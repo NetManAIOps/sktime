@@ -28,6 +28,11 @@ __all__ = [
     "distance_alignment_path_factory",
     "distance_alignment_path",
     "twe_alignment_path",
+    "pearson_correlation",
+    "dcor1_distance",
+    "dcor2_distance",
+    "cort_coefficient",
+    "sax_distance",
 ]
 
 from sktime.distances._distance import (
@@ -57,4 +62,11 @@ from sktime.distances._distance import (
     wdtw_alignment_path,
     wdtw_distance,
 )
+from sktime.distances._correlation import (
+    cort_coefficient,
+    dcor1_distance,
+    dcor2_distance,
+    pearson_correlation,
+)
+from sktime.distances._sax_distance import sax_distance
 from sktime.distances.lower_bounding import LowerBounding
