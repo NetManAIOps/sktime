@@ -16,6 +16,8 @@ from sktime.distances._resolve_metric import (
     _resolve_dist_instance,
     _resolve_metric_to_factory,
 )
+from sktime.distances._sbd import _SbdDistance
+from sktime.distances._smets import _SmetsDistance
 from sktime.distances._squared import _SquaredDistance
 from sktime.distances._twe import _TweDistance
 from sktime.distances._wddtw import _WddtwDistance
@@ -934,6 +936,78 @@ def twe_distance(
 
     return distance(x, y, metric="twe", **format_kwargs)
 
+
+def sbd_distance(x: np.ndarray, y: np.ndarray, **kwargs: Any) -> float:
+    """Compute the shape-based distance (SBD) between two time series.
+
+    SBD is defined as ``1 - max(NCC)`` where NCC is normalized cross-correlation.
+
+    Parameters
+    ----------
+    x: np.ndarray (1d or 2d array)
+        First time series.
+    y: np.ndarray (1d or 2d array)
+        Second time series.
+    kwargs: Any
+        Extra kwargs.
+
+    Returns
+    -------
+    float
+        SBD distance between x and y.
+    """
+    return distance(x, y, metric="sbd", **kwargs)
+
+def smets_distance(
+    x: np.ndarray,
+    y: np.ndarray,
+    p_norm: float = 2.0,
+    entropy_bins: int = 20,
+    uts_metric: str | Callable | NumbaDistance = "euclidean",
+    uts_metric_kwargs: dict[str, Any] | None = None,
+    **kwargs: Any,
+) -> float:
+    """Compute the SMETS distance between two multivariate time series.
+
+    SMETS consists of:
+    1) greedy matching across dimensions by pairwise UTS distance,
+    2) L_p aggregation on matched distances,
+    3) entropy penalty for unmatched dimensions,
+    4) dimensional difference penalty.
+
+    Parameters
+    ----------
+    x : np.ndarray (1d or 2d array)
+        First time series, interpreted as shape [n_dims, n_timepoints] after formatting.
+    y : np.ndarray (1d or 2d array)
+        Second time series, interpreted as shape [n_dims, n_timepoints] after formatting.
+    p_norm : float, default=2.0
+        p value used in L_p aggregation for matched UTS distances.
+    entropy_bins : int, default=20
+        Number of bins used for entropy estimation on unmatched dimensions.
+    uts_metric : str, callable, or NumbaDistance, default="euclidean"
+        Inner univariate time-series distance used to build pairwise dimension matrix.
+        Strings follow sktime distance names (e.g., "euclidean", "squared", "dtw").
+        Alias "linear" is supported and maps to "euclidean".
+    uts_metric_kwargs : dict or None, default=None
+        Keyword arguments forwarded only to the inner uts_metric.
+    kwargs : Any
+        Additional kwargs. If provided, merged into uts_metric_kwargs.
+
+    Returns
+    -------
+    float
+        SMETS distance between x and y.
+    """
+    format_kwargs = {
+        "p_norm": p_norm,
+        "entropy_bins": entropy_bins,
+        "uts_metric": uts_metric,
+        "uts_metric_kwargs": uts_metric_kwargs,
+    }
+    format_kwargs = {**format_kwargs, **kwargs}
+
+    return distance(x, y, metric="smets", **format_kwargs)
 
 def squared_distance(x: np.ndarray, y: np.ndarray, **kwargs: Any) -> float:
     r"""Compute the squared distance between two time series.
@@ -2394,6 +2468,18 @@ _METRIC_INFOS = [
         dist_instance=_TweDistance(),
         dist_alignment_path_func=twe_alignment_path,
     ),
+    MetricInfo(
+        canonical_name="sbd",
+        aka={"sbd", "shape based distance"},
+        dist_func=sbd_distance,
+        dist_instance=_SbdDistance(),
+    ),
+    MetricInfo(
+        canonical_name="smets",
+        aka={"smets", "smets distance"},
+        dist_func=smets_distance,
+        dist_instance=_SmetsDistance(),
+    ),
 ]
 
 _METRICS = {info.canonical_name: info for info in _METRIC_INFOS}
@@ -2413,4 +2499,6 @@ ALL_DISTANCES = (
     wddtw_distance,
     wdtw_distance,
     twe_distance,
+    sbd_distance,
+    smets_distance,
 )

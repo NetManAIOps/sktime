@@ -17,6 +17,7 @@ __author__ = [
 ]
 
 __all__ = [
+    "load_daily_delhi_climate",
     "load_oil_display",
     "load_etth_display",
     "load_airline",
@@ -772,6 +773,20 @@ def _coerce_to_monthly_period_index(ix):
     """
     return pd.PeriodIndex(ix, freq="M", name="Period")
 
+def _coerce_to_daily_period_index(ix):
+    """Coerce a date index to a daily period index.
+
+    Parameters
+    ----------
+    ix : pd.Index
+
+    Returns
+    -------
+    pd.PeriodIndex, with frequency "D", and name "Period"
+        coerced index ix
+    """
+    return pd.PeriodIndex(ix, freq="D", name="Period")
+
 
 def load_shampoo_sales():
     """Load the shampoo sales univariate time series dataset for forecasting.
@@ -1194,12 +1209,24 @@ def load_etth_display():
     path = os.path.join(MODULE, DIRNAME, "etth_display_W112", "etth_display_W112.csv")
     import pandas as pd
     return pd.read_csv(path)
+
 def load_oil_display():
     path = os.path.join(MODULE, DIRNAME, "oil", "oil.csv")
     import pandas as pd
     t = np.arange(40)
     
     return pd.read_csv(path, na_values=['.'])[810:810 + len(t)]['DCOILWTICO'].bfill().values
+
+def load_daily_delhi_climate():
+    path = os.path.join(MODULE, DIRNAME, "DailyDelhiClimate", "DailyDelhiClimateTest.csv")
+    import pandas as pd
+    y = pd.read_csv(path, index_col=0, parse_dates=["date"], dtype={1: float, 2: float, 3: float, 4: float}).squeeze("columns")
+
+    # make sure time index is properly formatted
+    y.index = _coerce_to_daily_period_index(y.index)
+    y.name = "Daily Delhi climate"
+    return y
+
 def load_solar(
     start="2021-05-01",
     end="2021-09-01",

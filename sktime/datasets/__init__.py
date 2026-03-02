@@ -1,6 +1,9 @@
 """Functions to load and write datasets."""
 
 __all__ = [
+    "load_oil_display",
+    "load_etth_display",
+    "load_daily_delhi_climate",
     "load_airline",
     "load_arrow_head",
     "load_gunpoint",
@@ -114,7 +117,8 @@ from sktime.datasets._single_problem_loaders import (
     # load_unit_test_tsf,
     # load_uschange,
     load_oil_display,
-    load_etth_display
+    load_etth_display,
+    load_daily_delhi_climate
 )
 from sktime.datasets.base import BaseDataset
 from sktime.datasets.classification import (

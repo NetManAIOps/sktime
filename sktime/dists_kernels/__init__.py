@@ -10,7 +10,9 @@ from sktime.dists_kernels.dtw import DtwDist
 from sktime.dists_kernels.dummy import ConstantPwTrafoPanel
 from sktime.dists_kernels.edit_dist import EditDist
 from sktime.dists_kernels.lucky import LuckyDtwDist
+from sktime.dists_kernels.ncc import NCCKernel
 from sktime.dists_kernels.scipy_dist import ScipyDist
+from sktime.dists_kernels.scipy_kernel import ScipyKernel
 from sktime.dists_kernels.signature_kernel import SignatureKernel
 
 __all__ = [
@@ -19,9 +21,11 @@ __all__ = [
     "AggrDist",
     "DtwDist",
     "LuckyDtwDist",
+    "NCCKernel",
     "EditDist",
     "FlatDist",
     "ScipyDist",
+    "ScipyKernel",
     "ConstantPwTrafoPanel",
     "PwTrafoPanelPipeline",
     "SignatureKernel",
