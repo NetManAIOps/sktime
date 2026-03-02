@@ -34,6 +34,8 @@ __all__ = [
     "dcor1_distance",
     "dcor2_distance",
     "cort_coefficient",
+    "dot_distance",
+    "granger_distance",
     "sax_distance",
 ]
 
@@ -44,6 +46,7 @@ from sktime.distances._distance import (
     distance_alignment_path,
     distance_alignment_path_factory,
     distance_factory,
+    dot_distance,
     dtw_alignment_path,
     dtw_distance,
     edr_alignment_path,
@@ -51,6 +54,7 @@ from sktime.distances._distance import (
     erp_alignment_path,
     erp_distance,
     euclidean_distance,
+    granger_distance,
     lcss_alignment_path,
     lcss_distance,
     msm_alignment_path,

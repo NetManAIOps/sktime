@@ -6,10 +6,12 @@ from typing import Any
 import numpy as np
 
 from sktime.distances._ddtw import _DdtwDistance
+from sktime.distances._dot import _DotDistance
 from sktime.distances._dtw import _DtwDistance
 from sktime.distances._edr import _EdrDistance
 from sktime.distances._erp import _ErpDistance
 from sktime.distances._euclidean import _EuclideanDistance
+from sktime.distances._granger import _GrangerDistance
 from sktime.distances._lcss import _LcssDistance
 from sktime.distances._msm import _MsmDistance
 from sktime.distances._resolve_metric import (
@@ -957,6 +959,56 @@ def sbd_distance(x: np.ndarray, y: np.ndarray, **kwargs: Any) -> float:
         SBD distance between x and y.
     """
     return distance(x, y, metric="sbd", **kwargs)
+
+
+def dot_distance(x: np.ndarray, y: np.ndarray, **kwargs: Any) -> float:
+    """Compute the dot distance (1 - cosine similarity) between two time series.
+
+    Parameters
+    ----------
+    x: np.ndarray (1d or 2d array)
+        First time series.
+    y: np.ndarray (1d or 2d array)
+        Second time series.
+    kwargs: Any
+        Extra kwargs.
+
+    Returns
+    -------
+    float
+        Dot distance between x and y.
+    """
+    return distance(x, y, metric="dot", **kwargs)
+
+
+def granger_distance(
+    x: np.ndarray, y: np.ndarray, max_lag: int = 5, **kwargs: Any
+) -> float:
+    """Compute Granger-causality based distance between two time series.
+
+    Uses statsmodels grangercausalitytests. Distance = 1 - min(p_value) over
+    both directions (x→y, y→x) and all lags. Lower p-value indicates stronger
+    Granger causality, hence smaller distance.
+
+    Parameters
+    ----------
+    x: np.ndarray (1d or 2d array)
+        First time series.
+    y: np.ndarray (1d or 2d array)
+        Second time series.
+    max_lag: int, default=5
+        Maximum lag for Granger causality test.
+    kwargs: Any
+        Extra kwargs.
+
+    Returns
+    -------
+    float
+        Granger distance between x and y.
+    """
+    format_kwargs = {"max_lag": max_lag, **kwargs}
+    return distance(x, y, metric="granger", **format_kwargs)
+
 
 def smets_distance(
     x: np.ndarray,
@@ -2480,6 +2532,18 @@ _METRIC_INFOS = [
         dist_func=smets_distance,
         dist_instance=_SmetsDistance(),
     ),
+    MetricInfo(
+        canonical_name="dot",
+        aka={"dot", "dot distance", "cosine distance"},
+        dist_func=dot_distance,
+        dist_instance=_DotDistance(),
+    ),
+    MetricInfo(
+        canonical_name="granger",
+        aka={"granger", "granger distance", "granger causality"},
+        dist_func=granger_distance,
+        dist_instance=_GrangerDistance(),
+    ),
 ]
 
 _METRICS = {info.canonical_name: info for info in _METRIC_INFOS}
@@ -2489,10 +2553,12 @@ _METRICS_NAMES = list(_METRICS.keys())
 
 ALL_DISTANCES = (
     ddtw_distance,
+    dot_distance,
     dtw_distance,
     edr_distance,
     erp_distance,
     euclidean_distance,
+    granger_distance,
     lcss_distance,
     msm_distance,
     squared_distance,

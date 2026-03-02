@@ -492,6 +492,14 @@ Filtering and denoising
 
     HPFilter
 
+.. currentmodule:: sktime.transformations.series.moving_average
+
+.. autosummary::
+    :toctree: auto_generated/
+    :template: class.rst
+
+    MovingAverageTransformer
+
 .. currentmodule:: sktime.transformations.series.kalman_filter
 
 .. autosummary::
