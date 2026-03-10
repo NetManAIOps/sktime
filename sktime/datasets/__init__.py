@@ -5,6 +5,7 @@ __all__ = [
     "load_etth_display",
     "load_daily_delhi_climate",
     "load_airline",
+    "load_chicken_egg",
     "load_arrow_head",
     "load_gunpoint",
     "load_basic_motions",
@@ -93,6 +94,7 @@ from sktime.datasets._readers_writers.utils import write_results_to_uea_format
 from sktime.datasets._single_problem_loaders import (
     load_acsf1,
     load_airline,
+    load_chicken_egg,
     load_arrow_head,
     load_basic_motions,
     load_covid_3month,

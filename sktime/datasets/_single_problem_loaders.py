@@ -979,6 +979,45 @@ def load_airline():
     return y
 
 
+def load_chicken_egg():
+    """Load the chicken-egg bivariate time series dataset for causality analysis.
+
+    Returns
+    -------
+    data : pd.DataFrame
+        DataFrame with columns "year", "chicken" and "egg".
+
+    Examples
+    --------
+    >>> from sktime.datasets import load_chicken_egg
+    >>> data = load_chicken_egg()
+
+    Notes
+    -----
+    Annual chicken production (number of chickens) and egg production
+    (millions of eggs) in the United States from 1931 to 1970.
+
+    This dataset is commonly used to demonstrate Granger causality testing
+    (the classic "chicken or the egg" problem).
+
+    Dimensionality:     bivariate
+    Series length:      40
+    Frequency:          Yearly
+    Number of cases:    1
+
+    References
+    ----------
+    .. [1] Thurman, W. N. and Fisher, M. E. (1988) Chickens, Eggs, and
+          Causality, or Which Came First? American Journal of Agricultural
+          Economics, 70(2), 237-238.
+    """
+    name = "ChickenEgg"
+    fname = name + ".csv"
+    path = os.path.join(MODULE, DIRNAME, name, fname)
+    data = pd.read_csv(path)
+    return data
+
+
 def load_uschange(y_name="Consumption"):
     """Load MTS dataset for forecasting Growth rates of personal consumption and income.
 
