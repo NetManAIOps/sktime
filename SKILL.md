@@ -82,7 +82,7 @@ If user asks about Time Series Sandbox details or the usage of specific features
 1. If Feishu plugin is installed:
    - Prompt OpenClaw to search Feishu knowledge base first for "Time Series Sandbox" documents.
    - Extract details that may describe sandbox-specific additions beyond sktime.
-   - Return the links and summaries from Feishu KB if found.
+   - Return the links and summaries from Feishu KB if found. Do not put the links in the code snippet! The links can only be included in the plain text.
 2. Then check repository docs:
    - `docs/` folder for local documentation and implementation notes.
 
