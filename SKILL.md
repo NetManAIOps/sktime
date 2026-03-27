@@ -12,6 +12,7 @@ Time Series Sandbox is based on:
 
 ## Quick One-Liner: Install and Run
 
+Make sure that you have install the `NetManAIOps/sktime` repository and set up the environment. **Do not** use the default sktime with `pip install sktime` as it may not include the latest sandbox features.
 Use this single command when the user asks for a one-sentence setup command:
 
 ```bash
@@ -59,18 +60,20 @@ Advise users to inspect both sources for coverage and updated versions.
 
 ## Reference Cases (Notebook Examples)
 
-If users ask "do we have reference cases/examples", do the following:
+If users ask "do we have reference cases/examples" or "I want to see some examples" or something like that, do the following:
 
 1. Search notebook files in:
    - `lectures/`
    - `examples/`
 2. Return relevant `.ipynb` paths.
-3. Also return clickable Colab links by appending notebook path to:
+3. Return **clickable** Colab links by appending notebook path to:
    - `https://colab.research.google.com/github/NetManAIOps/sktime/blob/main`
 
 Link rule:
 - If notebook is `lectures/lec5/clasp.ipynb`, return:
-  - `https://colab.research.google.com/github/NetManAIOps/sktime/blob/main/lectures/lec5/clasp.ipynb`
+  - `https://colab.research.google.com/github/NetManAIOps/sktime/blob/main/lectures/lec5/clasp.ipynb` as a Colab link.
+
+4. (Important) Open the link in the user's browser (with `openclaw browser`) if possible.
 
 ## Documentation Routing Rules
 
