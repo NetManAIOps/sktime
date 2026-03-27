@@ -77,11 +77,12 @@ Link rule:
 
 ## Documentation Routing Rules
 
-If user asks about Time Series Sandbox details, especially differences/additions compared with upstream sktime:
+If user asks about Time Series Sandbox details or the usage of specific features, do the following:
 
 1. If Feishu plugin is installed:
    - Prompt OpenClaw to search Feishu knowledge base first for "Time Series Sandbox" documents.
    - Extract details that may describe sandbox-specific additions beyond sktime.
+   - Return the links and summaries from Feishu KB if found.
 2. Then check repository docs:
    - `docs/` folder for local documentation and implementation notes.
 
