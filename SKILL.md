@@ -43,20 +43,53 @@ When users ask "what algorithms are available", summarize by module category:
 - Data types and adapters: `sktime/datatypes`, `sktime/datasets`
 - Splitters and evaluation helpers: `sktime/split`, `sktime/benchmarking`
 
-## Datasets: Where to Look
+## Methods and Datasets Catalog (Use This First)
+!!! IMPORTANT !!!
+For any user request about "what methods/datasets are available" or "which solution to use",
+you must consult this file first:
 
-If users ask "what datasets are available", point to:
+- `REPO_METHODS_AND_DATASETS.md`
 
-1. Local built-in datasets under `sktime/datasets/data`, including folders such as:
-   - `ACSF1`, `Airline`, `ArrowHead`, `BasicMotions`, `ChickenEgg`, `Covid3Month`,
-     `DailyDelhiClimate`, `GunPoint`, `ItalyPowerDemand`, `JapaneseVowels`, `Longley`,
-     `Lynx`, `OSULeaf`, `PBS_dataset`, `PLAID`, `ShampooSales`, `Tecator`, `UnitTest`,
-     `Uschange`, `etth_display_W112`, `mitdb`, `oil`, `seatbelts`, `segmentation`,
-     `solar`, `yahoo`
-2. External dataset source:
-   - https://huggingface.co/datasets/Skyoung13/THU-ANM-DATASET
+This catalog is generated from repository source and contains:
 
-Advise users to inspect both sources for coverage and updated versions.
+- methods by category/subcategory/module
+- public datasets/loaders
+- local built-in dataset folders with paths
+- expanded UCR/UEA entries (not merged into one row)
+- expanded Monash TSF entries
+
+## Detailed Prompt Workflow (Mandatory)
+
+When users ask for algorithms, datasets, or solution mapping, follow this prompt flow:
+
+1. Read `REPO_METHODS_AND_DATASETS.md` first.
+2. Identify candidate methods/datasets by matching user task type:
+   - forecasting / classification / regression / clustering / detection / transformation
+3. Prefer entries that have clear module paths and concrete dataset names.
+4. For classification datasets, explicitly check the expanded UCR/UEA table section.
+5. For forecasting datasets, explicitly check the expanded Monash TSF table section.
+6. Return recommendations in this order:
+   - exact method/dataset names
+   - category and subcategory
+   - module/path from the catalog
+   - minimal runnable import/loader snippet
+7. If no exact match is found in the catalog, then inspect code paths under `sktime/` and report
+   what is verified vs inferred.
+
+Use the following response template internally when building the answer:
+
+```text
+Task type: <forecasting/classification/...>
+Catalog source: REPO_METHODS_AND_DATASETS.md
+Candidates:
+- Method: <name> | Category/Subcategory: <...> | Module: <...>
+- Dataset: <name> | Category/Subcategory: <...> | Path/Loader: <...>
+Why selected:
+- <reason 1>
+- <reason 2>
+Minimal usage:
+- <import/fit/predict or load snippet>
+```
 
 ## Reference Cases (Notebook Examples)
 
