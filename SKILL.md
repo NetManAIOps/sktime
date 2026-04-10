@@ -91,6 +91,52 @@ Minimal usage:
 - <import/fit/predict or load snippet>
 ```
 
+## Code Generation and Execution Prompt (Mandatory)
+
+When a user asks to "write code using algorithms in Time Series Sandbox", you must follow this prompt policy:
+
+1. Use repository-native implementations first.
+   - Prefer algorithms implemented in this repository (`sktime/...`) and avoid external alternatives unless the user explicitly asks otherwise.
+2. Match the request before coding.
+   - Identify task type, input/output expectation, and constraints (for example: forecasting horizon, classification labels, runtime simplicity).
+3. Choose the simplest valid implementation.
+   - Select the minimal algorithm and minimal dataset/loader that can satisfy the user request.
+   - Keep code short and runnable; avoid unnecessary engineering complexity.
+4. Execute and capture real outputs whenever possible.
+   - Run the code and keep the raw output values/metrics/predictions.
+   - If execution is not possible, clearly state the blocker and provide expected output format.
+5. Return a structured final answer with all required parts.
+
+Your final user-facing response must include all of the following:
+
+- Algorithm name(s) used.
+- Exact API location(s) in repository/module form (for example: `sktime.forecasting.naive.NaiveForecaster`).
+- Core call snippet (minimal import + fit + predict/evaluate path).
+- Raw output from execution (original values/metrics, not only summary wording).
+- Plain-language interpretation of the output and why it answers the user's request.
+
+Use this internal response scaffold when preparing the final output:
+
+```text
+Matched need:
+- Task: <...>
+- Constraints: <...>
+
+Selected algorithm/API:
+- Algorithm: <name>
+- API path: <sktime....>
+- Why this is the simplest fit: <...>
+
+Core snippet:
+<minimal runnable code>
+
+Raw output:
+<verbatim execution output>
+
+Interpretation:
+<clear explanation for user>
+```
+
 ## Reference Cases (Notebook Examples)
 
 If users ask "do we have reference cases/examples" or "I want to see some examples" or something like that, do the following:
