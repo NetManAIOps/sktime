@@ -136,6 +136,30 @@ class classifier(_BaseScitypeOfObject):
         return TestAllClassifiers
 
 
+class causal_discoverer(_BaseScitypeOfObject):
+    """Causal discovery estimator, learns causal graph from data."""
+
+    _tags = {
+        "scitype_name": "causal_discoverer",
+        "short_descr": "causal discovery estimator, learns causal graph from data",
+        "parent_scitype": "estimator",
+    }
+
+    @classmethod
+    def get_base_class(cls):
+        from sktime.causal_discovery.base import BaseCausalDiscoverer
+
+        return BaseCausalDiscoverer
+
+    @classmethod
+    def get_test_class(cls):
+        from sktime.causal_discovery.tests.test_all_causal_discoverers import (
+            TestAllCausalDiscoverers,
+        )
+
+        return TestAllCausalDiscoverers
+
+
 class clusterer(_BaseScitypeOfObject):
     """Time series clusterer."""
 
