@@ -34,7 +34,8 @@ def configuration(parent_package="", top_path=None):
         "segmentation",
         "Covid3Month",
         "oil",
-        "etth_display_W112"
+        "etth_display_W112",
+        "CausalDiscoveryBNLearn",
     )
     for dataset in included_datasets:
         config.add_data_dir(f"data/{dataset}")

@@ -43,6 +43,10 @@ __all__ = [
     "load_unit_test_tsf",
     "load_covid_3month",
     "load_tecator",
+    "load_causal_bnlearn_dataset",
+    "load_sachs",
+    "load_alarm",
+    "load_asia",
 
 ]
 
@@ -66,6 +70,121 @@ from sktime.utils.dependencies import _check_soft_dependencies
 
 DIRNAME = "data"
 MODULE = os.path.dirname(__file__)
+
+
+def _parse_bnlearn_graph(path):
+    """Parse a simple DAG graph text file shipped with benchmark datasets."""
+    edges = []
+    with open(path, encoding="utf-8") as f:
+        for raw_line in f:
+            line = raw_line.strip()
+            if "-->" not in line:
+                continue
+            edge = line.split(".", 1)[-1].strip()
+            source, target = edge.split("-->")
+            edges.append((source.strip(), target.strip()))
+    return edges
+
+
+def load_causal_bnlearn_dataset(name="sachs", return_true_graph=False):
+    """Load common benchmark datasets for causal discovery demos.
+
+    Parameters
+    ----------
+    name : {"sachs", "alarm", "asia"}, default="sachs"
+        Dataset name.
+    return_true_graph : bool, default=False
+        If True, also return benchmark DAG edges as ``(source, target)`` tuples.
+
+    Returns
+    -------
+    X : pd.DataFrame
+        Tabular data matrix where rows are samples and columns are variables.
+    edges : list of tuple, optional
+        Returned only when ``return_true_graph=True``.
+
+    Notes
+    -----
+    These benchmark files are included for simple causal discovery examples and
+    follow the bnlearn benchmark naming conventions (variables ``X1 ... Xd``).
+    """
+    valid_names = {"sachs", "alarm", "asia"}
+    name = name.lower()
+    if name not in valid_names:
+        raise ValueError(
+            f"Unknown dataset name: {name}. Valid choices are {sorted(valid_names)}"
+        )
+
+    data_dir = os.path.join(MODULE, DIRNAME, "CausalDiscoveryBNLearn")
+    data_path = os.path.join(data_dir, f"{name}.txt")
+    X = pd.read_csv(data_path, sep=r"\s+")
+
+    if return_true_graph:
+        graph_path = os.path.join(data_dir, f"{name}.graph.txt")
+        edges = _parse_bnlearn_graph(graph_path)
+        return X, edges
+
+    return X
+
+
+def load_sachs(return_true_graph=False):
+    """Load the Sachs causal discovery benchmark dataset.
+
+    Parameters
+    ----------
+    return_true_graph : bool, default=False
+        If True, also return benchmark DAG edges.
+
+    Returns
+    -------
+    X : pd.DataFrame
+        Sachs benchmark data.
+    edges : list of tuple, optional
+        Returned only when ``return_true_graph=True``.
+    """
+    return load_causal_bnlearn_dataset(
+        name="sachs", return_true_graph=return_true_graph
+    )
+
+
+def load_alarm(return_true_graph=False):
+    """Load the Alarm causal discovery benchmark dataset.
+
+    Parameters
+    ----------
+    return_true_graph : bool, default=False
+        If True, also return benchmark DAG edges.
+
+    Returns
+    -------
+    X : pd.DataFrame
+        Alarm benchmark data.
+    edges : list of tuple, optional
+        Returned only when ``return_true_graph=True``.
+    """
+    return load_causal_bnlearn_dataset(
+        name="alarm", return_true_graph=return_true_graph
+    )
+
+
+def load_asia(return_true_graph=False):
+    """Load the Asia causal discovery benchmark dataset.
+
+    Parameters
+    ----------
+    return_true_graph : bool, default=False
+        If True, also return benchmark DAG edges.
+
+    Returns
+    -------
+    X : pd.DataFrame
+        Asia benchmark data.
+    edges : list of tuple, optional
+        Returned only when ``return_true_graph=True``.
+    """
+    return load_causal_bnlearn_dataset(
+        name="asia", return_true_graph=return_true_graph
+    )
 
 
 def load_UCR_UEA_dataset(
