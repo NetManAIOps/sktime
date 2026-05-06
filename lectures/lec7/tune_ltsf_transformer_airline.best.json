@@ -1,0 +1,30 @@
+{
+  "best_preset_name": "ref_lr001",
+  "screen_mae": 46.64720391204692,
+  "full_epochs": 220,
+  "final_mae": 32.830024494200444,
+  "preset_kwargs": {
+    "lr": 0.001,
+    "batch_size": 8,
+    "d_model": 128,
+    "n_heads": 8,
+    "d_ff": 256,
+    "e_layers": 2,
+    "d_layers": 1,
+    "dropout": 0.12,
+    "factor": 5,
+    "activation": "gelu",
+    "optimizer": "AdamW",
+    "optimizer_kwargs": {
+      "weight_decay": 5e-05
+    },
+    "criterion": "SmoothL1",
+    "temporal_encoding": true,
+    "temporal_encoding_type": "linear"
+  },
+  "seq_len": 36,
+  "context_len": 12,
+  "train_pred_len": 12,
+  "series_freq": "MS",
+  "num_epochs_refine": 220
+}
