@@ -42,6 +42,7 @@ When users ask "what algorithms are available", summarize by module category:
 - Pipeline/composition utilities: `sktime/pipeline`
 - Data types and adapters: `sktime/datatypes`, `sktime/datasets`
 - Splitters and evaluation helpers: `sktime/split`, `sktime/benchmarking`
+- Causal discovery: `sktime/causal_discovery`
 
 ## Methods and Datasets Catalog (Use This First)
 !!! IMPORTANT !!!
@@ -137,6 +138,63 @@ Interpretation:
 <clear explanation for user>
 ```
 
+## Causal Discovery Guidance
+
+Use this section when the user asks for causal discovery algorithms, causal
+graphs, time-series causality demos, or lecture notebooks.
+
+Repository-native APIs:
+
+- PC: `sktime.causal_discovery.PC`
+  - Tabular / i.i.d. constraint-based causal discovery.
+  - Wraps `causal-learn` and returns a CPDAG.
+  - Adjacency encoding: `1` directed edge, `-1` undirected edge, `0` no edge.
+- GES: `sktime.causal_discovery.GES`
+  - Tabular / i.i.d. score-based causal discovery.
+  - Wraps `causal-learn` and returns a CPDAG.
+  - Adjacency encoding is the same as PC.
+- PCMCI: `sktime.causal_discovery.PCMCI`
+  - Multivariate time-series causal discovery.
+  - Wraps `tigramite` and returns a lagged DAG adjacency matrix with shape
+    `(source_variable, target_variable, lag)`.
+  - For lagged edges, `adjacency[i, j, tau] == 1` means variable `i` at
+    `t - tau` points to variable `j` at `t`.
+- NOTEARS: `sktime.causal_discovery.NOTEARS`
+  - Native linear NOTEARS implementation for tabular DAG discovery.
+
+Bundled causal benchmark loaders:
+
+- `sktime.datasets.load_sachs(return_true_graph=True)`
+- `sktime.datasets.load_alarm(return_true_graph=True)`
+- `sktime.datasets.load_asia(return_true_graph=True)`
+- generic loader: `sktime.datasets.load_causal_bnlearn_dataset(...)`
+
+Dependency note:
+
+- PC and GES require the soft dependency `causal-learn`.
+- PCMCI requires the soft dependency `tigramite`.
+- Teaching notebooks should install those dependencies explicitly in the first
+  notebook cell, while importing the algorithms through `sktime.causal_discovery`.
+
+Lecture notebook convention for causal discovery:
+
+1. Prefer a small fixed-seed synthetic system with a known ground-truth graph
+   when the goal is to teach graph recovery rather than benchmark accuracy.
+2. For time-series causal discovery, keep the number of variables below 10 and
+   plot the raw time series first with `matplotlib`.
+3. Use the same variable names, true edge set, color legend, and graph layout
+   across PC, GES, and PCMCI notebooks whenever possible.
+4. Use colors consistently:
+   - green: correctly recovered edge
+   - red: false positive edge
+   - gray dashed: missed true edge
+   - orange: reversed or orientation-mismatched edge
+5. For PC and GES on time-series demos, use a lag-expanded tabular view such as
+   `X[t-1] -> X[t]`, and explain that their output is a CPDAG over these lagged
+   variables.
+6. For PCMCI, fit directly on the multivariate time series and visualize
+   lagged edges as `source[t-k] -> target[t]`.
+
 ## Reference Cases (Notebook Examples)
 
 If users ask "do we have reference cases/examples" or "I want to see some examples" or something like that, do the following:
@@ -144,6 +202,7 @@ If users ask "do we have reference cases/examples" or "I want to see some exampl
 1. Search notebook files in:
    - `lectures/`
    - `examples/`
+   - especially `lectures/lec9/` for causal discovery lecture demos
 2. Return relevant `.ipynb` paths.
 3. Return **clickable** Colab links by appending notebook path to:
    - `https://colab.research.google.com/github/NetManAIOps/sktime/blob/main`
@@ -153,6 +212,12 @@ Link rule:
   - `https://colab.research.google.com/github/NetManAIOps/sktime/blob/main/lectures/lec5/clasp.ipynb` as a Colab link.
 
 4. (Important) Open the link in the user's browser (with `openclaw browser`) if possible.
+
+Current causal discovery lecture notebooks:
+
+- `lectures/lec9/pc_causal_discovery_demo.ipynb`
+- `lectures/lec9/pcmci_causal_discovery_demo.ipynb`
+- `lectures/lec9/ges_causal_discovery_demo.ipynb`
 
 ## Documentation Routing Rules
 
