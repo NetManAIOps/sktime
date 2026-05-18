@@ -182,17 +182,31 @@ Lecture notebook convention for causal discovery:
    when the goal is to teach graph recovery rather than benchmark accuracy.
 2. For time-series causal discovery, keep the number of variables below 10 and
    plot the raw time series first with `matplotlib`.
-3. Use the same variable names, true edge set, color legend, and graph layout
-   across PC, GES, and PCMCI notebooks whenever possible.
-4. Use colors consistently:
+3. Prefer algorithm-specific case studies when one shared dataset hides the
+   method differences. Good teaching defaults are:
+   - PC: a small collider / v-structure case where conditional independence
+     produces identifiable arrowheads.
+   - GES: a contemporaneous tabular SEM where a global BIC-style score recovers
+     a sparse DAG over same-window measurements.
+   - PCMCI: a lagged time-series propagation chain where direct lagged causes
+     are separated from indirect lagged correlations.
+   In GES and PCMCI teaching notebooks, include a PC baseline on the same data
+   or on same-time slices so students can see how score-based and time-lagged
+   methods differ from constraint-based PC.
+4. Use a compact physical story with named variables rather than generic
+   `X1`, `X2`, `X3` when the notebook is for teaching.
+   For time-series lectures, prefer clean periodic shapes and visible delayed
+   pulses over purely noisy autoregressive traces.
+5. Use colors consistently:
    - green: correctly recovered edge
    - red: false positive edge
    - gray dashed: missed true edge
    - orange: reversed or orientation-mismatched edge
-5. For PC and GES on time-series demos, use a lag-expanded tabular view such as
+6. For PC and GES on time-series demos, use a lag-expanded tabular view such as
    `X[t-1] -> X[t]`, and explain that their output is a CPDAG over these lagged
-   variables.
-6. For PCMCI, fit directly on the multivariate time series and visualize
+   variables. If the CPDAG is mostly unoriented, redesign the case instead of
+   presenting a graph full of bidirectional edges.
+7. For PCMCI, fit directly on the multivariate time series and visualize
    lagged edges as `source[t-k] -> target[t]`.
 
 ## Reference Cases (Notebook Examples)
