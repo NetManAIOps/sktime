@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Time Series Sandbox Playground</title>
+  <link rel="stylesheet" href="/styles.css?v=20260707">
+</head>
+<body>
+  <main class="shell">
+    <aside class="panel controls">
+      <div>
+        <p class="eyebrow">TSBox Sandbox</p>
+        <h1>Time Series Sandbox Playground</h1>
+      </div>
+
+      <label>Task
+        <select id="taskSelect"></select>
+      </label>
+
+      <label>Dataset Source
+        <select id="sourceSelect">
+          <option value="all">All sources</option>
+          <option value="local">Local built-in</option>
+          <option value="huggingface">Hugging Face</option>
+          <option value="ucr_uea">UCR/UEA Archive</option>
+        </select>
+      </label>
+
+      <label>Dataset
+        <select id="datasetSelect"></select>
+      </label>
+
+      <label>Preprocessor
+        <select id="preprocessorSelect"></select>
+      </label>
+
+      <label>Algorithm
+        <select id="algorithmSelect"></select>
+      </label>
+
+      <div class="param-grid" id="params"></div>
+
+      <button id="runButton" type="button">Run Experiment</button>
+      <p class="hint" id="compatHint"></p>
+      <div class="deps" id="dependencies"></div>
+    </aside>
+
+    <section class="workspace">
+      <div class="hero-band">
+        <div>
+          <p class="eyebrow">TSBox Sandbox</p>
+          <h2>Time Series Sandbox Playground</h2>
+        </div>
+        <div class="status-pill" id="statusPill">Ready</div>
+      </div>
+
+      <section class="panel pipeline-panel">
+        <div class="section-head">
+          <h3>Experiment Pipeline</h3>
+          <span id="pipelineHint">dataset → preprocessor → algorithm → evaluation</span>
+        </div>
+        <div id="pipeline" class="pipeline"></div>
+      </section>
+
+      <section class="panel chart-panel">
+        <div class="section-head">
+          <h3>Evaluation View</h3>
+          <div id="runMeta"></div>
+        </div>
+        <canvas id="chart" width="960" height="360"></canvas>
+      </section>
+
+      <section class="metrics" id="metrics"></section>
+
+      <section class="panel table-panel">
+        <div class="section-head">
+          <h3>Result Table</h3>
+        </div>
+        <div id="tableWrap"></div>
+      </section>
+    </section>
+
+    <aside class="panel output">
+      <div class="tabs">
+        <button class="tab active" data-tab="code">Code</button>
+        <button class="tab" data-tab="report">Report</button>
+        <button class="tab" data-tab="log">Log</button>
+      </div>
+      <pre id="codeBlock"></pre>
+      <pre id="reportBlock" hidden></pre>
+      <pre id="logBlock" hidden></pre>
+      <div class="exports">
+        <a id="scriptLink" href="#" target="_blank" rel="noreferrer">Export script</a>
+        <a id="reportLink" href="#" target="_blank" rel="noreferrer">Export report</a>
+      </div>
+    </aside>
+  </main>
+  <script src="/app.js?v=20260707"></script>
+</body>
+</html>
+

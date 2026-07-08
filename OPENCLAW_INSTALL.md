@@ -8,17 +8,17 @@ This guide explains how to install and use the local Time Series Sandbox skill w
 - Python 3.10+ is available.
 - Git is available.
 
-## 2. Place the Skill in OpenClaw Skills Directory
+## 2. Skill Location
 
-Copy this folder:
+The local skill lives in this repository at:
 
-- `skills/time-series-sandbox/`
+- `.agent/skills/time-series-sandbox/`
 
-into your OpenClaw skills directory (for example, a local `skills/` directory loaded by OpenClaw).
+If OpenClaw uses a separate skills directory, copy or symlink this folder there.
 
 Ensure this file exists after placement:
 
-- `skills/time-series-sandbox/SKILL.md`
+- `.agent/skills/time-series-sandbox/SKILL.md`
 
 ## 3. One-Line Project Install and Smoke Run
 
@@ -39,13 +39,13 @@ cd sktime && python -m venv .venv && source .venv/bin/activate && python -m pip 
 Run the provided script:
 
 ```bash
-bash skills/time-series-sandbox/setup.sh
+bash .agent/skills/time-series-sandbox/setup.sh
 ```
 
 Or for an existing local repository path:
 
 ```bash
-bash skills/time-series-sandbox/setup.sh /path/to/sktime
+bash .agent/skills/time-series-sandbox/setup.sh /path/to/sktime
 ```
 
 ## 5. Validation Checklist
@@ -55,6 +55,10 @@ bash skills/time-series-sandbox/setup.sh /path/to/sktime
 - Notebook examples are discoverable under `examples/` and `lectures/`.
 - Colab links can be constructed with base:
   - `https://colab.research.google.com/github/NetManAIOps/sktime/blob/main`
+- TSBox Sandbox Playground starts locally:
+  - `python3 playground/server.py`
+- Playground tests pass:
+  - `python3 playground/test_playground.py`
 
 ## 6. Recommended Query Patterns for Users
 

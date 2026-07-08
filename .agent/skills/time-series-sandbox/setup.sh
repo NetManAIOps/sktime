@@ -2,8 +2,8 @@
 set -euo pipefail
 
 # Usage:
-#   bash skills/time-series-sandbox/setup.sh
-#   bash skills/time-series-sandbox/setup.sh /path/to/sktime
+#   bash .agent/skills/time-series-sandbox/setup.sh
+#   bash .agent/skills/time-series-sandbox/setup.sh /path/to/sktime
 
 REPO_URL="https://github.com/NetManAIOps/sktime.git"
 TARGET_DIR="${1:-sktime}"

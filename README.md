@@ -44,6 +44,10 @@ sktime is a library for time series analysis in Python. It provides a unified in
 [roadmap]: https://www.sktime.net/en/latest/roadmap.html
 [related software]: https://www.sktime.net/en/latest/related_software.html
 
+## :robot: Agent skills
+
+Repository-specific agent skills live under `.agent/skills/`. The current Time Series Sandbox skill is located at `.agent/skills/time-series-sandbox/SKILL.md` and documents the sandbox setup, repository map, catalog-first workflow, runnable user cases, and Playground usage for coding agents.
+
 ## :speech_balloon: Where to ask questions
 
 Questions and feedback are extremely welcome! We strongly believe in the value of sharing help publicly, as it allows a wider audience to benefit from it.
