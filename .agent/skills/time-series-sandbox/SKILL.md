@@ -183,6 +183,12 @@ registry entry looks wrong, rerun the command above rather than trusting it.
   reproduction script and report for each run.
 - `playground/hf_data.py`: Hugging Face loader for online forecasting series.
 - `playground/test_playground.py`: unittest suite.
+- `playground/labts.py`: LabTS API — headless CLI version of this Playground
+  for autoresearch harnesses and automated pipelines. Full parity with the web
+  endpoints: `catalog` ↔ `/api/catalog`, `run` ↔ `/api/run`,
+  `script` ↔ `/api/export/script`, `report` ↔ `/api/export/report`, with a
+  unified JSON envelope and pipeline flow (`run --out` → `script/report
+  --from`). See the `labts-api` skill.
 
 ### Dynamic algorithm registration
 
