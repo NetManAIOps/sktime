@@ -34,6 +34,12 @@ def run_experiment(spec: dict) -> dict:
         raise PlaygroundError(f"Dataset is not enabled: {spec['dataset_id']}")
     if preprocessor is None or not preprocessor.get("enabled"):
         raise PlaygroundError(f"Preprocessor is not enabled: {spec.get('preprocessor_id')}")
+    compat = preprocessor.get("compatible_tasks")
+    if compat and spec["task"] not in compat and "all" not in compat:
+        raise PlaygroundError(
+            f"Preprocessor `{preprocessor['name']}` is not compatible with task "
+            f"`{spec['task']}`. Compatible tasks: {', '.join(compat)}."
+        )
     if algorithm["task"] != spec["task"] or dataset["task"] != spec["task"]:
         raise PlaygroundError("Selected task, algorithm, and dataset are incompatible.")
 
@@ -124,10 +130,11 @@ def _run_forecasting(spec: dict, dataset: dict, preprocessor: dict, log: list[st
         mean_squared_error,
     )
 
-    params = {"horizon": 12, "seasonal_period": 12}
+    params = {"horizon": 12, "seasonal_period": 12, "context_window": 36}
     params.update(spec.get("params") or {})
     horizon = max(1, int(params.get("horizon") or 12))
     seasonal_period = max(1, int(params.get("seasonal_period") or 12))
+    context_window = max(1, int(params.get("context_window") or 36))
 
     if dataset["source"] == "huggingface":
         from hf_data import load_hf_series
@@ -180,6 +187,12 @@ def _run_forecasting(spec: dict, dataset: dict, preprocessor: dict, log: list[st
             }
             for index in y.index
         ],
+        "meta": {
+            "total": int(len(y)),
+            "test_start": int(len(y_train)),
+            "context_window": int(context_window),
+            "horizon": int(horizon),
+        },
     }
     return {
         "status": "ok",
@@ -299,7 +312,8 @@ def _run_anomaly(spec: dict, dataset: dict, preprocessor: dict, log: list[str]) 
         f"Loaded {dataset['name']} rows={len(raw)} threshold={threshold} window={window}"
     )
 
-    stride = max(1, len(raw) // 800)
+    max_points = 30000
+    stride = max(1, len(raw) // max_points) if len(raw) > max_points else 1
     points = []
     for i in range(0, len(raw), stride):
         points.append(
@@ -320,7 +334,7 @@ def _run_anomaly(spec: dict, dataset: dict, preprocessor: dict, log: list[str]) 
             "Detected": int(y_pred.sum()),
             "Ground Truth": int(y_true.sum()),
         },
-        "series": {"kind": "anomaly", "points": points},
+        "series": {"kind": "anomaly", "points": points, "meta": {"total": int(len(raw)), "stride": int(stride)}},
         "tables": {
             "detections": [
                 {
@@ -430,17 +444,31 @@ def _apply_series_preprocessor(y_train, y_test, preprocessor: dict, spec: dict, 
     est = _selected_preprocessor(preprocessor, spec)
     if est is None:
         return y_train, y_test
-    if hasattr(est, "fit_transform"):
-        y_train_t = est.fit_transform(y_train)
-    else:
-        y_train_t = est.fit(y_train).transform(y_train)
-    y_test_t = y_test
-    if y_test is not None:
-        y_test_t = est.transform(y_test)
-    y_train_t = _coerce_series_output(y_train_t, y_train.index)
-    if y_test is not None:
-        y_test_t = _coerce_series_output(y_test_t, y_test.index)
-    log.append(f"Applied preprocessor: {preprocessor['name']}")
+    name = preprocessor.get("name", "preprocessor")
+    try:
+        if hasattr(est, "fit_transform"):
+            y_train_t = est.fit_transform(y_train)
+        else:
+            y_train_t = est.fit(y_train).transform(y_train)
+        y_test_t = y_test
+        if y_test is not None:
+            y_test_t = est.transform(y_test)
+    except Exception as exc:
+        raise PlaygroundError(
+            f"Preprocessor `{name}` cannot be applied to this univariate series: "
+            f"{type(exc).__name__}: {exc}. Pick a series-to-series transformer "
+            f"(e.g. Detrender, Deseasonalizer, BoxCox, Log, Imputer)."
+        ) from exc
+    try:
+        y_train_t = _coerce_series_output(y_train_t, y_train.index)
+        if y_test is not None:
+            y_test_t = _coerce_series_output(y_test_t, y_test.index)
+    except (ValueError, TypeError) as exc:
+        raise PlaygroundError(
+            f"Preprocessor `{name}` changed the series shape/length and cannot be used "
+            f"in this pipeline: {exc}. Choose a length-preserving transformer."
+        ) from exc
+    log.append(f"Applied preprocessor: {name}")
     return y_train_t, y_test_t
 
 
@@ -448,12 +476,27 @@ def _apply_panel_preprocessor(X_train, X_test, preprocessor: dict, spec: dict, l
     est = _selected_preprocessor(preprocessor, spec)
     if est is None:
         return X_train, X_test
-    if hasattr(est, "fit_transform"):
-        X_train_t = est.fit_transform(X_train)
-    else:
-        X_train_t = est.fit(X_train).transform(X_train)
-    X_test_t = est.transform(X_test)
-    log.append(f"Applied preprocessor: {preprocessor['name']}")
+    name = preprocessor.get("name", "preprocessor")
+    try:
+        if hasattr(est, "fit_transform"):
+            X_train_t = est.fit_transform(X_train)
+        else:
+            X_train_t = est.fit(X_train).transform(X_train)
+        X_test_t = est.transform(X_test)
+    except Exception as exc:
+        raise PlaygroundError(
+            f"Preprocessor `{name}` cannot be applied to this panel: "
+            f"{type(exc).__name__}: {exc}. Pick a panel-to-panel transformer."
+        ) from exc
+    try:
+        if len(X_train_t) != len(X_train) or len(X_test_t) != len(X_test):
+            raise PlaygroundError(
+                f"Preprocessor `{name}` changed the number of instances "
+                f"({len(X_train)} -> {len(X_train_t)}); choose an instance-preserving transformer."
+            )
+    except TypeError:
+        pass
+    log.append(f"Applied preprocessor: {name}")
     return X_train_t, X_test_t
 
 
@@ -485,6 +528,7 @@ def _run_forecasting_generic(spec: dict, dataset: dict, algorithm: dict, preproc
 
     eval_params, est_params = split_params("forecasting", spec.get("params") or {})
     horizon = max(1, int(eval_params.get("horizon") or 12))
+    context_window = max(1, int(eval_params.get("context_window") or 36))
     forecaster = _build_estimator(algorithm, est_params)
     log.append(f"Estimator: {algorithm['name']} params={est_params or 'defaults'}")
 
@@ -516,6 +560,12 @@ def _run_forecasting_generic(spec: dict, dataset: dict, algorithm: dict, preproc
             }
             for index in y.index
         ],
+        "meta": {
+            "total": int(len(y)),
+            "test_start": int(len(y_train)),
+            "context_window": int(context_window),
+            "horizon": int(horizon),
+        },
     }
     return {
         "status": "ok",
@@ -619,7 +669,8 @@ def _run_anomaly_generic(spec: dict, dataset: dict, algorithm: dict, preprocesso
     f1 = 2 * precision * recall / (precision + recall) if precision + recall else 0.0
     log.append(f"Loaded {dataset['name']} rows={len(raw)}")
 
-    stride = max(1, len(raw) // 800)
+    max_points = 30000
+    stride = max(1, len(raw) // max_points) if len(raw) > max_points else 1
     points = [
         {
             "x": i,
@@ -638,7 +689,7 @@ def _run_anomaly_generic(spec: dict, dataset: dict, algorithm: dict, preprocesso
             "Detected": int(y_pred.sum()),
             "Ground Truth": int(y_true.sum()),
         },
-        "series": {"kind": "anomaly", "points": points},
+        "series": {"kind": "anomaly", "points": points, "meta": {"total": int(len(raw)), "stride": int(stride)}},
         "tables": {
             "detections": [
                 {"iloc": int(i), "value": _clean_number(raw.iloc[i]), "ground_truth": int(y_true[i])}
@@ -894,5 +945,9 @@ def _dependency_or_trace_error(exc: Exception) -> str:
 
         match = re.search(r"No module named ['\"]([^'\"]+)['\"]", str(exc))
         package = exc.name or (match.group(1) if match else str(exc))
-        return f"Missing dependency `{package}`. Run `python3 -m pip install -e .` and optional `python3 -m pip install huggingface-hub pyarrow` for online datasets."
+        return (
+            f"Missing dependency `{package}`. Install it in the playground environment, "
+            f"e.g. `python3 -m pip install {package}` "
+            f"(or `uv pip install --python .venv/bin/python {package}`)."
+        )
     return f"{type(exc).__name__}: {exc}\n{traceback.format_exc(limit=4)}"

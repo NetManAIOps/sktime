@@ -1,6 +1,8 @@
 const state = {
   catalog: null,
   result: null,
+  view: { start: 0, length: 0 },
+  viewKey: null,
 };
 
 const el = (id) => document.getElementById(id);
@@ -26,13 +28,38 @@ function bindEvents() {
       if (id === "taskSelect" || id === "sourceSelect" || id === "algorithmSelect") {
         refreshOptions();
       }
+      if (id === "taskSelect") {
+        renderPreprocessorOptions();
+      }
       renderParams();
       renderPipeline();
     });
   });
   el("runButton").addEventListener("click", runExperiment);
+  el("detectorSubtypeSelect").addEventListener("change", () => {
+    refreshOptions();
+    renderParams();
+    renderPipeline();
+  });
   document.querySelectorAll(".tab").forEach((button) => {
     button.addEventListener("click", () => showTab(button.dataset.tab));
+  });
+  el("viewStart").addEventListener("input", () => {
+    state.view.start = Number(el("viewStart").value);
+    renderChart();
+  });
+  el("viewLength").addEventListener("input", () => {
+    const total = state.result?.series?.points?.length || 1;
+    state.view.length = Math.max(1, Math.min(Number(el("viewLength").value) || 1, total));
+    state.view.start = Math.min(state.view.start, total - state.view.length);
+    renderChart();
+  });
+  let resizeTimer;
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      if (state.result) renderChart();
+    }, 120);
   });
 }
 
@@ -67,10 +94,22 @@ function renderDependencies() {
 }
 
 function renderPreprocessorOptions() {
-  const preprocessors = (state.catalog.preprocessors || []).filter((item) => item.enabled);
+  const task = el("taskSelect")?.value;
+  const previous = el("preprocessorSelect").value;
+  const preprocessors = (state.catalog.preprocessors || []).filter((item) => {
+    if (!item.enabled) return false;
+    const compat = item.compatible_tasks;
+    if (!compat || compat.includes("all") || !task) return true;
+    return compat.includes(task);
+  });
   el("preprocessorSelect").innerHTML = preprocessors
     .map((item) => `<option value="${item.id}">${item.name}</option>`)
     .join("");
+  if ([...el("preprocessorSelect").options].some((option) => option.value === previous)) {
+    el("preprocessorSelect").value = previous;
+  } else {
+    el("preprocessorSelect").value = "none";
+  }
 }
 
 function refreshOptions() {
@@ -78,10 +117,19 @@ function refreshOptions() {
   const source = el("sourceSelect").value;
   const previousAlgorithm = el("algorithmSelect").value;
   const algorithms = state.catalog.algorithms.filter((algorithm) => algorithm.task === task);
-  const enabledAlgorithms = algorithms.filter((algorithm) => algorithm.enabled);
+  const subtypeWrap = el("subtypeWrap");
+  if (subtypeWrap) subtypeWrap.hidden = task !== "anomaly_detection";
+  let visibleAlgorithms = algorithms;
+  if (task === "anomaly_detection") {
+    const subtype = el("detectorSubtypeSelect")?.value || "all";
+    if (subtype !== "all") {
+      visibleAlgorithms = algorithms.filter((algorithm) => (algorithm.subtype || "other") === subtype);
+    }
+  }
+  const enabledAlgorithms = visibleAlgorithms.filter((algorithm) => algorithm.enabled);
   el("algorithmSelect").innerHTML = [
     ...enabledAlgorithms.map((algorithm) => `<option value="${algorithm.id}">${algorithm.name}</option>`),
-    ...algorithms
+    ...visibleAlgorithms
       .filter((algorithm) => !algorithm.enabled)
       .slice(0, 20)
       .map((algorithm) => `<option value="${algorithm.id}" disabled>${algorithm.name} - ${algorithm.disabled_reason}</option>`),
@@ -232,7 +280,7 @@ async function runExperiment() {
     params,
     preprocessor_params: preprocessorParams,
   };
-  setStatus("Running");
+  showProgress("Running");
   el("runButton").disabled = true;
   try {
     const response = await fetch("/api/run", {
@@ -254,6 +302,7 @@ async function runExperiment() {
     renderError(String(error));
     setStatus("Error");
   } finally {
+    hideProgress();
     el("runButton").disabled = false;
   }
 }
@@ -262,7 +311,9 @@ function renderResult(result) {
   el("runMeta").textContent = `${result.dataset.name} / ${result.algorithm.name} / ${result.duration_ms} ms`;
   renderMetrics(result.metrics);
   renderTable(result.tables);
-  drawChart(result.series);
+  state.view = { start: 0, length: 0 };
+  state.viewKey = null;
+  renderChart();
   renderPipeline(result);
   el("codeBlock").textContent = result.code || "";
   el("reportBlock").textContent = result.report || "";
@@ -312,42 +363,184 @@ function confusionMatrix(cm) {
   return `<h3 style="margin-top:18px">Confusion Matrix</h3><table><thead>${header}</thead><tbody>${rows}</tbody></table>`;
 }
 
-function drawChart(series) {
+function setupCanvas() {
   const canvas = el("chart");
+  const dpr = window.devicePixelRatio || 1;
+  const cssW = Math.max(320, canvas.clientWidth || canvas.parentElement?.clientWidth || 960);
+  const cssH = Math.max(220, canvas.clientHeight || 360);
+  canvas.width = Math.round(cssW * dpr);
+  canvas.height = Math.round(cssH * dpr);
   const ctx = canvas.getContext("2d");
-  const width = canvas.width;
-  const height = canvas.height;
-  ctx.clearRect(0, 0, width, height);
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  return { ctx, w: cssW, h: cssH };
+}
+
+function renderChart() {
+  const { ctx, w, h } = setupCanvas();
   ctx.fillStyle = "#fffaf5";
-  ctx.fillRect(0, 0, width, height);
+  ctx.fillRect(0, 0, w, h);
+  const result = state.result;
+  const series = result?.series;
   if (!series || !series.points || series.points.length === 0) {
     drawLabel(ctx, "Run an experiment to render a chart.", 30, 50);
+    toggleChartControls(false);
     return;
   }
   if (series.kind === "classification") {
-    drawClassification(ctx, series.points, width, height);
+    toggleChartControls(false);
+    drawConfusionHeatmap(ctx, result.tables?.confusion_matrix, w, h);
     return;
   }
-  const keys = series.kind === "forecast" ? ["actual", "prediction"] : ["value"];
+  toggleChartControls(true);
+  ensureView(series);
+  const { start, length } = state.view;
+  const slice = series.points.slice(start, start + length);
+  if (series.kind === "forecast") {
+    drawForecastWindow(ctx, slice, w, h);
+  } else {
+    drawAnomalyWindow(ctx, slice, w, h);
+  }
+  syncChartControls(series);
+}
+
+function ensureView(series) {
+  const key = state.result?.run_id;
+  if (state.viewKey === key && state.view.length > 0) return;
+  const meta = series.meta || {};
+  const total = series.points.length;
+  let start = 0;
+  let length = total;
+  if (series.kind === "forecast") {
+    const cw = Number(state.result.spec?.params?.context_window) || meta.context_window || 36;
+    const hz = meta.horizon || 1;
+    length = Math.min(total, cw + hz);
+    const testStart = meta.test_start ?? total;
+    start = Math.max(0, Math.min(testStart - cw, total - length));
+  } else {
+    length = Math.min(total, 600);
+    const firstHit = series.points.findIndex((p) => p.predicted_anomaly);
+    if (firstHit >= 0) {
+      start = Math.max(0, Math.min(firstHit - Math.floor(length / 3), total - length));
+    } else {
+      start = Math.max(0, total - length);
+    }
+  }
+  state.view = { start, length };
+  state.viewKey = key;
+}
+
+function syncChartControls(series) {
+  const total = series.points.length;
+  const startInput = el("viewStart");
+  const lenInput = el("viewLength");
+  startInput.min = 0;
+  startInput.max = Math.max(0, total - state.view.length);
+  startInput.value = state.view.start;
+  lenInput.min = 1;
+  lenInput.max = total;
+  lenInput.value = state.view.length;
+  const end = Math.min(state.view.start + state.view.length, total);
+  el("viewHint").textContent = `showing ${state.view.start}\u2013${end} of ${total}`;
+}
+
+function toggleChartControls(show) {
+  const controls = el("chartControls");
+  if (controls) controls.hidden = !show;
+}
+
+function drawForecastWindow(ctx, points, w, h) {
   const values = [];
-  series.points.forEach((point) => {
-    keys.forEach((key) => {
-      if (typeof point[key] === "number") values.push(point[key]);
-    });
+  points.forEach((p) => {
+    if (typeof p.actual === "number") values.push(p.actual);
+    if (typeof p.prediction === "number") values.push(p.prediction);
   });
   const min = Math.min(...values);
   const max = Math.max(...values);
-  const pad = 34;
-  drawAxes(ctx, width, height, pad);
-  if (series.kind === "forecast") {
-    drawLine(ctx, series.points, "actual", "#5d4037", min, max, width, height, pad);
-    drawLine(ctx, series.points, "prediction", "#ff6f00", min, max, width, height, pad);
-    drawLegend(ctx, [["actual", "#5d4037"], ["prediction", "#ff6f00"]]);
-  } else {
-    drawLine(ctx, series.points, "value", "#5d4037", min, max, width, height, pad);
-    drawAnomalies(ctx, series.points, min, max, width, height, pad);
-    drawLegend(ctx, [["signal", "#5d4037"], ["predicted anomaly", "#ff6f00"], ["ground truth", "#2e7d32"]]);
+  const pad = 38;
+  const firstTest = points.findIndex((p) => p.split === "test");
+  if (firstTest >= 0) {
+    const x0 = pad + (firstTest / Math.max(points.length - 1, 1)) * (w - pad * 2);
+    ctx.fillStyle = "rgba(255, 111, 0, 0.07)";
+    ctx.fillRect(x0, pad, w - pad - x0, h - pad * 2);
   }
+  drawAxes(ctx, w, h, pad);
+  drawLine(ctx, points, "actual", "#5d4037", min, max, w, h, pad);
+  drawLine(ctx, points, "prediction", "#ff6f00", min, max, w, h, pad);
+  drawLegend(ctx, [["actual", "#5d4037"], ["prediction", "#ff6f00"], ["test region", "rgba(255,111,0,0.35)"]]);
+}
+
+function drawAnomalyWindow(ctx, points, w, h) {
+  const values = points.map((p) => p.value).filter((v) => typeof v === "number");
+  const min = Math.min(...values);
+  const max = Math.max(...values);
+  const pad = 38;
+  drawAxes(ctx, w, h, pad);
+  drawLine(ctx, points, "value", "#5d4037", min, max, w, h, pad);
+  drawAnomalies(ctx, points, min, max, w, h, pad);
+  drawLegend(ctx, [["signal", "#5d4037"], ["predicted anomaly", "#ff6f00"], ["ground truth", "#2e7d32"]]);
+}
+
+function drawConfusionHeatmap(ctx, cm, w, h) {
+  if (!cm || !cm.labels || cm.labels.length === 0) {
+    drawLabel(ctx, "No confusion matrix available.", 30, 50);
+    return;
+  }
+  const { labels, matrix } = cm;
+  const n = labels.length;
+  let maxCount = 1;
+  matrix.forEach((row) => row.forEach((v) => { if (v > maxCount) maxCount = v; }));
+  const leftPad = 72;
+  const topPad = 40;
+  const bottomPad = 66;
+  const rightPad = 20;
+  const cellW = (w - leftPad - rightPad) / n;
+  const cellH = (h - topPad - bottomPad) / n;
+  const showCounts = n <= 12;
+  for (let i = 0; i < n; i++) {
+    for (let j = 0; j < n; j++) {
+      const v = matrix[i][j];
+      const t = v / maxCount;
+      const x = leftPad + j * cellW;
+      const y = topPad + i * cellH;
+      if (i === j) {
+        const g = Math.round(232 - t * 120);
+        ctx.fillStyle = `rgb(${g}, 245, ${g})`;
+      } else if (v > 0) {
+        ctx.fillStyle = `rgb(255, ${Math.round(205 - t * 130)}, ${Math.round(175 - t * 120)})`;
+      } else {
+        ctx.fillStyle = "#fff7ef";
+      }
+      ctx.fillRect(x, y, cellW - 1, cellH - 1);
+      if (showCounts) {
+        ctx.fillStyle = t > 0.55 ? "#ffffff" : "#5d4037";
+        ctx.font = `${Math.max(10, Math.min(14, cellW / 3))}px system-ui`;
+        ctx.textAlign = "center";
+        ctx.fillText(String(v), x + cellW / 2, y + cellH / 2 + 4);
+        ctx.textAlign = "left";
+      }
+    }
+  }
+  ctx.fillStyle = "#5d4037";
+  ctx.font = "11px system-ui";
+  labels.forEach((label, i) => {
+    ctx.save();
+    ctx.translate(leftPad - 8, topPad + i * cellH + cellH / 2 + 4);
+    ctx.textAlign = "right";
+    ctx.fillText(truncateLabel(String(label), 10), 0, 0);
+    ctx.restore();
+    ctx.save();
+    ctx.translate(leftPad + i * cellW + cellW / 2, h - bottomPad + 16);
+    ctx.rotate(-Math.PI / 6);
+    ctx.textAlign = "right";
+    ctx.fillText(truncateLabel(String(label), 10), 0, 0);
+    ctx.restore();
+  });
+  ctx.textAlign = "left";
+  drawLabel(ctx, "rows = actual \u00b7 cols = predicted \u00b7 darker = more \u00b7 green diagonal = correct", leftPad, 24);
+}
+
+function truncateLabel(text, max) {
+  return text.length > max ? `${text.slice(0, max - 1)}\u2026` : text;
 }
 
 function drawLine(ctx, points, key, color, min, max, width, height, pad) {
@@ -431,7 +624,8 @@ function scale(value, min, max, height, pad) {
 }
 
 function renderEmptyState() {
-  drawChart(null);
+  state.result = null;
+  renderChart();
   el("metrics").innerHTML = "";
   el("tableWrap").innerHTML = "<p>Select a task, dataset, and algorithm, then run an experiment.</p>";
   el("codeBlock").textContent = "Generated reproduction code appears after a successful run.";
@@ -467,6 +661,17 @@ function currentPreprocessor() {
 
 function setStatus(text) {
   el("statusPill").textContent = text;
+}
+
+function showProgress(text) {
+  const bar = el("progressBar");
+  if (bar) bar.hidden = false;
+  if (text) setStatus(text);
+}
+
+function hideProgress() {
+  const bar = el("progressBar");
+  if (bar) bar.hidden = true;
 }
 
 function formatValue(value) {

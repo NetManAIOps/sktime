@@ -16,7 +16,7 @@ STATIC_ROOT = HERE / "static"
 if str(HERE) not in sys.path:
     sys.path.insert(0, str(HERE))
 
-from catalog import REPO_ROOT, build_catalog
+from catalog import REPO_ROOT, build_catalog, write_snapshot
 from runners import PlaygroundError, get_run, run_experiment
 
 if str(REPO_ROOT) not in sys.path:
@@ -125,6 +125,20 @@ def main():
 
     httpd = ThreadingHTTPServer((args.host, args.port), PlaygroundHandler)
     url = f"http://{args.host}:{args.port}"
+
+    import threading
+
+    def _refresh_snapshot():
+        try:
+            snapshot = write_snapshot()
+            sys.stderr.write(f"Catalog snapshot refreshed: {snapshot}\n")
+        except Exception as exc:
+            sys.stderr.write(
+                f"Catalog snapshot skipped: {type(exc).__name__}: {exc}\n"
+            )
+
+    threading.Thread(target=_refresh_snapshot, daemon=True).start()
+
     print(f"TSBox Sandbox Playground running at {url}")
     print("Press Ctrl+C to stop.")
     try:

@@ -4,9 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Time Series Sandbox Playground</title>
-  <link rel="stylesheet" href="/styles.css?v=20260707">
+  <link rel="stylesheet" href="/styles.css?v=20260713">
 </head>
 <body>
+  <div id="progressBar" class="progress-bar" hidden><div class="progress-bar-inner"></div></div>
   <main class="shell">
     <aside class="panel controls">
       <div>
@@ -33,6 +34,16 @@
 
       <label>Preprocessor
         <select id="preprocessorSelect"></select>
+      </label>
+
+      <label id="subtypeWrap" hidden>Detector type
+        <select id="detectorSubtypeSelect">
+          <option value="all">All types</option>
+          <option value="point_anomaly">Point anomaly</option>
+          <option value="collective_anomaly">Collective anomaly</option>
+          <option value="change_point">Change point</option>
+          <option value="segmentation">Segmentation</option>
+        </select>
       </label>
 
       <label>Algorithm
@@ -69,6 +80,11 @@
           <div id="runMeta"></div>
         </div>
         <canvas id="chart" width="960" height="360"></canvas>
+        <div class="chart-controls" id="chartControls" hidden>
+          <input id="viewStart" class="view-range" type="range" min="0" max="0" value="0" aria-label="Window start">
+          <label class="win-label">window <input id="viewLength" type="number" min="1" step="1" value="0"></label>
+          <span class="view-hint" id="viewHint"></span>
+        </div>
       </section>
 
       <section class="metrics" id="metrics"></section>
@@ -96,7 +112,7 @@
       </div>
     </aside>
   </main>
-  <script src="/app.js?v=20260707"></script>
+  <script src="/app.js?v=20260713"></script>
 </body>
 </html>
 

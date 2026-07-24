@@ -147,6 +147,31 @@ python3 playground/test_playground.py # unittest suite
 
 Open `http://127.0.0.1:8765`.
 
+### Catalog snapshot (for coding agents)
+
+A read-only JSON mirror of `/api/catalog` is kept at:
+
+- `.agent/skills/time-series-sandbox/catalog_snapshot.json`
+
+Prefer reading this file over the static lists in this document when you need the
+current, dynamic set of tasks / algorithms / preprocessors / datasets — every
+estimator discovered by `discover_registered_algorithms()` and
+`discover_registered_preprocessors()` appears under `algorithms` /
+`preprocessors`, including ones not named here. It also carries `metrics`,
+`compatibility`, `dependencies`, and `hf` metadata, plus a `_meta.generated_at`
+timestamp.
+
+Refresh it whenever the registry, dependencies, or datasets may have changed:
+
+```bash
+python3 playground/catalog.py          # writes the snapshot, no server needed
+```
+
+`playground/server.py` also refreshes it in a background thread on every
+startup, so launching the Playground keeps it current. It is still a static
+snapshot: if it looks stale (check `_meta.generated_at`) or a Hugging Face /
+registry entry looks wrong, rerun the command above rather than trusting it.
+
 ### Layout
 
 - `playground/server.py`: stdlib `ThreadingHTTPServer`. Endpoints: `/`,

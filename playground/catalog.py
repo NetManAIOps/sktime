@@ -2,9 +2,11 @@
 
 from __future__ import annotations
 
+import datetime
 import importlib
 import importlib.util
 import json
+import math
 import numbers
 import urllib.request
 import warnings
@@ -25,7 +27,7 @@ REPO_ROOT = _repo_root()
 # configure the experiment (holdout size, anomaly threshold/window). Anything
 # not listed here is forwarded to the selected estimator's constructor.
 EVAL_PARAMS = {
-    "forecasting": {"horizon"},
+    "forecasting": {"horizon", "context_window"},
     "classification": set(),
     "anomaly_detection": {"threshold", "window"},
 }
@@ -146,7 +148,7 @@ ENABLED_ALGORITHMS = [
         "module": "sktime.forecasting.naive.NaiveForecaster",
         "enabled": True,
         "template": "NaiveForecaster(strategy='last', sp=seasonal_period)",
-        "params": {"horizon": 12, "seasonal_period": 12},
+        "params": {"horizon": 12, "seasonal_period": 12, "context_window": 36},
     },
     {
         "id": "summary-random-forest",
@@ -163,6 +165,7 @@ ENABLED_ALGORITHMS = [
         "task": "anomaly_detection",
         "module": "sktime.detection.naive.ThresholdDetector",
         "enabled": True,
+        "subtype": "point_anomaly",
         "template": "ThresholdDetector(upper=threshold, lower=-threshold, mode='points')",
         "params": {"threshold": 2.0, "window": 24},
     },
@@ -312,6 +315,91 @@ def _install_hint(package: str) -> str:
     return "python3 -m pip install -e ."
 
 
+_DEP_IMPORT_ALIASES = {
+    "scikit-learn": "sklearn",
+    "scikit-base": "skbase",
+    "scikit-optimize": "skopt",
+    "scikit-posthocs": "scikit_posthocs",
+    "hydra-core": "hydra",
+    "pytorch-forecasting": "pytorch_forecasting",
+    "dtw-python": "dtw",
+    "pyyaml": "yaml",
+    "python-dateutil": "dateutil",
+}
+
+
+def _dep_distribution_name(spec: str) -> str:
+    import re
+
+    return re.split(r"[>=<!~;\[\s]", spec.strip(), 1)[0].strip()
+
+
+def _dep_marker_applies(spec: str) -> bool:
+    if ";" not in spec:
+        return True
+    try:
+        from packaging.markers import Marker
+
+        return Marker(spec.split(";", 1)[1].strip()).evaluate()
+    except Exception:
+        return True
+
+
+def _missing_python_dependency(deps) -> str | None:
+    """Return the first declared dependency that is not importable, or None."""
+    if not deps:
+        return None
+    if isinstance(deps, str):
+        deps = [deps]
+    import importlib.util
+
+    for spec in deps:
+        if isinstance(spec, (list, tuple)):
+            candidates = [s for s in spec if isinstance(s, str) and _dep_marker_applies(s)]
+            if candidates and not any(
+                importlib.util.find_spec(
+                    _DEP_IMPORT_ALIASES.get(_dep_distribution_name(s), _dep_distribution_name(s).replace("-", "_"))
+                )
+                for s in candidates
+            ):
+                return _dep_distribution_name(candidates[0])
+            continue
+        if not isinstance(spec, str) or not _dep_marker_applies(spec):
+            continue
+        name = _dep_distribution_name(spec)
+        module = _DEP_IMPORT_ALIASES.get(name, name.replace("-", "_"))
+        if importlib.util.find_spec(module) is None:
+            return name
+    return None
+
+
+def _detector_subtype(name: str, module: str) -> str:
+    """Classify a detector into a user-facing subtype for the anomaly task."""
+    text = f"{name} {module}".lower()
+    if any(k in text for k in ("capa", "mvcapa")):
+        return "collective_anomaly"
+    if any(
+        k in text
+        for k in (
+            "threshold", "outlier", "anomal", "stray", "lof", "iforest",
+            "isolation", "pyod", "knn", "mcd", "cblof", "cof", "abod", "sod",
+            "subsequence", "matrixprofile", "stumpy", "sigma",
+        )
+    ):
+        return "point_anomaly"
+    if any(
+        k in text
+        for k in (
+            "changepoint", "change_point", "binseg", "pelt", "clasp",
+            "mle_binseg", "optimal_partition", "moving_window", "seeded",
+        )
+    ):
+        return "change_point"
+    if any(k in text for k in ("segment", "ggs", "hmm", "fluss", "clust", "wclust")):
+        return "segmentation"
+    return "other"
+
+
 def discover_registered_algorithms() -> list[dict]:
     """Discover sktime estimators and enable the default-constructible ones.
 
@@ -365,30 +453,107 @@ def discover_registered_algorithms() -> list[dict]:
                 continue
             deps = row[2] if len(row) > 2 else None
             module_path = f"{klass.__module__}.{klass.__name__}"
-            params, _err = _try_construct(klass)
+            params, err = _try_construct(klass)
+            base = {
+                "id": f"registered-{task}-{name}",
+                "name": name,
+                "task": task,
+                "module": module_path,
+                "class_name": klass.__name__,
+                "curated": False,
+                "python_dependencies": deps,
+            }
+            if task == "anomaly_detection":
+                base["subtype"] = _detector_subtype(name, module_path)
+            if err is not None:
+                base.update(enabled=False, disabled_reason=err, params={})
+                discovered.append(base)
+                continue
+            missing = _missing_python_dependency(deps)
+            if missing is not None:
+                base.update(
+                    enabled=False,
+                    disabled_reason=f"Missing dependency `{missing}`",
+                    params={},
+                )
+                discovered.append(base)
+                continue
             params = params or {}
             if task == "forecasting":
-                params = {"horizon": 12, **params}
-            discovered.append(
-                {
-                    "id": f"registered-{task}-{name}",
-                    "name": name,
-                    "task": task,
-                    "module": module_path,
-                    "class_name": klass.__name__,
-                    "curated": False,
-                    "python_dependencies": deps,
-                    "enabled": True,
-                    "params": params,
-                }
-            )
+                params = {"horizon": 12, "context_window": 36, **params}
+            base.update(enabled=True, params=params)
+            discovered.append(base)
 
     _DISCOVERED_CACHE = discovered
     return discovered
 
 
+def _tiny_series_fixtures():
+    import numpy as np
+    import pandas as pd
+
+    # Strictly positive so positivity-requiring transformers (BoxCox/Log/Sqrt)
+    # are not falsely rejected during the compatibility probe.
+    values = np.arange(1, 61, dtype=float)
+    return [
+        pd.Series(values),
+        pd.Series(values, index=pd.date_range("2000-01-01", periods=60, freq="D")),
+    ]
+
+
+def _tiny_panel_fixture():
+    import numpy as np
+    import pandas as pd
+
+    return pd.DataFrame({"dim_0": [pd.Series(np.arange(30.0) + i) for i in range(8)]})
+
+
+def _is_same_length_series(value, n):
+    import pandas as pd
+
+    if isinstance(value, pd.Series):
+        return len(value) == n
+    if isinstance(value, pd.DataFrame):
+        return value.shape[1] == 1 and len(value) == n
+    return False
+
+
+def _probe_series_preprocessor(klass) -> bool:
+    for fixture in _tiny_series_fixtures():
+        try:
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore")
+                transformed = klass().fit_transform(fixture)
+        except Exception:
+            continue
+        if _is_same_length_series(transformed, len(fixture)):
+            return True
+    return False
+
+
+def _probe_panel_preprocessor(klass) -> bool:
+    fixture = _tiny_panel_fixture()
+    try:
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            transformed = klass().fit_transform(fixture)
+    except Exception:
+        return False
+    try:
+        return len(transformed) == len(fixture)
+    except Exception:
+        return False
+
+
 def discover_registered_preprocessors() -> list[dict]:
-    """Discover default-constructible sktime transformers as preprocessors."""
+    """Discover default-constructible sktime transformers as preprocessors.
+
+    A transformer is only offered for the tasks whose data it can round-trip
+    without changing shape: same-length single-series output for
+    forecasting/anomaly_detection, and the same number of instances for
+    classification. Transformers that need ``y``, change length/columns, or
+    rely on pairwise/feature extraction are filtered out per task.
+    """
     global _PREPROCESSOR_CACHE
     if _PREPROCESSOR_CACHE is not None:
         return _PREPROCESSOR_CACHE
@@ -402,6 +567,7 @@ def discover_registered_preprocessors() -> list[dict]:
                 "name": "sktime transformer registry unavailable",
                 "task": "all",
                 "enabled": False,
+                "compatible_tasks": [],
                 "disabled_reason": f"{type(exc).__name__}: {exc}",
             }
         ]
@@ -417,6 +583,7 @@ def discover_registered_preprocessors() -> list[dict]:
                 "name": "transformer registry error",
                 "task": "all",
                 "enabled": False,
+                "compatible_tasks": [],
                 "disabled_reason": f"{type(exc).__name__}: {exc}",
             }
         ]
@@ -427,6 +594,20 @@ def discover_registered_preprocessors() -> list[dict]:
         deps = row[2] if len(row) > 2 else None
         module_path = f"{klass.__module__}.{klass.__name__}"
         params, _err = _try_construct(klass)
+        if params is None and _err is not None:
+            try:
+                with warnings.catch_warnings():
+                    warnings.simplefilter("ignore")
+                    klass()
+            except Exception:
+                continue
+        compatible_tasks: list[str] = []
+        if _probe_series_preprocessor(klass):
+            compatible_tasks.extend(["forecasting", "anomaly_detection"])
+        if _probe_panel_preprocessor(klass):
+            compatible_tasks.append("classification")
+        if not compatible_tasks:
+            continue
         discovered.append(
             {
                 "id": f"registered-preprocessor-{name}",
@@ -437,6 +618,7 @@ def discover_registered_preprocessors() -> list[dict]:
                 "curated": False,
                 "python_dependencies": deps,
                 "enabled": True,
+                "compatible_tasks": compatible_tasks,
                 "params": params or {},
             }
         )
@@ -536,4 +718,54 @@ def get_enabled_preprocessor(preprocessor_id: str | None) -> dict | None:
 
 def get_dataset(dataset_id: str) -> dict | None:
     return next((item for item in all_datasets() if item["id"] == dataset_id), None)
+
+
+def _sanitize_for_json(obj):
+    """Replace non-finite floats with None so the snapshot stays valid JSON."""
+    if isinstance(obj, float):
+        return obj if math.isfinite(obj) else None
+    if isinstance(obj, dict):
+        return {k: _sanitize_for_json(v) for k, v in obj.items()}
+    if isinstance(obj, (list, tuple)):
+        return [_sanitize_for_json(v) for v in obj]
+    return obj
+
+
+# Static, read-only mirror of `/api/catalog` for tools that should not start
+# the HTTP server (coding agents, CI, docs). Kept next to the sandbox skill so
+# it is easy to discover.
+SNAPSHOT_PATH = (
+    REPO_ROOT / ".agent" / "skills" / "time-series-sandbox" / "catalog_snapshot.json"
+)
+
+
+def write_snapshot(path: Path | None = None) -> Path:
+    """Build the catalog and write it as a JSON snapshot.
+
+    Best-effort view: network-backed entries (Hugging Face configs) fall back to
+    defaults when offline, and the sktime registry degrades gracefully when soft
+    dependencies are missing. Returns the path written.
+    """
+    target = Path(path) if path is not None else SNAPSHOT_PATH
+    catalog = build_catalog(include_registered=True)
+    payload = {
+        "_meta": {
+            "generated_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+            "source": "playground.catalog.build_catalog",
+            "refresh": "python playground/catalog.py (also refreshed on playground/server.py startup)",
+            "note": "Static snapshot; may lag behind a running server. Regenerate to refresh.",
+        },
+        **catalog,
+    }
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(
+        json.dumps(_sanitize_for_json(payload), indent=2, ensure_ascii=False),
+        encoding="utf-8",
+    )
+    return target
+
+
+if __name__ == "__main__":
+    out = write_snapshot()
+    print(f"Wrote catalog snapshot to {out}")
 
