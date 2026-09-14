@@ -193,13 +193,15 @@ registry entry looks wrong, rerun the command above rather than trusting it.
 ### Dynamic algorithm registration
 
 The Playground is fully dynamic. `catalog.discover_registered_algorithms()`
-walks `sktime.registry.all_estimators()` for `forecaster`, `classifier`, and
-`detector`, and exposes EVERY discovered estimator as enabled, plus its numeric
-scalar hyperparameters from `get_params()`. There is no environment gating and
-no disabled list: whatever sktime has registered shows up and is runnable.
+walks `sktime.registry.all_estimators()` for `forecaster`, `classifier`,
+`regressor`, `clusterer`, and `detector`, and exposes EVERY discovered
+estimator as enabled, plus its numeric scalar hyperparameters from
+`get_params()`. There is no environment gating and no disabled list: whatever
+sktime has registered shows up and is runnable.
 
-- Three curated defaults (`NaiveForecaster`, `SummaryClassifier`,
-  `ThresholdDetector`) keep their hand-tuned runners and are listed first.
+- Five curated defaults (`NaiveForecaster`, `SummaryClassifier`,
+  `SklearnRegressorPipeline`, `TimeSeriesKMeans`, `ThresholdDetector`) keep
+  their hand-tuned runners and are listed first.
 - Every other discovered estimator goes through a generic per-task runner
   (`_run_<task>_generic`) and a generic export-script generator.
 - Evaluation parameters (`horizon`; `threshold`/`window` for the curated
@@ -217,6 +219,75 @@ python3 -m pip install statsmodels pmdarima numba pyod skchange stumpy tsfresh a
 still cannot run (missing dependency, mandatory constructor argument, or very
 slow) fail gracefully as a `blocked` result with a clear reason, never a server
 crash.
+
+### TSLib deep-learning forecasters
+
+Six THUML Time-Series-Library models are vendored under `sktime/libs/tslib/`
+(MIT, commit `4e938a1`; see `sktime/libs/tslib/README.md` for provenance and
+local import fixes) and adapted as sktime forecasters in
+`sktime/forecasting/tslib.py`:
+
+- `TimesNetForecaster`, `ITransformerForecaster`, `DLinearForecaster`,
+  `AutoformerForecaster`, `FEDformerForecaster`, `FreTSForecaster`
+
+They subclass `BaseDeepNetworkPyTorch` (soft dependency `torch`, CPU build in
+`playground/requirements.txt`), are default-constructible, and therefore show
+up in the Playground/labts catalog automatically as
+`registered-forecasting-<ClassName>` with their numeric hyperparameters
+(`seq_len`, `d_model`, `e_layers`, `num_epochs`, ...) exposed. Without torch
+they appear as disabled with a "Missing dependency" reason — nothing breaks.
+
+Adapter notes:
+
+- `fit` works with or without `fh`; the network's `pred_len` defaults to the
+  constructor `pred_len` (12) and is enlarged to the max `fh` seen in fit.
+  `predict` raises for fh beyond `pred_len`.
+- Input series are z-scored in fit and un-scored in predict; datetime indexes
+  get TSLib time features, non-datetime indexes pass `x_mark=None`.
+- Vendored layer files not needed by these six models were dropped so the
+  package imports cleanly without einops/mamba_ssm/pywt/reformer_pytorch.
+
+### PyOD point-anomaly detectors
+
+Nine pyod models are wrapped in `sktime/detection/adapters/pyod.py` as
+default-constructible detectors, so registry discovery (and hence the
+Playground/labts catalog) picks them up as
+`registered-anomaly_detection-<ClassName>`:
+
+- `PyODECODDetector`, `PyODCOPODDetector` (parameter-free), `PyODLOFDetector`,
+  `PyODIForestDetector`, `PyODKNNDetector`, `PyODHBOSDetector`,
+  `PyODCBLOFDetector`, `PyODMCDDetector`, `PyODOCSVMDetector`
+
+All expose `contamination` (default 0.1) plus their model-specific numeric
+hyperparameters, and are classified as `point_anomaly` in the catalog.
+`pyod` is pinned in `playground/requirements.txt`.
+
+Important: the wrappers override `_predict` via `_PyODPointsMixin` to return
+anomaly **positions** (ilocs). Upstream `PyODDetector._predict` returns the
+anomalous points' label *values* instead, which collapses every detection
+onto iloc 1 in the playground's sparse-ilocs pipeline — do not remove the
+mixin.
+
+### Experiment plugins (`playground/experiments/`) + `labts fork`
+
+For autoresearch coding agents: algorithms can live as **single-file plugins**
+in `playground/experiments/*.py` instead of inside the `sktime` package. See
+`playground/experiments/__init__.py` for the contract (top-level `TASK`,
+`Algorithm` class, optional `NAME`/`PARAMS`/`FORKED_FROM`; minimal
+fit/predict signatures per task; sktime estimators are also valid plugins).
+
+- Discovery: `playground/user_algos.discover_user_algorithms()` merges plugins
+  into the catalog as `user-<filename>` (re-scanned on every catalog call, so
+  edits show up immediately). A broken plugin only disables itself with a
+  `disabled_reason` — it never crashes catalog discovery.
+- `labts.py fork <algorithm_id> [--name X]` writes a subclass scaffold of any
+  enabled catalog algorithm into `experiments/`; `labts.py check <file>`
+  validates the contract and runs a tiny smoke experiment.
+- Plugin `PARAMS` are the declared defaults: the runners apply them under the
+  run's params (excluding per-task eval params), and the UI renders them as
+  knobs like any other algorithm.
+- forecasting plugins may use the simple contract `fit(y)` + `predict(steps)`;
+  classes with `get_params` are driven through the sktime contract instead.
 
 ### Gotchas (verified; keep these intact)
 
@@ -244,9 +315,10 @@ python3 playground/test_playground.py # run unit tests
 ```
 
 Capture the initial state plus one run of each task (forecasting,
-classification, anomaly_detection) and read the screenshots back to spot visual
-or functional regressions. The front end renders the dynamic algorithm dropdown
-and per-estimator parameters automatically, so newly registered estimators
+classification, regression, clustering, anomaly_detection) and read the
+screenshots back to spot visual or functional regressions. The front end
+renders the dynamic algorithm dropdown and per-estimator parameters
+automatically, so newly registered estimators
 appear without any front-end changes.
 
 ## Causal Discovery

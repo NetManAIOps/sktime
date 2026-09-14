@@ -1,6 +1,6 @@
 ---
 name: labts-api
-description: LabTS API — CLI version of the TSBox Sandbox Playground (NetManAIOps/sktime Time Series Sandbox) for autoresearch harnesses and automated pipelines. Use when an external harness/agent needs to discover available tasks/algorithms/datasets, run time-series experiments (forecasting, classification, anomaly detection), or export reproduction scripts and reports programmatically — one CLI command per call, stable JSON envelope, no HTTP server.
+description: LabTS API — CLI version of the TSBox Sandbox Playground (NetManAIOps/sktime Time Series Sandbox) for autoresearch harnesses and automated pipelines. Use when an external harness/agent needs to discover available tasks/algorithms/datasets, run time-series experiments (forecasting, classification, regression, clustering, anomaly detection), or export reproduction scripts and reports programmatically — one CLI command per call, stable JSON envelope, no HTTP server.
 ---
 
 # LabTS API — Playground CLI
@@ -12,9 +12,19 @@ catalog/runner code with identical results:
 | Playground web endpoint     | CLI command                                                   |
 |-----------------------------|---------------------------------------------------------------|
 | `GET /api/catalog`          | `labts.py catalog [--compact]`                                |
+| (discovery shortcut)        | `labts.py ls tasks\|algorithms\|datasets\|preprocessors\|metrics [--task X] [--all]` |
 | `POST /api/run`             | `labts.py run --spec '<json>' [--compact] [--out run.json]`   |
+|                             | `labts.py run --task forecasting --dataset airline --algorithm naive-seasonal-last --param horizon=6` |
 | `GET /api/export/script`    | `labts.py script (--spec '<json>' \| --from run.json)`        |
 | `GET /api/export/report`    | `labts.py report (--spec '<json>' \| --from run.json)`        |
+| (fork algorithm)            | `labts.py fork <algorithm_id> [--name X]`                     |
+| (validate plugin)           | `labts.py check <plugin.py>`                                  |
+
+`fork` materializes any enabled catalog algorithm as an editable single-file
+plugin in `playground/experiments/` (subclass scaffold with provenance
+metadata); the plugin is immediately discoverable as `user-<name>`. `check`
+validates the plugin contract and runs a tiny smoke experiment. See
+`playground/experiments/__init__.py` for the plugin contract.
 
 One process per call, no HTTP server, `run_id` session state not needed.
 Run from the repository root with the repo venv:
@@ -62,6 +72,7 @@ Full form (default) keys: `tasks`, `algorithms`, `preprocessors`, `datasets`,
 `metrics`, `compatibility`, `dependencies`, `hf`, `meta` (~1.2 MB).
 
 `--compact` (~60 KB, preferred for LLM harnesses): enabled entries only, drops
+
 `compatibility` (derivable as `algorithm.task == dataset.task`), `dependencies`,
 `hf`; trims algorithms to `id/name/task/subtype/params`.
 
@@ -83,11 +94,22 @@ Static mirror for browsing without paying discovery cost:
 `.agent/skills/time-series-sandbox/catalog_snapshot.json`
 (refresh: `python playground/catalog.py`).
 
-## `run --spec`
+## `ls` — quick discovery
+
+`labts.py ls <section>` prints one catalog section as
+`{"section", "count", "rows"}` inside the usual catalog envelope — cheaper to
+eyeball than the full catalog:
+
+- sections: `tasks`, `algorithms`, `datasets`, `preprocessors`, `metrics`
+- `--task X`: keep entries usable for task X (matches `task` or
+  `compatible_tasks`)
+- `--all`: include disabled algorithms/preprocessors (default: enabled only)
+
+## `run --spec` / `run --flags`
 
 ```json
 {
-  "task": "forecasting | classification | anomaly_detection",
+  "task": "forecasting | classification | regression | clustering | anomaly_detection",
   "dataset_id": "airline",
   "algorithm_id": "naive-seasonal-last",
   "preprocessor_id": "none",
@@ -96,10 +118,18 @@ Static mirror for browsing without paying discovery cost:
 }
 ```
 
-All fields optional — omitting everything runs the per-task default combination
-from `meta.defaults`. `task`, `algorithm_id`, and `dataset_id` must agree on
-the same task, else `blocked`. `--spec` also accepts `@path/to/spec.json` or
-`-` (stdin).
+`--spec` accepts a JSON string, `@path/to/spec.json`, or `-` (stdin).
+Equivalent flag form (no JSON needed):
+
+```bash
+labts.py run --task forecasting --dataset airline --algorithm naive-seasonal-last \
+    --param horizon=6 --param seasonal_period=12 [--pre-param key=value]
+```
+
+Both forms accept every field — all optional; omitting everything runs the
+per-task default combination from `meta.defaults`. `task`, `algorithm_id`,
+and `dataset_id` must agree on the same task, else `blocked`. `--param` /
+`--pre-param` are repeatable `key=value` flags; numeric values are coerced.
 
 Result `data` (full): `status`, `run_id`, `spec` (normalized), `task`,
 `dataset`, `algorithm`, `preprocessor`, `duration_ms`, `log`, `metrics`,
@@ -112,8 +142,9 @@ reproduction script), `report` (Markdown).
   later `script --from` / `report --from`.
 
 Metrics by task: forecasting → `MAE`/`MSE`/`MAPE`; classification →
-`Accuracy`/`Macro F1`; anomaly_detection → `Precision`/`Recall`/`F1`/
-`Detected`/`Ground Truth`.
+`Accuracy`/`Macro F1`; regression → `MAE`/`RMSE`/`R²`; clustering →
+`ARI`/`NMI`/`Clusters`/`Largest Cluster`; anomaly_detection →
+`Precision`/`Recall`/`F1`/`Detected`/`Ground Truth`.
 
 ## `script` / `report`
 

@@ -5,6 +5,7 @@ from __future__ import annotations
 import io
 import json
 import math
+import numpy as np
 import textwrap
 import time
 import traceback
@@ -64,6 +65,18 @@ def run_experiment(spec: dict) -> dict:
                     if curated
                     else _run_classification_generic(spec, dataset, algorithm, preprocessor, log)
                 )
+            elif spec["task"] == "regression":
+                result = (
+                    _run_regression(spec, dataset, preprocessor, log)
+                    if curated
+                    else _run_regression_generic(spec, dataset, algorithm, preprocessor, log)
+                )
+            elif spec["task"] == "clustering":
+                result = (
+                    _run_clustering(spec, dataset, preprocessor, log)
+                    if curated
+                    else _run_clustering_generic(spec, dataset, algorithm, preprocessor, log)
+                )
             elif spec["task"] == "anomaly_detection":
                 result = (
                     _run_anomaly(spec, dataset, preprocessor, log)
@@ -105,6 +118,8 @@ def _normalize_spec(spec: dict) -> dict:
     defaults = {
         "forecasting": ("airline", "naive-seasonal-last"),
         "classification": ("unit-test", "summary-random-forest"),
+        "regression": ("covid-3month", "summary-random-forest-regressor"),
+        "clustering": ("unit-test-cl", "ts-kmeans"),
         "anomaly_detection": ("yahoo", "threshold-detector"),
     }
     dataset_id, algorithm_id = defaults.get(task, defaults["forecasting"])
@@ -223,7 +238,7 @@ def _run_classification(spec: dict, dataset: dict, preprocessor: dict, log: list
 
     params = {"n_estimators": 25, "random_state": 7}
     params.update(spec.get("params") or {})
-    X_train, y_train, X_test, y_test = _load_classification_xy(dataset, log)
+    X_train, y_train, X_test, y_test = _load_panel_xy(dataset, log)
     X_train, X_test = _apply_panel_preprocessor(X_train, X_test, preprocessor, spec, log)
 
     estimator = RandomForestClassifier(
@@ -269,6 +284,131 @@ def _run_classification(spec: dict, dataset: dict, preprocessor: dict, log: list
         },
         "summary": f"Classified {len(y_test)} held-out time series.",
     }
+
+
+def _regression_result(y_test, y_pred, summary: str) -> dict:
+    import numpy as np
+    from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+
+    y_true = np.asarray(y_test, dtype=float)
+    y_hat = np.asarray(y_pred, dtype=float)
+    mae = float(mean_absolute_error(y_true, y_hat))
+    rmse = float(mean_squared_error(y_true, y_hat) ** 0.5)
+    r2 = float(r2_score(y_true, y_hat)) if len(y_true) > 1 else 0.0
+    residual = y_true - y_hat
+
+    return {
+        "status": "ok",
+        "metrics": {"MAE": mae, "RMSE": rmse, "R²": r2},
+        "series": {
+            "kind": "regression",
+            "points": [
+                {"x": i, "actual": _clean_number(a), "prediction": _clean_number(p)}
+                for i, (a, p) in enumerate(zip(y_true, y_hat))
+            ],
+        },
+        "tables": {
+            "predictions": [
+                {
+                    "row": i,
+                    "actual": _clean_number(a),
+                    "prediction": _clean_number(p),
+                    "residual": _clean_number(r),
+                }
+                for i, (a, p, r) in enumerate(zip(y_true[:30], y_hat[:30], residual[:30]))
+            ],
+        },
+        "summary": summary,
+    }
+
+
+def _run_regression(spec: dict, dataset: dict, preprocessor: dict, log: list[str]) -> dict:
+    from sklearn.ensemble import RandomForestRegressor
+    from sktime.regression.compose import SklearnRegressorPipeline
+    from sktime.transformations.series.summarize import SummaryTransformer
+
+    params = {"n_estimators": 25, "random_state": 7}
+    params.update(spec.get("params") or {})
+    X_train, y_train, X_test, y_test = _load_panel_xy(dataset, log)
+    X_train, X_test = _apply_panel_preprocessor(X_train, X_test, preprocessor, spec, log)
+
+    regressor = SklearnRegressorPipeline(
+        regressor=RandomForestRegressor(
+            n_estimators=int(params["n_estimators"]),
+            random_state=int(params["random_state"]),
+        ),
+        transformers=[SummaryTransformer()],
+    )
+    regressor.fit(X_train, y_train)
+    y_pred = regressor.predict(X_test)
+
+    return _regression_result(
+        y_test,
+        y_pred,
+        f"Regressed {len(y_test)} held-out time series targets with summary features + random forest.",
+    )
+
+
+def _clustering_result(y_test, y_pred, summary: str) -> dict:
+    import numpy as np
+    from sklearn.metrics import adjusted_rand_score, normalized_mutual_info_score
+
+    y_true = np.asarray([str(x) for x in y_test])
+    y_hat = np.asarray(y_pred, dtype=int)
+    ari = float(adjusted_rand_score(y_true, y_hat))
+    nmi = float(normalized_mutual_info_score(y_true, y_hat))
+    clusters, sizes = np.unique(y_hat, return_counts=True)
+
+    return {
+        "status": "ok",
+        "metrics": {
+            "ARI": ari,
+            "NMI": nmi,
+            "Clusters": int(len(clusters)),
+            "Largest Cluster": int(sizes.max()) if len(sizes) else 0,
+        },
+        "series": {
+            "kind": "clustering",
+            "points": [
+                {"x": i, "cluster": int(c), "actual": str(a)}
+                for i, (a, c) in enumerate(zip(y_true, y_hat))
+            ],
+        },
+        "tables": {
+            "predictions": [
+                {"row": i, "actual": str(a), "cluster": int(c)}
+                for i, (a, c) in enumerate(zip(y_true[:30], y_hat[:30]))
+            ],
+            "cluster_sizes": {
+                "labels": [str(c) for c in clusters.tolist()],
+                "sizes": sizes.astype(int).tolist(),
+            },
+        },
+        "summary": summary,
+    }
+
+
+def _run_clustering(spec: dict, dataset: dict, preprocessor: dict, log: list[str]) -> dict:
+    from sktime.clustering.k_means import TimeSeriesKMeans
+
+    params = {"n_clusters": 2, "random_state": 7}
+    params.update(spec.get("params") or {})
+    X_train, y_train, X_test, y_test = _load_panel_xy(dataset, log)
+    X_train, X_test = _apply_panel_preprocessor(X_train, X_test, preprocessor, spec, log)
+
+    clusterer = TimeSeriesKMeans(
+        n_clusters=int(params["n_clusters"]),
+        random_state=int(params["random_state"]),
+    )
+    clusterer.fit(X_train)
+    y_pred = clusterer.predict(X_test)
+    log.append(f"Fitted TimeSeriesKMeans on {len(y_train)} train series")
+
+    return _clustering_result(
+        y_test,
+        y_pred,
+        f"Clustered {len(y_test)} held-out time series into {params['n_clusters']} clusters.",
+    )
 
 
 def _run_anomaly(spec: dict, dataset: dict, preprocessor: dict, log: list[str]) -> dict:
@@ -392,7 +532,9 @@ def _load_forecasting_series(dataset: dict, log: list[str]):
     return y
 
 
-def _load_classification_xy(dataset: dict, log: list[str]):
+def _load_panel_xy(dataset: dict, log: list[str]):
+    """Load a panel (X_train, y_train, X_test, y_test) for classification,
+    regression, and clustering datasets."""
     if dataset.get("source") == "ucr_uea":
         from sktime.datasets import load_UCR_UEA_dataset
 
@@ -402,16 +544,10 @@ def _load_classification_xy(dataset: dict, log: list[str]):
         log.append(f"Loaded UCR/UEA {name} train={len(y_train)} test={len(y_test)}")
         return X_train, y_train, X_test, y_test
 
-    from sktime.datasets import load_arrow_head, load_gunpoint, load_italy_power_demand
-    from sktime.datasets._single_problem_loaders import load_unit_test
-
-    loaders = {
-        "unit-test": load_unit_test,
-        "arrow-head": load_arrow_head,
-        "italy-power-demand": load_italy_power_demand,
-        "gunpoint": load_gunpoint,
-    }
-    loader = loaders[dataset["id"]]
+    loader_path = dataset.get("loader")
+    if not loader_path:
+        raise PlaygroundError(f"Dataset {dataset['id']} has no panel loader.")
+    loader = import_estimator_class(loader_path)
     X_train, y_train = loader(split="train", return_X_y=True)
     X_test, y_test = loader(split="test", return_X_y=True)
     log.append(f"Loaded {dataset['name']} train={len(y_train)} test={len(y_test)}")
@@ -504,6 +640,16 @@ def _build_estimator(algorithm: dict, est_params: dict):
     """Instantiate a discovered estimator, coercing param types to its defaults."""
     klass = import_estimator_class(algorithm["module"])
     defaults = algorithm.get("params") or {}
+    if algorithm.get("user"):
+        # plugin PARAMS are the declared defaults; apply them under the
+        # run's params (excluding per-task eval params)
+        from catalog import EVAL_PARAMS
+
+        eval_keys = EVAL_PARAMS.get(algorithm.get("task"), set())
+        est_params = {
+            **{k: v for k, v in defaults.items() if k not in eval_keys},
+            **est_params,
+        }
     coerced = {}
     for key, value in est_params.items():
         default = defaults.get(key)
@@ -544,9 +690,17 @@ def _run_forecasting_generic(spec: dict, dataset: dict, algorithm: dict, preproc
     y_test = y.iloc[-horizon:]
     y_train, y_test = _apply_series_preprocessor(y_train, y_test, preprocessor, spec, log)
     y = pd.concat([y_train, y_test]).sort_index()
-    forecaster.fit(y_train)
-    y_pred = forecaster.predict(fh=list(range(1, len(y_test) + 1)))
-    y_pred.index = y_test.index
+    if algorithm.get("user") and not callable(getattr(forecaster, "get_params", None)):
+        # simple plugin contract: fit(y) + predict(steps)
+        forecaster.fit(y_train)
+        y_pred = pd.Series(
+            np.asarray(forecaster.predict(len(y_test)), dtype=float).ravel(),
+            index=y_test.index,
+        )
+    else:
+        forecaster.fit(y_train)
+        y_pred = forecaster.predict(fh=list(range(1, len(y_test) + 1)))
+        y_pred.index = y_test.index
 
     residual = (y_test - y_pred).astype(float)
     chart = {
@@ -597,7 +751,7 @@ def _run_classification_generic(spec: dict, dataset: dict, algorithm: dict, prep
     classifier = _build_estimator(algorithm, est_params)
     log.append(f"Estimator: {algorithm['name']} params={est_params or 'defaults'}")
 
-    X_train, y_train, X_test, y_test = _load_classification_xy(dataset, log)
+    X_train, y_train, X_test, y_test = _load_panel_xy(dataset, log)
     X_train, X_test = _apply_panel_preprocessor(X_train, X_test, preprocessor, spec, log)
     classifier.fit(X_train, y_train)
     y_pred = classifier.predict(X_test)
@@ -637,6 +791,43 @@ def _run_classification_generic(spec: dict, dataset: dict, algorithm: dict, prep
         },
         "summary": f"Classified {len(y_test)} held-out time series with {algorithm['name']}.",
     }
+
+
+def _run_regression_generic(spec: dict, dataset: dict, algorithm: dict, preprocessor: dict, log: list[str]) -> dict:
+    _eval_params, est_params = split_params("regression", spec.get("params") or {})
+    regressor = _build_estimator(algorithm, est_params)
+    log.append(f"Estimator: {algorithm['name']} params={est_params or 'defaults'}")
+
+    X_train, y_train, X_test, y_test = _load_panel_xy(dataset, log)
+    X_train, X_test = _apply_panel_preprocessor(X_train, X_test, preprocessor, spec, log)
+    regressor.fit(X_train, y_train)
+    y_pred = regressor.predict(X_test)
+
+    return _regression_result(
+        y_test,
+        y_pred,
+        f"Regressed {len(y_test)} held-out time series targets with {algorithm['name']}.",
+    )
+
+
+def _run_clustering_generic(spec: dict, dataset: dict, algorithm: dict, preprocessor: dict, log: list[str]) -> dict:
+    _eval_params, est_params = split_params("clustering", spec.get("params") or {})
+    clusterer = _build_estimator(algorithm, est_params)
+    log.append(f"Estimator: {algorithm['name']} params={est_params or 'defaults'}")
+
+    X_train, y_train, X_test, y_test = _load_panel_xy(dataset, log)
+    X_train, X_test = _apply_panel_preprocessor(X_train, X_test, preprocessor, spec, log)
+    if hasattr(clusterer, "predict"):
+        clusterer.fit(X_train)
+        y_pred = clusterer.predict(X_test)
+    else:
+        y_pred = clusterer.fit_predict(X_test)
+
+    return _clustering_result(
+        y_test,
+        y_pred,
+        f"Clustered {len(y_test)} held-out time series with {algorithm['name']}.",
+    )
 
 
 def _run_anomaly_generic(spec: dict, dataset: dict, algorithm: dict, preprocessor: dict, log: list[str]) -> dict:
@@ -715,6 +906,10 @@ def generate_script(result: dict) -> str:
             return _forecasting_script(dataset_id, params)
         if spec["task"] == "classification":
             return _classification_script(dataset_id, params)
+        if spec["task"] == "regression":
+            return _regression_script(dataset_id, params)
+        if spec["task"] == "clustering":
+            return _clustering_script(dataset_id, params)
         return _anomaly_script(dataset_id, params)
     return _generic_script(result)
 
@@ -804,6 +999,60 @@ def _classification_script(dataset_id: str, params: dict) -> str:
     )
 
 
+def _regression_script(dataset_id: str, params: dict) -> str:
+    n_estimators = int(params.get("n_estimators", 25))
+    random_state = int(params.get("random_state", 7))
+    dataset = get_dataset(dataset_id)
+    loader_path = dataset["loader"] if dataset else "sktime.datasets.load_covid_3month"
+    module_name, _, loader_name = loader_path.rpartition(".")
+    return textwrap.dedent(
+        f"""\
+        from sklearn.ensemble import RandomForestRegressor
+        from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+        from sktime.regression.compose import SklearnRegressorPipeline
+        from sktime.transformations.series.summarize import SummaryTransformer
+        from {module_name} import {loader_name}
+
+        X_train, y_train = {loader_name}(split="train", return_X_y=True)
+        X_test, y_test = {loader_name}(split="test", return_X_y=True)
+        reg = SklearnRegressorPipeline(
+            regressor=RandomForestRegressor(n_estimators={n_estimators}, random_state={random_state}),
+            transformers=[SummaryTransformer()],
+        )
+        reg.fit(X_train, y_train)
+        y_pred = reg.predict(X_test)
+        print("mae", mean_absolute_error(y_test, y_pred))
+        print("rmse", mean_squared_error(y_test, y_pred) ** 0.5)
+        print("r2", r2_score(y_test, y_pred))
+        print(y_pred[:20])
+        """
+    )
+
+
+def _clustering_script(dataset_id: str, params: dict) -> str:
+    n_clusters = int(params.get("n_clusters", 2))
+    random_state = int(params.get("random_state", 7))
+    dataset = get_dataset(dataset_id)
+    loader_path = dataset["loader"] if dataset else "sktime.datasets._single_problem_loaders.load_unit_test"
+    module_name, _, loader_name = loader_path.rpartition(".")
+    return textwrap.dedent(
+        f"""\
+        from sklearn.metrics import adjusted_rand_score, normalized_mutual_info_score
+        from sktime.clustering.k_means import TimeSeriesKMeans
+        from {module_name} import {loader_name}
+
+        X_train, y_train = {loader_name}(split="train", return_X_y=True)
+        X_test, y_test = {loader_name}(split="test", return_X_y=True)
+        clusterer = TimeSeriesKMeans(n_clusters={n_clusters}, random_state={random_state})
+        clusterer.fit(X_train)
+        y_pred = clusterer.predict(X_test)
+        print("ari", adjusted_rand_score(y_test, y_pred))
+        print("nmi", normalized_mutual_info_score(y_test, y_pred))
+        print(y_pred[:20])
+        """
+    )
+
+
 def _anomaly_script(dataset_id: str, params: dict) -> str:
     threshold = float(params.get("threshold", 2.0))
     window = int(params.get("window", 24))
@@ -847,7 +1096,23 @@ def _generic_script(result: dict) -> str:
     dataset_id = spec["dataset_id"]
     eval_params, est_params = split_params(task, spec.get("params") or {})
     module_name, _, class_name = algorithm["module"].rpartition(".")
+    if algorithm.get("user"):
+        from catalog import EVAL_PARAMS
+
+        eval_keys = EVAL_PARAMS.get(task, set())
+        est_params = {
+            **{k: v for k, v in (algorithm.get("params") or {}).items() if k not in eval_keys},
+            **est_params,
+        }
     args = ", ".join(f"{k}={repr(v)}" for k, v in est_params.items())
+    if algorithm.get("user"):
+        import_line = (
+            "import sys\n"
+            "sys.path.insert(0, \"playground\")  # user plugins live in playground/experiments\n"
+            f"from {module_name} import {class_name}"
+        )
+    else:
+        import_line = f"from {module_name} import {class_name}"
 
     if task == "forecasting":
         horizon = int(eval_params.get("horizon") or 12)
@@ -861,18 +1126,31 @@ def _generic_script(result: dict) -> str:
             load_line = f"from {mod} import {fn}\ny = {fn}().dropna()"
         else:
             load_line = f"# dataset {dataset_id!r} needs an online/custom loader\ny = None  # TODO: load a pandas Series"
-        return textwrap.dedent(
-            f"""\
-            from {module_name} import {class_name}
-            {load_line}
-
-            horizon = {horizon}
-            y_train, y_test = y.iloc[:-horizon], y.iloc[-horizon:]
-            est = {class_name}({args})
-            est.fit(y_train)
-            y_pred = est.predict(fh=list(range(1, len(y_test) + 1)))
-            print(y_pred)
-            """
+        if algorithm.get("user"):
+            _klass = import_estimator_class(algorithm["module"])
+            _simple_contract = not callable(getattr(_klass, "get_params", None))
+        else:
+            _simple_contract = False
+        if _simple_contract:
+            predict_block = (
+                "y_pred = est.predict(len(y_test))\n"
+                "import pandas as pd\n"
+                "y_pred = pd.Series(y_pred, index=y_test.index)"
+            )
+        else:
+            predict_block = (
+                "y_pred = est.predict(fh=list(range(1, len(y_test) + 1)))"
+            )
+        return (
+            f"{import_line}\n"
+            f"{load_line}\n"
+            f"\n"
+            f"horizon = {horizon}\n"
+            f"y_train, y_test = y.iloc[:-horizon], y.iloc[-horizon:]\n"
+            f"est = {class_name}({args})\n"
+            f"est.fit(y_train)\n"
+            f"{predict_block}\n"
+            f"print(y_pred)\n"
         )
 
     if task == "classification":
@@ -885,40 +1163,77 @@ def _generic_script(result: dict) -> str:
         fn, mod = loaders.get(
             dataset_id, ("load_unit_test", "sktime.datasets._single_problem_loaders")
         )
-        return textwrap.dedent(
-            f"""\
-            from {module_name} import {class_name}
-            from {mod} import {fn}
-            from sklearn.metrics import accuracy_score, f1_score
+        return (
+            f"{import_line}\n"
+            f"from {mod} import {fn}\n"
+            f"from sklearn.metrics import accuracy_score, f1_score\n"
+            f"\n"
+            f"X_train, y_train = {fn}(split=\"train\", return_X_y=True)\n"
+            f"X_test, y_test = {fn}(split=\"test\", return_X_y=True)\n"
+            f"est = {class_name}({args})\n"
+            f"est.fit(X_train, y_train)\n"
+            f"y_pred = est.predict(X_test)\n"
+            f"print(\"accuracy\", accuracy_score(y_test, y_pred))\n"
+            f"print(\"macro_f1\", f1_score(y_test, y_pred, average=\"macro\"))\n"
+        )
 
-            X_train, y_train = {fn}(split="train", return_X_y=True)
-            X_test, y_test = {fn}(split="test", return_X_y=True)
-            est = {class_name}({args})
-            est.fit(X_train, y_train)
-            y_pred = est.predict(X_test)
-            print("accuracy", accuracy_score(y_test, y_pred))
-            print("macro_f1", f1_score(y_test, y_pred, average="macro"))
-            """
+    if task == "regression":
+        dataset = get_dataset(dataset_id)
+        loader_path = dataset["loader"] if dataset else "sktime.datasets.load_covid_3month"
+        mod, _, fn = loader_path.rpartition(".")
+        return (
+            f"{import_line}\n"
+            f"from {mod} import {fn}\n"
+            f"from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score\n"
+            f"\n"
+            f"X_train, y_train = {fn}(split=\"train\", return_X_y=True)\n"
+            f"X_test, y_test = {fn}(split=\"test\", return_X_y=True)\n"
+            f"est = {class_name}({args})\n"
+            f"est.fit(X_train, y_train)\n"
+            f"y_pred = est.predict(X_test)\n"
+            f"print(\"mae\", mean_absolute_error(y_test, y_pred))\n"
+            f"print(\"rmse\", mean_squared_error(y_test, y_pred) ** 0.5)\n"
+            f"print(\"r2\", r2_score(y_test, y_pred))\n"
+        )
+
+    if task == "clustering":
+        dataset = get_dataset(dataset_id)
+        loader_path = (
+            dataset["loader"]
+            if dataset
+            else "sktime.datasets._single_problem_loaders.load_unit_test"
+        )
+        mod, _, fn = loader_path.rpartition(".")
+        return (
+            f"{import_line}\n"
+            f"from {mod} import {fn}\n"
+            f"from sklearn.metrics import adjusted_rand_score, normalized_mutual_info_score\n"
+            f"\n"
+            f"X_train, y_train = {fn}(split=\"train\", return_X_y=True)\n"
+            f"X_test, y_test = {fn}(split=\"test\", return_X_y=True)\n"
+            f"est = {class_name}({args})\n"
+            f"est.fit(X_train)\n"
+            f"y_pred = est.predict(X_test)\n"
+            f"print(\"ari\", adjusted_rand_score(y_test, y_pred))\n"
+            f"print(\"nmi\", normalized_mutual_info_score(y_test, y_pred))\n"
         )
 
     dataset = get_dataset(dataset_id)
     path = dataset["path"] if dataset else "sktime/datasets/data/yahoo/yahoo.csv"
-    return textwrap.dedent(
-        f"""\
-        import numpy as np
-        import pandas as pd
-        from {module_name} import {class_name}
-
-        frame = pd.read_csv("{path}")
-        raw = frame["data"].astype(float)
-        est = {class_name}({args})
-        out = est.fit_predict(raw.to_frame("data"))
-        arr = np.asarray(out).ravel()
-        pred = np.where(arr != 0)[0] if arr.size == len(raw) else np.array(arr, dtype=int)
-        y_pred = np.zeros(len(raw), dtype=int)
-        y_pred[pred[(pred >= 0) & (pred < len(raw))]] = 1
-        print("detected", int(y_pred.sum()))
-        """
+    return (
+        f"import numpy as np\n"
+        f"import pandas as pd\n"
+        f"{import_line}\n"
+        f"\n"
+        f"frame = pd.read_csv(\"{path}\")\n"
+        f"raw = frame[\"data\"].astype(float)\n"
+        f"est = {class_name}({args})\n"
+        f"out = est.fit_predict(raw.to_frame(\"data\"))\n"
+        f"arr = np.asarray(out).ravel()\n"
+        f"pred = np.where(arr != 0)[0] if arr.size == len(raw) else np.array(arr, dtype=int)\n"
+        f"y_pred = np.zeros(len(raw), dtype=int)\n"
+        f"y_pred[pred[(pred >= 0) & (pred < len(raw))]] = 1\n"
+        f"print(\"detected\", int(y_pred.sum()))\n"
     )
 
 

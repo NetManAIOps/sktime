@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated_at": "2026-07-10T01:55:37.301990+00:00",
+    "generated_at": "2026-09-10T11:51:59.081749+00:00",
     "source": "playground.catalog.build_catalog",
     "refresh": "python playground/catalog.py (also refreshed on playground/server.py startup)",
     "note": "Static snapshot; may lag behind a running server. Regenerate to refresh."
@@ -15,6 +15,16 @@
       "id": "classification",
       "label": "Classification",
       "description": "Train a time-series classifier and evaluate test labels."
+    },
+    {
+      "id": "regression",
+      "label": "Regression",
+      "description": "Train a time-series regressor and evaluate numeric test targets."
+    },
+    {
+      "id": "clustering",
+      "label": "Clustering",
+      "description": "Cluster time series and compare clusters with known labels."
     },
     {
       "id": "anomaly_detection",
@@ -51,6 +61,34 @@
       },
       "curated": true,
       "class_name": "SummaryClassifier"
+    },
+    {
+      "id": "summary-random-forest-regressor",
+      "name": "SklearnRegressorPipeline",
+      "task": "regression",
+      "module": "sktime.regression.compose.SklearnRegressorPipeline",
+      "enabled": true,
+      "template": "SklearnRegressorPipeline(RandomForestRegressor(n_estimators=25), SummaryTransformer())",
+      "params": {
+        "n_estimators": 25,
+        "random_state": 7
+      },
+      "curated": true,
+      "class_name": "SklearnRegressorPipeline"
+    },
+    {
+      "id": "ts-kmeans",
+      "name": "TimeSeriesKMeans",
+      "task": "clustering",
+      "module": "sktime.clustering.k_means.TimeSeriesKMeans",
+      "enabled": true,
+      "template": "TimeSeriesKMeans(n_clusters=n_clusters)",
+      "params": {
+        "n_clusters": 2,
+        "random_state": 7
+      },
+      "curated": true,
+      "class_name": "TimeSeriesKMeans"
     },
     {
       "id": "threshold-detector",
@@ -228,6 +266,39 @@
       "params": {}
     },
     {
+      "id": "registered-forecasting-AutoformerForecaster",
+      "name": "AutoformerForecaster",
+      "task": "forecasting",
+      "module": "sktime.forecasting.tslib.AutoformerForecaster",
+      "class_name": "AutoformerForecaster",
+      "curated": false,
+      "python_dependencies": [
+        "torch"
+      ],
+      "enabled": true,
+      "params": {
+        "horizon": 12,
+        "context_window": 36,
+        "batch_size": 32,
+        "channel_independence": 1,
+        "d_ff": 128,
+        "d_layers": 1,
+        "d_model": 64,
+        "dropout": 0.1,
+        "e_layers": 2,
+        "factor": 3,
+        "label_len": 18,
+        "lr": 0.001,
+        "moving_avg": 25,
+        "n_heads": 8,
+        "num_epochs": 3,
+        "num_kernels": 6,
+        "pred_len": 12,
+        "seq_len": 36,
+        "top_k": 3
+      }
+    },
+    {
       "id": "registered-forecasting-BATS",
       "name": "BATS",
       "task": "forecasting",
@@ -367,6 +438,39 @@
       "enabled": false,
       "disabled_reason": "TypeError: CurveFitForecaster.__init__() missing 1 required positional argument: 'function'",
       "params": {}
+    },
+    {
+      "id": "registered-forecasting-DLinearForecaster",
+      "name": "DLinearForecaster",
+      "task": "forecasting",
+      "module": "sktime.forecasting.tslib.DLinearForecaster",
+      "class_name": "DLinearForecaster",
+      "curated": false,
+      "python_dependencies": [
+        "torch"
+      ],
+      "enabled": true,
+      "params": {
+        "horizon": 12,
+        "context_window": 36,
+        "batch_size": 32,
+        "channel_independence": 1,
+        "d_ff": 128,
+        "d_layers": 1,
+        "d_model": 64,
+        "dropout": 0.1,
+        "e_layers": 2,
+        "factor": 3,
+        "label_len": 18,
+        "lr": 0.001,
+        "moving_avg": 25,
+        "n_heads": 8,
+        "num_epochs": 3,
+        "num_kernels": 6,
+        "pred_len": 12,
+        "seq_len": 36,
+        "top_k": 3
+      }
     },
     {
       "id": "registered-forecasting-DartsLinearRegressionModel",
@@ -532,9 +636,20 @@
       "python_dependencies": [
         "torch"
       ],
-      "enabled": false,
-      "disabled_reason": "ModuleNotFoundError: ESRNNForecaster requires package 'torch' to be present in the python environment, but 'torch' was not found. 'torch' is a dependency of ESRNNForecaster and required to construct it. To install the requirement 'torch', please run: `pip install torch` ",
-      "params": {}
+      "enabled": true,
+      "params": {
+        "horizon": 12,
+        "context_window": 36,
+        "batch_size": 32,
+        "hidden_size": 10,
+        "lr": 0.1,
+        "num_epochs": 1000,
+        "num_layer": 5,
+        "season1_length": 12,
+        "season2_length": 6,
+        "stride": 1,
+        "window": 10
+      }
     },
     {
       "id": "registered-forecasting-EnbPIForecaster",
@@ -574,6 +689,39 @@
       "params": {
         "horizon": 12,
         "context_window": 36
+      }
+    },
+    {
+      "id": "registered-forecasting-FEDformerForecaster",
+      "name": "FEDformerForecaster",
+      "task": "forecasting",
+      "module": "sktime.forecasting.tslib.FEDformerForecaster",
+      "class_name": "FEDformerForecaster",
+      "curated": false,
+      "python_dependencies": [
+        "torch"
+      ],
+      "enabled": true,
+      "params": {
+        "horizon": 12,
+        "context_window": 36,
+        "batch_size": 32,
+        "channel_independence": 1,
+        "d_ff": 128,
+        "d_layers": 1,
+        "d_model": 64,
+        "dropout": 0.1,
+        "e_layers": 2,
+        "factor": 3,
+        "label_len": 18,
+        "lr": 0.001,
+        "moving_avg": 25,
+        "n_heads": 8,
+        "num_epochs": 3,
+        "num_kernels": 6,
+        "pred_len": 12,
+        "seq_len": 36,
+        "top_k": 3
       }
     },
     {
@@ -713,6 +861,39 @@
       "params": {}
     },
     {
+      "id": "registered-forecasting-FreTSForecaster",
+      "name": "FreTSForecaster",
+      "task": "forecasting",
+      "module": "sktime.forecasting.tslib.FreTSForecaster",
+      "class_name": "FreTSForecaster",
+      "curated": false,
+      "python_dependencies": [
+        "torch"
+      ],
+      "enabled": true,
+      "params": {
+        "horizon": 12,
+        "context_window": 36,
+        "batch_size": 32,
+        "channel_independence": 1,
+        "d_ff": 128,
+        "d_layers": 1,
+        "d_model": 64,
+        "dropout": 0.1,
+        "e_layers": 2,
+        "factor": 3,
+        "label_len": 18,
+        "lr": 0.001,
+        "moving_avg": 25,
+        "n_heads": 8,
+        "num_epochs": 3,
+        "num_kernels": 6,
+        "pred_len": 12,
+        "seq_len": 36,
+        "top_k": 3
+      }
+    },
+    {
       "id": "registered-forecasting-GreykiteForecaster",
       "name": "GreykiteForecaster",
       "task": "forecasting",
@@ -788,6 +969,39 @@
       "enabled": false,
       "disabled_reason": "TypeError: HierarchyEnsembleForecaster.__init__() missing 1 required positional argument: 'forecasters'",
       "params": {}
+    },
+    {
+      "id": "registered-forecasting-ITransformerForecaster",
+      "name": "ITransformerForecaster",
+      "task": "forecasting",
+      "module": "sktime.forecasting.tslib.ITransformerForecaster",
+      "class_name": "ITransformerForecaster",
+      "curated": false,
+      "python_dependencies": [
+        "torch"
+      ],
+      "enabled": true,
+      "params": {
+        "horizon": 12,
+        "context_window": 36,
+        "batch_size": 32,
+        "channel_independence": 1,
+        "d_ff": 128,
+        "d_layers": 1,
+        "d_model": 64,
+        "dropout": 0.1,
+        "e_layers": 2,
+        "factor": 3,
+        "label_len": 18,
+        "lr": 0.001,
+        "moving_avg": 25,
+        "n_heads": 8,
+        "num_epochs": 3,
+        "num_kernels": 6,
+        "pred_len": 12,
+        "seq_len": 36,
+        "top_k": 3
+      }
     },
     {
       "id": "registered-forecasting-IgnoreX",
@@ -911,7 +1125,7 @@
         "transformers"
       ],
       "enabled": false,
-      "disabled_reason": "ModuleNotFoundError: MomentFMForecaster requires package 'torch' to be present in the python environment, but 'torch' was not found. 'torch' is a dependency of MomentFMForecaster and required to construct it. To install the requirement 'torch', please run: `pip install torch` ",
+      "disabled_reason": "ModuleNotFoundError: MomentFMForecaster requires package 'huggingface-hub' to be present in the python environment, but 'huggingface-hub' was not found. 'huggingface-hub' is a dependency of MomentFMForecaster and required to construct it. To install the requirement 'huggingface-hub', please run: `pip install huggingface-hub` ",
       "params": {}
     },
     {
@@ -1224,9 +1438,19 @@
       "class_name": "RBFForecaster",
       "curated": false,
       "python_dependencies": "torch",
-      "enabled": false,
-      "disabled_reason": "ModuleNotFoundError: RBFForecaster requires package 'torch' to be present in the python environment, but 'torch' was not found. 'torch' is a dependency of RBFForecaster and required to construct it. To install the requirement 'torch', please run: `pip install torch` ",
-      "params": {}
+      "enabled": true,
+      "params": {
+        "horizon": 12,
+        "context_window": 36,
+        "batch_size": 32,
+        "dropout_rate": 0.1,
+        "epochs": 100,
+        "gamma": 1.0,
+        "hidden_size": 32,
+        "lr": 0.01,
+        "stride": 1,
+        "window_length": 10
+      }
     },
     {
       "id": "registered-forecasting-ReconcilerForecaster",
@@ -1679,7 +1903,7 @@
         "tirex-ts"
       ],
       "enabled": false,
-      "disabled_reason": "ModuleNotFoundError: TiRexForecaster requires package 'torch' to be present in the python environment, but 'torch' was not found. 'torch' is a dependency of TiRexForecaster and required to construct it. To install the requirement 'torch', please run: `pip install torch` ",
+      "disabled_reason": "ModuleNotFoundError: TiRexForecaster requires package 'tirex-ts' to be present in the python environment, but 'tirex-ts' was not found. 'tirex-ts' is a dependency of TiRexForecaster and required to construct it. To install the requirement 'tirex-ts', please run: `pip install tirex-ts` ",
       "params": {}
     },
     {
@@ -1694,7 +1918,7 @@
         "transformers"
       ],
       "enabled": false,
-      "disabled_reason": "ModuleNotFoundError: TimeLLMForecaster requires package 'torch' to be present in the python environment, but 'torch' was not found. 'torch' is a dependency of TimeLLMForecaster and required to construct it. To install the requirement 'torch', please run: `pip install torch` ",
+      "disabled_reason": "ModuleNotFoundError: TimeLLMForecaster requires package 'transformers' to be present in the python environment, but 'transformers' was not found. 'transformers' is a dependency of TimeLLMForecaster and required to construct it. To install the requirement 'transformers', please run: `pip install transformers` ",
       "params": {}
     },
     {
@@ -1730,8 +1954,41 @@
         "utilsforecast"
       ],
       "enabled": false,
-      "disabled_reason": "ModuleNotFoundError: TimesFMForecaster requires python version to be <3.11,>=3.10, but system python version is 3.12.13 (main, Jun 23 2026, 15:44:24) [Clang 22.1.3 ].",
+      "disabled_reason": "ModuleNotFoundError: TimesFMForecaster requires python version to be <3.11,>=3.10, but system python version is 3.12.12 | packaged by conda-forge | (main, Oct 22 2025, 23:25:55) [GCC 14.3.0].",
       "params": {}
+    },
+    {
+      "id": "registered-forecasting-TimesNetForecaster",
+      "name": "TimesNetForecaster",
+      "task": "forecasting",
+      "module": "sktime.forecasting.tslib.TimesNetForecaster",
+      "class_name": "TimesNetForecaster",
+      "curated": false,
+      "python_dependencies": [
+        "torch"
+      ],
+      "enabled": true,
+      "params": {
+        "horizon": 12,
+        "context_window": 36,
+        "batch_size": 32,
+        "channel_independence": 1,
+        "d_ff": 128,
+        "d_layers": 1,
+        "d_model": 64,
+        "dropout": 0.1,
+        "e_layers": 2,
+        "factor": 3,
+        "label_len": 18,
+        "lr": 0.001,
+        "moving_avg": 25,
+        "n_heads": 8,
+        "num_epochs": 3,
+        "num_kernels": 6,
+        "pred_len": 12,
+        "seq_len": 36,
+        "top_k": 3
+      }
     },
     {
       "id": "registered-forecasting-TinyTimeMixerForecaster",
@@ -1761,7 +2018,7 @@
         "toto-ts>=0.1.3"
       ],
       "enabled": false,
-      "disabled_reason": "ModuleNotFoundError: TotoForecaster requires package 'torch>=2.5' to be present in the python environment, but 'torch>=2.5' was not found. 'torch>=2.5' is a dependency of TotoForecaster and required to construct it. To install the requirement 'torch>=2.5', please run: `pip install torch>=2.5` ",
+      "disabled_reason": "ModuleNotFoundError: TotoForecaster requires package 'toto-ts>=0.1.3' to be present in the python environment, but 'toto-ts>=0.1.3' was not found. 'toto-ts>=0.1.3' is a dependency of TotoForecaster and required to construct it. To install the requirement 'toto-ts>=0.1.3', please run: `pip install toto-ts>=0.1.3` ",
       "params": {}
     },
     {
@@ -2205,7 +2462,7 @@
       "curated": false,
       "python_dependencies": "tsfresh",
       "enabled": false,
-      "disabled_reason": "ModuleNotFoundError: FreshPRINCE requires python version to be <3.10, but system python version is 3.12.13 (main, Jun 23 2026, 15:44:24) [Clang 22.1.3 ].",
+      "disabled_reason": "ModuleNotFoundError: FreshPRINCE requires python version to be <3.10, but system python version is 3.12.12 | packaged by conda-forge | (main, Oct 22 2025, 23:25:55) [GCC 14.3.0].",
       "params": {}
     },
     {
@@ -2216,9 +2473,16 @@
       "class_name": "GRUClassifier",
       "curated": false,
       "python_dependencies": "torch",
-      "enabled": false,
-      "disabled_reason": "ModuleNotFoundError: GRUClassifier requires package 'torch' to be present in the python environment, but 'torch' was not found. 'torch' is a dependency of GRUClassifier and required to construct it. To install the requirement 'torch', please run: `pip install torch` ",
-      "params": {}
+      "enabled": true,
+      "params": {
+        "batch_size": 8,
+        "dropout": 0.0,
+        "fc_dropout": 0.0,
+        "hidden_dim": 256,
+        "lr": 0.001,
+        "n_layers": 4,
+        "num_epochs": 10
+      }
     },
     {
       "id": "registered-classification-GRUFCNNClassifier",
@@ -2449,9 +2713,17 @@
       "python_dependencies": [
         "torch"
       ],
-      "enabled": false,
-      "disabled_reason": "ModuleNotFoundError: MVTSTransformerClassifier requires package 'torch' to be present in the python environment, but 'torch' was not found. 'torch' is a dependency of MVTSTransformerClassifier and required to construct it. To install the requirement 'torch', please run: `pip install torch` ",
-      "params": {}
+      "enabled": true,
+      "params": {
+        "batch_size": 8,
+        "d_model": 256,
+        "dim_feedforward": 128,
+        "dropout": 0.1,
+        "lr": 0.001,
+        "n_heads": 4,
+        "num_epochs": 10,
+        "num_layers": 4
+      }
     },
     {
       "id": "registered-classification-MatrixProfileClassifier",
@@ -2483,7 +2755,7 @@
         "transformers"
       ],
       "enabled": false,
-      "disabled_reason": "ModuleNotFoundError: MomentFMClassifier requires package 'torch' to be present in the python environment, but 'torch' was not found. 'torch' is a dependency of MomentFMClassifier and required to construct it. To install the requirement 'torch', please run: `pip install torch` ",
+      "disabled_reason": "ModuleNotFoundError: MomentFMClassifier requires package 'huggingface-hub' to be present in the python environment, but 'huggingface-hub' was not found. 'huggingface-hub' is a dependency of MomentFMClassifier and required to construct it. To install the requirement 'huggingface-hub', please run: `pip install huggingface-hub` ",
       "params": {}
     },
     {
@@ -2753,9 +3025,17 @@
       "class_name": "SimpleRNNClassifierTorch",
       "curated": false,
       "python_dependencies": "torch",
-      "enabled": false,
-      "disabled_reason": "ModuleNotFoundError: SimpleRNNClassifierTorch requires package 'torch' to be present in the python environment, but 'torch' was not found. 'torch' is a dependency of SimpleRNNClassifierTorch and required to construct it. To install the requirement 'torch', please run: `pip install torch` ",
-      "params": {}
+      "enabled": true,
+      "params": {
+        "batch_size": 1,
+        "dropout": 0.0,
+        "fc_dropout": 0.0,
+        "hidden_dim": 6,
+        "lr": 0.001,
+        "n_layers": 1,
+        "num_epochs": 100,
+        "random_state": 0
+      }
     },
     {
       "id": "registered-classification-SklearnClassifierPipeline",
@@ -2925,6 +3205,462 @@
       "python_dependencies": null,
       "enabled": false,
       "disabled_reason": "TypeError: WeightedEnsembleClassifier.__init__() missing 1 required positional argument: 'classifiers'",
+      "params": {}
+    },
+    {
+      "id": "registered-regression-CNNRegressor",
+      "name": "CNNRegressor",
+      "task": "regression",
+      "module": "sktime.regression.deep_learning.cnn.CNNRegressor",
+      "class_name": "CNNRegressor",
+      "curated": false,
+      "python_dependencies": "tensorflow",
+      "enabled": true,
+      "params": {
+        "avg_pool_size": 3,
+        "batch_size": 16,
+        "kernel_size": 7,
+        "n_conv_layers": 2,
+        "n_epochs": 2000,
+        "random_state": 0
+      }
+    },
+    {
+      "id": "registered-regression-CNTCRegressor",
+      "name": "CNTCRegressor",
+      "task": "regression",
+      "module": "sktime.regression.deep_learning.cntc.CNTCRegressor",
+      "class_name": "CNTCRegressor",
+      "curated": false,
+      "python_dependencies": [
+        "tensorflow"
+      ],
+      "enabled": true,
+      "params": {
+        "batch_size": 16,
+        "dense_size": 64,
+        "lstm_size": 8,
+        "n_epochs": 2000,
+        "random_state": 0,
+        "rnn_size": 64
+      }
+    },
+    {
+      "id": "registered-regression-ComposableTimeSeriesForestRegressor",
+      "name": "ComposableTimeSeriesForestRegressor",
+      "task": "regression",
+      "module": "sktime.regression.compose._ensemble.ComposableTimeSeriesForestRegressor",
+      "class_name": "ComposableTimeSeriesForestRegressor",
+      "curated": false,
+      "python_dependencies": [
+        "joblib"
+      ],
+      "enabled": true,
+      "params": {
+        "min_impurity_decrease": 0.0,
+        "min_samples_leaf": 1,
+        "min_samples_split": 2,
+        "min_weight_fraction_leaf": 0.0,
+        "n_estimators": 100,
+        "verbose": 0
+      }
+    },
+    {
+      "id": "registered-regression-DummyRegressor",
+      "name": "DummyRegressor",
+      "task": "regression",
+      "module": "sktime.regression.dummy._dummy.DummyRegressor",
+      "class_name": "DummyRegressor",
+      "curated": false,
+      "python_dependencies": null,
+      "enabled": true,
+      "params": {}
+    },
+    {
+      "id": "registered-regression-FCNRegressor",
+      "name": "FCNRegressor",
+      "task": "regression",
+      "module": "sktime.regression.deep_learning.fcn.FCNRegressor",
+      "class_name": "FCNRegressor",
+      "curated": false,
+      "python_dependencies": "tensorflow",
+      "enabled": true,
+      "params": {
+        "batch_size": 16,
+        "n_epochs": 2000
+      }
+    },
+    {
+      "id": "registered-regression-InceptionTimeRegressor",
+      "name": "InceptionTimeRegressor",
+      "task": "regression",
+      "module": "sktime.regression.deep_learning.inceptiontime.InceptionTimeRegressor",
+      "class_name": "InceptionTimeRegressor",
+      "curated": false,
+      "python_dependencies": "tensorflow",
+      "enabled": true,
+      "params": {
+        "batch_size": 64,
+        "bottleneck_size": 32,
+        "depth": 6,
+        "kernel_size": 40,
+        "n_epochs": 1500,
+        "n_filters": 32
+      }
+    },
+    {
+      "id": "registered-regression-KNeighborsTimeSeriesRegressor",
+      "name": "KNeighborsTimeSeriesRegressor",
+      "task": "regression",
+      "module": "sktime.regression.distance_based._time_series_neighbors.KNeighborsTimeSeriesRegressor",
+      "class_name": "KNeighborsTimeSeriesRegressor",
+      "curated": false,
+      "python_dependencies": null,
+      "enabled": true,
+      "params": {
+        "leaf_size": 30,
+        "n_neighbors": 1
+      }
+    },
+    {
+      "id": "registered-regression-LSTMFCNRegressor",
+      "name": "LSTMFCNRegressor",
+      "task": "regression",
+      "module": "sktime.regression.deep_learning.lstmfcn.LSTMFCNRegressor",
+      "class_name": "LSTMFCNRegressor",
+      "curated": false,
+      "python_dependencies": "tensorflow",
+      "enabled": true,
+      "params": {
+        "batch_size": 128,
+        "dropout": 0.8,
+        "lstm_size": 8,
+        "n_epochs": 2000,
+        "verbose": 0
+      }
+    },
+    {
+      "id": "registered-regression-MACNNRegressor",
+      "name": "MACNNRegressor",
+      "task": "regression",
+      "module": "sktime.regression.deep_learning.macnn.MACNNRegressor",
+      "class_name": "MACNNRegressor",
+      "curated": false,
+      "python_dependencies": "tensorflow",
+      "enabled": true,
+      "params": {
+        "batch_size": 4,
+        "n_epochs": 1500,
+        "pool_size": 3,
+        "random_state": 0,
+        "reduction": 16,
+        "repeats": 2,
+        "strides": 2
+      }
+    },
+    {
+      "id": "registered-regression-MCDCNNRegressor",
+      "name": "MCDCNNRegressor",
+      "task": "regression",
+      "module": "sktime.regression.deep_learning.mcdcnn.MCDCNNRegressor",
+      "class_name": "MCDCNNRegressor",
+      "curated": false,
+      "python_dependencies": "tensorflow",
+      "enabled": true,
+      "params": {
+        "batch_size": 16,
+        "dense_units": 732,
+        "kernel_size": 5,
+        "n_epochs": 120,
+        "pool_size": 2,
+        "random_state": 0
+      }
+    },
+    {
+      "id": "registered-regression-MLPRegressor",
+      "name": "MLPRegressor",
+      "task": "regression",
+      "module": "sktime.regression.deep_learning.mlp.MLPRegressor",
+      "class_name": "MLPRegressor",
+      "curated": false,
+      "python_dependencies": "tensorflow",
+      "enabled": true,
+      "params": {
+        "batch_size": 16,
+        "n_epochs": 2000
+      }
+    },
+    {
+      "id": "registered-regression-MultiplexRegressor",
+      "name": "MultiplexRegressor",
+      "task": "regression",
+      "module": "sktime.regression.compose._multiplexer.MultiplexRegressor",
+      "class_name": "MultiplexRegressor",
+      "curated": false,
+      "python_dependencies": null,
+      "enabled": false,
+      "disabled_reason": "TypeError: MultiplexRegressor.__init__() missing 1 required positional argument: 'regressors'",
+      "params": {}
+    },
+    {
+      "id": "registered-regression-RegressorPipeline",
+      "name": "RegressorPipeline",
+      "task": "regression",
+      "module": "sktime.regression.compose._pipeline.RegressorPipeline",
+      "class_name": "RegressorPipeline",
+      "curated": false,
+      "python_dependencies": null,
+      "enabled": false,
+      "disabled_reason": "TypeError: RegressorPipeline.__init__() missing 2 required positional arguments: 'regressor' and 'transformers'",
+      "params": {}
+    },
+    {
+      "id": "registered-regression-ResNetRegressor",
+      "name": "ResNetRegressor",
+      "task": "regression",
+      "module": "sktime.regression.deep_learning.resnet.ResNetRegressor",
+      "class_name": "ResNetRegressor",
+      "curated": false,
+      "python_dependencies": "tensorflow",
+      "enabled": false,
+      "disabled_reason": "TypeError: ResNetNetwork.__init__() got an unexpected keyword argument 'activation_hidden'",
+      "params": {}
+    },
+    {
+      "id": "registered-regression-RocketRegressor",
+      "name": "RocketRegressor",
+      "task": "regression",
+      "module": "sktime.regression.kernel_based._rocket_regressor.RocketRegressor",
+      "class_name": "RocketRegressor",
+      "curated": false,
+      "python_dependencies": "numba",
+      "enabled": true,
+      "params": {
+        "max_dilations_per_kernel": 32,
+        "n_features_per_kernel": 4,
+        "n_jobs": 1,
+        "num_kernels": 10000
+      }
+    },
+    {
+      "id": "registered-regression-SimpleRNNRegressor",
+      "name": "SimpleRNNRegressor",
+      "task": "regression",
+      "module": "sktime.regression.deep_learning.rnn._rnn_tf.SimpleRNNRegressor",
+      "class_name": "SimpleRNNRegressor",
+      "curated": false,
+      "python_dependencies": "tensorflow",
+      "enabled": true,
+      "params": {
+        "batch_size": 1,
+        "dropout": 0.0,
+        "n_epochs": 100,
+        "random_state": 0,
+        "units": 6
+      }
+    },
+    {
+      "id": "registered-regression-SimpleRNNRegressorTorch",
+      "name": "SimpleRNNRegressorTorch",
+      "task": "regression",
+      "module": "sktime.regression.deep_learning.rnn._rnn_torch.SimpleRNNRegressorTorch",
+      "class_name": "SimpleRNNRegressorTorch",
+      "curated": false,
+      "python_dependencies": "torch",
+      "enabled": true,
+      "params": {
+        "batch_size": 1,
+        "dropout": 0.0,
+        "fc_dropout": 0.0,
+        "hidden_dim": 6,
+        "lr": 0.001,
+        "n_layers": 1,
+        "num_epochs": 100,
+        "random_state": 0
+      }
+    },
+    {
+      "id": "registered-regression-TSRGridSearchCV",
+      "name": "TSRGridSearchCV",
+      "task": "regression",
+      "module": "sktime.regression.model_selection._tune.TSRGridSearchCV",
+      "class_name": "TSRGridSearchCV",
+      "curated": false,
+      "python_dependencies": null,
+      "enabled": false,
+      "disabled_reason": "TypeError: TSRGridSearchCV.__init__() missing 2 required positional arguments: 'estimator' and 'param_grid'",
+      "params": {}
+    },
+    {
+      "id": "registered-regression-TapNetRegressor",
+      "name": "TapNetRegressor",
+      "task": "regression",
+      "module": "sktime.regression.deep_learning.tapnet.TapNetRegressor",
+      "class_name": "TapNetRegressor",
+      "curated": false,
+      "python_dependencies": "tensorflow",
+      "enabled": true,
+      "params": {
+        "batch_size": 16,
+        "dilation": 1,
+        "dropout": 0.5,
+        "lstm_dropout": 0.8,
+        "n_epochs": 2000
+      }
+    },
+    {
+      "id": "registered-regression-TimeSeriesForestRegressor",
+      "name": "TimeSeriesForestRegressor",
+      "task": "regression",
+      "module": "sktime.regression.interval_based._tsf.TimeSeriesForestRegressor",
+      "class_name": "TimeSeriesForestRegressor",
+      "curated": false,
+      "python_dependencies": [
+        "joblib"
+      ],
+      "enabled": true,
+      "params": {
+        "min_interval": 3,
+        "n_estimators": 200,
+        "n_jobs": 1
+      }
+    },
+    {
+      "id": "registered-regression-TimeSeriesSVRTslearn",
+      "name": "TimeSeriesSVRTslearn",
+      "task": "regression",
+      "module": "sktime.regression.kernel_based._svr_tslearn.TimeSeriesSVRTslearn",
+      "class_name": "TimeSeriesSVRTslearn",
+      "curated": false,
+      "python_dependencies": "tslearn",
+      "enabled": false,
+      "disabled_reason": "ModuleNotFoundError: TimeSeriesSVRTslearn requires package 'tslearn' to be present in the python environment, but 'tslearn' was not found. 'tslearn' is a dependency of TimeSeriesSVRTslearn and required to construct it. To install the requirement 'tslearn', please run: `pip install tslearn` ",
+      "params": {}
+    },
+    {
+      "id": "registered-clustering-ClustererPipeline",
+      "name": "ClustererPipeline",
+      "task": "clustering",
+      "module": "sktime.clustering.compose._pipeline.ClustererPipeline",
+      "class_name": "ClustererPipeline",
+      "curated": false,
+      "python_dependencies": null,
+      "enabled": false,
+      "disabled_reason": "TypeError: ClustererPipeline.__init__() missing 2 required positional arguments: 'clusterer' and 'transformers'",
+      "params": {}
+    },
+    {
+      "id": "registered-clustering-STDBSCAN",
+      "name": "STDBSCAN",
+      "task": "clustering",
+      "module": "sktime.clustering.spatio_temporal._st_dbscan.STDBSCAN",
+      "class_name": "STDBSCAN",
+      "curated": false,
+      "python_dependencies": [
+        "scipy",
+        "scikit-learn"
+      ],
+      "enabled": true,
+      "params": {
+        "eps1": 0.5,
+        "eps2": 10,
+        "min_samples": 5,
+        "n_jobs": -1,
+        "sparse_matrix_threshold": 20000
+      }
+    },
+    {
+      "id": "registered-clustering-SklearnClustererPipeline",
+      "name": "SklearnClustererPipeline",
+      "task": "clustering",
+      "module": "sktime.clustering.compose._pipeline.SklearnClustererPipeline",
+      "class_name": "SklearnClustererPipeline",
+      "curated": false,
+      "python_dependencies": null,
+      "enabled": false,
+      "disabled_reason": "TypeError: SklearnClustererPipeline.__init__() missing 2 required positional arguments: 'clusterer' and 'transformers'",
+      "params": {}
+    },
+    {
+      "id": "registered-clustering-TimeSeriesDBSCAN",
+      "name": "TimeSeriesDBSCAN",
+      "task": "clustering",
+      "module": "sktime.clustering.dbscan.TimeSeriesDBSCAN",
+      "class_name": "TimeSeriesDBSCAN",
+      "curated": false,
+      "python_dependencies": null,
+      "enabled": true,
+      "params": {
+        "eps": 0.5,
+        "leaf_size": 30,
+        "min_samples": 5
+      }
+    },
+    {
+      "id": "registered-clustering-TimeSeriesKMeansTslearn",
+      "name": "TimeSeriesKMeansTslearn",
+      "task": "clustering",
+      "module": "sktime.clustering.k_means._k_means_tslearn.TimeSeriesKMeansTslearn",
+      "class_name": "TimeSeriesKMeansTslearn",
+      "curated": false,
+      "python_dependencies": "tslearn",
+      "enabled": false,
+      "disabled_reason": "ModuleNotFoundError: TimeSeriesKMeansTslearn requires package 'tslearn' to be present in the python environment, but 'tslearn' was not found. 'tslearn' is a dependency of TimeSeriesKMeansTslearn and required to construct it. To install the requirement 'tslearn', please run: `pip install tslearn` ",
+      "params": {}
+    },
+    {
+      "id": "registered-clustering-TimeSeriesKMedoids",
+      "name": "TimeSeriesKMedoids",
+      "task": "clustering",
+      "module": "sktime.clustering.k_medoids.TimeSeriesKMedoids",
+      "class_name": "TimeSeriesKMedoids",
+      "curated": false,
+      "python_dependencies": "numba",
+      "enabled": true,
+      "params": {
+        "max_iter": 300,
+        "n_clusters": 8,
+        "n_init": 10,
+        "tol": 1e-06
+      }
+    },
+    {
+      "id": "registered-clustering-TimeSeriesKShapes",
+      "name": "TimeSeriesKShapes",
+      "task": "clustering",
+      "module": "sktime.clustering.k_shapes.TimeSeriesKShapes",
+      "class_name": "TimeSeriesKShapes",
+      "curated": false,
+      "python_dependencies": "tslearn",
+      "enabled": false,
+      "disabled_reason": "ModuleNotFoundError: TimeSeriesKShapes requires package 'tslearn' to be present in the python environment, but 'tslearn' was not found. 'tslearn' is a dependency of TimeSeriesKShapes and required to construct it. To install the requirement 'tslearn', please run: `pip install tslearn` ",
+      "params": {}
+    },
+    {
+      "id": "registered-clustering-TimeSeriesKernelKMeans",
+      "name": "TimeSeriesKernelKMeans",
+      "task": "clustering",
+      "module": "sktime.clustering.kernel_k_means.TimeSeriesKernelKMeans",
+      "class_name": "TimeSeriesKernelKMeans",
+      "curated": false,
+      "python_dependencies": "tslearn",
+      "enabled": false,
+      "disabled_reason": "ModuleNotFoundError: TimeSeriesKernelKMeans requires package 'tslearn' to be present in the python environment, but 'tslearn' was not found. 'tslearn' is a dependency of TimeSeriesKernelKMeans and required to construct it. To install the requirement 'tslearn', please run: `pip install tslearn` ",
+      "params": {}
+    },
+    {
+      "id": "registered-clustering-TimeSeriesKvisibility",
+      "name": "TimeSeriesKvisibility",
+      "task": "clustering",
+      "module": "sktime.clustering.kvisibility.TimeSeriesKvisibility",
+      "class_name": "TimeSeriesKvisibility",
+      "curated": false,
+      "python_dependencies": [
+        "networkx",
+        "ts2vg"
+      ],
+      "enabled": false,
+      "disabled_reason": "ModuleNotFoundError: TimeSeriesKvisibility requires package 'ts2vg' to be present in the python environment, but 'ts2vg' was not found. 'ts2vg' is a dependency of TimeSeriesKvisibility and required to construct it. To install the requirement 'ts2vg', please run: `pip install ts2vg` ",
       "params": {}
     },
     {
@@ -3214,6 +3950,35 @@
       }
     },
     {
+      "id": "registered-anomaly_detection-PyODCBLOFDetector",
+      "name": "PyODCBLOFDetector",
+      "task": "anomaly_detection",
+      "module": "sktime.detection.adapters.pyod.PyODCBLOFDetector",
+      "class_name": "PyODCBLOFDetector",
+      "curated": false,
+      "python_dependencies": "pyod",
+      "subtype": "point_anomaly",
+      "enabled": true,
+      "params": {
+        "contamination": 0.1,
+        "n_clusters": 8
+      }
+    },
+    {
+      "id": "registered-anomaly_detection-PyODCOPODDetector",
+      "name": "PyODCOPODDetector",
+      "task": "anomaly_detection",
+      "module": "sktime.detection.adapters.pyod.PyODCOPODDetector",
+      "class_name": "PyODCOPODDetector",
+      "curated": false,
+      "python_dependencies": "pyod",
+      "subtype": "point_anomaly",
+      "enabled": true,
+      "params": {
+        "contamination": 0.1
+      }
+    },
+    {
       "id": "registered-anomaly_detection-PyODDetector",
       "name": "PyODDetector",
       "task": "anomaly_detection",
@@ -3225,6 +3990,109 @@
       "enabled": false,
       "disabled_reason": "TypeError: PyODDetector.__init__() missing 1 required positional argument: 'estimator'",
       "params": {}
+    },
+    {
+      "id": "registered-anomaly_detection-PyODECODDetector",
+      "name": "PyODECODDetector",
+      "task": "anomaly_detection",
+      "module": "sktime.detection.adapters.pyod.PyODECODDetector",
+      "class_name": "PyODECODDetector",
+      "curated": false,
+      "python_dependencies": "pyod",
+      "subtype": "point_anomaly",
+      "enabled": true,
+      "params": {
+        "contamination": 0.1
+      }
+    },
+    {
+      "id": "registered-anomaly_detection-PyODHBOSDetector",
+      "name": "PyODHBOSDetector",
+      "task": "anomaly_detection",
+      "module": "sktime.detection.adapters.pyod.PyODHBOSDetector",
+      "class_name": "PyODHBOSDetector",
+      "curated": false,
+      "python_dependencies": "pyod",
+      "subtype": "point_anomaly",
+      "enabled": true,
+      "params": {
+        "contamination": 0.1,
+        "n_bins": 10
+      }
+    },
+    {
+      "id": "registered-anomaly_detection-PyODIForestDetector",
+      "name": "PyODIForestDetector",
+      "task": "anomaly_detection",
+      "module": "sktime.detection.adapters.pyod.PyODIForestDetector",
+      "class_name": "PyODIForestDetector",
+      "curated": false,
+      "python_dependencies": "pyod",
+      "subtype": "point_anomaly",
+      "enabled": true,
+      "params": {
+        "contamination": 0.1,
+        "n_estimators": 100
+      }
+    },
+    {
+      "id": "registered-anomaly_detection-PyODKNNDetector",
+      "name": "PyODKNNDetector",
+      "task": "anomaly_detection",
+      "module": "sktime.detection.adapters.pyod.PyODKNNDetector",
+      "class_name": "PyODKNNDetector",
+      "curated": false,
+      "python_dependencies": "pyod",
+      "subtype": "point_anomaly",
+      "enabled": true,
+      "params": {
+        "contamination": 0.1,
+        "n_neighbors": 5
+      }
+    },
+    {
+      "id": "registered-anomaly_detection-PyODLOFDetector",
+      "name": "PyODLOFDetector",
+      "task": "anomaly_detection",
+      "module": "sktime.detection.adapters.pyod.PyODLOFDetector",
+      "class_name": "PyODLOFDetector",
+      "curated": false,
+      "python_dependencies": "pyod",
+      "subtype": "point_anomaly",
+      "enabled": true,
+      "params": {
+        "contamination": 0.1,
+        "n_neighbors": 20
+      }
+    },
+    {
+      "id": "registered-anomaly_detection-PyODMCDDetector",
+      "name": "PyODMCDDetector",
+      "task": "anomaly_detection",
+      "module": "sktime.detection.adapters.pyod.PyODMCDDetector",
+      "class_name": "PyODMCDDetector",
+      "curated": false,
+      "python_dependencies": "pyod",
+      "subtype": "point_anomaly",
+      "enabled": true,
+      "params": {
+        "contamination": 0.1
+      }
+    },
+    {
+      "id": "registered-anomaly_detection-PyODOCSVMDetector",
+      "name": "PyODOCSVMDetector",
+      "task": "anomaly_detection",
+      "module": "sktime.detection.adapters.pyod.PyODOCSVMDetector",
+      "class_name": "PyODOCSVMDetector",
+      "curated": false,
+      "python_dependencies": "pyod",
+      "subtype": "point_anomaly",
+      "enabled": true,
+      "params": {
+        "contamination": 0.1,
+        "nu": 0.5
+      }
     },
     {
       "id": "registered-anomaly_detection-SeededBinarySegmentation",
@@ -3317,6 +4185,85 @@
       "subtype": "segmentation",
       "enabled": true,
       "params": {}
+    },
+    {
+      "id": "user-ecod_direct",
+      "task": "anomaly_detection",
+      "module": "experiments.ecod_direct.Algorithm",
+      "class_name": "Algorithm",
+      "curated": false,
+      "user": true,
+      "plugin_file": "/home/xiezhe/sktime/playground/experiments/ecod_direct.py",
+      "name": "ecod-direct",
+      "enabled": true,
+      "params": {
+        "contamination": 0.02
+      },
+      "subtype": "point_anomaly"
+    },
+    {
+      "id": "user-my_ecod",
+      "task": "anomaly_detection",
+      "module": "experiments.my_ecod.Algorithm",
+      "class_name": "Algorithm",
+      "curated": false,
+      "user": true,
+      "plugin_file": "/home/xiezhe/sktime/playground/experiments/my_ecod.py",
+      "name": "my_ecod",
+      "enabled": true,
+      "params": {
+        "contamination": 0.02
+      },
+      "subtype": "point_anomaly",
+      "forked_from": "registered-anomaly_detection-PyODECODDetector"
+    },
+    {
+      "id": "user-my_timesnet",
+      "task": "forecasting",
+      "module": "experiments.my_timesnet.Algorithm",
+      "class_name": "Algorithm",
+      "curated": false,
+      "user": true,
+      "plugin_file": "/home/xiezhe/sktime/playground/experiments/my_timesnet.py",
+      "name": "my_timesnet",
+      "enabled": true,
+      "params": {
+        "horizon": 12,
+        "context_window": 36,
+        "batch_size": 32,
+        "channel_independence": 1,
+        "d_ff": 128,
+        "d_layers": 1,
+        "d_model": 32,
+        "dropout": 0.1,
+        "e_layers": 2,
+        "factor": 3,
+        "label_len": 18,
+        "lr": 0.001,
+        "moving_avg": 25,
+        "n_heads": 8,
+        "num_epochs": 2,
+        "num_kernels": 6,
+        "pred_len": 12,
+        "seq_len": 36,
+        "top_k": 3
+      },
+      "forked_from": "registered-forecasting-TimesNetForecaster"
+    },
+    {
+      "id": "user-seasonal_ma",
+      "task": "forecasting",
+      "module": "experiments.seasonal_ma.Algorithm",
+      "class_name": "Algorithm",
+      "curated": false,
+      "user": true,
+      "plugin_file": "/home/xiezhe/sktime/playground/experiments/seasonal_ma.py",
+      "name": "seasonal-moving-average",
+      "enabled": true,
+      "params": {
+        "window": 12,
+        "seasonal_period": 12
+      }
     }
   ],
   "preprocessors": [
@@ -3339,7 +4286,9 @@
       "python_dependencies": null,
       "enabled": true,
       "compatible_tasks": [
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "adi_threshold": 1.32,
@@ -3371,7 +4320,9 @@
       "python_dependencies": "statsmodels",
       "enabled": true,
       "compatible_tasks": [
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {}
     },
@@ -3385,7 +4336,9 @@
       "python_dependencies": "statsmodels",
       "enabled": true,
       "compatible_tasks": [
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "K": 12,
@@ -3405,7 +4358,9 @@
       "compatible_tasks": [
         "forecasting",
         "anomaly_detection",
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {}
     },
@@ -3438,7 +4393,9 @@
       "compatible_tasks": [
         "forecasting",
         "anomaly_detection",
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "high": 32,
@@ -3455,7 +4412,9 @@
       "python_dependencies": "numba",
       "enabled": true,
       "compatible_tasks": [
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {}
     },
@@ -3469,7 +4428,9 @@
       "python_dependencies": "pycatch22",
       "enabled": true,
       "compatible_tasks": [
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {}
     },
@@ -3483,7 +4444,9 @@
       "python_dependencies": "numba",
       "enabled": true,
       "compatible_tasks": [
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "exclusion_radius": 0.05,
@@ -3526,7 +4489,9 @@
       "compatible_tasks": [
         "forecasting",
         "anomaly_detection",
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {}
     },
@@ -3542,7 +4507,9 @@
       "compatible_tasks": [
         "forecasting",
         "anomaly_detection",
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {}
     },
@@ -3558,7 +4525,9 @@
       "compatible_tasks": [
         "forecasting",
         "anomaly_detection",
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "sp": 1
@@ -3576,7 +4545,9 @@
       "compatible_tasks": [
         "forecasting",
         "anomaly_detection",
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {}
     },
@@ -3592,7 +4563,9 @@
       "compatible_tasks": [
         "forecasting",
         "anomaly_detection",
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "frac": 0.95
@@ -3608,7 +4581,9 @@
       "python_dependencies": null,
       "enabled": true,
       "compatible_tasks": [
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "num_levels": 3
@@ -3626,7 +4601,9 @@
       "compatible_tasks": [
         "forecasting",
         "anomaly_detection",
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {}
     },
@@ -3642,7 +4619,9 @@
       "compatible_tasks": [
         "forecasting",
         "anomaly_detection",
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "sp": 1
@@ -3660,7 +4639,9 @@
       "compatible_tasks": [
         "forecasting",
         "anomaly_detection",
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {}
     },
@@ -3676,7 +4657,9 @@
       "compatible_tasks": [
         "forecasting",
         "anomaly_detection",
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "lags": 1
@@ -3694,7 +4677,9 @@
       "compatible_tasks": [
         "forecasting",
         "anomaly_detection",
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "dilation": 2
@@ -3710,7 +4695,9 @@
       "python_dependencies": null,
       "enabled": true,
       "compatible_tasks": [
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {}
     },
@@ -3726,7 +4713,9 @@
       "compatible_tasks": [
         "forecasting",
         "anomaly_detection",
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "axis": 0
@@ -3744,7 +4733,9 @@
       "compatible_tasks": [
         "forecasting",
         "anomaly_detection",
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "alpha": 1.0
@@ -3762,7 +4753,9 @@
       "compatible_tasks": [
         "forecasting",
         "anomaly_detection",
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "power": 0.5
@@ -3778,7 +4771,9 @@
       "python_dependencies": null,
       "enabled": true,
       "compatible_tasks": [
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "alpha": 0.5,
@@ -3816,7 +4811,9 @@
       "python_dependencies": null,
       "enabled": true,
       "compatible_tasks": [
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {}
     },
@@ -3832,7 +4829,9 @@
       "compatible_tasks": [
         "forecasting",
         "anomaly_detection",
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {}
     },
@@ -3846,7 +4845,9 @@
       "python_dependencies": null,
       "enabled": true,
       "compatible_tasks": [
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "num_bins": 8,
@@ -3866,7 +4867,9 @@
       "compatible_tasks": [
         "forecasting",
         "anomaly_detection",
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "lamb": 1600
@@ -3884,7 +4887,9 @@
       "compatible_tasks": [
         "forecasting",
         "anomaly_detection",
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "k": 1.4826,
@@ -3904,7 +4909,9 @@
       "compatible_tasks": [
         "forecasting",
         "anomaly_detection",
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "K": 1,
@@ -3927,7 +4934,9 @@
       "python_dependencies": null,
       "enabled": true,
       "compatible_tasks": [
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "confidence_level": 0.95,
@@ -3947,7 +4956,9 @@
       "compatible_tasks": [
         "forecasting",
         "anomaly_detection",
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {}
     },
@@ -3963,7 +4974,9 @@
       "compatible_tasks": [
         "forecasting",
         "anomaly_detection",
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {}
     },
@@ -3979,7 +4992,9 @@
       "compatible_tasks": [
         "forecasting",
         "anomaly_detection",
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {}
     },
@@ -3993,7 +5008,9 @@
       "python_dependencies": null,
       "enabled": true,
       "compatible_tasks": [
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "intervals": 10
@@ -4011,7 +5028,9 @@
       "compatible_tasks": [
         "forecasting",
         "anomaly_detection",
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {}
     },
@@ -4027,7 +5046,9 @@
       "compatible_tasks": [
         "forecasting",
         "anomaly_detection",
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {}
     },
@@ -4041,7 +5062,9 @@
       "python_dependencies": null,
       "enabled": true,
       "compatible_tasks": [
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {}
     },
@@ -4057,7 +5080,9 @@
       "compatible_tasks": [
         "forecasting",
         "anomaly_detection",
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "lags": 0
@@ -4075,7 +5100,9 @@
       "compatible_tasks": [
         "forecasting",
         "anomaly_detection",
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "offset": 0,
@@ -4094,7 +5121,9 @@
       "compatible_tasks": [
         "forecasting",
         "anomaly_detection",
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {}
     },
@@ -4125,7 +5154,9 @@
       "python_dependencies": null,
       "enabled": true,
       "compatible_tasks": [
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "m": 10
@@ -4158,7 +5189,9 @@
       "python_dependencies": "numba",
       "enabled": true,
       "compatible_tasks": [
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "max_dilations_per_kernel": 32,
@@ -4176,7 +5209,9 @@
       "python_dependencies": "numba",
       "enabled": true,
       "compatible_tasks": [
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "max_dilations_per_kernel": 32,
@@ -4194,7 +5229,9 @@
       "python_dependencies": "numba",
       "enabled": true,
       "compatible_tasks": [
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "max_dilations_per_kernel": 32,
@@ -4212,7 +5249,9 @@
       "python_dependencies": "numba",
       "enabled": true,
       "compatible_tasks": [
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "max_dilations_per_kernel": 32,
@@ -4231,7 +5270,9 @@
       "python_dependencies": "numba",
       "enabled": true,
       "compatible_tasks": [
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "max_dilations_per_kernel": 32,
@@ -4252,7 +5293,9 @@
       "compatible_tasks": [
         "forecasting",
         "anomaly_detection",
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "alpha": 0
@@ -4268,7 +5311,9 @@
       "python_dependencies": null,
       "enabled": true,
       "compatible_tasks": [
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "frame_size": 0,
@@ -4285,7 +5330,9 @@
       "python_dependencies": null,
       "enabled": true,
       "compatible_tasks": [
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "num_intervals": 8
@@ -4303,7 +5350,9 @@
       "compatible_tasks": [
         "forecasting",
         "anomaly_detection",
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "tol": 0.0
@@ -4321,7 +5370,9 @@
       "compatible_tasks": [
         "forecasting",
         "anomaly_detection",
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "fill_value": 0
@@ -4337,7 +5388,9 @@
       "python_dependencies": "statsmodels",
       "enabled": true,
       "compatible_tasks": [
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {}
     },
@@ -4351,7 +5404,9 @@
       "python_dependencies": null,
       "enabled": true,
       "compatible_tasks": [
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "min_length": 2,
@@ -4368,7 +5423,9 @@
       "python_dependencies": null,
       "enabled": true,
       "compatible_tasks": [
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "gamma": 1.0
@@ -4384,7 +5441,9 @@
       "python_dependencies": null,
       "enabled": true,
       "compatible_tasks": [
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {}
     },
@@ -4398,7 +5457,9 @@
       "python_dependencies": null,
       "enabled": true,
       "compatible_tasks": [
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {}
     },
@@ -4412,7 +5473,9 @@
       "python_dependencies": null,
       "enabled": true,
       "compatible_tasks": [
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "n_intervals": 100,
@@ -4431,7 +5494,9 @@
       "compatible_tasks": [
         "forecasting",
         "anomaly_detection",
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "n": 1.0,
@@ -4465,7 +5530,9 @@
       "compatible_tasks": [
         "forecasting",
         "anomaly_detection",
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "lags": 0,
@@ -4484,7 +5551,9 @@
       "compatible_tasks": [
         "forecasting",
         "anomaly_detection",
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {}
     },
@@ -4498,7 +5567,9 @@
       "python_dependencies": "numba",
       "enabled": true,
       "compatible_tasks": [
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "n_jobs": 1,
@@ -4515,7 +5586,9 @@
       "python_dependencies": null,
       "enabled": true,
       "compatible_tasks": [
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "alphabet_size": 5,
@@ -4533,7 +5606,9 @@
       "python_dependencies": null,
       "enabled": true,
       "compatible_tasks": [
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "alphabet_size": 4,
@@ -4553,7 +5628,9 @@
       "compatible_tasks": [
         "forecasting",
         "anomaly_detection",
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "low_pass_deg": 1,
@@ -4578,7 +5655,9 @@
       "compatible_tasks": [
         "forecasting",
         "anomaly_detection",
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "alpha": 0.01,
@@ -4599,7 +5678,9 @@
       "compatible_tasks": [
         "forecasting",
         "anomaly_detection",
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "mad_normalization_factor": 1.4826
@@ -4617,7 +5698,9 @@
       "compatible_tasks": [
         "forecasting",
         "anomaly_detection",
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {}
     },
@@ -4631,7 +5714,9 @@
       "python_dependencies": null,
       "enabled": true,
       "compatible_tasks": [
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "degree": 2
@@ -4647,7 +5732,9 @@
       "python_dependencies": null,
       "enabled": true,
       "compatible_tasks": [
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "window_length": 5
@@ -4663,7 +5750,9 @@
       "python_dependencies": null,
       "enabled": true,
       "compatible_tasks": [
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "num_intervals": 8
@@ -4681,7 +5770,9 @@
       "compatible_tasks": [
         "forecasting",
         "anomaly_detection",
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {}
     },
@@ -4697,7 +5788,9 @@
       "compatible_tasks": [
         "forecasting",
         "anomaly_detection",
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {}
     },
@@ -4711,7 +5804,9 @@
       "python_dependencies": null,
       "enabled": true,
       "compatible_tasks": [
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {}
     },
@@ -4725,7 +5820,9 @@
       "python_dependencies": null,
       "enabled": true,
       "compatible_tasks": [
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {}
     },
@@ -4739,7 +5836,9 @@
       "python_dependencies": null,
       "enabled": true,
       "compatible_tasks": [
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {}
     },
@@ -4755,7 +5854,9 @@
       "compatible_tasks": [
         "forecasting",
         "anomaly_detection",
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {}
     },
@@ -4771,7 +5872,9 @@
       "compatible_tasks": [
         "forecasting",
         "anomaly_detection",
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {}
     },
@@ -4787,7 +5890,9 @@
       "compatible_tasks": [
         "forecasting",
         "anomaly_detection",
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {}
     },
@@ -4801,7 +5906,9 @@
       "python_dependencies": null,
       "enabled": true,
       "compatible_tasks": [
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "DC": 0,
@@ -4845,7 +5952,9 @@
       "compatible_tasks": [
         "forecasting",
         "anomaly_detection",
-        "classification"
+        "classification",
+        "regression",
+        "clustering"
       ],
       "params": {
         "n_jobs": -1
@@ -4907,6 +6016,48 @@
       "id": "gunpoint",
       "name": "GunPoint",
       "task": "classification",
+      "source": "local",
+      "loader": "sktime.datasets.load_gunpoint",
+      "enabled": true
+    },
+    {
+      "id": "covid-3month",
+      "name": "Covid3Month",
+      "task": "regression",
+      "source": "local",
+      "loader": "sktime.datasets.load_covid_3month",
+      "enabled": true,
+      "default": true
+    },
+    {
+      "id": "tecator",
+      "name": "Tecator",
+      "task": "regression",
+      "source": "local",
+      "loader": "sktime.datasets.load_tecator",
+      "enabled": true
+    },
+    {
+      "id": "unit-test-cl",
+      "name": "UnitTest (labels for ARI)",
+      "task": "clustering",
+      "source": "local",
+      "loader": "sktime.datasets._single_problem_loaders.load_unit_test",
+      "enabled": true,
+      "default": true
+    },
+    {
+      "id": "arrow-head-cl",
+      "name": "ArrowHead (labels for ARI)",
+      "task": "clustering",
+      "source": "local",
+      "loader": "sktime.datasets.load_arrow_head",
+      "enabled": true
+    },
+    {
+      "id": "gunpoint-cl",
+      "name": "GunPoint (labels for ARI)",
+      "task": "clustering",
       "source": "local",
       "loader": "sktime.datasets.load_gunpoint",
       "enabled": true
@@ -6786,6 +7937,31 @@
       "task": "classification"
     },
     {
+      "id": "mae",
+      "name": "MAE",
+      "task": "regression"
+    },
+    {
+      "id": "rmse",
+      "name": "RMSE",
+      "task": "regression"
+    },
+    {
+      "id": "r2",
+      "name": "R²",
+      "task": "regression"
+    },
+    {
+      "id": "ari",
+      "name": "Adjusted Rand Index",
+      "task": "clustering"
+    },
+    {
+      "id": "nmi",
+      "name": "Normalized Mutual Info",
+      "task": "clustering"
+    },
+    {
       "id": "precision",
       "name": "Precision",
       "task": "anomaly_detection"
@@ -7753,6 +8929,31 @@
       "dataset_id": "ucr-yoga"
     },
     {
+      "task": "regression",
+      "algorithm_id": "summary-random-forest-regressor",
+      "dataset_id": "covid-3month"
+    },
+    {
+      "task": "regression",
+      "algorithm_id": "summary-random-forest-regressor",
+      "dataset_id": "tecator"
+    },
+    {
+      "task": "clustering",
+      "algorithm_id": "ts-kmeans",
+      "dataset_id": "unit-test-cl"
+    },
+    {
+      "task": "clustering",
+      "algorithm_id": "ts-kmeans",
+      "dataset_id": "arrow-head-cl"
+    },
+    {
+      "task": "clustering",
+      "algorithm_id": "ts-kmeans",
+      "dataset_id": "gunpoint-cl"
+    },
+    {
       "task": "anomaly_detection",
       "algorithm_id": "threshold-detector",
       "dataset_id": "yahoo"
@@ -8484,6 +9685,126 @@
     },
     {
       "task": "forecasting",
+      "algorithm_id": "registered-forecasting-AutoformerForecaster",
+      "dataset_id": "airline"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-AutoformerForecaster",
+      "dataset_id": "shampoo-sales"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-AutoformerForecaster",
+      "dataset_id": "lynx"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-AutoformerForecaster",
+      "dataset_id": "hf-aqshunyi"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-AutoformerForecaster",
+      "dataset_id": "hf-covid-19"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-AutoformerForecaster",
+      "dataset_id": "hf-czelan"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-AutoformerForecaster",
+      "dataset_id": "hf-etth1"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-AutoformerForecaster",
+      "dataset_id": "hf-etth2"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-AutoformerForecaster",
+      "dataset_id": "hf-ettm1"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-AutoformerForecaster",
+      "dataset_id": "hf-ettm2"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-AutoformerForecaster",
+      "dataset_id": "hf-electricity"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-AutoformerForecaster",
+      "dataset_id": "hf-exchange"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-AutoformerForecaster",
+      "dataset_id": "hf-fred-md"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-AutoformerForecaster",
+      "dataset_id": "hf-ili"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-AutoformerForecaster",
+      "dataset_id": "hf-nasdaq"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-AutoformerForecaster",
+      "dataset_id": "hf-nn5"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-AutoformerForecaster",
+      "dataset_id": "hf-nyse"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-AutoformerForecaster",
+      "dataset_id": "hf-pems08"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-AutoformerForecaster",
+      "dataset_id": "hf-solar"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-AutoformerForecaster",
+      "dataset_id": "hf-traffic"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-AutoformerForecaster",
+      "dataset_id": "hf-weather"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-AutoformerForecaster",
+      "dataset_id": "hf-wike2000"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-AutoformerForecaster",
+      "dataset_id": "hf-wind"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-AutoformerForecaster",
+      "dataset_id": "hf-zafnoo"
+    },
+    {
+      "task": "forecasting",
       "algorithm_id": "registered-forecasting-BaggingForecaster",
       "dataset_id": "airline"
     },
@@ -8724,6 +10045,126 @@
     },
     {
       "task": "forecasting",
+      "algorithm_id": "registered-forecasting-DLinearForecaster",
+      "dataset_id": "airline"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-DLinearForecaster",
+      "dataset_id": "shampoo-sales"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-DLinearForecaster",
+      "dataset_id": "lynx"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-DLinearForecaster",
+      "dataset_id": "hf-aqshunyi"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-DLinearForecaster",
+      "dataset_id": "hf-covid-19"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-DLinearForecaster",
+      "dataset_id": "hf-czelan"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-DLinearForecaster",
+      "dataset_id": "hf-etth1"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-DLinearForecaster",
+      "dataset_id": "hf-etth2"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-DLinearForecaster",
+      "dataset_id": "hf-ettm1"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-DLinearForecaster",
+      "dataset_id": "hf-ettm2"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-DLinearForecaster",
+      "dataset_id": "hf-electricity"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-DLinearForecaster",
+      "dataset_id": "hf-exchange"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-DLinearForecaster",
+      "dataset_id": "hf-fred-md"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-DLinearForecaster",
+      "dataset_id": "hf-ili"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-DLinearForecaster",
+      "dataset_id": "hf-nasdaq"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-DLinearForecaster",
+      "dataset_id": "hf-nn5"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-DLinearForecaster",
+      "dataset_id": "hf-nyse"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-DLinearForecaster",
+      "dataset_id": "hf-pems08"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-DLinearForecaster",
+      "dataset_id": "hf-solar"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-DLinearForecaster",
+      "dataset_id": "hf-traffic"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-DLinearForecaster",
+      "dataset_id": "hf-weather"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-DLinearForecaster",
+      "dataset_id": "hf-wike2000"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-DLinearForecaster",
+      "dataset_id": "hf-wind"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-DLinearForecaster",
+      "dataset_id": "hf-zafnoo"
+    },
+    {
+      "task": "forecasting",
       "algorithm_id": "registered-forecasting-DynamicFactor",
       "dataset_id": "airline"
     },
@@ -8840,6 +10281,126 @@
     {
       "task": "forecasting",
       "algorithm_id": "registered-forecasting-DynamicFactor",
+      "dataset_id": "hf-zafnoo"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ESRNNForecaster",
+      "dataset_id": "airline"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ESRNNForecaster",
+      "dataset_id": "shampoo-sales"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ESRNNForecaster",
+      "dataset_id": "lynx"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ESRNNForecaster",
+      "dataset_id": "hf-aqshunyi"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ESRNNForecaster",
+      "dataset_id": "hf-covid-19"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ESRNNForecaster",
+      "dataset_id": "hf-czelan"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ESRNNForecaster",
+      "dataset_id": "hf-etth1"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ESRNNForecaster",
+      "dataset_id": "hf-etth2"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ESRNNForecaster",
+      "dataset_id": "hf-ettm1"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ESRNNForecaster",
+      "dataset_id": "hf-ettm2"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ESRNNForecaster",
+      "dataset_id": "hf-electricity"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ESRNNForecaster",
+      "dataset_id": "hf-exchange"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ESRNNForecaster",
+      "dataset_id": "hf-fred-md"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ESRNNForecaster",
+      "dataset_id": "hf-ili"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ESRNNForecaster",
+      "dataset_id": "hf-nasdaq"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ESRNNForecaster",
+      "dataset_id": "hf-nn5"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ESRNNForecaster",
+      "dataset_id": "hf-nyse"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ESRNNForecaster",
+      "dataset_id": "hf-pems08"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ESRNNForecaster",
+      "dataset_id": "hf-solar"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ESRNNForecaster",
+      "dataset_id": "hf-traffic"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ESRNNForecaster",
+      "dataset_id": "hf-weather"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ESRNNForecaster",
+      "dataset_id": "hf-wike2000"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ESRNNForecaster",
+      "dataset_id": "hf-wind"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ESRNNForecaster",
       "dataset_id": "hf-zafnoo"
     },
     {
@@ -8964,6 +10525,366 @@
     },
     {
       "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FEDformerForecaster",
+      "dataset_id": "airline"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FEDformerForecaster",
+      "dataset_id": "shampoo-sales"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FEDformerForecaster",
+      "dataset_id": "lynx"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FEDformerForecaster",
+      "dataset_id": "hf-aqshunyi"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FEDformerForecaster",
+      "dataset_id": "hf-covid-19"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FEDformerForecaster",
+      "dataset_id": "hf-czelan"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FEDformerForecaster",
+      "dataset_id": "hf-etth1"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FEDformerForecaster",
+      "dataset_id": "hf-etth2"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FEDformerForecaster",
+      "dataset_id": "hf-ettm1"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FEDformerForecaster",
+      "dataset_id": "hf-ettm2"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FEDformerForecaster",
+      "dataset_id": "hf-electricity"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FEDformerForecaster",
+      "dataset_id": "hf-exchange"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FEDformerForecaster",
+      "dataset_id": "hf-fred-md"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FEDformerForecaster",
+      "dataset_id": "hf-ili"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FEDformerForecaster",
+      "dataset_id": "hf-nasdaq"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FEDformerForecaster",
+      "dataset_id": "hf-nn5"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FEDformerForecaster",
+      "dataset_id": "hf-nyse"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FEDformerForecaster",
+      "dataset_id": "hf-pems08"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FEDformerForecaster",
+      "dataset_id": "hf-solar"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FEDformerForecaster",
+      "dataset_id": "hf-traffic"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FEDformerForecaster",
+      "dataset_id": "hf-weather"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FEDformerForecaster",
+      "dataset_id": "hf-wike2000"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FEDformerForecaster",
+      "dataset_id": "hf-wind"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FEDformerForecaster",
+      "dataset_id": "hf-zafnoo"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FreTSForecaster",
+      "dataset_id": "airline"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FreTSForecaster",
+      "dataset_id": "shampoo-sales"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FreTSForecaster",
+      "dataset_id": "lynx"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FreTSForecaster",
+      "dataset_id": "hf-aqshunyi"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FreTSForecaster",
+      "dataset_id": "hf-covid-19"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FreTSForecaster",
+      "dataset_id": "hf-czelan"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FreTSForecaster",
+      "dataset_id": "hf-etth1"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FreTSForecaster",
+      "dataset_id": "hf-etth2"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FreTSForecaster",
+      "dataset_id": "hf-ettm1"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FreTSForecaster",
+      "dataset_id": "hf-ettm2"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FreTSForecaster",
+      "dataset_id": "hf-electricity"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FreTSForecaster",
+      "dataset_id": "hf-exchange"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FreTSForecaster",
+      "dataset_id": "hf-fred-md"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FreTSForecaster",
+      "dataset_id": "hf-ili"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FreTSForecaster",
+      "dataset_id": "hf-nasdaq"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FreTSForecaster",
+      "dataset_id": "hf-nn5"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FreTSForecaster",
+      "dataset_id": "hf-nyse"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FreTSForecaster",
+      "dataset_id": "hf-pems08"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FreTSForecaster",
+      "dataset_id": "hf-solar"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FreTSForecaster",
+      "dataset_id": "hf-traffic"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FreTSForecaster",
+      "dataset_id": "hf-weather"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FreTSForecaster",
+      "dataset_id": "hf-wike2000"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FreTSForecaster",
+      "dataset_id": "hf-wind"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-FreTSForecaster",
+      "dataset_id": "hf-zafnoo"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ITransformerForecaster",
+      "dataset_id": "airline"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ITransformerForecaster",
+      "dataset_id": "shampoo-sales"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ITransformerForecaster",
+      "dataset_id": "lynx"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ITransformerForecaster",
+      "dataset_id": "hf-aqshunyi"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ITransformerForecaster",
+      "dataset_id": "hf-covid-19"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ITransformerForecaster",
+      "dataset_id": "hf-czelan"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ITransformerForecaster",
+      "dataset_id": "hf-etth1"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ITransformerForecaster",
+      "dataset_id": "hf-etth2"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ITransformerForecaster",
+      "dataset_id": "hf-ettm1"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ITransformerForecaster",
+      "dataset_id": "hf-ettm2"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ITransformerForecaster",
+      "dataset_id": "hf-electricity"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ITransformerForecaster",
+      "dataset_id": "hf-exchange"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ITransformerForecaster",
+      "dataset_id": "hf-fred-md"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ITransformerForecaster",
+      "dataset_id": "hf-ili"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ITransformerForecaster",
+      "dataset_id": "hf-nasdaq"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ITransformerForecaster",
+      "dataset_id": "hf-nn5"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ITransformerForecaster",
+      "dataset_id": "hf-nyse"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ITransformerForecaster",
+      "dataset_id": "hf-pems08"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ITransformerForecaster",
+      "dataset_id": "hf-solar"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ITransformerForecaster",
+      "dataset_id": "hf-traffic"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ITransformerForecaster",
+      "dataset_id": "hf-weather"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ITransformerForecaster",
+      "dataset_id": "hf-wike2000"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ITransformerForecaster",
+      "dataset_id": "hf-wind"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ITransformerForecaster",
+      "dataset_id": "hf-zafnoo"
+    },
+    {
+      "task": "forecasting",
       "algorithm_id": "registered-forecasting-MAPAForecaster",
       "dataset_id": "airline"
     },
@@ -9204,6 +11125,126 @@
     },
     {
       "task": "forecasting",
+      "algorithm_id": "registered-forecasting-RBFForecaster",
+      "dataset_id": "airline"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-RBFForecaster",
+      "dataset_id": "shampoo-sales"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-RBFForecaster",
+      "dataset_id": "lynx"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-RBFForecaster",
+      "dataset_id": "hf-aqshunyi"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-RBFForecaster",
+      "dataset_id": "hf-covid-19"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-RBFForecaster",
+      "dataset_id": "hf-czelan"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-RBFForecaster",
+      "dataset_id": "hf-etth1"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-RBFForecaster",
+      "dataset_id": "hf-etth2"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-RBFForecaster",
+      "dataset_id": "hf-ettm1"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-RBFForecaster",
+      "dataset_id": "hf-ettm2"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-RBFForecaster",
+      "dataset_id": "hf-electricity"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-RBFForecaster",
+      "dataset_id": "hf-exchange"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-RBFForecaster",
+      "dataset_id": "hf-fred-md"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-RBFForecaster",
+      "dataset_id": "hf-ili"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-RBFForecaster",
+      "dataset_id": "hf-nasdaq"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-RBFForecaster",
+      "dataset_id": "hf-nn5"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-RBFForecaster",
+      "dataset_id": "hf-nyse"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-RBFForecaster",
+      "dataset_id": "hf-pems08"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-RBFForecaster",
+      "dataset_id": "hf-solar"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-RBFForecaster",
+      "dataset_id": "hf-traffic"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-RBFForecaster",
+      "dataset_id": "hf-weather"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-RBFForecaster",
+      "dataset_id": "hf-wike2000"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-RBFForecaster",
+      "dataset_id": "hf-wind"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-RBFForecaster",
+      "dataset_id": "hf-zafnoo"
+    },
+    {
+      "task": "forecasting",
       "algorithm_id": "registered-forecasting-SARIMAX",
       "dataset_id": "airline"
     },
@@ -11120,6 +13161,126 @@
     {
       "task": "forecasting",
       "algorithm_id": "registered-forecasting-ThetaModularForecaster",
+      "dataset_id": "hf-zafnoo"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TimesNetForecaster",
+      "dataset_id": "airline"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TimesNetForecaster",
+      "dataset_id": "shampoo-sales"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TimesNetForecaster",
+      "dataset_id": "lynx"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TimesNetForecaster",
+      "dataset_id": "hf-aqshunyi"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TimesNetForecaster",
+      "dataset_id": "hf-covid-19"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TimesNetForecaster",
+      "dataset_id": "hf-czelan"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TimesNetForecaster",
+      "dataset_id": "hf-etth1"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TimesNetForecaster",
+      "dataset_id": "hf-etth2"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TimesNetForecaster",
+      "dataset_id": "hf-ettm1"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TimesNetForecaster",
+      "dataset_id": "hf-ettm2"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TimesNetForecaster",
+      "dataset_id": "hf-electricity"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TimesNetForecaster",
+      "dataset_id": "hf-exchange"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TimesNetForecaster",
+      "dataset_id": "hf-fred-md"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TimesNetForecaster",
+      "dataset_id": "hf-ili"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TimesNetForecaster",
+      "dataset_id": "hf-nasdaq"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TimesNetForecaster",
+      "dataset_id": "hf-nn5"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TimesNetForecaster",
+      "dataset_id": "hf-nyse"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TimesNetForecaster",
+      "dataset_id": "hf-pems08"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TimesNetForecaster",
+      "dataset_id": "hf-solar"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TimesNetForecaster",
+      "dataset_id": "hf-traffic"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TimesNetForecaster",
+      "dataset_id": "hf-weather"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TimesNetForecaster",
+      "dataset_id": "hf-wike2000"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TimesNetForecaster",
+      "dataset_id": "hf-wind"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TimesNetForecaster",
       "dataset_id": "hf-zafnoo"
     },
     {
@@ -21804,6 +23965,836 @@
     },
     {
       "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "unit-test"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "arrow-head"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "italy-power-demand"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "gunpoint"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-acsf1"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-adiac"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-allgesturewiimotex"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-allgesturewiimotey"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-allgesturewiimotez"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-arrowhead"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-articularywordrecognition"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-asphaltobstacles"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-asphaltobstaclescoordinates"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-asphaltpavementtypecoordinates"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-asphaltregularitycoordinates"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-atrialfibrillation"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-bme"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-basicmotions"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-beef"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-beetlefly"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-birdchicken"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-cbf"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-car"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-charactertrajectories"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-chinatown"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-chlorineconcentration"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-cincecgtorso"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-coffee"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-computers"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-cricket"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-cricketx"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-crickety"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-cricketz"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-crop"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-diatomsizereduction"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-distalphalanxoutlineagegroup"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-distalphalanxoutlinecorrect"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-distalphalanxtw"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-dodgerloopday"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-dodgerloopgame"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-dodgerloopweekend"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-duckduckgeese"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-ecg200"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-ecg5000"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-ecgfivedays"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-eoghorizontalsignal"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-eogverticalsignal"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-ering"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-earthquakes"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-eigenworms"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-electricdevices"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-epilepsy"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-ethanolconcentration"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-ethanollevel"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-faceall"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-facedetection"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-facefour"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-facesucr"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-fiftywords"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-fingermovements"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-fish"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-forda"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-fordb"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-freezerregulartrain"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-freezersmalltrain"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-fungi"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-gesturemidaird1"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-gesturemidaird2"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-gesturemidaird3"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-gesturepebblez1"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-gesturepebblez2"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-gunpoint"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-gunpointagespan"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-gunpointmaleversusfemale"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-gunpointoldversusyoung"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-ham"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-handmovementdirection"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-handoutlines"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-handwriting"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-haptics"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-heartbeat"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-herring"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-housetwenty"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-inlineskate"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-insectepgregulartrain"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-insectepgsmalltrain"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-insectwingbeat"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-insectwingbeatsound"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-italypowerdemand"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-japanesevowels"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-lsst"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-largekitchenappliances"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-libras"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-lightning2"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-lightning7"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-mallat"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-meat"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-medicalimages"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-melbournepedestrian"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-middlephalanxoutlineagegroup"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-middlephalanxoutlinecorrect"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-middlephalanxtw"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-mixedshapesregulartrain"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-mixedshapessmalltrain"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-motestrain"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-motorimagery"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-natops"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-noninvasivefetalecgthorax1"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-noninvasivefetalecgthorax2"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-osuleaf"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-oliveoil"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-pems-sf"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-plaid"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-pendigits"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-phalangesoutlinescorrect"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-phoneme"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-phonemespectra"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-pickupgesturewiimotez"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-pigairwaypressure"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-pigartpressure"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-pigcvp"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-plane"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-powercons"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-proximalphalanxoutlineagegroup"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-proximalphalanxoutlinecorrect"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-proximalphalanxtw"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-racketsports"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-refrigerationdevices"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-rock"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-screentype"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-selfregulationscp1"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-selfregulationscp2"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-semghandgenderch2"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-semghandmovementch2"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-semghandsubjectch2"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-shakegesturewiimotez"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-shapeletsim"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-shapesall"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-smallkitchenappliances"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-smoothsubspace"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-sonyaiborobotsurface1"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-sonyaiborobotsurface2"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-spokenarabicdigits"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-standwalkjump"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-starlightcurves"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-strawberry"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-swedishleaf"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-symbols"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-syntheticcontrol"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-toesegmentation1"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-toesegmentation2"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-trace"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-twoleadecg"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-twopatterns"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-umd"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-uwavegesturelibrary"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-uwavegesturelibraryall"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-uwavegesturelibraryx"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-uwavegesturelibraryy"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-uwavegesturelibraryz"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-wafer"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-wine"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-wordsynonyms"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-worms"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-wormstwoclass"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-GRUClassifier",
+      "dataset_id": "ucr-yoga"
+    },
+    {
+      "task": "classification",
       "algorithm_id": "registered-classification-HIVECOTEV1",
       "dataset_id": "unit-test"
     },
@@ -30934,6 +33925,836 @@
     },
     {
       "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "unit-test"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "arrow-head"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "italy-power-demand"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "gunpoint"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-acsf1"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-adiac"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-allgesturewiimotex"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-allgesturewiimotey"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-allgesturewiimotez"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-arrowhead"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-articularywordrecognition"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-asphaltobstacles"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-asphaltobstaclescoordinates"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-asphaltpavementtypecoordinates"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-asphaltregularitycoordinates"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-atrialfibrillation"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-bme"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-basicmotions"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-beef"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-beetlefly"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-birdchicken"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-cbf"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-car"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-charactertrajectories"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-chinatown"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-chlorineconcentration"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-cincecgtorso"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-coffee"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-computers"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-cricket"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-cricketx"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-crickety"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-cricketz"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-crop"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-diatomsizereduction"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-distalphalanxoutlineagegroup"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-distalphalanxoutlinecorrect"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-distalphalanxtw"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-dodgerloopday"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-dodgerloopgame"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-dodgerloopweekend"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-duckduckgeese"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-ecg200"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-ecg5000"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-ecgfivedays"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-eoghorizontalsignal"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-eogverticalsignal"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-ering"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-earthquakes"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-eigenworms"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-electricdevices"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-epilepsy"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-ethanolconcentration"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-ethanollevel"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-faceall"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-facedetection"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-facefour"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-facesucr"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-fiftywords"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-fingermovements"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-fish"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-forda"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-fordb"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-freezerregulartrain"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-freezersmalltrain"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-fungi"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-gesturemidaird1"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-gesturemidaird2"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-gesturemidaird3"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-gesturepebblez1"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-gesturepebblez2"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-gunpoint"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-gunpointagespan"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-gunpointmaleversusfemale"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-gunpointoldversusyoung"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-ham"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-handmovementdirection"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-handoutlines"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-handwriting"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-haptics"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-heartbeat"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-herring"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-housetwenty"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-inlineskate"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-insectepgregulartrain"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-insectepgsmalltrain"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-insectwingbeat"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-insectwingbeatsound"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-italypowerdemand"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-japanesevowels"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-lsst"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-largekitchenappliances"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-libras"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-lightning2"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-lightning7"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-mallat"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-meat"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-medicalimages"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-melbournepedestrian"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-middlephalanxoutlineagegroup"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-middlephalanxoutlinecorrect"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-middlephalanxtw"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-mixedshapesregulartrain"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-mixedshapessmalltrain"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-motestrain"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-motorimagery"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-natops"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-noninvasivefetalecgthorax1"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-noninvasivefetalecgthorax2"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-osuleaf"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-oliveoil"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-pems-sf"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-plaid"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-pendigits"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-phalangesoutlinescorrect"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-phoneme"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-phonemespectra"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-pickupgesturewiimotez"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-pigairwaypressure"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-pigartpressure"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-pigcvp"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-plane"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-powercons"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-proximalphalanxoutlineagegroup"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-proximalphalanxoutlinecorrect"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-proximalphalanxtw"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-racketsports"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-refrigerationdevices"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-rock"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-screentype"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-selfregulationscp1"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-selfregulationscp2"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-semghandgenderch2"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-semghandmovementch2"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-semghandsubjectch2"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-shakegesturewiimotez"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-shapeletsim"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-shapesall"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-smallkitchenappliances"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-smoothsubspace"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-sonyaiborobotsurface1"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-sonyaiborobotsurface2"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-spokenarabicdigits"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-standwalkjump"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-starlightcurves"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-strawberry"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-swedishleaf"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-symbols"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-syntheticcontrol"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-toesegmentation1"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-toesegmentation2"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-trace"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-twoleadecg"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-twopatterns"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-umd"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-uwavegesturelibrary"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-uwavegesturelibraryall"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-uwavegesturelibraryx"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-uwavegesturelibraryy"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-uwavegesturelibraryz"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-wafer"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-wine"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-wordsynonyms"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-worms"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-wormstwoclass"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-MVTSTransformerClassifier",
+      "dataset_id": "ucr-yoga"
+    },
+    {
+      "task": "classification",
       "algorithm_id": "registered-classification-MatrixProfileClassifier",
       "dataset_id": "unit-test"
     },
@@ -40894,6 +44715,836 @@
     },
     {
       "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "unit-test"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "arrow-head"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "italy-power-demand"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "gunpoint"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-acsf1"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-adiac"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-allgesturewiimotex"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-allgesturewiimotey"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-allgesturewiimotez"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-arrowhead"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-articularywordrecognition"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-asphaltobstacles"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-asphaltobstaclescoordinates"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-asphaltpavementtypecoordinates"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-asphaltregularitycoordinates"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-atrialfibrillation"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-bme"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-basicmotions"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-beef"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-beetlefly"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-birdchicken"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-cbf"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-car"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-charactertrajectories"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-chinatown"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-chlorineconcentration"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-cincecgtorso"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-coffee"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-computers"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-cricket"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-cricketx"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-crickety"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-cricketz"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-crop"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-diatomsizereduction"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-distalphalanxoutlineagegroup"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-distalphalanxoutlinecorrect"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-distalphalanxtw"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-dodgerloopday"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-dodgerloopgame"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-dodgerloopweekend"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-duckduckgeese"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-ecg200"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-ecg5000"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-ecgfivedays"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-eoghorizontalsignal"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-eogverticalsignal"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-ering"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-earthquakes"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-eigenworms"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-electricdevices"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-epilepsy"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-ethanolconcentration"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-ethanollevel"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-faceall"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-facedetection"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-facefour"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-facesucr"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-fiftywords"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-fingermovements"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-fish"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-forda"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-fordb"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-freezerregulartrain"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-freezersmalltrain"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-fungi"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-gesturemidaird1"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-gesturemidaird2"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-gesturemidaird3"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-gesturepebblez1"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-gesturepebblez2"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-gunpoint"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-gunpointagespan"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-gunpointmaleversusfemale"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-gunpointoldversusyoung"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-ham"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-handmovementdirection"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-handoutlines"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-handwriting"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-haptics"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-heartbeat"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-herring"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-housetwenty"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-inlineskate"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-insectepgregulartrain"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-insectepgsmalltrain"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-insectwingbeat"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-insectwingbeatsound"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-italypowerdemand"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-japanesevowels"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-lsst"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-largekitchenappliances"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-libras"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-lightning2"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-lightning7"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-mallat"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-meat"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-medicalimages"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-melbournepedestrian"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-middlephalanxoutlineagegroup"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-middlephalanxoutlinecorrect"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-middlephalanxtw"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-mixedshapesregulartrain"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-mixedshapessmalltrain"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-motestrain"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-motorimagery"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-natops"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-noninvasivefetalecgthorax1"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-noninvasivefetalecgthorax2"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-osuleaf"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-oliveoil"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-pems-sf"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-plaid"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-pendigits"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-phalangesoutlinescorrect"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-phoneme"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-phonemespectra"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-pickupgesturewiimotez"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-pigairwaypressure"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-pigartpressure"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-pigcvp"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-plane"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-powercons"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-proximalphalanxoutlineagegroup"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-proximalphalanxoutlinecorrect"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-proximalphalanxtw"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-racketsports"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-refrigerationdevices"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-rock"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-screentype"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-selfregulationscp1"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-selfregulationscp2"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-semghandgenderch2"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-semghandmovementch2"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-semghandsubjectch2"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-shakegesturewiimotez"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-shapeletsim"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-shapesall"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-smallkitchenappliances"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-smoothsubspace"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-sonyaiborobotsurface1"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-sonyaiborobotsurface2"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-spokenarabicdigits"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-standwalkjump"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-starlightcurves"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-strawberry"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-swedishleaf"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-symbols"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-syntheticcontrol"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-toesegmentation1"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-toesegmentation2"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-trace"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-twoleadecg"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-twopatterns"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-umd"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-uwavegesturelibrary"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-uwavegesturelibraryall"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-uwavegesturelibraryx"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-uwavegesturelibraryy"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-uwavegesturelibraryz"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-wafer"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-wine"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-wordsynonyms"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-worms"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-wormstwoclass"
+    },
+    {
+      "task": "classification",
+      "algorithm_id": "registered-classification-SimpleRNNClassifierTorch",
+      "dataset_id": "ucr-yoga"
+    },
+    {
+      "task": "classification",
       "algorithm_id": "registered-classification-SupervisedTimeSeriesForest",
       "dataset_id": "unit-test"
     },
@@ -45871,6 +50522,211 @@
       "task": "classification",
       "algorithm_id": "registered-classification-WEASEL",
       "dataset_id": "ucr-yoga"
+    },
+    {
+      "task": "regression",
+      "algorithm_id": "registered-regression-CNNRegressor",
+      "dataset_id": "covid-3month"
+    },
+    {
+      "task": "regression",
+      "algorithm_id": "registered-regression-CNNRegressor",
+      "dataset_id": "tecator"
+    },
+    {
+      "task": "regression",
+      "algorithm_id": "registered-regression-CNTCRegressor",
+      "dataset_id": "covid-3month"
+    },
+    {
+      "task": "regression",
+      "algorithm_id": "registered-regression-CNTCRegressor",
+      "dataset_id": "tecator"
+    },
+    {
+      "task": "regression",
+      "algorithm_id": "registered-regression-ComposableTimeSeriesForestRegressor",
+      "dataset_id": "covid-3month"
+    },
+    {
+      "task": "regression",
+      "algorithm_id": "registered-regression-ComposableTimeSeriesForestRegressor",
+      "dataset_id": "tecator"
+    },
+    {
+      "task": "regression",
+      "algorithm_id": "registered-regression-DummyRegressor",
+      "dataset_id": "covid-3month"
+    },
+    {
+      "task": "regression",
+      "algorithm_id": "registered-regression-DummyRegressor",
+      "dataset_id": "tecator"
+    },
+    {
+      "task": "regression",
+      "algorithm_id": "registered-regression-FCNRegressor",
+      "dataset_id": "covid-3month"
+    },
+    {
+      "task": "regression",
+      "algorithm_id": "registered-regression-FCNRegressor",
+      "dataset_id": "tecator"
+    },
+    {
+      "task": "regression",
+      "algorithm_id": "registered-regression-InceptionTimeRegressor",
+      "dataset_id": "covid-3month"
+    },
+    {
+      "task": "regression",
+      "algorithm_id": "registered-regression-InceptionTimeRegressor",
+      "dataset_id": "tecator"
+    },
+    {
+      "task": "regression",
+      "algorithm_id": "registered-regression-KNeighborsTimeSeriesRegressor",
+      "dataset_id": "covid-3month"
+    },
+    {
+      "task": "regression",
+      "algorithm_id": "registered-regression-KNeighborsTimeSeriesRegressor",
+      "dataset_id": "tecator"
+    },
+    {
+      "task": "regression",
+      "algorithm_id": "registered-regression-LSTMFCNRegressor",
+      "dataset_id": "covid-3month"
+    },
+    {
+      "task": "regression",
+      "algorithm_id": "registered-regression-LSTMFCNRegressor",
+      "dataset_id": "tecator"
+    },
+    {
+      "task": "regression",
+      "algorithm_id": "registered-regression-MACNNRegressor",
+      "dataset_id": "covid-3month"
+    },
+    {
+      "task": "regression",
+      "algorithm_id": "registered-regression-MACNNRegressor",
+      "dataset_id": "tecator"
+    },
+    {
+      "task": "regression",
+      "algorithm_id": "registered-regression-MCDCNNRegressor",
+      "dataset_id": "covid-3month"
+    },
+    {
+      "task": "regression",
+      "algorithm_id": "registered-regression-MCDCNNRegressor",
+      "dataset_id": "tecator"
+    },
+    {
+      "task": "regression",
+      "algorithm_id": "registered-regression-MLPRegressor",
+      "dataset_id": "covid-3month"
+    },
+    {
+      "task": "regression",
+      "algorithm_id": "registered-regression-MLPRegressor",
+      "dataset_id": "tecator"
+    },
+    {
+      "task": "regression",
+      "algorithm_id": "registered-regression-RocketRegressor",
+      "dataset_id": "covid-3month"
+    },
+    {
+      "task": "regression",
+      "algorithm_id": "registered-regression-RocketRegressor",
+      "dataset_id": "tecator"
+    },
+    {
+      "task": "regression",
+      "algorithm_id": "registered-regression-SimpleRNNRegressor",
+      "dataset_id": "covid-3month"
+    },
+    {
+      "task": "regression",
+      "algorithm_id": "registered-regression-SimpleRNNRegressor",
+      "dataset_id": "tecator"
+    },
+    {
+      "task": "regression",
+      "algorithm_id": "registered-regression-SimpleRNNRegressorTorch",
+      "dataset_id": "covid-3month"
+    },
+    {
+      "task": "regression",
+      "algorithm_id": "registered-regression-SimpleRNNRegressorTorch",
+      "dataset_id": "tecator"
+    },
+    {
+      "task": "regression",
+      "algorithm_id": "registered-regression-TapNetRegressor",
+      "dataset_id": "covid-3month"
+    },
+    {
+      "task": "regression",
+      "algorithm_id": "registered-regression-TapNetRegressor",
+      "dataset_id": "tecator"
+    },
+    {
+      "task": "regression",
+      "algorithm_id": "registered-regression-TimeSeriesForestRegressor",
+      "dataset_id": "covid-3month"
+    },
+    {
+      "task": "regression",
+      "algorithm_id": "registered-regression-TimeSeriesForestRegressor",
+      "dataset_id": "tecator"
+    },
+    {
+      "task": "clustering",
+      "algorithm_id": "registered-clustering-STDBSCAN",
+      "dataset_id": "unit-test-cl"
+    },
+    {
+      "task": "clustering",
+      "algorithm_id": "registered-clustering-STDBSCAN",
+      "dataset_id": "arrow-head-cl"
+    },
+    {
+      "task": "clustering",
+      "algorithm_id": "registered-clustering-STDBSCAN",
+      "dataset_id": "gunpoint-cl"
+    },
+    {
+      "task": "clustering",
+      "algorithm_id": "registered-clustering-TimeSeriesDBSCAN",
+      "dataset_id": "unit-test-cl"
+    },
+    {
+      "task": "clustering",
+      "algorithm_id": "registered-clustering-TimeSeriesDBSCAN",
+      "dataset_id": "arrow-head-cl"
+    },
+    {
+      "task": "clustering",
+      "algorithm_id": "registered-clustering-TimeSeriesDBSCAN",
+      "dataset_id": "gunpoint-cl"
+    },
+    {
+      "task": "clustering",
+      "algorithm_id": "registered-clustering-TimeSeriesKMedoids",
+      "dataset_id": "unit-test-cl"
+    },
+    {
+      "task": "clustering",
+      "algorithm_id": "registered-clustering-TimeSeriesKMedoids",
+      "dataset_id": "arrow-head-cl"
+    },
+    {
+      "task": "clustering",
+      "algorithm_id": "registered-clustering-TimeSeriesKMedoids",
+      "dataset_id": "gunpoint-cl"
     },
     {
       "task": "anomaly_detection",
@@ -46024,6 +50880,96 @@
     },
     {
       "task": "anomaly_detection",
+      "algorithm_id": "registered-anomaly_detection-PyODCBLOFDetector",
+      "dataset_id": "yahoo"
+    },
+    {
+      "task": "anomaly_detection",
+      "algorithm_id": "registered-anomaly_detection-PyODCBLOFDetector",
+      "dataset_id": "mitdb"
+    },
+    {
+      "task": "anomaly_detection",
+      "algorithm_id": "registered-anomaly_detection-PyODCOPODDetector",
+      "dataset_id": "yahoo"
+    },
+    {
+      "task": "anomaly_detection",
+      "algorithm_id": "registered-anomaly_detection-PyODCOPODDetector",
+      "dataset_id": "mitdb"
+    },
+    {
+      "task": "anomaly_detection",
+      "algorithm_id": "registered-anomaly_detection-PyODECODDetector",
+      "dataset_id": "yahoo"
+    },
+    {
+      "task": "anomaly_detection",
+      "algorithm_id": "registered-anomaly_detection-PyODECODDetector",
+      "dataset_id": "mitdb"
+    },
+    {
+      "task": "anomaly_detection",
+      "algorithm_id": "registered-anomaly_detection-PyODHBOSDetector",
+      "dataset_id": "yahoo"
+    },
+    {
+      "task": "anomaly_detection",
+      "algorithm_id": "registered-anomaly_detection-PyODHBOSDetector",
+      "dataset_id": "mitdb"
+    },
+    {
+      "task": "anomaly_detection",
+      "algorithm_id": "registered-anomaly_detection-PyODIForestDetector",
+      "dataset_id": "yahoo"
+    },
+    {
+      "task": "anomaly_detection",
+      "algorithm_id": "registered-anomaly_detection-PyODIForestDetector",
+      "dataset_id": "mitdb"
+    },
+    {
+      "task": "anomaly_detection",
+      "algorithm_id": "registered-anomaly_detection-PyODKNNDetector",
+      "dataset_id": "yahoo"
+    },
+    {
+      "task": "anomaly_detection",
+      "algorithm_id": "registered-anomaly_detection-PyODKNNDetector",
+      "dataset_id": "mitdb"
+    },
+    {
+      "task": "anomaly_detection",
+      "algorithm_id": "registered-anomaly_detection-PyODLOFDetector",
+      "dataset_id": "yahoo"
+    },
+    {
+      "task": "anomaly_detection",
+      "algorithm_id": "registered-anomaly_detection-PyODLOFDetector",
+      "dataset_id": "mitdb"
+    },
+    {
+      "task": "anomaly_detection",
+      "algorithm_id": "registered-anomaly_detection-PyODMCDDetector",
+      "dataset_id": "yahoo"
+    },
+    {
+      "task": "anomaly_detection",
+      "algorithm_id": "registered-anomaly_detection-PyODMCDDetector",
+      "dataset_id": "mitdb"
+    },
+    {
+      "task": "anomaly_detection",
+      "algorithm_id": "registered-anomaly_detection-PyODOCSVMDetector",
+      "dataset_id": "yahoo"
+    },
+    {
+      "task": "anomaly_detection",
+      "algorithm_id": "registered-anomaly_detection-PyODOCSVMDetector",
+      "dataset_id": "mitdb"
+    },
+    {
+      "task": "anomaly_detection",
       "algorithm_id": "registered-anomaly_detection-SeededBinarySegmentation",
       "dataset_id": "yahoo"
     },
@@ -46071,6 +51017,266 @@
       "task": "anomaly_detection",
       "algorithm_id": "registered-anomaly_detection-ZeroSegments",
       "dataset_id": "mitdb"
+    },
+    {
+      "task": "anomaly_detection",
+      "algorithm_id": "user-ecod_direct",
+      "dataset_id": "yahoo"
+    },
+    {
+      "task": "anomaly_detection",
+      "algorithm_id": "user-ecod_direct",
+      "dataset_id": "mitdb"
+    },
+    {
+      "task": "anomaly_detection",
+      "algorithm_id": "user-my_ecod",
+      "dataset_id": "yahoo"
+    },
+    {
+      "task": "anomaly_detection",
+      "algorithm_id": "user-my_ecod",
+      "dataset_id": "mitdb"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-my_timesnet",
+      "dataset_id": "airline"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-my_timesnet",
+      "dataset_id": "shampoo-sales"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-my_timesnet",
+      "dataset_id": "lynx"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-my_timesnet",
+      "dataset_id": "hf-aqshunyi"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-my_timesnet",
+      "dataset_id": "hf-covid-19"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-my_timesnet",
+      "dataset_id": "hf-czelan"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-my_timesnet",
+      "dataset_id": "hf-etth1"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-my_timesnet",
+      "dataset_id": "hf-etth2"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-my_timesnet",
+      "dataset_id": "hf-ettm1"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-my_timesnet",
+      "dataset_id": "hf-ettm2"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-my_timesnet",
+      "dataset_id": "hf-electricity"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-my_timesnet",
+      "dataset_id": "hf-exchange"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-my_timesnet",
+      "dataset_id": "hf-fred-md"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-my_timesnet",
+      "dataset_id": "hf-ili"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-my_timesnet",
+      "dataset_id": "hf-nasdaq"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-my_timesnet",
+      "dataset_id": "hf-nn5"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-my_timesnet",
+      "dataset_id": "hf-nyse"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-my_timesnet",
+      "dataset_id": "hf-pems08"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-my_timesnet",
+      "dataset_id": "hf-solar"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-my_timesnet",
+      "dataset_id": "hf-traffic"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-my_timesnet",
+      "dataset_id": "hf-weather"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-my_timesnet",
+      "dataset_id": "hf-wike2000"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-my_timesnet",
+      "dataset_id": "hf-wind"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-my_timesnet",
+      "dataset_id": "hf-zafnoo"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-seasonal_ma",
+      "dataset_id": "airline"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-seasonal_ma",
+      "dataset_id": "shampoo-sales"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-seasonal_ma",
+      "dataset_id": "lynx"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-seasonal_ma",
+      "dataset_id": "hf-aqshunyi"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-seasonal_ma",
+      "dataset_id": "hf-covid-19"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-seasonal_ma",
+      "dataset_id": "hf-czelan"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-seasonal_ma",
+      "dataset_id": "hf-etth1"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-seasonal_ma",
+      "dataset_id": "hf-etth2"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-seasonal_ma",
+      "dataset_id": "hf-ettm1"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-seasonal_ma",
+      "dataset_id": "hf-ettm2"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-seasonal_ma",
+      "dataset_id": "hf-electricity"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-seasonal_ma",
+      "dataset_id": "hf-exchange"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-seasonal_ma",
+      "dataset_id": "hf-fred-md"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-seasonal_ma",
+      "dataset_id": "hf-ili"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-seasonal_ma",
+      "dataset_id": "hf-nasdaq"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-seasonal_ma",
+      "dataset_id": "hf-nn5"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-seasonal_ma",
+      "dataset_id": "hf-nyse"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-seasonal_ma",
+      "dataset_id": "hf-pems08"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-seasonal_ma",
+      "dataset_id": "hf-solar"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-seasonal_ma",
+      "dataset_id": "hf-traffic"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-seasonal_ma",
+      "dataset_id": "hf-weather"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-seasonal_ma",
+      "dataset_id": "hf-wike2000"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-seasonal_ma",
+      "dataset_id": "hf-wind"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "user-seasonal_ma",
+      "dataset_id": "hf-zafnoo"
     }
   ],
   "dependencies": {

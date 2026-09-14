@@ -8,10 +8,18 @@ has a CLI counterpart (same catalog/runner code, identical results):
     ----------------------------  ------------------------------------------
     GET  /api/catalog             python playground/labts.py catalog [--compact]
     POST /api/run                 python playground/labts.py run --spec '<json>' [--compact] [--out run.json]
+                                  python playground/labts.py run --task forecasting --dataset airline \
+                                      --algorithm naive-seasonal-last --param horizon=6
     GET  /api/export/script       python playground/labts.py script (--spec '<json>' | --from run.json)
     GET  /api/export/report       python playground/labts.py report (--spec '<json>' | --from run.json)
 
+    Discovery shortcut            python playground/labts.py ls tasks|algorithms|datasets|preprocessors|metrics \
+                                      [--task forecasting] [--all]
+
 `--spec` accepts a JSON string, `@path/to/spec.json`, or `-` for stdin.
+`run` also takes plain flags (`--task/--dataset/--algorithm/--preprocessor`,
+plus repeatable `--param key=value` / `--pre-param key=value`) so no JSON is
+needed for common calls; omitting everything runs the per-task default.
 
 `catalog` and `run` print a JSON envelope on stdout (always, also for errors):
 
@@ -45,7 +53,7 @@ HERE = Path(__file__).resolve().parent
 if str(HERE) not in sys.path:
     sys.path.insert(0, str(HERE))
 
-from catalog import EVAL_PARAMS, REPO_ROOT, _sanitize_for_json, build_catalog  # noqa: E402
+from catalog import EVAL_PARAMS, REPO_ROOT, _sanitize_for_json, build_catalog, get_enabled_algorithm  # noqa: E402
 from runners import PlaygroundError, _normalize_spec, run_experiment  # noqa: E402
 
 if str(REPO_ROOT) not in sys.path:
@@ -214,7 +222,7 @@ def _main_catalog(args) -> int:
 def _main_run(args) -> int:
     envelope = _envelope("result")
     try:
-        spec = _load_spec(args.spec)
+        spec = _load_spec(args.spec) if args.spec else _spec_from_flags(args)
         data = run_experiment(spec)
         if args.out:
             _write_json(args.out, {**envelope, "data": data})
@@ -224,6 +232,128 @@ def _main_run(args) -> int:
         return _fail(envelope, sys.stdout, exc, "error", EXIT_USAGE)
     except PlaygroundError as exc:
         return _fail(envelope, sys.stdout, exc, "blocked", EXIT_BLOCKED)
+    except Exception as exc:
+        return _fail(envelope, sys.stdout, exc, "error", EXIT_ERROR)
+    _emit_json(sys.stdout, envelope)
+    return exit_code
+
+
+def _parse_kv_pairs(pairs: list[str] | None, what: str) -> dict:
+    """Parse repeatable `key=value` flags into a dict.
+
+    Values are coerced to int/float when they look numeric, matching the
+    estimator-param coercion in the runners.
+    """
+    params: dict = {}
+    for pair in pairs or []:
+        if "=" not in pair:
+            raise UsageError(f"Invalid {what} `{pair}`; expected key=value.")
+        key, _, value = pair.partition("=")
+        key = key.strip()
+        if not key:
+            raise UsageError(f"Invalid {what} `{pair}`; empty key.")
+        value = value.strip()
+        try:
+            params[key] = int(value)
+        except ValueError:
+            try:
+                params[key] = float(value)
+            except ValueError:
+                params[key] = value
+    return params
+
+
+def _spec_from_flags(args) -> dict:
+    """Build a run spec from --task/--dataset/... flags instead of --spec."""
+    spec = {
+        "task": args.task,
+        "dataset_id": args.dataset,
+        "algorithm_id": args.algorithm,
+        "preprocessor_id": args.preprocessor,
+        "params": _parse_kv_pairs(args.param, "--param"),
+        "preprocessor_params": _parse_kv_pairs(args.pre_param, "--pre-param"),
+    }
+    return {k: v for k, v in spec.items() if v not in (None, {})}
+
+
+_LS_SECTIONS = ("tasks", "algorithms", "datasets", "preprocessors", "metrics")
+
+
+def _main_ls(args) -> int:
+    """Quick resource listing, a filtered view of the catalog."""
+    envelope = _envelope("catalog")
+    try:
+        data = build_catalog(include_registered=True)
+        rows = data[args.section]
+        if args.section in ("algorithms", "preprocessors") and not args.all:
+            rows = [row for row in rows if row.get("enabled")]
+        if args.task:
+            rows = [
+                row
+                for row in rows
+                if row.get("task") in (args.task, "all")
+                or args.task in (row.get("compatible_tasks") or [])
+            ]
+        envelope["data"] = {"section": args.section, "count": len(rows), "rows": rows}
+        exit_code = EXIT_OK
+    except Exception as exc:
+        return _fail(envelope, sys.stdout, exc, "error", EXIT_ERROR)
+    _emit_json(sys.stdout, envelope)
+    return exit_code
+
+
+def _main_fork(args) -> int:
+    """Materialize a catalog algorithm as an editable experiments/ plugin."""
+    from user_algos import PluginError, scaffold_fork, user_algorithm_id
+
+    envelope = _envelope("fork")
+    try:
+        algorithm = get_enabled_algorithm(args.algorithm_id)
+        if algorithm is None:
+            raise UsageError(
+                f"Algorithm is not enabled or unknown: {args.algorithm_id}. "
+                "Fork sources must be enabled catalog entries (see `labts.py ls algorithms`)."
+            )
+        target = scaffold_fork(algorithm, name=args.name)
+        envelope["data"] = {
+            "path": str(target),
+            "algorithm_id": user_algorithm_id(target.stem),
+            "forked_from": algorithm["id"],
+            "next_steps": [
+                f"edit {target}",
+                f"labts.py check {target}",
+                f"labts.py run --algorithm {user_algorithm_id(target.stem)} --task {algorithm['task']} ...",
+            ],
+        }
+        exit_code = EXIT_OK
+    except UsageError as exc:
+        return _fail(envelope, sys.stdout, exc, "error", EXIT_USAGE)
+    except PluginError as exc:
+        return _fail(envelope, sys.stdout, exc, "blocked", EXIT_BLOCKED)
+    except Exception as exc:
+        return _fail(envelope, sys.stdout, exc, "error", EXIT_ERROR)
+    _emit_json(sys.stdout, envelope)
+    return exit_code
+
+
+def _main_check(args) -> int:
+    """Validate a plugin file and run a tiny smoke experiment."""
+    from user_algos import check_plugin
+
+    envelope = _envelope("check")
+    try:
+        path = Path(args.file)
+        if not path.is_file():
+            raise UsageError(f"Plugin file not found: {args.file}")
+        result = check_plugin(path)
+        envelope["data"] = result
+        if result["ok"]:
+            exit_code = EXIT_OK
+        else:
+            envelope.update(status="blocked", error=result["error"])
+            exit_code = EXIT_BLOCKED
+    except UsageError as exc:
+        return _fail(envelope, sys.stdout, exc, "error", EXIT_USAGE)
     except Exception as exc:
         return _fail(envelope, sys.stdout, exc, "error", EXIT_ERROR)
     _emit_json(sys.stdout, envelope)
@@ -270,11 +400,43 @@ def main(argv: list[str] | None = None) -> int:
         "dependency status, and HF metadata.",
     )
 
+    p_ls = sub.add_parser(
+        "ls",
+        help="List one catalog section (quick discovery without the full catalog).",
+    )
+    p_ls.add_argument("section", choices=_LS_SECTIONS)
+    p_ls.add_argument(
+        "--task",
+        help="Keep only entries usable for this task "
+        "(matches entry.task or entry.compatible_tasks).",
+    )
+    p_ls.add_argument(
+        "--all",
+        action="store_true",
+        help="Include disabled algorithms/preprocessors (default: enabled only).",
+    )
+
     p_run = sub.add_parser("run", help="Run one experiment spec.")
     p_run.add_argument(
         "--spec",
-        required=True,
-        help="Spec as a JSON string, @path/to/spec.json, or - for stdin.",
+        help="Spec as a JSON string, @path/to/spec.json, or - for stdin. "
+        "Alternative to the --task/--dataset/--algorithm flags.",
+    )
+    p_run.add_argument("--task", help="Task id, e.g. forecasting. Omit for the default task.")
+    p_run.add_argument("--dataset", help="Dataset id; omit for the per-task default.")
+    p_run.add_argument("--algorithm", help="Algorithm id; omit for the per-task default.")
+    p_run.add_argument("--preprocessor", help="Preprocessor id (default: none).")
+    p_run.add_argument(
+        "--param",
+        action="append",
+        metavar="KEY=VALUE",
+        help="Algorithm/eval parameter; repeatable. Numbers are coerced.",
+    )
+    p_run.add_argument(
+        "--pre-param",
+        action="append",
+        metavar="KEY=VALUE",
+        help="Preprocessor parameter; repeatable.",
     )
     p_run.add_argument(
         "--compact",
@@ -308,11 +470,33 @@ def main(argv: list[str] | None = None) -> int:
             "(no re-run).",
         )
 
+    p_fork = sub.add_parser(
+        "fork",
+        help="Fork a catalog algorithm into an editable playground/experiments/ plugin.",
+    )
+    p_fork.add_argument("algorithm_id", help="Enabled catalog algorithm id to fork.")
+    p_fork.add_argument(
+        "--name",
+        help="Plugin file/display name (default: the algorithm's name, slugified).",
+    )
+
+    p_check = sub.add_parser(
+        "check",
+        help="Validate a plugin file and run a tiny smoke experiment.",
+    )
+    p_check.add_argument("file", help="Path to the plugin .py file.")
+
     args = parser.parse_args(argv)
     if args.command == "catalog":
         return _main_catalog(args)
+    if args.command == "ls":
+        return _main_ls(args)
     if args.command == "run":
         return _main_run(args)
+    if args.command == "fork":
+        return _main_fork(args)
+    if args.command == "check":
+        return _main_check(args)
     return _main_export(args)
 
 

@@ -391,11 +391,16 @@ function renderChart() {
     drawConfusionHeatmap(ctx, result.tables?.confusion_matrix, w, h);
     return;
   }
+  if (series.kind === "clustering") {
+    toggleChartControls(false);
+    drawClustering(ctx, series.points, w, h);
+    return;
+  }
   toggleChartControls(true);
   ensureView(series);
   const { start, length } = state.view;
   const slice = series.points.slice(start, start + length);
-  if (series.kind === "forecast") {
+  if (series.kind === "forecast" || series.kind === "regression") {
     drawForecastWindow(ctx, slice, w, h);
   } else {
     drawAnomalyWindow(ctx, slice, w, h);
@@ -579,8 +584,26 @@ function drawAnomalies(ctx, points, min, max, width, height, pad) {
   });
 }
 
-function drawClassification(ctx, points, width, height) {
-  const labels = [...new Set(points.flatMap((p) => [p.actual, p.prediction]))];
+const CLUSTER_PALETTE = ["#ff6f00", "#2e7d32", "#1565c0", "#6a1b9a", "#c62828", "#00838f", "#5d4037", "#ad1457"];
+
+function drawClustering(ctx, points, w, h) {
+  const clusters = [...new Set(points.map((p) => p.cluster))].sort((a, b) => a - b);
+  const pad = 38;
+  drawAxes(ctx, w, h, pad);
+  const barW = Math.max(2, (w - pad * 2) / Math.max(points.length, 1));
+  points.forEach((p, i) => {
+    const x = pad + (i / Math.max(points.length, 1)) * (w - pad * 2);
+    ctx.fillStyle = CLUSTER_PALETTE[clusters.indexOf(p.cluster) % CLUSTER_PALETTE.length];
+    ctx.fillRect(x, pad, barW, h - pad * 2);
+  });
+  drawLegend(
+    ctx,
+    clusters.slice(0, 4).map((c) => [`cluster ${c}`, CLUSTER_PALETTE[clusters.indexOf(c) % CLUSTER_PALETTE.length]])
+  );
+  drawLabel(ctx, "Each bar is a test instance colored by predicted cluster.", pad, h - 12);
+}
+
+function drawClassification(ctx, points, width, height) {  const labels = [...new Set(points.flatMap((p) => [p.actual, p.prediction]))];
   const pad = 42;
   drawAxes(ctx, width, height, pad);
   points.forEach((point, i) => {

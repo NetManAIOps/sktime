@@ -15,9 +15,11 @@
 # - sktime itself is installed editable from the repo root (`-e .`); run the
 #   recreate command from the repository root so the relative path resolves.
 # - `numba` is pinned to <0.63 by sktime's all_extras (resolved here to 0.62.1).
-# - The deep-learning stack is intentionally NOT included. To enable torch-based
-#   estimators, install the `dl` extra:
-#     uv pip install --python .venv/bin/python -e ".[dl]"
+# - torch (CPU build) IS included: the TSLib adapters in
+#   `sktime/forecasting/tslib.py` (TimesNet, iTransformer, DLinear, Autoformer,
+#   FEDformer, FreTS) need it. The +cpu wheel comes from the PyTorch index via
+#   the --extra-index-url line below. sktime's `dl` extra (tensorflow/keras
+#   networks) remains NOT included; install it manually if needed.
 # - Some soft deps are skipped on Python 3.12 by upstream environment markers
 #   (e.g. prophet, hmmlearn, tslearn, tsfresh, pyod). Install them manually only
 #   when a specific estimator asks for them.
@@ -104,6 +106,7 @@ pycatch22==0.4.5
 pydantic==2.13.4
 pydantic-core==2.46.4
 pygments==2.20.0
+pyod==3.6.5
 pyparsing==3.3.2
 python-dateutil==2.9.0.post0
 pytz==2026.2
@@ -135,6 +138,8 @@ tensorflow==2.19.1
 termcolor==3.3.0
 threadpoolctl==3.6.0
 toolz==0.12.1
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.14.0+cpu
 tqdm==4.68.4
 triad==1.0.2
 typing-extensions==4.16.0

@@ -29,12 +29,16 @@ REPO_ROOT = _repo_root()
 EVAL_PARAMS = {
     "forecasting": {"horizon", "context_window"},
     "classification": set(),
+    "regression": set(),
+    "clustering": set(),
     "anomaly_detection": {"threshold", "window"},
 }
 
 _ESTIMATOR_TYPES = {
     "forecaster": "forecasting",
     "classifier": "classification",
+    "regressor": "regression",
+    "clusterer": "clustering",
     "detector": "anomaly_detection",
 }
 
@@ -134,6 +138,16 @@ TASKS = [
         "description": "Train a time-series classifier and evaluate test labels.",
     },
     {
+        "id": "regression",
+        "label": "Regression",
+        "description": "Train a time-series regressor and evaluate numeric test targets.",
+    },
+    {
+        "id": "clustering",
+        "label": "Clustering",
+        "description": "Cluster time series and compare clusters with known labels.",
+    },
+    {
         "id": "anomaly_detection",
         "label": "Anomaly Detection",
         "description": "Detect point anomalies and compare with known labels.",
@@ -158,6 +172,24 @@ ENABLED_ALGORITHMS = [
         "enabled": True,
         "template": "SummaryClassifier(RandomForestClassifier(n_estimators=25))",
         "params": {"n_estimators": 25, "random_state": 7},
+    },
+    {
+        "id": "summary-random-forest-regressor",
+        "name": "SklearnRegressorPipeline",
+        "task": "regression",
+        "module": "sktime.regression.compose.SklearnRegressorPipeline",
+        "enabled": True,
+        "template": "SklearnRegressorPipeline(RandomForestRegressor(n_estimators=25), SummaryTransformer())",
+        "params": {"n_estimators": 25, "random_state": 7},
+    },
+    {
+        "id": "ts-kmeans",
+        "name": "TimeSeriesKMeans",
+        "task": "clustering",
+        "module": "sktime.clustering.k_means.TimeSeriesKMeans",
+        "enabled": True,
+        "template": "TimeSeriesKMeans(n_clusters=n_clusters)",
+        "params": {"n_clusters": 2, "random_state": 7},
     },
     {
         "id": "threshold-detector",
@@ -242,6 +274,48 @@ DATASETS = [
         "id": "gunpoint",
         "name": "GunPoint",
         "task": "classification",
+        "source": "local",
+        "loader": "sktime.datasets.load_gunpoint",
+        "enabled": True,
+    },
+    {
+        "id": "covid-3month",
+        "name": "Covid3Month",
+        "task": "regression",
+        "source": "local",
+        "loader": "sktime.datasets.load_covid_3month",
+        "enabled": True,
+        "default": True,
+    },
+    {
+        "id": "tecator",
+        "name": "Tecator",
+        "task": "regression",
+        "source": "local",
+        "loader": "sktime.datasets.load_tecator",
+        "enabled": True,
+    },
+    {
+        "id": "unit-test-cl",
+        "name": "UnitTest (labels for ARI)",
+        "task": "clustering",
+        "source": "local",
+        "loader": "sktime.datasets._single_problem_loaders.load_unit_test",
+        "enabled": True,
+        "default": True,
+    },
+    {
+        "id": "arrow-head-cl",
+        "name": "ArrowHead (labels for ARI)",
+        "task": "clustering",
+        "source": "local",
+        "loader": "sktime.datasets.load_arrow_head",
+        "enabled": True,
+    },
+    {
+        "id": "gunpoint-cl",
+        "name": "GunPoint (labels for ARI)",
+        "task": "clustering",
         "source": "local",
         "loader": "sktime.datasets.load_gunpoint",
         "enabled": True,
@@ -550,9 +624,10 @@ def discover_registered_preprocessors() -> list[dict]:
 
     A transformer is only offered for the tasks whose data it can round-trip
     without changing shape: same-length single-series output for
-    forecasting/anomaly_detection, and the same number of instances for
-    classification. Transformers that need ``y``, change length/columns, or
-    rely on pairwise/feature extraction are filtered out per task.
+    forecasting/anomaly_detection, and the same number of instances for the
+    panel tasks (classification, regression, clustering). Transformers that
+    need ``y``, change length/columns, or rely on pairwise/feature extraction
+    are filtered out per task.
     """
     global _PREPROCESSOR_CACHE
     if _PREPROCESSOR_CACHE is not None:
@@ -605,7 +680,7 @@ def discover_registered_preprocessors() -> list[dict]:
         if _probe_series_preprocessor(klass):
             compatible_tasks.extend(["forecasting", "anomaly_detection"])
         if _probe_panel_preprocessor(klass):
-            compatible_tasks.append("classification")
+            compatible_tasks.extend(["classification", "regression", "clustering"])
         if not compatible_tasks:
             continue
         discovered.append(
@@ -654,6 +729,9 @@ def build_catalog(include_registered: bool = True) -> dict:
     algorithms = list(ENABLED_ALGORITHMS)
     if include_registered:
         algorithms.extend(discover_registered_algorithms())
+        from user_algos import discover_user_algorithms
+
+        algorithms.extend(discover_user_algorithms())
     preprocessors = list(PREPROCESSORS)
     if include_registered:
         preprocessors.extend(discover_registered_preprocessors())
@@ -684,6 +762,11 @@ def build_catalog(include_registered: bool = True) -> dict:
             {"id": "mape", "name": "MAPE", "task": "forecasting"},
             {"id": "accuracy", "name": "Accuracy", "task": "classification"},
             {"id": "macro_f1", "name": "Macro F1", "task": "classification"},
+            {"id": "mae", "name": "MAE", "task": "regression"},
+            {"id": "rmse", "name": "RMSE", "task": "regression"},
+            {"id": "r2", "name": "R²", "task": "regression"},
+            {"id": "ari", "name": "Adjusted Rand Index", "task": "clustering"},
+            {"id": "nmi", "name": "Normalized Mutual Info", "task": "clustering"},
             {"id": "precision", "name": "Precision", "task": "anomaly_detection"},
             {"id": "recall", "name": "Recall", "task": "anomaly_detection"},
             {"id": "f1", "name": "F1", "task": "anomaly_detection"},
@@ -701,7 +784,9 @@ def get_enabled_algorithm(algorithm_id: str) -> dict | None:
     for item in discover_registered_algorithms():
         if item["id"] == algorithm_id and item.get("enabled"):
             return item
-    return None
+    from user_algos import get_user_algorithm
+
+    return get_user_algorithm(algorithm_id)
 
 
 def get_enabled_preprocessor(preprocessor_id: str | None) -> dict | None:
