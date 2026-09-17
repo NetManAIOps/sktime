@@ -456,8 +456,8 @@ def _detector_subtype(name: str, module: str) -> str:
         k in text
         for k in (
             "threshold", "outlier", "anomal", "stray", "lof", "iforest",
-            "isolation", "pyod", "knn", "mcd", "cblof", "cof", "abod", "sod",
-            "subsequence", "matrixprofile", "stumpy", "sigma",
+            "isolation", "pyod", "devad", "knn", "mcd", "cblof", "cof", "abod",
+            "sod", "subsequence", "matrixprofile", "stumpy", "sigma",
         )
     ):
         return "point_anomaly"

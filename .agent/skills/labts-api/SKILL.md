@@ -12,19 +12,29 @@ catalog/runner code with identical results:
 | Playground web endpoint     | CLI command                                                   |
 |-----------------------------|---------------------------------------------------------------|
 | `GET /api/catalog`          | `labts.py catalog [--compact]`                                |
-| (discovery shortcut)        | `labts.py ls tasks\|algorithms\|datasets\|preprocessors\|metrics [--task X] [--all]` |
+| (discovery shortcut)        | `labts.py ls tasks\|algorithms\|datasets\|preprocessors\|metrics\|models [--task X] [--all]` |
 | `POST /api/run`             | `labts.py run --spec '<json>' [--compact] [--out run.json]`   |
 |                             | `labts.py run --task forecasting --dataset airline --algorithm naive-seasonal-last --param horizon=6` |
 | `GET /api/export/script`    | `labts.py script (--spec '<json>' \| --from run.json)`        |
 | `GET /api/export/report`    | `labts.py report (--spec '<json>' \| --from run.json)`        |
 | (fork algorithm)            | `labts.py fork <algorithm_id> [--name X]`                     |
 | (validate plugin)           | `labts.py check <plugin.py>`                                  |
+| (train + persist model)     | `labts.py train --algorithm <devad-detector-id> [--dataset yahoo] [--model-id X] [--param epochs=3] [--val-fraction 0.2]` |
+| (detect with saved model)   | `labts.py detect --model-id X [--dataset yahoo] [--param threshold_quantile=0.99] [--out run.json]` |
 
 `fork` materializes any enabled catalog algorithm as an editable single-file
 plugin in `playground/experiments/` (subclass scaffold with provenance
 metadata); the plugin is immediately discoverable as `user-<name>`. `check`
 validates the plugin contract and runs a tiny smoke experiment. See
 `playground/experiments/__init__.py` for the plugin contract.
+
+`run` is **stateless**: fit and predict happen in one call and the fitted
+model is discarded. `train`/`detect` (DevAD detectors only, ids
+`registered-anomaly_detection-DevAD*`) split the lifecycle: `train` persists
+`model.pt` + `manifest.json` + `training.log` under
+`playground/models/<model_id>/` (overwritten on re-train), `detect` reloads
+the model and returns the **same result envelope as `run`** (so
+`report --from` works on it). `ls models` lists persisted models.
 
 One process per call, no HTTP server, `run_id` session state not needed.
 Run from the repository root with the repo venv:
@@ -44,7 +54,7 @@ environment, see `playground/requirements.txt`)
 {
   "api": "labts",
   "api_version": "1.0",
-  "kind": "catalog" | "result",
+  "kind": "catalog" | "result" | "train" | "fork" | "check",
   "status": "ok" | "blocked" | "error",
   "data": { ... } | null,
   "error": null | "message"
@@ -100,7 +110,9 @@ Static mirror for browsing without paying discovery cost:
 `{"section", "count", "rows"}` inside the usual catalog envelope — cheaper to
 eyeball than the full catalog:
 
-- sections: `tasks`, `algorithms`, `datasets`, `preprocessors`, `metrics`
+- sections: `tasks`, `algorithms`, `datasets`, `preprocessors`, `metrics`,
+  `models` (persisted `labts train` outputs: `model_id`, `family`, `params`,
+  `seed`, `best_epoch`, `model_dir`)
 - `--task X`: keep entries usable for task X (matches `task` or
   `compatible_tasks`)
 - `--all`: include disabled algorithms/preprocessors (default: enabled only)
@@ -158,6 +170,36 @@ Export the generated reproduction script (`code`) or Markdown report
 
 A `--from` file produced by `run --compact` **stdout** (not `--out`) lacks the
 export payloads and fails with exit 2 — always use `--out` for export chains.
+
+## `train` / `detect` — persistent DevAD models
+
+Only for the 17 DevAD detectors (`labts.py ls algorithms --task
+anomaly_detection`, names `DevAD*`); other detectors are not trainable — use
+`run` directly (`train` exits `blocked` with a clear message).
+
+```bash
+# train once (persists playground/models/fits-v1/: model.pt, manifest.json, training.log)
+labts.py train --algorithm registered-anomaly_detection-DevADFITSDetector \
+    --dataset yahoo --model-id fits-v1 --param epochs=3 --val-fraction 0.2
+
+# detect many (same envelope as run; --compact/--out supported)
+labts.py detect --model-id fits-v1 --dataset yahoo --param threshold_quantile=0.99 --out det.json
+labts.py report --from det.json
+```
+
+- `--model-id` defaults to `<family>-<dataset>`; re-training the same id
+  overwrites it.
+- `--param` keys: adapter params `win_len`, `epochs`, `batch_size`, `seed`,
+  `device`, `threshold_quantile` (detect only) go to the adapter; **any other
+  key is forwarded as a DevAD hyperparameter** (validated against the family's
+  `HP` table — unknown keys fail `blocked` with the list of valid names).
+  Non-scalar HPs can be passed as `--param params='{"h_dim": 64}'`.
+- `--val-fraction F` holds out the series tail for validation, enabling early
+  stopping for torch families.
+- `train` result: `model_id`, `family`, resolved `params`, `model_dir`,
+  `duration_ms`, `next_steps`. `detect` result: identical in shape to `run`
+  (`metrics`/`series`/`tables`/`code`/`report`), with
+  `spec.algorithm_id = "devad-trained:<model-id>"`.
 
 ## Examples
 

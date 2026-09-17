@@ -188,7 +188,11 @@ registry entry looks wrong, rerun the command above rather than trusting it.
   endpoints: `catalog` ↔ `/api/catalog`, `run` ↔ `/api/run`,
   `script` ↔ `/api/export/script`, `report` ↔ `/api/export/report`, with a
   unified JSON envelope and pipeline flow (`run --out` → `script/report
-  --from`). See the `labts-api` skill.
+  --from`). Adds stateful model lifecycle commands for DevAD detectors:
+  `train` (persist under `playground/models/`), `detect`, `ls models`.
+  See the `labts-api` skill.
+- `playground/trainer.py`: train/detect backends for the DevAD zoo
+  (`sktime/libs/devad`) used by `labts.py train`/`detect`.
 
 ### Dynamic algorithm registration
 
@@ -267,6 +271,45 @@ anomaly **positions** (ilocs). Upstream `PyODDetector._predict` returns the
 anomalous points' label *values* instead, which collapses every detection
 onto iloc 1 in the playground's sparse-ilocs pipeline — do not remove the
 mixin.
+
+### DevAD anomaly-detection zoo (`sktime/libs/devad`)
+
+Seventeen anomaly-detection families are vendored under `sktime/libs/devad/`
+(imported from the `tinyfire27_devad_cli` branch; see
+`sktime/libs/devad/README.md` for provenance) behind a uniform
+`fit(x_train)` / `detect(x_test) -> scores + start_pos` API
+(`models/Base.py`, `models/registry.py`):
+
+- torch families: BeatGAN, COUTA, Donut, FCVAE, FITS, KAN-AD, LSTM-AD,
+  ModernTCN, OmniAnomaly, TimesNet, TranAD, USAD
+- scikit-learn subsequence families: IForest, KMeansAD, SubLOF, SubOCSVM,
+  SubPCA
+
+Each family has an `HP` table of hyperparameters; entries marked `REQUIRED`
+get defaults from the sktime adapters (`_default_overrides`). Model families
+AnomalyTransformer/CAE/DAGMM/EncDecAD exist as source files but are **not**
+in `ModelRegistry` (upstream WIP) and are therefore not exposed.
+
+Two entry points consume the zoo:
+
+- `sktime/detection/adapters/devad.py` — one default-constructible detector
+  per family (`DevADFITSDetector`, ...), discoverable as
+  `registered-anomaly_detection-<ClassName>`. `_predict` thresholds the
+  DevAD anomaly scores at `threshold_quantile` (default 0.99) and returns
+  point ilocs; `win_len`/`epochs`/`batch_size` are first-class constructor
+  params, every other HP goes through the `params` dict (a JSON string is
+  accepted, e.g. `--param params='{"h_dim": 64}'`).
+- `playground/trainer.py` — backs `labts.py train` / `labts.py detect` /
+  `labts.py ls models` on top of DevAD's `services.model_service`: training
+  persists `model.pt` + `manifest.json` + `training.log` under
+  `playground/models/<model_id>/` (gitignored), detection reloads the model
+  and returns the standard run envelope. This is the train-once/detect-many
+  counterpart of the stateless `labts run`.
+
+The zoo's native typer CLI also works:
+`python -m sktime.libs.devad.cli.app model list|info|train|detect|evaluate`
+(data in/out as `.npy` files; requires `typer`, pinned in
+`playground/requirements.txt`; `rich` renders the training reporter).
 
 ### Experiment plugins (`playground/experiments/`) + `labts fork`
 

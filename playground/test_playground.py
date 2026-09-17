@@ -171,6 +171,105 @@ class RunnerTests(unittest.TestCase):
         self.assertGreater(result["metrics"]["Detected"], 1)
         self.assertGreater(result["metrics"]["F1"], 0)
 
+    def test_devad_detector_runs(self):
+        # DevAD adapter (sktime.detection.adapters.devad) exercises the
+        # generic anomaly runner with a subsequence sklearn family.
+        try:
+            result = run_experiment(
+                {
+                    "task": "anomaly_detection",
+                    "dataset_id": "yahoo",
+                    "algorithm_id": "registered-anomaly_detection-DevADSubPCADetector",
+                    "params": {"win_len": 8, "threshold_quantile": 0.95},
+                }
+            )
+        except PlaygroundError as exc:
+            self.skipTest(str(exc))
+        self.assertEqual(result["status"], "ok")
+        self.assertIn("F1", result["metrics"])
+        self.assertGreater(result["metrics"]["Detected"], 1)
+
+    def test_devad_train_detect_cycle(self):
+        # labts train/detect: persist an iforest model, reload it, and get a
+        # run-compatible envelope back. Uses a throwaway models root.
+        import tempfile
+
+        import trainer
+
+        try:
+            with tempfile.TemporaryDirectory() as tmp:
+                trainer.MODELS_ROOT = Path(tmp)
+                trained = trainer.train_devad(
+                    {
+                        "algorithm_id": "registered-anomaly_detection-DevADIForestDetector",
+                        "dataset_id": "yahoo",
+                        "model_id": "t-iforest",
+                        "params": {"win_len": 8},
+                    }
+                )
+                self.assertEqual(trained["status"], "ok")
+                self.assertEqual(trained["family"], "iforest")
+                self.assertTrue((Path(tmp) / "t-iforest" / "model.pt").is_file())
+                self.assertTrue((Path(tmp) / "t-iforest" / "manifest.json").is_file())
+
+                models = trainer.list_trained_models()
+                self.assertEqual([m["model_id"] for m in models], ["t-iforest"])
+
+                result = trainer.detect_devad(
+                    {
+                        "model_id": "t-iforest",
+                        "dataset_id": "yahoo",
+                        "params": {"threshold_quantile": 0.95},
+                    }
+                )
+        except PlaygroundError as exc:
+            self.skipTest(str(exc))
+        finally:
+            trainer.MODELS_ROOT = REPO_ROOT / "playground" / "models"
+        self.assertEqual(result["status"], "ok")
+        self.assertIn("F1", result["metrics"])
+        self.assertGreater(result["metrics"]["Detected"], 1)
+        self.assertEqual(result["spec"]["algorithm_id"], "devad-trained:t-iforest")
+        self.assertIn("code", result)
+        self.assertIn("report", result)
+
+    def test_devad_train_rejects_non_devad_algorithm(self):
+        import trainer
+
+        with self.assertRaises(PlaygroundError):
+            trainer.train_devad(
+                {
+                    "algorithm_id": "registered-anomaly_detection-PyODECODDetector",
+                    "dataset_id": "yahoo",
+                }
+            )
+
+    def test_devad_fits_train_detect_cycle(self):
+        # Torch family end-to-end: tiny FITS training run + reload + detect.
+        import tempfile
+
+        import trainer
+
+        try:
+            with tempfile.TemporaryDirectory() as tmp:
+                trainer.MODELS_ROOT = Path(tmp)
+                trained = trainer.train_devad(
+                    {
+                        "algorithm_id": "registered-anomaly_detection-DevADFITSDetector",
+                        "dataset_id": "yahoo",
+                        "model_id": "t-fits",
+                        "params": {"epochs": 1, "batch_size": 64},
+                    }
+                )
+                self.assertEqual(trained["status"], "ok")
+                result = trainer.detect_devad({"model_id": "t-fits", "dataset_id": "yahoo"})
+        except PlaygroundError as exc:
+            self.skipTest(str(exc))
+        finally:
+            trainer.MODELS_ROOT = REPO_ROOT / "playground" / "models"
+        self.assertEqual(result["status"], "ok")
+        self.assertGreater(result["metrics"]["Detected"], 1)
+
 
 class UserPluginTests(unittest.TestCase):
     def test_user_plugins_discovered(self):

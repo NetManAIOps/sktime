@@ -830,27 +830,25 @@ def _run_clustering_generic(spec: dict, dataset: dict, algorithm: dict, preproce
     )
 
 
-def _run_anomaly_generic(spec: dict, dataset: dict, algorithm: dict, preprocessor: dict, log: list[str]) -> dict:
-    import numpy as np
+def load_anomaly_series(dataset: dict, preprocessor: dict, spec: dict, log: list[str]):
+    """Load (values, labels) of an anomaly_detection dataset, with preprocessing."""
     import pandas as pd
-
-    _eval_params, est_params = split_params("anomaly_detection", spec.get("params") or {})
-    detector = _build_estimator(algorithm, est_params)
-    log.append(f"Estimator: {algorithm['name']} params={est_params or 'defaults'}")
 
     frame = pd.read_csv(REPO_ROOT / dataset["path"])
     y_true = frame["label"].astype(int).to_numpy()
     raw = frame["data"].astype(float)
     raw = _apply_series_preprocessor(raw, None, preprocessor, spec, log)[0]
+    log.append(f"Loaded {dataset['name']} rows={len(raw)}")
+    return raw, y_true
 
-    sparse = detector.fit_predict(raw.to_frame("data"))
-    arr = np.asarray(sparse).ravel() if sparse is not None else np.array([])
-    if arr.size == len(raw) and arr.size > 0:
-        pred_indices = np.where(arr != 0)[0]
-    else:
-        pred_indices = _extract_sparse_ilocs(sparse)
+
+def build_anomaly_result(raw, y_true, pred_indices, detector_name: str) -> dict:
+    """Shared metrics/series/tables payload for point-anomaly detections."""
+    import numpy as np
+
     y_pred = np.zeros(len(raw), dtype=int)
-    y_pred[pred_indices[(pred_indices >= 0) & (pred_indices < len(raw))]] = 1
+    pred_indices = pred_indices[(pred_indices >= 0) & (pred_indices < len(raw))]
+    y_pred[pred_indices] = 1
 
     tp = int(((y_true == 1) & (y_pred == 1)).sum())
     fp = int(((y_true == 0) & (y_pred == 1)).sum())
@@ -858,7 +856,6 @@ def _run_anomaly_generic(spec: dict, dataset: dict, algorithm: dict, preprocesso
     precision = tp / (tp + fp) if tp + fp else 0.0
     recall = tp / (tp + fn) if tp + fn else 0.0
     f1 = 2 * precision * recall / (precision + recall) if precision + recall else 0.0
-    log.append(f"Loaded {dataset['name']} rows={len(raw)}")
 
     max_points = 30000
     stride = max(1, len(raw) // max_points) if len(raw) > max_points else 1
@@ -887,8 +884,29 @@ def _run_anomaly_generic(spec: dict, dataset: dict, algorithm: dict, preprocesso
                 for i in np.where(y_pred == 1)[0][:40]
             ]
         },
-        "summary": f"Detected {int(y_pred.sum())} anomalies against {int(y_true.sum())} labels with {algorithm['name']}.",
+        "summary": (
+            f"Detected {int(y_pred.sum())} anomalies against "
+            f"{int(y_true.sum())} labels with {detector_name}."
+        ),
     }
+
+
+def _run_anomaly_generic(spec: dict, dataset: dict, algorithm: dict, preprocessor: dict, log: list[str]) -> dict:
+    import numpy as np
+
+    _eval_params, est_params = split_params("anomaly_detection", spec.get("params") or {})
+    detector = _build_estimator(algorithm, est_params)
+    log.append(f"Estimator: {algorithm['name']} params={est_params or 'defaults'}")
+
+    raw, y_true = load_anomaly_series(dataset, preprocessor, spec, log)
+
+    sparse = detector.fit_predict(raw.to_frame("data"))
+    arr = np.asarray(sparse).ravel() if sparse is not None else np.array([])
+    if arr.size == len(raw) and arr.size > 0:
+        pred_indices = np.where(arr != 0)[0]
+    else:
+        pred_indices = _extract_sparse_ilocs(sparse)
+    return build_anomaly_result(raw, y_true, pred_indices, algorithm["name"])
 
 
 def get_run(run_id: str) -> dict | None:

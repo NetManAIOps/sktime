@@ -13,13 +13,22 @@ has a CLI counterpart (same catalog/runner code, identical results):
     GET  /api/export/script       python playground/labts.py script (--spec '<json>' | --from run.json)
     GET  /api/export/report       python playground/labts.py report (--spec '<json>' | --from run.json)
 
-    Discovery shortcut            python playground/labts.py ls tasks|algorithms|datasets|preprocessors|metrics \
+    Discovery shortcut            python playground/labts.py ls tasks|algorithms|datasets|preprocessors|metrics|models \
                                       [--task forecasting] [--all]
+
+    Persistent models (DevAD)     python playground/labts.py train --algorithm <devad-detector-id> \
+                                      --dataset yahoo --model-id my-model [--param epochs=3] [--val-fraction 0.2]
+                                  python playground/labts.py detect --model-id my-model [--dataset yahoo] \
+                                      [--param threshold_quantile=0.99] [--out run.json]
 
 `--spec` accepts a JSON string, `@path/to/spec.json`, or `-` for stdin.
 `run` also takes plain flags (`--task/--dataset/--algorithm/--preprocessor`,
 plus repeatable `--param key=value` / `--pre-param key=value`) so no JSON is
 needed for common calls; omitting everything runs the per-task default.
+
+`run` is stateless (fit+predict in one call, model discarded). For trainable
+DevAD detectors, `train` persists the model under `playground/models/<id>/`
+and `detect` reuses it, returning the same result envelope as `run`.
 
 `catalog` and `run` print a JSON envelope on stdout (always, also for errors):
 
@@ -276,15 +285,20 @@ def _spec_from_flags(args) -> dict:
     return {k: v for k, v in spec.items() if v not in (None, {})}
 
 
-_LS_SECTIONS = ("tasks", "algorithms", "datasets", "preprocessors", "metrics")
+_LS_SECTIONS = ("tasks", "algorithms", "datasets", "preprocessors", "metrics", "models")
 
 
 def _main_ls(args) -> int:
     """Quick resource listing, a filtered view of the catalog."""
     envelope = _envelope("catalog")
     try:
-        data = build_catalog(include_registered=True)
-        rows = data[args.section]
+        if args.section == "models":
+            from trainer import list_trained_models
+
+            rows = list_trained_models()
+        else:
+            data = build_catalog(include_registered=True)
+            rows = data[args.section]
         if args.section in ("algorithms", "preprocessors") and not args.all:
             rows = [row for row in rows if row.get("enabled")]
         if args.task:
@@ -296,6 +310,63 @@ def _main_ls(args) -> int:
             ]
         envelope["data"] = {"section": args.section, "count": len(rows), "rows": rows}
         exit_code = EXIT_OK
+    except Exception as exc:
+        return _fail(envelope, sys.stdout, exc, "error", EXIT_ERROR)
+    _emit_json(sys.stdout, envelope)
+    return exit_code
+
+
+def _main_train(args) -> int:
+    """Train a DevAD detector on a dataset and persist the model."""
+    from trainer import train_devad
+
+    envelope = _envelope("train")
+    try:
+        spec = {
+            "algorithm_id": args.algorithm,
+            "dataset_id": args.dataset,
+            "model_id": args.model_id,
+            "preprocessor_id": args.preprocessor,
+            "params": _parse_kv_pairs(args.param, "--param"),
+            "preprocessor_params": _parse_kv_pairs(args.pre_param, "--pre-param"),
+            "val_fraction": args.val_fraction,
+        }
+        spec = {k: v for k, v in spec.items() if v not in (None, {})}
+        envelope["data"] = train_devad(spec)
+        exit_code = EXIT_OK
+    except UsageError as exc:
+        return _fail(envelope, sys.stdout, exc, "error", EXIT_USAGE)
+    except PlaygroundError as exc:
+        return _fail(envelope, sys.stdout, exc, "blocked", EXIT_BLOCKED)
+    except Exception as exc:
+        return _fail(envelope, sys.stdout, exc, "error", EXIT_ERROR)
+    _emit_json(sys.stdout, envelope)
+    return exit_code
+
+
+def _main_detect(args) -> int:
+    """Run a persisted DevAD model; same result envelope as `run`."""
+    from trainer import detect_devad
+
+    envelope = _envelope("result")
+    try:
+        spec = {
+            "model_id": args.model_id,
+            "dataset_id": args.dataset,
+            "preprocessor_id": args.preprocessor,
+            "params": _parse_kv_pairs(args.param, "--param"),
+            "preprocessor_params": _parse_kv_pairs(args.pre_param, "--pre-param"),
+        }
+        spec = {k: v for k, v in spec.items() if v not in (None, {})}
+        data = detect_devad(spec)
+        if args.out:
+            _write_json(args.out, {**envelope, "data": data})
+        envelope["data"] = _compact_result(data) if args.compact else data
+        exit_code = EXIT_OK
+    except UsageError as exc:
+        return _fail(envelope, sys.stdout, exc, "error", EXIT_USAGE)
+    except PlaygroundError as exc:
+        return _fail(envelope, sys.stdout, exc, "blocked", EXIT_BLOCKED)
     except Exception as exc:
         return _fail(envelope, sys.stdout, exc, "error", EXIT_ERROR)
     _emit_json(sys.stdout, envelope)
@@ -480,6 +551,71 @@ def main(argv: list[str] | None = None) -> int:
         help="Plugin file/display name (default: the algorithm's name, slugified).",
     )
 
+    p_train = sub.add_parser(
+        "train",
+        help="Train a DevAD detector on a dataset and persist the model "
+        "under playground/models/<model-id>/.",
+    )
+    p_train.add_argument(
+        "--algorithm",
+        required=True,
+        help="DevAD adapter id, e.g. registered-anomaly_detection-DevADFITSDetector.",
+    )
+    p_train.add_argument("--dataset", help="Anomaly dataset id (default: yahoo).")
+    p_train.add_argument(
+        "--model-id",
+        help="Persisted model directory name (default: <family>-<dataset>). "
+        "An existing model with the same id is overwritten.",
+    )
+    p_train.add_argument("--preprocessor", help="Preprocessor id (default: none).")
+    p_train.add_argument(
+        "--param",
+        action="append",
+        metavar="KEY=VALUE",
+        help="Adapter param (win_len/epochs/batch_size/seed/device/...) or "
+        "DevAD hyperparameter (h_dim/lr/...); repeatable.",
+    )
+    p_train.add_argument(
+        "--pre-param",
+        action="append",
+        metavar="KEY=VALUE",
+        help="Preprocessor parameter; repeatable.",
+    )
+    p_train.add_argument(
+        "--val-fraction",
+        type=float,
+        default=0.0,
+        help="Hold out this fraction of the series tail for validation "
+        "(enables early stopping for torch families). Default: 0.",
+    )
+
+    p_detect = sub.add_parser(
+        "detect",
+        help="Run a persisted model (labts train) on a dataset; "
+        "same result envelope as `run`.",
+    )
+    p_detect.add_argument(
+        "--model-id",
+        required=True,
+        help="Trained model id under playground/models/ (see `ls models`).",
+    )
+    p_detect.add_argument("--dataset", help="Anomaly dataset id (default: yahoo).")
+    p_detect.add_argument("--preprocessor", help="Preprocessor id (default: none).")
+    p_detect.add_argument(
+        "--param",
+        action="append",
+        metavar="KEY=VALUE",
+        help="Detect param: threshold_quantile (default 0.99), device; repeatable.",
+    )
+    p_detect.add_argument(
+        "--pre-param",
+        action="append",
+        metavar="KEY=VALUE",
+        help="Preprocessor parameter; repeatable.",
+    )
+    p_detect.add_argument("--compact", action="store_true", help="Like `run --compact`.")
+    p_detect.add_argument("--out", metavar="FILE", help="Like `run --out`.")
+
     p_check = sub.add_parser(
         "check",
         help="Validate a plugin file and run a tiny smoke experiment.",
@@ -493,6 +629,10 @@ def main(argv: list[str] | None = None) -> int:
         return _main_ls(args)
     if args.command == "run":
         return _main_run(args)
+    if args.command == "train":
+        return _main_train(args)
+    if args.command == "detect":
+        return _main_detect(args)
     if args.command == "fork":
         return _main_fork(args)
     if args.command == "check":

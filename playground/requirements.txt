@@ -20,6 +20,9 @@
 #   FEDformer, FreTS) need it. The +cpu wheel comes from the PyTorch index via
 #   the --extra-index-url line below. sktime's `dl` extra (tensorflow/keras
 #   networks) remains NOT included; install it manually if needed.
+# - typer + rich are included for the vendored DevAD zoo (`sktime/libs/devad`):
+#   rich renders its training reporter, typer powers its native CLI
+#   (`python -m sktime.libs.devad.cli.app`).
 # - Some soft deps are skipped on Python 3.12 by upstream environment markers
 #   (e.g. prophet, hmmlearn, tslearn, tsfresh, pyod). Install them manually only
 #   when a specific estimator asks for them.
@@ -29,6 +32,7 @@ absl-py==2.5.0
 adagio==0.2.6
 alembic==1.18.5
 annotated-types==0.7.0
+annotated-doc==0.0.5
 anyio==4.14.1
 arch==7.2.0
 astunparse==1.6.3
@@ -124,6 +128,7 @@ scikit-posthocs==0.14.0
 scipy==1.15.3
 seaborn==0.13.2
 setuptools==83.0.0
+shellingham==1.5.4
 simdkalman==1.0.4
 six==1.17.0
 skchange==0.16.0
@@ -144,6 +149,7 @@ tqdm==4.68.4
 triad==1.0.2
 typing-extensions==4.16.0
 typing-inspection==0.4.2
+typer==0.27.2
 tzdata==2026.2
 urllib3==2.7.0
 utilsforecast==0.2.16
