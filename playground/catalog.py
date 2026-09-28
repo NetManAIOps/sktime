@@ -32,6 +32,7 @@ EVAL_PARAMS = {
     "regression": set(),
     "clustering": set(),
     "anomaly_detection": {"threshold", "window"},
+    "causal": {"max_samples", "seed"},
 }
 
 _ESTIMATOR_TYPES = {
@@ -152,6 +153,12 @@ TASKS = [
         "label": "Anomaly Detection",
         "description": "Detect point anomalies and compare with known labels.",
     },
+    {
+        "id": "causal",
+        "label": "Causal Discovery",
+        "description": "Discover a causal graph from tabular/time-series data and "
+        "score it against a ground-truth graph (SHD, edge precision/recall/F1).",
+    },
 ]
 
 ENABLED_ALGORITHMS = [
@@ -202,6 +209,64 @@ ENABLED_ALGORITHMS = [
         "params": {"threshold": 2.0, "window": 24},
     },
 ]
+
+_CAUSAL_ALGORITHMS = [
+    {
+        "id": "causal-notears",
+        "name": "NOTEARS",
+        "task": "causal",
+        "module": "sktime.causal_discovery.notears.NOTEARS",
+        "enabled": True,
+        "template": "NOTEARS(lambda1=lambda1, w_threshold=w_threshold)",
+        "params": {"lambda1": 0.01, "w_threshold": 0.3, "max_samples": 2000},
+    },
+    {
+        "id": "causal-pc",
+        "name": "PC",
+        "task": "causal",
+        "module": "sktime.causal_discovery.pc.PC",
+        "enabled": True,
+        "python_dependencies": ["causal-learn"],
+        "template": "PC(alpha=alpha)",
+        "params": {"alpha": 0.05, "max_samples": 2000},
+    },
+    {
+        "id": "causal-ges",
+        "name": "GES",
+        "task": "causal",
+        "module": "sktime.causal_discovery.ges.GES",
+        "enabled": True,
+        "python_dependencies": ["causal-learn"],
+        "template": "GES(score_func=score_func)",
+        "params": {"max_samples": 2000},
+    },
+    {
+        "id": "causal-pcmci",
+        "name": "PCMCI",
+        "task": "causal",
+        "module": "sktime.causal_discovery.pcmci.PCMCI",
+        "enabled": True,
+        "python_dependencies": ["tigramite"],
+        "template": "PCMCI(max_lag=max_lag, alpha_level=alpha_level)",
+        "params": {"max_lag": 1, "alpha_level": 0.05, "max_samples": 2000},
+    },
+]
+
+for _entry in _CAUSAL_ALGORITHMS:
+    _deps = _entry.get("python_dependencies") or []
+    _missing = next(
+        (
+            dep
+            for dep in _deps
+            if importlib.util.find_spec(dep.replace("-", "_")) is None
+        ),
+        None,
+    )
+    if _missing is not None:
+        _entry["enabled"] = False
+        _entry["disabled_reason"] = f"Missing dependency `{_missing}`"
+
+ENABLED_ALGORITHMS.extend(_CAUSAL_ALGORITHMS)
 
 for _entry in ENABLED_ALGORITHMS:
     _entry.setdefault("curated", True)
@@ -335,6 +400,34 @@ DATASETS = [
         "task": "anomaly_detection",
         "source": "local",
         "path": "sktime/datasets/data/mitdb/mitdb.csv",
+        "enabled": True,
+    },
+    {
+        "id": "causal-sachs",
+        "name": "Sachs (bnlearn, true DAG)",
+        "task": "causal",
+        "source": "local",
+        "loader": "sktime.datasets.load_sachs",
+        "true_graph": True,
+        "enabled": True,
+        "default": True,
+    },
+    {
+        "id": "causal-alarm",
+        "name": "ALARM (bnlearn, true DAG)",
+        "task": "causal",
+        "source": "local",
+        "loader": "sktime.datasets.load_alarm",
+        "true_graph": True,
+        "enabled": True,
+    },
+    {
+        "id": "causal-asia",
+        "name": "Asia (bnlearn, true DAG)",
+        "task": "causal",
+        "source": "local",
+        "loader": "sktime.datasets.load_asia",
+        "true_graph": True,
         "enabled": True,
     },
 ]
@@ -474,6 +567,66 @@ def _detector_subtype(name: str, module: str) -> str:
     return "other"
 
 
+def _is_missing_args_error(err: str) -> bool:
+    """True when construction failed only due to missing required arguments."""
+    return "required positional argument" in err
+
+
+_ESTIMATOR_PARAM_HINTS = (
+    "forecaster",
+    "forecasters",
+    "classifier",
+    "classifiers",
+    "regressor",
+    "regressors",
+    "clusterer",
+    "clusterers",
+    "detector",
+    "detectors",
+    "transformer",
+    "transformers",
+    "estimator",
+    "estimators",
+    "steps",
+    "base_estimator",
+)
+
+
+def _looks_like_estimator_param(name: str) -> bool:
+    n = name.lower()
+    return any(
+        n == hint or n.endswith("_" + hint) or n.endswith(hint + "s")
+        for hint in _ESTIMATOR_PARAM_HINTS
+    )
+
+
+def _constructor_param_info(klass) -> tuple[list[str], dict, list[str]]:
+    """Inspect ``__init__``: (required params, numeric defaults, estimator params).
+
+    Estimator-typed params (by name heuristic) are the ones a nested spec can
+    fill with ``{"estimator": {...}}`` — see runners._build_estimator.
+    """
+    import inspect
+
+    try:
+        sig = inspect.signature(klass.__init__)
+    except (TypeError, ValueError):
+        return [], {}, []
+    required: list[str] = []
+    numeric: dict = {}
+    est_names: list[str] = []
+    for pname, param in sig.parameters.items():
+        if pname == "self" or param.kind in (param.VAR_KEYWORD, param.VAR_POSITIONAL):
+            continue
+        if _looks_like_estimator_param(pname):
+            est_names.append(pname)
+        if param.default is inspect.Parameter.empty:
+            required.append(pname)
+        elif isinstance(param.default, (int, float)) and not isinstance(param.default, bool):
+            numeric[pname] = param.default
+    return required, numeric, est_names
+
+
 def discover_registered_algorithms() -> list[dict]:
     """Discover sktime estimators and enable the default-constructible ones.
 
@@ -540,7 +693,24 @@ def discover_registered_algorithms() -> list[dict]:
             if task == "anomaly_detection":
                 base["subtype"] = _detector_subtype(name, module_path)
             if err is not None:
-                base.update(enabled=False, disabled_reason=err, params={})
+                required, sig_numeric, est_names = _constructor_param_info(klass)
+                missing = _missing_python_dependency(deps)
+                if required and _is_missing_args_error(err) and missing is None:
+                    # Meta-estimator/compositor: constructible once the required
+                    # (typically sub-estimator) params are passed through nested
+                    # spec params. Enable it and advertise what it needs.
+                    if task == "forecasting":
+                        sig_numeric = {"horizon": 12, "context_window": 36, **sig_numeric}
+                    base.update(
+                        enabled=True,
+                        params=sig_numeric,
+                        required_params=required,
+                        requires_constructor_params=True,
+                    )
+                    if est_names:
+                        base["accepts_estimators"] = est_names
+                else:
+                    base.update(enabled=False, disabled_reason=err, params={})
                 discovered.append(base)
                 continue
             missing = _missing_python_dependency(deps)
@@ -556,6 +726,9 @@ def discover_registered_algorithms() -> list[dict]:
             if task == "forecasting":
                 params = {"horizon": 12, "context_window": 36, **params}
             base.update(enabled=True, params=params)
+            _required, _numeric, est_names = _constructor_param_info(klass)
+            if est_names:
+                base["accepts_estimators"] = est_names
             discovered.append(base)
 
     _DISCOVERED_CACHE = discovered
@@ -726,6 +899,8 @@ def hf_metadata() -> dict:
 
 def build_catalog(include_registered: bool = True) -> dict:
     """Return the Playground catalog consumed by the front end."""
+    from metrics import all_metrics
+
     algorithms = list(ENABLED_ALGORITHMS)
     if include_registered:
         algorithms.extend(discover_registered_algorithms())
@@ -756,25 +931,33 @@ def build_catalog(include_registered: bool = True) -> dict:
         "algorithms": algorithms,
         "preprocessors": preprocessors,
         "datasets": datasets,
-        "metrics": [
-            {"id": "mae", "name": "MAE", "task": "forecasting"},
-            {"id": "mse", "name": "MSE", "task": "forecasting"},
-            {"id": "mape", "name": "MAPE", "task": "forecasting"},
-            {"id": "accuracy", "name": "Accuracy", "task": "classification"},
-            {"id": "macro_f1", "name": "Macro F1", "task": "classification"},
-            {"id": "mae", "name": "MAE", "task": "regression"},
-            {"id": "rmse", "name": "RMSE", "task": "regression"},
-            {"id": "r2", "name": "R²", "task": "regression"},
-            {"id": "ari", "name": "Adjusted Rand Index", "task": "clustering"},
-            {"id": "nmi", "name": "Normalized Mutual Info", "task": "clustering"},
-            {"id": "precision", "name": "Precision", "task": "anomaly_detection"},
-            {"id": "recall", "name": "Recall", "task": "anomaly_detection"},
-            {"id": "f1", "name": "F1", "task": "anomaly_detection"},
-        ],
+        "metrics": all_metrics(),
+        "analyzers": _analyzers_section(),
+        "distances": _distances_section(),
         "compatibility": compatibility,
         "dependencies": dependency_status(),
         "hf": hf_metadata(),
     }
+
+
+def _analyzers_section() -> list[dict]:
+    """Param-estimation algorithms backing `labts analyze` (lazy import)."""
+    try:
+        from analyzer import ANALYZERS
+
+        return [dict(entry) for entry in ANALYZERS]
+    except Exception as exc:
+        return [{"id": "analyzers-unavailable", "enabled": False, "disabled_reason": str(exc)}]
+
+
+def _distances_section() -> list[dict]:
+    """Distance metrics backing `labts dist` (lazy import)."""
+    try:
+        from domain_runners import DISTANCES
+
+        return [dict(entry) for entry in DISTANCES]
+    except Exception as exc:
+        return [{"id": "distances-unavailable", "enabled": False, "disabled_reason": str(exc)}]
 
 
 def get_enabled_algorithm(algorithm_id: str) -> dict | None:

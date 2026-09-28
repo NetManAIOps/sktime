@@ -178,9 +178,24 @@ registry entry looks wrong, rerun the command above rather than trusting it.
   `/api/catalog`, `/api/run`, `/api/export/script`, `/api/export/report`.
   Static assets live in `playground/static/`.
 - `playground/catalog.py`: builds the task/algorithm/dataset catalog consumed
-  by the front end, and discovers sktime estimators.
+  by the front end, and discovers sktime estimators. Also registers the
+  `causal` task (NOTEARS/PC/GES/PCMCI + bnlearn datasets with ground-truth
+  DAGs) and marks compositors that accept sub-estimators
+  (`required_params`/`accepts_estimators`).
 - `playground/runners.py`: validates specs, runs experiments, and generates the
-  reproduction script and report for each run.
+  reproduction script and report for each run. Supports preprocessing chains
+  (ordered, length-preserving steps), nested estimator specs for compositors,
+  registry-driven extra metrics, continuous anomaly scores, and re-scoring of
+  saved runs (`evaluate_saved_run`).
+- `playground/metrics.py`: unified metric registry (sktime forecasting /
+  detection metrics, sklearn task metrics, DevAD score-based anomaly
+  metrics) with `id/name/task/requires/direction/default` metadata; drives
+  `labts ls metrics`, `run --metric`, and `labts evaluate`.
+- `playground/domain_runners.py`: causal-discovery runner (graph metrics:
+  SHD + edge precision/recall/F1 against the true DAG) and the pairwise
+  distance-matrix backend for `labts dist`.
+- `playground/analyzer.py`: `sktime.param_est` backend for `labts analyze`
+  (seasonality, stationarity, AR lag order).
 - `playground/hf_data.py`: Hugging Face loader for online forecasting series.
 - `playground/test_playground.py`: unittest suite.
 - `playground/labts.py`: LabTS API — headless CLI version of this Playground
@@ -189,8 +204,10 @@ registry entry looks wrong, rerun the command above rather than trusting it.
   `script` ↔ `/api/export/script`, `report` ↔ `/api/export/report`, with a
   unified JSON envelope and pipeline flow (`run --out` → `script/report
   --from`). Adds stateful model lifecycle commands for DevAD detectors:
-  `train` (persist under `playground/models/`), `detect`, `ls models`.
-  See the `labts-api` skill.
+  `train` (persist under `playground/models/`), `detect`, `ls models`; plus
+  `evaluate` (re-score saved runs with registry metrics), `analyze`
+  (param_est), `dist` (pairwise distances), and `predict` (generic
+  persistence backend, wired for mission M2). See the `labts-api` skill.
 - `playground/trainer.py`: train/detect backends for the DevAD zoo
   (`sktime/libs/devad`) used by `labts.py train`/`detect`.
 
@@ -201,16 +218,34 @@ walks `sktime.registry.all_estimators()` for `forecaster`, `classifier`,
 `regressor`, `clusterer`, and `detector`, and exposes EVERY discovered
 estimator as enabled, plus its numeric scalar hyperparameters from
 `get_params()`. There is no environment gating and no disabled list: whatever
-sktime has registered shows up and is runnable.
+sktime has registered shows up and is runnable. Estimators whose constructor
+requires arguments (compositors/meta-estimators such as ForecastingPipeline,
+EnsembleForecaster, reduction wrappers) are enabled too and marked with
+`required_params` / `accepts_estimators` — they run through **nested
+estimator specs** (`spec.params` values of the form
+`{"name": "x", "estimator": {"algorithm_id": ..., "params": {...}}}`, built
+recursively by `runners._build_estimator` with task-type validation).
 
 - Five curated defaults (`NaiveForecaster`, `SummaryClassifier`,
   `SklearnRegressorPipeline`, `TimeSeriesKMeans`, `ThresholdDetector`) keep
-  their hand-tuned runners and are listed first.
+  their hand-tuned runners and are listed first; the causal task adds curated
+  `NOTEARS` (native), `PC`/`GES` (soft dep `causal-learn`), and `PCMCI`
+  (soft dep `tigramite`) plus the bnlearn `causal-sachs/alarm/asia` datasets
+  with ground-truth DAGs.
 - Every other discovered estimator goes through a generic per-task runner
   (`_run_<task>_generic`) and a generic export-script generator.
 - Evaluation parameters (`horizon`; `threshold`/`window` for the curated
-  anomaly detector) are split from estimator constructor parameters via
-  `catalog.split_params()`.
+  anomaly detector; `max_samples`/`seed` for causal) are split from estimator
+  constructor parameters via `catalog.split_params()`.
+- Preprocessors chain: `spec.preprocessors` is an ordered list of
+  length/instance-preserving steps (`--preprocessor` repeatable on the CLI,
+  per-step params via `--pre-param STEP:key=value`); the legacy single
+  `preprocessor_id` form is a one-step chain.
+- Metrics come from the unified registry in `playground/metrics.py`:
+  defaults are unchanged per task; `run --metric <id>` adds registry entries
+  (e.g. DevAD `pa_f1`/`vus_roc` on top of the point P/R/F1), and
+  `labts evaluate --from run.json` re-scores a saved run without re-fitting
+  (anomaly via the saved continuous `scores`).
 
 Soft dependencies are not required to start the Playground, but they unlock most
 discovered estimators. For broad coverage install them, for example:
