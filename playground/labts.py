@@ -13,7 +13,7 @@ has a CLI counterpart (same catalog/runner code, identical results):
     GET  /api/export/script       python playground/labts.py script (--spec '<json>' | --from run.json)
     GET  /api/export/report       python playground/labts.py report (--spec '<json>' | --from run.json)
 
-    Discovery shortcut            python playground/labts.py ls tasks|algorithms|datasets|preprocessors|metrics|models \
+    Discovery shortcut            python playground/labts.py ls tasks|algorithms|datasets|preprocessors|metrics|models|analyzers|distances \
                                       [--task forecasting] [--all]
 
     Persistent models (DevAD)     python playground/labts.py train --algorithm <devad-detector-id> \
@@ -21,10 +21,22 @@ has a CLI counterpart (same catalog/runner code, identical results):
                                   python playground/labts.py detect --model-id my-model [--dataset yahoo] \
                                       [--param threshold_quantile=0.99] [--out run.json]
 
+    Re-score a run                python playground/labts.py evaluate --from run.json --metric pa_f1 [--metric vus_roc]
+                                  python playground/labts.py evaluate --spec '<json>' --metric mase   (re-runs)
+
+    Parameter estimation          python playground/labts.py analyze --algorithm seasonality-acf --dataset airline
+
+    Pairwise distances            python playground/labts.py dist --dataset unit-test --metric dtw [--metric scipy:cosine]
+
+    Predict (persisted model)     python playground/labts.py predict --model-id M [--dataset D] [--param k=v]
+                                  (reloads a persisted model via trainer.predict_estimator and scores
+                                  the dataset holdout; DevAD models delegate to `detect`)
+
 `--spec` accepts a JSON string, `@path/to/spec.json`, or `-` for stdin.
-`run` also takes plain flags (`--task/--dataset/--algorithm/--preprocessor`,
-plus repeatable `--param key=value` / `--pre-param key=value`) so no JSON is
-needed for common calls; omitting everything runs the per-task default.
+`run` also takes plain flags (`--task/--dataset/--algorithm`, repeatable
+`--preprocessor`, `--metric`, plus repeatable `--param key=value` /
+`--pre-param [STEP:]key=value`) so no JSON is needed for common calls;
+omitting everything runs the per-task default.
 
 `run` is stateless (fit+predict in one call, model discarded). For trainable
 DevAD detectors, `train` persists the model under `playground/models/<id>/`
@@ -48,6 +60,7 @@ Typical pipeline flow (run once, export many):
     python playground/labts.py run --spec @spec.json --out run.json
     python playground/labts.py script --from run.json > experiment.py
     python playground/labts.py report --from run.json > experiment.md
+    python playground/labts.py evaluate --from run.json --metric pa_f1
 """
 
 from __future__ import annotations
@@ -77,7 +90,7 @@ EXIT_USAGE = 2
 EXIT_BLOCKED = 3
 
 # Large, presentation-oriented result fields dropped by `run --compact`.
-_RUN_HEAVY_KEYS = ("series", "tables", "code", "report")
+_RUN_HEAVY_KEYS = ("series", "tables", "code", "report", "scores", "evaluation")
 # Result key backing each export command.
 _EXPORT_KEYS = {"script": "code", "report": "report"}
 
@@ -120,7 +133,7 @@ def _meta() -> dict:
 
 def _compact_catalog(data: dict) -> dict:
     """Enabled entries only; drop the compatibility cross-product and env info."""
-    keep_algo = ("id", "name", "task", "subtype", "params")
+    keep_algo = ("id", "name", "task", "subtype", "params", "required_params", "accepts_estimators")
     keep_prep = ("id", "name", "compatible_tasks", "params")
     keep_ds = ("id", "name", "task", "source", "online", "default")
     return {
@@ -140,6 +153,8 @@ def _compact_catalog(data: dict) -> dict:
             {k: d[k] for k in keep_ds if k in d} for d in data["datasets"]
         ],
         "metrics": data["metrics"],
+        "analyzers": data.get("analyzers", []),
+        "distances": data.get("distances", []),
     }
 
 
@@ -261,31 +276,92 @@ def _parse_kv_pairs(pairs: list[str] | None, what: str) -> dict:
         key = key.strip()
         if not key:
             raise UsageError(f"Invalid {what} `{pair}`; empty key.")
-        value = value.strip()
-        try:
-            params[key] = int(value)
-        except ValueError:
-            try:
-                params[key] = float(value)
-            except ValueError:
-                params[key] = value
+        params[key] = _coerce_cli_value(value.strip())
     return params
+
+
+def _coerce_cli_value(value: str):
+    try:
+        return int(value)
+    except ValueError:
+        try:
+            return float(value)
+        except ValueError:
+            return value
+
+
+def _parse_step_kv_pairs(pairs: list[str] | None, n_steps: int, what: str) -> list[dict]:
+    """Parse repeatable `--pre-param` flags into per-step param dicts.
+
+    Per-step addressing: `STEP:key=value` where STEP is the 1-based index of
+    the `--preprocessor` occurrence it belongs to. A bare `key=value` (no
+    prefix) is accepted only with a single step — the historic behaviour.
+    """
+    per_step: list[dict] = [dict() for _ in range(max(1, n_steps))]
+    for pair in pairs or []:
+        if "=" not in pair:
+            raise UsageError(f"Invalid {what} `{pair}`; expected [STEP:]key=value.")
+        head, _, value = pair.partition("=")
+        head = head.strip()
+        step_idx = 0
+        key = head
+        if ":" in head:
+            step_s, _, key = head.partition(":")
+            try:
+                step_idx = int(step_s) - 1
+            except ValueError:
+                raise UsageError(
+                    f"Invalid {what} `{pair}`; STEP must be a 1-based step index."
+                ) from None
+            if not 0 <= step_idx < n_steps:
+                raise UsageError(
+                    f"Invalid {what} `{pair}`; step {step_s} out of range "
+                    f"(1..{n_steps} for the given --preprocessor steps)."
+                )
+        elif n_steps > 1:
+            raise UsageError(
+                f"Invalid {what} `{pair}`; with multiple --preprocessor steps, "
+                "address params per step as `STEP:key=value` (e.g. `2:degree=2`)."
+            )
+        key = key.strip()
+        if not key:
+            raise UsageError(f"Invalid {what} `{pair}`; empty key.")
+        per_step[step_idx][key] = _coerce_cli_value(value.strip())
+    return per_step
 
 
 def _spec_from_flags(args) -> dict:
     """Build a run spec from --task/--dataset/... flags instead of --spec."""
+    preprocessors = list(args.preprocessor or [])
     spec = {
         "task": args.task,
         "dataset_id": args.dataset,
         "algorithm_id": args.algorithm,
-        "preprocessor_id": args.preprocessor,
         "params": _parse_kv_pairs(args.param, "--param"),
-        "preprocessor_params": _parse_kv_pairs(args.pre_param, "--pre-param"),
     }
+    if getattr(args, "metric", None):
+        spec["metrics"] = list(args.metric)
+    if preprocessors:
+        per_step = _parse_step_kv_pairs(args.pre_param, len(preprocessors), "--pre-param")
+        spec["preprocessors"] = [
+            {"id": pid, "params": per_step[i]} for i, pid in enumerate(preprocessors)
+        ]
+    elif args.pre_param:
+        # legacy tolerant path: params without a preprocessor are ignored
+        spec["preprocessor_params"] = _parse_kv_pairs(args.pre_param, "--pre-param")
     return {k: v for k, v in spec.items() if v not in (None, {})}
 
 
-_LS_SECTIONS = ("tasks", "algorithms", "datasets", "preprocessors", "metrics", "models")
+_LS_SECTIONS = (
+    "tasks",
+    "algorithms",
+    "datasets",
+    "preprocessors",
+    "metrics",
+    "models",
+    "analyzers",
+    "distances",
+)
 
 
 def _main_ls(args) -> int:
@@ -359,6 +435,153 @@ def _main_detect(args) -> int:
         }
         spec = {k: v for k, v in spec.items() if v not in (None, {})}
         data = detect_devad(spec)
+        if args.out:
+            _write_json(args.out, {**envelope, "data": data})
+        envelope["data"] = _compact_result(data) if args.compact else data
+        exit_code = EXIT_OK
+    except UsageError as exc:
+        return _fail(envelope, sys.stdout, exc, "error", EXIT_USAGE)
+    except PlaygroundError as exc:
+        return _fail(envelope, sys.stdout, exc, "blocked", EXIT_BLOCKED)
+    except Exception as exc:
+        return _fail(envelope, sys.stdout, exc, "error", EXIT_ERROR)
+    _emit_json(sys.stdout, envelope)
+    return exit_code
+
+
+def _main_evaluate(args) -> int:
+    """Re-score a run with registry metrics — from a saved result or a re-run."""
+    from runners import evaluate_saved_run
+
+    envelope = _envelope("evaluate")
+    try:
+        metric_ids = list(args.metric or [])
+        if not metric_ids:
+            raise UsageError("`labts evaluate` needs at least one --metric <id>.")
+        if args.from_file:
+            data = evaluate_saved_run(_load_result_file(args.from_file), metric_ids)
+        else:
+            from metrics import resolve_metrics
+
+            spec = _load_spec(args.spec)
+            spec["metrics"] = metric_ids
+            result = run_experiment(spec)
+            requested_names = [
+                entry["name"] for entry in resolve_metrics(metric_ids, result["task"])
+            ]
+            data = {
+                "status": "ok",
+                "task": result["task"],
+                "run_id": result["run_id"],
+                "dataset_id": result["dataset"]["id"],
+                "algorithm_id": result["algorithm"]["id"],
+                "metric_ids": metric_ids,
+                "metrics": {
+                    name: result["metrics"][name]
+                    for name in requested_names
+                    if name in result["metrics"]
+                },
+                "source": "fresh run (re-fit)",
+            }
+        envelope["data"] = data
+        exit_code = EXIT_OK
+    except UsageError as exc:
+        return _fail(envelope, sys.stdout, exc, "error", EXIT_USAGE)
+    except PlaygroundError as exc:
+        return _fail(envelope, sys.stdout, exc, "blocked", EXIT_BLOCKED)
+    except Exception as exc:
+        return _fail(envelope, sys.stdout, exc, "error", EXIT_ERROR)
+    _emit_json(sys.stdout, envelope)
+    return exit_code
+
+
+def _main_analyze(args) -> int:
+    """Fit a param_est analyzer on a catalog series; print its estimates."""
+    from analyzer import run_analysis
+
+    envelope = _envelope("analyze")
+    try:
+        spec = {
+            "analyzer_id": args.algorithm,
+            "dataset_id": args.dataset,
+            "params": _parse_kv_pairs(args.param, "--param"),
+        }
+        spec = {k: v for k, v in spec.items() if v not in (None, {})}
+        envelope["data"] = run_analysis(spec)
+        exit_code = EXIT_OK
+    except UsageError as exc:
+        return _fail(envelope, sys.stdout, exc, "error", EXIT_USAGE)
+    except PlaygroundError as exc:
+        return _fail(envelope, sys.stdout, exc, "blocked", EXIT_BLOCKED)
+    except Exception as exc:
+        return _fail(envelope, sys.stdout, exc, "error", EXIT_ERROR)
+    _emit_json(sys.stdout, envelope)
+    return exit_code
+
+
+def _main_dist(args) -> int:
+    """Pairwise distance matrix over a panel dataset."""
+    from domain_runners import compute_distance_matrix
+
+    envelope = _envelope("dist")
+    try:
+        from catalog import get_dataset as _get_dataset
+
+        dataset = _get_dataset(args.dataset or "unit-test")
+        if dataset is None or not dataset.get("enabled"):
+            raise PlaygroundError(f"Dataset is not enabled: {args.dataset}")
+        params = _parse_kv_pairs(args.param, "--param")
+        log = []
+        results = []
+        for metric_id in args.metric:
+            results.append(
+                compute_distance_matrix(
+                    dataset,
+                    metric_id,
+                    params=params,
+                    max_instances=args.max_instances,
+                    log=log,
+                )
+            )
+        envelope["data"] = {
+            "dataset_id": dataset["id"],
+            "dataset_name": dataset["name"],
+            "split": "train",
+            "max_instances": args.max_instances,
+            "results": results,
+            "log": log,
+        }
+        exit_code = EXIT_OK
+    except UsageError as exc:
+        return _fail(envelope, sys.stdout, exc, "error", EXIT_USAGE)
+    except PlaygroundError as exc:
+        return _fail(envelope, sys.stdout, exc, "blocked", EXIT_BLOCKED)
+    except Exception as exc:
+        return _fail(envelope, sys.stdout, exc, "error", EXIT_ERROR)
+    _emit_json(sys.stdout, envelope)
+    return exit_code
+
+
+def _main_predict(args) -> int:
+    """Predict with a persisted model via trainer.predict_estimator."""
+    envelope = _envelope("predict")
+    try:
+        try:
+            from trainer import predict_estimator
+        except ImportError:
+            raise PlaygroundError(
+                "The predict backend `trainer.predict_estimator` is missing "
+                "from this checkout (it lives in playground/trainer.py on "
+                "main) — update the branch. For DevAD anomaly models use "
+                "`labts detect --model-id ...` instead."
+            ) from None
+        spec = {
+            "model_id": args.model_id,
+            "dataset_id": args.dataset,
+            "params": _parse_kv_pairs(args.param, "--param"),
+        }
+        spec = {k: v for k, v in spec.items() if v not in (None, {})}
+        data = predict_estimator(**spec)
         if args.out:
             _write_json(args.out, {**envelope, "data": data})
         envelope["data"] = _compact_result(data) if args.compact else data
@@ -496,7 +719,19 @@ def main(argv: list[str] | None = None) -> int:
     p_run.add_argument("--task", help="Task id, e.g. forecasting. Omit for the default task.")
     p_run.add_argument("--dataset", help="Dataset id; omit for the per-task default.")
     p_run.add_argument("--algorithm", help="Algorithm id; omit for the per-task default.")
-    p_run.add_argument("--preprocessor", help="Preprocessor id (default: none).")
+    p_run.add_argument(
+        "--preprocessor",
+        action="append",
+        help="Preprocessor id; repeatable — steps run in the given order, "
+        "each must preserve length/instance count.",
+    )
+    p_run.add_argument(
+        "--metric",
+        action="append",
+        metavar="ID",
+        help="Extra metric from the registry (see `ls metrics --task X`); "
+        "repeatable. Defaults are unchanged when omitted.",
+    )
     p_run.add_argument(
         "--param",
         action="append",
@@ -506,8 +741,9 @@ def main(argv: list[str] | None = None) -> int:
     p_run.add_argument(
         "--pre-param",
         action="append",
-        metavar="KEY=VALUE",
-        help="Preprocessor parameter; repeatable.",
+        metavar="[STEP:]KEY=VALUE",
+        help="Preprocessor parameter; repeatable. With multiple --preprocessor "
+        "steps, prefix the 1-based step index, e.g. `2:degree=2`.",
     )
     p_run.add_argument(
         "--compact",
@@ -622,6 +858,96 @@ def main(argv: list[str] | None = None) -> int:
     )
     p_check.add_argument("file", help="Path to the plugin .py file.")
 
+    p_eval = sub.add_parser(
+        "evaluate",
+        help="Re-score a run with registry metrics: from a saved result "
+        "(`--from run.json`, no re-fit — anomaly runs use the saved continuous "
+        "scores) or from a spec (`--spec ...`, re-runs the experiment).",
+    )
+    eval_source = p_eval.add_mutually_exclusive_group(required=True)
+    eval_source.add_argument(
+        "--from",
+        dest="from_file",
+        metavar="FILE",
+        help="Result saved earlier with `run --out` (or `detect --out`).",
+    )
+    eval_source.add_argument(
+        "--spec",
+        help="Re-run this spec, then score (JSON string, @path, or - for stdin).",
+    )
+    p_eval.add_argument(
+        "--metric",
+        action="append",
+        required=True,
+        metavar="ID",
+        help="Metric id from the registry (see `ls metrics --task X`); repeatable.",
+    )
+
+    p_analyze = sub.add_parser(
+        "analyze",
+        help="Fit a param_est analyzer on a catalog series and print the "
+        "estimated parameters (no evaluation stage).",
+    )
+    p_analyze.add_argument(
+        "--algorithm",
+        help="Analyzer id (see `ls analyzers`; default: seasonality-acf).",
+    )
+    p_analyze.add_argument("--dataset", help="Series dataset id (default: airline).")
+    p_analyze.add_argument(
+        "--param",
+        action="append",
+        metavar="KEY=VALUE",
+        help="Analyzer constructor parameter; repeatable.",
+    )
+
+    p_dist = sub.add_parser(
+        "dist",
+        help="Pairwise distance matrix over a panel dataset (train split).",
+    )
+    p_dist.add_argument("--dataset", help="Panel dataset id (default: unit-test).")
+    p_dist.add_argument(
+        "--metric",
+        action="append",
+        required=True,
+        metavar="ID",
+        help="Distance id: sktime name (dtw, euclidean, ...) or scipy:<name> "
+        "(see `ls distances`); repeatable.",
+    )
+    p_dist.add_argument(
+        "--max-instances",
+        type=int,
+        default=50,
+        help="Cap the number of train instances (default: 50).",
+    )
+    p_dist.add_argument(
+        "--param",
+        action="append",
+        metavar="KEY=VALUE",
+        help="Distance parameter (e.g. window=0.1 for dtw, p=3 for "
+        "scipy:minkowski); repeatable, applies to every requested metric.",
+    )
+
+    p_predict = sub.add_parser(
+        "predict",
+        help="Predict with a persisted model: reloads it via "
+        "trainer.predict_estimator and scores the dataset holdout; "
+        "DevAD models delegate to `detect`.",
+    )
+    p_predict.add_argument(
+        "--model-id",
+        required=True,
+        help="Persisted model id (see `ls models`).",
+    )
+    p_predict.add_argument("--dataset", help="Dataset id to predict on.")
+    p_predict.add_argument(
+        "--param",
+        action="append",
+        metavar="KEY=VALUE",
+        help="Predict parameter; repeatable.",
+    )
+    p_predict.add_argument("--compact", action="store_true", help="Like `run --compact`.")
+    p_predict.add_argument("--out", metavar="FILE", help="Like `run --out`.")
+
     args = parser.parse_args(argv)
     if args.command == "catalog":
         return _main_catalog(args)
@@ -633,6 +959,14 @@ def main(argv: list[str] | None = None) -> int:
         return _main_train(args)
     if args.command == "detect":
         return _main_detect(args)
+    if args.command == "evaluate":
+        return _main_evaluate(args)
+    if args.command == "analyze":
+        return _main_analyze(args)
+    if args.command == "dist":
+        return _main_dist(args)
+    if args.command == "predict":
+        return _main_predict(args)
     if args.command == "fork":
         return _main_fork(args)
     if args.command == "check":
