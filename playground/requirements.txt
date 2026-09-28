@@ -26,9 +26,20 @@
 # - Some soft deps are skipped on Python 3.12 by upstream environment markers
 #   (e.g. prophet, hmmlearn, tslearn, tsfresh, pyod). Install them manually only
 #   when a specific estimator asks for them.
+# - transformers==4.40.1 + accelerate==0.28.0 (plus tokenizers/safetensors/
+#   regex/psutil) power the zero-shot foundation-model adapters in
+#   `sktime/forecasting/fm_playground.py` (Chronos-Bolt, Granite TTM). The
+#   versions are the intersection verified against the vendored libs in
+#   `sktime/libs/chronos` and `sktime/libs/granite_ttm`. Do not upgrade
+#   transformers without re-verifying the vendored libs (T5 internals drift).
+# - huggingface-hub is pinned to 0.36.2 (<1.0): sktime's soft-dependency
+#   checks and transformers 4.40.1's runtime dependency check both require
+#   huggingface-hub<1.0, so the three pins are interlocked. hf-hub 1.x also
+#   breaks sktime's dependency lookup (METADATA `Name` uses an underscore).
 
 -e .
 absl-py==2.5.0
+accelerate==0.28.0
 adagio==0.2.6
 alembic==1.18.5
 annotated-types==0.7.0
@@ -66,7 +77,7 @@ hmmlearn==0.3.3
 holidays==0.100
 httpcore==1.0.9
 httpx==0.28.1
-huggingface-hub==1.23.0
+huggingface-hub==0.36.2
 idna==3.18
 importlib-metadata==9.0.0
 itsdangerous==2.2.0
@@ -104,6 +115,7 @@ pmdarima==2.1.1
 polars==1.42.1
 polars-runtime-32==1.42.1
 protobuf==5.29.6
+psutil==7.2.2
 pyaml==26.7.0
 pyarrow==24.0.0
 pycatch22==0.4.5
@@ -117,10 +129,12 @@ pytz==2026.2
 pyyaml==6.0.3
 ray==2.56.0
 referencing==0.37.0
+regex==2026.9.10
 requests==2.34.2
 retrying==1.4.2
 rich==15.0.0
 rpds-py==2026.6.3
+safetensors==0.8.0
 scikit-base==0.13.2
 scikit-learn==1.7.2
 scikit-optimize==0.10.2
@@ -142,10 +156,12 @@ tensorboard-data-server==0.7.2
 tensorflow==2.19.1
 termcolor==3.3.0
 threadpoolctl==3.6.0
+tokenizers==0.19.1
 toolz==0.12.1
 --extra-index-url https://download.pytorch.org/whl/cpu
 torch==2.14.0+cpu
 tqdm==4.68.4
+transformers==4.40.1
 triad==1.0.2
 typing-extensions==4.16.0
 typing-inspection==0.4.2
