@@ -252,13 +252,29 @@ _CAUSAL_ALGORITHMS = [
     },
 ]
 
+_DEP_IMPORT_ALIASES = {
+    "scikit-learn": "sklearn",
+    "scikit-base": "skbase",
+    "scikit-optimize": "skopt",
+    "scikit-posthocs": "scikit_posthocs",
+    "hydra-core": "hydra",
+    "pytorch-forecasting": "pytorch_forecasting",
+    "dtw-python": "dtw",
+    "pyyaml": "yaml",
+    "python-dateutil": "dateutil",
+    "causal-learn": "causallearn",
+}
+
 for _entry in _CAUSAL_ALGORITHMS:
     _deps = _entry.get("python_dependencies") or []
     _missing = next(
         (
             dep
             for dep in _deps
-            if importlib.util.find_spec(dep.replace("-", "_")) is None
+            if importlib.util.find_spec(
+                _DEP_IMPORT_ALIASES.get(dep, dep.replace("-", "_"))
+            )
+            is None
         ),
         None,
     )
@@ -480,19 +496,6 @@ def _install_hint(package: str) -> str:
     if package in {"huggingface-hub", "pyarrow"}:
         return "python3 -m pip install huggingface-hub pyarrow"
     return "python3 -m pip install -e ."
-
-
-_DEP_IMPORT_ALIASES = {
-    "scikit-learn": "sklearn",
-    "scikit-base": "skbase",
-    "scikit-optimize": "skopt",
-    "scikit-posthocs": "scikit_posthocs",
-    "hydra-core": "hydra",
-    "pytorch-forecasting": "pytorch_forecasting",
-    "dtw-python": "dtw",
-    "pyyaml": "yaml",
-    "python-dateutil": "dateutil",
-}
 
 
 def _dep_distribution_name(spec: str) -> str:
