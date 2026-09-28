@@ -579,7 +579,55 @@ class base_metricor:
                 params[name] = kwargs[name]
 
         return float(method(**inputs, **params))
-    
+
+    def metric_all(
+        self,
+        label,
+        score,
+        delta_k: int = 7,
+        sliding_window: int = 100,
+        values=None,
+        output=None,
+    ) -> dict:
+        """Compute every applicable metric from ``METRIC_MAP`` in one call.
+
+        All metrics that only require ``label`` and ``score`` are always
+        computed; metrics requiring ``values``/``output`` are included when
+        those are passed. ``delta_k`` is forwarded to Delay-F1 and
+        ``sliding_window`` to the VUS metrics.
+
+        A metric that cannot be computed (e.g. Affiliation-F1 when ``label``
+        contains no anomaly event, or AUC-ROC on single-class labels) is
+        reported as ``NaN`` instead of aborting the whole evaluation.
+
+        Returns
+        -------
+        dict
+            Mapping of metric name to float value (or NaN if not computable).
+        """
+        available = {"label": label, "score": score}
+        if values is not None:
+            available["values"] = values
+        if output is not None:
+            available["output"] = output
+
+        overrides = {"delay_k": delta_k, "sliding_window": sliding_window}
+        results = {}
+        for metric_name, spec in self.METRIC_MAP.items():
+            if any(req not in available for req in spec["requires"]):
+                continue
+            kwargs = {req: available[req] for req in spec["requires"]}
+            kwargs.update(
+                (name, value)
+                for name, value in overrides.items()
+                if name in spec.get("params", {})
+            )
+            try:
+                results[metric_name] = self(metric_name, **kwargs)
+            except Exception:
+                results[metric_name] = float("nan")
+        return results
+
 
 def concordant_count_and_rate(val_metrics, test_metrics):
     v, f = val_metrics, test_metrics
