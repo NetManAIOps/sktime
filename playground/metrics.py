@@ -125,7 +125,8 @@ def _sklearn_classification(fn_name, **fixed):
         from sklearn import metrics as skm
 
         fn = getattr(skm, fn_name)
-        return float(fn(_labels(ctx), _predictions(ctx), **fixed))
+        # labels may be strings (e.g. unit-test classes) — never coerce to float
+        return float(fn(_labels(ctx), _predictions(ctx, dtype=None), **fixed))
 
     return compute
 
@@ -145,7 +146,8 @@ def _sklearn_clustering(fn_name):
         from sklearn import metrics as skm
 
         fn = getattr(skm, fn_name)
-        return float(fn(_labels(ctx), _predictions(ctx)))
+        # labels may be strings (e.g. unit-test classes) — never coerce to float
+        return float(fn(_labels(ctx), _predictions(ctx, dtype=None)))
 
     return compute
 

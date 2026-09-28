@@ -29,7 +29,8 @@ has a CLI counterpart (same catalog/runner code, identical results):
     Pairwise distances            python playground/labts.py dist --dataset unit-test --metric dtw [--metric scipy:cosine]
 
     Predict (persisted model)     python playground/labts.py predict --model-id M [--dataset D] [--param k=v]
-                                  (generic backend from mission M2; blocked with a hint until it lands)
+                                  (reloads a persisted model via trainer.predict_estimator and scores
+                                  the dataset holdout; DevAD models delegate to `detect`)
 
 `--spec` accepts a JSON string, `@path/to/spec.json`, or `-` for stdin.
 `run` also takes plain flags (`--task/--dataset/--algorithm`, repeatable
@@ -562,17 +563,17 @@ def _main_dist(args) -> int:
 
 
 def _main_predict(args) -> int:
-    """Predict with a persisted model via trainer.predict_estimator (M2 backend)."""
+    """Predict with a persisted model via trainer.predict_estimator."""
     envelope = _envelope("predict")
     try:
         try:
             from trainer import predict_estimator
         except ImportError:
             raise PlaygroundError(
-                "The generic predict backend is not available in this build: "
-                "`trainer.predict_estimator` is provided by the persistence "
-                "mission (M2, branch feat/labts-sktime-save-load-train-predict). "
-                "For DevAD anomaly models use `labts detect --model-id ...` instead."
+                "The predict backend `trainer.predict_estimator` is missing "
+                "from this checkout (it lives in playground/trainer.py on "
+                "main) — update the branch. For DevAD anomaly models use "
+                "`labts detect --model-id ...` instead."
             ) from None
         spec = {
             "model_id": args.model_id,
@@ -928,9 +929,9 @@ def main(argv: list[str] | None = None) -> int:
 
     p_predict = sub.add_parser(
         "predict",
-        help="Predict with a persisted model via the generic persistence "
-        "backend (trainer.predict_estimator, provided by mission M2). "
-        "Returns blocked with a hint while the backend is unavailable.",
+        help="Predict with a persisted model: reloads it via "
+        "trainer.predict_estimator and scores the dataset holdout; "
+        "DevAD models delegate to `detect`.",
     )
     p_predict.add_argument(
         "--model-id",

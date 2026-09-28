@@ -445,6 +445,56 @@ class RunnerMetricsTests(unittest.TestCase):
                 }
             )
 
+    def test_classification_extra_metrics_string_labels(self):
+        # regression: label-based sklearn wrappers must not coerce string
+        # class labels to float (unit-test classes are strings)
+        result = self._run_or_skip_missing_deps(
+            {
+                "task": "classification",
+                "dataset_id": "unit-test",
+                "algorithm_id": "summary-random-forest",
+                "params": {"n_estimators": 5, "random_state": 7},
+                "metrics": ["micro_f1", "weighted_f1", "balanced_accuracy"],
+            }
+        )
+        self.assertEqual(result["status"], "ok")
+        self.assertIn("Micro F1", result["metrics"])
+        self.assertIn("Weighted F1", result["metrics"])
+        self.assertIn("Balanced Accuracy", result["metrics"])
+
+    def test_clustering_extra_metrics_string_labels(self):
+        # regression: same string-label coercion guard for clustering metrics
+        result = self._run_or_skip_missing_deps(
+            {
+                "task": "clustering",
+                "dataset_id": "unit-test-cl",
+                "algorithm_id": "ts-kmeans",
+                "params": {"n_clusters": 2, "random_state": 7},
+                "metrics": ["homogeneity", "v_measure"],
+            }
+        )
+        self.assertEqual(result["status"], "ok")
+        self.assertIn("Homogeneity", result["metrics"])
+        self.assertIn("V-Measure", result["metrics"])
+
+    def test_evaluate_saved_classification_run(self):
+        from runners import evaluate_saved_run
+
+        result = self._run_or_skip_missing_deps(
+            {
+                "task": "classification",
+                "dataset_id": "unit-test",
+                "algorithm_id": "summary-random-forest",
+                "params": {"n_estimators": 5, "random_state": 7},
+                "metrics": ["micro_f1"],
+            }
+        )
+        scored = evaluate_saved_run(result, ["micro_f1"])
+        self.assertEqual(scored["status"], "ok")
+        self.assertAlmostEqual(
+            scored["metrics"]["Micro F1"], result["metrics"]["Micro F1"], places=9
+        )
+
 
 class EvaluateSavedRunTests(unittest.TestCase):
     def _run_or_skip_missing_deps(self, spec):

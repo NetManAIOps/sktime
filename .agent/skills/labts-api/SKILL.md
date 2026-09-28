@@ -24,7 +24,7 @@ catalog/runner code with identical results:
 | (re-score a run)            | `labts.py evaluate (--from run.json \| --spec '<json>') --metric M [--metric M2]` |
 | (parameter estimation)      | `labts.py analyze --algorithm seasonality-acf --dataset airline [--param k=v]` |
 | (pairwise distances)        | `labts.py dist --dataset unit-test --metric dtw [--metric scipy:cosine] [--max-instances 50]` |
-| (predict, persisted model)  | `labts.py predict --model-id X [--dataset D] [--param k=v]` (generic backend from mission M2; **blocked** with a hint until it lands) |
+| (predict, persisted model)  | `labts.py predict --model-id X [--dataset D] [--param k=v]` |
 
 `fork` materializes any enabled catalog algorithm as an editable single-file
 plugin in `playground/experiments/` (subclass scaffold with provenance
@@ -323,17 +323,20 @@ Computes the pairwise distance matrix over the dataset's **train** instances
 `window=0.1` for dtw, `p=3` for scipy:minkowski). Output `data.results[]`:
 `metric`, `shape`, `symmetric`, `min/max/mean` (off-diagonal), full `matrix`.
 
-## `predict` — persisted-model prediction (M2 backend)
+## `predict` — persisted-model prediction
 
 ```bash
 labts.py predict --model-id <id> [--dataset D] [--param k=v] [--out run.json]
 ```
 
 Calls `trainer.predict_estimator(model_id, dataset_id, params)` — the generic
-persistence backend delivered by mission M2
-(`feat/labts-sktime-save-load-train-predict`). Until that lands in this
-branch the command returns **blocked** with a clear hint (exit 3); for DevAD
-anomaly models `labts detect` remains the working path.
+persistence backend (merged on main): it reloads a persisted model and
+evaluates it on the dataset's holdout split, returning the **same result
+envelope as `run`** (so `report --from` / `evaluate --from` work on it).
+DevAD models delegate to `detect_devad` (the `detect` alias); sktime models
+reload from `model.zip` and are scored against the manifest's eval params
+(`--param` overrides them, e.g. `--param horizon=24`). Unknown model ids are
+`blocked` (exit 3) — see `ls models` for what is persisted.
 
 ## Examples
 
