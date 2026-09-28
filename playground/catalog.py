@@ -263,6 +263,7 @@ _DEP_IMPORT_ALIASES = {
     "pyyaml": "yaml",
     "python-dateutil": "dateutil",
     "causal-learn": "causallearn",
+    "pykan": "kan",
 }
 
 for _entry in _CAUSAL_ALGORITHMS:
