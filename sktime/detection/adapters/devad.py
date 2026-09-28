@@ -13,8 +13,10 @@ scores at a quantile and report the exceedance positions as point anomalies.
 """
 
 __all__ = [
+    "DevADAnomalyTransformerDetector",
     "DevADBeatGANDetector",
     "DevADCOUTADetector",
+    "DevADDAGMMDetector",
     "DevADDonutDetector",
     "DevADFCVAEDetector",
     "DevADFITSDetector",
@@ -162,12 +164,39 @@ class _DevADDetectorBase(BaseDetector):
     @classmethod
     def get_test_params(cls, parameter_set="default"):
         """Small, fast configuration for sktime's estimator checks."""
-        return {
+        params = {
             "threshold_quantile": 0.9,
             "win_len": 8,
-            "epochs": 1,
-            "batch_size": 16,
         }
+        hp = ModelRegistry.get_model_class(cls.family).HP
+        if "epochs" in hp:
+            params["epochs"] = 1
+        if "batch_size" in hp:
+            params["batch_size"] = 16
+        return params
+
+
+class DevADAnomalyTransformerDetector(_DevADDetectorBase):
+    """Anomaly Transformer: association-discrepancy transformer whose
+    anomaly score combines reconstruction error with the prior/series
+    association KL divergence [1]_.
+
+    References
+    ----------
+    .. [1] Xu, J. et al. Anomaly Transformer: Time Series Anomaly Detection
+       with Association Discrepancy. ICLR 2022.
+    """
+
+    _tags = {"python_dependencies": ["rich", "torch"]}
+
+    family = "anomaly_transformer"
+
+    @classmethod
+    def get_test_params(cls, parameter_set="default"):
+        """Small architecture on top of the fast base configuration."""
+        params = super().get_test_params(parameter_set=parameter_set)
+        params["params"] = {"d_model": 16, "n_heads": 2, "e_layers": 1, "d_ff": 16}
+        return params
 
 
 class DevADBeatGANDetector(_DevADDetectorBase):
@@ -200,6 +229,21 @@ class DevADCOUTADetector(_DevADDetectorBase):
     family = "couta"
 
 
+class DevADDAGMMDetector(_DevADDetectorBase):
+    """DAGMM: deep autoencoding Gaussian mixture model; the energy of a
+    window under the estimated mixture is the anomaly score [1]_.
+
+    References
+    ----------
+    .. [1] Zong, B. et al. Deep Autoencoding Gaussian Mixture Model for
+       Unsupervised Anomaly Detection. ICLR 2018.
+    """
+
+    _tags = {"python_dependencies": ["rich", "torch"]}
+
+    family = "dagmm"
+
+
 class DevADDonutDetector(_DevADDetectorBase):
     """Donut: seasonal VAE reconstruction for web KPI anomaly detection [1]_.
 
@@ -228,6 +272,13 @@ class DevADFCVAEDetector(_DevADDetectorBase):
 
     family = "fcvae"
 
+    @classmethod
+    def get_test_params(cls, parameter_set="default"):
+        """Small, fast configuration; win_len must cover kernel_size=16."""
+        params = super().get_test_params(parameter_set=parameter_set)
+        params["win_len"] = 16
+        return params
+
 
 class DevADFITSDetector(_DevADDetectorBase):
     """FITS: lightweight frequency-interpolation reconstruction model [1]_.
@@ -241,6 +292,15 @@ class DevADFITSDetector(_DevADDetectorBase):
     _tags = {"python_dependencies": ["rich", "torch"]}
 
     family = "fits"
+
+    @classmethod
+    def get_test_params(cls, parameter_set="default"):
+        """Small, fast configuration; the family needs
+        win_len/downsample_rate // 2 + 1 >= cut_freq, so cut_freq and
+        downsample_rate shrink together with win_len."""
+        params = super().get_test_params(parameter_set=parameter_set)
+        params["params"] = {"downsample_rate": 2, "cut_freq": 2}
+        return params
 
 
 class DevADIForestDetector(_DevADDetectorBase):

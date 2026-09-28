@@ -46,6 +46,8 @@ class ModelRegistry:
         "omni_anomaly": OmniAnomaly,
         "tranad": TranAD,
         "beatgan": BeatGAN,
+        "anomaly_transformer": AnomalyTransformer,
+        "dagmm": DAGMM,
     }
 
     @classmethod
