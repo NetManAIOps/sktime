@@ -185,3 +185,29 @@ def test_against_statsmodels_5():
     ardl_loglik = ardl_sktime.get_fitted_params()["loglike"]
     sm_loglik = sel_res.model.loglike(res.params)
     return assert_allclose(ardl_loglik, sm_loglik)
+
+
+@pytest.mark.skipif(
+    not run_test_for_class(ARDL),
+    reason="run test only if softdeps are present and incrementally (if requested)",
+)
+def test_ardl_default_lags():
+    """Test that ARDL with default lags=None constructs and fits.
+
+    Regression test: default construction used to raise AssertionError,
+    lags=None is resolved by statsmodels as no endogenous lags.
+    """
+    import numpy as np
+    import pandas as pd
+
+    ARDL()
+
+    y = pd.Series(np.sin(np.arange(40)) + 10)
+    forecaster = ARDL()
+    forecaster.fit(y)
+    y_pred = forecaster.predict(fh=ForecastingHorizon([1, 2, 3]))
+    assert len(y_pred) == 3
+
+    # auto_ardl with explicit lags must still raise
+    with pytest.raises(ValueError, match="lags should not be specified"):
+        ARDL(lags=2, auto_ardl=True)
