@@ -1,0 +1,20 @@
+{
+  "id": "forecasting-dlinear-weather-96",
+  "task": "forecasting",
+  "ran_at": "2026-09-28T09:47:11.933941+00:00",
+  "command": "python playground/labts.py run --task forecasting --algorithm registered-forecasting-DLinearForecaster --dataset hf-weather --param seq_len=336 --param pred_len=96 --param horizon=96 --metric mse --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 32.97,
+  "value": 0.11042374197575112,
+  "delta": -0.065576,
+  "delta_rel": 0.372592,
+  "status": "deviation",
+  "metrics": {
+    "MAE": 0.24673828979333245,
+    "MSE": 0.11042374197575112,
+    "MAPE": 0.042166721886618484
+  },
+  "error": null,
+  "stdout_tail": "{\"api\": \"labts\", \"api_version\": \"1.0\", \"kind\": \"result\", \"status\": \"ok\", \"data\": {\"status\": \"ok\", \"metrics\": {\"MAE\": 0.24673828979333245, \"MSE\": 0.11042374197575112, \"MAPE\": 0.042166721886618484}, \"summary\": \"Forecasted 96 steps with DLinearForecaster.\", \"run_id\": \"a535df2a6de8\", \"spec\": {\"task\": \"forecasting\", \"dataset_id\": \"hf-weather\", \"algorithm_id\": \"registered-forecasting-DLinearForecaster\", \"preprocessor_id\": \"none\", \"preprocessors\": [], \"params\": {\"seq_len\": 336, \"pred_len\": 96, \"horizon\": 96}, \"preprocessor_params\": {}, \"metrics\": [\"mse\"]}, \"task\": \"forecasting\", \"dataset\": {\"id\": \"hf-weather\", \"name\": \"THU-ANM Weather\", \"task\": \"forecasting\", \"source\": \"huggingface\", \"hf_dataset\": \"Skyoung13/THU-ANM-DATASET\", \"hf_config\": \"Weather\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"registered-forecasting-DLinearForecaster\", \"name\": \"DLinearForecaster\", \"task\": \"forecasting\", \"module\": \"sktime.forecasting.tslib.DLinearForecaster\", \"class_name\": \"DLinearForecaster\", \"curated\": false, \"python_dependencies\": [\"torch\"], \"enabled\": true, \"params\": {\"horizon\": 12, \"context_window\": 36, \"batch_size\": 32, \"channel_independence\": 1, \"d_ff\": 128, \"d_layers\": 1, \"d_model\": 64, \"dropout\": 0.1, \"e_layers\": 2, \"factor\": 3, \"label_len\": 18, \"lr\": 0.001, \"moving_avg\": 25, \"n_heads\": 8, \"num_epochs\": 3, \"num_kernels\": 6, \"pred_len\": 12, \"seq_len\": 36, \"top_k\": 3}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"preprocessors\": [], \"duration_ms\": 30643.0, \"log\": [\"Selected task: forecasting\", \"Selected dataset: THU-ANM Weather\", \"Selected preprocessor: Identity / none\", \"Selected algorithm: DLinearForecaster\", \"Estimator: DLinearForecaster params={'seq_len': 336, 'pred_len': 96}\", \"Loaded Hugging Face config Weather (52696 rows)\", \"Normalized time index to RangeIndex for reproducible forecasting\", \"Finished in 30643.0 ms\"]}, \"error\": null}\n"
+}

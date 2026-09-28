@@ -1,0 +1,23 @@
+{
+  "id": "detection-iforest-mitdb-auc",
+  "task": "anomaly_detection",
+  "ran_at": "2026-09-28T09:43:29.578374+00:00",
+  "command": "python playground/labts.py run --task anomaly_detection --algorithm registered-anomaly_detection-PyODIForestDetector --dataset mitdb --metric auc_roc --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 13.71,
+  "value": 0.694368378631022,
+  "delta": -0.005632,
+  "delta_rel": 0.008045,
+  "status": "reproduced",
+  "metrics": {
+    "Precision": 0.023004059539918808,
+    "Recall": 0.048295454545454544,
+    "F1": 0.03116406966086159,
+    "Detected": 739,
+    "Ground Truth": 352,
+    "AUC-ROC": 0.694368378631022
+  },
+  "error": null,
+  "stdout_tail": "{\"api\": \"labts\", \"api_version\": \"1.0\", \"kind\": \"result\", \"status\": \"ok\", \"data\": {\"status\": \"ok\", \"metrics\": {\"Precision\": 0.023004059539918808, \"Recall\": 0.048295454545454544, \"F1\": 0.03116406966086159, \"Detected\": 739, \"Ground Truth\": 352, \"AUC-ROC\": 0.694368378631022}, \"summary\": \"Detected 739 anomalies against 352 labels with PyODIForestDetector.\", \"run_id\": \"1e2e72a59af8\", \"spec\": {\"task\": \"anomaly_detection\", \"dataset_id\": \"mitdb\", \"algorithm_id\": \"registered-anomaly_detection-PyODIForestDetector\", \"preprocessor_id\": \"none\", \"preprocessors\": [], \"params\": {}, \"preprocessor_params\": {}, \"metrics\": [\"auc_roc\"]}, \"task\": \"anomaly_detection\", \"dataset\": {\"id\": \"mitdb\", \"name\": \"MIT-BIH ECG Anomaly\", \"task\": \"anomaly_detection\", \"source\": \"local\", \"path\": \"sktime/datasets/data/mitdb/mitdb.csv\", \"enabled\": true}, \"algorithm\": {\"id\": \"registered-anomaly_detection-PyODIForestDetector\", \"name\": \"PyODIForestDetector\", \"task\": \"anomaly_detection\", \"module\": \"sktime.detection.adapters.pyod.PyODIForestDetector\", \"class_name\": \"PyODIForestDetector\", \"curated\": false, \"python_dependencies\": \"pyod\", \"subtype\": \"point_anomaly\", \"enabled\": true, \"params\": {\"contamination\": 0.1, \"n_estimators\": 100}, \"accepts_estimators\": [\"n_estimators\"]}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"preprocessors\": [], \"duration_ms\": 11388.7, \"log\": [\"Selected task: anomaly_detection\", \"Selected dataset: MIT-BIH ECG Anomaly\", \"Selected preprocessor: Identity / none\", \"Selected algorithm: PyODIForestDetector\", \"Estimator: PyODIForestDetector params=defaults\", \"Loaded MIT-BIH ECG Anomaly rows=7500\", \"Finished in 11388.7 ms\"]}, \"error\": null}\n"
+}

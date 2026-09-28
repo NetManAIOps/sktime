@@ -200,9 +200,14 @@ class BaseTSLibForecaster(BaseDeepNetworkPyTorch):
     # data
     # ------------------------------------------------------------------
     def _time_marks(self, index):
-        """Time features for a pandas index, or None when not datetime-like."""
+        """Time features for a pandas index; zero-filled when not datetime-like.
+
+        Never returns None: the DataLoader's default_collate cannot batch None,
+        so non-datetime indexes (e.g. RangeIndex) get zero marks instead.
+        """
         if not isinstance(index, (pd.DatetimeIndex, pd.PeriodIndex)):
-            return None
+            width = _FREQ_MARK_DIM.get(self.freq, 4)
+            return np.zeros((len(index), width), dtype=np.float32)
         try:
             from sktime.libs.tslib.utils.timefeatures import time_features
 

@@ -1,0 +1,21 @@
+{
+  "id": "clustering-kshape-arrowhead",
+  "task": "clustering",
+  "ran_at": "2026-09-28T09:45:23.405971+00:00",
+  "command": "python playground/labts.py run --task clustering --algorithm registered-clustering-TimeSeriesKShapes --dataset arrow-head-cl --param n_clusters=3 --param random_state=42 --metric ari --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 30.28,
+  "value": 0.0,
+  "delta": -0.17425,
+  "delta_rel": 1.0,
+  "status": "deviation",
+  "metrics": {
+    "ARI": 0.0,
+    "NMI": 0.0,
+    "Clusters": 1,
+    "Largest Cluster": 175
+  },
+  "error": null,
+  "stdout_tail": "{\"api\": \"labts\", \"api_version\": \"1.0\", \"kind\": \"result\", \"status\": \"ok\", \"data\": {\"status\": \"ok\", \"metrics\": {\"ARI\": 0.0, \"NMI\": 0.0, \"Clusters\": 1, \"Largest Cluster\": 175}, \"summary\": \"Clustered 175 held-out time series with TimeSeriesKShapes.\", \"run_id\": \"0e5b9e19675e\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"arrow-head-cl\", \"algorithm_id\": \"registered-clustering-TimeSeriesKShapes\", \"preprocessor_id\": \"none\", \"preprocessors\": [], \"params\": {\"n_clusters\": 3, \"random_state\": 42}, \"preprocessor_params\": {}, \"metrics\": [\"ari\"]}, \"task\": \"clustering\", \"dataset\": {\"id\": \"arrow-head-cl\", \"name\": \"ArrowHead (labels for ARI)\", \"task\": \"clustering\", \"source\": \"local\", \"loader\": \"sktime.datasets.load_arrow_head\", \"enabled\": true}, \"algorithm\": {\"id\": \"registered-clustering-TimeSeriesKShapes\", \"name\": \"TimeSeriesKShapes\", \"task\": \"clustering\", \"module\": \"sktime.clustering.k_shapes.TimeSeriesKShapes\", \"class_name\": \"TimeSeriesKShapes\", \"curated\": false, \"python_dependencies\": \"tslearn\", \"enabled\": true, \"params\": {\"max_iter\": 300, \"n_clusters\": 8, \"n_init\": 10, \"tol\": 0.0001}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"preprocessors\": [], \"duration_ms\": 27644.2, \"log\": [\"Selected task: clustering\", \"Selected dataset: ArrowHead (labels for ARI)\", \"Selected preprocessor: Identity / none\", \"Selected algorithm: TimeSeriesKShapes\", \"Estimator: TimeSeriesKShapes params={'n_clusters': 3, 'random_state': 42}\", \"Loaded ArrowHead (labels for ARI) train=36 test=175\", \"Finished in 27644.2 ms\"]}, \"error\": null}\n"
+}

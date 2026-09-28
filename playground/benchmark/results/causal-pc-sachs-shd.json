@@ -1,0 +1,23 @@
+{
+  "id": "causal-pc-sachs-shd",
+  "task": "causal",
+  "ran_at": "2026-09-28T09:43:49.251148+00:00",
+  "command": "python playground/labts.py run --task causal --algorithm causal-pc --dataset causal-sachs-cont --param max_samples=7466 --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 3.15,
+  "value": 22.0,
+  "delta": -1.0,
+  "delta_rel": 0.043478,
+  "status": "reproduced",
+  "metrics": {
+    "SHD": 22,
+    "Edge Precision": 0.44,
+    "Edge Recall": 0.55,
+    "Edge F1": 0.48888888888888893,
+    "Edges": 25,
+    "True Edges": 20
+  },
+  "error": null,
+  "stdout_tail": "rected\", \"in_true_graph\": true}, {\"source\": \"pka\", \"target\": \"p38\", \"type\": \"directed\", \"in_true_graph\": true}, {\"source\": \"pka\", \"target\": \"jnk\", \"type\": \"directed\", \"in_true_graph\": true}, {\"source\": \"pkc\", \"target\": \"p38\", \"type\": \"directed\", \"in_true_graph\": true}, {\"source\": \"pkc\", \"target\": \"jnk\", \"type\": \"directed\", \"in_true_graph\": true}, {\"source\": \"p38\", \"target\": \"mek\", \"type\": \"directed\", \"in_true_graph\": false}, {\"source\": \"p38\", \"target\": \"jnk\", \"type\": \"undirected\", \"in_true_graph\": false}, {\"source\": \"jnk\", \"target\": \"plc\", \"type\": \"directed\", \"in_true_graph\": false}, {\"source\": \"jnk\", \"target\": \"erk\", \"type\": \"directed\", \"in_true_graph\": false}]}, \"summary\": \"Discovered 25 edges (20 true) with PC: SHD=22, edge F1=0.489.\", \"run_id\": \"c0850972cd7a\", \"spec\": {\"task\": \"causal\", \"dataset_id\": \"causal-sachs-cont\", \"algorithm_id\": \"causal-pc\", \"preprocessor_id\": \"none\", \"preprocessors\": [], \"params\": {\"max_samples\": 7466}, \"preprocessor_params\": {}}, \"task\": \"causal\", \"dataset\": {\"id\": \"causal-sachs-cont\", \"name\": \"Sachs continuous (7466×11, 20-edge DAG)\", \"task\": \"causal\", \"source\": \"local\", \"loader\": \"domain_runners.load_sachs_continuous\", \"true_graph\": true, \"enabled\": true}, \"algorithm\": {\"id\": \"causal-pc\", \"name\": \"PC\", \"task\": \"causal\", \"module\": \"sktime.causal_discovery.pc.PC\", \"enabled\": true, \"python_dependencies\": [\"causal-learn\"], \"template\": \"PC(alpha=alpha)\", \"params\": {\"alpha\": 0.05, \"max_samples\": 2000}, \"curated\": true, \"class_name\": \"PC\"}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"preprocessors\": [], \"duration_ms\": 2724.4, \"log\": [\"Selected task: causal\", \"Selected dataset: Sachs continuous (7466×11, 20-edge DAG)\", \"Selected preprocessor: Identity / none\", \"Selected algorithm: PC\", \"Estimator: PC params=defaults\", \"Loaded Sachs continuous (7466×11, 20-edge DAG) samples=7466 variables=11 true_edges=20\", \"Finished in 2724.4 ms\"]}, \"error\": null}\n"
+}

@@ -1,0 +1,2419 @@
+{
+  "generated_at": "2026-09-28T10:17:40.997768+00:00",
+  "catalog_source": "snapshot",
+  "tasks": [
+    {
+      "id": "forecasting",
+      "name": "Forecasting",
+      "description": "Predict future values of a series.",
+      "algorithm_count": 138,
+      "enabled_count": 131
+    },
+    {
+      "id": "classification",
+      "name": "Classification",
+      "description": "Assign series to discrete classes.",
+      "algorithm_count": 66,
+      "enabled_count": 64
+    },
+    {
+      "id": "regression",
+      "name": "Regression",
+      "description": "Predict a continuous value from a series.",
+      "algorithm_count": 22,
+      "enabled_count": 22
+    },
+    {
+      "id": "clustering",
+      "name": "Clustering",
+      "description": "Group series without labels.",
+      "algorithm_count": 10,
+      "enabled_count": 10
+    },
+    {
+      "id": "anomaly_detection",
+      "name": "Anomaly Detection",
+      "description": "Flag anomalous points or segments.",
+      "algorithm_count": 58,
+      "enabled_count": 58
+    },
+    {
+      "id": "causal",
+      "name": "Causal Discovery",
+      "description": "Recover the causal graph behind the data.",
+      "algorithm_count": 4,
+      "enabled_count": 4
+    }
+  ],
+  "algorithms": {
+    "forecasting": [
+      {
+        "id": "registered-forecasting-ARARForecaster",
+        "name": "ARARForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-ARCH",
+        "name": "ARCH",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-ARDL",
+        "name": "ARDL",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-ARIMA",
+        "name": "ARIMA",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-AutoARIMA",
+        "name": "AutoARIMA",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-AutoEnsembleForecaster",
+        "name": "AutoEnsembleForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-AutoETS",
+        "name": "AutoETS",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-AutoformerForecaster",
+        "name": "AutoformerForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-AutoREG",
+        "name": "AutoREG",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-AutoTS",
+        "name": "AutoTS",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-BaggingForecaster",
+        "name": "BaggingForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-BATS",
+        "name": "BATS",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-BoxCoxBiasAdjustedForecaster",
+        "name": "BoxCoxBiasAdjustedForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-ChronosForecaster",
+        "name": "ChronosForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-ChronosPlaygroundForecaster",
+        "name": "ChronosPlaygroundForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-CINNForecaster",
+        "name": "CINNForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-ColumnEnsembleForecaster",
+        "name": "ColumnEnsembleForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-ConformalIntervals",
+        "name": "ConformalIntervals",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-ConvTimeNetForecaster",
+        "name": "ConvTimeNetForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-Croston",
+        "name": "Croston",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-CurveFitForecaster",
+        "name": "CurveFitForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-DartsLinearRegressionModel",
+        "name": "DartsLinearRegressionModel",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-DartsRegressionModel",
+        "name": "DartsRegressionModel",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-DartsXGBModel",
+        "name": "DartsXGBModel",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-DirectReductionForecaster",
+        "name": "DirectReductionForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-DirectTabularRegressionForecaster",
+        "name": "DirectTabularRegressionForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-DirectTimeSeriesRegressionForecaster",
+        "name": "DirectTimeSeriesRegressionForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-DirRecTabularRegressionForecaster",
+        "name": "DirRecTabularRegressionForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-DirRecTimeSeriesRegressionForecaster",
+        "name": "DirRecTimeSeriesRegressionForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-DLinearForecaster",
+        "name": "DLinearForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-DontUpdate",
+        "name": "DontUpdate",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-DoubleMLForecaster",
+        "name": "DoubleMLForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-DynamicFactor",
+        "name": "DynamicFactor",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-EnbPIForecaster",
+        "name": "EnbPIForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-EnsembleForecaster",
+        "name": "EnsembleForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-ESRNNForecaster",
+        "name": "ESRNNForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-ExponentialSmoothing",
+        "name": "ExponentialSmoothing",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-FallbackForecaster",
+        "name": "FallbackForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-FEDformerForecaster",
+        "name": "FEDformerForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-FhPlexForecaster",
+        "name": "FhPlexForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-ForecastByLevel",
+        "name": "ForecastByLevel",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-ForecastingGridSearchCV",
+        "name": "ForecastingGridSearchCV",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-ForecastingOptunaSearchCV",
+        "name": "ForecastingOptunaSearchCV",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-ForecastingPipeline",
+        "name": "ForecastingPipeline",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-ForecastingRandomizedSearchCV",
+        "name": "ForecastingRandomizedSearchCV",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-ForecastingSkoptSearchCV",
+        "name": "ForecastingSkoptSearchCV",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-ForecastKnownValues",
+        "name": "ForecastKnownValues",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-ForecastX",
+        "name": "ForecastX",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-FreTSForecaster",
+        "name": "FreTSForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-GroupbyCategoryForecaster",
+        "name": "GroupbyCategoryForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-HFTransformersForecaster",
+        "name": "HFTransformersForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-HierarchicalProphet",
+        "name": "HierarchicalProphet",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-HierarchyEnsembleForecaster",
+        "name": "HierarchyEnsembleForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-IgnoreX",
+        "name": "IgnoreX",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-ITransformerForecaster",
+        "name": "ITransformerForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-LTSFDLinearForecaster",
+        "name": "LTSFDLinearForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-LTSFLinearForecaster",
+        "name": "LTSFLinearForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-LTSFNLinearForecaster",
+        "name": "LTSFNLinearForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-LTSFTransformerForecaster",
+        "name": "LTSFTransformerForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-MAPAForecaster",
+        "name": "MAPAForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-MOIRAIForecaster",
+        "name": "MOIRAIForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-MomentFMForecaster",
+        "name": "MomentFMForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-MultioutputTabularRegressionForecaster",
+        "name": "MultioutputTabularRegressionForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-MultioutputTimeSeriesRegressionForecaster",
+        "name": "MultioutputTimeSeriesRegressionForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-MultiplexForecaster",
+        "name": "MultiplexForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "user-my_timesnet",
+        "name": "my_timesnet",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "naive-seasonal-last",
+        "name": "NaiveForecaster",
+        "enabled": true,
+        "source": "curated"
+      },
+      {
+        "id": "registered-forecasting-NaiveVariance",
+        "name": "NaiveVariance",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-NeuralForecastDilatedRNN",
+        "name": "NeuralForecastDilatedRNN",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-NeuralForecastGRU",
+        "name": "NeuralForecastGRU",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-NeuralForecastLSTM",
+        "name": "NeuralForecastLSTM",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-NeuralForecastRNN",
+        "name": "NeuralForecastRNN",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-NeuralForecastTCN",
+        "name": "NeuralForecastTCN",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-OnlineEnsembleForecaster",
+        "name": "OnlineEnsembleForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-PatchTSTForecaster",
+        "name": "PatchTSTForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-Permute",
+        "name": "Permute",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-PluginParamsForecaster",
+        "name": "PluginParamsForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-PolynomialTrendForecaster",
+        "name": "PolynomialTrendForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-Prophet",
+        "name": "Prophet",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-ProphetPiecewiseLinearTrendForecaster",
+        "name": "ProphetPiecewiseLinearTrendForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-Prophetverse",
+        "name": "Prophetverse",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-PyKANForecaster",
+        "name": "PyKANForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-PytorchForecastingDeepAR",
+        "name": "PytorchForecastingDeepAR",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-PytorchForecastingNBeats",
+        "name": "PytorchForecastingNBeats",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-PytorchForecastingNHiTS",
+        "name": "PytorchForecastingNHiTS",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-PytorchForecastingTFT",
+        "name": "PytorchForecastingTFT",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-RBFForecaster",
+        "name": "RBFForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-ReconcilerForecaster",
+        "name": "ReconcilerForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-RecursiveReductionForecaster",
+        "name": "RecursiveReductionForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-RecursiveTabularRegressionForecaster",
+        "name": "RecursiveTabularRegressionForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-RecursiveTimeSeriesRegressionForecaster",
+        "name": "RecursiveTimeSeriesRegressionForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-ResidualBoostingForecaster",
+        "name": "ResidualBoostingForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-SARIMAX",
+        "name": "SARIMAX",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-SCINetForecaster",
+        "name": "SCINetForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "user-seasonal_ma",
+        "name": "seasonal-moving-average",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-SkforecastAutoreg",
+        "name": "SkforecastAutoreg",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-SkforecastRecursive",
+        "name": "SkforecastRecursive",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-SplineTrendForecaster",
+        "name": "SplineTrendForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-SquaringResiduals",
+        "name": "SquaringResiduals",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-StackingForecaster",
+        "name": "StackingForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-StatsForecastADIDA",
+        "name": "StatsForecastADIDA",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-StatsForecastARCH",
+        "name": "StatsForecastARCH",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-StatsForecastAutoARIMA",
+        "name": "StatsForecastAutoARIMA",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-StatsForecastAutoCES",
+        "name": "StatsForecastAutoCES",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-StatsForecastAutoETS",
+        "name": "StatsForecastAutoETS",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-StatsForecastAutoTBATS",
+        "name": "StatsForecastAutoTBATS",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-StatsForecastAutoTheta",
+        "name": "StatsForecastAutoTheta",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-StatsForecastGARCH",
+        "name": "StatsForecastGARCH",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-StatsForecastMSTL",
+        "name": "StatsForecastMSTL",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-StatsModelsARIMA",
+        "name": "StatsModelsARIMA",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-STLForecaster",
+        "name": "STLForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-TBATS",
+        "name": "TBATS",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-ThetaForecaster",
+        "name": "ThetaForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-ThetaModularForecaster",
+        "name": "ThetaModularForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-TimeLLMForecaster",
+        "name": "TimeLLMForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-TimeMoEForecaster",
+        "name": "TimeMoEForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-TimesNetForecaster",
+        "name": "TimesNetForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-TinyTimeMixerForecaster",
+        "name": "TinyTimeMixerForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-TinyTimeMixerPlaygroundForecaster",
+        "name": "TinyTimeMixerPlaygroundForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-TransformedTargetForecaster",
+        "name": "TransformedTargetForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-TransformSelectForecaster",
+        "name": "TransformSelectForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-TrendForecaster",
+        "name": "TrendForecaster",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-TSB",
+        "name": "TSB",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-UnobservedComponents",
+        "name": "UnobservedComponents",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-UpdateEvery",
+        "name": "UpdateEvery",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-UpdateRefitsEvery",
+        "name": "UpdateRefitsEvery",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-VAR",
+        "name": "VAR",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-VARMAX",
+        "name": "VARMAX",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-VARReduce",
+        "name": "VARReduce",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-VECM",
+        "name": "VECM",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-YfromX",
+        "name": "YfromX",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-ForecastingOptCV",
+        "name": "ForecastingOptCV",
+        "enabled": false,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-GreykiteForecaster",
+        "name": "GreykiteForecaster",
+        "enabled": false,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-HCrystalBallAdapter",
+        "name": "HCrystalBallAdapter",
+        "enabled": false,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-TimesFMForecaster",
+        "name": "TimesFMForecaster",
+        "enabled": false,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-TiRexForecaster",
+        "name": "TiRexForecaster",
+        "enabled": false,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-TotoForecaster",
+        "name": "TotoForecaster",
+        "enabled": false,
+        "source": "registry"
+      },
+      {
+        "id": "registered-forecasting-TSCOptCV",
+        "name": "TSCOptCV",
+        "enabled": false,
+        "source": "registry"
+      }
+    ],
+    "classification": [
+      {
+        "id": "registered-classification-Arsenal",
+        "name": "Arsenal",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-BaggingClassifier",
+        "name": "BaggingClassifier",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-BOSSEnsemble",
+        "name": "BOSSEnsemble",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-BOSSVSClassifierPyts",
+        "name": "BOSSVSClassifierPyts",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-CanonicalIntervalForest",
+        "name": "CanonicalIntervalForest",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-Catch22Classifier",
+        "name": "Catch22Classifier",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-ClassifierPipeline",
+        "name": "ClassifierPipeline",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-CNNClassifier",
+        "name": "CNNClassifier",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-CNTCClassifier",
+        "name": "CNTCClassifier",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-ColumnEnsembleClassifier",
+        "name": "ColumnEnsembleClassifier",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-ComposableTimeSeriesForestClassifier",
+        "name": "ComposableTimeSeriesForestClassifier",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-ContractableBOSS",
+        "name": "ContractableBOSS",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-ConvTimeNetClassifier",
+        "name": "ConvTimeNetClassifier",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-DrCIF",
+        "name": "DrCIF",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-DummyClassifier",
+        "name": "DummyClassifier",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-ElasticEnsemble",
+        "name": "ElasticEnsemble",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-FCNClassifier",
+        "name": "FCNClassifier",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-GRUClassifier",
+        "name": "GRUClassifier",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-GRUFCNNClassifier",
+        "name": "GRUFCNNClassifier",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-HIVECOTEV1",
+        "name": "HIVECOTEV1",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-HIVECOTEV2",
+        "name": "HIVECOTEV2",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-InceptionTimeClassifier",
+        "name": "InceptionTimeClassifier",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-IndividualBOSS",
+        "name": "IndividualBOSS",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-IndividualTDE",
+        "name": "IndividualTDE",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-KNeighborsTimeSeriesClassifier",
+        "name": "KNeighborsTimeSeriesClassifier",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-KNeighborsTimeSeriesClassifierPyts",
+        "name": "KNeighborsTimeSeriesClassifierPyts",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-KNeighborsTimeSeriesClassifierTslearn",
+        "name": "KNeighborsTimeSeriesClassifierTslearn",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-LSTMFCNClassifier",
+        "name": "LSTMFCNClassifier",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-MACNNClassifier",
+        "name": "MACNNClassifier",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-MatrixProfileClassifier",
+        "name": "MatrixProfileClassifier",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-MCDCNNClassifier",
+        "name": "MCDCNNClassifier",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-MLPClassifier",
+        "name": "MLPClassifier",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-MomentFMClassifier",
+        "name": "MomentFMClassifier",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-MrSEQL",
+        "name": "MrSEQL",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-MultiplexClassifier",
+        "name": "MultiplexClassifier",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-MUSE",
+        "name": "MUSE",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-MVTSTransformerClassifier",
+        "name": "MVTSTransformerClassifier",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-ProbabilityThresholdEarlyClassifier",
+        "name": "ProbabilityThresholdEarlyClassifier",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-ProximityForest",
+        "name": "ProximityForest",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-ProximityStump",
+        "name": "ProximityStump",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-ProximityTree",
+        "name": "ProximityTree",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-RandomIntervalClassifier",
+        "name": "RandomIntervalClassifier",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-RandomIntervalSpectralEnsemble",
+        "name": "RandomIntervalSpectralEnsemble",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-ResNetClassifier",
+        "name": "ResNetClassifier",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-RocketClassifier",
+        "name": "RocketClassifier",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-ShapeDTW",
+        "name": "ShapeDTW",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-ShapeletLearningClassifierPyts",
+        "name": "ShapeletLearningClassifierPyts",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-ShapeletLearningClassifierTslearn",
+        "name": "ShapeletLearningClassifierTslearn",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-ShapeletTransformClassifier",
+        "name": "ShapeletTransformClassifier",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-SignatureClassifier",
+        "name": "SignatureClassifier",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-SimpleRNNClassifier",
+        "name": "SimpleRNNClassifier",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-SimpleRNNClassifierTorch",
+        "name": "SimpleRNNClassifierTorch",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-SklearnClassifierPipeline",
+        "name": "SklearnClassifierPipeline",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "summary-random-forest",
+        "name": "SummaryClassifier",
+        "enabled": true,
+        "source": "curated"
+      },
+      {
+        "id": "registered-classification-SupervisedTimeSeriesForest",
+        "name": "SupervisedTimeSeriesForest",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-TapNetClassifier",
+        "name": "TapNetClassifier",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-TemporalDictionaryEnsemble",
+        "name": "TemporalDictionaryEnsemble",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-TimeSeriesForestClassifier",
+        "name": "TimeSeriesForestClassifier",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-TimeSeriesSVC",
+        "name": "TimeSeriesSVC",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-TimeSeriesSVCTslearn",
+        "name": "TimeSeriesSVCTslearn",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-TSCGridSearchCV",
+        "name": "TSCGridSearchCV",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-TSFreshClassifier",
+        "name": "TSFreshClassifier",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-WEASEL",
+        "name": "WEASEL",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-WeightedEnsembleClassifier",
+        "name": "WeightedEnsembleClassifier",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-FreshPRINCE",
+        "name": "FreshPRINCE",
+        "enabled": false,
+        "source": "registry"
+      },
+      {
+        "id": "registered-classification-MrSQM",
+        "name": "MrSQM",
+        "enabled": false,
+        "source": "registry"
+      }
+    ],
+    "regression": [
+      {
+        "id": "registered-regression-CNNRegressor",
+        "name": "CNNRegressor",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-regression-CNTCRegressor",
+        "name": "CNTCRegressor",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-regression-ComposableTimeSeriesForestRegressor",
+        "name": "ComposableTimeSeriesForestRegressor",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-regression-DummyRegressor",
+        "name": "DummyRegressor",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-regression-FCNRegressor",
+        "name": "FCNRegressor",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-regression-InceptionTimeRegressor",
+        "name": "InceptionTimeRegressor",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-regression-KNeighborsTimeSeriesRegressor",
+        "name": "KNeighborsTimeSeriesRegressor",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-regression-LSTMFCNRegressor",
+        "name": "LSTMFCNRegressor",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-regression-MACNNRegressor",
+        "name": "MACNNRegressor",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-regression-MCDCNNRegressor",
+        "name": "MCDCNNRegressor",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-regression-MLPRegressor",
+        "name": "MLPRegressor",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-regression-MultiplexRegressor",
+        "name": "MultiplexRegressor",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-regression-RegressorPipeline",
+        "name": "RegressorPipeline",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-regression-ResNetRegressor",
+        "name": "ResNetRegressor",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-regression-RocketRegressor",
+        "name": "RocketRegressor",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-regression-SimpleRNNRegressor",
+        "name": "SimpleRNNRegressor",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-regression-SimpleRNNRegressorTorch",
+        "name": "SimpleRNNRegressorTorch",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "summary-random-forest-regressor",
+        "name": "SklearnRegressorPipeline",
+        "enabled": true,
+        "source": "curated"
+      },
+      {
+        "id": "registered-regression-TapNetRegressor",
+        "name": "TapNetRegressor",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-regression-TimeSeriesForestRegressor",
+        "name": "TimeSeriesForestRegressor",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-regression-TimeSeriesSVRTslearn",
+        "name": "TimeSeriesSVRTslearn",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-regression-TSRGridSearchCV",
+        "name": "TSRGridSearchCV",
+        "enabled": true,
+        "source": "registry"
+      }
+    ],
+    "clustering": [
+      {
+        "id": "registered-clustering-ClustererPipeline",
+        "name": "ClustererPipeline",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-clustering-SklearnClustererPipeline",
+        "name": "SklearnClustererPipeline",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-clustering-STDBSCAN",
+        "name": "STDBSCAN",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-clustering-TimeSeriesDBSCAN",
+        "name": "TimeSeriesDBSCAN",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-clustering-TimeSeriesKernelKMeans",
+        "name": "TimeSeriesKernelKMeans",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "ts-kmeans",
+        "name": "TimeSeriesKMeans",
+        "enabled": true,
+        "source": "curated"
+      },
+      {
+        "id": "registered-clustering-TimeSeriesKMeansTslearn",
+        "name": "TimeSeriesKMeansTslearn",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-clustering-TimeSeriesKMedoids",
+        "name": "TimeSeriesKMedoids",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-clustering-TimeSeriesKShapes",
+        "name": "TimeSeriesKShapes",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-clustering-TimeSeriesKvisibility",
+        "name": "TimeSeriesKvisibility",
+        "enabled": true,
+        "source": "registry"
+      }
+    ],
+    "anomaly_detection": [
+      {
+        "id": "registered-anomaly_detection-BinarySegmentation",
+        "name": "BinarySegmentation",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-CAPA",
+        "name": "CAPA",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-CircularBinarySegmentation",
+        "name": "CircularBinarySegmentation",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-ClaSPSegmentation",
+        "name": "ClaSPSegmentation",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-ClusterSegmenter",
+        "name": "ClusterSegmenter",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-DetectorPipeline",
+        "name": "DetectorPipeline",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-DevADAnomalyTransformerDetector",
+        "name": "DevADAnomalyTransformerDetector",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-DevADBeatGANDetector",
+        "name": "DevADBeatGANDetector",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-DevADCOUTADetector",
+        "name": "DevADCOUTADetector",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-DevADDAGMMDetector",
+        "name": "DevADDAGMMDetector",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-DevADDonutDetector",
+        "name": "DevADDonutDetector",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-DevADFCVAEDetector",
+        "name": "DevADFCVAEDetector",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-DevADFITSDetector",
+        "name": "DevADFITSDetector",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-DevADIForestDetector",
+        "name": "DevADIForestDetector",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-DevADKANADDetector",
+        "name": "DevADKANADDetector",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-DevADKMeansADDetector",
+        "name": "DevADKMeansADDetector",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-DevADLSTMADDetector",
+        "name": "DevADLSTMADDetector",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-DevADModernTCNDetector",
+        "name": "DevADModernTCNDetector",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-DevADOmniAnomalyDetector",
+        "name": "DevADOmniAnomalyDetector",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-DevADSubLOFDetector",
+        "name": "DevADSubLOFDetector",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-DevADSubOCSVMDetector",
+        "name": "DevADSubOCSVMDetector",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-DevADSubPCADetector",
+        "name": "DevADSubPCADetector",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-DevADTimesNetDetector",
+        "name": "DevADTimesNetDetector",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-DevADTranADDetector",
+        "name": "DevADTranADDetector",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-DevADUSADDetector",
+        "name": "DevADUSADDetector",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-DummyRegularAnomalies",
+        "name": "DummyRegularAnomalies",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-DummyRegularChangePoints",
+        "name": "DummyRegularChangePoints",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "user-ecod_direct",
+        "name": "ecod-direct",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-GaussianHMM",
+        "name": "GaussianHMM",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-GMMHMM",
+        "name": "GMMHMM",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-GreedyGaussianSegmentation",
+        "name": "GreedyGaussianSegmentation",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-HMM",
+        "name": "HMM",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-MLEBinSeg",
+        "name": "MLEBinSeg",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-MovingWindow",
+        "name": "MovingWindow",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-MVCAPA",
+        "name": "MVCAPA",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "user-my_ecod",
+        "name": "my_ecod",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "user-my_subpca",
+        "name": "my_subpca",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-OptimalPartitioning",
+        "name": "OptimalPartitioning",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-PELT",
+        "name": "PELT",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-PoissonHMM",
+        "name": "PoissonHMM",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-PyODCBLOFDetector",
+        "name": "PyODCBLOFDetector",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-PyODCOPODDetector",
+        "name": "PyODCOPODDetector",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-PyODDetector",
+        "name": "PyODDetector",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-PyODECODDetector",
+        "name": "PyODECODDetector",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-PyODHBOSDetector",
+        "name": "PyODHBOSDetector",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-PyODIForestDetector",
+        "name": "PyODIForestDetector",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-PyODKNNDetector",
+        "name": "PyODKNNDetector",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-PyODLOFDetector",
+        "name": "PyODLOFDetector",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-PyODMCDDetector",
+        "name": "PyODMCDDetector",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-PyODOCSVMDetector",
+        "name": "PyODOCSVMDetector",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-SeededBinarySegmentation",
+        "name": "SeededBinarySegmentation",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-StatThresholdAnomaliser",
+        "name": "StatThresholdAnomaliser",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-SubLOF",
+        "name": "SubLOF",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "threshold-detector",
+        "name": "ThresholdDetector",
+        "enabled": true,
+        "source": "curated"
+      },
+      {
+        "id": "registered-anomaly_detection-WindowSegmenter",
+        "name": "WindowSegmenter",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-ZeroAnomalies",
+        "name": "ZeroAnomalies",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-ZeroChangePoints",
+        "name": "ZeroChangePoints",
+        "enabled": true,
+        "source": "registry"
+      },
+      {
+        "id": "registered-anomaly_detection-ZeroSegments",
+        "name": "ZeroSegments",
+        "enabled": true,
+        "source": "registry"
+      }
+    ],
+    "causal": [
+      {
+        "id": "causal-ges",
+        "name": "GES",
+        "enabled": true,
+        "source": "curated"
+      },
+      {
+        "id": "causal-notears",
+        "name": "NOTEARS",
+        "enabled": true,
+        "source": "curated"
+      },
+      {
+        "id": "causal-pc",
+        "name": "PC",
+        "enabled": true,
+        "source": "curated"
+      },
+      {
+        "id": "causal-pcmci",
+        "name": "PCMCI",
+        "enabled": true,
+        "source": "curated"
+      }
+    ]
+  },
+  "entries": [
+    {
+      "id": "detection-lof-yahoo-auc",
+      "algorithm": "registered-anomaly_detection-PyODLOFDetector",
+      "algorithm_name": "LOF",
+      "dataset": "yahoo",
+      "dataset_name": "Yahoo (TSB-UAD YAHOO subset)",
+      "metric": "AUC-ROC",
+      "metric_key": "AUC-ROC",
+      "value": 0.86,
+      "settings": "Unsupervised fit on full series; sliding-window embedding with FFT-based window length; scores min-max normalized; point-wise AUC-ROC averaged over all 367 YAHOO series",
+      "source": {
+        "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
+        "venue": "PVLDB 15(8):1697-1711, 2022",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "README 'Overall Results' table, row YAHOO, column LOF (AUC 0.86, F 0.62)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "Granularity gap: the paper value averages 367 Yahoo series; the labts yahoo dataset is a single bundled series (1000 points, 7 anomalies). Directional check only.",
+      "task": "anomaly_detection",
+      "command": "python playground/labts.py run --task anomaly_detection --algorithm registered-anomaly_detection-PyODLOFDetector --dataset yahoo --metric auc_roc --compact",
+      "status": "deviation",
+      "value_reproduced": 0.6819162710401381,
+      "delta": -0.178084,
+      "delta_rel": 0.207074,
+      "ran_at": "2026-09-28T09:43:02.868809+00:00",
+      "duration_s": 13.34,
+      "error": null,
+      "metrics": {
+        "Precision": 0.04819277108433735,
+        "Recall": 0.5714285714285714,
+        "F1": 0.08888888888888889,
+        "Detected": 83,
+        "Ground Truth": 7,
+        "AUC-ROC": 0.6819162710401381
+      }
+    },
+    {
+      "id": "detection-iforest-yahoo-auc",
+      "algorithm": "registered-anomaly_detection-PyODIForestDetector",
+      "algorithm_name": "IForest",
+      "dataset": "yahoo",
+      "dataset_name": "Yahoo (TSB-UAD YAHOO subset)",
+      "metric": "AUC-ROC",
+      "metric_key": "AUC-ROC",
+      "value": 0.62,
+      "settings": "Unsupervised fit on full series; sliding-window embedding; point-wise AUC-ROC averaged over all 367 YAHOO series",
+      "source": {
+        "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
+        "venue": "PVLDB 15(8):1697-1711, 2022",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "README 'Overall Results' table, row YAHOO, column IForest (AUC 0.62, F 0.06)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "Same granularity gap as the LOF entry.",
+      "task": "anomaly_detection",
+      "command": "python playground/labts.py run --task anomaly_detection --algorithm registered-anomaly_detection-PyODIForestDetector --dataset yahoo --metric auc_roc --compact",
+      "status": "deviation",
+      "value_reproduced": 0.9076391886059559,
+      "delta": 0.287639,
+      "delta_rel": 0.463934,
+      "ran_at": "2026-09-28T09:43:15.865451+00:00",
+      "duration_s": 13.0,
+      "error": null,
+      "metrics": {
+        "Precision": 0.04,
+        "Recall": 0.5714285714285714,
+        "F1": 0.07476635514018691,
+        "Detected": 100,
+        "Ground Truth": 7,
+        "AUC-ROC": 0.9076391886059559
+      }
+    },
+    {
+      "id": "detection-iforest-mitdb-auc",
+      "algorithm": "registered-anomaly_detection-PyODIForestDetector",
+      "algorithm_name": "IForest",
+      "dataset": "mitdb",
+      "dataset_name": "MIT-BIH ECG (TSB-UAD MITDB subset)",
+      "metric": "AUC-ROC",
+      "metric_key": "AUC-ROC",
+      "value": 0.7,
+      "settings": "Unsupervised fit on full series; sliding-window embedding; point-wise AUC-ROC averaged over all 32 MITDB series",
+      "source": {
+        "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
+        "venue": "PVLDB 15(8):1697-1711, 2022",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "README 'Overall Results' table, row MITDB, column IForest (AUC 0.70, F 0.09)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "Granularity gap: 32-series average vs the single 7500-point excerpt bundled with labts.",
+      "task": "anomaly_detection",
+      "command": "python playground/labts.py run --task anomaly_detection --algorithm registered-anomaly_detection-PyODIForestDetector --dataset mitdb --metric auc_roc --compact",
+      "status": "reproduced",
+      "value_reproduced": 0.694368378631022,
+      "delta": -0.005632,
+      "delta_rel": 0.008045,
+      "ran_at": "2026-09-28T09:43:29.578374+00:00",
+      "duration_s": 13.71,
+      "error": null,
+      "metrics": {
+        "Precision": 0.023004059539918808,
+        "Recall": 0.048295454545454544,
+        "F1": 0.03116406966086159,
+        "Detected": 739,
+        "Ground Truth": 352,
+        "AUC-ROC": 0.694368378631022
+      }
+    },
+    {
+      "id": "causal-notears-sachs-shd",
+      "algorithm": "causal-notears",
+      "algorithm_name": "NOTEARS",
+      "dataset": "causal-sachs-cont",
+      "dataset_name": "Sachs continuous (n=7466, d=11, 20-edge DAG)",
+      "metric": "SHD",
+      "metric_key": "SHD",
+      "value": 22,
+      "settings": "Original NOTEARS (least-squares + L1 + acyclicity); full dataset n=7466, no train/test split; SHD vs the 20-edge consensus DAG; 16 edges estimated",
+      "source": {
+        "title": "DAGs with NO TEARS: Continuous Optimization for Structure Learning (Zheng, Aragam, Ravikumar, Xing)",
+        "venue": "NeurIPS 2018",
+        "url": "https://ar5iv.labs.arxiv.org/html/1803.01422",
+        "locator": "Section 5.4 'Real-data': '16 for NOTEARS with an SHD of 22'"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 6
+      },
+      "notes": "Same continuous Sachs data and same 20-edge consensus DAG as the paper (vendored from cmu-phil/example-causal-datasets). labts must run with max_samples=7466 (default subsample is 2000).",
+      "task": "causal",
+      "command": "python playground/labts.py run --task causal --algorithm causal-notears --dataset causal-sachs-cont --param max_samples=7466 --compact",
+      "status": "reproduced",
+      "value_reproduced": 23.0,
+      "delta": 1.0,
+      "delta_rel": 0.045455,
+      "ran_at": "2026-09-28T09:43:46.100389+00:00",
+      "duration_s": 16.52,
+      "error": null,
+      "metrics": {
+        "SHD": 23,
+        "Edge Precision": 0.3333333333333333,
+        "Edge Recall": 0.4,
+        "Edge F1": 0.3636363636363636,
+        "Edges": 24,
+        "True Edges": 20
+      }
+    },
+    {
+      "id": "causal-pc-sachs-shd",
+      "algorithm": "causal-pc",
+      "algorithm_name": "PC",
+      "dataset": "causal-sachs-cont",
+      "dataset_name": "Sachs continuous (n=7466, d=11, 20-edge DAG)",
+      "metric": "SHD",
+      "metric_key": "SHD",
+      "value": 23,
+      "settings": "PC in Tetrad 7.6.7 with default settings; CPDAG with 24 estimated edges; SHD vs the 20-edge ground-truth DAG",
+      "source": {
+        "title": "Are You Doing Better Than Random Guessing? A Call for Using Negative Controls When Evaluating Causal Discovery Algorithms (Petersen)",
+        "venue": "arXiv:2412.10039v2",
+        "url": "https://arxiv.org/pdf/2412.10039",
+        "locator": "Table 6 'SHD for the Sachs Data', row PC"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 8
+      },
+      "notes": "Implementation gap: paper uses Tetrad's PC; labts uses causal-learn's PC. Independence-test defaults may differ.",
+      "task": "causal",
+      "command": "python playground/labts.py run --task causal --algorithm causal-pc --dataset causal-sachs-cont --param max_samples=7466 --compact",
+      "status": "reproduced",
+      "value_reproduced": 22.0,
+      "delta": -1.0,
+      "delta_rel": 0.043478,
+      "ran_at": "2026-09-28T09:43:49.251148+00:00",
+      "duration_s": 3.15,
+      "error": null,
+      "metrics": {
+        "SHD": 22,
+        "Edge Precision": 0.44,
+        "Edge Recall": 0.55,
+        "Edge F1": 0.48888888888888893,
+        "Edges": 25,
+        "True Edges": 20
+      }
+    },
+    {
+      "id": "causal-ges-sachs-shd",
+      "algorithm": "causal-ges",
+      "algorithm_name": "GES",
+      "dataset": "causal-sachs-cont",
+      "dataset_name": "Sachs continuous (n=7466, d=11, 20-edge DAG)",
+      "metric": "SHD",
+      "metric_key": "SHD",
+      "value": 30,
+      "settings": "GES in Tetrad 7.6.7 with default settings; CPDAG with 30 estimated edges; SHD vs the 20-edge ground-truth DAG",
+      "source": {
+        "title": "Are You Doing Better Than Random Guessing? A Call for Using Negative Controls When Evaluating Causal Discovery Algorithms (Petersen)",
+        "venue": "arXiv:2412.10039v2",
+        "url": "https://arxiv.org/pdf/2412.10039",
+        "locator": "Table 6 'SHD for the Sachs Data', row GES"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 8
+      },
+      "notes": "Implementation gap: Tetrad GES vs causal-learn GES. (The NOTEARS paper reports FGS SHD=22 on the same data; Tetrad GES defaults give 30.)",
+      "task": "causal",
+      "command": "python playground/labts.py run --task causal --algorithm causal-ges --dataset causal-sachs-cont --param max_samples=7466 --compact",
+      "status": "reproduced",
+      "value_reproduced": 31.0,
+      "delta": 1.0,
+      "delta_rel": 0.033333,
+      "ran_at": "2026-09-28T09:43:52.074191+00:00",
+      "duration_s": 2.82,
+      "error": null,
+      "metrics": {
+        "SHD": 31,
+        "Edge Precision": 0.23529411764705882,
+        "Edge Recall": 0.4,
+        "Edge F1": 0.29629629629629634,
+        "Edges": 34,
+        "True Edges": 20
+      }
+    },
+    {
+      "id": "classification-rocket-italypowerdemand",
+      "algorithm": "registered-classification-RocketClassifier",
+      "algorithm_name": "ROCKET",
+      "dataset": "italy-power-demand",
+      "dataset_name": "ItalyPowerDemand (UCR)",
+      "metric": "Accuracy",
+      "metric_key": "Accuracy",
+      "value": 0.96958,
+      "settings": "UCR default train/test split (67/1029); 10,000 random kernels; RidgeClassifierCV(alphas=logspace(-3,3,10), normalize=True); mean over 10 runs (std 0.001)",
+      "source": {
+        "title": "ROCKET: Exceptionally Fast and Accurate Time Series Classification Using Random Convolutional Kernels (Dempster, Petitjean, Webb)",
+        "venue": "Data Mining and Knowledge Discovery 34(5), 2020",
+        "url": "https://raw.githubusercontent.com/angus924/rocket/master/results/results_ucr.csv",
+        "locator": "official results_ucr.csv, row ItalyPowerDemand, accuracy_mean column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "sktime RocketClassifier matches the paper protocol (10,000 kernels + RidgeClassifierCV). Kernels are random, so single-run accuracy varies within the paper's reported std (~0.001).",
+      "task": "classification",
+      "command": "python playground/labts.py run --task classification --algorithm registered-classification-RocketClassifier --dataset italy-power-demand --metric accuracy --compact",
+      "status": "reproduced",
+      "value_reproduced": 0.9689018464528668,
+      "delta": -0.000678,
+      "delta_rel": 0.000699,
+      "ran_at": "2026-09-28T09:44:21.705420+00:00",
+      "duration_s": 29.63,
+      "error": null,
+      "metrics": {
+        "Accuracy": 0.9689018464528668,
+        "Macro F1": 0.9689018170828454
+      }
+    },
+    {
+      "id": "classification-rocket-arrowhead",
+      "algorithm": "registered-classification-RocketClassifier",
+      "algorithm_name": "ROCKET",
+      "dataset": "arrow-head",
+      "dataset_name": "ArrowHead (UCR)",
+      "metric": "Accuracy",
+      "metric_key": "Accuracy",
+      "value": 0.81429,
+      "settings": "UCR default train/test split (36/175); 10,000 random kernels; RidgeClassifierCV; mean over 10 runs (std 0.0094)",
+      "source": {
+        "title": "ROCKET: Exceptionally Fast and Accurate Time Series Classification Using Random Convolutional Kernels (Dempster, Petitjean, Webb)",
+        "venue": "Data Mining and Knowledge Discovery 34(5), 2020",
+        "url": "https://raw.githubusercontent.com/angus924/rocket/master/results/results_ucr.csv",
+        "locator": "official results_ucr.csv, row ArrowHead, accuracy_mean column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "Non-saturated dataset; paper std over 10 runs is ~0.0094, so +/-0.03 tolerance covers kernel randomness.",
+      "task": "classification",
+      "command": "python playground/labts.py run --task classification --algorithm registered-classification-RocketClassifier --dataset arrow-head --metric accuracy --compact",
+      "status": "reproduced",
+      "value_reproduced": 0.8114285714285714,
+      "delta": -0.002861,
+      "delta_rel": 0.003514,
+      "ran_at": "2026-09-28T09:44:53.129951+00:00",
+      "duration_s": 31.42,
+      "error": null,
+      "metrics": {
+        "Accuracy": 0.8114285714285714,
+        "Macro F1": 0.811559629161399
+      }
+    },
+    {
+      "id": "clustering-kshape-arrowhead",
+      "algorithm": "registered-clustering-TimeSeriesKShapes",
+      "algorithm_name": "k-Shape",
+      "dataset": "arrow-head-cl",
+      "dataset_name": "ArrowHead (UCR, fused train+test)",
+      "metric": "ARI",
+      "metric_key": "ARI",
+      "value": 0.17425,
+      "settings": "k=3 (= number of classes); full dataset clustered (train+test fused, N=211); mean over 10 runs of the authors' Matlab implementation",
+      "source": {
+        "title": "k-Shape: Efficient and Accurate Clustering of Time Series (Paparrizos & Gravano) — official Matlab repository",
+        "venue": "ACM SIGMOD 2015 / ACM TODS 2017",
+        "url": "https://github.com/TheDatumOrg/kshape-matlab",
+        "locator": "README 'Results on the 128 univariate datasets', row ArrowHead (RI 0.623006, ARI 0.17425450, NMI 0.2533444)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "Paper value is the mean of 10 Matlab runs; labts runs tslearn's KShape once with a fixed seed. Random init makes single-run ARI swing; RI=0.623006 in the same row.",
+      "task": "clustering",
+      "command": "python playground/labts.py run --task clustering --algorithm registered-clustering-TimeSeriesKShapes --dataset arrow-head-cl --param n_clusters=3 --param random_state=42 --metric ari --compact",
+      "status": "deviation",
+      "value_reproduced": 0.0,
+      "delta": -0.17425,
+      "delta_rel": 1.0,
+      "ran_at": "2026-09-28T09:45:23.405971+00:00",
+      "duration_s": 30.28,
+      "error": null,
+      "metrics": {
+        "ARI": 0.0,
+        "NMI": 0.0,
+        "Clusters": 1,
+        "Largest Cluster": 175
+      }
+    },
+    {
+      "id": "clustering-kshape-gunpoint",
+      "algorithm": "registered-clustering-TimeSeriesKShapes",
+      "algorithm_name": "k-Shape",
+      "dataset": "gunpoint-cl",
+      "dataset_name": "GunPoint (UCR, fused train+test)",
+      "metric": "ARI",
+      "metric_key": "ARI",
+      "value": -0.00505,
+      "settings": "k=2 (= number of classes); full dataset clustered (train+test fused, N=306); mean over 10 runs of the authors' Matlab implementation",
+      "source": {
+        "title": "k-Shape: Efficient and Accurate Clustering of Time Series (Paparrizos & Gravano) — official Matlab repository",
+        "venue": "ACM SIGMOD 2015 / ACM TODS 2017",
+        "url": "https://github.com/TheDatumOrg/kshape-matlab",
+        "locator": "README 'Results on the 128 univariate datasets', row GunPoint (RI 0.497487, ARI -0.005050, NMI 0.0)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "GunPoint clustering is at chance level even for the authors (RI 0.4975, NMI 0.0) — reproducing this row validates that near-chance behavior, not a bug.",
+      "task": "clustering",
+      "command": "python playground/labts.py run --task clustering --algorithm registered-clustering-TimeSeriesKShapes --dataset gunpoint-cl --param n_clusters=2 --param random_state=42 --metric ari --compact",
+      "status": "reproduced",
+      "value_reproduced": 0.0,
+      "delta": 0.00505,
+      "delta_rel": 1.0,
+      "ran_at": "2026-09-28T09:45:52.887639+00:00",
+      "duration_s": 29.48,
+      "error": null,
+      "metrics": {
+        "ARI": 0.0,
+        "NMI": 0.0,
+        "Clusters": 1,
+        "Largest Cluster": 150
+      }
+    },
+    {
+      "id": "forecasting-dlinear-etth1-96",
+      "algorithm": "registered-forecasting-DLinearForecaster",
+      "algorithm_name": "DLinear",
+      "dataset": "hf-etth1",
+      "dataset_name": "ETTh1",
+      "metric": "MSE",
+      "metric_key": "MSE",
+      "value": 0.375,
+      "settings": "Multivariate LTSF-Linear protocol; look-back L=336, horizon 96; z-score normalized; test-set MSE averaged over 7 channels and rolling origins over the 4-month test split",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTh1/96, DLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.15
+      },
+      "notes": "Protocol gap: paper trains on a 12-month split and evaluates rolling-origin over the 4-month test set across all 7 channels; labts trains on all but the last 96 points and scores a single univariate origin with num_epochs=3. Expect deviation until rolling-origin multivariate evaluation lands.",
+      "task": "forecasting",
+      "command": "python playground/labts.py run --task forecasting --algorithm registered-forecasting-DLinearForecaster --dataset hf-etth1 --param seq_len=336 --param pred_len=96 --param horizon=96 --metric mse --compact",
+      "status": "deviation",
+      "value_reproduced": 0.5574297139080636,
+      "delta": 0.18243,
+      "delta_rel": 0.486479,
+      "ran_at": "2026-09-28T09:46:38.968249+00:00",
+      "duration_s": 46.08,
+      "error": null,
+      "metrics": {
+        "MAE": 0.5706981667138867,
+        "MSE": 0.5574297139080636,
+        "MAPE": 0.5583096702883522
+      }
+    },
+    {
+      "id": "forecasting-dlinear-weather-96",
+      "algorithm": "registered-forecasting-DLinearForecaster",
+      "algorithm_name": "DLinear",
+      "dataset": "hf-weather",
+      "dataset_name": "Weather",
+      "metric": "MSE",
+      "metric_key": "MSE",
+      "value": 0.176,
+      "settings": "Multivariate LTSF-Linear protocol; look-back L=336, horizon 96; z-score normalized; test-set MSE averaged over 21 channels and rolling origins",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row Weather/96, DLinear*"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.15
+      },
+      "notes": "Same protocol gap as the ETTh1 entry (univariate single-origin holdout vs multivariate rolling-origin test).",
+      "task": "forecasting",
+      "command": "python playground/labts.py run --task forecasting --algorithm registered-forecasting-DLinearForecaster --dataset hf-weather --param seq_len=336 --param pred_len=96 --param horizon=96 --metric mse --compact",
+      "status": "deviation",
+      "value_reproduced": 0.11042374197575112,
+      "delta": -0.065576,
+      "delta_rel": 0.372592,
+      "ran_at": "2026-09-28T09:47:11.933941+00:00",
+      "duration_s": 32.97,
+      "error": null,
+      "metrics": {
+        "MAE": 0.24673828979333245,
+        "MSE": 0.11042374197575112,
+        "MAPE": 0.042166721886618484
+      }
+    },
+    {
+      "id": "forecasting-autoformer-etth1-96",
+      "algorithm": "registered-forecasting-AutoformerForecaster",
+      "algorithm_name": "Autoformer",
+      "dataset": "hf-etth1",
+      "dataset_name": "ETTh1",
+      "metric": "MSE",
+      "metric_key": "MSE",
+      "value": 0.449,
+      "settings": "Multivariate LTSF protocol; look-back L=96 (Transformers), horizon 96; z-score normalized; test-set MSE",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTh1/96, Autoformer (quoted from the FEDformer paper, ICML 2022; identical to Autoformer paper's own value)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.2
+      },
+      "notes": "Same protocol gap as the DLinear entries; also num_epochs=3 default (paper trains to convergence).",
+      "task": "forecasting",
+      "command": "python playground/labts.py run --task forecasting --algorithm registered-forecasting-AutoformerForecaster --dataset hf-etth1 --param seq_len=96 --param pred_len=96 --param horizon=96 --metric mse --compact",
+      "status": "reproduced",
+      "value_reproduced": 0.4109711655225607,
+      "delta": -0.038029,
+      "delta_rel": 0.084697,
+      "ran_at": "2026-09-28T09:51:06.096717+00:00",
+      "duration_s": 234.16,
+      "error": null,
+      "metrics": {
+        "MAE": 0.515523592777731,
+        "MSE": 0.4109711655225607,
+        "MAPE": 0.7987782834133416
+      }
+    },
+    {
+      "id": "regression-rocket-covid3month",
+      "algorithm": "registered-regression-RocketRegressor",
+      "algorithm_name": "Rocket",
+      "dataset": "covid-3month",
+      "dataset_name": "Covid3Month (TSER archive)",
+      "metric": "RMSE",
+      "metric_key": "RMSE",
+      "value": 0.0438782,
+      "settings": "TSER archive default train/test split (140/61); ROCKET transform with ridge-regression-style regressor; average RMSE over 5 runs",
+      "source": {
+        "title": "Time Series Extrinsic Regression (Tan, Bergmeir, Petitjean, Webb) — official TSER results page",
+        "venue": "Data Mining and Knowledge Discovery 35, 2021 / tseregression.org",
+        "url": "http://tseregression.org/",
+        "locator": "Results table, row Covid3Month, column Rocket"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.2
+      },
+      "notes": "Rocket was the best-ranked algorithm in the TSER paper. sktime RocketRegressor follows the same protocol (fixed archive split, ridge on ROCKET features).",
+      "task": "regression",
+      "command": "python playground/labts.py run --task regression --algorithm registered-regression-RocketRegressor --dataset covid-3month --metric rmse --compact",
+      "status": "reproduced",
+      "value_reproduced": 0.0389928099603455,
+      "delta": -0.004885,
+      "delta_rel": 0.11134,
+      "ran_at": "2026-09-28T09:51:35.491437+00:00",
+      "duration_s": 29.39,
+      "error": null,
+      "metrics": {
+        "MAE": 0.028532003631796823,
+        "RMSE": 0.0389928099603455,
+        "R²": 0.23645960975254454
+      }
+    },
+    {
+      "id": "regression-rf-covid3month",
+      "algorithm": "summary-random-forest-regressor",
+      "algorithm_name": "RandomForest",
+      "dataset": "covid-3month",
+      "dataset_name": "Covid3Month (TSER archive)",
+      "metric": "RMSE",
+      "metric_key": "RMSE",
+      "value": 0.0424,
+      "settings": "TSER archive default train/test split (140/61); scikit-learn RandomForest with default parameters on the flattened raw series; average RMSE over 5 runs",
+      "source": {
+        "title": "Time Series Extrinsic Regression (Tan, Bergmeir, Petitjean, Webb) — official TSER results page",
+        "venue": "Data Mining and Knowledge Discovery 35, 2021 / tseregression.org",
+        "url": "http://tseregression.org/",
+        "locator": "Results table, row Covid3Month, column RandomForest"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.35
+      },
+      "notes": "Protocol mismatch on purpose: the paper flattens the raw series into sklearn defaults, while the labts pipeline fits RF(25 trees) on summary features. Kept as a demonstration that the leaderboard flags representation gaps, not only implementation bugs.",
+      "task": "regression",
+      "command": "python playground/labts.py run --task regression --algorithm summary-random-forest-regressor --dataset covid-3month --metric rmse --compact",
+      "status": "reproduced",
+      "value_reproduced": 0.04679649136974218,
+      "delta": 0.004396,
+      "delta_rel": 0.103691,
+      "ran_at": "2026-09-28T09:51:39.281716+00:00",
+      "duration_s": 3.79,
+      "error": null,
+      "metrics": {
+        "MAE": 0.03293033550832359,
+        "RMSE": 0.04679649136974218,
+        "R²": -0.09973876605185339
+      }
+    }
+  ],
+  "summary": {
+    "entries": 15,
+    "reproduced": 10,
+    "deviation": 5,
+    "error": 0,
+    "pending": 0,
+    "run_total": 15,
+    "reproduced_pct": 66.7
+  }
+}

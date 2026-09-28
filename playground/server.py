@@ -40,6 +40,34 @@ class PlaygroundHandler(BaseHTTPRequestHandler):
         if parsed.path in {"/", "/index.html"}:
             self._file(STATIC_ROOT / "index.html")
             return
+        if parsed.path in {"/benchmark", "/benchmark.html"}:
+            leaderboard = (HERE / "benchmark" / "leaderboard.html").resolve()
+            if leaderboard.is_file():
+                self._raw_file(leaderboard)
+            else:
+                self._json(
+                    {
+                        "status": "error",
+                        "error": "leaderboard.html not built; run "
+                        "`python playground/benchmark/build_state.py` first",
+                    },
+                    status=404,
+                )
+            return
+        if parsed.path == "/api/benchmark":
+            state = HERE / "benchmark" / "state.json"
+            if not state.is_file():
+                self._json(
+                    {
+                        "status": "error",
+                        "error": "state.json not built; run "
+                        "`python playground/benchmark/build_state.py` first",
+                    },
+                    status=404,
+                )
+                return
+            self._json(json.loads(state.read_text(encoding="utf-8")))
+            return
         self._file(STATIC_ROOT / parsed.path.lstrip("/"))
 
     def do_POST(self):
@@ -102,11 +130,15 @@ class PlaygroundHandler(BaseHTTPRequestHandler):
         except (OSError, ValueError):
             self._json({"status": "error", "error": "Not found"}, status=404)
             return
-        if not resolved.is_file():
+        self._raw_file(resolved)
+
+    def _raw_file(self, path: Path):
+        """Serve a trusted file without the STATIC_ROOT containment check."""
+        if not path.is_file():
             self._json({"status": "error", "error": "Not found"}, status=404)
             return
-        body = resolved.read_bytes()
-        content_type = mimetypes.guess_type(resolved.name)[0] or "application/octet-stream"
+        body = path.read_bytes()
+        content_type = mimetypes.guess_type(path.name)[0] or "application/octet-stream"
         self.send_response(200)
         self.send_header("Content-Type", content_type)
         self.send_header("Content-Length", str(len(body)))

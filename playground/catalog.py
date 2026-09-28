@@ -430,6 +430,15 @@ DATASETS = [
         "default": True,
     },
     {
+        "id": "causal-sachs-cont",
+        "name": "Sachs continuous (7466×11, 20-edge DAG)",
+        "task": "causal",
+        "source": "local",
+        "loader": "domain_runners.load_sachs_continuous",
+        "true_graph": True,
+        "enabled": True,
+    },
+    {
         "id": "causal-alarm",
         "name": "ALARM (bnlearn, true DAG)",
         "task": "causal",

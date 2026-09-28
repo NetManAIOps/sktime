@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>labts · benchmark</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --text: #0d0d0d;
+    --text-2: #5f5f5f;
+    --text-3: #9b9b9b;
+    --hairline: #e7e7e7;
+    --hairline-2: #f0f0f0;
+    --hover: #f7f7f7;
+    --code-bg: #f4f4f4;
+    --green: #10a37f;
+    --amber: #b45309;
+    --red: #dc2626;
+    --gray: #9b9b9b;
+    --mono: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font: 15px/1.55 "Inter", -apple-system, "SF Pro Text", "Segoe UI", Roboto,
+      "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+  }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 1060px; margin: 0 auto; padding: 0 32px; }
+
+  /* ---------- top bar ---------- */
+  .topbar {
+    position: sticky; top: 0; z-index: 20;
+    background: rgba(255,255,255,.85); backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--hairline);
+  }
+  .topbar .wrap { display: flex; align-items: center; height: 56px; }
+  .brand { display: flex; align-items: baseline; gap: 10px; font-weight: 600; letter-spacing: -.01em; }
+  .brand .mark { width: 10px; height: 10px; border-radius: 3px; background: var(--text); align-self: center; }
+  .brand .sub { color: var(--text-3); font-weight: 400; }
+  .topbar .right { margin-left: auto; display: flex; gap: 22px; color: var(--text-2); font-size: 13px; }
+  .topbar .right a:hover { color: var(--text); }
+
+  /* ---------- hero ---------- */
+  .hero { padding: 76px 0 44px; border-bottom: 1px solid var(--hairline); }
+  .eyebrow {
+    font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--text-3); margin-bottom: 18px;
+  }
+  .hero h1 {
+    font-size: 46px; font-weight: 500; letter-spacing: -.025em; line-height: 1.12;
+    max-width: 640px;
+  }
+  .hero p { margin-top: 18px; color: var(--text-2); max-width: 620px; font-size: 16px; }
+
+  /* ---------- stats ---------- */
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--hairline); }
+  .stat { padding: 26px 0 26px; border-left: 1px solid var(--hairline); padding-left: 26px; }
+  .stat:first-child { border-left: none; padding-left: 0; }
+  .stat .num { font-size: 30px; font-weight: 500; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+  .stat .lbl { margin-top: 4px; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); }
+
+  /* ---------- tabs ---------- */
+  .tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--hairline); overflow-x: auto; }
+  .tab {
+    display: inline-block; padding: 14px 14px 13px; font-size: 14px; color: var(--text-2);
+    border-bottom: 2px solid transparent; margin-bottom: -1px; white-space: nowrap;
+    transition: color .15s ease;
+  }
+  .tab:hover { color: var(--text); }
+  .tab.active { color: var(--text); border-bottom-color: var(--text); font-weight: 500; }
+  .tab .cnt { color: var(--text-3); font-size: 12px; margin-left: 6px; font-variant-numeric: tabular-nums; }
+
+  /* task sections: all visible without JS; tabs hide/show with JS */
+  .no-js .task-section { display: block; }
+  body:not(.no-js) .task-section { display: none; }
+  body:not(.no-js) .task-section.active { display: block; }
+
+  /* ---------- task panel ---------- */
+  .panel { padding: 40px 0 64px; }
+  .panel-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 6px; }
+  .panel-head h2 { font-size: 22px; font-weight: 500; letter-spacing: -.01em; }
+  .panel-head .desc { color: var(--text-2); font-size: 14px; }
+  .panel-sub { color: var(--text-3); font-size: 13px; margin-bottom: 26px; }
+
+  .section-label {
+    font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--text-3); margin: 34px 0 12px;
+  }
+
+  /* ---------- claims (native details/summary, works without JS) ---------- */
+  .claims { border: 1px solid var(--hairline); border-radius: 10px; overflow: hidden; }
+  details.claim { border-top: 1px solid var(--hairline-2); }
+  details.claim:first-child { border-top: none; }
+  details.claim summary {
+    list-style: none; cursor: pointer;
+    display: grid; grid-template-columns: 1.5fr 1.3fr .7fr .8fr .8fr .8fr 1fr;
+    gap: 12px; align-items: center; padding: 13px 18px;
+    transition: background .12s ease;
+  }
+  details.claim summary::-webkit-details-marker { display: none; }
+  details.claim summary:hover { background: var(--hover); }
+  details.claim[open] summary { background: var(--hover); }
+  details.claim summary .alg { font-weight: 500; font-size: 14px; }
+  details.claim summary .alg .lib { color: var(--text-3); font-weight: 400; font-size: 12px; margin-left: 8px; }
+  details.claim summary .ds { color: var(--text-2); font-size: 13px; }
+  details.claim summary .met { color: var(--text-2); font-size: 13px; }
+  .num { font-family: var(--mono); font-size: 13px; font-variant-numeric: tabular-nums; }
+  .num.gt { color: var(--text); }
+  .num.rep { color: var(--text-2); }
+  .delta { font-family: var(--mono); font-size: 12.5px; font-variant-numeric: tabular-nums; }
+  .delta .tol { color: var(--text-3); }
+  .delta.ok { color: var(--green); }
+  .delta.bad { color: var(--amber); }
+  .status { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; }
+  .dot { width: 7px; height: 7px; border-radius: 50%; flex: none; }
+  .status.reproduced { color: var(--green); } .status.reproduced .dot { background: var(--green); }
+  .status.deviation { color: var(--amber); } .status.deviation .dot { background: var(--amber); }
+  .status.error { color: var(--red); } .status.error .dot { background: var(--red); }
+  .status.pending { color: var(--gray); } .status.pending .dot { background: var(--gray); }
+  .chev { color: var(--text-3); font-size: 12px; transition: transform .15s ease; justify-self: end; }
+  details.claim[open] summary .chev { transform: rotate(90deg); }
+
+  .claim-detail { padding: 4px 18px 20px; background: #fbfbfa; border-top: 1px solid var(--hairline-2); }
+  .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 14px; }
+  .detail-grid .full { grid-column: 1 / -1; }
+  .kv-label { font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); margin-bottom: 6px; }
+  .kv { font-size: 13px; color: var(--text-2); }
+  .kv a { color: var(--text); border-bottom: 1px solid var(--hairline); }
+  .kv a:hover { border-bottom-color: var(--text); }
+  .cmd {
+    position: relative; background: var(--code-bg); border: 1px solid var(--hairline);
+    border-radius: 8px; padding: 12px 44px 12px 14px; font-family: var(--mono);
+    font-size: 12.5px; line-height: 1.6; white-space: pre-wrap; word-break: break-all;
+    color: var(--text);
+  }
+  .copy {
+    position: absolute; top: 8px; right: 8px; border: 1px solid var(--hairline);
+    background: #fff; border-radius: 6px; font-size: 11px; color: var(--text-2);
+    padding: 3px 8px; cursor: pointer; font-family: inherit;
+  }
+  .copy:hover { color: var(--text); border-color: var(--text-3); }
+  .raw-metrics { font-family: var(--mono); font-size: 12px; color: var(--text-2); white-space: pre-wrap; }
+
+  /* ---------- catalog chips ---------- */
+  .filter {
+    width: 260px; padding: 8px 12px; font: inherit; font-size: 13px;
+    border: 1px solid var(--hairline); border-radius: 8px; outline: none; margin-bottom: 16px;
+  }
+  .filter:focus { border-color: var(--text-3); }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 7px;
+    border: 1px solid var(--hairline); border-radius: 999px;
+    padding: 5px 12px; font-size: 12.5px; color: var(--text-2);
+  }
+  .chip .dot { width: 6px; height: 6px; }
+  .chip.enabled .dot { background: var(--green); }
+  .chip.disabled { color: var(--text-3); } .chip.disabled .dot { background: #d4d4d4; }
+  .chip .tag { font-size: 10px; color: var(--text-3); border: 1px solid var(--hairline); border-radius: 4px; padding: 0 4px; }
+
+  /* ---------- footer / misc ---------- */
+  footer { border-top: 1px solid var(--hairline); padding: 26px 0 44px; color: var(--text-3); font-size: 12.5px; }
+  footer code { font-family: var(--mono); font-size: 11.5px; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+  .empty { color: var(--text-2); padding: 28px 0; font-size: 14px; }
+
+  @media (max-width: 880px) {
+    details.claim summary { grid-template-columns: 1.4fr 1fr .7fr .8fr .9fr; }
+    details.claim summary .met, details.claim summary .delta { display: none; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .stat { padding-left: 18px; }
+    .detail-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 34px; }
+  }
+</style>
+</head>
+<body class="no-js">
+
+<header class="topbar">
+  <div class="wrap">
+    <div class="brand"><span class="mark"></span>labts <span class="sub">benchmark</span></div>
+    <nav class="right">
+      <a href="/">Playground</a>
+      <a href="state.json" target="_blank" rel="noopener">state.json</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="eyebrow">Reproducibility leaderboard</div>
+    <h1>Paper numbers, re-run.</h1>
+    <p>Every claim below was reported in a paper or an official results table.
+       Each one carries the exact <span style="font-family:var(--mono);font-size:13px;">labts</span> command
+       that re-runs it — green means our re-run landed inside the stated tolerance.
+       Click a row for the citation, protocol, and command.</p>
+  </section>
+
+  <section class="stats" id="stats"><!--BENCH:STATS--></section>
+
+  <nav class="tabs" id="tabs"><!--BENCH:TABS--></nav>
+
+  <div id="sections"><!--BENCH:SECTIONS--></div>
+
+  <footer>
+    Built by labts · state generated <!--BENCH:GENERATED--> · groundtruth curated under
+    <code>playground/benchmark/groundtruth/</code> ·
+    re-run with <code>python playground/benchmark/reproduce.py</code> ·
+    refresh with <code>python playground/benchmark/build_state.py</code>
+  </footer>
+</main>
+
+<script>
+// Progressive enhancement only — the page is fully pre-rendered and readable
+// with JavaScript disabled (e.g. IDE preview panes).
+(function () {
+  document.body.classList.remove("no-js");
+
+  var tabs = Array.prototype.slice.call(document.querySelectorAll(".tab"));
+  var sections = Array.prototype.slice.call(document.querySelectorAll(".task-section"));
+  function activate(id, push) {
+    var found = false;
+    sections.forEach(function (s) {
+      var on = s.id === "task-" + id;
+      s.classList.toggle("active", on);
+      if (on) found = true;
+    });
+    if (!found && sections.length) { sections[0].classList.add("active"); id = sections[0].id.slice(5); }
+    tabs.forEach(function (t) { t.classList.toggle("active", t.dataset.task === id); });
+    if (push && history.replaceState) history.replaceState(null, "", "#" + id);
+  }
+  tabs.forEach(function (t) {
+    t.addEventListener("click", function (ev) {
+      ev.preventDefault();
+      activate(t.dataset.task, true);
+      document.getElementById("sections").scrollIntoView({ block: "start" });
+    });
+  });
+  window.addEventListener("hashchange", function () { activate(location.hash.slice(1), false); });
+  activate(location.hash.slice(1) || (tabs[0] && tabs[0].dataset.task) || "", false);
+
+  document.querySelectorAll(".copy").forEach(function (btn) {
+    btn.addEventListener("click", function (ev) {
+      ev.preventDefault(); ev.stopPropagation();
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(btn.dataset.cmd).catch(function () {});
+      }
+      btn.textContent = "Copied";
+      setTimeout(function () { btn.textContent = "Copy"; }, 1200);
+    });
+  });
+
+  document.querySelectorAll(".filter").forEach(function (inp) {
+    inp.addEventListener("input", function () {
+      var q = inp.value.toLowerCase();
+      inp.parentElement.querySelectorAll(".chip").forEach(function (chip) {
+        chip.style.display = !q || chip.dataset.name.indexOf(q) !== -1 ? "" : "none";
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "id": "forecasting-autoformer-etth1-96",
+  "task": "forecasting",
+  "ran_at": "2026-09-28T09:51:06.096717+00:00",
+  "command": "python playground/labts.py run --task forecasting --algorithm registered-forecasting-AutoformerForecaster --dataset hf-etth1 --param seq_len=96 --param pred_len=96 --param horizon=96 --metric mse --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 234.16,
+  "value": 0.4109711655225607,
+  "delta": -0.038029,
+  "delta_rel": 0.084697,
+  "status": "reproduced",
+  "metrics": {
+    "MAE": 0.515523592777731,
+    "MSE": 0.4109711655225607,
+    "MAPE": 0.7987782834133416
+  },
+  "error": null,
+  "stdout_tail": "{\"api\": \"labts\", \"api_version\": \"1.0\", \"kind\": \"result\", \"status\": \"ok\", \"data\": {\"status\": \"ok\", \"metrics\": {\"MAE\": 0.515523592777731, \"MSE\": 0.4109711655225607, \"MAPE\": 0.7987782834133416}, \"summary\": \"Forecasted 96 steps with AutoformerForecaster.\", \"run_id\": \"ff6754ec7eca\", \"spec\": {\"task\": \"forecasting\", \"dataset_id\": \"hf-etth1\", \"algorithm_id\": \"registered-forecasting-AutoformerForecaster\", \"preprocessor_id\": \"none\", \"preprocessors\": [], \"params\": {\"seq_len\": 96, \"pred_len\": 96, \"horizon\": 96}, \"preprocessor_params\": {}, \"metrics\": [\"mse\"]}, \"task\": \"forecasting\", \"dataset\": {\"id\": \"hf-etth1\", \"name\": \"THU-ANM ETTh1\", \"task\": \"forecasting\", \"source\": \"huggingface\", \"hf_dataset\": \"Skyoung13/THU-ANM-DATASET\", \"hf_config\": \"ETTh1\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"registered-forecasting-AutoformerForecaster\", \"name\": \"AutoformerForecaster\", \"task\": \"forecasting\", \"module\": \"sktime.forecasting.tslib.AutoformerForecaster\", \"class_name\": \"AutoformerForecaster\", \"curated\": false, \"python_dependencies\": [\"torch\"], \"enabled\": true, \"params\": {\"horizon\": 12, \"context_window\": 36, \"batch_size\": 32, \"channel_independence\": 1, \"d_ff\": 128, \"d_layers\": 1, \"d_model\": 64, \"dropout\": 0.1, \"e_layers\": 2, \"factor\": 3, \"label_len\": 18, \"lr\": 0.001, \"moving_avg\": 25, \"n_heads\": 8, \"num_epochs\": 3, \"num_kernels\": 6, \"pred_len\": 12, \"seq_len\": 36, \"top_k\": 3}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"preprocessors\": [], \"duration_ms\": 231761.0, \"log\": [\"Selected task: forecasting\", \"Selected dataset: THU-ANM ETTh1\", \"Selected preprocessor: Identity / none\", \"Selected algorithm: AutoformerForecaster\", \"Estimator: AutoformerForecaster params={'seq_len': 96, 'pred_len': 96}\", \"Loaded Hugging Face config ETTh1 (17420 rows)\", \"Normalized time index to RangeIndex for reproducible forecasting\", \"Finished in 231761.0 ms\"]}, \"error\": null}\n"
+}

@@ -11,6 +11,9 @@
 
 from __future__ import annotations
 
+import re
+from pathlib import Path
+
 import numpy as np
 
 from catalog import import_estimator_class, split_params
@@ -19,6 +22,34 @@ from runners import PlaygroundError, _build_estimator, _clean_number, _load_pane
 # ---------------------------------------------------------------------------
 # causal discovery
 # ---------------------------------------------------------------------------
+
+_SACHS_CONT_DIR = (
+    Path(__file__).resolve().parent.parent
+    / "sktime"
+    / "datasets"
+    / "data"
+    / "sachs_continuous"
+)
+
+
+def load_sachs_continuous(return_true_graph: bool = False):
+    """Continuous Sachs protein-signaling data (Sachs et al. 2005).
+
+    7466 flow-cytometry samples over 11 variables, with the 20-edge consensus
+    DAG used by Zheng et al. (NOTEARS, NeurIPS 2018, Sec. 5.4). Files vendored
+    from cmu-phil/example-causal-datasets (real/sachs).
+    """
+    import pandas as pd
+
+    X = pd.read_csv(_SACHS_CONT_DIR / "sachs.csv", sep="\t")
+    if not return_true_graph:
+        return X
+    edges = []
+    for line in (_SACHS_CONT_DIR / "truth.txt").read_text().splitlines():
+        match = re.match(r"^\d+\.\s+(\w+)\s+-->\s+(\w+)", line.strip())
+        if match:
+            edges.append((match.group(1), match.group(2)))
+    return X, edges
 
 
 def _load_causal_dataset(dataset: dict, log: list[str]):

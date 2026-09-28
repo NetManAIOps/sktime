@@ -1,0 +1,19 @@
+{
+  "id": "classification-rocket-arrowhead",
+  "task": "classification",
+  "ran_at": "2026-09-28T09:44:53.129951+00:00",
+  "command": "python playground/labts.py run --task classification --algorithm registered-classification-RocketClassifier --dataset arrow-head --metric accuracy --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 31.42,
+  "value": 0.8114285714285714,
+  "delta": -0.002861,
+  "delta_rel": 0.003514,
+  "status": "reproduced",
+  "metrics": {
+    "Accuracy": 0.8114285714285714,
+    "Macro F1": 0.811559629161399
+  },
+  "error": null,
+  "stdout_tail": "{\"api\": \"labts\", \"api_version\": \"1.0\", \"kind\": \"result\", \"status\": \"ok\", \"data\": {\"status\": \"ok\", \"metrics\": {\"Accuracy\": 0.8114285714285714, \"Macro F1\": 0.811559629161399}, \"summary\": \"Classified 175 held-out time series with RocketClassifier.\", \"run_id\": \"c1df84b58bfc\", \"spec\": {\"task\": \"classification\", \"dataset_id\": \"arrow-head\", \"algorithm_id\": \"registered-classification-RocketClassifier\", \"preprocessor_id\": \"none\", \"preprocessors\": [], \"params\": {}, \"preprocessor_params\": {}, \"metrics\": [\"accuracy\"]}, \"task\": \"classification\", \"dataset\": {\"id\": \"arrow-head\", \"name\": \"ArrowHead\", \"task\": \"classification\", \"source\": \"local\", \"loader\": \"sktime.datasets.load_arrow_head\", \"enabled\": true}, \"algorithm\": {\"id\": \"registered-classification-RocketClassifier\", \"name\": \"RocketClassifier\", \"task\": \"classification\", \"module\": \"sktime.classification.kernel_based._rocket_classifier.RocketClassifier\", \"class_name\": \"RocketClassifier\", \"curated\": false, \"python_dependencies\": \"numba\", \"enabled\": true, \"params\": {\"max_dilations_per_kernel\": 32, \"n_features_per_kernel\": 4, \"n_jobs\": 1, \"num_kernels\": 10000}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"preprocessors\": [], \"duration_ms\": 29012.1, \"log\": [\"Selected task: classification\", \"Selected dataset: ArrowHead\", \"Selected preprocessor: Identity / none\", \"Selected algorithm: RocketClassifier\", \"Estimator: RocketClassifier params=defaults\", \"Loaded ArrowHead train=36 test=175\", \"Finished in 29012.1 ms\"]}, \"error\": null}\n"
+}

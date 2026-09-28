@@ -1,0 +1,19 @@
+{
+  "id": "classification-rocket-italypowerdemand",
+  "task": "classification",
+  "ran_at": "2026-09-28T09:44:21.705420+00:00",
+  "command": "python playground/labts.py run --task classification --algorithm registered-classification-RocketClassifier --dataset italy-power-demand --metric accuracy --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 29.63,
+  "value": 0.9689018464528668,
+  "delta": -0.000678,
+  "delta_rel": 0.000699,
+  "status": "reproduced",
+  "metrics": {
+    "Accuracy": 0.9689018464528668,
+    "Macro F1": 0.9689018170828454
+  },
+  "error": null,
+  "stdout_tail": "{\"api\": \"labts\", \"api_version\": \"1.0\", \"kind\": \"result\", \"status\": \"ok\", \"data\": {\"status\": \"ok\", \"metrics\": {\"Accuracy\": 0.9689018464528668, \"Macro F1\": 0.9689018170828454}, \"summary\": \"Classified 1029 held-out time series with RocketClassifier.\", \"run_id\": \"15fecd544669\", \"spec\": {\"task\": \"classification\", \"dataset_id\": \"italy-power-demand\", \"algorithm_id\": \"registered-classification-RocketClassifier\", \"preprocessor_id\": \"none\", \"preprocessors\": [], \"params\": {}, \"preprocessor_params\": {}, \"metrics\": [\"accuracy\"]}, \"task\": \"classification\", \"dataset\": {\"id\": \"italy-power-demand\", \"name\": \"ItalyPowerDemand\", \"task\": \"classification\", \"source\": \"local\", \"loader\": \"sktime.datasets.load_italy_power_demand\", \"enabled\": true}, \"algorithm\": {\"id\": \"registered-classification-RocketClassifier\", \"name\": \"RocketClassifier\", \"task\": \"classification\", \"module\": \"sktime.classification.kernel_based._rocket_classifier.RocketClassifier\", \"class_name\": \"RocketClassifier\", \"curated\": false, \"python_dependencies\": \"numba\", \"enabled\": true, \"params\": {\"max_dilations_per_kernel\": 32, \"n_features_per_kernel\": 4, \"n_jobs\": 1, \"num_kernels\": 10000}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"preprocessors\": [], \"duration_ms\": 27249.6, \"log\": [\"Selected task: classification\", \"Selected dataset: ItalyPowerDemand\", \"Selected preprocessor: Identity / none\", \"Selected algorithm: RocketClassifier\", \"Estimator: RocketClassifier params=defaults\", \"Loaded ItalyPowerDemand train=67 test=1029\", \"Finished in 27249.6 ms\"]}, \"error\": null}\n"
+}

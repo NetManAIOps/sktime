@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>labts · benchmark</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --text: #0d0d0d;
+    --text-2: #5f5f5f;
+    --text-3: #9b9b9b;
+    --hairline: #e7e7e7;
+    --hairline-2: #f0f0f0;
+    --hover: #f7f7f7;
+    --code-bg: #f4f4f4;
+    --green: #10a37f;
+    --amber: #b45309;
+    --red: #dc2626;
+    --gray: #9b9b9b;
+    --mono: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font: 15px/1.55 "Inter", -apple-system, "SF Pro Text", "Segoe UI", Roboto,
+      "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+  }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 1060px; margin: 0 auto; padding: 0 32px; }
+
+  /* ---------- top bar ---------- */
+  .topbar {
+    position: sticky; top: 0; z-index: 20;
+    background: rgba(255,255,255,.85); backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--hairline);
+  }
+  .topbar .wrap { display: flex; align-items: center; height: 56px; }
+  .brand { display: flex; align-items: baseline; gap: 10px; font-weight: 600; letter-spacing: -.01em; }
+  .brand .mark { width: 10px; height: 10px; border-radius: 3px; background: var(--text); align-self: center; }
+  .brand .sub { color: var(--text-3); font-weight: 400; }
+  .topbar .right { margin-left: auto; display: flex; gap: 22px; color: var(--text-2); font-size: 13px; }
+  .topbar .right a:hover { color: var(--text); }
+
+  /* ---------- hero ---------- */
+  .hero { padding: 76px 0 44px; border-bottom: 1px solid var(--hairline); }
+  .eyebrow {
+    font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--text-3); margin-bottom: 18px;
+  }
+  .hero h1 {
+    font-size: 46px; font-weight: 500; letter-spacing: -.025em; line-height: 1.12;
+    max-width: 640px;
+  }
+  .hero p { margin-top: 18px; color: var(--text-2); max-width: 620px; font-size: 16px; }
+
+  /* ---------- stats ---------- */
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--hairline); }
+  .stat { padding: 26px 0 26px; border-left: 1px solid var(--hairline); padding-left: 26px; }
+  .stat:first-child { border-left: none; padding-left: 0; }
+  .stat .num { font-size: 30px; font-weight: 500; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+  .stat .lbl { margin-top: 4px; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); }
+
+  /* ---------- tabs ---------- */
+  .tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--hairline); overflow-x: auto; }
+  .tab {
+    display: inline-block; padding: 14px 14px 13px; font-size: 14px; color: var(--text-2);
+    border-bottom: 2px solid transparent; margin-bottom: -1px; white-space: nowrap;
+    transition: color .15s ease;
+  }
+  .tab:hover { color: var(--text); }
+  .tab.active { color: var(--text); border-bottom-color: var(--text); font-weight: 500; }
+  .tab .cnt { color: var(--text-3); font-size: 12px; margin-left: 6px; font-variant-numeric: tabular-nums; }
+
+  /* task sections: all visible without JS; tabs hide/show with JS */
+  .no-js .task-section { display: block; }
+  body:not(.no-js) .task-section { display: none; }
+  body:not(.no-js) .task-section.active { display: block; }
+
+  /* ---------- task panel ---------- */
+  .panel { padding: 40px 0 64px; }
+  .panel-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 6px; }
+  .panel-head h2 { font-size: 22px; font-weight: 500; letter-spacing: -.01em; }
+  .panel-head .desc { color: var(--text-2); font-size: 14px; }
+  .panel-sub { color: var(--text-3); font-size: 13px; margin-bottom: 26px; }
+
+  .section-label {
+    font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--text-3); margin: 34px 0 12px;
+  }
+
+  /* ---------- claims (native details/summary, works without JS) ---------- */
+  .claims { border: 1px solid var(--hairline); border-radius: 10px; overflow: hidden; }
+  details.claim { border-top: 1px solid var(--hairline-2); }
+  details.claim:first-child { border-top: none; }
+  details.claim summary {
+    list-style: none; cursor: pointer;
+    display: grid; grid-template-columns: 1.5fr 1.3fr .7fr .8fr .8fr .8fr 1fr;
+    gap: 12px; align-items: center; padding: 13px 18px;
+    transition: background .12s ease;
+  }
+  details.claim summary::-webkit-details-marker { display: none; }
+  details.claim summary:hover { background: var(--hover); }
+  details.claim[open] summary { background: var(--hover); }
+  details.claim summary .alg { font-weight: 500; font-size: 14px; }
+  details.claim summary .alg .lib { color: var(--text-3); font-weight: 400; font-size: 12px; margin-left: 8px; }
+  details.claim summary .ds { color: var(--text-2); font-size: 13px; }
+  details.claim summary .met { color: var(--text-2); font-size: 13px; }
+  .num { font-family: var(--mono); font-size: 13px; font-variant-numeric: tabular-nums; }
+  .num.gt { color: var(--text); }
+  .num.rep { color: var(--text-2); }
+  .delta { font-family: var(--mono); font-size: 12.5px; font-variant-numeric: tabular-nums; }
+  .delta .tol { color: var(--text-3); }
+  .delta.ok { color: var(--green); }
+  .delta.bad { color: var(--amber); }
+  .status { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; }
+  .dot { width: 7px; height: 7px; border-radius: 50%; flex: none; }
+  .status.reproduced { color: var(--green); } .status.reproduced .dot { background: var(--green); }
+  .status.deviation { color: var(--amber); } .status.deviation .dot { background: var(--amber); }
+  .status.error { color: var(--red); } .status.error .dot { background: var(--red); }
+  .status.pending { color: var(--gray); } .status.pending .dot { background: var(--gray); }
+  .chev { color: var(--text-3); font-size: 12px; transition: transform .15s ease; justify-self: end; }
+  details.claim[open] summary .chev { transform: rotate(90deg); }
+
+  .claim-detail { padding: 4px 18px 20px; background: #fbfbfa; border-top: 1px solid var(--hairline-2); }
+  .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 14px; }
+  .detail-grid .full { grid-column: 1 / -1; }
+  .kv-label { font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); margin-bottom: 6px; }
+  .kv { font-size: 13px; color: var(--text-2); }
+  .kv a { color: var(--text); border-bottom: 1px solid var(--hairline); }
+  .kv a:hover { border-bottom-color: var(--text); }
+  .cmd {
+    position: relative; background: var(--code-bg); border: 1px solid var(--hairline);
+    border-radius: 8px; padding: 12px 44px 12px 14px; font-family: var(--mono);
+    font-size: 12.5px; line-height: 1.6; white-space: pre-wrap; word-break: break-all;
+    color: var(--text);
+  }
+  .copy {
+    position: absolute; top: 8px; right: 8px; border: 1px solid var(--hairline);
+    background: #fff; border-radius: 6px; font-size: 11px; color: var(--text-2);
+    padding: 3px 8px; cursor: pointer; font-family: inherit;
+  }
+  .copy:hover { color: var(--text); border-color: var(--text-3); }
+  .raw-metrics { font-family: var(--mono); font-size: 12px; color: var(--text-2); white-space: pre-wrap; }
+
+  /* ---------- catalog chips ---------- */
+  .filter {
+    width: 260px; padding: 8px 12px; font: inherit; font-size: 13px;
+    border: 1px solid var(--hairline); border-radius: 8px; outline: none; margin-bottom: 16px;
+  }
+  .filter:focus { border-color: var(--text-3); }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 7px;
+    border: 1px solid var(--hairline); border-radius: 999px;
+    padding: 5px 12px; font-size: 12.5px; color: var(--text-2);
+  }
+  .chip .dot { width: 6px; height: 6px; }
+  .chip.enabled .dot { background: var(--green); }
+  .chip.disabled { color: var(--text-3); } .chip.disabled .dot { background: #d4d4d4; }
+  .chip .tag { font-size: 10px; color: var(--text-3); border: 1px solid var(--hairline); border-radius: 4px; padding: 0 4px; }
+
+  /* ---------- footer / misc ---------- */
+  footer { border-top: 1px solid var(--hairline); padding: 26px 0 44px; color: var(--text-3); font-size: 12.5px; }
+  footer code { font-family: var(--mono); font-size: 11.5px; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+  .empty { color: var(--text-2); padding: 28px 0; font-size: 14px; }
+
+  @media (max-width: 880px) {
+    details.claim summary { grid-template-columns: 1.4fr 1fr .7fr .8fr .9fr; }
+    details.claim summary .met, details.claim summary .delta { display: none; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .stat { padding-left: 18px; }
+    .detail-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 34px; }
+  }
+</style>
+</head>
+<body class="no-js">
+
+<header class="topbar">
+  <div class="wrap">
+    <div class="brand"><span class="mark"></span>labts <span class="sub">benchmark</span></div>
+    <nav class="right">
+      <a href="/">Playground</a>
+      <a href="state.json" target="_blank" rel="noopener">state.json</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="eyebrow">Reproducibility leaderboard</div>
+    <h1>Paper numbers, re-run.</h1>
+    <p>Every claim below was reported in a paper or an official results table.
+       Each one carries the exact <span style="font-family:var(--mono);font-size:13px;">labts</span> command
+       that re-runs it — green means our re-run landed inside the stated tolerance.
+       Click a row for the citation, protocol, and command.</p>
+  </section>
+
+  <section class="stats" id="stats"><div class="stat"><div class="num">298</div><div class="lbl">algorithms tracked</div></div><div class="stat"><div class="num">15</div><div class="lbl">groundtruth claims</div></div><div class="stat"><div class="num">10/15</div><div class="lbl">claims reproduced</div></div><div class="stat"><div class="num">66.7%</div><div class="lbl">reproduction rate</div></div></section>
+
+  <nav class="tabs" id="tabs"><a class="tab" href="#forecasting" data-task="forecasting">Forecasting<span class="cnt">138</span></a><a class="tab" href="#classification" data-task="classification">Classification<span class="cnt">66</span></a><a class="tab" href="#regression" data-task="regression">Regression<span class="cnt">22</span></a><a class="tab" href="#clustering" data-task="clustering">Clustering<span class="cnt">10</span></a><a class="tab" href="#anomaly_detection" data-task="anomaly_detection">Anomaly Detection<span class="cnt">58</span></a><a class="tab" href="#causal" data-task="causal">Causal Discovery<span class="cnt">4</span></a></nav>
+
+  <div id="sections">
+<section class="task-section panel" id="task-forecasting">
+  <div class="panel-head">
+    <h2>Forecasting</h2>
+    <span class="desc">Predict future values of a series.</span>
+  </div>
+  <div class="panel-sub">131 of 138 algorithms runnable in this environment</div>
+
+  <div class="section-label">Tracked claims (3)</div>
+  <div class="claims">
+<details class="claim">
+  <summary>
+    <div class="alg">DLinear<span class="lib">AAAI 2023</span></div>
+    <div class="ds">ETTh1</div>
+    <div class="met">MSE</div>
+    <div class="num gt">0.375</div>
+    <div class="num rep">0.5574</div>
+    <div class="delta bad">+0.1824 <span class="tol">±15%</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status deviation"><span class="dot"></span>Deviation</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">Reproduce — exact labts CLI command</div>
+        <div class="cmd">python playground/labts.py run --task forecasting --algorithm registered-forecasting-DLinearForecaster --dataset hf-etth1 --param seq_len=336 --param pred_len=96 --param horizon=96 --metric mse --compact<button class="copy" data-cmd="python playground/labts.py run --task forecasting --algorithm registered-forecasting-DLinearForecaster --dataset hf-etth1 --param seq_len=336 --param pred_len=96 --param horizon=96 --metric mse --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://arxiv.org/html/2205.13504v3" target="_blank" rel="noopener">Are Transformers Effective for Time Series Forecasting? (Zeng et al.)</a><br/>
+          AAAI 2023 · Table 2, row ETTh1/96, DLinear* (authors&#x27; own run)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Multivariate LTSF-Linear protocol; look-back L=336, horizon 96; z-score normalized; test-set MSE averaged over 7 channels and rolling origins over the 4-month test split</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±15% relative</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-09-28 09:46:38 UTC · 46.1s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Protocol gap: paper trains on a 12-month split and evaluates rolling-origin over the 4-month test set across all 7 channels; labts trains on all but the last 96 points and scores a single univariate origin with num_epochs=3. Expect deviation until rolling-origin multivariate evaluation lands.</div>
+      </div>
+      
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;MAE&quot;: 0.5706981667138867, &quot;MSE&quot;: 0.5574297139080636, &quot;MAPE&quot;: 0.5583096702883522}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="alg">DLinear<span class="lib">AAAI 2023</span></div>
+    <div class="ds">Weather</div>
+    <div class="met">MSE</div>
+    <div class="num gt">0.176</div>
+    <div class="num rep">0.1104</div>
+    <div class="delta bad">-0.06558 <span class="tol">±15%</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status deviation"><span class="dot"></span>Deviation</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">Reproduce — exact labts CLI command</div>
+        <div class="cmd">python playground/labts.py run --task forecasting --algorithm registered-forecasting-DLinearForecaster --dataset hf-weather --param seq_len=336 --param pred_len=96 --param horizon=96 --metric mse --compact<button class="copy" data-cmd="python playground/labts.py run --task forecasting --algorithm registered-forecasting-DLinearForecaster --dataset hf-weather --param seq_len=336 --param pred_len=96 --param horizon=96 --metric mse --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://arxiv.org/html/2205.13504v3" target="_blank" rel="noopener">Are Transformers Effective for Time Series Forecasting? (Zeng et al.)</a><br/>
+          AAAI 2023 · Table 2, row Weather/96, DLinear*
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Multivariate LTSF-Linear protocol; look-back L=336, horizon 96; z-score normalized; test-set MSE averaged over 21 channels and rolling origins</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±15% relative</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-09-28 09:47:11 UTC · 33s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Same protocol gap as the ETTh1 entry (univariate single-origin holdout vs multivariate rolling-origin test).</div>
+      </div>
+      
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;MAE&quot;: 0.24673828979333245, &quot;MSE&quot;: 0.11042374197575112, &quot;MAPE&quot;: 0.042166721886618484}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="alg">Autoformer<span class="lib">AAAI 2023</span></div>
+    <div class="ds">ETTh1</div>
+    <div class="met">MSE</div>
+    <div class="num gt">0.449</div>
+    <div class="num rep">0.411</div>
+    <div class="delta ok">-0.03803 <span class="tol">±20%</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">Reproduce — exact labts CLI command</div>
+        <div class="cmd">python playground/labts.py run --task forecasting --algorithm registered-forecasting-AutoformerForecaster --dataset hf-etth1 --param seq_len=96 --param pred_len=96 --param horizon=96 --metric mse --compact<button class="copy" data-cmd="python playground/labts.py run --task forecasting --algorithm registered-forecasting-AutoformerForecaster --dataset hf-etth1 --param seq_len=96 --param pred_len=96 --param horizon=96 --metric mse --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://arxiv.org/html/2205.13504v3" target="_blank" rel="noopener">Are Transformers Effective for Time Series Forecasting? (Zeng et al.)</a><br/>
+          AAAI 2023 · Table 2, row ETTh1/96, Autoformer (quoted from the FEDformer paper, ICML 2022; identical to Autoformer paper&#x27;s own value)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Multivariate LTSF protocol; look-back L=96 (Transformers), horizon 96; z-score normalized; test-set MSE</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±20% relative</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-09-28 09:51:06 UTC · 234s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Same protocol gap as the DLinear entries; also num_epochs=3 default (paper trains to convergence).</div>
+      </div>
+      
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;MAE&quot;: 0.515523592777731, &quot;MSE&quot;: 0.4109711655225607, &quot;MAPE&quot;: 0.7987782834133416}</div></div>
+    </div>
+  </div>
+</details></div>
+
+  <div class="section-label">Catalog — all 138 forecasting algorithms</div>
+  <input class="filter" type="search" placeholder="Filter algorithms…" />
+  <div class="chips"><span class="chip enabled" title="registered-forecasting-ARARForecaster" data-name="ararforecaster registered-forecasting-ararforecaster"><span class="dot"></span>ARARForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-ARCH" data-name="arch registered-forecasting-arch"><span class="dot"></span>ARCH<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-ARDL" data-name="ardl registered-forecasting-ardl"><span class="dot"></span>ARDL<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-ARIMA" data-name="arima registered-forecasting-arima"><span class="dot"></span>ARIMA<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-AutoARIMA" data-name="autoarima registered-forecasting-autoarima"><span class="dot"></span>AutoARIMA<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-AutoEnsembleForecaster" data-name="autoensembleforecaster registered-forecasting-autoensembleforecaster"><span class="dot"></span>AutoEnsembleForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-AutoETS" data-name="autoets registered-forecasting-autoets"><span class="dot"></span>AutoETS<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-AutoformerForecaster" data-name="autoformerforecaster registered-forecasting-autoformerforecaster"><span class="dot"></span>AutoformerForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-AutoREG" data-name="autoreg registered-forecasting-autoreg"><span class="dot"></span>AutoREG<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-AutoTS" data-name="autots registered-forecasting-autots"><span class="dot"></span>AutoTS<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-BaggingForecaster" data-name="baggingforecaster registered-forecasting-baggingforecaster"><span class="dot"></span>BaggingForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-BATS" data-name="bats registered-forecasting-bats"><span class="dot"></span>BATS<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-BoxCoxBiasAdjustedForecaster" data-name="boxcoxbiasadjustedforecaster registered-forecasting-boxcoxbiasadjustedforecaster"><span class="dot"></span>BoxCoxBiasAdjustedForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-ChronosForecaster" data-name="chronosforecaster registered-forecasting-chronosforecaster"><span class="dot"></span>ChronosForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-ChronosPlaygroundForecaster" data-name="chronosplaygroundforecaster registered-forecasting-chronosplaygroundforecaster"><span class="dot"></span>ChronosPlaygroundForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-CINNForecaster" data-name="cinnforecaster registered-forecasting-cinnforecaster"><span class="dot"></span>CINNForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-ColumnEnsembleForecaster" data-name="columnensembleforecaster registered-forecasting-columnensembleforecaster"><span class="dot"></span>ColumnEnsembleForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-ConformalIntervals" data-name="conformalintervals registered-forecasting-conformalintervals"><span class="dot"></span>ConformalIntervals<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-ConvTimeNetForecaster" data-name="convtimenetforecaster registered-forecasting-convtimenetforecaster"><span class="dot"></span>ConvTimeNetForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-Croston" data-name="croston registered-forecasting-croston"><span class="dot"></span>Croston<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-CurveFitForecaster" data-name="curvefitforecaster registered-forecasting-curvefitforecaster"><span class="dot"></span>CurveFitForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-DartsLinearRegressionModel" data-name="dartslinearregressionmodel registered-forecasting-dartslinearregressionmodel"><span class="dot"></span>DartsLinearRegressionModel<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-DartsRegressionModel" data-name="dartsregressionmodel registered-forecasting-dartsregressionmodel"><span class="dot"></span>DartsRegressionModel<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-DartsXGBModel" data-name="dartsxgbmodel registered-forecasting-dartsxgbmodel"><span class="dot"></span>DartsXGBModel<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-DirectReductionForecaster" data-name="directreductionforecaster registered-forecasting-directreductionforecaster"><span class="dot"></span>DirectReductionForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-DirectTabularRegressionForecaster" data-name="directtabularregressionforecaster registered-forecasting-directtabularregressionforecaster"><span class="dot"></span>DirectTabularRegressionForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-DirectTimeSeriesRegressionForecaster" data-name="directtimeseriesregressionforecaster registered-forecasting-directtimeseriesregressionforecaster"><span class="dot"></span>DirectTimeSeriesRegressionForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-DirRecTabularRegressionForecaster" data-name="dirrectabularregressionforecaster registered-forecasting-dirrectabularregressionforecaster"><span class="dot"></span>DirRecTabularRegressionForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-DirRecTimeSeriesRegressionForecaster" data-name="dirrectimeseriesregressionforecaster registered-forecasting-dirrectimeseriesregressionforecaster"><span class="dot"></span>DirRecTimeSeriesRegressionForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-DLinearForecaster" data-name="dlinearforecaster registered-forecasting-dlinearforecaster"><span class="dot"></span>DLinearForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-DontUpdate" data-name="dontupdate registered-forecasting-dontupdate"><span class="dot"></span>DontUpdate<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-DoubleMLForecaster" data-name="doublemlforecaster registered-forecasting-doublemlforecaster"><span class="dot"></span>DoubleMLForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-DynamicFactor" data-name="dynamicfactor registered-forecasting-dynamicfactor"><span class="dot"></span>DynamicFactor<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-EnbPIForecaster" data-name="enbpiforecaster registered-forecasting-enbpiforecaster"><span class="dot"></span>EnbPIForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-EnsembleForecaster" data-name="ensembleforecaster registered-forecasting-ensembleforecaster"><span class="dot"></span>EnsembleForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-ESRNNForecaster" data-name="esrnnforecaster registered-forecasting-esrnnforecaster"><span class="dot"></span>ESRNNForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-ExponentialSmoothing" data-name="exponentialsmoothing registered-forecasting-exponentialsmoothing"><span class="dot"></span>ExponentialSmoothing<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-FallbackForecaster" data-name="fallbackforecaster registered-forecasting-fallbackforecaster"><span class="dot"></span>FallbackForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-FEDformerForecaster" data-name="fedformerforecaster registered-forecasting-fedformerforecaster"><span class="dot"></span>FEDformerForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-FhPlexForecaster" data-name="fhplexforecaster registered-forecasting-fhplexforecaster"><span class="dot"></span>FhPlexForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-ForecastByLevel" data-name="forecastbylevel registered-forecasting-forecastbylevel"><span class="dot"></span>ForecastByLevel<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-ForecastingGridSearchCV" data-name="forecastinggridsearchcv registered-forecasting-forecastinggridsearchcv"><span class="dot"></span>ForecastingGridSearchCV<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-ForecastingOptunaSearchCV" data-name="forecastingoptunasearchcv registered-forecasting-forecastingoptunasearchcv"><span class="dot"></span>ForecastingOptunaSearchCV<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-ForecastingPipeline" data-name="forecastingpipeline registered-forecasting-forecastingpipeline"><span class="dot"></span>ForecastingPipeline<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-ForecastingRandomizedSearchCV" data-name="forecastingrandomizedsearchcv registered-forecasting-forecastingrandomizedsearchcv"><span class="dot"></span>ForecastingRandomizedSearchCV<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-ForecastingSkoptSearchCV" data-name="forecastingskoptsearchcv registered-forecasting-forecastingskoptsearchcv"><span class="dot"></span>ForecastingSkoptSearchCV<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-ForecastKnownValues" data-name="forecastknownvalues registered-forecasting-forecastknownvalues"><span class="dot"></span>ForecastKnownValues<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-ForecastX" data-name="forecastx registered-forecasting-forecastx"><span class="dot"></span>ForecastX<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-FreTSForecaster" data-name="fretsforecaster registered-forecasting-fretsforecaster"><span class="dot"></span>FreTSForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-GroupbyCategoryForecaster" data-name="groupbycategoryforecaster registered-forecasting-groupbycategoryforecaster"><span class="dot"></span>GroupbyCategoryForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-HFTransformersForecaster" data-name="hftransformersforecaster registered-forecasting-hftransformersforecaster"><span class="dot"></span>HFTransformersForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-HierarchicalProphet" data-name="hierarchicalprophet registered-forecasting-hierarchicalprophet"><span class="dot"></span>HierarchicalProphet<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-HierarchyEnsembleForecaster" data-name="hierarchyensembleforecaster registered-forecasting-hierarchyensembleforecaster"><span class="dot"></span>HierarchyEnsembleForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-IgnoreX" data-name="ignorex registered-forecasting-ignorex"><span class="dot"></span>IgnoreX<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-ITransformerForecaster" data-name="itransformerforecaster registered-forecasting-itransformerforecaster"><span class="dot"></span>ITransformerForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-LTSFDLinearForecaster" data-name="ltsfdlinearforecaster registered-forecasting-ltsfdlinearforecaster"><span class="dot"></span>LTSFDLinearForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-LTSFLinearForecaster" data-name="ltsflinearforecaster registered-forecasting-ltsflinearforecaster"><span class="dot"></span>LTSFLinearForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-LTSFNLinearForecaster" data-name="ltsfnlinearforecaster registered-forecasting-ltsfnlinearforecaster"><span class="dot"></span>LTSFNLinearForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-LTSFTransformerForecaster" data-name="ltsftransformerforecaster registered-forecasting-ltsftransformerforecaster"><span class="dot"></span>LTSFTransformerForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-MAPAForecaster" data-name="mapaforecaster registered-forecasting-mapaforecaster"><span class="dot"></span>MAPAForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-MOIRAIForecaster" data-name="moiraiforecaster registered-forecasting-moiraiforecaster"><span class="dot"></span>MOIRAIForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-MomentFMForecaster" data-name="momentfmforecaster registered-forecasting-momentfmforecaster"><span class="dot"></span>MomentFMForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-MultioutputTabularRegressionForecaster" data-name="multioutputtabularregressionforecaster registered-forecasting-multioutputtabularregressionforecaster"><span class="dot"></span>MultioutputTabularRegressionForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-MultioutputTimeSeriesRegressionForecaster" data-name="multioutputtimeseriesregressionforecaster registered-forecasting-multioutputtimeseriesregressionforecaster"><span class="dot"></span>MultioutputTimeSeriesRegressionForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-MultiplexForecaster" data-name="multiplexforecaster registered-forecasting-multiplexforecaster"><span class="dot"></span>MultiplexForecaster<span class="tag">registry</span></span><span class="chip enabled" title="user-my_timesnet" data-name="my_timesnet user-my_timesnet"><span class="dot"></span>my_timesnet<span class="tag">registry</span></span><span class="chip enabled" title="naive-seasonal-last" data-name="naiveforecaster naive-seasonal-last"><span class="dot"></span>NaiveForecaster<span class="tag">curated</span></span><span class="chip enabled" title="registered-forecasting-NaiveVariance" data-name="naivevariance registered-forecasting-naivevariance"><span class="dot"></span>NaiveVariance<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-NeuralForecastDilatedRNN" data-name="neuralforecastdilatedrnn registered-forecasting-neuralforecastdilatedrnn"><span class="dot"></span>NeuralForecastDilatedRNN<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-NeuralForecastGRU" data-name="neuralforecastgru registered-forecasting-neuralforecastgru"><span class="dot"></span>NeuralForecastGRU<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-NeuralForecastLSTM" data-name="neuralforecastlstm registered-forecasting-neuralforecastlstm"><span class="dot"></span>NeuralForecastLSTM<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-NeuralForecastRNN" data-name="neuralforecastrnn registered-forecasting-neuralforecastrnn"><span class="dot"></span>NeuralForecastRNN<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-NeuralForecastTCN" data-name="neuralforecasttcn registered-forecasting-neuralforecasttcn"><span class="dot"></span>NeuralForecastTCN<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-OnlineEnsembleForecaster" data-name="onlineensembleforecaster registered-forecasting-onlineensembleforecaster"><span class="dot"></span>OnlineEnsembleForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-PatchTSTForecaster" data-name="patchtstforecaster registered-forecasting-patchtstforecaster"><span class="dot"></span>PatchTSTForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-Permute" data-name="permute registered-forecasting-permute"><span class="dot"></span>Permute<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-PluginParamsForecaster" data-name="pluginparamsforecaster registered-forecasting-pluginparamsforecaster"><span class="dot"></span>PluginParamsForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-PolynomialTrendForecaster" data-name="polynomialtrendforecaster registered-forecasting-polynomialtrendforecaster"><span class="dot"></span>PolynomialTrendForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-Prophet" data-name="prophet registered-forecasting-prophet"><span class="dot"></span>Prophet<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-ProphetPiecewiseLinearTrendForecaster" data-name="prophetpiecewiselineartrendforecaster registered-forecasting-prophetpiecewiselineartrendforecaster"><span class="dot"></span>ProphetPiecewiseLinearTrendForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-Prophetverse" data-name="prophetverse registered-forecasting-prophetverse"><span class="dot"></span>Prophetverse<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-PyKANForecaster" data-name="pykanforecaster registered-forecasting-pykanforecaster"><span class="dot"></span>PyKANForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-PytorchForecastingDeepAR" data-name="pytorchforecastingdeepar registered-forecasting-pytorchforecastingdeepar"><span class="dot"></span>PytorchForecastingDeepAR<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-PytorchForecastingNBeats" data-name="pytorchforecastingnbeats registered-forecasting-pytorchforecastingnbeats"><span class="dot"></span>PytorchForecastingNBeats<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-PytorchForecastingNHiTS" data-name="pytorchforecastingnhits registered-forecasting-pytorchforecastingnhits"><span class="dot"></span>PytorchForecastingNHiTS<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-PytorchForecastingTFT" data-name="pytorchforecastingtft registered-forecasting-pytorchforecastingtft"><span class="dot"></span>PytorchForecastingTFT<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-RBFForecaster" data-name="rbfforecaster registered-forecasting-rbfforecaster"><span class="dot"></span>RBFForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-ReconcilerForecaster" data-name="reconcilerforecaster registered-forecasting-reconcilerforecaster"><span class="dot"></span>ReconcilerForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-RecursiveReductionForecaster" data-name="recursivereductionforecaster registered-forecasting-recursivereductionforecaster"><span class="dot"></span>RecursiveReductionForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-RecursiveTabularRegressionForecaster" data-name="recursivetabularregressionforecaster registered-forecasting-recursivetabularregressionforecaster"><span class="dot"></span>RecursiveTabularRegressionForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-RecursiveTimeSeriesRegressionForecaster" data-name="recursivetimeseriesregressionforecaster registered-forecasting-recursivetimeseriesregressionforecaster"><span class="dot"></span>RecursiveTimeSeriesRegressionForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-ResidualBoostingForecaster" data-name="residualboostingforecaster registered-forecasting-residualboostingforecaster"><span class="dot"></span>ResidualBoostingForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-SARIMAX" data-name="sarimax registered-forecasting-sarimax"><span class="dot"></span>SARIMAX<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-SCINetForecaster" data-name="scinetforecaster registered-forecasting-scinetforecaster"><span class="dot"></span>SCINetForecaster<span class="tag">registry</span></span><span class="chip enabled" title="user-seasonal_ma" data-name="seasonal-moving-average user-seasonal_ma"><span class="dot"></span>seasonal-moving-average<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-SkforecastAutoreg" data-name="skforecastautoreg registered-forecasting-skforecastautoreg"><span class="dot"></span>SkforecastAutoreg<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-SkforecastRecursive" data-name="skforecastrecursive registered-forecasting-skforecastrecursive"><span class="dot"></span>SkforecastRecursive<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-SplineTrendForecaster" data-name="splinetrendforecaster registered-forecasting-splinetrendforecaster"><span class="dot"></span>SplineTrendForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-SquaringResiduals" data-name="squaringresiduals registered-forecasting-squaringresiduals"><span class="dot"></span>SquaringResiduals<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-StackingForecaster" data-name="stackingforecaster registered-forecasting-stackingforecaster"><span class="dot"></span>StackingForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-StatsForecastADIDA" data-name="statsforecastadida registered-forecasting-statsforecastadida"><span class="dot"></span>StatsForecastADIDA<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-StatsForecastARCH" data-name="statsforecastarch registered-forecasting-statsforecastarch"><span class="dot"></span>StatsForecastARCH<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-StatsForecastAutoARIMA" data-name="statsforecastautoarima registered-forecasting-statsforecastautoarima"><span class="dot"></span>StatsForecastAutoARIMA<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-StatsForecastAutoCES" data-name="statsforecastautoces registered-forecasting-statsforecastautoces"><span class="dot"></span>StatsForecastAutoCES<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-StatsForecastAutoETS" data-name="statsforecastautoets registered-forecasting-statsforecastautoets"><span class="dot"></span>StatsForecastAutoETS<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-StatsForecastAutoTBATS" data-name="statsforecastautotbats registered-forecasting-statsforecastautotbats"><span class="dot"></span>StatsForecastAutoTBATS<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-StatsForecastAutoTheta" data-name="statsforecastautotheta registered-forecasting-statsforecastautotheta"><span class="dot"></span>StatsForecastAutoTheta<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-StatsForecastGARCH" data-name="statsforecastgarch registered-forecasting-statsforecastgarch"><span class="dot"></span>StatsForecastGARCH<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-StatsForecastMSTL" data-name="statsforecastmstl registered-forecasting-statsforecastmstl"><span class="dot"></span>StatsForecastMSTL<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-StatsModelsARIMA" data-name="statsmodelsarima registered-forecasting-statsmodelsarima"><span class="dot"></span>StatsModelsARIMA<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-STLForecaster" data-name="stlforecaster registered-forecasting-stlforecaster"><span class="dot"></span>STLForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-TBATS" data-name="tbats registered-forecasting-tbats"><span class="dot"></span>TBATS<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-ThetaForecaster" data-name="thetaforecaster registered-forecasting-thetaforecaster"><span class="dot"></span>ThetaForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-ThetaModularForecaster" data-name="thetamodularforecaster registered-forecasting-thetamodularforecaster"><span class="dot"></span>ThetaModularForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-TimeLLMForecaster" data-name="timellmforecaster registered-forecasting-timellmforecaster"><span class="dot"></span>TimeLLMForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-TimeMoEForecaster" data-name="timemoeforecaster registered-forecasting-timemoeforecaster"><span class="dot"></span>TimeMoEForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-TimesNetForecaster" data-name="timesnetforecaster registered-forecasting-timesnetforecaster"><span class="dot"></span>TimesNetForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-TinyTimeMixerForecaster" data-name="tinytimemixerforecaster registered-forecasting-tinytimemixerforecaster"><span class="dot"></span>TinyTimeMixerForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-TinyTimeMixerPlaygroundForecaster" data-name="tinytimemixerplaygroundforecaster registered-forecasting-tinytimemixerplaygroundforecaster"><span class="dot"></span>TinyTimeMixerPlaygroundForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-TransformedTargetForecaster" data-name="transformedtargetforecaster registered-forecasting-transformedtargetforecaster"><span class="dot"></span>TransformedTargetForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-TransformSelectForecaster" data-name="transformselectforecaster registered-forecasting-transformselectforecaster"><span class="dot"></span>TransformSelectForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-TrendForecaster" data-name="trendforecaster registered-forecasting-trendforecaster"><span class="dot"></span>TrendForecaster<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-TSB" data-name="tsb registered-forecasting-tsb"><span class="dot"></span>TSB<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-UnobservedComponents" data-name="unobservedcomponents registered-forecasting-unobservedcomponents"><span class="dot"></span>UnobservedComponents<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-UpdateEvery" data-name="updateevery registered-forecasting-updateevery"><span class="dot"></span>UpdateEvery<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-UpdateRefitsEvery" data-name="updaterefitsevery registered-forecasting-updaterefitsevery"><span class="dot"></span>UpdateRefitsEvery<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-VAR" data-name="var registered-forecasting-var"><span class="dot"></span>VAR<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-VARMAX" data-name="varmax registered-forecasting-varmax"><span class="dot"></span>VARMAX<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-VARReduce" data-name="varreduce registered-forecasting-varreduce"><span class="dot"></span>VARReduce<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-VECM" data-name="vecm registered-forecasting-vecm"><span class="dot"></span>VECM<span class="tag">registry</span></span><span class="chip enabled" title="registered-forecasting-YfromX" data-name="yfromx registered-forecasting-yfromx"><span class="dot"></span>YfromX<span class="tag">registry</span></span><span class="chip disabled" title="registered-forecasting-ForecastingOptCV" data-name="forecastingoptcv registered-forecasting-forecastingoptcv"><span class="dot"></span>ForecastingOptCV<span class="tag">registry</span></span><span class="chip disabled" title="registered-forecasting-GreykiteForecaster" data-name="greykiteforecaster registered-forecasting-greykiteforecaster"><span class="dot"></span>GreykiteForecaster<span class="tag">registry</span></span><span class="chip disabled" title="registered-forecasting-HCrystalBallAdapter" data-name="hcrystalballadapter registered-forecasting-hcrystalballadapter"><span class="dot"></span>HCrystalBallAdapter<span class="tag">registry</span></span><span class="chip disabled" title="registered-forecasting-TimesFMForecaster" data-name="timesfmforecaster registered-forecasting-timesfmforecaster"><span class="dot"></span>TimesFMForecaster<span class="tag">registry</span></span><span class="chip disabled" title="registered-forecasting-TiRexForecaster" data-name="tirexforecaster registered-forecasting-tirexforecaster"><span class="dot"></span>TiRexForecaster<span class="tag">registry</span></span><span class="chip disabled" title="registered-forecasting-TotoForecaster" data-name="totoforecaster registered-forecasting-totoforecaster"><span class="dot"></span>TotoForecaster<span class="tag">registry</span></span><span class="chip disabled" title="registered-forecasting-TSCOptCV" data-name="tscoptcv registered-forecasting-tscoptcv"><span class="dot"></span>TSCOptCV<span class="tag">registry</span></span></div>
+</section>
+<section class="task-section panel" id="task-classification">
+  <div class="panel-head">
+    <h2>Classification</h2>
+    <span class="desc">Assign series to discrete classes.</span>
+  </div>
+  <div class="panel-sub">64 of 66 algorithms runnable in this environment</div>
+
+  <div class="section-label">Tracked claims (2)</div>
+  <div class="claims">
+<details class="claim">
+  <summary>
+    <div class="alg">ROCKET<span class="lib">Data Mining and Knowledge Discovery 34(5)</span></div>
+    <div class="ds">ItalyPowerDemand (UCR)</div>
+    <div class="met">Accuracy</div>
+    <div class="num gt">0.9696</div>
+    <div class="num rep">0.9689</div>
+    <div class="delta ok">-6.78e-04 <span class="tol">±0.02</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">Reproduce — exact labts CLI command</div>
+        <div class="cmd">python playground/labts.py run --task classification --algorithm registered-classification-RocketClassifier --dataset italy-power-demand --metric accuracy --compact<button class="copy" data-cmd="python playground/labts.py run --task classification --algorithm registered-classification-RocketClassifier --dataset italy-power-demand --metric accuracy --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/angus924/rocket/master/results/results_ucr.csv" target="_blank" rel="noopener">ROCKET: Exceptionally Fast and Accurate Time Series Classification Using Random Convolutional Kernels (Dempster, Petitjean, Webb)</a><br/>
+          Data Mining and Knowledge Discovery 34(5), 2020 · official results_ucr.csv, row ItalyPowerDemand, accuracy_mean column
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split (67/1029); 10,000 random kernels; RidgeClassifierCV(alphas=logspace(-3,3,10), normalize=True); mean over 10 runs (std 0.001)</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-09-28 09:44:21 UTC · 29.6s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">sktime RocketClassifier matches the paper protocol (10,000 kernels + RidgeClassifierCV). Kernels are random, so single-run accuracy varies within the paper&#x27;s reported std (~0.001).</div>
+      </div>
+      
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 0.9689018464528668, &quot;Macro F1&quot;: 0.9689018170828454}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="alg">ROCKET<span class="lib">Data Mining and Knowledge Discovery 34(5)</span></div>
+    <div class="ds">ArrowHead (UCR)</div>
+    <div class="met">Accuracy</div>
+    <div class="num gt">0.8143</div>
+    <div class="num rep">0.8114</div>
+    <div class="delta ok">-0.002861 <span class="tol">±0.03</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">Reproduce — exact labts CLI command</div>
+        <div class="cmd">python playground/labts.py run --task classification --algorithm registered-classification-RocketClassifier --dataset arrow-head --metric accuracy --compact<button class="copy" data-cmd="python playground/labts.py run --task classification --algorithm registered-classification-RocketClassifier --dataset arrow-head --metric accuracy --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/angus924/rocket/master/results/results_ucr.csv" target="_blank" rel="noopener">ROCKET: Exceptionally Fast and Accurate Time Series Classification Using Random Convolutional Kernels (Dempster, Petitjean, Webb)</a><br/>
+          Data Mining and Knowledge Discovery 34(5), 2020 · official results_ucr.csv, row ArrowHead, accuracy_mean column
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split (36/175); 10,000 random kernels; RidgeClassifierCV; mean over 10 runs (std 0.0094)</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.03 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-09-28 09:44:53 UTC · 31.4s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Non-saturated dataset; paper std over 10 runs is ~0.0094, so +/-0.03 tolerance covers kernel randomness.</div>
+      </div>
+      
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 0.8114285714285714, &quot;Macro F1&quot;: 0.811559629161399}</div></div>
+    </div>
+  </div>
+</details></div>
+
+  <div class="section-label">Catalog — all 66 classification algorithms</div>
+  <input class="filter" type="search" placeholder="Filter algorithms…" />
+  <div class="chips"><span class="chip enabled" title="registered-classification-Arsenal" data-name="arsenal registered-classification-arsenal"><span class="dot"></span>Arsenal<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-BaggingClassifier" data-name="baggingclassifier registered-classification-baggingclassifier"><span class="dot"></span>BaggingClassifier<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-BOSSEnsemble" data-name="bossensemble registered-classification-bossensemble"><span class="dot"></span>BOSSEnsemble<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-BOSSVSClassifierPyts" data-name="bossvsclassifierpyts registered-classification-bossvsclassifierpyts"><span class="dot"></span>BOSSVSClassifierPyts<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-CanonicalIntervalForest" data-name="canonicalintervalforest registered-classification-canonicalintervalforest"><span class="dot"></span>CanonicalIntervalForest<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-Catch22Classifier" data-name="catch22classifier registered-classification-catch22classifier"><span class="dot"></span>Catch22Classifier<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-ClassifierPipeline" data-name="classifierpipeline registered-classification-classifierpipeline"><span class="dot"></span>ClassifierPipeline<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-CNNClassifier" data-name="cnnclassifier registered-classification-cnnclassifier"><span class="dot"></span>CNNClassifier<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-CNTCClassifier" data-name="cntcclassifier registered-classification-cntcclassifier"><span class="dot"></span>CNTCClassifier<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-ColumnEnsembleClassifier" data-name="columnensembleclassifier registered-classification-columnensembleclassifier"><span class="dot"></span>ColumnEnsembleClassifier<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-ComposableTimeSeriesForestClassifier" data-name="composabletimeseriesforestclassifier registered-classification-composabletimeseriesforestclassifier"><span class="dot"></span>ComposableTimeSeriesForestClassifier<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-ContractableBOSS" data-name="contractableboss registered-classification-contractableboss"><span class="dot"></span>ContractableBOSS<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-ConvTimeNetClassifier" data-name="convtimenetclassifier registered-classification-convtimenetclassifier"><span class="dot"></span>ConvTimeNetClassifier<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-DrCIF" data-name="drcif registered-classification-drcif"><span class="dot"></span>DrCIF<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-DummyClassifier" data-name="dummyclassifier registered-classification-dummyclassifier"><span class="dot"></span>DummyClassifier<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-ElasticEnsemble" data-name="elasticensemble registered-classification-elasticensemble"><span class="dot"></span>ElasticEnsemble<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-FCNClassifier" data-name="fcnclassifier registered-classification-fcnclassifier"><span class="dot"></span>FCNClassifier<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-GRUClassifier" data-name="gruclassifier registered-classification-gruclassifier"><span class="dot"></span>GRUClassifier<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-GRUFCNNClassifier" data-name="grufcnnclassifier registered-classification-grufcnnclassifier"><span class="dot"></span>GRUFCNNClassifier<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-HIVECOTEV1" data-name="hivecotev1 registered-classification-hivecotev1"><span class="dot"></span>HIVECOTEV1<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-HIVECOTEV2" data-name="hivecotev2 registered-classification-hivecotev2"><span class="dot"></span>HIVECOTEV2<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-InceptionTimeClassifier" data-name="inceptiontimeclassifier registered-classification-inceptiontimeclassifier"><span class="dot"></span>InceptionTimeClassifier<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-IndividualBOSS" data-name="individualboss registered-classification-individualboss"><span class="dot"></span>IndividualBOSS<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-IndividualTDE" data-name="individualtde registered-classification-individualtde"><span class="dot"></span>IndividualTDE<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-KNeighborsTimeSeriesClassifier" data-name="kneighborstimeseriesclassifier registered-classification-kneighborstimeseriesclassifier"><span class="dot"></span>KNeighborsTimeSeriesClassifier<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-KNeighborsTimeSeriesClassifierPyts" data-name="kneighborstimeseriesclassifierpyts registered-classification-kneighborstimeseriesclassifierpyts"><span class="dot"></span>KNeighborsTimeSeriesClassifierPyts<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-KNeighborsTimeSeriesClassifierTslearn" data-name="kneighborstimeseriesclassifiertslearn registered-classification-kneighborstimeseriesclassifiertslearn"><span class="dot"></span>KNeighborsTimeSeriesClassifierTslearn<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-LSTMFCNClassifier" data-name="lstmfcnclassifier registered-classification-lstmfcnclassifier"><span class="dot"></span>LSTMFCNClassifier<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-MACNNClassifier" data-name="macnnclassifier registered-classification-macnnclassifier"><span class="dot"></span>MACNNClassifier<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-MatrixProfileClassifier" data-name="matrixprofileclassifier registered-classification-matrixprofileclassifier"><span class="dot"></span>MatrixProfileClassifier<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-MCDCNNClassifier" data-name="mcdcnnclassifier registered-classification-mcdcnnclassifier"><span class="dot"></span>MCDCNNClassifier<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-MLPClassifier" data-name="mlpclassifier registered-classification-mlpclassifier"><span class="dot"></span>MLPClassifier<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-MomentFMClassifier" data-name="momentfmclassifier registered-classification-momentfmclassifier"><span class="dot"></span>MomentFMClassifier<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-MrSEQL" data-name="mrseql registered-classification-mrseql"><span class="dot"></span>MrSEQL<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-MultiplexClassifier" data-name="multiplexclassifier registered-classification-multiplexclassifier"><span class="dot"></span>MultiplexClassifier<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-MUSE" data-name="muse registered-classification-muse"><span class="dot"></span>MUSE<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-MVTSTransformerClassifier" data-name="mvtstransformerclassifier registered-classification-mvtstransformerclassifier"><span class="dot"></span>MVTSTransformerClassifier<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-ProbabilityThresholdEarlyClassifier" data-name="probabilitythresholdearlyclassifier registered-classification-probabilitythresholdearlyclassifier"><span class="dot"></span>ProbabilityThresholdEarlyClassifier<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-ProximityForest" data-name="proximityforest registered-classification-proximityforest"><span class="dot"></span>ProximityForest<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-ProximityStump" data-name="proximitystump registered-classification-proximitystump"><span class="dot"></span>ProximityStump<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-ProximityTree" data-name="proximitytree registered-classification-proximitytree"><span class="dot"></span>ProximityTree<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-RandomIntervalClassifier" data-name="randomintervalclassifier registered-classification-randomintervalclassifier"><span class="dot"></span>RandomIntervalClassifier<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-RandomIntervalSpectralEnsemble" data-name="randomintervalspectralensemble registered-classification-randomintervalspectralensemble"><span class="dot"></span>RandomIntervalSpectralEnsemble<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-ResNetClassifier" data-name="resnetclassifier registered-classification-resnetclassifier"><span class="dot"></span>ResNetClassifier<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-RocketClassifier" data-name="rocketclassifier registered-classification-rocketclassifier"><span class="dot"></span>RocketClassifier<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-ShapeDTW" data-name="shapedtw registered-classification-shapedtw"><span class="dot"></span>ShapeDTW<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-ShapeletLearningClassifierPyts" data-name="shapeletlearningclassifierpyts registered-classification-shapeletlearningclassifierpyts"><span class="dot"></span>ShapeletLearningClassifierPyts<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-ShapeletLearningClassifierTslearn" data-name="shapeletlearningclassifiertslearn registered-classification-shapeletlearningclassifiertslearn"><span class="dot"></span>ShapeletLearningClassifierTslearn<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-ShapeletTransformClassifier" data-name="shapelettransformclassifier registered-classification-shapelettransformclassifier"><span class="dot"></span>ShapeletTransformClassifier<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-SignatureClassifier" data-name="signatureclassifier registered-classification-signatureclassifier"><span class="dot"></span>SignatureClassifier<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-SimpleRNNClassifier" data-name="simplernnclassifier registered-classification-simplernnclassifier"><span class="dot"></span>SimpleRNNClassifier<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-SimpleRNNClassifierTorch" data-name="simplernnclassifiertorch registered-classification-simplernnclassifiertorch"><span class="dot"></span>SimpleRNNClassifierTorch<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-SklearnClassifierPipeline" data-name="sklearnclassifierpipeline registered-classification-sklearnclassifierpipeline"><span class="dot"></span>SklearnClassifierPipeline<span class="tag">registry</span></span><span class="chip enabled" title="summary-random-forest" data-name="summaryclassifier summary-random-forest"><span class="dot"></span>SummaryClassifier<span class="tag">curated</span></span><span class="chip enabled" title="registered-classification-SupervisedTimeSeriesForest" data-name="supervisedtimeseriesforest registered-classification-supervisedtimeseriesforest"><span class="dot"></span>SupervisedTimeSeriesForest<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-TapNetClassifier" data-name="tapnetclassifier registered-classification-tapnetclassifier"><span class="dot"></span>TapNetClassifier<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-TemporalDictionaryEnsemble" data-name="temporaldictionaryensemble registered-classification-temporaldictionaryensemble"><span class="dot"></span>TemporalDictionaryEnsemble<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-TimeSeriesForestClassifier" data-name="timeseriesforestclassifier registered-classification-timeseriesforestclassifier"><span class="dot"></span>TimeSeriesForestClassifier<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-TimeSeriesSVC" data-name="timeseriessvc registered-classification-timeseriessvc"><span class="dot"></span>TimeSeriesSVC<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-TimeSeriesSVCTslearn" data-name="timeseriessvctslearn registered-classification-timeseriessvctslearn"><span class="dot"></span>TimeSeriesSVCTslearn<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-TSCGridSearchCV" data-name="tscgridsearchcv registered-classification-tscgridsearchcv"><span class="dot"></span>TSCGridSearchCV<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-TSFreshClassifier" data-name="tsfreshclassifier registered-classification-tsfreshclassifier"><span class="dot"></span>TSFreshClassifier<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-WEASEL" data-name="weasel registered-classification-weasel"><span class="dot"></span>WEASEL<span class="tag">registry</span></span><span class="chip enabled" title="registered-classification-WeightedEnsembleClassifier" data-name="weightedensembleclassifier registered-classification-weightedensembleclassifier"><span class="dot"></span>WeightedEnsembleClassifier<span class="tag">registry</span></span><span class="chip disabled" title="registered-classification-FreshPRINCE" data-name="freshprince registered-classification-freshprince"><span class="dot"></span>FreshPRINCE<span class="tag">registry</span></span><span class="chip disabled" title="registered-classification-MrSQM" data-name="mrsqm registered-classification-mrsqm"><span class="dot"></span>MrSQM<span class="tag">registry</span></span></div>
+</section>
+<section class="task-section panel" id="task-regression">
+  <div class="panel-head">
+    <h2>Regression</h2>
+    <span class="desc">Predict a continuous value from a series.</span>
+  </div>
+  <div class="panel-sub">22 of 22 algorithms runnable in this environment</div>
+
+  <div class="section-label">Tracked claims (2)</div>
+  <div class="claims">
+<details class="claim">
+  <summary>
+    <div class="alg">Rocket<span class="lib">Data Mining and Knowledge Discovery 35</span></div>
+    <div class="ds">Covid3Month (TSER archive)</div>
+    <div class="met">RMSE</div>
+    <div class="num gt">0.04388</div>
+    <div class="num rep">0.03899</div>
+    <div class="delta ok">-0.004885 <span class="tol">±20%</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">Reproduce — exact labts CLI command</div>
+        <div class="cmd">python playground/labts.py run --task regression --algorithm registered-regression-RocketRegressor --dataset covid-3month --metric rmse --compact<button class="copy" data-cmd="python playground/labts.py run --task regression --algorithm registered-regression-RocketRegressor --dataset covid-3month --metric rmse --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="http://tseregression.org/" target="_blank" rel="noopener">Time Series Extrinsic Regression (Tan, Bergmeir, Petitjean, Webb) — official TSER results page</a><br/>
+          Data Mining and Knowledge Discovery 35, 2021 / tseregression.org · Results table, row Covid3Month, column Rocket
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">TSER archive default train/test split (140/61); ROCKET transform with ridge-regression-style regressor; average RMSE over 5 runs</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±20% relative</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-09-28 09:51:35 UTC · 29.4s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Rocket was the best-ranked algorithm in the TSER paper. sktime RocketRegressor follows the same protocol (fixed archive split, ridge on ROCKET features).</div>
+      </div>
+      
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;MAE&quot;: 0.028532003631796823, &quot;RMSE&quot;: 0.0389928099603455, &quot;R²&quot;: 0.23645960975254454}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="alg">RandomForest<span class="lib">Data Mining and Knowledge Discovery 35</span></div>
+    <div class="ds">Covid3Month (TSER archive)</div>
+    <div class="met">RMSE</div>
+    <div class="num gt">0.0424</div>
+    <div class="num rep">0.0468</div>
+    <div class="delta ok">+0.004396 <span class="tol">±35%</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">Reproduce — exact labts CLI command</div>
+        <div class="cmd">python playground/labts.py run --task regression --algorithm summary-random-forest-regressor --dataset covid-3month --metric rmse --compact<button class="copy" data-cmd="python playground/labts.py run --task regression --algorithm summary-random-forest-regressor --dataset covid-3month --metric rmse --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="http://tseregression.org/" target="_blank" rel="noopener">Time Series Extrinsic Regression (Tan, Bergmeir, Petitjean, Webb) — official TSER results page</a><br/>
+          Data Mining and Knowledge Discovery 35, 2021 / tseregression.org · Results table, row Covid3Month, column RandomForest
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">TSER archive default train/test split (140/61); scikit-learn RandomForest with default parameters on the flattened raw series; average RMSE over 5 runs</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±35% relative</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-09-28 09:51:39 UTC · 3.79s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Protocol mismatch on purpose: the paper flattens the raw series into sklearn defaults, while the labts pipeline fits RF(25 trees) on summary features. Kept as a demonstration that the leaderboard flags representation gaps, not only implementation bugs.</div>
+      </div>
+      
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;MAE&quot;: 0.03293033550832359, &quot;RMSE&quot;: 0.04679649136974218, &quot;R²&quot;: -0.09973876605185339}</div></div>
+    </div>
+  </div>
+</details></div>
+
+  <div class="section-label">Catalog — all 22 regression algorithms</div>
+  <input class="filter" type="search" placeholder="Filter algorithms…" />
+  <div class="chips"><span class="chip enabled" title="registered-regression-CNNRegressor" data-name="cnnregressor registered-regression-cnnregressor"><span class="dot"></span>CNNRegressor<span class="tag">registry</span></span><span class="chip enabled" title="registered-regression-CNTCRegressor" data-name="cntcregressor registered-regression-cntcregressor"><span class="dot"></span>CNTCRegressor<span class="tag">registry</span></span><span class="chip enabled" title="registered-regression-ComposableTimeSeriesForestRegressor" data-name="composabletimeseriesforestregressor registered-regression-composabletimeseriesforestregressor"><span class="dot"></span>ComposableTimeSeriesForestRegressor<span class="tag">registry</span></span><span class="chip enabled" title="registered-regression-DummyRegressor" data-name="dummyregressor registered-regression-dummyregressor"><span class="dot"></span>DummyRegressor<span class="tag">registry</span></span><span class="chip enabled" title="registered-regression-FCNRegressor" data-name="fcnregressor registered-regression-fcnregressor"><span class="dot"></span>FCNRegressor<span class="tag">registry</span></span><span class="chip enabled" title="registered-regression-InceptionTimeRegressor" data-name="inceptiontimeregressor registered-regression-inceptiontimeregressor"><span class="dot"></span>InceptionTimeRegressor<span class="tag">registry</span></span><span class="chip enabled" title="registered-regression-KNeighborsTimeSeriesRegressor" data-name="kneighborstimeseriesregressor registered-regression-kneighborstimeseriesregressor"><span class="dot"></span>KNeighborsTimeSeriesRegressor<span class="tag">registry</span></span><span class="chip enabled" title="registered-regression-LSTMFCNRegressor" data-name="lstmfcnregressor registered-regression-lstmfcnregressor"><span class="dot"></span>LSTMFCNRegressor<span class="tag">registry</span></span><span class="chip enabled" title="registered-regression-MACNNRegressor" data-name="macnnregressor registered-regression-macnnregressor"><span class="dot"></span>MACNNRegressor<span class="tag">registry</span></span><span class="chip enabled" title="registered-regression-MCDCNNRegressor" data-name="mcdcnnregressor registered-regression-mcdcnnregressor"><span class="dot"></span>MCDCNNRegressor<span class="tag">registry</span></span><span class="chip enabled" title="registered-regression-MLPRegressor" data-name="mlpregressor registered-regression-mlpregressor"><span class="dot"></span>MLPRegressor<span class="tag">registry</span></span><span class="chip enabled" title="registered-regression-MultiplexRegressor" data-name="multiplexregressor registered-regression-multiplexregressor"><span class="dot"></span>MultiplexRegressor<span class="tag">registry</span></span><span class="chip enabled" title="registered-regression-RegressorPipeline" data-name="regressorpipeline registered-regression-regressorpipeline"><span class="dot"></span>RegressorPipeline<span class="tag">registry</span></span><span class="chip enabled" title="registered-regression-ResNetRegressor" data-name="resnetregressor registered-regression-resnetregressor"><span class="dot"></span>ResNetRegressor<span class="tag">registry</span></span><span class="chip enabled" title="registered-regression-RocketRegressor" data-name="rocketregressor registered-regression-rocketregressor"><span class="dot"></span>RocketRegressor<span class="tag">registry</span></span><span class="chip enabled" title="registered-regression-SimpleRNNRegressor" data-name="simplernnregressor registered-regression-simplernnregressor"><span class="dot"></span>SimpleRNNRegressor<span class="tag">registry</span></span><span class="chip enabled" title="registered-regression-SimpleRNNRegressorTorch" data-name="simplernnregressortorch registered-regression-simplernnregressortorch"><span class="dot"></span>SimpleRNNRegressorTorch<span class="tag">registry</span></span><span class="chip enabled" title="summary-random-forest-regressor" data-name="sklearnregressorpipeline summary-random-forest-regressor"><span class="dot"></span>SklearnRegressorPipeline<span class="tag">curated</span></span><span class="chip enabled" title="registered-regression-TapNetRegressor" data-name="tapnetregressor registered-regression-tapnetregressor"><span class="dot"></span>TapNetRegressor<span class="tag">registry</span></span><span class="chip enabled" title="registered-regression-TimeSeriesForestRegressor" data-name="timeseriesforestregressor registered-regression-timeseriesforestregressor"><span class="dot"></span>TimeSeriesForestRegressor<span class="tag">registry</span></span><span class="chip enabled" title="registered-regression-TimeSeriesSVRTslearn" data-name="timeseriessvrtslearn registered-regression-timeseriessvrtslearn"><span class="dot"></span>TimeSeriesSVRTslearn<span class="tag">registry</span></span><span class="chip enabled" title="registered-regression-TSRGridSearchCV" data-name="tsrgridsearchcv registered-regression-tsrgridsearchcv"><span class="dot"></span>TSRGridSearchCV<span class="tag">registry</span></span></div>
+</section>
+<section class="task-section panel" id="task-clustering">
+  <div class="panel-head">
+    <h2>Clustering</h2>
+    <span class="desc">Group series without labels.</span>
+  </div>
+  <div class="panel-sub">10 of 10 algorithms runnable in this environment</div>
+
+  <div class="section-label">Tracked claims (2)</div>
+  <div class="claims">
+<details class="claim">
+  <summary>
+    <div class="alg">k-Shape<span class="lib">ACM SIGMOD 2015 / ACM TODS 2017</span></div>
+    <div class="ds">ArrowHead (UCR, fused train+test)</div>
+    <div class="met">ARI</div>
+    <div class="num gt">0.1742</div>
+    <div class="num rep">0</div>
+    <div class="delta bad">-0.1742 <span class="tol">±0.15</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status deviation"><span class="dot"></span>Deviation</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">Reproduce — exact labts CLI command</div>
+        <div class="cmd">python playground/labts.py run --task clustering --algorithm registered-clustering-TimeSeriesKShapes --dataset arrow-head-cl --param n_clusters=3 --param random_state=42 --metric ari --compact<button class="copy" data-cmd="python playground/labts.py run --task clustering --algorithm registered-clustering-TimeSeriesKShapes --dataset arrow-head-cl --param n_clusters=3 --param random_state=42 --metric ari --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/TheDatumOrg/kshape-matlab" target="_blank" rel="noopener">k-Shape: Efficient and Accurate Clustering of Time Series (Paparrizos &amp; Gravano) — official Matlab repository</a><br/>
+          ACM SIGMOD 2015 / ACM TODS 2017 · README &#x27;Results on the 128 univariate datasets&#x27;, row ArrowHead (RI 0.623006, ARI 0.17425450, NMI 0.2533444)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">k=3 (= number of classes); full dataset clustered (train+test fused, N=211); mean over 10 runs of the authors&#x27; Matlab implementation</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.15 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-09-28 09:45:23 UTC · 30.3s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Paper value is the mean of 10 Matlab runs; labts runs tslearn&#x27;s KShape once with a fixed seed. Random init makes single-run ARI swing; RI=0.623006 in the same row.</div>
+      </div>
+      
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;ARI&quot;: 0.0, &quot;NMI&quot;: 0.0, &quot;Clusters&quot;: 1, &quot;Largest Cluster&quot;: 175}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="alg">k-Shape<span class="lib">ACM SIGMOD 2015 / ACM TODS 2017</span></div>
+    <div class="ds">GunPoint (UCR, fused train+test)</div>
+    <div class="met">ARI</div>
+    <div class="num gt">-0.00505</div>
+    <div class="num rep">0</div>
+    <div class="delta ok">+0.00505 <span class="tol">±0.15</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">Reproduce — exact labts CLI command</div>
+        <div class="cmd">python playground/labts.py run --task clustering --algorithm registered-clustering-TimeSeriesKShapes --dataset gunpoint-cl --param n_clusters=2 --param random_state=42 --metric ari --compact<button class="copy" data-cmd="python playground/labts.py run --task clustering --algorithm registered-clustering-TimeSeriesKShapes --dataset gunpoint-cl --param n_clusters=2 --param random_state=42 --metric ari --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/TheDatumOrg/kshape-matlab" target="_blank" rel="noopener">k-Shape: Efficient and Accurate Clustering of Time Series (Paparrizos &amp; Gravano) — official Matlab repository</a><br/>
+          ACM SIGMOD 2015 / ACM TODS 2017 · README &#x27;Results on the 128 univariate datasets&#x27;, row GunPoint (RI 0.497487, ARI -0.005050, NMI 0.0)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">k=2 (= number of classes); full dataset clustered (train+test fused, N=306); mean over 10 runs of the authors&#x27; Matlab implementation</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.15 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-09-28 09:45:52 UTC · 29.5s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">GunPoint clustering is at chance level even for the authors (RI 0.4975, NMI 0.0) — reproducing this row validates that near-chance behavior, not a bug.</div>
+      </div>
+      
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;ARI&quot;: 0.0, &quot;NMI&quot;: 0.0, &quot;Clusters&quot;: 1, &quot;Largest Cluster&quot;: 150}</div></div>
+    </div>
+  </div>
+</details></div>
+
+  <div class="section-label">Catalog — all 10 clustering algorithms</div>
+  <input class="filter" type="search" placeholder="Filter algorithms…" />
+  <div class="chips"><span class="chip enabled" title="registered-clustering-ClustererPipeline" data-name="clustererpipeline registered-clustering-clustererpipeline"><span class="dot"></span>ClustererPipeline<span class="tag">registry</span></span><span class="chip enabled" title="registered-clustering-SklearnClustererPipeline" data-name="sklearnclustererpipeline registered-clustering-sklearnclustererpipeline"><span class="dot"></span>SklearnClustererPipeline<span class="tag">registry</span></span><span class="chip enabled" title="registered-clustering-STDBSCAN" data-name="stdbscan registered-clustering-stdbscan"><span class="dot"></span>STDBSCAN<span class="tag">registry</span></span><span class="chip enabled" title="registered-clustering-TimeSeriesDBSCAN" data-name="timeseriesdbscan registered-clustering-timeseriesdbscan"><span class="dot"></span>TimeSeriesDBSCAN<span class="tag">registry</span></span><span class="chip enabled" title="registered-clustering-TimeSeriesKernelKMeans" data-name="timeserieskernelkmeans registered-clustering-timeserieskernelkmeans"><span class="dot"></span>TimeSeriesKernelKMeans<span class="tag">registry</span></span><span class="chip enabled" title="ts-kmeans" data-name="timeserieskmeans ts-kmeans"><span class="dot"></span>TimeSeriesKMeans<span class="tag">curated</span></span><span class="chip enabled" title="registered-clustering-TimeSeriesKMeansTslearn" data-name="timeserieskmeanstslearn registered-clustering-timeserieskmeanstslearn"><span class="dot"></span>TimeSeriesKMeansTslearn<span class="tag">registry</span></span><span class="chip enabled" title="registered-clustering-TimeSeriesKMedoids" data-name="timeserieskmedoids registered-clustering-timeserieskmedoids"><span class="dot"></span>TimeSeriesKMedoids<span class="tag">registry</span></span><span class="chip enabled" title="registered-clustering-TimeSeriesKShapes" data-name="timeserieskshapes registered-clustering-timeserieskshapes"><span class="dot"></span>TimeSeriesKShapes<span class="tag">registry</span></span><span class="chip enabled" title="registered-clustering-TimeSeriesKvisibility" data-name="timeserieskvisibility registered-clustering-timeserieskvisibility"><span class="dot"></span>TimeSeriesKvisibility<span class="tag">registry</span></span></div>
+</section>
+<section class="task-section panel" id="task-anomaly_detection">
+  <div class="panel-head">
+    <h2>Anomaly Detection</h2>
+    <span class="desc">Flag anomalous points or segments.</span>
+  </div>
+  <div class="panel-sub">58 of 58 algorithms runnable in this environment</div>
+
+  <div class="section-label">Tracked claims (3)</div>
+  <div class="claims">
+<details class="claim">
+  <summary>
+    <div class="alg">LOF<span class="lib">PVLDB 15(8):1697-1711</span></div>
+    <div class="ds">Yahoo (TSB-UAD YAHOO subset)</div>
+    <div class="met">AUC-ROC</div>
+    <div class="num gt">0.86</div>
+    <div class="num rep">0.6819</div>
+    <div class="delta bad">-0.1781 <span class="tol">±0.15</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status deviation"><span class="dot"></span>Deviation</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">Reproduce — exact labts CLI command</div>
+        <div class="cmd">python playground/labts.py run --task anomaly_detection --algorithm registered-anomaly_detection-PyODLOFDetector --dataset yahoo --metric auc_roc --compact<button class="copy" data-cmd="python playground/labts.py run --task anomaly_detection --algorithm registered-anomaly_detection-PyODLOFDetector --dataset yahoo --metric auc_roc --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/TheDatumOrg/TSB-UAD" target="_blank" rel="noopener">TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)</a><br/>
+          PVLDB 15(8):1697-1711, 2022 · README &#x27;Overall Results&#x27; table, row YAHOO, column LOF (AUC 0.86, F 0.62)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Unsupervised fit on full series; sliding-window embedding with FFT-based window length; scores min-max normalized; point-wise AUC-ROC averaged over all 367 YAHOO series</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.15 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-09-28 09:43:02 UTC · 13.3s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Granularity gap: the paper value averages 367 Yahoo series; the labts yahoo dataset is a single bundled series (1000 points, 7 anomalies). Directional check only.</div>
+      </div>
+      
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Precision&quot;: 0.04819277108433735, &quot;Recall&quot;: 0.5714285714285714, &quot;F1&quot;: 0.08888888888888889, &quot;Detected&quot;: 83, &quot;Ground Truth&quot;: 7, &quot;AUC-ROC&quot;: 0.6819162710401381}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="alg">IForest<span class="lib">PVLDB 15(8):1697-1711</span></div>
+    <div class="ds">Yahoo (TSB-UAD YAHOO subset)</div>
+    <div class="met">AUC-ROC</div>
+    <div class="num gt">0.62</div>
+    <div class="num rep">0.9076</div>
+    <div class="delta bad">+0.2876 <span class="tol">±0.15</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status deviation"><span class="dot"></span>Deviation</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">Reproduce — exact labts CLI command</div>
+        <div class="cmd">python playground/labts.py run --task anomaly_detection --algorithm registered-anomaly_detection-PyODIForestDetector --dataset yahoo --metric auc_roc --compact<button class="copy" data-cmd="python playground/labts.py run --task anomaly_detection --algorithm registered-anomaly_detection-PyODIForestDetector --dataset yahoo --metric auc_roc --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/TheDatumOrg/TSB-UAD" target="_blank" rel="noopener">TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)</a><br/>
+          PVLDB 15(8):1697-1711, 2022 · README &#x27;Overall Results&#x27; table, row YAHOO, column IForest (AUC 0.62, F 0.06)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Unsupervised fit on full series; sliding-window embedding; point-wise AUC-ROC averaged over all 367 YAHOO series</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.15 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-09-28 09:43:15 UTC · 13s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Same granularity gap as the LOF entry.</div>
+      </div>
+      
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Precision&quot;: 0.04, &quot;Recall&quot;: 0.5714285714285714, &quot;F1&quot;: 0.07476635514018691, &quot;Detected&quot;: 100, &quot;Ground Truth&quot;: 7, &quot;AUC-ROC&quot;: 0.9076391886059559}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="alg">IForest<span class="lib">PVLDB 15(8):1697-1711</span></div>
+    <div class="ds">MIT-BIH ECG (TSB-UAD MITDB subset)</div>
+    <div class="met">AUC-ROC</div>
+    <div class="num gt">0.7</div>
+    <div class="num rep">0.6944</div>
+    <div class="delta ok">-0.005632 <span class="tol">±0.15</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">Reproduce — exact labts CLI command</div>
+        <div class="cmd">python playground/labts.py run --task anomaly_detection --algorithm registered-anomaly_detection-PyODIForestDetector --dataset mitdb --metric auc_roc --compact<button class="copy" data-cmd="python playground/labts.py run --task anomaly_detection --algorithm registered-anomaly_detection-PyODIForestDetector --dataset mitdb --metric auc_roc --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/TheDatumOrg/TSB-UAD" target="_blank" rel="noopener">TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)</a><br/>
+          PVLDB 15(8):1697-1711, 2022 · README &#x27;Overall Results&#x27; table, row MITDB, column IForest (AUC 0.70, F 0.09)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Unsupervised fit on full series; sliding-window embedding; point-wise AUC-ROC averaged over all 32 MITDB series</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.15 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-09-28 09:43:29 UTC · 13.7s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Granularity gap: 32-series average vs the single 7500-point excerpt bundled with labts.</div>
+      </div>
+      
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Precision&quot;: 0.023004059539918808, &quot;Recall&quot;: 0.048295454545454544, &quot;F1&quot;: 0.03116406966086159, &quot;Detected&quot;: 739, &quot;Ground Truth&quot;: 352, &quot;AUC-ROC&quot;: 0.694368378631022}</div></div>
+    </div>
+  </div>
+</details></div>
+
+  <div class="section-label">Catalog — all 58 anomaly detection algorithms</div>
+  <input class="filter" type="search" placeholder="Filter algorithms…" />
+  <div class="chips"><span class="chip enabled" title="registered-anomaly_detection-BinarySegmentation" data-name="binarysegmentation registered-anomaly_detection-binarysegmentation"><span class="dot"></span>BinarySegmentation<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-CAPA" data-name="capa registered-anomaly_detection-capa"><span class="dot"></span>CAPA<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-CircularBinarySegmentation" data-name="circularbinarysegmentation registered-anomaly_detection-circularbinarysegmentation"><span class="dot"></span>CircularBinarySegmentation<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-ClaSPSegmentation" data-name="claspsegmentation registered-anomaly_detection-claspsegmentation"><span class="dot"></span>ClaSPSegmentation<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-ClusterSegmenter" data-name="clustersegmenter registered-anomaly_detection-clustersegmenter"><span class="dot"></span>ClusterSegmenter<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-DetectorPipeline" data-name="detectorpipeline registered-anomaly_detection-detectorpipeline"><span class="dot"></span>DetectorPipeline<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-DevADAnomalyTransformerDetector" data-name="devadanomalytransformerdetector registered-anomaly_detection-devadanomalytransformerdetector"><span class="dot"></span>DevADAnomalyTransformerDetector<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-DevADBeatGANDetector" data-name="devadbeatgandetector registered-anomaly_detection-devadbeatgandetector"><span class="dot"></span>DevADBeatGANDetector<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-DevADCOUTADetector" data-name="devadcoutadetector registered-anomaly_detection-devadcoutadetector"><span class="dot"></span>DevADCOUTADetector<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-DevADDAGMMDetector" data-name="devaddagmmdetector registered-anomaly_detection-devaddagmmdetector"><span class="dot"></span>DevADDAGMMDetector<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-DevADDonutDetector" data-name="devaddonutdetector registered-anomaly_detection-devaddonutdetector"><span class="dot"></span>DevADDonutDetector<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-DevADFCVAEDetector" data-name="devadfcvaedetector registered-anomaly_detection-devadfcvaedetector"><span class="dot"></span>DevADFCVAEDetector<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-DevADFITSDetector" data-name="devadfitsdetector registered-anomaly_detection-devadfitsdetector"><span class="dot"></span>DevADFITSDetector<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-DevADIForestDetector" data-name="devadiforestdetector registered-anomaly_detection-devadiforestdetector"><span class="dot"></span>DevADIForestDetector<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-DevADKANADDetector" data-name="devadkanaddetector registered-anomaly_detection-devadkanaddetector"><span class="dot"></span>DevADKANADDetector<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-DevADKMeansADDetector" data-name="devadkmeansaddetector registered-anomaly_detection-devadkmeansaddetector"><span class="dot"></span>DevADKMeansADDetector<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-DevADLSTMADDetector" data-name="devadlstmaddetector registered-anomaly_detection-devadlstmaddetector"><span class="dot"></span>DevADLSTMADDetector<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-DevADModernTCNDetector" data-name="devadmoderntcndetector registered-anomaly_detection-devadmoderntcndetector"><span class="dot"></span>DevADModernTCNDetector<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-DevADOmniAnomalyDetector" data-name="devadomnianomalydetector registered-anomaly_detection-devadomnianomalydetector"><span class="dot"></span>DevADOmniAnomalyDetector<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-DevADSubLOFDetector" data-name="devadsublofdetector registered-anomaly_detection-devadsublofdetector"><span class="dot"></span>DevADSubLOFDetector<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-DevADSubOCSVMDetector" data-name="devadsubocsvmdetector registered-anomaly_detection-devadsubocsvmdetector"><span class="dot"></span>DevADSubOCSVMDetector<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-DevADSubPCADetector" data-name="devadsubpcadetector registered-anomaly_detection-devadsubpcadetector"><span class="dot"></span>DevADSubPCADetector<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-DevADTimesNetDetector" data-name="devadtimesnetdetector registered-anomaly_detection-devadtimesnetdetector"><span class="dot"></span>DevADTimesNetDetector<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-DevADTranADDetector" data-name="devadtranaddetector registered-anomaly_detection-devadtranaddetector"><span class="dot"></span>DevADTranADDetector<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-DevADUSADDetector" data-name="devadusaddetector registered-anomaly_detection-devadusaddetector"><span class="dot"></span>DevADUSADDetector<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-DummyRegularAnomalies" data-name="dummyregularanomalies registered-anomaly_detection-dummyregularanomalies"><span class="dot"></span>DummyRegularAnomalies<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-DummyRegularChangePoints" data-name="dummyregularchangepoints registered-anomaly_detection-dummyregularchangepoints"><span class="dot"></span>DummyRegularChangePoints<span class="tag">registry</span></span><span class="chip enabled" title="user-ecod_direct" data-name="ecod-direct user-ecod_direct"><span class="dot"></span>ecod-direct<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-GaussianHMM" data-name="gaussianhmm registered-anomaly_detection-gaussianhmm"><span class="dot"></span>GaussianHMM<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-GMMHMM" data-name="gmmhmm registered-anomaly_detection-gmmhmm"><span class="dot"></span>GMMHMM<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-GreedyGaussianSegmentation" data-name="greedygaussiansegmentation registered-anomaly_detection-greedygaussiansegmentation"><span class="dot"></span>GreedyGaussianSegmentation<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-HMM" data-name="hmm registered-anomaly_detection-hmm"><span class="dot"></span>HMM<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-MLEBinSeg" data-name="mlebinseg registered-anomaly_detection-mlebinseg"><span class="dot"></span>MLEBinSeg<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-MovingWindow" data-name="movingwindow registered-anomaly_detection-movingwindow"><span class="dot"></span>MovingWindow<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-MVCAPA" data-name="mvcapa registered-anomaly_detection-mvcapa"><span class="dot"></span>MVCAPA<span class="tag">registry</span></span><span class="chip enabled" title="user-my_ecod" data-name="my_ecod user-my_ecod"><span class="dot"></span>my_ecod<span class="tag">registry</span></span><span class="chip enabled" title="user-my_subpca" data-name="my_subpca user-my_subpca"><span class="dot"></span>my_subpca<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-OptimalPartitioning" data-name="optimalpartitioning registered-anomaly_detection-optimalpartitioning"><span class="dot"></span>OptimalPartitioning<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-PELT" data-name="pelt registered-anomaly_detection-pelt"><span class="dot"></span>PELT<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-PoissonHMM" data-name="poissonhmm registered-anomaly_detection-poissonhmm"><span class="dot"></span>PoissonHMM<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-PyODCBLOFDetector" data-name="pyodcblofdetector registered-anomaly_detection-pyodcblofdetector"><span class="dot"></span>PyODCBLOFDetector<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-PyODCOPODDetector" data-name="pyodcopoddetector registered-anomaly_detection-pyodcopoddetector"><span class="dot"></span>PyODCOPODDetector<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-PyODDetector" data-name="pyoddetector registered-anomaly_detection-pyoddetector"><span class="dot"></span>PyODDetector<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-PyODECODDetector" data-name="pyodecoddetector registered-anomaly_detection-pyodecoddetector"><span class="dot"></span>PyODECODDetector<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-PyODHBOSDetector" data-name="pyodhbosdetector registered-anomaly_detection-pyodhbosdetector"><span class="dot"></span>PyODHBOSDetector<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-PyODIForestDetector" data-name="pyodiforestdetector registered-anomaly_detection-pyodiforestdetector"><span class="dot"></span>PyODIForestDetector<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-PyODKNNDetector" data-name="pyodknndetector registered-anomaly_detection-pyodknndetector"><span class="dot"></span>PyODKNNDetector<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-PyODLOFDetector" data-name="pyodlofdetector registered-anomaly_detection-pyodlofdetector"><span class="dot"></span>PyODLOFDetector<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-PyODMCDDetector" data-name="pyodmcddetector registered-anomaly_detection-pyodmcddetector"><span class="dot"></span>PyODMCDDetector<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-PyODOCSVMDetector" data-name="pyodocsvmdetector registered-anomaly_detection-pyodocsvmdetector"><span class="dot"></span>PyODOCSVMDetector<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-SeededBinarySegmentation" data-name="seededbinarysegmentation registered-anomaly_detection-seededbinarysegmentation"><span class="dot"></span>SeededBinarySegmentation<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-StatThresholdAnomaliser" data-name="statthresholdanomaliser registered-anomaly_detection-statthresholdanomaliser"><span class="dot"></span>StatThresholdAnomaliser<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-SubLOF" data-name="sublof registered-anomaly_detection-sublof"><span class="dot"></span>SubLOF<span class="tag">registry</span></span><span class="chip enabled" title="threshold-detector" data-name="thresholddetector threshold-detector"><span class="dot"></span>ThresholdDetector<span class="tag">curated</span></span><span class="chip enabled" title="registered-anomaly_detection-WindowSegmenter" data-name="windowsegmenter registered-anomaly_detection-windowsegmenter"><span class="dot"></span>WindowSegmenter<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-ZeroAnomalies" data-name="zeroanomalies registered-anomaly_detection-zeroanomalies"><span class="dot"></span>ZeroAnomalies<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-ZeroChangePoints" data-name="zerochangepoints registered-anomaly_detection-zerochangepoints"><span class="dot"></span>ZeroChangePoints<span class="tag">registry</span></span><span class="chip enabled" title="registered-anomaly_detection-ZeroSegments" data-name="zerosegments registered-anomaly_detection-zerosegments"><span class="dot"></span>ZeroSegments<span class="tag">registry</span></span></div>
+</section>
+<section class="task-section panel" id="task-causal">
+  <div class="panel-head">
+    <h2>Causal Discovery</h2>
+    <span class="desc">Recover the causal graph behind the data.</span>
+  </div>
+  <div class="panel-sub">4 of 4 algorithms runnable in this environment</div>
+
+  <div class="section-label">Tracked claims (3)</div>
+  <div class="claims">
+<details class="claim">
+  <summary>
+    <div class="alg">NOTEARS<span class="lib">NeurIPS 2018</span></div>
+    <div class="ds">Sachs continuous (n=7466, d=11, 20-edge DAG)</div>
+    <div class="met">SHD</div>
+    <div class="num gt">22</div>
+    <div class="num rep">23</div>
+    <div class="delta ok">+1 <span class="tol">±6</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">Reproduce — exact labts CLI command</div>
+        <div class="cmd">python playground/labts.py run --task causal --algorithm causal-notears --dataset causal-sachs-cont --param max_samples=7466 --compact<button class="copy" data-cmd="python playground/labts.py run --task causal --algorithm causal-notears --dataset causal-sachs-cont --param max_samples=7466 --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://ar5iv.labs.arxiv.org/html/1803.01422" target="_blank" rel="noopener">DAGs with NO TEARS: Continuous Optimization for Structure Learning (Zheng, Aragam, Ravikumar, Xing)</a><br/>
+          NeurIPS 2018 · Section 5.4 &#x27;Real-data&#x27;: &#x27;16 for NOTEARS with an SHD of 22&#x27;
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Original NOTEARS (least-squares + L1 + acyclicity); full dataset n=7466, no train/test split; SHD vs the 20-edge consensus DAG; 16 edges estimated</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±6 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-09-28 09:43:46 UTC · 16.5s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Same continuous Sachs data and same 20-edge consensus DAG as the paper (vendored from cmu-phil/example-causal-datasets). labts must run with max_samples=7466 (default subsample is 2000).</div>
+      </div>
+      
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;SHD&quot;: 23, &quot;Edge Precision&quot;: 0.3333333333333333, &quot;Edge Recall&quot;: 0.4, &quot;Edge F1&quot;: 0.3636363636363636, &quot;Edges&quot;: 24, &quot;True Edges&quot;: 20}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="alg">PC<span class="lib">arXiv:2412.10039v2</span></div>
+    <div class="ds">Sachs continuous (n=7466, d=11, 20-edge DAG)</div>
+    <div class="met">SHD</div>
+    <div class="num gt">23</div>
+    <div class="num rep">22</div>
+    <div class="delta ok">-1 <span class="tol">±8</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">Reproduce — exact labts CLI command</div>
+        <div class="cmd">python playground/labts.py run --task causal --algorithm causal-pc --dataset causal-sachs-cont --param max_samples=7466 --compact<button class="copy" data-cmd="python playground/labts.py run --task causal --algorithm causal-pc --dataset causal-sachs-cont --param max_samples=7466 --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://arxiv.org/pdf/2412.10039" target="_blank" rel="noopener">Are You Doing Better Than Random Guessing? A Call for Using Negative Controls When Evaluating Causal Discovery Algorithms (Petersen)</a><br/>
+          arXiv:2412.10039v2 · Table 6 &#x27;SHD for the Sachs Data&#x27;, row PC
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">PC in Tetrad 7.6.7 with default settings; CPDAG with 24 estimated edges; SHD vs the 20-edge ground-truth DAG</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±8 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-09-28 09:43:49 UTC · 3.15s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Implementation gap: paper uses Tetrad&#x27;s PC; labts uses causal-learn&#x27;s PC. Independence-test defaults may differ.</div>
+      </div>
+      
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;SHD&quot;: 22, &quot;Edge Precision&quot;: 0.44, &quot;Edge Recall&quot;: 0.55, &quot;Edge F1&quot;: 0.48888888888888893, &quot;Edges&quot;: 25, &quot;True Edges&quot;: 20}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="alg">GES<span class="lib">arXiv:2412.10039v2</span></div>
+    <div class="ds">Sachs continuous (n=7466, d=11, 20-edge DAG)</div>
+    <div class="met">SHD</div>
+    <div class="num gt">30</div>
+    <div class="num rep">31</div>
+    <div class="delta ok">+1 <span class="tol">±8</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">Reproduce — exact labts CLI command</div>
+        <div class="cmd">python playground/labts.py run --task causal --algorithm causal-ges --dataset causal-sachs-cont --param max_samples=7466 --compact<button class="copy" data-cmd="python playground/labts.py run --task causal --algorithm causal-ges --dataset causal-sachs-cont --param max_samples=7466 --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://arxiv.org/pdf/2412.10039" target="_blank" rel="noopener">Are You Doing Better Than Random Guessing? A Call for Using Negative Controls When Evaluating Causal Discovery Algorithms (Petersen)</a><br/>
+          arXiv:2412.10039v2 · Table 6 &#x27;SHD for the Sachs Data&#x27;, row GES
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">GES in Tetrad 7.6.7 with default settings; CPDAG with 30 estimated edges; SHD vs the 20-edge ground-truth DAG</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±8 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-09-28 09:43:52 UTC · 2.82s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Implementation gap: Tetrad GES vs causal-learn GES. (The NOTEARS paper reports FGS SHD=22 on the same data; Tetrad GES defaults give 30.)</div>
+      </div>
+      
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;SHD&quot;: 31, &quot;Edge Precision&quot;: 0.23529411764705882, &quot;Edge Recall&quot;: 0.4, &quot;Edge F1&quot;: 0.29629629629629634, &quot;Edges&quot;: 34, &quot;True Edges&quot;: 20}</div></div>
+    </div>
+  </div>
+</details></div>
+
+  <div class="section-label">Catalog — all 4 causal discovery algorithms</div>
+  <input class="filter" type="search" placeholder="Filter algorithms…" />
+  <div class="chips"><span class="chip enabled" title="causal-ges" data-name="ges causal-ges"><span class="dot"></span>GES<span class="tag">curated</span></span><span class="chip enabled" title="causal-notears" data-name="notears causal-notears"><span class="dot"></span>NOTEARS<span class="tag">curated</span></span><span class="chip enabled" title="causal-pc" data-name="pc causal-pc"><span class="dot"></span>PC<span class="tag">curated</span></span><span class="chip enabled" title="causal-pcmci" data-name="pcmci causal-pcmci"><span class="dot"></span>PCMCI<span class="tag">curated</span></span></div>
+</section></div>
+
+  <footer>
+    Built by labts · state generated 2026-09-28 10:17:40 UTC · groundtruth curated under
+    <code>playground/benchmark/groundtruth/</code> ·
+    re-run with <code>python playground/benchmark/reproduce.py</code> ·
+    refresh with <code>python playground/benchmark/build_state.py</code>
+  </footer>
+</main>
+
+<script>
+// Progressive enhancement only — the page is fully pre-rendered and readable
+// with JavaScript disabled (e.g. IDE preview panes).
+(function () {
+  document.body.classList.remove("no-js");
+
+  var tabs = Array.prototype.slice.call(document.querySelectorAll(".tab"));
+  var sections = Array.prototype.slice.call(document.querySelectorAll(".task-section"));
+  function activate(id, push) {
+    var found = false;
+    sections.forEach(function (s) {
+      var on = s.id === "task-" + id;
+      s.classList.toggle("active", on);
+      if (on) found = true;
+    });
+    if (!found && sections.length) { sections[0].classList.add("active"); id = sections[0].id.slice(5); }
+    tabs.forEach(function (t) { t.classList.toggle("active", t.dataset.task === id); });
+    if (push && history.replaceState) history.replaceState(null, "", "#" + id);
+  }
+  tabs.forEach(function (t) {
+    t.addEventListener("click", function (ev) {
+      ev.preventDefault();
+      activate(t.dataset.task, true);
+      document.getElementById("sections").scrollIntoView({ block: "start" });
+    });
+  });
+  window.addEventListener("hashchange", function () { activate(location.hash.slice(1), false); });
+  activate(location.hash.slice(1) || (tabs[0] && tabs[0].dataset.task) || "", false);
+
+  document.querySelectorAll(".copy").forEach(function (btn) {
+    btn.addEventListener("click", function (ev) {
+      ev.preventDefault(); ev.stopPropagation();
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(btn.dataset.cmd).catch(function () {});
+      }
+      btn.textContent = "Copied";
+      setTimeout(function () { btn.textContent = "Copy"; }, 1200);
+    });
+  });
+
+  document.querySelectorAll(".filter").forEach(function (inp) {
+    inp.addEventListener("input", function () {
+      var q = inp.value.toLowerCase();
+      inp.parentElement.querySelectorAll(".chip").forEach(function (chip) {
+        chip.style.display = !q || chip.dataset.name.indexOf(q) !== -1 ? "" : "none";
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

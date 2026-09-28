@@ -1,0 +1,65 @@
+{
+  "task": "forecasting",
+  "entries": [
+    {
+      "id": "forecasting-dlinear-etth1-96",
+      "algorithm": "registered-forecasting-DLinearForecaster",
+      "algorithm_name": "DLinear",
+      "dataset": "hf-etth1",
+      "dataset_name": "ETTh1",
+      "metric": "MSE",
+      "metric_key": "MSE",
+      "value": 0.375,
+      "settings": "Multivariate LTSF-Linear protocol; look-back L=336, horizon 96; z-score normalized; test-set MSE averaged over 7 channels and rolling origins over the 4-month test split",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTh1/96, DLinear* (authors' own run)"
+      },
+      "command": "python playground/labts.py run --task forecasting --algorithm registered-forecasting-DLinearForecaster --dataset hf-etth1 --param seq_len=336 --param pred_len=96 --param horizon=96 --metric mse --compact",
+      "tolerance": {"type": "relative", "value": 0.15},
+      "notes": "Protocol gap: paper trains on a 12-month split and evaluates rolling-origin over the 4-month test set across all 7 channels; labts trains on all but the last 96 points and scores a single univariate origin with num_epochs=3. Expect deviation until rolling-origin multivariate evaluation lands."
+    },
+    {
+      "id": "forecasting-dlinear-weather-96",
+      "algorithm": "registered-forecasting-DLinearForecaster",
+      "algorithm_name": "DLinear",
+      "dataset": "hf-weather",
+      "dataset_name": "Weather",
+      "metric": "MSE",
+      "metric_key": "MSE",
+      "value": 0.176,
+      "settings": "Multivariate LTSF-Linear protocol; look-back L=336, horizon 96; z-score normalized; test-set MSE averaged over 21 channels and rolling origins",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row Weather/96, DLinear*"
+      },
+      "command": "python playground/labts.py run --task forecasting --algorithm registered-forecasting-DLinearForecaster --dataset hf-weather --param seq_len=336 --param pred_len=96 --param horizon=96 --metric mse --compact",
+      "tolerance": {"type": "relative", "value": 0.15},
+      "notes": "Same protocol gap as the ETTh1 entry (univariate single-origin holdout vs multivariate rolling-origin test)."
+    },
+    {
+      "id": "forecasting-autoformer-etth1-96",
+      "algorithm": "registered-forecasting-AutoformerForecaster",
+      "algorithm_name": "Autoformer",
+      "dataset": "hf-etth1",
+      "dataset_name": "ETTh1",
+      "metric": "MSE",
+      "metric_key": "MSE",
+      "value": 0.449,
+      "settings": "Multivariate LTSF protocol; look-back L=96 (Transformers), horizon 96; z-score normalized; test-set MSE",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTh1/96, Autoformer (quoted from the FEDformer paper, ICML 2022; identical to Autoformer paper's own value)"
+      },
+      "command": "python playground/labts.py run --task forecasting --algorithm registered-forecasting-AutoformerForecaster --dataset hf-etth1 --param seq_len=96 --param pred_len=96 --param horizon=96 --metric mse --compact",
+      "tolerance": {"type": "relative", "value": 0.2},
+      "notes": "Same protocol gap as the DLinear entries; also num_epochs=3 default (paper trains to convergence)."
+    }
+  ]
+}

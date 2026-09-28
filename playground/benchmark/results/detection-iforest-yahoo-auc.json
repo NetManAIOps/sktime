@@ -1,0 +1,23 @@
+{
+  "id": "detection-iforest-yahoo-auc",
+  "task": "anomaly_detection",
+  "ran_at": "2026-09-28T09:43:15.865451+00:00",
+  "command": "python playground/labts.py run --task anomaly_detection --algorithm registered-anomaly_detection-PyODIForestDetector --dataset yahoo --metric auc_roc --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 13.0,
+  "value": 0.9076391886059559,
+  "delta": 0.287639,
+  "delta_rel": 0.463934,
+  "status": "deviation",
+  "metrics": {
+    "Precision": 0.04,
+    "Recall": 0.5714285714285714,
+    "F1": 0.07476635514018691,
+    "Detected": 100,
+    "Ground Truth": 7,
+    "AUC-ROC": 0.9076391886059559
+  },
+  "error": null,
+  "stdout_tail": "{\"api\": \"labts\", \"api_version\": \"1.0\", \"kind\": \"result\", \"status\": \"ok\", \"data\": {\"status\": \"ok\", \"metrics\": {\"Precision\": 0.04, \"Recall\": 0.5714285714285714, \"F1\": 0.07476635514018691, \"Detected\": 100, \"Ground Truth\": 7, \"AUC-ROC\": 0.9076391886059559}, \"summary\": \"Detected 100 anomalies against 7 labels with PyODIForestDetector.\", \"run_id\": \"93a6a96d0cb4\", \"spec\": {\"task\": \"anomaly_detection\", \"dataset_id\": \"yahoo\", \"algorithm_id\": \"registered-anomaly_detection-PyODIForestDetector\", \"preprocessor_id\": \"none\", \"preprocessors\": [], \"params\": {}, \"preprocessor_params\": {}, \"metrics\": [\"auc_roc\"]}, \"task\": \"anomaly_detection\", \"dataset\": {\"id\": \"yahoo\", \"name\": \"Yahoo Anomaly\", \"task\": \"anomaly_detection\", \"source\": \"local\", \"path\": \"sktime/datasets/data/yahoo/yahoo.csv\", \"enabled\": true, \"default\": true}, \"algorithm\": {\"id\": \"registered-anomaly_detection-PyODIForestDetector\", \"name\": \"PyODIForestDetector\", \"task\": \"anomaly_detection\", \"module\": \"sktime.detection.adapters.pyod.PyODIForestDetector\", \"class_name\": \"PyODIForestDetector\", \"curated\": false, \"python_dependencies\": \"pyod\", \"subtype\": \"point_anomaly\", \"enabled\": true, \"params\": {\"contamination\": 0.1, \"n_estimators\": 100}, \"accepts_estimators\": [\"n_estimators\"]}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"preprocessors\": [], \"duration_ms\": 11043.9, \"log\": [\"Selected task: anomaly_detection\", \"Selected dataset: Yahoo Anomaly\", \"Selected preprocessor: Identity / none\", \"Selected algorithm: PyODIForestDetector\", \"Estimator: PyODIForestDetector params=defaults\", \"Loaded Yahoo Anomaly rows=1000\", \"Finished in 11043.9 ms\"]}, \"error\": null}\n"
+}

@@ -1,0 +1,25 @@
+Graph Nodes:
+raf;mek;plc;pip2;pip3;erk;akt;pka;pkc;p38;jnk
+
+Graph Edges:
+1. erk --> akt
+2. mek --> erk
+3. pip2 --> pkc
+4. pip3 --> akt
+5. pip3 --> pip2
+6. pip3 --> plc
+7. pka --> akt
+8. pka --> erk
+9. pka --> jnk
+10. pka --> mek
+11. pka --> p38
+12. pka --> raf
+13. pkc --> jnk
+14. pkc --> mek
+15. pkc --> p38
+16. pkc --> pka
+17. pkc --> raf
+18. plc --> pip2
+19. plc --> pkc
+20. raf --> mek
+

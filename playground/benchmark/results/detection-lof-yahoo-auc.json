@@ -1,0 +1,23 @@
+{
+  "id": "detection-lof-yahoo-auc",
+  "task": "anomaly_detection",
+  "ran_at": "2026-09-28T09:43:02.868809+00:00",
+  "command": "python playground/labts.py run --task anomaly_detection --algorithm registered-anomaly_detection-PyODLOFDetector --dataset yahoo --metric auc_roc --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 13.34,
+  "value": 0.6819162710401381,
+  "delta": -0.178084,
+  "delta_rel": 0.207074,
+  "status": "deviation",
+  "metrics": {
+    "Precision": 0.04819277108433735,
+    "Recall": 0.5714285714285714,
+    "F1": 0.08888888888888889,
+    "Detected": 83,
+    "Ground Truth": 7,
+    "AUC-ROC": 0.6819162710401381
+  },
+  "error": null,
+  "stdout_tail": "{\"api\": \"labts\", \"api_version\": \"1.0\", \"kind\": \"result\", \"status\": \"ok\", \"data\": {\"status\": \"ok\", \"metrics\": {\"Precision\": 0.04819277108433735, \"Recall\": 0.5714285714285714, \"F1\": 0.08888888888888889, \"Detected\": 83, \"Ground Truth\": 7, \"AUC-ROC\": 0.6819162710401381}, \"summary\": \"Detected 83 anomalies against 7 labels with PyODLOFDetector.\", \"run_id\": \"b5f7d39dd337\", \"spec\": {\"task\": \"anomaly_detection\", \"dataset_id\": \"yahoo\", \"algorithm_id\": \"registered-anomaly_detection-PyODLOFDetector\", \"preprocessor_id\": \"none\", \"preprocessors\": [], \"params\": {}, \"preprocessor_params\": {}, \"metrics\": [\"auc_roc\"]}, \"task\": \"anomaly_detection\", \"dataset\": {\"id\": \"yahoo\", \"name\": \"Yahoo Anomaly\", \"task\": \"anomaly_detection\", \"source\": \"local\", \"path\": \"sktime/datasets/data/yahoo/yahoo.csv\", \"enabled\": true, \"default\": true}, \"algorithm\": {\"id\": \"registered-anomaly_detection-PyODLOFDetector\", \"name\": \"PyODLOFDetector\", \"task\": \"anomaly_detection\", \"module\": \"sktime.detection.adapters.pyod.PyODLOFDetector\", \"class_name\": \"PyODLOFDetector\", \"curated\": false, \"python_dependencies\": \"pyod\", \"subtype\": \"point_anomaly\", \"enabled\": true, \"params\": {\"contamination\": 0.1, \"n_neighbors\": 20}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"preprocessors\": [], \"duration_ms\": 10852.6, \"log\": [\"Selected task: anomaly_detection\", \"Selected dataset: Yahoo Anomaly\", \"Selected preprocessor: Identity / none\", \"Selected algorithm: PyODLOFDetector\", \"Estimator: PyODLOFDetector params=defaults\", \"Loaded Yahoo Anomaly rows=1000\", \"Finished in 10852.6 ms\"]}, \"error\": null}\n"
+}

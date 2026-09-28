@@ -1,0 +1,23 @@
+{
+  "id": "causal-notears-sachs-shd",
+  "task": "causal",
+  "ran_at": "2026-09-28T09:43:46.100389+00:00",
+  "command": "python playground/labts.py run --task causal --algorithm causal-notears --dataset causal-sachs-cont --param max_samples=7466 --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 16.52,
+  "value": 23.0,
+  "delta": 1.0,
+  "delta_rel": 0.045455,
+  "status": "reproduced",
+  "metrics": {
+    "SHD": 23,
+    "Edge Precision": 0.3333333333333333,
+    "Edge Recall": 0.4,
+    "Edge F1": 0.3636363636363636,
+    "Edges": 24,
+    "True Edges": 20
+  },
+  "error": null,
+  "stdout_tail": "\"pkc\", \"type\": \"directed\", \"in_true_graph\": false}, {\"source\": \"erk\", \"target\": \"jnk\", \"type\": \"directed\", \"in_true_graph\": false}, {\"source\": \"akt\", \"target\": \"raf\", \"type\": \"directed\", \"in_true_graph\": false}, {\"source\": \"akt\", \"target\": \"plc\", \"type\": \"directed\", \"in_true_graph\": false}, {\"source\": \"pkc\", \"target\": \"pka\", \"type\": \"directed\", \"in_true_graph\": true}, {\"source\": \"pkc\", \"target\": \"p38\", \"type\": \"directed\", \"in_true_graph\": true}, {\"source\": \"pkc\", \"target\": \"jnk\", \"type\": \"directed\", \"in_true_graph\": true}, {\"source\": \"p38\", \"target\": \"pka\", \"type\": \"directed\", \"in_true_graph\": false}]}, \"summary\": \"Discovered 24 edges (20 true) with NOTEARS: SHD=23, edge F1=0.364.\", \"run_id\": \"4e35c936a4b8\", \"spec\": {\"task\": \"causal\", \"dataset_id\": \"causal-sachs-cont\", \"algorithm_id\": \"causal-notears\", \"preprocessor_id\": \"none\", \"preprocessors\": [], \"params\": {\"max_samples\": 7466}, \"preprocessor_params\": {}}, \"task\": \"causal\", \"dataset\": {\"id\": \"causal-sachs-cont\", \"name\": \"Sachs continuous (7466×11, 20-edge DAG)\", \"task\": \"causal\", \"source\": \"local\", \"loader\": \"domain_runners.load_sachs_continuous\", \"true_graph\": true, \"enabled\": true}, \"algorithm\": {\"id\": \"causal-notears\", \"name\": \"NOTEARS\", \"task\": \"causal\", \"module\": \"sktime.causal_discovery.notears.NOTEARS\", \"enabled\": true, \"template\": \"NOTEARS(lambda1=lambda1, w_threshold=w_threshold)\", \"params\": {\"lambda1\": 0.01, \"w_threshold\": 0.3, \"max_samples\": 2000}, \"curated\": true, \"class_name\": \"NOTEARS\"}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"preprocessors\": [], \"duration_ms\": 16216.0, \"log\": [\"Selected task: causal\", \"Selected dataset: Sachs continuous (7466×11, 20-edge DAG)\", \"Selected preprocessor: Identity / none\", \"Selected algorithm: NOTEARS\", \"Estimator: NOTEARS params=defaults\", \"Loaded Sachs continuous (7466×11, 20-edge DAG) samples=7466 variables=11 true_edges=20\", \"Finished in 16216.0 ms\"]}, \"error\": null}\n"
+}
