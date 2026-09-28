@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated_at": "2026-09-28T06:19:42.604177+00:00",
+    "generated_at": "2026-09-28T07:07:00.501186+00:00",
     "source": "playground.catalog.build_catalog",
     "refresh": "python playground/catalog.py (also refreshed on playground/server.py startup)",
     "note": "Static snapshot; may lag behind a running server. Regenerate to refresh."
@@ -474,6 +474,24 @@
         "model_path"
       ],
       "requires_constructor_params": true
+    },
+    {
+      "id": "registered-forecasting-ChronosPlaygroundForecaster",
+      "name": "ChronosPlaygroundForecaster",
+      "task": "forecasting",
+      "module": "sktime.forecasting.fm_playground.ChronosPlaygroundForecaster",
+      "class_name": "ChronosPlaygroundForecaster",
+      "curated": false,
+      "python_dependencies": [
+        "torch",
+        "transformers",
+        "accelerate"
+      ],
+      "enabled": true,
+      "params": {
+        "horizon": 12,
+        "context_window": 36
+      }
     },
     {
       "id": "registered-forecasting-ColumnEnsembleForecaster",
@@ -2632,6 +2650,25 @@
       "task": "forecasting",
       "module": "sktime.forecasting.ttm.TinyTimeMixerForecaster",
       "class_name": "TinyTimeMixerForecaster",
+      "curated": false,
+      "python_dependencies": [
+        "transformers",
+        "torch",
+        "accelerate>=0.26.0"
+      ],
+      "enabled": true,
+      "params": {
+        "horizon": 12,
+        "context_window": 36,
+        "validation_split": 0.2
+      }
+    },
+    {
+      "id": "registered-forecasting-TinyTimeMixerPlaygroundForecaster",
+      "name": "TinyTimeMixerPlaygroundForecaster",
+      "task": "forecasting",
+      "module": "sktime.forecasting.fm_playground.TinyTimeMixerPlaygroundForecaster",
+      "class_name": "TinyTimeMixerPlaygroundForecaster",
       "curated": false,
       "python_dependencies": [
         "transformers",
@@ -5442,7 +5479,7 @@
       "class_name": "Algorithm",
       "curated": false,
       "user": true,
-      "plugin_file": "/home/xiezhe/sktime/.tower/worktrees/wt-1/playground/experiments/ecod_direct.py",
+      "plugin_file": "/home/xiezhe/sktime/playground/experiments/ecod_direct.py",
       "name": "ecod-direct",
       "enabled": true,
       "params": {
@@ -5457,7 +5494,7 @@
       "class_name": "Algorithm",
       "curated": false,
       "user": true,
-      "plugin_file": "/home/xiezhe/sktime/.tower/worktrees/wt-1/playground/experiments/my_ecod.py",
+      "plugin_file": "/home/xiezhe/sktime/playground/experiments/my_ecod.py",
       "name": "my_ecod",
       "enabled": true,
       "params": {
@@ -5473,7 +5510,7 @@
       "class_name": "Algorithm",
       "curated": false,
       "user": true,
-      "plugin_file": "/home/xiezhe/sktime/.tower/worktrees/wt-1/playground/experiments/my_subpca.py",
+      "plugin_file": "/home/xiezhe/sktime/playground/experiments/my_subpca.py",
       "name": "my_subpca",
       "enabled": true,
       "params": {
@@ -5490,7 +5527,7 @@
       "class_name": "Algorithm",
       "curated": false,
       "user": true,
-      "plugin_file": "/home/xiezhe/sktime/.tower/worktrees/wt-1/playground/experiments/my_timesnet.py",
+      "plugin_file": "/home/xiezhe/sktime/playground/experiments/my_timesnet.py",
       "name": "my_timesnet",
       "enabled": true,
       "params": {
@@ -5523,7 +5560,7 @@
       "class_name": "Algorithm",
       "curated": false,
       "user": true,
-      "plugin_file": "/home/xiezhe/sktime/.tower/worktrees/wt-1/playground/experiments/seasonal_ma.py",
+      "plugin_file": "/home/xiezhe/sktime/playground/experiments/seasonal_ma.py",
       "name": "seasonal-moving-average",
       "enabled": true,
       "params": {
@@ -12516,6 +12553,126 @@
     },
     {
       "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ChronosPlaygroundForecaster",
+      "dataset_id": "airline"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ChronosPlaygroundForecaster",
+      "dataset_id": "shampoo-sales"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ChronosPlaygroundForecaster",
+      "dataset_id": "lynx"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ChronosPlaygroundForecaster",
+      "dataset_id": "hf-aqshunyi"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ChronosPlaygroundForecaster",
+      "dataset_id": "hf-covid-19"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ChronosPlaygroundForecaster",
+      "dataset_id": "hf-czelan"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ChronosPlaygroundForecaster",
+      "dataset_id": "hf-etth1"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ChronosPlaygroundForecaster",
+      "dataset_id": "hf-etth2"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ChronosPlaygroundForecaster",
+      "dataset_id": "hf-ettm1"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ChronosPlaygroundForecaster",
+      "dataset_id": "hf-ettm2"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ChronosPlaygroundForecaster",
+      "dataset_id": "hf-electricity"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ChronosPlaygroundForecaster",
+      "dataset_id": "hf-exchange"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ChronosPlaygroundForecaster",
+      "dataset_id": "hf-fred-md"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ChronosPlaygroundForecaster",
+      "dataset_id": "hf-ili"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ChronosPlaygroundForecaster",
+      "dataset_id": "hf-nasdaq"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ChronosPlaygroundForecaster",
+      "dataset_id": "hf-nn5"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ChronosPlaygroundForecaster",
+      "dataset_id": "hf-nyse"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ChronosPlaygroundForecaster",
+      "dataset_id": "hf-pems08"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ChronosPlaygroundForecaster",
+      "dataset_id": "hf-solar"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ChronosPlaygroundForecaster",
+      "dataset_id": "hf-traffic"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ChronosPlaygroundForecaster",
+      "dataset_id": "hf-weather"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ChronosPlaygroundForecaster",
+      "dataset_id": "hf-wike2000"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ChronosPlaygroundForecaster",
+      "dataset_id": "hf-wind"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-ChronosPlaygroundForecaster",
+      "dataset_id": "hf-zafnoo"
+    },
+    {
+      "task": "forecasting",
       "algorithm_id": "registered-forecasting-ColumnEnsembleForecaster",
       "dataset_id": "airline"
     },
@@ -21992,6 +22149,126 @@
     {
       "task": "forecasting",
       "algorithm_id": "registered-forecasting-TinyTimeMixerForecaster",
+      "dataset_id": "hf-zafnoo"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TinyTimeMixerPlaygroundForecaster",
+      "dataset_id": "airline"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TinyTimeMixerPlaygroundForecaster",
+      "dataset_id": "shampoo-sales"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TinyTimeMixerPlaygroundForecaster",
+      "dataset_id": "lynx"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TinyTimeMixerPlaygroundForecaster",
+      "dataset_id": "hf-aqshunyi"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TinyTimeMixerPlaygroundForecaster",
+      "dataset_id": "hf-covid-19"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TinyTimeMixerPlaygroundForecaster",
+      "dataset_id": "hf-czelan"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TinyTimeMixerPlaygroundForecaster",
+      "dataset_id": "hf-etth1"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TinyTimeMixerPlaygroundForecaster",
+      "dataset_id": "hf-etth2"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TinyTimeMixerPlaygroundForecaster",
+      "dataset_id": "hf-ettm1"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TinyTimeMixerPlaygroundForecaster",
+      "dataset_id": "hf-ettm2"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TinyTimeMixerPlaygroundForecaster",
+      "dataset_id": "hf-electricity"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TinyTimeMixerPlaygroundForecaster",
+      "dataset_id": "hf-exchange"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TinyTimeMixerPlaygroundForecaster",
+      "dataset_id": "hf-fred-md"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TinyTimeMixerPlaygroundForecaster",
+      "dataset_id": "hf-ili"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TinyTimeMixerPlaygroundForecaster",
+      "dataset_id": "hf-nasdaq"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TinyTimeMixerPlaygroundForecaster",
+      "dataset_id": "hf-nn5"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TinyTimeMixerPlaygroundForecaster",
+      "dataset_id": "hf-nyse"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TinyTimeMixerPlaygroundForecaster",
+      "dataset_id": "hf-pems08"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TinyTimeMixerPlaygroundForecaster",
+      "dataset_id": "hf-solar"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TinyTimeMixerPlaygroundForecaster",
+      "dataset_id": "hf-traffic"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TinyTimeMixerPlaygroundForecaster",
+      "dataset_id": "hf-weather"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TinyTimeMixerPlaygroundForecaster",
+      "dataset_id": "hf-wike2000"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TinyTimeMixerPlaygroundForecaster",
+      "dataset_id": "hf-wind"
+    },
+    {
+      "task": "forecasting",
+      "algorithm_id": "registered-forecasting-TinyTimeMixerPlaygroundForecaster",
       "dataset_id": "hf-zafnoo"
     },
     {
