@@ -78,6 +78,81 @@
       "spec_params": {},
       "train_command": "python playground/labts.py train --algorithm registered-anomaly_detection-PyODIForestDetector --dataset tsb-mitdb --model-id bench-detection-iforest-mitdb-auc --param contamination=0.1 --param n_estimators=100",
       "run_command": "python playground/labts.py run --model-id bench-detection-iforest-mitdb-auc --compact"
+    },
+    {
+      "id": "detection-hbos-yahoo-auc",
+      "algorithm": "registered-anomaly_detection-PyODHBOSDetector",
+      "algorithm_name": "HBOS",
+      "dataset": "tsb-yahoo",
+      "dataset_name": "YAHOO (TSB-UAD, 367 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.57
+      },
+      "settings": "Unsupervised fit per series; sliding-window embedding; point-wise AUC-ROC averaged over all 367 YAHOO series",
+      "source": {
+        "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
+        "venue": "PVLDB 15(8):1697-1711, 2022",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "README 'Overall Results' table, row YAHOO, column HBOS (AUC 0.57, F 0.07)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "spec_params": {},
+      "train_command": "python playground/labts.py train --algorithm registered-anomaly_detection-PyODHBOSDetector --dataset tsb-yahoo --model-id bench-detection-hbos-yahoo-auc --param contamination=0.1 --param n_bins=10",
+      "run_command": "python playground/labts.py run --model-id bench-detection-hbos-yahoo-auc --compact"
+    },
+    {
+      "id": "detection-ocsvm-yahoo-auc",
+      "algorithm": "registered-anomaly_detection-PyODOCSVMDetector",
+      "algorithm_name": "OCSVM",
+      "dataset": "tsb-yahoo",
+      "dataset_name": "YAHOO (TSB-UAD, 367 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.5
+      },
+      "settings": "Unsupervised fit per series; sliding-window embedding; point-wise AUC-ROC averaged over all 367 YAHOO series",
+      "source": {
+        "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
+        "venue": "PVLDB 15(8):1697-1711, 2022",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "README 'Overall Results' table, row YAHOO, column OCSVM (AUC 0.5, F 0.03)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "spec_params": {},
+      "train_command": "python playground/labts.py train --algorithm registered-anomaly_detection-PyODOCSVMDetector --dataset tsb-yahoo --model-id bench-detection-ocsvm-yahoo-auc --param contamination=0.1 --param nu=0.5",
+      "run_command": "python playground/labts.py run --model-id bench-detection-ocsvm-yahoo-auc --compact"
+    },
+    {
+      "id": "detection-hbos-mitdb-auc",
+      "algorithm": "registered-anomaly_detection-PyODHBOSDetector",
+      "algorithm_name": "HBOS",
+      "dataset": "tsb-mitdb",
+      "dataset_name": "MITDB (TSB-UAD, 32 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.7
+      },
+      "settings": "Unsupervised fit per series; sliding-window embedding; point-wise AUC-ROC averaged over all 32 MITDB series",
+      "source": {
+        "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
+        "venue": "PVLDB 15(8):1697-1711, 2022",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "README 'Overall Results' table, row MITDB, column HBOS (AUC 0.7, F 0.07)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "spec_params": {},
+      "train_command": "python playground/labts.py train --algorithm registered-anomaly_detection-PyODHBOSDetector --dataset tsb-mitdb --model-id bench-detection-hbos-mitdb-auc --param contamination=0.1 --param n_bins=10",
+      "run_command": "python playground/labts.py run --model-id bench-detection-hbos-mitdb-auc --compact"
     }
   ]
 }

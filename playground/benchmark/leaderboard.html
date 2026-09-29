@@ -211,7 +211,7 @@
        Click a row for the citation, protocol, and commands.</p>
   </section>
 
-  <section class="stats" id="stats"><div class="stat"><div class="num">298</div><div class="lbl">algorithms tracked</div></div><div class="stat"><div class="num">24</div><div class="lbl">groundtruth claims</div></div><div class="stat"><div class="num">20/24</div><div class="lbl">claims reproduced</div></div><div class="stat"><div class="num">83.3%</div><div class="lbl">reproduction rate</div></div></section>
+  <section class="stats" id="stats"><div class="stat"><div class="num">298</div><div class="lbl">algorithms tracked</div></div><div class="stat"><div class="num">34</div><div class="lbl">groundtruth claims</div></div><div class="stat"><div class="num">28/34</div><div class="lbl">claims reproduced</div></div><div class="stat"><div class="num">82.4%</div><div class="lbl">reproduction rate</div></div></section>
 
   <nav class="tabs" id="tabs"><a class="tab" href="#forecasting" data-task="forecasting">Forecasting<span class="cnt">138</span></a><a class="tab" href="#classification" data-task="classification">Classification<span class="cnt">66</span></a><a class="tab" href="#regression" data-task="regression">Regression<span class="cnt">22</span></a><a class="tab" href="#clustering" data-task="clustering">Clustering<span class="cnt">10</span></a><a class="tab" href="#anomaly_detection" data-task="anomaly_detection">Anomaly Detection<span class="cnt">58</span></a><a class="tab" href="#causal" data-task="causal">Causal Discovery<span class="cnt">4</span></a></nav>
 
@@ -223,7 +223,7 @@
   </div>
   <div class="panel-sub">131 of 138 algorithms runnable in this environment</div>
 
-  <div class="section-label">Tracked claims (12)</div>
+  <div class="section-label">Tracked claims (19)</div>
   <div class="claim-groups">
 <details class="claim-group">
   <summary>
@@ -786,6 +786,343 @@
     </div>
   </div>
 </details></div>
+</details>
+<details class="claim-group">
+  <summary>
+    <div class="alg">NLinear<span class="lib">AAAI 2023</span></div>
+    <div class="grp-note">5 dataset/config claims</div>
+    <div style="display:flex;align-items:center;justify-content:flex-end;gap:10px">
+      <span class="status reproduced"><span class="dot"></span>5/5 configs reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="group-body">
+<details class="claim">
+  <summary>
+    <div class="ds">ETTh1<span class="win">horizon 96 · lookback 336</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">MSE</span> 0.374→0.3881 ✓</span><span class="m-ok"><span class="m-name">MAE</span> 0.394→0.4043 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">python playground/labts.py train --algorithm registered-forecasting-NLinearForecaster --dataset hf-etth1 --model-id bench-forecasting-nlinear-etth1-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3<button class="copy" data-cmd="python playground/labts.py train --algorithm registered-forecasting-NLinearForecaster --dataset hf-etth1 --model-id bench-forecasting-nlinear-etth1-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">python playground/labts.py run --model-id bench-forecasting-nlinear-etth1-96 --compact<button class="copy" data-cmd="python playground/labts.py run --model-id bench-forecasting-nlinear-etth1-96 --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://arxiv.org/html/2205.13504v3" target="_blank" rel="noopener">Are Transformers Effective for Time Series Forecasting? (Zeng et al.)</a><br/>
+          AAAI 2023 · Table 2, row ETTh1/96, NLinear* (authors&#x27; own run)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±10% relative</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-09-29 11:15:15 UTC · 23.6s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Protocol matched via labts rolling eval (train once, slide over the paper&#x27;s exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.</div>
+      </div>
+      
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;MAE&quot;: 0.40433336000281034, &quot;MSE&quot;: 0.3881303485290199, &quot;MAPE&quot;: 9.711059886374528, &quot;Windows&quot;: 2797}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">ETTh1<span class="win">horizon 192 · lookback 336</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">MSE</span> 0.408→0.4144 ✓</span><span class="m-ok"><span class="m-name">MAE</span> 0.415→0.4176 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">python playground/labts.py train --algorithm registered-forecasting-NLinearForecaster --dataset hf-etth1 --model-id bench-forecasting-nlinear-etth1-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3<button class="copy" data-cmd="python playground/labts.py train --algorithm registered-forecasting-NLinearForecaster --dataset hf-etth1 --model-id bench-forecasting-nlinear-etth1-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">python playground/labts.py run --model-id bench-forecasting-nlinear-etth1-192 --compact<button class="copy" data-cmd="python playground/labts.py run --model-id bench-forecasting-nlinear-etth1-192 --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://arxiv.org/html/2205.13504v3" target="_blank" rel="noopener">Are Transformers Effective for Time Series Forecasting? (Zeng et al.)</a><br/>
+          AAAI 2023 · Table 2, row ETTh1/192, NLinear* (authors&#x27; own run)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±10% relative</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-09-29 11:15:40 UTC · 24.2s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Protocol matched via labts rolling eval (train once, slide over the paper&#x27;s exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.</div>
+      </div>
+      
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;MAE&quot;: 0.4176101161934447, &quot;MSE&quot;: 0.4143857837625587, &quot;MAPE&quot;: 9.496204880557485, &quot;Windows&quot;: 2701}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">ETTh1<span class="win">horizon 336 · lookback 336</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">MSE</span> 0.429→0.4375 ✓</span><span class="m-ok"><span class="m-name">MAE</span> 0.427→0.434 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">python playground/labts.py train --algorithm registered-forecasting-NLinearForecaster --dataset hf-etth1 --model-id bench-forecasting-nlinear-etth1-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3<button class="copy" data-cmd="python playground/labts.py train --algorithm registered-forecasting-NLinearForecaster --dataset hf-etth1 --model-id bench-forecasting-nlinear-etth1-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">python playground/labts.py run --model-id bench-forecasting-nlinear-etth1-336 --compact<button class="copy" data-cmd="python playground/labts.py run --model-id bench-forecasting-nlinear-etth1-336 --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://arxiv.org/html/2205.13504v3" target="_blank" rel="noopener">Are Transformers Effective for Time Series Forecasting? (Zeng et al.)</a><br/>
+          AAAI 2023 · Table 2, row ETTh1/336, NLinear* (authors&#x27; own run)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±10% relative</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-09-29 11:16:05 UTC · 25.5s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Protocol matched via labts rolling eval (train once, slide over the paper&#x27;s exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.</div>
+      </div>
+      
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;MAE&quot;: 0.4339992575460002, &quot;MSE&quot;: 0.4374932443935415, &quot;MAPE&quot;: 9.23361496937739, &quot;Windows&quot;: 2557}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">ETTh1<span class="win">horizon 720 · lookback 336</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">MSE</span> 0.44→0.4443 ✓</span><span class="m-ok"><span class="m-name">MAE</span> 0.453→0.458 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">python playground/labts.py train --algorithm registered-forecasting-NLinearForecaster --dataset hf-etth1 --model-id bench-forecasting-nlinear-etth1-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3<button class="copy" data-cmd="python playground/labts.py train --algorithm registered-forecasting-NLinearForecaster --dataset hf-etth1 --model-id bench-forecasting-nlinear-etth1-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">python playground/labts.py run --model-id bench-forecasting-nlinear-etth1-720 --compact<button class="copy" data-cmd="python playground/labts.py run --model-id bench-forecasting-nlinear-etth1-720 --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://arxiv.org/html/2205.13504v3" target="_blank" rel="noopener">Are Transformers Effective for Time Series Forecasting? (Zeng et al.)</a><br/>
+          AAAI 2023 · Table 2, row ETTh1/720, NLinear* (authors&#x27; own run)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±10% relative</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-09-29 11:16:31 UTC · 25.9s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Protocol matched via labts rolling eval (train once, slide over the paper&#x27;s exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.</div>
+      </div>
+      
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;MAE&quot;: 0.45803676697581563, &quot;MSE&quot;: 0.444341714577384, &quot;MAPE&quot;: 9.685167197155579, &quot;Windows&quot;: 2173}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Weather<span class="win">horizon 96 · lookback 336</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">MSE</span> 0.182→0.1736 ✓</span><span class="m-ok"><span class="m-name">MAE</span> 0.232→0.2234 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">python playground/labts.py train --algorithm registered-forecasting-NLinearForecaster --dataset hf-weather --model-id bench-forecasting-nlinear-weather-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3<button class="copy" data-cmd="python playground/labts.py train --algorithm registered-forecasting-NLinearForecaster --dataset hf-weather --model-id bench-forecasting-nlinear-weather-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">python playground/labts.py run --model-id bench-forecasting-nlinear-weather-96 --compact<button class="copy" data-cmd="python playground/labts.py run --model-id bench-forecasting-nlinear-weather-96 --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://arxiv.org/html/2205.13504v3" target="_blank" rel="noopener">Are Transformers Effective for Time Series Forecasting? (Zeng et al.)</a><br/>
+          AAAI 2023 · Table 2, row Weather/96, NLinear* (authors&#x27; own run)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±10% relative</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-09-29 11:18:10 UTC · 48.9s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Protocol matched via labts rolling eval (train once, slide over the paper&#x27;s exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.</div>
+      </div>
+      
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;MAE&quot;: 0.2234489433576198, &quot;MSE&quot;: 0.17363854440671178, &quot;MAPE&quot;: 12.5112978849095, &quot;Windows&quot;: 10445}</div></div>
+    </div>
+  </div>
+</details></div>
+</details>
+<details class="claim-group">
+  <summary>
+    <div class="alg">Linear<span class="lib">AAAI 2023</span></div>
+    <div class="grp-note">2 dataset/config claims</div>
+    <div style="display:flex;align-items:center;justify-content:flex-end;gap:10px">
+      <span class="status deviation"><span class="dot"></span>1/2 configs reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="group-body">
+<details class="claim">
+  <summary>
+    <div class="ds">ETTh1<span class="win">horizon 96 · lookback 336</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">MSE</span> 0.375→0.3884 ✓</span><span class="m-ok"><span class="m-name">MAE</span> 0.397→0.4133 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">python playground/labts.py train --algorithm registered-forecasting-LinearForecaster --dataset hf-etth1 --model-id bench-forecasting-linear-etth1-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3<button class="copy" data-cmd="python playground/labts.py train --algorithm registered-forecasting-LinearForecaster --dataset hf-etth1 --model-id bench-forecasting-linear-etth1-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">python playground/labts.py run --model-id bench-forecasting-linear-etth1-96 --compact<button class="copy" data-cmd="python playground/labts.py run --model-id bench-forecasting-linear-etth1-96 --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://arxiv.org/html/2205.13504v3" target="_blank" rel="noopener">Are Transformers Effective for Time Series Forecasting? (Zeng et al.)</a><br/>
+          AAAI 2023 · Table 2, row ETTh1/96, Linear* (authors&#x27; own run)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±10% relative</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-09-29 11:16:54 UTC · 23.2s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Protocol matched via labts rolling eval (train once, slide over the paper&#x27;s exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.</div>
+      </div>
+      
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;MAE&quot;: 0.41328052339102095, &quot;MSE&quot;: 0.38837227986848477, &quot;MAPE&quot;: 8.747299144400547, &quot;Windows&quot;: 2797}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">ETTh1<span class="win">horizon 720 · lookback 336</span></div>
+    <div class="mline"><span class="m-bad"><span class="m-name">MSE</span> 0.624→0.4924 ✗</span><span class="m-bad"><span class="m-name">MAE</span> 0.592→0.5022 ✗</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status deviation"><span class="dot"></span>Deviation</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">python playground/labts.py train --algorithm registered-forecasting-LinearForecaster --dataset hf-etth1 --model-id bench-forecasting-linear-etth1-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3<button class="copy" data-cmd="python playground/labts.py train --algorithm registered-forecasting-LinearForecaster --dataset hf-etth1 --model-id bench-forecasting-linear-etth1-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">python playground/labts.py run --model-id bench-forecasting-linear-etth1-720 --compact<button class="copy" data-cmd="python playground/labts.py run --model-id bench-forecasting-linear-etth1-720 --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://arxiv.org/html/2205.13504v3" target="_blank" rel="noopener">Are Transformers Effective for Time Series Forecasting? (Zeng et al.)</a><br/>
+          AAAI 2023 · Table 2, row ETTh1/720, Linear* (authors&#x27; own run)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±10% relative</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-09-29 11:17:21 UTC · 26.8s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Protocol matched via labts rolling eval (train once, slide over the paper&#x27;s exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Our run lands BELOW the paper value (better): vanilla Linear is known to degrade at horizon 720 while our rolling protocol with train-statistics z-score stays stable.</div>
+      </div>
+      
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;MAE&quot;: 0.5022059972958494, &quot;MSE&quot;: 0.4924007268105196, &quot;MAPE&quot;: 9.843329575906958, &quot;Windows&quot;: 2173}</div></div>
+    </div>
+  </div>
+</details></div>
 </details></div>
 
   <div class="section-label">Catalog — all 138 forecasting algorithms</div>
@@ -1155,7 +1492,7 @@
   </div>
   <div class="panel-sub">58 of 58 algorithms runnable in this environment</div>
 
-  <div class="section-label">Tracked claims (3)</div>
+  <div class="section-label">Tracked claims (6)</div>
   <div class="claim-groups">
 <details class="claim-group">
   <summary>
@@ -1310,6 +1647,163 @@
       </div>
       
       <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;AUC-ROC&quot;: 0.6058284957794551, &quot;Precision&quot;: 0.20208207425299596, &quot;Recall&quot;: 0.2081382072049597, &quot;F1&quot;: 0.13950586153996042, &quot;Series&quot;: 32}</div></div>
+    </div>
+  </div>
+</details></div>
+</details>
+<details class="claim-group">
+  <summary>
+    <div class="alg">HBOS<span class="lib">PVLDB 15(8):1697-1711</span></div>
+    <div class="grp-note">2 dataset/config claims</div>
+    <div style="display:flex;align-items:center;justify-content:flex-end;gap:10px">
+      <span class="status deviation"><span class="dot"></span>1/2 configs reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="group-body">
+<details class="claim">
+  <summary>
+    <div class="ds">YAHOO (TSB-UAD, 367 series)<span class="win">per-series · dataset average</span></div>
+    <div class="mline"><span class="m-bad"><span class="m-name">AUC-ROC</span> 0.57→0.8082 ✗</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status deviation"><span class="dot"></span>Deviation</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">python playground/labts.py train --algorithm registered-anomaly_detection-PyODHBOSDetector --dataset tsb-yahoo --model-id bench-detection-hbos-yahoo-auc --param contamination=0.1 --param n_bins=10<button class="copy" data-cmd="python playground/labts.py train --algorithm registered-anomaly_detection-PyODHBOSDetector --dataset tsb-yahoo --model-id bench-detection-hbos-yahoo-auc --param contamination=0.1 --param n_bins=10">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">python playground/labts.py run --model-id bench-detection-hbos-yahoo-auc --compact<button class="copy" data-cmd="python playground/labts.py run --model-id bench-detection-hbos-yahoo-auc --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/TheDatumOrg/TSB-UAD" target="_blank" rel="noopener">TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)</a><br/>
+          PVLDB 15(8):1697-1711, 2022 · README &#x27;Overall Results&#x27; table, row YAHOO, column HBOS (AUC 0.57, F 0.07)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Unsupervised fit per series; sliding-window embedding; point-wise AUC-ROC averaged over all 367 YAHOO series</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.15 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-09-29 11:06:22 UTC · 26.1s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv"></div>
+      </div>
+      
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;AUC-ROC&quot;: 0.808205580327725, &quot;Precision&quot;: 0.1264356007197957, &quot;Recall&quot;: 0.5535190717671797, &quot;F1&quot;: 0.15853989045698522, &quot;Series&quot;: 367}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">MITDB (TSB-UAD, 32 series)<span class="win">per-series · dataset average</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">AUC-ROC</span> 0.7→0.5835 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">python playground/labts.py train --algorithm registered-anomaly_detection-PyODHBOSDetector --dataset tsb-mitdb --model-id bench-detection-hbos-mitdb-auc --param contamination=0.1 --param n_bins=10<button class="copy" data-cmd="python playground/labts.py train --algorithm registered-anomaly_detection-PyODHBOSDetector --dataset tsb-mitdb --model-id bench-detection-hbos-mitdb-auc --param contamination=0.1 --param n_bins=10">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">python playground/labts.py run --model-id bench-detection-hbos-mitdb-auc --compact<button class="copy" data-cmd="python playground/labts.py run --model-id bench-detection-hbos-mitdb-auc --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/TheDatumOrg/TSB-UAD" target="_blank" rel="noopener">TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)</a><br/>
+          PVLDB 15(8):1697-1711, 2022 · README &#x27;Overall Results&#x27; table, row MITDB, column HBOS (AUC 0.7, F 0.07)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Unsupervised fit per series; sliding-window embedding; point-wise AUC-ROC averaged over all 32 MITDB series</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.15 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-09-29 11:08:34 UTC · 41.6s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv"></div>
+      </div>
+      
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;AUC-ROC&quot;: 0.5835010770424021, &quot;Precision&quot;: 0.19051405826758774, &quot;Recall&quot;: 0.1538205444392119, &quot;F1&quot;: 0.1102072788720638, &quot;Series&quot;: 32}</div></div>
+    </div>
+  </div>
+</details></div>
+</details>
+<details class="claim-group">
+  <summary>
+    <div class="alg">OCSVM<span class="lib">PVLDB 15(8):1697-1711</span></div>
+    <div class="grp-note">1 dataset/config claim</div>
+    <div style="display:flex;align-items:center;justify-content:flex-end;gap:10px">
+      <span class="status reproduced"><span class="dot"></span>1/1 configs reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="group-body">
+<details class="claim">
+  <summary>
+    <div class="ds">YAHOO (TSB-UAD, 367 series)<span class="win">per-series · dataset average</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">AUC-ROC</span> 0.5→0.5894 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">python playground/labts.py train --algorithm registered-anomaly_detection-PyODOCSVMDetector --dataset tsb-yahoo --model-id bench-detection-ocsvm-yahoo-auc --param contamination=0.1 --param nu=0.5<button class="copy" data-cmd="python playground/labts.py train --algorithm registered-anomaly_detection-PyODOCSVMDetector --dataset tsb-yahoo --model-id bench-detection-ocsvm-yahoo-auc --param contamination=0.1 --param nu=0.5">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">python playground/labts.py run --model-id bench-detection-ocsvm-yahoo-auc --compact<button class="copy" data-cmd="python playground/labts.py run --model-id bench-detection-ocsvm-yahoo-auc --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/TheDatumOrg/TSB-UAD" target="_blank" rel="noopener">TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)</a><br/>
+          PVLDB 15(8):1697-1711, 2022 · README &#x27;Overall Results&#x27; table, row YAHOO, column OCSVM (AUC 0.5, F 0.03)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Unsupervised fit per series; sliding-window embedding; point-wise AUC-ROC averaged over all 367 YAHOO series</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.15 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-09-29 11:07:52 UTC · 90.8s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv"></div>
+      </div>
+      
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;AUC-ROC&quot;: 0.5894081192933259, &quot;Precision&quot;: 0.019646374861815783, &quot;Recall&quot;: 0.2225948887582347, &quot;F1&quot;: 0.03134604447943897, &quot;Series&quot;: 367}</div></div>
     </div>
   </div>
 </details></div>
@@ -1503,7 +1997,7 @@
 </section></div>
 
   <footer>
-    Built by labts · state generated 2026-09-29 09:54:03 UTC · groundtruth curated under
+    Built by labts · state generated 2026-09-29 11:18:37 UTC · groundtruth curated under
     <code>playground/benchmark/groundtruth/</code> ·
     re-run with <code>python playground/benchmark/reproduce.py</code> ·
     refresh with <code>python playground/benchmark/build_state.py</code>

@@ -206,7 +206,7 @@ def render_claim(entry: dict) -> str:
       </div>
       <div>
         <div class="kv-label">Protocol (as reported)</div>
-        <div class="kv">{esc(entry['settings'])}</div>
+        <div class="kv">{esc(entry.get('settings', ''))}</div>
       </div>
       <div>
         <div class="kv-label">Tolerance</div>
@@ -218,7 +218,7 @@ def render_claim(entry: dict) -> str:
       </div>
       <div class="full">
         <div class="kv-label">Notes</div>
-        <div class="kv">{esc(entry['notes'])}</div>
+        <div class="kv">{esc(entry.get('notes', ''))}</div>
       </div>
       {error_html}
       {metrics_html}

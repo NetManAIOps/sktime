@@ -502,6 +502,34 @@ class DLinearForecaster(BaseTSLibForecaster):
     _model_name = "DLinear"
 
 
+class NLinearForecaster(BaseTSLibForecaster):
+    """NLinear (last-value normalized linear) forecaster from TSLib.
+
+    Vendored from THUML Time-Series-Library (models/NLinear.py) [1]_.
+
+    References
+    ----------
+    .. [1] Zeng A, Chen M, Zhang L, Xu Q. 2023. Are transformers effective for
+       time series forecasting? AAAI 2023.
+    """
+
+    _model_name = "NLinear"
+
+
+class LinearForecaster(BaseTSLibForecaster):
+    """Vanilla one-layer linear forecaster from TSLib.
+
+    Vendored from THUML Time-Series-Library (models/Linear.py) [1]_.
+
+    References
+    ----------
+    .. [1] Zeng A, Chen M, Zhang L, Xu Q. 2023. Are transformers effective for
+       time series forecasting? AAAI 2023.
+    """
+
+    _model_name = "Linear"
+
+
 class TimesNetForecaster(BaseTSLibForecaster):
     """TimesNet forecaster from TSLib (temporal 2D-variation modeling) [1]_.
 
