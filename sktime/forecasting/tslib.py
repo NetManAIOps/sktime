@@ -123,6 +123,8 @@ class BaseTSLibForecaster(BaseDeepNetworkPyTorch):
         num_epochs=3,
         batch_size=32,
         lr=1e-3,
+        lr_decay=1.0,
+        device="auto",
         criterion=None,
         criterion_kwargs=None,
         optimizer=None,
@@ -145,6 +147,8 @@ class BaseTSLibForecaster(BaseDeepNetworkPyTorch):
         self.top_k = top_k
         self.num_kernels = num_kernels
         self.channel_independence = channel_independence
+        self.lr_decay = lr_decay
+        self.device = device
 
         super().__init__(
             num_epochs=num_epochs,
@@ -246,6 +250,12 @@ class BaseTSLibForecaster(BaseDeepNetworkPyTorch):
     # ------------------------------------------------------------------
     # fit / predict
     # ------------------------------------------------------------------
+    def _resolve_device(self) -> str:
+        """Runtime torch device; "auto" picks CUDA when available."""
+        if str(self.device) == "auto":
+            return "cuda" if torch.cuda.is_available() else "cpu"
+        return str(self.device)
+
     def _fit(self, y, fh, X=None):
         """Fit the TSLib model; fh may be None (pred_len fallback)."""
         fh_max = 0
@@ -255,17 +265,31 @@ class BaseTSLibForecaster(BaseDeepNetworkPyTorch):
         self._n_channels = y.shape[1]
         self._y_len = len(y)
         self.network = self._build_network(fh_max)
+        self._device = self._resolve_device()
+        self.network.to(self._device)
         self._criterion = self._instantiate_criterion()
         self._optimizer = self._instantiate_optimizer()
 
         dataloader = self.build_pytorch_train_dataloader(y)
         self.network.train()
+        base_lr = self.lr
         for epoch in range(self.num_epochs):
+            if float(self.lr_decay) != 1.0:
+                # paper schedule (Autoformer lradj=type1): lr * decay ** epoch
+                for group in self._optimizer.param_groups:
+                    group["lr"] = base_lr * (float(self.lr_decay) ** epoch)
             self._run_epoch(epoch, dataloader)
         return self
 
     def _run_epoch(self, epoch, dataloader):
         for x_enc, x_mark, x_dec, x_mark_dec, y_true in dataloader:
+            x_enc = x_enc.to(self._device)
+            x_dec = x_dec.to(self._device)
+            y_true = y_true.to(self._device)
+            if x_mark is not None:
+                x_mark = x_mark.to(self._device)
+            if x_mark_dec is not None:
+                x_mark_dec = x_mark_dec.to(self._device)
             y_pred = self.network(x_enc, x_mark, x_dec, x_mark_dec)
             loss = self._criterion(y_pred, y_true)
             self._optimizer.zero_grad()
@@ -298,15 +322,19 @@ class BaseTSLibForecaster(BaseDeepNetworkPyTorch):
         )
         x_enc, x_mark, x_dec, x_mark_dec, _ = dataset[0]
 
+        self._device = self._resolve_device()
+        self.network.to(self._device)
         self.network.eval()
         with torch.no_grad():
             out = self.network(
-                x_enc.unsqueeze(0),
-                x_mark.unsqueeze(0) if x_mark is not None else None,
-                x_dec.unsqueeze(0),
-                x_mark_dec.unsqueeze(0) if x_mark_dec is not None else None,
+                x_enc.unsqueeze(0).to(self._device),
+                x_mark.unsqueeze(0).to(self._device) if x_mark is not None else None,
+                x_dec.unsqueeze(0).to(self._device),
+                x_mark_dec.unsqueeze(0).to(self._device)
+                if x_mark_dec is not None
+                else None,
             )
-        y_pred = out[0, :, :].numpy() * self._std + self._mean
+        y_pred = out[0, :, :].cpu().numpy() * self._std + self._mean
         y_pred = y_pred[fh_values - 1]
         return pd.DataFrame(
             y_pred, columns=self._y.columns, index=fh.to_absolute_index(self.cutoff)
@@ -350,6 +378,8 @@ class BaseTSLibForecaster(BaseDeepNetworkPyTorch):
         import torch
 
         seq_len, label_len = self.seq_len, self.label_len
+        self._device = self._resolve_device()
+        self.network.to(self._device)
         self.network.eval()
         outputs = []
         with torch.no_grad():
@@ -357,10 +387,10 @@ class BaseTSLibForecaster(BaseDeepNetworkPyTorch):
                 batch = starts[i : i + batch_size]
                 x_enc = torch.stack(
                     [torch.from_numpy(scaled[s - seq_len : s]).float() for s in batch]
-                )
+                ).to(self._device)
                 x_mark = torch.stack(
                     [torch.from_numpy(marks[s - seq_len : s]).float() for s in batch]
-                )
+                ).to(self._device)
                 x_dec = torch.zeros(len(batch), label_len + horizon, scaled.shape[1])
                 for j, s in enumerate(batch):
                     x_dec[j, :label_len] = torch.from_numpy(
@@ -380,9 +410,10 @@ class BaseTSLibForecaster(BaseDeepNetworkPyTorch):
                         ).float()
                         for s in batch
                     ]
-                )
+                ).to(self._device)
+                x_dec = x_dec.to(self._device)
                 out = self.network(x_enc, x_mark, x_dec, x_mark_dec)
-                outputs.append(out[:, :horizon, :].numpy())
+                outputs.append(out[:, :horizon, :].cpu().numpy())
         pred = np.concatenate(outputs, axis=0) * self._std + self._mean
         return pred
 

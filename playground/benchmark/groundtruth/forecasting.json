@@ -34,7 +34,7 @@
         "test_start_fraction": 0.661,
         "test_end_fraction": 0.827
       },
-      "train_command": "python playground/labts.py train --algorithm registered-forecasting-DLinearForecaster --dataset hf-etth1 --model-id bench-forecasting-dlinear-etth1-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "train_command": "python playground/labts.py train --algorithm registered-forecasting-DLinearForecaster --dataset hf-etth1 --model-id bench-forecasting-dlinear-etth1-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
       "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-etth1-96 --compact"
     },
     {
@@ -70,7 +70,7 @@
         "test_start_fraction": 0.661,
         "test_end_fraction": 0.827
       },
-      "train_command": "python playground/labts.py train --algorithm registered-forecasting-DLinearForecaster --dataset hf-etth1 --model-id bench-forecasting-dlinear-etth1-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "train_command": "python playground/labts.py train --algorithm registered-forecasting-DLinearForecaster --dataset hf-etth1 --model-id bench-forecasting-dlinear-etth1-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
       "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-etth1-192 --compact"
     },
     {
@@ -106,7 +106,7 @@
         "test_start_fraction": 0.661,
         "test_end_fraction": 0.827
       },
-      "train_command": "python playground/labts.py train --algorithm registered-forecasting-DLinearForecaster --dataset hf-etth1 --model-id bench-forecasting-dlinear-etth1-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "train_command": "python playground/labts.py train --algorithm registered-forecasting-DLinearForecaster --dataset hf-etth1 --model-id bench-forecasting-dlinear-etth1-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
       "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-etth1-336 --compact"
     },
     {
@@ -142,7 +142,7 @@
         "test_start_fraction": 0.661,
         "test_end_fraction": 0.827
       },
-      "train_command": "python playground/labts.py train --algorithm registered-forecasting-DLinearForecaster --dataset hf-etth1 --model-id bench-forecasting-dlinear-etth1-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "train_command": "python playground/labts.py train --algorithm registered-forecasting-DLinearForecaster --dataset hf-etth1 --model-id bench-forecasting-dlinear-etth1-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
       "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-etth1-720 --compact"
     },
     {
@@ -177,7 +177,7 @@
         "train_fraction": 0.7,
         "test_fraction": 0.2
       },
-      "train_command": "python playground/labts.py train --algorithm registered-forecasting-DLinearForecaster --dataset hf-weather --model-id bench-forecasting-dlinear-weather-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "train_command": "python playground/labts.py train --algorithm registered-forecasting-DLinearForecaster --dataset hf-weather --model-id bench-forecasting-dlinear-weather-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
       "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-weather-96 --compact"
     },
     {
@@ -212,7 +212,7 @@
         "train_fraction": 0.7,
         "test_fraction": 0.2
       },
-      "train_command": "python playground/labts.py train --algorithm registered-forecasting-DLinearForecaster --dataset hf-weather --model-id bench-forecasting-dlinear-weather-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "train_command": "python playground/labts.py train --algorithm registered-forecasting-DLinearForecaster --dataset hf-weather --model-id bench-forecasting-dlinear-weather-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
       "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-weather-192 --compact"
     },
     {
@@ -247,7 +247,7 @@
         "train_fraction": 0.7,
         "test_fraction": 0.2
       },
-      "train_command": "python playground/labts.py train --algorithm registered-forecasting-DLinearForecaster --dataset hf-weather --model-id bench-forecasting-dlinear-weather-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "train_command": "python playground/labts.py train --algorithm registered-forecasting-DLinearForecaster --dataset hf-weather --model-id bench-forecasting-dlinear-weather-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
       "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-weather-336 --compact"
     },
     {
@@ -282,7 +282,7 @@
         "train_fraction": 0.7,
         "test_fraction": 0.2
       },
-      "train_command": "python playground/labts.py train --algorithm registered-forecasting-DLinearForecaster --dataset hf-weather --model-id bench-forecasting-dlinear-weather-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "train_command": "python playground/labts.py train --algorithm registered-forecasting-DLinearForecaster --dataset hf-weather --model-id bench-forecasting-dlinear-weather-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
       "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-weather-720 --compact"
     },
     {
@@ -307,7 +307,7 @@
         "type": "relative",
         "value": 0.15
       },
-      "notes": "Same ETT exact split as the DLinear entries; num_epochs=10 (paper trains ~10 epochs with early stopping). Residual gap: seed/implementation details.",
+      "notes": "Official Autoformer training config (run.py + ETTh1 script): d_model=512, d_ff=2048, label_len=48, dropout=0.05, lr=1e-4 halved every epoch (lradj=type1), 10 epochs, same ETT exact split. Remaining known gap: no validation-based early stopping / best-checkpoint restore (paper uses patience=3); trained on GPU.",
       "spec_params": {
         "seq_len": 96,
         "pred_len": 96,
@@ -316,9 +316,15 @@
         "eval_mode": "rolling",
         "train_fraction": 0.496,
         "test_start_fraction": 0.661,
-        "test_end_fraction": 0.827
+        "test_end_fraction": 0.827,
+        "d_model": 512,
+        "d_ff": 2048,
+        "label_len": 48,
+        "dropout": 0.05,
+        "lr": 0.0001,
+        "lr_decay": 0.5
       },
-      "train_command": "python playground/labts.py train --algorithm registered-forecasting-AutoformerForecaster --dataset hf-etth1 --model-id bench-forecasting-autoformer-etth1-96 --param seq_len=96 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "train_command": "python playground/labts.py train --algorithm registered-forecasting-AutoformerForecaster --dataset hf-etth1 --model-id bench-forecasting-autoformer-etth1-96 --param seq_len=96 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param d_model=512 --param d_ff=2048 --param label_len=48 --param dropout=0.05 --param lr=0.0001 --param lr_decay=0.5 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_layers=1 --param e_layers=2 --param factor=3 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
       "run_command": "python playground/labts.py run --model-id bench-forecasting-autoformer-etth1-96 --compact"
     },
     {
@@ -343,7 +349,7 @@
         "type": "relative",
         "value": 0.15
       },
-      "notes": "Same ETT exact split as the DLinear entries; num_epochs=10 (paper trains ~10 epochs with early stopping). Residual gap: seed/implementation details.",
+      "notes": "Official Autoformer training config (run.py + ETTh1 script): d_model=512, d_ff=2048, label_len=48, dropout=0.05, lr=1e-4 halved every epoch (lradj=type1), 10 epochs, same ETT exact split. Remaining known gap: no validation-based early stopping / best-checkpoint restore (paper uses patience=3); trained on GPU.",
       "spec_params": {
         "seq_len": 96,
         "pred_len": 192,
@@ -352,9 +358,15 @@
         "eval_mode": "rolling",
         "train_fraction": 0.496,
         "test_start_fraction": 0.661,
-        "test_end_fraction": 0.827
+        "test_end_fraction": 0.827,
+        "d_model": 512,
+        "d_ff": 2048,
+        "label_len": 48,
+        "dropout": 0.05,
+        "lr": 0.0001,
+        "lr_decay": 0.5
       },
-      "train_command": "python playground/labts.py train --algorithm registered-forecasting-AutoformerForecaster --dataset hf-etth1 --model-id bench-forecasting-autoformer-etth1-192 --param seq_len=96 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "train_command": "python playground/labts.py train --algorithm registered-forecasting-AutoformerForecaster --dataset hf-etth1 --model-id bench-forecasting-autoformer-etth1-192 --param seq_len=96 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param d_model=512 --param d_ff=2048 --param label_len=48 --param dropout=0.05 --param lr=0.0001 --param lr_decay=0.5 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_layers=1 --param e_layers=2 --param factor=3 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
       "run_command": "python playground/labts.py run --model-id bench-forecasting-autoformer-etth1-192 --compact"
     },
     {
@@ -379,7 +391,7 @@
         "type": "relative",
         "value": 0.15
       },
-      "notes": "Same ETT exact split as the DLinear entries; num_epochs=10 (paper trains ~10 epochs with early stopping). Residual gap: seed/implementation details.",
+      "notes": "Official Autoformer training config (run.py + ETTh1 script): d_model=512, d_ff=2048, label_len=48, dropout=0.05, lr=1e-4 halved every epoch (lradj=type1), 10 epochs, same ETT exact split. Remaining known gap: no validation-based early stopping / best-checkpoint restore (paper uses patience=3); trained on GPU.",
       "spec_params": {
         "seq_len": 96,
         "pred_len": 336,
@@ -388,9 +400,15 @@
         "eval_mode": "rolling",
         "train_fraction": 0.496,
         "test_start_fraction": 0.661,
-        "test_end_fraction": 0.827
+        "test_end_fraction": 0.827,
+        "d_model": 512,
+        "d_ff": 2048,
+        "label_len": 48,
+        "dropout": 0.05,
+        "lr": 0.0001,
+        "lr_decay": 0.5
       },
-      "train_command": "python playground/labts.py train --algorithm registered-forecasting-AutoformerForecaster --dataset hf-etth1 --model-id bench-forecasting-autoformer-etth1-336 --param seq_len=96 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "train_command": "python playground/labts.py train --algorithm registered-forecasting-AutoformerForecaster --dataset hf-etth1 --model-id bench-forecasting-autoformer-etth1-336 --param seq_len=96 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param d_model=512 --param d_ff=2048 --param label_len=48 --param dropout=0.05 --param lr=0.0001 --param lr_decay=0.5 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_layers=1 --param e_layers=2 --param factor=3 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
       "run_command": "python playground/labts.py run --model-id bench-forecasting-autoformer-etth1-336 --compact"
     },
     {
@@ -415,7 +433,7 @@
         "type": "relative",
         "value": 0.15
       },
-      "notes": "Same ETT exact split as the DLinear entries; num_epochs=10 (paper trains ~10 epochs with early stopping). Residual gap: seed/implementation details.",
+      "notes": "Official Autoformer training config (run.py + ETTh1 script): d_model=512, d_ff=2048, label_len=48, dropout=0.05, lr=1e-4 halved every epoch (lradj=type1), 10 epochs, same ETT exact split. Remaining known gap: no validation-based early stopping / best-checkpoint restore (paper uses patience=3); trained on GPU.",
       "spec_params": {
         "seq_len": 96,
         "pred_len": 720,
@@ -424,9 +442,15 @@
         "eval_mode": "rolling",
         "train_fraction": 0.496,
         "test_start_fraction": 0.661,
-        "test_end_fraction": 0.827
+        "test_end_fraction": 0.827,
+        "d_model": 512,
+        "d_ff": 2048,
+        "label_len": 48,
+        "dropout": 0.05,
+        "lr": 0.0001,
+        "lr_decay": 0.5
       },
-      "train_command": "python playground/labts.py train --algorithm registered-forecasting-AutoformerForecaster --dataset hf-etth1 --model-id bench-forecasting-autoformer-etth1-720 --param seq_len=96 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "train_command": "python playground/labts.py train --algorithm registered-forecasting-AutoformerForecaster --dataset hf-etth1 --model-id bench-forecasting-autoformer-etth1-720 --param seq_len=96 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param d_model=512 --param d_ff=2048 --param label_len=48 --param dropout=0.05 --param lr=0.0001 --param lr_decay=0.5 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_layers=1 --param e_layers=2 --param factor=3 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
       "run_command": "python playground/labts.py run --model-id bench-forecasting-autoformer-etth1-720 --compact"
     }
   ]

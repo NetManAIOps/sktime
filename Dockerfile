@@ -10,15 +10,33 @@
 #     python playground/labts.py catalog --compact
 #   sudo docker run --rm tsbox-playground:latest \
 #     python playground/labts.py run --spec '{"task":"forecasting"}' --compact
+#
+# Remote build (Agent Office / agi build service):
+#   agi build submit . --dest <registry>/labts:<tag> -o json
+#
+# Mirrors default to pypi.org: measured from the agi build service it is
+# ~700x faster than mirrors.aliyun.com (340 MB/s vs 0.5 MB/s). For CN-only
+# hosts, override with e.g.:
+#   --build-arg PIP_INDEX_URL=https://mirrors.aliyun.com/pypi/simple/ \
+#   --build-arg BASE_IMAGE=docker.m.daocloud.io/library/python:3.12-slim
+# (pypi.msh.team/simple is NOT a PyPI proxy — internal packages only.)
 
-# docker.io is unreachable from this host; the daocloud mirror is used instead.
-FROM docker.m.daocloud.io/library/python:3.12-slim
+ARG BASE_IMAGE=docker.m.daocloud.io/library/python:3.12-slim
+FROM ${BASE_IMAGE}
+
+# Torch wheel flavor:
+#   cuda (default) — plain PyPI torch wheel with the bundled CUDA runtime;
+#                    works on GPU sandboxes AND on CPU-only hosts.
+#   cpu            — keep the frozen +cpu wheel from requirements.txt (smaller).
+ARG TORCH_FLAVOR=cuda
+ARG PIP_INDEX_URL=https://pypi.org/simple/
+ARG PIP_EXTRA_INDEX_URL=
 
 ENV PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1 \
-    PIP_INDEX_URL=http://pypi.ksyun.cn/simple/ \
-    PIP_TRUSTED_HOST=pypi.ksyun.cn
+    PIP_INDEX_URL=${PIP_INDEX_URL} \
+    PIP_EXTRA_INDEX_URL=${PIP_EXTRA_INDEX_URL}
 
 WORKDIR /app
 
@@ -31,8 +49,14 @@ COPY playground ./playground
 
 # pycatch22 ships no wheel for this platform and compiles a C extension;
 # install a toolchain for the build and remove it afterwards.
+# For TORCH_FLAVOR=cuda, swap the pinned +cpu wheel for the plain PyPI wheel
+# (=== excludes the +cpu local version) and drop the pytorch CPU index.
 RUN apt-get update \
     && apt-get install -y --no-install-recommends gcc libc6-dev \
+    && if [ "$TORCH_FLAVOR" = "cuda" ]; then \
+         sed -i -e '\#--extra-index-url https://download.pytorch.org/whl/cpu#d' \
+                -e 's|^torch==2.14.0+cpu$|torch===2.14.0|' playground/requirements.txt; \
+       fi \
     && pip install -r playground/requirements.txt \
     && apt-get purge -y gcc libc6-dev \
     && apt-get autoremove -y \
