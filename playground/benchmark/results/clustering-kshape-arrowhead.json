@@ -1,21 +1,39 @@
 {
   "id": "clustering-kshape-arrowhead",
   "task": "clustering",
-  "ran_at": "2026-09-28T09:45:23.405971+00:00",
-  "command": "python playground/labts.py run --task clustering --algorithm registered-clustering-TimeSeriesKShapes --dataset arrow-head-cl --param n_clusters=3 --param random_state=42 --metric ari --compact",
+  "ran_at": "2026-09-29T05:29:34.405837+00:00",
+  "train_command": "python playground/labts.py train --algorithm registered-clustering-TimeSeriesKShapes --dataset arrow-head-cl --model-id bench-clustering-kshape-arrowhead --param n_clusters=3 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+  "run_command": "python playground/labts.py run --model-id bench-clustering-kshape-arrowhead --compact",
   "python": "/home/xiezhe/sktime/.venv-full/bin/python",
   "returncode": 0,
-  "duration_s": 30.28,
-  "value": 0.0,
-  "delta": -0.17425,
-  "delta_rel": 1.0,
-  "status": "deviation",
+  "duration_s": 38.17,
+  "values": {
+    "ARI": 0.2168668658859379,
+    "NMI": 0.30863600090432775
+  },
+  "per_metric": {
+    "ARI": {
+      "gt": 0.17425,
+      "value": 0.2168668658859379,
+      "delta": 0.042617,
+      "delta_rel": 0.244573,
+      "status": "reproduced"
+    },
+    "NMI": {
+      "gt": 0.25334,
+      "value": 0.30863600090432775,
+      "delta": 0.055296,
+      "delta_rel": 0.218268,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
   "metrics": {
-    "ARI": 0.0,
-    "NMI": 0.0,
-    "Clusters": 1,
-    "Largest Cluster": 175
+    "ARI": 0.2168668658859379,
+    "NMI": 0.30863600090432775,
+    "Clusters": 3,
+    "Largest Cluster": 150
   },
   "error": null,
-  "stdout_tail": "{\"api\": \"labts\", \"api_version\": \"1.0\", \"kind\": \"result\", \"status\": \"ok\", \"data\": {\"status\": \"ok\", \"metrics\": {\"ARI\": 0.0, \"NMI\": 0.0, \"Clusters\": 1, \"Largest Cluster\": 175}, \"summary\": \"Clustered 175 held-out time series with TimeSeriesKShapes.\", \"run_id\": \"0e5b9e19675e\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"arrow-head-cl\", \"algorithm_id\": \"registered-clustering-TimeSeriesKShapes\", \"preprocessor_id\": \"none\", \"preprocessors\": [], \"params\": {\"n_clusters\": 3, \"random_state\": 42}, \"preprocessor_params\": {}, \"metrics\": [\"ari\"]}, \"task\": \"clustering\", \"dataset\": {\"id\": \"arrow-head-cl\", \"name\": \"ArrowHead (labels for ARI)\", \"task\": \"clustering\", \"source\": \"local\", \"loader\": \"sktime.datasets.load_arrow_head\", \"enabled\": true}, \"algorithm\": {\"id\": \"registered-clustering-TimeSeriesKShapes\", \"name\": \"TimeSeriesKShapes\", \"task\": \"clustering\", \"module\": \"sktime.clustering.k_shapes.TimeSeriesKShapes\", \"class_name\": \"TimeSeriesKShapes\", \"curated\": false, \"python_dependencies\": \"tslearn\", \"enabled\": true, \"params\": {\"max_iter\": 300, \"n_clusters\": 8, \"n_init\": 10, \"tol\": 0.0001}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"preprocessors\": [], \"duration_ms\": 27644.2, \"log\": [\"Selected task: clustering\", \"Selected dataset: ArrowHead (labels for ARI)\", \"Selected preprocessor: Identity / none\", \"Selected algorithm: TimeSeriesKShapes\", \"Estimator: TimeSeriesKShapes params={'n_clusters': 3, 'random_state': 42}\", \"Loaded ArrowHead (labels for ARI) train=36 test=175\", \"Finished in 27644.2 ms\"]}, \"error\": null}\n"
+  "stdout_tail": "-head-cl\", \"algorithm_id\": \"sktime-trained:bench-clustering-kshape-arrowhead\", \"preprocessor_id\": \"none\", \"params\": {}}, \"task\": \"clustering\", \"dataset\": {\"id\": \"arrow-head-cl\", \"name\": \"ArrowHead (labels for ARI)\", \"task\": \"clustering\", \"source\": \"local\", \"loader\": \"sktime.datasets.load_arrow_head\", \"enabled\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-clustering-kshape-arrowhead\", \"name\": \"TimeSeriesKShapes (trained: bench-clustering-kshape-arrowhead)\", \"task\": \"clustering\", \"module\": \"sktime.clustering.k_shapes.TimeSeriesKShapes\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/playground/models/bench-clustering-kshape-arrowhead\", \"manifest\": {\"model_id\": \"bench-clustering-kshape-arrowhead\", \"backend\": \"sktime\", \"task\": \"clustering\", \"algorithm_id\": \"registered-clustering-TimeSeriesKShapes\", \"algorithm_name\": \"TimeSeriesKShapes\", \"module\": \"sktime.clustering.k_shapes.TimeSeriesKShapes\", \"params\": {\"n_clusters\": 3, \"random_state\": 42, \"max_iter\": 300, \"n_init\": 10, \"tol\": 0.0001}, \"eval_params\": {\"fit_on\": \"all\"}, \"created_at\": \"2026-09-29T05:29:27.511947+00:00\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"arrow-head-cl\", \"algorithm_id\": \"registered-clustering-TimeSeriesKShapes\", \"preprocessor_id\": \"none\", \"params\": {\"n_clusters\": 3, \"fit_on\": \"all\", \"random_state\": 42, \"max_iter\": 300, \"n_init\": 10, \"tol\": 0.0001}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 3489.4, \"log\": [\"Selected dataset: ArrowHead (labels for ARI)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-clustering-kshape-arrowhead (sktime backend, algorithm: registered-clustering-TimeSeriesKShapes, created: 2026-09-29T05:29:27.511947+00:00)\", \"Loaded ArrowHead (labels for ARI) train=36 test=175\", \"Finished in 3489.4 ms\"]}, \"error\": null}\n"
 }

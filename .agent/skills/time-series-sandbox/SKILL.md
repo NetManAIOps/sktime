@@ -203,13 +203,17 @@ registry entry looks wrong, rerun the command above rather than trusting it.
   endpoints: `catalog` ↔ `/api/catalog`, `run` ↔ `/api/run`,
   `script` ↔ `/api/export/script`, `report` ↔ `/api/export/report`, with a
   unified JSON envelope and pipeline flow (`run --out` → `script/report
-  --from`). Adds stateful model lifecycle commands for DevAD detectors:
-  `train` (persist under `playground/models/`), `detect`, `ls models`; plus
-  `evaluate` (re-score saved runs with registry metrics), `analyze`
-  (param_est), `dist` (pairwise distances), and `predict` (generic
-  persistence backend, wired for mission M2). See the `labts-api` skill.
-- `playground/trainer.py`: train/detect backends for the DevAD zoo
-  (`sktime/libs/devad`) used by `labts.py train`/`detect`.
+  --from`). Adds stateful model lifecycle commands for EVERY catalog
+  algorithm/task: `train` (persist under `playground/models/`) and
+  `run --model-id` (reload + score the holdout, no refit; `predict`/`detect`
+  are aliases), plus `ls models`, `evaluate` (re-score saved runs with
+  registry metrics), `analyze` (param_est), and `dist` (pairwise distances).
+  See the `labts-api` skill.
+- `playground/trainer.py`: generic train/persist/predict backends (sktime
+  save/load via `persistence.py`; DevAD zoo via `sktime/libs/devad`) used by
+  `labts.py train` / `run --model-id`. Covers rolling-origin forecasting,
+  clustering `fit_on=all`, causal discovery, and per-series model bundles
+  for multi-series anomaly datasets.
 
 ### Dynamic algorithm registration
 

@@ -1,16 +1,21 @@
 """Persistent model training and prediction for playground models.
 
-`labts run` is stateless: fit and predict happen in one call and the fitted
-model is discarded. The train-once/predict-many workflow persists fitted
-models under ``playground/models/<model_id>/`` and reloads them later:
+Two lifecycle forms share one API:
 
-    labts train   --algorithm registered-forecasting-SARIMAX --dataset airline \
+* ``labts run`` (no model id) is stateless: fit and predict happen in one
+  call and the fitted model is discarded.
+* ``labts train`` + ``labts run --model-id`` split the lifecycle for EVERY
+  catalog algorithm/task (``predict``/``detect`` are aliases of the model
+  path). The train-once/run-many workflow persists fitted models under
+  ``playground/models/<model_id>/`` and reloads them later::
+
+    labts train --algorithm registered-forecasting-SARIMAX --dataset airline \
         --model-id sarimax-v1 --param horizon=12
-    labts predict --model-id sarimax-v1 --dataset airline
+    labts run   --model-id sarimax-v1 --dataset airline
 
-    labts train  --algorithm registered-anomaly_detection-DevADFITSDetector \
+    labts train --algorithm registered-anomaly_detection-DevADFITSDetector \
         --dataset yahoo --model-id fits-v1 --param epochs=3
-    labts detect --model-id fits-v1 --dataset yahoo --param threshold_quantile=0.99
+    labts run   --model-id fits-v1 --dataset yahoo --param threshold_quantile=0.99
 
 Backend selection rule (`train(spec)`): an algorithm whose catalog module
 starts with ``sktime.detection.adapters.devad.`` is trained through the
@@ -25,15 +30,23 @@ counterparts, except the curated anomaly detector whose `run` pipeline
 embeds ad-hoc detrending that is not part of the estimator and is
 therefore rejected with a hint to use a registered detector instead.
 
+Train/predict reproduces the one-shot `run` evaluation protocol per task:
+rolling-origin forecasting (``eval_mode=rolling`` + split fractions, via
+tslib ``predict_windows``), clustering ``fit_on=all`` (fused train+test),
+causal discovery (fitted discoverer persisted; predict re-scores its graph
+against the true DAG), and multi-series anomaly datasets (one fitted
+detector per series under ``series/<NNNN>/model.zip``, manifest
+``multiseries: true``; predict averages the per-series metrics exactly like
+the one-shot multi-series runner).
+
 `predict_estimator(model_id, dataset_id, params)` reloads a persisted
 model and evaluates it on the dataset's holdout split, returning the same
 result envelope as `labts run`, so `labts report --from` works on it
-unchanged. For DevAD models it delegates to `detect_devad` (`labts detect`
-stays an alias of the anomaly predict path); for sktime models the
-holdout split is reproduced from the manifest's eval params, overridable
-via `params` (e.g. ``{"horizon": 24}``). The fitted preprocessor selected
-at train time is persisted alongside the model and re-applied (transform
-only, never refit) at predict time.
+unchanged. For DevAD models it delegates to `detect_devad`; for sktime
+models the holdout split is reproduced from the manifest's eval params,
+overridable via `params` (e.g. ``{"horizon": 24}``). The fitted
+preprocessor selected at train time is persisted alongside the model and
+re-applied (transform only, never refit) at predict time.
 """
 
 from __future__ import annotations
@@ -86,6 +99,7 @@ _TASK_DEFAULT_DATASETS = {
     "regression": "covid-3month",
     "clustering": "unit-test-cl",
     "anomaly_detection": "yahoo",
+    "causal": "causal-sachs",
 }
 
 
@@ -111,6 +125,7 @@ def list_trained_models() -> list[dict]:
                 "params": manifest.get("params"),
                 "seed": manifest.get("seed"),
                 "best_epoch": manifest.get("best_epoch"),
+                "multiseries": bool(manifest.get("multiseries")),
                 "created_at": manifest.get("created_at"),
                 "model_dir": str(manifest_path.parent),
             }
@@ -271,17 +286,31 @@ def _train_sktime(spec: dict, algorithm: dict) -> dict:
         "params": params,
         "preprocessor_params": spec.get("preprocessor_params") or {},
     }
-    manifest = persistence.save_sktime_model(
-        estimator,
-        models_root=MODELS_ROOT,
-        model_id=model_id,
-        task=task,
-        algorithm=algorithm,
-        est_params=est_params,
-        eval_params=eval_params,
-        spec=normalized_spec,
-        preprocessor=prep_est,
-    )
+    multiseries = fit_info.pop("_multiseries", None)
+    if multiseries is not None:
+        manifest = persistence.save_sktime_multiseries_model(
+            multiseries,
+            models_root=MODELS_ROOT,
+            model_id=model_id,
+            task=task,
+            algorithm=algorithm,
+            est_params=est_params,
+            eval_params=eval_params,
+            spec=normalized_spec,
+        )
+        fit_info["series_models"] = int(len(multiseries))
+    else:
+        manifest = persistence.save_sktime_model(
+            estimator,
+            models_root=MODELS_ROOT,
+            model_id=model_id,
+            task=task,
+            algorithm=algorithm,
+            est_params=est_params,
+            eval_params=eval_params,
+            spec=normalized_spec,
+            preprocessor=prep_est,
+        )
     model_dir = MODELS_ROOT / model_id
     elapsed_ms = round((time.perf_counter() - started) * 1000, 1)
     log.append(f"Finished in {elapsed_ms} ms")
@@ -299,7 +328,7 @@ def _train_sktime(spec: dict, algorithm: dict) -> dict:
         "duration_ms": elapsed_ms,
         "log": log,
         "next_steps": [
-            f"labts.py predict --model-id {model_id} --dataset {dataset['id']}",
+            f"labts.py run --model-id {model_id} --dataset {dataset['id']}",
             "labts.py ls models",
         ],
     }
@@ -338,18 +367,24 @@ def _predict_sktime(
         f"{manifest.get('algorithm_id')}, created: {manifest.get('created_at')})",
     ]
     try:
-        estimator = persistence.load_sktime_model(model_dir)
-        prep_est = persistence.load_sktime_preprocessor(model_dir)
-        result, predict_meta = _predict_sktime_payload(
-            estimator,
-            prep_est,
-            preprocessor.get("name", "preprocessor"),
-            task,
-            dataset,
-            eval_params,
-            display_name,
-            log,
-        )
+        if manifest.get("multiseries"):
+            models = persistence.load_sktime_series_models(model_dir, manifest)
+            result, predict_meta = _predict_multiseries_payload(
+                models, dataset, display_name, log
+            )
+        else:
+            estimator = persistence.load_sktime_model(model_dir)
+            prep_est = persistence.load_sktime_preprocessor(model_dir)
+            result, predict_meta = _predict_sktime_payload(
+                estimator,
+                prep_est,
+                preprocessor.get("name", "preprocessor"),
+                task,
+                dataset,
+                eval_params,
+                display_name,
+                log,
+            )
     except PlaygroundError:
         raise
     except Exception as exc:
@@ -409,6 +444,36 @@ def _predict_sktime_payload(
         import pandas as pd
 
         horizon = max(1, int(eval_params.get("horizon") or 12))
+        if str(eval_params.get("eval_mode") or "single") == "rolling":
+            from runners import (
+                _load_forecasting_frame,
+                _rolling_forecast_result,
+                _rolling_split,
+            )
+
+            if prep_est is not None:
+                raise PlaygroundError(
+                    "rolling evaluation does not support preprocessors yet"
+                )
+            if not hasattr(estimator, "predict_windows"):
+                raise PlaygroundError(
+                    "This forecaster does not support rolling evaluation (needs "
+                    "refit-free windowed prediction; tslib adapters provide it)."
+                )
+            y = _load_forecasting_frame(dataset, log)
+            train_end, test_start, test_end = _rolling_split(len(y), horizon, eval_params)
+            payload = _rolling_forecast_result(
+                estimator,
+                display_name,
+                y,
+                train_end,
+                test_start,
+                test_end,
+                horizon,
+                log,
+            )
+            payload.pop("_metric_context", None)
+            return payload, {"horizon": horizon, "eval_mode": "rolling"}
         y_train, y_test, horizon = _forecast_split(dataset, horizon, log)
         if prep_est is not None:
             y_train = _transform_series(prep_est, prep_name, y_train, log)
@@ -424,6 +489,24 @@ def _predict_sktime_payload(
             f"Forecasted {len(y_test)} steps with {display_name}.",
         )
         return payload, {"horizon": int(len(y_test))}
+    if task == "clustering" and str(eval_params.get("fit_on") or "") == "all":
+        from runners import _concat_panels
+
+        X_train, y_train, X_test, y_test = _load_panel_xy(dataset, log)
+        if prep_est is not None:
+            X_train = _transform_panel(prep_est, prep_name, X_train, log)
+            X_test = _transform_panel(prep_est, prep_name, X_test, log)
+        X_all = _concat_panels(X_train, X_test)
+        y_all = np.concatenate([np.asarray(y_train), np.asarray(y_test)])
+        y_pred = getattr(estimator, "labels_", None)
+        if y_pred is None:
+            y_pred = estimator.predict(X_all)
+        payload = _clustering_payload(
+            y_all,
+            y_pred,
+            f"Clustered all {len(y_all)} series with {display_name}.",
+        )
+        return payload, {}
     if task in ("classification", "regression", "clustering"):
         _X_train, _y_train, X_test, y_test = _load_panel_xy(dataset, log)
         if prep_est is not None:
@@ -463,7 +546,104 @@ def _predict_sktime_payload(
         else:
             pred_indices = _extract_sparse_ilocs(sparse)
         return build_anomaly_result(raw, y_true, pred_indices, display_name), {}
+    if task == "causal":
+        from domain_runners import _causal_payload, _load_causal_dataset, graph_metrics
+
+        X, true_edges = _load_causal_dataset(dataset, log)
+        variable_names = [
+            str(v) for v in getattr(estimator, "variable_names_", X.columns)
+        ]
+        metrics = graph_metrics(
+            estimator.get_adjacency_matrix(), variable_names, true_edges
+        )
+        graph = _causal_payload(estimator, variable_names, true_edges)
+        matched = {
+            (edge["source"], edge["target"])
+            for edge in graph["edges"]
+            if edge.get("in_true_graph")
+        }
+        true_rows = [
+            {
+                "source": str(s),
+                "target": str(t),
+                "found": (str(s), str(t)) in matched
+                or any(
+                    e["source"] == str(t)
+                    and e["target"] == str(s)
+                    and e["type"] == "undirected"
+                    for e in graph["edges"]
+                ),
+            }
+            for s, t in true_edges
+        ]
+        payload = {
+            "status": "ok",
+            "metrics": metrics,
+            "graph": graph,
+            "series": {
+                "kind": "causal_graph",
+                "nodes": graph["variable_names"],
+                "edges": graph["edges"],
+                "meta": {
+                    "graph_type": graph["graph_type"],
+                    "n_vars": len(graph["variable_names"]),
+                },
+            },
+            "tables": {"edges": graph["edges"][:200], "true_edges": true_rows},
+            "summary": (
+                f"Discovered {metrics['Edges']} edges ({metrics['True Edges']} true) "
+                f"with {display_name}: SHD={metrics['SHD']}, "
+                f"edge F1={metrics['Edge F1']:.3f}."
+            ),
+        }
+        return payload, {}
     raise PlaygroundError(f"Unknown task in manifest: {task}")
+
+
+def _predict_multiseries_payload(models: dict, dataset: dict, display_name: str, log: list[str]):
+    """Evaluate per-series persisted detectors; dataset-level averaged metrics.
+
+    Mirrors the one-shot `_run_anomaly_multiseries` protocol (TSB-UAD), but
+    with no refit: each series is scored by its own persisted detector.
+    """
+    import pandas as pd
+    from metrics import resolve_metrics
+    from runners import (
+        _anomaly_series_row,
+        multiseries_anomaly_payload,
+        resolve_series_dir,
+    )
+
+    series_dir = resolve_series_dir(dataset)
+    files = sorted(series_dir.glob("*.out"))
+    if not files:
+        raise PlaygroundError(f"No .out series files under {series_dir}")
+    auc_entry = resolve_metrics(["auc_roc"], "anomaly_detection")[0]
+    per_series = []
+    missing = 0
+    for i, path in enumerate(files):
+        detector = models.get(path.name)
+        if detector is None:
+            missing += 1
+            continue
+        frame = pd.read_csv(path, header=None, names=["data", "label"])
+        raw = frame["data"].astype(float)
+        y_true = frame["label"].astype(int).to_numpy()
+        sparse = detector.predict(raw.to_frame("data"))
+        per_series.append(
+            _anomaly_series_row(detector, sparse, raw, y_true, auc_entry, path.name)
+        )
+        if (i + 1) % 50 == 0:
+            log.append(f"Scored {i + 1}/{len(files)} series")
+    if missing:
+        log.append(f"Skipped {missing} series without a persisted model")
+    if not per_series:
+        raise PlaygroundError(
+            "No persisted series models match this dataset's series files."
+        )
+    payload = multiseries_anomaly_payload(per_series, display_name, log)
+    payload.pop("_metric_context", None)
+    return payload, {"multiseries": True}
 
 
 def _fit_sktime_estimator(
@@ -475,9 +655,32 @@ def _fit_sktime_estimator(
     eval_params: dict,
     log: list[str],
 ) -> tuple[dict, dict]:
-    """Fit estimator (+ optional preprocessor); return (fit_info, eval_params)."""
+    """Fit estimator (+ optional preprocessor); return (fit_info, eval_params).
+
+    Multi-series anomaly datasets return the per-series fitted detectors in
+    ``fit_info["_multiseries"]`` (handled by `_train_sktime`, which persists
+    them through `persistence.save_sktime_multiseries_model`).
+    """
     if task == "forecasting":
         horizon = max(1, int(eval_params.get("horizon") or 12))
+        if str(eval_params.get("eval_mode") or "single") == "rolling":
+            from runners import _load_forecasting_frame, _rolling_split
+
+            if prep_est is not None:
+                raise PlaygroundError(
+                    "rolling evaluation does not support preprocessors yet"
+                )
+            if not hasattr(estimator, "predict_windows"):
+                raise PlaygroundError(
+                    "This forecaster does not support rolling evaluation (needs "
+                    "refit-free windowed prediction; tslib adapters provide it). "
+                    "Use the default single-origin eval instead."
+                )
+            y = _load_forecasting_frame(dataset, log)
+            train_end, _, _ = _rolling_split(len(y), horizon, eval_params)
+            estimator.fit(y.iloc[:train_end])
+            log.append(f"Rolling train: fit on {train_end} rows")
+            return {"train_length": int(train_end)}, {**eval_params, "horizon": horizon}
         y_train, _y_test, horizon = _forecast_split(dataset, horizon, log)
         if prep_est is not None:
             y_train, _ = _fit_apply_series_preprocessor(
@@ -495,19 +698,70 @@ def _fit_sktime_estimator(
         estimator.fit(X_train, y_train)
         return {"train_instances": int(len(y_train))}, eval_params
     if task == "clustering":
-        X_train, y_train, _X_test, _y_test = _load_panel_xy(dataset, log)
+        X_train, y_train, X_test, y_test = _load_panel_xy(dataset, log)
         if prep_est is not None:
-            X_train, _ = _fit_apply_panel_preprocessor(
-                prep_est, prep_name, X_train, None, log
+            X_train, X_test = _fit_apply_panel_preprocessor(
+                prep_est, prep_name, X_train, X_test, log
             )
+        if str(eval_params.get("fit_on") or "") == "all":
+            # Unsupervised clustering papers evaluate on the fused train+test
+            # set — mirror the `labts run` protocol exactly.
+            from runners import _concat_panels
+
+            X_all = _concat_panels(X_train, X_test)
+            estimator.fit(X_all)
+            log.append(f"fit_on=all: fused train+test into {len(X_all)} series")
+            return {"train_instances": int(len(y_train) + len(y_test))}, eval_params
         estimator.fit(X_train)
         return {"train_instances": int(len(y_train))}, eval_params
     if task == "anomaly_detection":
+        if dataset.get("series_dir"):
+            import pandas as pd
+            from runners import resolve_series_dir
+
+            if prep_est is not None:
+                raise PlaygroundError(
+                    "multi-series training does not support preprocessors yet"
+                )
+            series_dir = resolve_series_dir(dataset)
+            files = sorted(series_dir.glob("*.out"))
+            if not files:
+                raise PlaygroundError(f"No .out series files under {series_dir}")
+            models = {}
+            for i, path in enumerate(files):
+                frame = pd.read_csv(path, header=None, names=["data", "label"])
+                raw = frame["data"].astype(float)
+                detector = (
+                    estimator.clone() if hasattr(estimator, "clone") else estimator
+                )
+                detector.fit(raw.to_frame("data"))
+                models[path.name] = detector
+                if (i + 1) % 50 == 0:
+                    log.append(f"Fitted {i + 1}/{len(files)} series")
+            log.append(f"Fitted per-series detectors on {len(models)} series")
+            return {
+                "train_length": int(len(models)),
+                "_multiseries": models,
+            }, eval_params
         raw, _y_true = _load_anomaly_frame(dataset, log)
         if prep_est is not None:
             raw, _ = _fit_apply_series_preprocessor(prep_est, prep_name, raw, None, log)
         estimator.fit(raw.to_frame("data"))
         return {"train_length": int(len(raw))}, eval_params
+    if task == "causal":
+        from domain_runners import _load_causal_dataset, _subsample
+
+        if prep_est is not None:
+            raise PlaygroundError("causal discovery does not support preprocessors")
+        X, _true_edges = _load_causal_dataset(dataset, log)
+        X = _subsample(
+            X,
+            int(eval_params.get("max_samples") or 2000),
+            int(eval_params.get("seed") or 7),
+            log,
+        )
+        estimator.fit(X)
+        return {"train_instances": int(len(X))}, eval_params
     raise PlaygroundError(f"Unknown task: {task}")
 
 
@@ -521,6 +775,11 @@ def _build_train_estimator(algorithm: dict, est_params: dict):
     """
     if algorithm.get("curated"):
         return _build_curated_estimator(algorithm, est_params)
+    return _build_module_estimator(algorithm, est_params)
+
+
+def _build_module_estimator(algorithm: dict, est_params: dict):
+    """Build an estimator from its catalog module path (run-equivalent)."""
     klass = import_estimator_class(algorithm["module"])
     defaults = algorithm.get("params") or {}
     if algorithm.get("user"):
@@ -589,6 +848,10 @@ def _build_curated_estimator(algorithm: dict, est_params: dict):
             n_clusters=int(est_params.get("n_clusters") or 2),
             random_state=int(est_params.get("random_state") or 7),
         )
+    if algorithm.get("task") == "causal":
+        # Curated causal entries run their module estimator directly (same as
+        # `run_causal`), so the module-based build is run-equivalent.
+        return _build_module_estimator(algorithm, est_params)
     raise PlaygroundError(
         f"Curated algorithm `{algorithm_id}` has no persistent train pipeline: "
         "its `labts run` path embeds ad-hoc preprocessing that is not part of "
@@ -990,11 +1253,28 @@ def _clustering_payload(y_test, y_pred, summary: str) -> dict:
 
 def _predict_script(model_id: str, task: str, dataset: dict, meta: dict) -> str:
     """Self-contained reproduction snippet for a trained-model prediction."""
+    if meta.get("multiseries"):
+        return (
+            "from sktime.base import BaseEstimator\n"
+            "# one fitted detector per series: series/<NNNN>/model.zip, mapped\n"
+            "# to series names in manifest.json\n"
+            "est = BaseEstimator.load_from_path("
+            f'"playground/models/{model_id}/series/0000/model.zip")\n'
+            "# X: single-channel DataFrame of the series to score\n"
+            "out = est.predict(X)\n"
+            'print("detections:", out)\n'
+        )
     load_line = (
         "from sktime.base import BaseEstimator\n"
         "est = BaseEstimator.load_from_path("
         f'"playground/models/{model_id}/model.zip")\n'
     )
+    if task == "causal":
+        return (
+            load_line
+            + 'print("variables:", [str(v) for v in est.variable_names_])\n'
+            + 'print("adjacency:", est.get_adjacency_matrix())\n'
+        )
     if task == "forecasting":
         horizon = int(meta.get("horizon") or 12)
         return (

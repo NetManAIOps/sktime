@@ -72,24 +72,21 @@ def load_result(entry_id: str) -> dict | None:
 def attach_status(entry: dict, result: dict | None) -> dict:
     """Recompute the display status from the stored value (source of truth)."""
     out = dict(entry)
-    out.pop("command", None)  # keep state lean; command comes from result/entry
-    out["command"] = entry["command"]
     if result is None:
         out["status"] = "pending"
-        out["value_reproduced"] = None
-        out["delta"] = None
-        out["delta_rel"] = None
+        out["values"] = None
+        out["per_metric"] = None
         out["ran_at"] = None
         out["duration_s"] = None
         return out
     out["status"] = result.get("status", "error")
-    out["value_reproduced"] = result.get("value")
-    out["delta"] = result.get("delta")
-    out["delta_rel"] = result.get("delta_rel")
+    out["values"] = result.get("values")
+    out["per_metric"] = result.get("per_metric")
     out["ran_at"] = result.get("ran_at")
     out["duration_s"] = result.get("duration_s")
     out["error"] = result.get("error")
-    out["metrics"] = result.get("metrics")
+    # raw envelope metrics; "metrics" stays the groundtruth dict from the entry
+    out["raw_metrics"] = result.get("metrics")
     return out
 
 
@@ -129,21 +126,28 @@ def _status_html(status: str) -> str:
     )
 
 
-def _delta_html(entry: dict) -> str:
-    delta = entry.get("delta")
-    if delta is None:
-        return '<div class="delta">—</div>'
-    tol = entry["tolerance"]
-    if tol["type"] == "absolute":
-        tol_txt = f"±{fmt_num(tol['value'], 2)}"
-    else:
-        tol_txt = f"±{round(float(tol['value']) * 100)}%"
-    cls = {"reproduced": "ok", "deviation": "bad"}.get(entry["status"], "")
-    sign = "+" if delta > 0 else ""
-    return (
-        f'<div class="delta {cls}">{sign}{fmt_num(delta)} '
-        f'<span class="tol">{tol_txt}</span></div>'
-    )
+def _badge(status: str, text: str) -> str:
+    return f'<span class="status {status}"><span class="dot"></span>{esc(text)}</span>'
+
+
+def _metrics_line(entry: dict) -> str:
+    """Per-metric inline results: `MSE 0.375→0.319 ✓  MAE 0.399→0.411 ✓`."""
+    parts = []
+    for name, gt in entry["metrics"].items():
+        pm = (entry.get("per_metric") or {}).get(name)
+        if pm is None:
+            parts.append(
+                f'<span class="m-pen"><span class="m-name">{esc(name)}</span> '
+                f"{fmt_num(gt)}→—</span>"
+            )
+            continue
+        cls = {"reproduced": "m-ok", "deviation": "m-bad"}.get(pm["status"], "m-pen")
+        mark = "✓" if pm["status"] == "reproduced" else "✗"
+        parts.append(
+            f'<span class="{cls}"><span class="m-name">{esc(name)}</span> '
+            f'{fmt_num(gt)}→{fmt_num(pm["value"])} {mark}</span>'
+        )
+    return f'<div class="mline">{"".join(parts)}</div>'
 
 
 def render_claim(entry: dict) -> str:
@@ -162,7 +166,6 @@ def render_claim(entry: dict) -> str:
         if tol["type"] == "absolute"
         else f"±{round(float(tol['value']) * 100)}% relative"
     )
-    reproduced = "—" if entry["status"] == "pending" else fmt_num(entry.get("value_reproduced"))
     error_html = ""
     if entry.get("error"):
         error_html = (
@@ -170,20 +173,17 @@ def render_claim(entry: dict) -> str:
             f'<div class="kv" style="color:var(--red)">{esc(entry["error"])}</div></div>'
         )
     metrics_html = ""
-    if entry.get("metrics"):
+    if entry.get("raw_metrics"):
         metrics_html = (
             '<div class="full"><div class="kv-label">All metrics returned</div>'
-            f'<div class="raw-metrics">{esc(json.dumps(entry["metrics"], ensure_ascii=False))}</div></div>'
+            f'<div class="raw-metrics">{esc(json.dumps(entry["raw_metrics"], ensure_ascii=False))}</div></div>'
         )
+    window = f'<span class="win">{esc(entry["window"])}</span>' if entry.get("window") else ""
     return f"""
 <details class="claim">
   <summary>
-    <div class="alg">{esc(entry['algorithm_name'])}<span class="lib">{esc(source['venue'].split(',')[0])}</span></div>
-    <div class="ds">{esc(entry['dataset_name'])}</div>
-    <div class="met">{esc(entry['metric'])}</div>
-    <div class="num gt">{fmt_num(entry['value'])}</div>
-    <div class="num rep">{reproduced}</div>
-    {_delta_html(entry)}
+    <div class="ds">{esc(entry['dataset_name'])}{window}</div>
+    {_metrics_line(entry)}
     <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
       {_status_html(entry['status'])}
       <span class="chev">›</span>
@@ -192,8 +192,10 @@ def render_claim(entry: dict) -> str:
   <div class="claim-detail">
     <div class="detail-grid">
       <div class="full">
-        <div class="kv-label">Reproduce — exact labts CLI command</div>
-        <div class="cmd">{esc(entry['command'])}<button class="copy" data-cmd="{esc(entry['command'])}">Copy</button></div>
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">{esc(entry['train_command'])}<button class="copy" data-cmd="{esc(entry['train_command'])}">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">{esc(entry['run_command'])}<button class="copy" data-cmd="{esc(entry['run_command'])}">Copy</button></div>
       </div>
       <div>
         <div class="kv-label">Source (groundtruth)</div>
@@ -225,9 +227,41 @@ def render_claim(entry: dict) -> str:
 </details>"""
 
 
+def render_group(algorithm_name: str, entries: list[dict]) -> str:
+    """Parent row for one algorithm: its dataset/config claims as sub-rows."""
+    n = len(entries)
+    k = sum(1 for e in entries if e["status"] == "reproduced")
+    if all(e["status"] == "pending" for e in entries):
+        agg_status, agg_text = "pending", f"{n} configs · not run"
+    elif k == n:
+        agg_status, agg_text = "reproduced", f"{k}/{n} configs reproduced"
+    else:
+        agg_status, agg_text = "deviation", f"{k}/{n} configs reproduced"
+    venue = entries[0]["source"]["venue"].split(",")[0]
+    return f"""
+<details class="claim-group">
+  <summary>
+    <div class="alg">{esc(algorithm_name)}<span class="lib">{esc(venue)}</span></div>
+    <div class="grp-note">{n} dataset/config claim{"s" if n > 1 else ""}</div>
+    <div style="display:flex;align-items:center;justify-content:flex-end;gap:10px">
+      {_badge(agg_status, agg_text)}
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="group-body">{"".join(render_claim(e) for e in entries)}</div>
+</details>"""
+
+
 def render_section(task: dict, entries: list[dict], algs: list[dict]) -> str:
     if entries:
-        claims = f'<div class="claims">{"".join(render_claim(e) for e in entries)}</div>'
+        groups: dict[str, list[dict]] = {}
+        for e in entries:
+            groups.setdefault(e["algorithm_name"], []).append(e)
+        claims = (
+            '<div class="claim-groups">'
+            + "".join(render_group(name, es) for name, es in groups.items())
+            + "</div>"
+        )
     else:
         claims = (
             '<div class="empty">No groundtruth claims curated yet for this task — '

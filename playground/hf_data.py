@@ -87,6 +87,38 @@ def _maybe_json(value):
     return value
 
 
+def load_hf_frame(config: str):
+    """Load all channels of a THU-ANM config as one DataFrame.
+
+    Each parquet row is one channel/series (columns: series_name, timestamps,
+    values); the returned frame is (n_timepoints, n_channels) with one column
+    per series_name — the multivariate layout the LTSF papers evaluate on.
+    """
+    import pandas as pd
+    from huggingface_hub import hf_hub_download
+
+    filename = f"{config}/train-00000-of-00001.parquet"
+    path = hf_hub_download(
+        repo_id=HF_DATASET_ID,
+        filename=filename,
+        repo_type="dataset",
+    )
+    frame = pd.read_parquet(path)
+    data = {}
+    index = None
+    for _, row in frame.iterrows():
+        values = _maybe_json(row["values"])
+        timestamps = pd.to_datetime(_maybe_json(row["timestamps"]), errors="coerce")
+        if index is None:
+            index = (
+                timestamps
+                if not timestamps.isna().any()
+                else pd.RangeIndex(start=0, stop=len(values), step=1)
+            )
+        data[str(row["series_name"])] = values
+    return pd.DataFrame(data, index=index).dropna()
+
+
 def cache_dir() -> Path:
     return Path.home() / ".cache" / "tsbox-sandbox-playground"
 

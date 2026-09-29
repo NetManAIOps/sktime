@@ -1,23 +1,32 @@
 {
   "id": "detection-lof-yahoo-auc",
   "task": "anomaly_detection",
-  "ran_at": "2026-09-28T09:43:02.868809+00:00",
-  "command": "python playground/labts.py run --task anomaly_detection --algorithm registered-anomaly_detection-PyODLOFDetector --dataset yahoo --metric auc_roc --compact",
+  "ran_at": "2026-09-29T05:22:02.680638+00:00",
+  "train_command": "python playground/labts.py train --algorithm registered-anomaly_detection-PyODLOFDetector --dataset tsb-yahoo --model-id bench-detection-lof-yahoo-auc --param contamination=0.1 --param n_neighbors=20",
+  "run_command": "python playground/labts.py run --model-id bench-detection-lof-yahoo-auc --compact",
   "python": "/home/xiezhe/sktime/.venv-full/bin/python",
   "returncode": 0,
-  "duration_s": 13.34,
-  "value": 0.6819162710401381,
-  "delta": -0.178084,
-  "delta_rel": 0.207074,
-  "status": "deviation",
+  "duration_s": 29.5,
+  "values": {
+    "AUC-ROC": 0.7371557260006566
+  },
+  "per_metric": {
+    "AUC-ROC": {
+      "gt": 0.86,
+      "value": 0.7371557260006566,
+      "delta": -0.122844,
+      "delta_rel": 0.142842,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
   "metrics": {
-    "Precision": 0.04819277108433735,
-    "Recall": 0.5714285714285714,
-    "F1": 0.08888888888888889,
-    "Detected": 83,
-    "Ground Truth": 7,
-    "AUC-ROC": 0.6819162710401381
+    "AUC-ROC": 0.7371557260006566,
+    "Precision": 0.03831145923563264,
+    "Recall": 0.5099388211128584,
+    "F1": 0.0642455887257553,
+    "Series": 367
   },
   "error": null,
-  "stdout_tail": "{\"api\": \"labts\", \"api_version\": \"1.0\", \"kind\": \"result\", \"status\": \"ok\", \"data\": {\"status\": \"ok\", \"metrics\": {\"Precision\": 0.04819277108433735, \"Recall\": 0.5714285714285714, \"F1\": 0.08888888888888889, \"Detected\": 83, \"Ground Truth\": 7, \"AUC-ROC\": 0.6819162710401381}, \"summary\": \"Detected 83 anomalies against 7 labels with PyODLOFDetector.\", \"run_id\": \"b5f7d39dd337\", \"spec\": {\"task\": \"anomaly_detection\", \"dataset_id\": \"yahoo\", \"algorithm_id\": \"registered-anomaly_detection-PyODLOFDetector\", \"preprocessor_id\": \"none\", \"preprocessors\": [], \"params\": {}, \"preprocessor_params\": {}, \"metrics\": [\"auc_roc\"]}, \"task\": \"anomaly_detection\", \"dataset\": {\"id\": \"yahoo\", \"name\": \"Yahoo Anomaly\", \"task\": \"anomaly_detection\", \"source\": \"local\", \"path\": \"sktime/datasets/data/yahoo/yahoo.csv\", \"enabled\": true, \"default\": true}, \"algorithm\": {\"id\": \"registered-anomaly_detection-PyODLOFDetector\", \"name\": \"PyODLOFDetector\", \"task\": \"anomaly_detection\", \"module\": \"sktime.detection.adapters.pyod.PyODLOFDetector\", \"class_name\": \"PyODLOFDetector\", \"curated\": false, \"python_dependencies\": \"pyod\", \"subtype\": \"point_anomaly\", \"enabled\": true, \"params\": {\"contamination\": 0.1, \"n_neighbors\": 20}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"preprocessors\": [], \"duration_ms\": 10852.6, \"log\": [\"Selected task: anomaly_detection\", \"Selected dataset: Yahoo Anomaly\", \"Selected preprocessor: Identity / none\", \"Selected algorithm: PyODLOFDetector\", \"Estimator: PyODLOFDetector params=defaults\", \"Loaded Yahoo Anomaly rows=1000\", \"Finished in 10852.6 ms\"]}, \"error\": null}\n"
+  "stdout_tail": "etic_86_data.out\", \"artifact\": \"series/0351/model.zip\"}, {\"name\": \"Yahoo_A2synthetic_87_data.out\", \"artifact\": \"series/0352/model.zip\"}, {\"name\": \"Yahoo_A2synthetic_88_data.out\", \"artifact\": \"series/0353/model.zip\"}, {\"name\": \"Yahoo_A2synthetic_89_data.out\", \"artifact\": \"series/0354/model.zip\"}, {\"name\": \"Yahoo_A2synthetic_8_data.out\", \"artifact\": \"series/0355/model.zip\"}, {\"name\": \"Yahoo_A2synthetic_90_data.out\", \"artifact\": \"series/0356/model.zip\"}, {\"name\": \"Yahoo_A2synthetic_91_data.out\", \"artifact\": \"series/0357/model.zip\"}, {\"name\": \"Yahoo_A2synthetic_92_data.out\", \"artifact\": \"series/0358/model.zip\"}, {\"name\": \"Yahoo_A2synthetic_93_data.out\", \"artifact\": \"series/0359/model.zip\"}, {\"name\": \"Yahoo_A2synthetic_94_data.out\", \"artifact\": \"series/0360/model.zip\"}, {\"name\": \"Yahoo_A2synthetic_95_data.out\", \"artifact\": \"series/0361/model.zip\"}, {\"name\": \"Yahoo_A2synthetic_96_data.out\", \"artifact\": \"series/0362/model.zip\"}, {\"name\": \"Yahoo_A2synthetic_97_data.out\", \"artifact\": \"series/0363/model.zip\"}, {\"name\": \"Yahoo_A2synthetic_98_data.out\", \"artifact\": \"series/0364/model.zip\"}, {\"name\": \"Yahoo_A2synthetic_99_data.out\", \"artifact\": \"series/0365/model.zip\"}, {\"name\": \"Yahoo_A2synthetic_9_data.out\", \"artifact\": \"series/0366/model.zip\"}], \"artifacts\": {\"model\": null, \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 6934.6, \"log\": [\"Selected dataset: TSB-UAD YAHOO (367 series)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-detection-lof-yahoo-auc (sktime backend, algorithm: registered-anomaly_detection-PyODLOFDetector, created: 2026-09-29T05:21:53.067135+00:00)\", \"Scored 50/367 series\", \"Scored 100/367 series\", \"Scored 150/367 series\", \"Scored 200/367 series\", \"Scored 250/367 series\", \"Scored 300/367 series\", \"Scored 350/367 series\", \"Multi-series eval: 367 series, AUC-ROC=0.7372\", \"Finished in 6934.6 ms\"]}, \"error\": null}\n"
 }

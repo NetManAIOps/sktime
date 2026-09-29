@@ -1,0 +1,72 @@
+name: Deploy benchmark leaderboard to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "playground/benchmark/**"
+      - ".agent/skills/time-series-sandbox/catalog_snapshot.json"
+      - ".github/workflows/benchmark-pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # --snapshot reads the committed catalog snapshot and the committed
+      # groundtruth/results JSON, so no sktime installation is needed here.
+      # Reproduction itself (reproduce.py) runs locally/on-demand, never in CI.
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build the self-contained leaderboard
+        run: python playground/benchmark/build_state.py --snapshot
+
+      - name: Stage Pages artifact
+        run: |
+          mkdir -p _pages/benchmark
+          cp playground/benchmark/leaderboard.html _pages/benchmark/index.html
+          cp playground/benchmark/state.json _pages/benchmark/state.json
+          # Site landing page: one Pages site per repo, many pages inside it.
+          # Future pages just add another directory here.
+          cat > _pages/index.html <<'EOF'
+          <!doctype html>
+          <html lang="en"><head><meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <title>sktime · labts</title>
+          <style>body{font-family:-apple-system,"Helvetica Neue",Arial,sans-serif;max-width:720px;margin:120px auto;padding:0 24px;color:#1d1d1f}
+          a{color:#0066cc;text-decoration:none}a:hover{text-decoration:underline}
+          .card{border:1px solid #e5e5ea;border-radius:14px;padding:20px 24px;margin-top:28px}
+          .sub{color:#6e6e73;font-size:14px}</style></head>
+          <body><h1>sktime · labts</h1>
+          <p class="sub">Time Series Sandbox — pages on this site:</p>
+          <div class="card"><a href="./benchmark/"><b>Benchmark leaderboard →</b></a>
+          <p class="sub">Paper numbers, re-run: groundtruth claims with exact labts train + run commands.</p></div>
+          </body></html>
+          EOF
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _pages
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -16,10 +16,13 @@ has a CLI counterpart (same catalog/runner code, identical results):
     Discovery shortcut            python playground/labts.py ls tasks|algorithms|datasets|preprocessors|metrics|models|analyzers|distances \
                                       [--task forecasting] [--all]
 
-    Persistent models (DevAD)     python playground/labts.py train --algorithm <devad-detector-id> \
-                                      --dataset yahoo --model-id my-model [--param epochs=3] [--val-fraction 0.2]
-                                  python playground/labts.py detect --model-id my-model [--dataset yahoo] \
-                                      [--param threshold_quantile=0.99] [--out run.json]
+    Train once, run many          python playground/labts.py train --algorithm <algorithm-id> \
+                                      [--dataset D] [--model-id M] [--param k=v] [--val-fraction 0.2]
+                                  python playground/labts.py run --model-id M [--dataset D] \
+                                      [--param k=v] [--metric mase] [--out run.json]
+                                  (`train` works for every catalog algorithm/task; DevAD models
+                                  use the DevAD backend, everything else sktime save/load.
+                                  `predict`/`detect` are aliases of `run --model-id`.)
 
     Re-score a run                python playground/labts.py evaluate --from run.json --metric pa_f1 [--metric vus_roc]
                                   python playground/labts.py evaluate --spec '<json>' --metric mase   (re-runs)
@@ -28,19 +31,17 @@ has a CLI counterpart (same catalog/runner code, identical results):
 
     Pairwise distances            python playground/labts.py dist --dataset unit-test --metric dtw [--metric scipy:cosine]
 
-    Predict (persisted model)     python playground/labts.py predict --model-id M [--dataset D] [--param k=v]
-                                  (reloads a persisted model via trainer.predict_estimator and scores
-                                  the dataset holdout; DevAD models delegate to `detect`)
-
 `--spec` accepts a JSON string, `@path/to/spec.json`, or `-` for stdin.
 `run` also takes plain flags (`--task/--dataset/--algorithm`, repeatable
 `--preprocessor`, `--metric`, plus repeatable `--param key=value` /
 `--pre-param [STEP:]key=value`) so no JSON is needed for common calls;
 omitting everything runs the per-task default.
 
-`run` is stateless (fit+predict in one call, model discarded). For trainable
-DevAD detectors, `train` persists the model under `playground/models/<id>/`
-and `detect` reuses it, returning the same result envelope as `run`.
+`run` without --model-id is stateless (fit+predict in one call, model
+discarded). `train` persists the fitted model (plus eval params and the
+fitted preprocessor) under `playground/models/<id>/`, and `run --model-id`
+reloads it and scores the dataset holdout with the same result envelope —
+no refit, so expensive models are trained once and evaluated many times.
 
 `catalog` and `run` print a JSON envelope on stdout (always, also for errors):
 
@@ -246,8 +247,11 @@ def _main_catalog(args) -> int:
 def _main_run(args) -> int:
     envelope = _envelope("result")
     try:
-        spec = _load_spec(args.spec) if args.spec else _spec_from_flags(args)
-        data = run_experiment(spec)
+        if getattr(args, "model_id", None):
+            data = _run_trained_model(args)
+        else:
+            spec = _load_spec(args.spec) if args.spec else _spec_from_flags(args)
+            data = run_experiment(spec)
         if args.out:
             _write_json(args.out, {**envelope, "data": data})
         envelope["data"] = _compact_result(data) if args.compact else data
@@ -260,6 +264,47 @@ def _main_run(args) -> int:
         return _fail(envelope, sys.stdout, exc, "error", EXIT_ERROR)
     _emit_json(sys.stdout, envelope)
     return exit_code
+
+
+def _run_trained_model(args) -> dict:
+    """`run --model-id`: evaluate a persisted model (train once, run many)."""
+    from trainer import predict_estimator
+    from runners import _apply_requested_metrics, _saved_run_context
+
+    for flag, value in (
+        ("--spec", args.spec),
+        ("--task", args.task),
+        ("--algorithm", args.algorithm),
+        ("--preprocessor", args.preprocessor),
+        ("--pre-param", args.pre_param),
+    ):
+        if value:
+            raise UsageError(
+                f"`run --model-id` does not take {flag}: the trained model's "
+                "manifest already fixes the task, algorithm, and preprocessing. "
+                "Only --dataset/--param/--metric/--compact/--out apply."
+            )
+    params = _parse_kv_pairs(args.param, "--param")
+    data = predict_estimator(args.model_id, args.dataset, params)
+    metric_ids = list(args.metric or [])
+    if metric_ids:
+        if (data.get("tables") or {}).get("per_series") is not None:
+            raise UsageError(
+                "--metric is not supported for multi-series models; "
+                "dataset-averaged metrics are reported directly."
+            )
+        meta = (data.get("series") or {}).get("meta") or {}
+        if meta.get("eval_mode") == "rolling":
+            raise UsageError(
+                "--metric on rolling model runs is not supported; the rolling "
+                "aggregate MSE/MAE/MAPE are reported directly. Use a one-shot "
+                "`run` (fit+evaluate) for registry metrics on rolling eval."
+            )
+        context = _saved_run_context(data, data["task"])
+        _apply_requested_metrics(
+            data, {"task": data["task"], "metrics": metric_ids}, context
+        )
+    return data
 
 
 def _parse_kv_pairs(pairs: list[str] | None, what: str) -> dict:
@@ -393,8 +438,8 @@ def _main_ls(args) -> int:
 
 
 def _main_train(args) -> int:
-    """Train a DevAD detector on a dataset and persist the model."""
-    from trainer import train_devad
+    """Train any catalog algorithm and persist the model (generic entry)."""
+    from trainer import train as train_model
 
     envelope = _envelope("train")
     try:
@@ -408,7 +453,7 @@ def _main_train(args) -> int:
             "val_fraction": args.val_fraction,
         }
         spec = {k: v for k, v in spec.items() if v not in (None, {})}
-        envelope["data"] = train_devad(spec)
+        envelope["data"] = train_model(spec)
         exit_code = EXIT_OK
     except UsageError as exc:
         return _fail(envelope, sys.stdout, exc, "error", EXIT_USAGE)
@@ -710,7 +755,18 @@ def main(argv: list[str] | None = None) -> int:
         help="Include disabled algorithms/preprocessors (default: enabled only).",
     )
 
-    p_run = sub.add_parser("run", help="Run one experiment spec.")
+    p_run = sub.add_parser(
+        "run",
+        help="Run one experiment spec (fit+evaluate), or evaluate a persisted "
+        "model with --model-id (no refit).",
+    )
+    p_run.add_argument(
+        "--model-id",
+        help="Evaluate a model persisted by `train` instead of fitting a fresh "
+        "one (train once, run many). The manifest's dataset/algorithm/"
+        "preprocessing are reused; --dataset overrides the dataset, --param "
+        "overrides eval params (e.g. horizon).",
+    )
     p_run.add_argument(
         "--spec",
         help="Spec as a JSON string, @path/to/spec.json, or - for stdin. "
@@ -789,18 +845,19 @@ def main(argv: list[str] | None = None) -> int:
 
     p_train = sub.add_parser(
         "train",
-        help="Train a DevAD detector on a dataset and persist the model "
-        "under playground/models/<model-id>/.",
+        help="Train any catalog algorithm on a dataset and persist the model "
+        "under playground/models/<model-id>/ (reuse it with `run --model-id`).",
     )
     p_train.add_argument(
         "--algorithm",
         required=True,
-        help="DevAD adapter id, e.g. registered-anomaly_detection-DevADFITSDetector.",
+        help="Catalog algorithm id, e.g. registered-forecasting-DLinearForecaster "
+        "or registered-anomaly_detection-DevADFITSDetector.",
     )
-    p_train.add_argument("--dataset", help="Anomaly dataset id (default: yahoo).")
+    p_train.add_argument("--dataset", help="Dataset id (default: per-task default).")
     p_train.add_argument(
         "--model-id",
-        help="Persisted model directory name (default: <family>-<dataset>). "
+        help="Persisted model directory name (default: <algorithm>-<dataset>). "
         "An existing model with the same id is overwritten.",
     )
     p_train.add_argument("--preprocessor", help="Preprocessor id (default: none).")
@@ -808,8 +865,9 @@ def main(argv: list[str] | None = None) -> int:
         "--param",
         action="append",
         metavar="KEY=VALUE",
-        help="Adapter param (win_len/epochs/batch_size/seed/device/...) or "
-        "DevAD hyperparameter (h_dim/lr/...); repeatable.",
+        help="Estimator constructor param or task eval param (horizon/"
+        "eval_mode/train_fraction/...); DevAD detectors also take adapter "
+        "params (win_len/epochs/seed/device/...) and hyperparameters; repeatable.",
     )
     p_train.add_argument(
         "--pre-param",
@@ -821,13 +879,13 @@ def main(argv: list[str] | None = None) -> int:
         "--val-fraction",
         type=float,
         default=0.0,
-        help="Hold out this fraction of the series tail for validation "
-        "(enables early stopping for torch families). Default: 0.",
+        help="DevAD only: hold out this fraction of the series tail for "
+        "validation (enables early stopping for torch families). Default: 0.",
     )
 
     p_detect = sub.add_parser(
         "detect",
-        help="Run a persisted model (labts train) on a dataset; "
+        help="Alias of `run --model-id` for persisted DevAD anomaly models; "
         "same result envelope as `run`.",
     )
     p_detect.add_argument(
@@ -929,7 +987,7 @@ def main(argv: list[str] | None = None) -> int:
 
     p_predict = sub.add_parser(
         "predict",
-        help="Predict with a persisted model: reloads it via "
+        help="Alias of `run --model-id`: reloads a persisted model via "
         "trainer.predict_estimator and scores the dataset holdout; "
         "DevAD models delegate to `detect`.",
     )

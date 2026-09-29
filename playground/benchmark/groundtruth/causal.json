@@ -7,9 +7,10 @@
       "algorithm_name": "NOTEARS",
       "dataset": "causal-sachs-cont",
       "dataset_name": "Sachs continuous (n=7466, d=11, 20-edge DAG)",
-      "metric": "SHD",
-      "metric_key": "SHD",
-      "value": 22,
+      "window": "full data",
+      "metrics": {
+        "SHD": 22
+      },
       "settings": "Original NOTEARS (least-squares + L1 + acyclicity); full dataset n=7466, no train/test split; SHD vs the 20-edge consensus DAG; 16 edges estimated",
       "source": {
         "title": "DAGs with NO TEARS: Continuous Optimization for Structure Learning (Zheng, Aragam, Ravikumar, Xing)",
@@ -17,9 +18,16 @@
         "url": "https://ar5iv.labs.arxiv.org/html/1803.01422",
         "locator": "Section 5.4 'Real-data': '16 for NOTEARS with an SHD of 22'"
       },
-      "command": "python playground/labts.py run --task causal --algorithm causal-notears --dataset causal-sachs-cont --param max_samples=7466 --compact",
-      "tolerance": {"type": "absolute", "value": 6},
-      "notes": "Same continuous Sachs data and same 20-edge consensus DAG as the paper (vendored from cmu-phil/example-causal-datasets). labts must run with max_samples=7466 (default subsample is 2000)."
+      "tolerance": {
+        "type": "absolute",
+        "value": 6
+      },
+      "notes": "Same continuous Sachs data and same 20-edge consensus DAG as the paper (vendored from cmu-phil/example-causal-datasets). labts must run with max_samples=7466 (default subsample is 2000).",
+      "spec_params": {
+        "max_samples": 7466
+      },
+      "train_command": "python playground/labts.py train --algorithm causal-notears --dataset causal-sachs-cont --model-id bench-causal-notears-sachs-shd --param max_samples=7466 --param lambda1=0.01 --param seed=7 --param w_threshold=0.3",
+      "run_command": "python playground/labts.py run --model-id bench-causal-notears-sachs-shd --compact"
     },
     {
       "id": "causal-pc-sachs-shd",
@@ -27,9 +35,10 @@
       "algorithm_name": "PC",
       "dataset": "causal-sachs-cont",
       "dataset_name": "Sachs continuous (n=7466, d=11, 20-edge DAG)",
-      "metric": "SHD",
-      "metric_key": "SHD",
-      "value": 23,
+      "window": "full data",
+      "metrics": {
+        "SHD": 23
+      },
       "settings": "PC in Tetrad 7.6.7 with default settings; CPDAG with 24 estimated edges; SHD vs the 20-edge ground-truth DAG",
       "source": {
         "title": "Are You Doing Better Than Random Guessing? A Call for Using Negative Controls When Evaluating Causal Discovery Algorithms (Petersen)",
@@ -37,9 +46,16 @@
         "url": "https://arxiv.org/pdf/2412.10039",
         "locator": "Table 6 'SHD for the Sachs Data', row PC"
       },
-      "command": "python playground/labts.py run --task causal --algorithm causal-pc --dataset causal-sachs-cont --param max_samples=7466 --compact",
-      "tolerance": {"type": "absolute", "value": 8},
-      "notes": "Implementation gap: paper uses Tetrad's PC; labts uses causal-learn's PC. Independence-test defaults may differ."
+      "tolerance": {
+        "type": "absolute",
+        "value": 8
+      },
+      "notes": "Implementation gap: paper uses Tetrad's PC; labts uses causal-learn's PC. Independence-test defaults may differ.",
+      "spec_params": {
+        "max_samples": 7466
+      },
+      "train_command": "python playground/labts.py train --algorithm causal-pc --dataset causal-sachs-cont --model-id bench-causal-pc-sachs-shd --param max_samples=7466 --param alpha=0.05 --param seed=7",
+      "run_command": "python playground/labts.py run --model-id bench-causal-pc-sachs-shd --compact"
     },
     {
       "id": "causal-ges-sachs-shd",
@@ -47,9 +63,10 @@
       "algorithm_name": "GES",
       "dataset": "causal-sachs-cont",
       "dataset_name": "Sachs continuous (n=7466, d=11, 20-edge DAG)",
-      "metric": "SHD",
-      "metric_key": "SHD",
-      "value": 30,
+      "window": "full data",
+      "metrics": {
+        "SHD": 30
+      },
       "settings": "GES in Tetrad 7.6.7 with default settings; CPDAG with 30 estimated edges; SHD vs the 20-edge ground-truth DAG",
       "source": {
         "title": "Are You Doing Better Than Random Guessing? A Call for Using Negative Controls When Evaluating Causal Discovery Algorithms (Petersen)",
@@ -57,9 +74,16 @@
         "url": "https://arxiv.org/pdf/2412.10039",
         "locator": "Table 6 'SHD for the Sachs Data', row GES"
       },
-      "command": "python playground/labts.py run --task causal --algorithm causal-ges --dataset causal-sachs-cont --param max_samples=7466 --compact",
-      "tolerance": {"type": "absolute", "value": 8},
-      "notes": "Implementation gap: Tetrad GES vs causal-learn GES. (The NOTEARS paper reports FGS SHD=22 on the same data; Tetrad GES defaults give 30.)"
+      "tolerance": {
+        "type": "absolute",
+        "value": 8
+      },
+      "notes": "Implementation gap: Tetrad GES vs causal-learn GES. (The NOTEARS paper reports FGS SHD=22 on the same data; Tetrad GES defaults give 30.)",
+      "spec_params": {
+        "max_samples": 7466
+      },
+      "train_command": "python playground/labts.py train --algorithm causal-ges --dataset causal-sachs-cont --model-id bench-causal-ges-sachs-shd --param max_samples=7466 --param seed=7",
+      "run_command": "python playground/labts.py run --model-id bench-causal-ges-sachs-shd --compact"
     }
   ]
 }

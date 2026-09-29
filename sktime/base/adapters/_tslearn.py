@@ -20,6 +20,23 @@ class _TslearnAdapter:
     # defines the name of the attribute containing the tslearn estimator
     _estimator_attr = "_estimator"
 
+    @staticmethod
+    def _to_tslearn(X):
+        """Convert sktime numpy3D (n, d, sz) to tslearn layout (n, sz, d).
+
+        tslearn interprets 3D input as (n_ts, sz, d); sktime's numpy3D is
+        (n_instances, n_dimensions, series_length). Without this transpose,
+        univariate series (n, 1, sz) are read as length-1 series with sz
+        dimensions, which silently degenerates tslearn estimators (e.g.
+        KShape collapsing everything into one cluster).
+        """
+        import numpy as np
+
+        X = np.asarray(X)
+        if X.ndim == 3:
+            return X.transpose(0, 2, 1)
+        return X
+
     def _get_tslearn_class(self):
         """Abstract method to get tslearn class.
 
@@ -70,6 +87,7 @@ class _TslearnAdapter:
         # if yes, call with y, otherwise without
         tslearn_has_y = "y" in signature(tslearn_est.fit).parameters
 
+        X = self._to_tslearn(X)
         if tslearn_has_y:
             tslearn_est.fit(X, y)
         else:
@@ -101,6 +119,7 @@ class _TslearnAdapter:
         # if yes, call with y, otherwise without
         tslearn_has_y = "y" in signature(tslearn_est.predict).parameters
 
+        X = self._to_tslearn(X)
         if tslearn_has_y:
             return tslearn_est.predict(X, y)
         else:

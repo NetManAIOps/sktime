@@ -38,6 +38,16 @@ share that layout:
                          "preprocessor": "preprocessor.zip" | null}
     }
 
+Multi-series anomaly datasets (``series_dir``, TSB-UAD layout) instead get
+one fitted detector per series, persisted by
+``save_sktime_multiseries_model`` under ``series/<NNNN>/model.zip``. Their
+manifest uses the same schema plus::
+
+    "multiseries": True,
+    "series": [{"name": <series file name>, "artifact": "series/NNNN/model.zip"}, ...]
+
+and ``artifacts.model`` is null.
+
 Backend selection rule (implemented in ``trainer.train``): algorithms whose
 catalog ``module`` starts with ``sktime.detection.adapters.devad.`` are
 trained through the DevAD backend; everything else — registered sktime
@@ -186,3 +196,87 @@ def load_sktime_preprocessor(model_dir: str | Path):
         raise PlaygroundError(
             f"Could not load preprocessor artifact {path}: {type(exc).__name__}: {exc}"
         ) from exc
+
+
+def save_sktime_multiseries_model(
+    models: dict,
+    *,
+    models_root: str | Path,
+    model_id: str,
+    task: str,
+    algorithm: dict,
+    est_params: dict,
+    eval_params: dict,
+    spec: dict,
+) -> dict:
+    """Persist one fitted estimator per series (multi-series anomaly datasets).
+
+    Each series model is stored with sktime's own ``save`` under
+    ``<model_id>/series/<NNNN>/model.zip``; the manifest gets
+    ``"multiseries": True`` and a ``series`` list mapping series names to
+    artifacts. Backend stays ``sktime`` — `detect_backend` is unaffected.
+    """
+    validate_model_id(model_id)
+    model_dir = Path(models_root) / model_id
+    if model_dir.exists():
+        shutil.rmtree(model_dir)
+    model_dir.mkdir(parents=True)
+    series_entries = []
+    try:
+        for i, (name, estimator) in enumerate(models.items()):
+            if not callable(getattr(estimator, "save", None)):
+                raise PlaygroundError(
+                    f"Estimator of type {type(estimator).__name__} does not "
+                    "implement the sktime save/load contract (no `save` method)."
+                )
+            sub = Path("series") / f"{i:04d}"
+            (model_dir / sub).mkdir(parents=True, exist_ok=True)
+            estimator.save(model_dir / sub / "model").close()
+            series_entries.append(
+                {"name": name, "artifact": str(sub / MODEL_ARTIFACT)}
+            )
+    except PlaygroundError:
+        shutil.rmtree(model_dir, ignore_errors=True)
+        raise
+    except Exception as exc:
+        shutil.rmtree(model_dir, ignore_errors=True)
+        raise PlaygroundError(
+            f"Could not persist model `{model_id}`: {type(exc).__name__}: {exc}"
+        ) from exc
+    manifest = {
+        "model_id": model_id,
+        "backend": SKTIME_BACKEND,
+        "task": task,
+        "algorithm_id": algorithm.get("id"),
+        "algorithm_name": algorithm.get("name"),
+        "module": algorithm.get("module"),
+        "params": est_params,
+        "eval_params": eval_params,
+        "created_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+        "spec": spec,
+        "multiseries": True,
+        "series": series_entries,
+        "artifacts": {"model": None, "preprocessor": None},
+    }
+    (model_dir / MANIFEST_NAME).write_text(
+        json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+    )
+    return manifest
+
+
+def load_sktime_series_models(model_dir: str | Path, manifest: dict) -> dict:
+    """Reload {series_name: fitted estimator} persisted by `save_sktime_multiseries_model`."""
+    from sktime.base import BaseEstimator
+
+    models = {}
+    for entry in manifest.get("series") or []:
+        path = Path(model_dir) / entry["artifact"]
+        if not path.is_file():
+            raise PlaygroundError(f"Series model artifact not found: {path}")
+        try:
+            models[entry["name"]] = BaseEstimator.load_from_path(path)
+        except Exception as exc:
+            raise PlaygroundError(
+                f"Could not load series model {path}: {type(exc).__name__}: {exc}"
+            ) from exc
+    return models

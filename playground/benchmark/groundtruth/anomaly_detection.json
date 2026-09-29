@@ -5,61 +5,79 @@
       "id": "detection-lof-yahoo-auc",
       "algorithm": "registered-anomaly_detection-PyODLOFDetector",
       "algorithm_name": "LOF",
-      "dataset": "yahoo",
-      "dataset_name": "Yahoo (TSB-UAD YAHOO subset)",
-      "metric": "AUC-ROC",
-      "metric_key": "AUC-ROC",
-      "value": 0.86,
-      "settings": "Unsupervised fit on full series; sliding-window embedding with FFT-based window length; scores min-max normalized; point-wise AUC-ROC averaged over all 367 YAHOO series",
+      "dataset": "tsb-yahoo",
+      "dataset_name": "YAHOO (TSB-UAD, 367 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.86
+      },
+      "settings": "Unsupervised fit per series; sliding-window embedding with FFT-based window length; scores min-max normalized; point-wise AUC-ROC averaged over all 367 YAHOO series",
       "source": {
         "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
         "venue": "PVLDB 15(8):1697-1711, 2022",
         "url": "https://github.com/TheDatumOrg/TSB-UAD",
         "locator": "README 'Overall Results' table, row YAHOO, column LOF (AUC 0.86, F 0.62)"
       },
-      "command": "python playground/labts.py run --task anomaly_detection --algorithm registered-anomaly_detection-PyODLOFDetector --dataset yahoo --metric auc_roc --compact",
-      "tolerance": {"type": "absolute", "value": 0.15},
-      "notes": "Granularity gap: the paper value averages 367 Yahoo series; the labts yahoo dataset is a single bundled series (1000 points, 7 anomalies). Directional check only."
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "Now apples-to-apples: labts scores the same 367 TSB-UAD series and averages per-series AUC. Residual gap: window-length heuristic and score normalization may differ from TSB-UAD's reference pipeline. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ).",
+      "spec_params": {},
+      "train_command": "python playground/labts.py train --algorithm registered-anomaly_detection-PyODLOFDetector --dataset tsb-yahoo --model-id bench-detection-lof-yahoo-auc --param contamination=0.1 --param n_neighbors=20",
+      "run_command": "python playground/labts.py run --model-id bench-detection-lof-yahoo-auc --compact"
     },
     {
       "id": "detection-iforest-yahoo-auc",
       "algorithm": "registered-anomaly_detection-PyODIForestDetector",
       "algorithm_name": "IForest",
-      "dataset": "yahoo",
-      "dataset_name": "Yahoo (TSB-UAD YAHOO subset)",
-      "metric": "AUC-ROC",
-      "metric_key": "AUC-ROC",
-      "value": 0.62,
-      "settings": "Unsupervised fit on full series; sliding-window embedding; point-wise AUC-ROC averaged over all 367 YAHOO series",
+      "dataset": "tsb-yahoo",
+      "dataset_name": "YAHOO (TSB-UAD, 367 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.62
+      },
+      "settings": "Unsupervised fit per series; sliding-window embedding; point-wise AUC-ROC averaged over all 367 YAHOO series",
       "source": {
         "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
         "venue": "PVLDB 15(8):1697-1711, 2022",
         "url": "https://github.com/TheDatumOrg/TSB-UAD",
         "locator": "README 'Overall Results' table, row YAHOO, column IForest (AUC 0.62, F 0.06)"
       },
-      "command": "python playground/labts.py run --task anomaly_detection --algorithm registered-anomaly_detection-PyODIForestDetector --dataset yahoo --metric auc_roc --compact",
-      "tolerance": {"type": "absolute", "value": 0.15},
-      "notes": "Same granularity gap as the LOF entry."
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "Same protocol as the LOF entry.",
+      "spec_params": {},
+      "train_command": "python playground/labts.py train --algorithm registered-anomaly_detection-PyODIForestDetector --dataset tsb-yahoo --model-id bench-detection-iforest-yahoo-auc --param contamination=0.1 --param n_estimators=100",
+      "run_command": "python playground/labts.py run --model-id bench-detection-iforest-yahoo-auc --compact"
     },
     {
       "id": "detection-iforest-mitdb-auc",
       "algorithm": "registered-anomaly_detection-PyODIForestDetector",
       "algorithm_name": "IForest",
-      "dataset": "mitdb",
-      "dataset_name": "MIT-BIH ECG (TSB-UAD MITDB subset)",
-      "metric": "AUC-ROC",
-      "metric_key": "AUC-ROC",
-      "value": 0.7,
-      "settings": "Unsupervised fit on full series; sliding-window embedding; point-wise AUC-ROC averaged over all 32 MITDB series",
+      "dataset": "tsb-mitdb",
+      "dataset_name": "MITDB (TSB-UAD, 32 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.7
+      },
+      "settings": "Unsupervised fit per series; sliding-window embedding; point-wise AUC-ROC averaged over all 32 MITDB series",
       "source": {
         "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
         "venue": "PVLDB 15(8):1697-1711, 2022",
         "url": "https://github.com/TheDatumOrg/TSB-UAD",
         "locator": "README 'Overall Results' table, row MITDB, column IForest (AUC 0.70, F 0.09)"
       },
-      "command": "python playground/labts.py run --task anomaly_detection --algorithm registered-anomaly_detection-PyODIForestDetector --dataset mitdb --metric auc_roc --compact",
-      "tolerance": {"type": "absolute", "value": 0.15},
-      "notes": "Granularity gap: 32-series average vs the single 7500-point excerpt bundled with labts."
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "Same protocol as the Yahoo entries, on the 32 MITDB series.",
+      "spec_params": {},
+      "train_command": "python playground/labts.py train --algorithm registered-anomaly_detection-PyODIForestDetector --dataset tsb-mitdb --model-id bench-detection-iforest-mitdb-auc --param contamination=0.1 --param n_estimators=100",
+      "run_command": "python playground/labts.py run --model-id bench-detection-iforest-mitdb-auc --compact"
     }
   ]
 }

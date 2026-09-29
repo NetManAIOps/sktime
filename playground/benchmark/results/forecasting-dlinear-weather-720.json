@@ -1,0 +1,39 @@
+{
+  "id": "forecasting-dlinear-weather-720",
+  "task": "forecasting",
+  "ran_at": "2026-09-29T05:37:51.825513+00:00",
+  "train_command": "python playground/labts.py train --algorithm registered-forecasting-DLinearForecaster --dataset hf-weather --model-id bench-forecasting-dlinear-weather-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+  "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-weather-720 --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 114.56,
+  "values": {
+    "MSE": 0.3271291449738203,
+    "MAE": 0.355883907885721
+  },
+  "per_metric": {
+    "MSE": {
+      "gt": 0.323,
+      "value": 0.3271291449738203,
+      "delta": 0.004129,
+      "delta_rel": 0.012784,
+      "status": "reproduced"
+    },
+    "MAE": {
+      "gt": 0.362,
+      "value": 0.355883907885721,
+      "delta": -0.006116,
+      "delta_rel": 0.016895,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "MAE": 0.355883907885721,
+    "MSE": 0.3271291449738203,
+    "MAPE": 12.496922856763343,
+    "Windows": 9821
+  },
+  "error": null,
+  "stdout_tail": "-weather-720\", \"backend\": \"sktime\", \"task\": \"forecasting\", \"algorithm_id\": \"registered-forecasting-DLinearForecaster\", \"algorithm_name\": \"DLinearForecaster\", \"module\": \"sktime.forecasting.tslib.DLinearForecaster\", \"params\": {\"seq_len\": 336, \"pred_len\": 720, \"num_epochs\": 10, \"batch_size\": 32, \"channel_independence\": 1, \"d_ff\": 128, \"d_layers\": 1, \"d_model\": 64, \"dropout\": 0.1, \"e_layers\": 2, \"factor\": 3, \"label_len\": 18, \"lr\": 0.001, \"moving_avg\": 25, \"n_heads\": 8, \"num_kernels\": 6, \"top_k\": 3}, \"eval_params\": {\"horizon\": 720, \"eval_mode\": \"rolling\", \"train_fraction\": 0.7, \"test_fraction\": 0.2, \"context_window\": 36}, \"created_at\": \"2026-09-29T05:37:34.456248+00:00\", \"spec\": {\"task\": \"forecasting\", \"dataset_id\": \"hf-weather\", \"algorithm_id\": \"registered-forecasting-DLinearForecaster\", \"preprocessor_id\": \"none\", \"params\": {\"seq_len\": 336, \"pred_len\": 720, \"horizon\": 720, \"num_epochs\": 10, \"eval_mode\": \"rolling\", \"train_fraction\": 0.7, \"test_fraction\": 0.2, \"batch_size\": 32, \"channel_independence\": 1, \"context_window\": 36, \"d_ff\": 128, \"d_layers\": 1, \"d_model\": 64, \"dropout\": 0.1, \"e_layers\": 2, \"factor\": 3, \"label_len\": 18, \"lr\": 0.001, \"moving_avg\": 25, \"n_heads\": 8, \"num_kernels\": 6, \"top_k\": 3}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 14509.8, \"log\": [\"Selected dataset: THU-ANM Weather\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-forecasting-dlinear-weather-720 (sktime backend, algorithm: registered-forecasting-DLinearForecaster, created: 2026-09-29T05:37:34.456248+00:00)\", \"Loaded Hugging Face config Weather (52696 rows x 21 channels)\", \"Normalized time index to RangeIndex for reproducible forecasting\", \"Rolling eval: fit on 36887 rows, 9821 windows (test region [42156, 52696) of 52696, horizon=720)\", \"Finished in 14509.8 ms\"]}, \"error\": null}\n"
+}

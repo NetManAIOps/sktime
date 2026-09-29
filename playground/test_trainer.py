@@ -1,10 +1,14 @@
 """Roundtrip tests for the generic train/predict persistence backend.
 
-Covers the three backend paths of `trainer.train` / `trainer.predict_estimator`
-(forecaster via sktime save/load, classifier via sktime save/load, DevAD via
-the model_service backend) plus the manifest schema documented in
-``playground/persistence.py``. All tests use a throwaway models root and never
-touch ``playground/models/``.
+Covers `trainer.train` / `trainer.predict_estimator` (and the `labts run
+--model-id` CLI on top of them): sktime save/load roundtrips for
+forecasting/classification, rolling-origin forecasting, clustering
+`fit_on=all`, causal discovery, per-series multi-series anomaly bundles
+(synthetic TSB-UAD layout), the DevAD model_service backend, and the
+manifest schema documented in ``playground/persistence.py``. Deterministic
+algorithms are checked for exact metric parity with the one-shot
+`run_experiment`. All tests use a throwaway models root and never touch
+``playground/models/``.
 """
 
 from __future__ import annotations
@@ -287,6 +291,272 @@ class TrainPredictErrorTests(TrainerTestCase):
                     "model_id": "t-threshold",
                 }
             )
+
+
+class CausalTrainTests(TrainerTestCase):
+    def test_notears_train_run_matches_one_shot(self):
+        trained = self._train_or_skip(
+            {
+                "algorithm_id": "causal-notears",
+                "dataset_id": "causal-sachs",
+                "model_id": "t-notears",
+                "params": {"max_samples": 300},
+            }
+        )
+        self.assertEqual(trained["status"], "ok")
+        self.assertEqual(trained["task"], "causal")
+        self.assertTrue((Path(trained["model_dir"]) / "model.zip").is_file())
+
+        from runners import run_experiment
+
+        result = trainer.predict_estimator("t-notears", "causal-sachs", {})
+        one_shot = run_experiment(
+            {
+                "task": "causal",
+                "dataset_id": "causal-sachs",
+                "algorithm_id": "causal-notears",
+                "params": {"max_samples": 300},
+            }
+        )
+        self.assertEqual(result["status"], "ok")
+        # NOTEARS is deterministic on the same subsample: exact match required.
+        self.assertEqual(result["metrics"], one_shot["metrics"])
+        self.assertEqual(result["graph"]["adjacency"], one_shot["graph"]["adjacency"])
+
+
+class ClusteringFitOnAllTests(TrainerTestCase):
+    def test_fit_on_all_train_run_matches_one_shot(self):
+        trained = self._train_or_skip(
+            {
+                "algorithm_id": "ts-kmeans",
+                "dataset_id": "unit-test-cl",
+                "model_id": "t-kmeans-all",
+                "params": {"fit_on": "all"},
+            }
+        )
+        self.assertEqual(trained["status"], "ok")
+
+        from runners import run_experiment
+
+        result = trainer.predict_estimator("t-kmeans-all", "unit-test-cl", {})
+        one_shot = run_experiment(
+            {
+                "task": "clustering",
+                "dataset_id": "unit-test-cl",
+                "algorithm_id": "ts-kmeans",
+                "params": {"fit_on": "all"},
+            }
+        )
+        self.assertEqual(result["metrics"], one_shot["metrics"])
+        # The default holdout protocol is untouched (no fit_on).
+        default_run = run_experiment(
+            {
+                "task": "clustering",
+                "dataset_id": "unit-test-cl",
+                "algorithm_id": "ts-kmeans",
+            }
+        )
+        self.assertNotEqual(result["metrics"]["ARI"], default_run["metrics"]["ARI"])
+
+
+class MultiSeriesAnomalyTests(TrainerTestCase):
+    """Per-series model bundles for TSB-UAD-style multi-series datasets."""
+
+    def setUp(self):
+        super().setUp()
+        import os
+
+        import numpy as np
+
+        self._tsb_tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self._tsb_tmp.cleanup)
+        series_dir = Path(self._tsb_tmp.name) / "TSB-UAD-Public" / "YAHOO"
+        series_dir.mkdir(parents=True)
+        rng = np.random.RandomState(0)
+        for k in range(3):
+            n = 300
+            t = np.arange(n)
+            values = np.sin(t / (8.0 + k)) + 0.05 * rng.randn(n)
+            labels = np.zeros(n, dtype=int)
+            for center in (100 + 10 * k, 200 - 5 * k):
+                values[center : center + 3] += 6.0
+                labels[center : center + 3] = 1
+            data = np.column_stack([values, labels])
+            np.savetxt(
+                series_dir / f"synthetic_{k}.out",
+                data,
+                fmt=["%.6f", "%d"],
+                delimiter=",",
+            )
+        self._orig_tsb_home = os.environ.get("TSB_UAD_HOME")
+        os.environ["TSB_UAD_HOME"] = self._tsb_tmp.name
+        self.addCleanup(self._restore_tsb_home)
+
+    def _restore_tsb_home(self):
+        import os
+
+        if self._orig_tsb_home is None:
+            os.environ.pop("TSB_UAD_HOME", None)
+        else:
+            os.environ["TSB_UAD_HOME"] = self._orig_tsb_home
+
+    def test_multiseries_train_run_matches_one_shot(self):
+        trained = self._train_or_skip(
+            {
+                "algorithm_id": "registered-anomaly_detection-PyODLOFDetector",
+                "dataset_id": "tsb-yahoo",
+                "model_id": "t-lof-ms",
+            }
+        )
+        self.assertEqual(trained["status"], "ok")
+        self.assertEqual(trained["series_models"], 3)
+        manifest = trained["manifest"]
+        self.assertTrue(manifest["multiseries"])
+        self.assertEqual(len(manifest["series"]), 3)
+        model_dir = Path(trained["model_dir"])
+        self.assertTrue((model_dir / "series" / "0000" / "model.zip").is_file())
+
+        from runners import run_experiment
+
+        result = trainer.predict_estimator("t-lof-ms", "tsb-yahoo", {})
+        one_shot = run_experiment(
+            {
+                "task": "anomaly_detection",
+                "dataset_id": "tsb-yahoo",
+                "algorithm_id": "registered-anomaly_detection-PyODLOFDetector",
+            }
+        )
+        self.assertEqual(result["status"], "ok")
+        self.assertEqual(result["metrics"]["Series"], 3)
+        # LOF is deterministic: the persisted per-series models must reproduce
+        # the one-shot dataset-level metrics exactly.
+        for key in ("AUC-ROC", "Precision", "Recall", "F1"):
+            self.assertAlmostEqual(
+                result["metrics"][key], one_shot["metrics"][key], places=9
+            )
+        self.assertEqual(len(result["tables"]["per_series"]), 3)
+
+
+class RollingForecastTrainTests(TrainerTestCase):
+    def test_rolling_train_run_protocol_and_determinism(self):
+        params = {
+            "eval_mode": "rolling",
+            "horizon": 6,
+            "pred_len": 6,
+            "seq_len": 12,
+            "num_epochs": 1,
+            "test_fraction": 0.2,
+        }
+        trained = self._train_or_skip(
+            {
+                "algorithm_id": "registered-forecasting-DLinearForecaster",
+                "dataset_id": "airline",
+                "model_id": "t-dlinear-roll",
+                "params": params,
+            }
+        )
+        self.assertEqual(trained["status"], "ok")
+        self.assertEqual(trained["manifest"]["eval_params"]["eval_mode"], "rolling")
+
+        from runners import run_experiment
+
+        result = trainer.predict_estimator("t-dlinear-roll", "airline", {})
+        again = trainer.predict_estimator("t-dlinear-roll", "airline", {})
+        one_shot = run_experiment(
+            {
+                "task": "forecasting",
+                "dataset_id": "airline",
+                "algorithm_id": "registered-forecasting-DLinearForecaster",
+                "params": params,
+            }
+        )
+        self.assertEqual(result["status"], "ok")
+        # Same persisted model, no refit: bit-identical metrics on re-run.
+        self.assertEqual(result["metrics"], again["metrics"])
+        # Same protocol as the one-shot rolling runner (split, window count).
+        self.assertEqual(result["metrics"]["Windows"], one_shot["metrics"]["Windows"])
+        self.assertEqual(
+            result["series"]["meta"]["test_start"],
+            one_shot["series"]["meta"]["test_start"],
+        )
+        self.assertEqual(
+            result["series"]["meta"]["test_end"], one_shot["series"]["meta"]["test_end"]
+        )
+        for key in ("MSE", "MAE"):
+            import math
+
+            self.assertGreaterEqual(result["metrics"][key], 0.0)
+            self.assertTrue(math.isfinite(result["metrics"][key]))
+
+
+class CliRunModelIdTests(TrainerTestCase):
+    """`labts run --model-id` end-to-end through the CLI entry point."""
+
+    def _cli(self, argv):
+        import contextlib
+        import io
+
+        import labts
+
+        buffer = io.StringIO()
+        with contextlib.redirect_stdout(buffer):
+            code = labts.main(argv)
+        return code, json.loads(buffer.getvalue())
+
+    def test_run_model_id_matches_one_shot(self):
+        trained = self._train_or_skip(
+            {
+                "algorithm_id": "naive-seasonal-last",
+                "dataset_id": "airline",
+                "model_id": "t-cli",
+                "params": {"horizon": 6},
+            }
+        )
+        self.assertEqual(trained["status"], "ok")
+
+        code, envelope = self._cli(["run", "--model-id", "t-cli", "--compact"])
+        self.assertEqual(code, 0)
+        self.assertEqual(envelope["status"], "ok")
+        metrics = envelope["data"]["metrics"]
+
+        code, one_shot = self._cli(
+            [
+                "run",
+                "--task",
+                "forecasting",
+                "--dataset",
+                "airline",
+                "--algorithm",
+                "naive-seasonal-last",
+                "--param",
+                "horizon=6",
+                "--compact",
+            ]
+        )
+        self.assertEqual(code, 0)
+        self.assertEqual(metrics, one_shot["data"]["metrics"])
+
+        code, with_metric = self._cli(
+            ["run", "--model-id", "t-cli", "--metric", "mase", "--compact"]
+        )
+        self.assertEqual(code, 0)
+        self.assertIn("MASE", with_metric["data"]["metrics"])
+
+    def test_run_model_id_rejects_conflicting_flags(self):
+        trained = self._train_or_skip(
+            {
+                "algorithm_id": "naive-seasonal-last",
+                "dataset_id": "airline",
+                "model_id": "t-cli-conflict",
+            }
+        )
+        self.assertEqual(trained["status"], "ok")
+        code, envelope = self._cli(
+            ["run", "--model-id", "t-cli-conflict", "--algorithm", "naive-seasonal-last"]
+        )
+        self.assertEqual(code, 2)
+        self.assertEqual(envelope["status"], "error")
+        self.assertIn("--algorithm", envelope["error"])
 
 
 if __name__ == "__main__":

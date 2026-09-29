@@ -1,0 +1,39 @@
+{
+  "id": "forecasting-autoformer-etth1-336",
+  "task": "forecasting",
+  "ran_at": "2026-09-29T06:02:56.641855+00:00",
+  "train_command": "python playground/labts.py train --algorithm registered-forecasting-AutoformerForecaster --dataset hf-etth1 --model-id bench-forecasting-autoformer-etth1-336 --param seq_len=96 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+  "run_command": "python playground/labts.py run --model-id bench-forecasting-autoformer-etth1-336 --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 572.18,
+  "values": {
+    "MSE": 0.6599290240768895,
+    "MAE": 0.5626500803005422
+  },
+  "per_metric": {
+    "MSE": {
+      "gt": 0.521,
+      "value": 0.6599290240768895,
+      "delta": 0.138929,
+      "delta_rel": 0.266658,
+      "status": "deviation"
+    },
+    "MAE": {
+      "gt": 0.496,
+      "value": 0.5626500803005422,
+      "delta": 0.06665,
+      "delta_rel": 0.134375,
+      "status": "reproduced"
+    }
+  },
+  "status": "deviation",
+  "metrics": {
+    "MAE": 0.5626500803005422,
+    "MSE": 0.6599290240768895,
+    "MAPE": 12.848650851701526,
+    "Windows": 2557
+  },
+  "error": null,
+  "stdout_tail": "ered-forecasting-AutoformerForecaster\", \"algorithm_name\": \"AutoformerForecaster\", \"module\": \"sktime.forecasting.tslib.AutoformerForecaster\", \"params\": {\"seq_len\": 96, \"pred_len\": 336, \"num_epochs\": 10, \"batch_size\": 32, \"channel_independence\": 1, \"d_ff\": 128, \"d_layers\": 1, \"d_model\": 64, \"dropout\": 0.1, \"e_layers\": 2, \"factor\": 3, \"label_len\": 18, \"lr\": 0.001, \"moving_avg\": 25, \"n_heads\": 8, \"num_kernels\": 6, \"top_k\": 3}, \"eval_params\": {\"horizon\": 336, \"eval_mode\": \"rolling\", \"train_fraction\": 0.496, \"test_start_fraction\": 0.661, \"test_end_fraction\": 0.827, \"context_window\": 36}, \"created_at\": \"2026-09-29T06:02:39.768210+00:00\", \"spec\": {\"task\": \"forecasting\", \"dataset_id\": \"hf-etth1\", \"algorithm_id\": \"registered-forecasting-AutoformerForecaster\", \"preprocessor_id\": \"none\", \"params\": {\"seq_len\": 96, \"pred_len\": 336, \"horizon\": 336, \"num_epochs\": 10, \"eval_mode\": \"rolling\", \"train_fraction\": 0.496, \"test_start_fraction\": 0.661, \"test_end_fraction\": 0.827, \"batch_size\": 32, \"channel_independence\": 1, \"context_window\": 36, \"d_ff\": 128, \"d_layers\": 1, \"d_model\": 64, \"dropout\": 0.1, \"e_layers\": 2, \"factor\": 3, \"label_len\": 18, \"lr\": 0.001, \"moving_avg\": 25, \"n_heads\": 8, \"num_kernels\": 6, \"top_k\": 3}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 14117.3, \"log\": [\"Selected dataset: THU-ANM ETTh1\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-forecasting-autoformer-etth1-336 (sktime backend, algorithm: registered-forecasting-AutoformerForecaster, created: 2026-09-29T06:02:39.768210+00:00)\", \"Loaded Hugging Face config ETTh1 (17420 rows x 7 channels)\", \"Normalized time index to RangeIndex for reproducible forecasting\", \"Rolling eval: fit on 8640 rows, 2557 windows (test region [11514, 14406) of 17420, horizon=336)\", \"Finished in 14117.3 ms\"]}, \"error\": null}\n"
+}

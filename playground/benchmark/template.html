@@ -92,29 +92,41 @@
   }
 
   /* ---------- claims (native details/summary, works without JS) ---------- */
-  .claims { border: 1px solid var(--hairline); border-radius: 10px; overflow: hidden; }
+  .claim-groups { border: 1px solid var(--hairline); border-radius: 10px; overflow: hidden; }
+  details.claim-group { border-top: 1px solid var(--hairline-2); }
+  details.claim-group:first-child { border-top: none; }
+  details.claim-group > summary {
+    list-style: none; cursor: pointer;
+    display: grid; grid-template-columns: 1.4fr 1fr 1.2fr;
+    gap: 12px; align-items: center; padding: 14px 18px;
+    transition: background .12s ease;
+  }
+  details.claim-group > summary::-webkit-details-marker { display: none; }
+  details.claim-group > summary:hover { background: var(--hover); }
+  details.claim-group[open] > summary { background: var(--hover); }
+  details.claim-group > summary .alg { font-weight: 600; font-size: 14.5px; }
+  details.claim-group[open] > summary .chev { transform: rotate(90deg); }
+  .lib { color: var(--text-3); font-weight: 400; font-size: 12px; margin-left: 8px; }
+  .grp-note { color: var(--text-3); font-size: 12.5px; }
+  .group-body { border-top: 1px solid var(--hairline-2); background: #fdfdfc; }
   details.claim { border-top: 1px solid var(--hairline-2); }
   details.claim:first-child { border-top: none; }
   details.claim summary {
     list-style: none; cursor: pointer;
-    display: grid; grid-template-columns: 1.5fr 1.3fr .7fr .8fr .8fr .8fr 1fr;
-    gap: 12px; align-items: center; padding: 13px 18px;
+    display: grid; grid-template-columns: 1.4fr 2.2fr 1fr;
+    gap: 12px; align-items: center; padding: 11px 18px 11px 34px;
     transition: background .12s ease;
   }
   details.claim summary::-webkit-details-marker { display: none; }
   details.claim summary:hover { background: var(--hover); }
   details.claim[open] summary { background: var(--hover); }
-  details.claim summary .alg { font-weight: 500; font-size: 14px; }
-  details.claim summary .alg .lib { color: var(--text-3); font-weight: 400; font-size: 12px; margin-left: 8px; }
-  details.claim summary .ds { color: var(--text-2); font-size: 13px; }
-  details.claim summary .met { color: var(--text-2); font-size: 13px; }
-  .num { font-family: var(--mono); font-size: 13px; font-variant-numeric: tabular-nums; }
-  .num.gt { color: var(--text); }
-  .num.rep { color: var(--text-2); }
-  .delta { font-family: var(--mono); font-size: 12.5px; font-variant-numeric: tabular-nums; }
-  .delta .tol { color: var(--text-3); }
-  .delta.ok { color: var(--green); }
-  .delta.bad { color: var(--amber); }
+  details.claim summary .ds { color: var(--text); font-size: 13px; font-weight: 500; }
+  details.claim summary .ds .win { color: var(--text-3); font-weight: 400; font-size: 12px; margin-left: 8px; }
+  .mline { display: flex; gap: 16px; flex-wrap: wrap; font-family: var(--mono); font-size: 12.5px; font-variant-numeric: tabular-nums; }
+  .mline .m-name { color: var(--text-3); }
+  .mline .m-ok { color: var(--green); }
+  .mline .m-bad { color: var(--amber); }
+  .mline .m-pen { color: var(--gray); }
   .status { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; }
   .dot { width: 7px; height: 7px; border-radius: 50%; flex: none; }
   .status.reproduced { color: var(--green); } .status.reproduced .dot { background: var(--green); }
@@ -168,8 +180,8 @@
   .empty { color: var(--text-2); padding: 28px 0; font-size: 14px; }
 
   @media (max-width: 880px) {
-    details.claim summary { grid-template-columns: 1.4fr 1fr .7fr .8fr .9fr; }
-    details.claim summary .met, details.claim summary .delta { display: none; }
+    details.claim summary { grid-template-columns: 1.2fr 1.6fr .9fr; padding-left: 18px; }
+    details.claim-group > summary { grid-template-columns: 1.2fr .8fr 1fr; }
     .stats { grid-template-columns: repeat(2, 1fr); }
     .stat { padding-left: 18px; }
     .detail-grid { grid-template-columns: 1fr; }
@@ -194,9 +206,9 @@
     <div class="eyebrow">Reproducibility leaderboard</div>
     <h1>Paper numbers, re-run.</h1>
     <p>Every claim below was reported in a paper or an official results table.
-       Each one carries the exact <span style="font-family:var(--mono);font-size:13px;">labts</span> command
-       that re-runs it — green means our re-run landed inside the stated tolerance.
-       Click a row for the citation, protocol, and command.</p>
+       Each one carries the exact <span style="font-family:var(--mono);font-size:13px;">labts</span> train + run
+       commands that re-run it — green means our re-run landed inside the stated tolerance.
+       Click a row for the citation, protocol, and commands.</p>
   </section>
 
   <section class="stats" id="stats"><!--BENCH:STATS--></section>

@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """Re-run the benchmark's groundtruth claims via the labts CLI.
 
-Reads ``groundtruth/*.json``, executes each entry's recorded ``command`` with
-the current interpreter, extracts the claimed metric from the labts result
-envelope, and writes ``results/<entry-id>.json``:
+Reads ``groundtruth/*.json``, executes each entry's recorded command pair
+(``train_command`` then ``run_command`` — the train-once/run-many lifecycle
+with every parameter explicit), extracts the claimed metric from the labts
+result envelope, and writes ``results/<entry-id>.json``:
 
     {
-      "id": ..., "ran_at": ..., "command": ..., "python": ...,
-      "returncode": ..., "duration_s": ..., "value": ...,
+      "id": ..., "ran_at": ..., "train_command": ..., "run_command": ...,
+      "python": ..., "returncode": ..., "duration_s": ..., "value": ...,
       "delta": ..., "delta_rel": ..., "status": "reproduced|deviation|error",
       "metrics": {...}, "error": ..., "stdout_tail": ...
     }
@@ -26,6 +27,7 @@ from __future__ import annotations
 import argparse
 import datetime
 import json
+import shlex
 import subprocess
 import sys
 import time
@@ -69,42 +71,59 @@ def _extract_metric(metrics: dict, metric_key: str) -> float | None:
     return None
 
 
-def compare(value: float, entry: dict) -> tuple[float, float, str]:
-    """Return (delta, relative delta, status) against the groundtruth value."""
-    gt = float(entry["value"])
+def compare(value: float, gt_value: float, tolerance: dict) -> tuple[float, float, str]:
+    """Return (delta, relative delta, status) for one metric."""
+    gt = float(gt_value)
     delta = value - gt
     delta_rel = abs(delta) / abs(gt) if gt else abs(delta)
-    tol = entry["tolerance"]
-    if tol["type"] == "absolute":
-        ok = abs(delta) <= float(tol["value"])
+    if tolerance["type"] == "absolute":
+        ok = abs(delta) <= float(tolerance["value"])
     else:
-        ok = delta_rel <= float(tol["value"])
+        ok = delta_rel <= float(tolerance["value"])
     return delta, delta_rel, ("reproduced" if ok else "deviation")
 
 
-def run_entry(entry: dict, timeout_s: int) -> dict:
-    command = entry["command"]
-    argv = [sys.executable] + command.split()[1:]  # replace leading "python"
-    started = time.time()
-    proc = subprocess.run(
+def _execute(command: str, timeout_s: int) -> subprocess.CompletedProcess:
+    argv = [sys.executable] + shlex.split(command)[1:]  # replace leading "python"
+    return subprocess.run(
         argv,
         cwd=REPO_ROOT,
         capture_output=True,
         text=True,
         timeout=timeout_s,
     )
+
+
+def run_entry(entry: dict, timeout_s: int) -> dict:
+    train_command = entry["train_command"]
+    run_command = entry["run_command"]
+    started = time.time()
+    proc = _execute(train_command, timeout_s)
+    if proc.returncode == 0:
+        train_envelope = _parse_envelope(proc.stdout or "")
+        if train_envelope is None or train_envelope.get("status") != "ok":
+            proc = subprocess.CompletedProcess(
+                proc.args,
+                1,
+                proc.stdout,
+                f"train status="
+                f"{(train_envelope or {}).get('status')}: "
+                f"{(train_envelope or {}).get('error')}",
+            )
+        else:
+            proc = _execute(run_command, timeout_s)
     duration = time.time() - started
     record = {
         "id": entry["id"],
         "task": entry["task"],
         "ran_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
-        "command": command,
+        "train_command": train_command,
+        "run_command": run_command,
         "python": sys.executable,
         "returncode": proc.returncode,
         "duration_s": round(duration, 2),
-        "value": None,
-        "delta": None,
-        "delta_rel": None,
+        "values": None,
+        "per_metric": None,
         "status": "error",
         "metrics": None,
         "error": None,
@@ -122,15 +141,29 @@ def run_entry(entry: dict, timeout_s: int) -> dict:
         return record
     metrics = (envelope.get("data") or {}).get("metrics") or {}
     record["metrics"] = metrics
-    value = _extract_metric(metrics, entry["metric_key"])
-    if value is None:
-        record["error"] = f"metric {entry['metric_key']!r} not in result keys {list(metrics)}"
+
+    per_metric = {}
+    missing = []
+    for name, gt_value in entry["metrics"].items():
+        value = _extract_metric(metrics, name)
+        if value is None:
+            missing.append(name)
+            continue
+        delta, delta_rel, status = compare(value, gt_value, entry["tolerance"])
+        per_metric[name] = {
+            "gt": gt_value,
+            "value": value,
+            "delta": round(delta, 6),
+            "delta_rel": round(delta_rel, 6),
+            "status": status,
+        }
+    record["values"] = {name: m["value"] for name, m in per_metric.items()}
+    record["per_metric"] = per_metric
+    if missing:
+        record["error"] = f"metrics {missing} not in result keys {list(metrics)}"
         return record
-    record["value"] = value
-    delta, delta_rel, status = compare(value, entry)
-    record["delta"] = round(delta, 6)
-    record["delta_rel"] = round(delta_rel, 6)
-    record["status"] = status
+    statuses = {m["status"] for m in per_metric.values()}
+    record["status"] = "reproduced" if statuses == {"reproduced"} else "deviation"
     return record
 
 
@@ -160,7 +193,7 @@ def main() -> int:
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
     failed = 0
     for entry in entries:
-        print(f"▶ {entry['id']}  ($ {entry['command']})", flush=True)
+        print(f"▶ {entry['id']}  ($ {entry['run_command']})", flush=True)
         try:
             record = run_entry(entry, args.timeout)
         except subprocess.TimeoutExpired:
@@ -170,15 +203,20 @@ def main() -> int:
                 "status": "error",
                 "error": f"timeout after {args.timeout}s",
                 "ran_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
-                "command": entry["command"],
+                "train_command": entry["train_command"],
+                "run_command": entry["run_command"],
                 "python": sys.executable,
             }
         (RESULTS_DIR / f"{entry['id']}.json").write_text(
             json.dumps(record, indent=2, ensure_ascii=False), encoding="utf-8"
         )
         mark = {"reproduced": "✓", "deviation": "✗", "error": "!"}.get(record["status"], "?")
-        value = record.get("value")
-        shown = f"{value:.6g}" if isinstance(value, float) else "-"
+        shown = ""
+        if record.get("per_metric"):
+            shown = "  ".join(
+                f"{name} {m['value']:.6g}({'+' if m['delta'] >= 0 else ''}{m['delta']:.3g})"
+                for name, m in record["per_metric"].items()
+            )
         print(f"  {mark} {record['status']}: {shown} ({record.get('duration_s', '?')}s)\n", flush=True)
         if record["status"] == "error":
             failed += 1

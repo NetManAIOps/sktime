@@ -6,10 +6,12 @@
       "algorithm": "registered-clustering-TimeSeriesKShapes",
       "algorithm_name": "k-Shape",
       "dataset": "arrow-head-cl",
-      "dataset_name": "ArrowHead (UCR, fused train+test)",
-      "metric": "ARI",
-      "metric_key": "ARI",
-      "value": 0.17425,
+      "dataset_name": "ArrowHead (UCR)",
+      "window": "fused train+test · k=3",
+      "metrics": {
+        "ARI": 0.17425,
+        "NMI": 0.25334
+      },
       "settings": "k=3 (= number of classes); full dataset clustered (train+test fused, N=211); mean over 10 runs of the authors' Matlab implementation",
       "source": {
         "title": "k-Shape: Efficient and Accurate Clustering of Time Series (Paparrizos & Gravano) — official Matlab repository",
@@ -17,19 +19,30 @@
         "url": "https://github.com/TheDatumOrg/kshape-matlab",
         "locator": "README 'Results on the 128 univariate datasets', row ArrowHead (RI 0.623006, ARI 0.17425450, NMI 0.2533444)"
       },
-      "command": "python playground/labts.py run --task clustering --algorithm registered-clustering-TimeSeriesKShapes --dataset arrow-head-cl --param n_clusters=3 --param random_state=42 --metric ari --compact",
-      "tolerance": {"type": "absolute", "value": 0.15},
-      "notes": "Paper value is the mean of 10 Matlab runs; labts runs tslearn's KShape once with a fixed seed. Random init makes single-run ARI swing; RI=0.623006 in the same row."
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "Paper value is the mean of 10 Matlab runs; labts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing.",
+      "spec_params": {
+        "n_clusters": 3,
+        "fit_on": "all",
+        "random_state": 42
+      },
+      "train_command": "python playground/labts.py train --algorithm registered-clustering-TimeSeriesKShapes --dataset arrow-head-cl --model-id bench-clustering-kshape-arrowhead --param n_clusters=3 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "run_command": "python playground/labts.py run --model-id bench-clustering-kshape-arrowhead --compact"
     },
     {
       "id": "clustering-kshape-gunpoint",
       "algorithm": "registered-clustering-TimeSeriesKShapes",
       "algorithm_name": "k-Shape",
       "dataset": "gunpoint-cl",
-      "dataset_name": "GunPoint (UCR, fused train+test)",
-      "metric": "ARI",
-      "metric_key": "ARI",
-      "value": -0.00505,
+      "dataset_name": "GunPoint (UCR)",
+      "window": "fused train+test · k=2",
+      "metrics": {
+        "ARI": -0.00505,
+        "NMI": 0.0
+      },
       "settings": "k=2 (= number of classes); full dataset clustered (train+test fused, N=306); mean over 10 runs of the authors' Matlab implementation",
       "source": {
         "title": "k-Shape: Efficient and Accurate Clustering of Time Series (Paparrizos & Gravano) — official Matlab repository",
@@ -37,9 +50,18 @@
         "url": "https://github.com/TheDatumOrg/kshape-matlab",
         "locator": "README 'Results on the 128 univariate datasets', row GunPoint (RI 0.497487, ARI -0.005050, NMI 0.0)"
       },
-      "command": "python playground/labts.py run --task clustering --algorithm registered-clustering-TimeSeriesKShapes --dataset gunpoint-cl --param n_clusters=2 --param random_state=42 --metric ari --compact",
-      "tolerance": {"type": "absolute", "value": 0.15},
-      "notes": "GunPoint clustering is at chance level even for the authors (RI 0.4975, NMI 0.0) — reproducing this row validates that near-chance behavior, not a bug."
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "GunPoint clustering is at chance level even for the authors (RI 0.4975, NMI 0.0) — reproducing this row validates near-chance behavior, not a bug.",
+      "spec_params": {
+        "n_clusters": 2,
+        "fit_on": "all",
+        "random_state": 42
+      },
+      "train_command": "python playground/labts.py train --algorithm registered-clustering-TimeSeriesKShapes --dataset gunpoint-cl --model-id bench-clustering-kshape-gunpoint --param n_clusters=2 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "run_command": "python playground/labts.py run --model-id bench-clustering-kshape-gunpoint --compact"
     }
   ]
 }

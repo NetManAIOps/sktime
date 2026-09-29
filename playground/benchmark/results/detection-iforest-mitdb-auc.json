@@ -1,23 +1,32 @@
 {
   "id": "detection-iforest-mitdb-auc",
   "task": "anomaly_detection",
-  "ran_at": "2026-09-28T09:43:29.578374+00:00",
-  "command": "python playground/labts.py run --task anomaly_detection --algorithm registered-anomaly_detection-PyODIForestDetector --dataset mitdb --metric auc_roc --compact",
+  "ran_at": "2026-09-29T05:27:19.512215+00:00",
+  "train_command": "python playground/labts.py train --algorithm registered-anomaly_detection-PyODIForestDetector --dataset tsb-mitdb --model-id bench-detection-iforest-mitdb-auc --param contamination=0.1 --param n_estimators=100",
+  "run_command": "python playground/labts.py run --model-id bench-detection-iforest-mitdb-auc --compact",
   "python": "/home/xiezhe/sktime/.venv-full/bin/python",
   "returncode": 0,
-  "duration_s": 13.71,
-  "value": 0.694368378631022,
-  "delta": -0.005632,
-  "delta_rel": 0.008045,
+  "duration_s": 231.67,
+  "values": {
+    "AUC-ROC": 0.6058284957794551
+  },
+  "per_metric": {
+    "AUC-ROC": {
+      "gt": 0.7,
+      "value": 0.6058284957794551,
+      "delta": -0.094172,
+      "delta_rel": 0.134531,
+      "status": "reproduced"
+    }
+  },
   "status": "reproduced",
   "metrics": {
-    "Precision": 0.023004059539918808,
-    "Recall": 0.048295454545454544,
-    "F1": 0.03116406966086159,
-    "Detected": 739,
-    "Ground Truth": 352,
-    "AUC-ROC": 0.694368378631022
+    "AUC-ROC": 0.6058284957794551,
+    "Precision": 0.20208207425299596,
+    "Recall": 0.2081382072049597,
+    "F1": 0.13950586153996042,
+    "Series": 32
   },
   "error": null,
-  "stdout_tail": "{\"api\": \"labts\", \"api_version\": \"1.0\", \"kind\": \"result\", \"status\": \"ok\", \"data\": {\"status\": \"ok\", \"metrics\": {\"Precision\": 0.023004059539918808, \"Recall\": 0.048295454545454544, \"F1\": 0.03116406966086159, \"Detected\": 739, \"Ground Truth\": 352, \"AUC-ROC\": 0.694368378631022}, \"summary\": \"Detected 739 anomalies against 352 labels with PyODIForestDetector.\", \"run_id\": \"1e2e72a59af8\", \"spec\": {\"task\": \"anomaly_detection\", \"dataset_id\": \"mitdb\", \"algorithm_id\": \"registered-anomaly_detection-PyODIForestDetector\", \"preprocessor_id\": \"none\", \"preprocessors\": [], \"params\": {}, \"preprocessor_params\": {}, \"metrics\": [\"auc_roc\"]}, \"task\": \"anomaly_detection\", \"dataset\": {\"id\": \"mitdb\", \"name\": \"MIT-BIH ECG Anomaly\", \"task\": \"anomaly_detection\", \"source\": \"local\", \"path\": \"sktime/datasets/data/mitdb/mitdb.csv\", \"enabled\": true}, \"algorithm\": {\"id\": \"registered-anomaly_detection-PyODIForestDetector\", \"name\": \"PyODIForestDetector\", \"task\": \"anomaly_detection\", \"module\": \"sktime.detection.adapters.pyod.PyODIForestDetector\", \"class_name\": \"PyODIForestDetector\", \"curated\": false, \"python_dependencies\": \"pyod\", \"subtype\": \"point_anomaly\", \"enabled\": true, \"params\": {\"contamination\": 0.1, \"n_estimators\": 100}, \"accepts_estimators\": [\"n_estimators\"]}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"preprocessors\": [], \"duration_ms\": 11388.7, \"log\": [\"Selected task: anomaly_detection\", \"Selected dataset: MIT-BIH ECG Anomaly\", \"Selected preprocessor: Identity / none\", \"Selected algorithm: PyODIForestDetector\", \"Estimator: PyODIForestDetector params=defaults\", \"Loaded MIT-BIH ECG Anomaly rows=7500\", \"Finished in 11388.7 ms\"]}, \"error\": null}\n"
+  "stdout_tail": "\", \"artifact\": \"series/0011/model.zip\"}, {\"name\": \"122.test.csv@1.out\", \"artifact\": \"series/0012/model.zip\"}, {\"name\": \"201.test.csv@1.out\", \"artifact\": \"series/0013/model.zip\"}, {\"name\": \"201.test.csv@2.out\", \"artifact\": \"series/0014/model.zip\"}, {\"name\": \"210.test.csv@1.out\", \"artifact\": \"series/0015/model.zip\"}, {\"name\": \"212.test.csv@1.out\", \"artifact\": \"series/0016/model.zip\"}, {\"name\": \"212.test.csv@2.out\", \"artifact\": \"series/0017/model.zip\"}, {\"name\": \"213.test.csv@1.out\", \"artifact\": \"series/0018/model.zip\"}, {\"name\": \"213.test.csv@2.out\", \"artifact\": \"series/0019/model.zip\"}, {\"name\": \"215.test.csv@1.out\", \"artifact\": \"series/0020/model.zip\"}, {\"name\": \"215.test.csv@2.out\", \"artifact\": \"series/0021/model.zip\"}, {\"name\": \"219.test.csv@1.out\", \"artifact\": \"series/0022/model.zip\"}, {\"name\": \"219.test.csv@2.out\", \"artifact\": \"series/0023/model.zip\"}, {\"name\": \"221.test.csv@1.out\", \"artifact\": \"series/0024/model.zip\"}, {\"name\": \"221.test.csv@2.out\", \"artifact\": \"series/0025/model.zip\"}, {\"name\": \"223.test.csv@1.out\", \"artifact\": \"series/0026/model.zip\"}, {\"name\": \"223.test.csv@2.out\", \"artifact\": \"series/0027/model.zip\"}, {\"name\": \"233.test.csv@1.out\", \"artifact\": \"series/0028/model.zip\"}, {\"name\": \"233.test.csv@2.out\", \"artifact\": \"series/0029/model.zip\"}, {\"name\": \"234.test.csv@1.out\", \"artifact\": \"series/0030/model.zip\"}, {\"name\": \"234.test.csv@2.out\", \"artifact\": \"series/0031/model.zip\"}], \"artifacts\": {\"model\": null, \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 63852.2, \"log\": [\"Selected dataset: TSB-UAD MITDB (32 series)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-detection-iforest-mitdb-auc (sktime backend, algorithm: registered-anomaly_detection-PyODIForestDetector, created: 2026-09-29T05:26:12.774186+00:00)\", \"Multi-series eval: 32 series, AUC-ROC=0.6058\", \"Finished in 63852.2 ms\"]}, \"error\": null}\n"
 }

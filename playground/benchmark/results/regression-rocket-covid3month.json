@@ -1,20 +1,30 @@
 {
   "id": "regression-rocket-covid3month",
   "task": "regression",
-  "ran_at": "2026-09-28T09:51:35.491437+00:00",
-  "command": "python playground/labts.py run --task regression --algorithm registered-regression-RocketRegressor --dataset covid-3month --metric rmse --compact",
+  "ran_at": "2026-09-29T06:17:37.781136+00:00",
+  "train_command": "python playground/labts.py train --algorithm registered-regression-RocketRegressor --dataset covid-3month --model-id bench-regression-rocket-covid3month --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+  "run_command": "python playground/labts.py run --model-id bench-regression-rocket-covid3month --compact",
   "python": "/home/xiezhe/sktime/.venv-full/bin/python",
   "returncode": 0,
-  "duration_s": 29.39,
-  "value": 0.0389928099603455,
-  "delta": -0.004885,
-  "delta_rel": 0.11134,
+  "duration_s": 33.49,
+  "values": {
+    "RMSE": 0.03817886217196469
+  },
+  "per_metric": {
+    "RMSE": {
+      "gt": 0.0438782,
+      "value": 0.03817886217196469,
+      "delta": -0.005699,
+      "delta_rel": 0.12989,
+      "status": "reproduced"
+    }
+  },
   "status": "reproduced",
   "metrics": {
-    "MAE": 0.028532003631796823,
-    "RMSE": 0.0389928099603455,
-    "R²": 0.23645960975254454
+    "MAE": 0.028425973430793835,
+    "RMSE": 0.03817886217196469,
+    "R²": 0.268003656474359
   },
   "error": null,
-  "stdout_tail": "{\"api\": \"labts\", \"api_version\": \"1.0\", \"kind\": \"result\", \"status\": \"ok\", \"data\": {\"status\": \"ok\", \"metrics\": {\"MAE\": 0.028532003631796823, \"RMSE\": 0.0389928099603455, \"R²\": 0.23645960975254454}, \"summary\": \"Regressed 61 held-out time series targets with RocketRegressor.\", \"run_id\": \"ae7e448c2cd5\", \"spec\": {\"task\": \"regression\", \"dataset_id\": \"covid-3month\", \"algorithm_id\": \"registered-regression-RocketRegressor\", \"preprocessor_id\": \"none\", \"preprocessors\": [], \"params\": {}, \"preprocessor_params\": {}, \"metrics\": [\"rmse\"]}, \"task\": \"regression\", \"dataset\": {\"id\": \"covid-3month\", \"name\": \"Covid3Month\", \"task\": \"regression\", \"source\": \"local\", \"loader\": \"sktime.datasets.load_covid_3month\", \"enabled\": true, \"default\": true}, \"algorithm\": {\"id\": \"registered-regression-RocketRegressor\", \"name\": \"RocketRegressor\", \"task\": \"regression\", \"module\": \"sktime.regression.kernel_based._rocket_regressor.RocketRegressor\", \"class_name\": \"RocketRegressor\", \"curated\": false, \"python_dependencies\": \"numba\", \"enabled\": true, \"params\": {\"max_dilations_per_kernel\": 32, \"n_features_per_kernel\": 4, \"n_jobs\": 1, \"num_kernels\": 10000}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"preprocessors\": [], \"duration_ms\": 27031.3, \"log\": [\"Selected task: regression\", \"Selected dataset: Covid3Month\", \"Selected preprocessor: Identity / none\", \"Selected algorithm: RocketRegressor\", \"Estimator: RocketRegressor params=defaults\", \"Loaded Covid3Month train=140 test=61\", \"Finished in 27031.3 ms\"]}, \"error\": null}\n"
+  "stdout_tail": "th\", \"algorithm_id\": \"sktime-trained:bench-regression-rocket-covid3month\", \"preprocessor_id\": \"none\", \"params\": {}}, \"task\": \"regression\", \"dataset\": {\"id\": \"covid-3month\", \"name\": \"Covid3Month\", \"task\": \"regression\", \"source\": \"local\", \"loader\": \"sktime.datasets.load_covid_3month\", \"enabled\": true, \"default\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-regression-rocket-covid3month\", \"name\": \"RocketRegressor (trained: bench-regression-rocket-covid3month)\", \"task\": \"regression\", \"module\": \"sktime.regression.kernel_based._rocket_regressor.RocketRegressor\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/playground/models/bench-regression-rocket-covid3month\", \"manifest\": {\"model_id\": \"bench-regression-rocket-covid3month\", \"backend\": \"sktime\", \"task\": \"regression\", \"algorithm_id\": \"registered-regression-RocketRegressor\", \"algorithm_name\": \"RocketRegressor\", \"module\": \"sktime.regression.kernel_based._rocket_regressor.RocketRegressor\", \"params\": {\"max_dilations_per_kernel\": 32, \"n_features_per_kernel\": 4, \"n_jobs\": 1, \"num_kernels\": 10000}, \"eval_params\": {}, \"created_at\": \"2026-09-29T06:17:28.253047+00:00\", \"spec\": {\"task\": \"regression\", \"dataset_id\": \"covid-3month\", \"algorithm_id\": \"registered-regression-RocketRegressor\", \"preprocessor_id\": \"none\", \"params\": {\"max_dilations_per_kernel\": 32, \"n_features_per_kernel\": 4, \"n_jobs\": 1, \"num_kernels\": 10000}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 6473.1, \"log\": [\"Selected dataset: Covid3Month\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-regression-rocket-covid3month (sktime backend, algorithm: registered-regression-RocketRegressor, created: 2026-09-29T06:17:28.253047+00:00)\", \"Loaded Covid3Month train=140 test=61\", \"Finished in 6473.1 ms\"]}, \"error\": null}\n"
 }

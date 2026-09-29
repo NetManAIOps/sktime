@@ -19,12 +19,12 @@ catalog/runner code with identical results:
 | `GET /api/export/report`    | `labts.py report (--spec '<json>' \| --from run.json)`        |
 | (fork algorithm)            | `labts.py fork <algorithm_id> [--name X]`                     |
 | (validate plugin)           | `labts.py check <plugin.py>`                                  |
-| (train + persist model)     | `labts.py train --algorithm <devad-detector-id> [--dataset yahoo] [--model-id X] [--param epochs=3] [--val-fraction 0.2]` |
-| (detect with saved model)   | `labts.py detect --model-id X [--dataset yahoo] [--param threshold_quantile=0.99] [--out run.json]` |
+| (train + persist model)     | `labts.py train --algorithm <algorithm-id> [--dataset D] [--model-id X] [--param k=v] [--val-fraction 0.2]` |
+| (run a saved model)         | `labts.py run --model-id X [--dataset D] [--param k=v] [--metric mase] [--out run.json]` |
 | (re-score a run)            | `labts.py evaluate (--from run.json \| --spec '<json>') --metric M [--metric M2]` |
 | (parameter estimation)      | `labts.py analyze --algorithm seasonality-acf --dataset airline [--param k=v]` |
 | (pairwise distances)        | `labts.py dist --dataset unit-test --metric dtw [--metric scipy:cosine] [--max-instances 50]` |
-| (predict, persisted model)  | `labts.py predict --model-id X [--dataset D] [--param k=v]` |
+| (predict/detect aliases)    | `labts.py predict --model-id X` / `labts.py detect --model-id X` (= `run --model-id`) |
 
 `fork` materializes any enabled catalog algorithm as an editable single-file
 plugin in `playground/experiments/` (subclass scaffold with provenance
@@ -32,13 +32,16 @@ metadata); the plugin is immediately discoverable as `user-<name>`. `check`
 validates the plugin contract and runs a tiny smoke experiment. See
 `playground/experiments/__init__.py` for the plugin contract.
 
-`run` is **stateless**: fit and predict happen in one call and the fitted
-model is discarded. `train`/`detect` (DevAD detectors only, ids
-`registered-anomaly_detection-DevAD*`) split the lifecycle: `train` persists
-`model.pt` + `manifest.json` + `training.log` under
-`playground/models/<model_id>/` (overwritten on re-train), `detect` reloads
-the model and returns the **same result envelope as `run`** (so
-`report --from` works on it). `ls models` lists persisted models.
+`run` without `--model-id` is **stateless**: fit and predict happen in one
+call and the fitted model is discarded. `train` + `run --model-id` split the
+lifecycle **for every catalog algorithm and task** (forecasting,
+classification, regression, clustering, anomaly_detection, causal): `train`
+fits on the training split and persists the model + manifest (eval params,
+fitted preprocessor) under `playground/models/<model_id>/` (overwritten on
+re-train), `run --model-id` reloads it and scores the holdout with the
+**same result envelope as `run`** (so `report --from` works on it) — no
+refit. `predict`/`detect` are kept as aliases. `ls models` lists persisted
+models.
 
 One process per call, no HTTP server, `run_id` session state not needed.
 Run from the repository root with the repo venv:
@@ -239,35 +242,60 @@ Export the generated reproduction script (`code`) or Markdown report
 A `--from` file produced by `run --compact` **stdout** (not `--out`) lacks the
 export payloads and fails with exit 2 — always use `--out` for export chains.
 
-## `train` / `detect` — persistent DevAD models
+## `train` / `run --model-id` — persistent models (all algorithms)
 
-Only for the 17 DevAD detectors (`labts.py ls algorithms --task
-anomaly_detection`, names `DevAD*`); other detectors are not trainable — use
-`run` directly (`train` exits `blocked` with a clear message).
+`train` works for **every enabled catalog algorithm** (curated ids like
+`naive-seasonal-last`, `causal-notears`, and `registered-<task>-<Name>` /
+`user-<name>`), not just DevAD. Backend selection is automatic: DevAD
+adapters (`registered-anomaly_detection-DevAD*`) use the DevAD backend
+(`model.pt` + `training.log`), everything else sktime save/load (`model.zip`
++ `manifest.json`). The one curated exception is `threshold-detector`,
+whose run pipeline embeds ad-hoc detrending — it is rejected with a hint.
 
 ```bash
-# train once (persists playground/models/fits-v1/: model.pt, manifest.json, training.log)
+# train once, any task (fit on the training split; eval params are persisted)
+labts.py train --algorithm registered-forecasting-DLinearForecaster \
+    --dataset hf-etth1 --model-id dlinear-v1 \
+    --param seq_len=336 --param pred_len=96 --param horizon=96 \
+    --param eval_mode=rolling --param train_fraction=0.496 \
+    --param test_start_fraction=0.661 --param test_end_fraction=0.827 \
+    --param num_epochs=10
+
+# run many — no refit, same envelope as run; --compact/--out/--metric supported
+labts.py run --model-id dlinear-v1 --compact
+labts.py report --from det.json
+
+# DevAD example (unchanged): train once, detect many
 labts.py train --algorithm registered-anomaly_detection-DevADFITSDetector \
     --dataset yahoo --model-id fits-v1 --param epochs=3 --val-fraction 0.2
-
-# detect many (same envelope as run; --compact/--out supported)
-labts.py detect --model-id fits-v1 --dataset yahoo --param threshold_quantile=0.99 --out det.json
-labts.py report --from det.json
+labts.py run --model-id fits-v1 --dataset yahoo --param threshold_quantile=0.99 --out det.json
 ```
 
-- `--model-id` defaults to `<family>-<dataset>`; re-training the same id
-  overwrites it.
-- `--param` keys: adapter params `win_len`, `epochs`, `batch_size`, `seed`,
-  `device`, `threshold_quantile` (detect only) go to the adapter; **any other
-  key is forwarded as a DevAD hyperparameter** (validated against the family's
-  `HP` table — unknown keys fail `blocked` with the list of valid names).
-  Non-scalar HPs can be passed as `--param params='{"h_dim": 64}'`.
-- `--val-fraction F` holds out the series tail for validation, enabling early
-  stopping for torch families.
-- `train` result: `model_id`, `family`, resolved `params`, `model_dir`,
-  `duration_ms`, `next_steps`. `detect` result: identical in shape to `run`
-  (`metrics`/`series`/`tables`/`code`/`report`), with
-  `spec.algorithm_id = "devad-trained:<model-id>"`.
+- `--model-id` defaults to `<algorithm>-<dataset>` (DevAD: `<family>-<dataset>`);
+  re-training the same id overwrites it.
+- Protocol parity with one-shot `run` is enforced per task: rolling-origin
+  forecasting (`eval_mode=rolling` + split fractions, tslib `predict_windows`),
+  clustering `fit_on=all` (fused train+test), causal discovery (the persisted
+  "model" is the fitted discoverer; `run --model-id` re-scores its graph
+  against the dataset's true DAG), and multi-series anomaly datasets
+  (`tsb-yahoo`/`tsb-mitdb`): one detector is fitted **per series** and stored
+  under `series/<NNNN>/model.zip` (manifest `multiseries: true` + `series`
+  mapping); `run --model-id` reproduces the dataset-averaged metrics exactly.
+- DevAD `--param` keys: adapter params `win_len`, `epochs`, `batch_size`,
+  `seed`, `device`, `threshold_quantile` (detect only) go to the adapter;
+  **any other key is forwarded as a DevAD hyperparameter** (validated against
+  the family's `HP` table). Non-scalar HPs: `--param params='{"h_dim": 64}'`.
+- `--val-fraction F` (DevAD only) holds out the series tail for validation,
+  enabling early stopping for torch families.
+- `train` result: `model_id`, `backend`, resolved `params`, `model_dir`,
+  `manifest`, `duration_ms`, `next_steps`. `run --model-id` result: identical
+  in shape to `run` (`metrics`/`series`/`tables`/`code`/`report`), with
+  `spec.algorithm_id = "sktime-trained:<model-id>"` (DevAD:
+  `"devad-trained:<model-id>"`).
+- `run --model-id` rejects `--spec/--task/--algorithm/--preprocessor/
+  --pre-param` (the manifest fixes them); only `--dataset/--param/--metric/
+  --compact/--out` apply. `--metric` re-scores from the fresh payload (not
+  supported for multi-series or rolling payloads, which report aggregates).
 
 ## `evaluate` — re-score a run
 
@@ -323,18 +351,21 @@ Computes the pairwise distance matrix over the dataset's **train** instances
 `window=0.1` for dtw, `p=3` for scipy:minkowski). Output `data.results[]`:
 `metric`, `shape`, `symmetric`, `min/max/mean` (off-diagonal), full `matrix`.
 
-## `predict` — persisted-model prediction
+## `run --model-id` (aliases `predict` / `detect`) — persisted-model evaluation
 
 ```bash
-labts.py predict --model-id <id> [--dataset D] [--param k=v] [--out run.json]
+labts.py run --model-id <id> [--dataset D] [--param k=v] [--metric mase] [--out run.json]
+# equivalent legacy forms:
+labts.py predict --model-id <id> [--dataset D] [--param k=v]
+labts.py detect --model-id <id> [--dataset D] [--param threshold_quantile=0.99]
 ```
 
-Calls `trainer.predict_estimator(model_id, dataset_id, params)` — the generic
-persistence backend (merged on main): it reloads a persisted model and
-evaluates it on the dataset's holdout split, returning the **same result
-envelope as `run`** (so `report --from` / `evaluate --from` work on it).
-DevAD models delegate to `detect_devad` (the `detect` alias); sktime models
-reload from `model.zip` and are scored against the manifest's eval params
+All of them call `trainer.predict_estimator(model_id, dataset_id, params)`:
+reload a persisted model and evaluate it on the dataset's holdout split,
+returning the **same result envelope as `run`** (so `report --from` /
+`evaluate --from` work on it). DevAD models delegate to `detect_devad`;
+sktime models reload from `model.zip` (multi-series bundles from
+`series/<NNNN>/model.zip`) and are scored against the manifest's eval params
 (`--param` overrides them, e.g. `--param horizon=24`). Unknown model ids are
 `blocked` (exit 3) — see `ls models` for what is persisted.
 

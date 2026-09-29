@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-28T10:17:40.997768+00:00",
+  "generated_at": "2026-09-29T06:18:26.057271+00:00",
   "catalog_source": "snapshot",
   "tasks": [
     {
@@ -1852,12 +1852,13 @@
       "id": "detection-lof-yahoo-auc",
       "algorithm": "registered-anomaly_detection-PyODLOFDetector",
       "algorithm_name": "LOF",
-      "dataset": "yahoo",
-      "dataset_name": "Yahoo (TSB-UAD YAHOO subset)",
-      "metric": "AUC-ROC",
-      "metric_key": "AUC-ROC",
-      "value": 0.86,
-      "settings": "Unsupervised fit on full series; sliding-window embedding with FFT-based window length; scores min-max normalized; point-wise AUC-ROC averaged over all 367 YAHOO series",
+      "dataset": "tsb-yahoo",
+      "dataset_name": "YAHOO (TSB-UAD, 367 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.86
+      },
+      "settings": "Unsupervised fit per series; sliding-window embedding with FFT-based window length; scores min-max normalized; point-wise AUC-ROC averaged over all 367 YAHOO series",
       "source": {
         "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
         "venue": "PVLDB 15(8):1697-1711, 2022",
@@ -1868,35 +1869,46 @@
         "type": "absolute",
         "value": 0.15
       },
-      "notes": "Granularity gap: the paper value averages 367 Yahoo series; the labts yahoo dataset is a single bundled series (1000 points, 7 anomalies). Directional check only.",
+      "notes": "Now apples-to-apples: labts scores the same 367 TSB-UAD series and averages per-series AUC. Residual gap: window-length heuristic and score normalization may differ from TSB-UAD's reference pipeline. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ).",
+      "spec_params": {},
+      "train_command": "python playground/labts.py train --algorithm registered-anomaly_detection-PyODLOFDetector --dataset tsb-yahoo --model-id bench-detection-lof-yahoo-auc --param contamination=0.1 --param n_neighbors=20",
+      "run_command": "python playground/labts.py run --model-id bench-detection-lof-yahoo-auc --compact",
       "task": "anomaly_detection",
-      "command": "python playground/labts.py run --task anomaly_detection --algorithm registered-anomaly_detection-PyODLOFDetector --dataset yahoo --metric auc_roc --compact",
-      "status": "deviation",
-      "value_reproduced": 0.6819162710401381,
-      "delta": -0.178084,
-      "delta_rel": 0.207074,
-      "ran_at": "2026-09-28T09:43:02.868809+00:00",
-      "duration_s": 13.34,
+      "status": "reproduced",
+      "values": {
+        "AUC-ROC": 0.7371557260006566
+      },
+      "per_metric": {
+        "AUC-ROC": {
+          "gt": 0.86,
+          "value": 0.7371557260006566,
+          "delta": -0.122844,
+          "delta_rel": 0.142842,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-09-29T05:22:02.680638+00:00",
+      "duration_s": 29.5,
       "error": null,
-      "metrics": {
-        "Precision": 0.04819277108433735,
-        "Recall": 0.5714285714285714,
-        "F1": 0.08888888888888889,
-        "Detected": 83,
-        "Ground Truth": 7,
-        "AUC-ROC": 0.6819162710401381
+      "raw_metrics": {
+        "AUC-ROC": 0.7371557260006566,
+        "Precision": 0.03831145923563264,
+        "Recall": 0.5099388211128584,
+        "F1": 0.0642455887257553,
+        "Series": 367
       }
     },
     {
       "id": "detection-iforest-yahoo-auc",
       "algorithm": "registered-anomaly_detection-PyODIForestDetector",
       "algorithm_name": "IForest",
-      "dataset": "yahoo",
-      "dataset_name": "Yahoo (TSB-UAD YAHOO subset)",
-      "metric": "AUC-ROC",
-      "metric_key": "AUC-ROC",
-      "value": 0.62,
-      "settings": "Unsupervised fit on full series; sliding-window embedding; point-wise AUC-ROC averaged over all 367 YAHOO series",
+      "dataset": "tsb-yahoo",
+      "dataset_name": "YAHOO (TSB-UAD, 367 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.62
+      },
+      "settings": "Unsupervised fit per series; sliding-window embedding; point-wise AUC-ROC averaged over all 367 YAHOO series",
       "source": {
         "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
         "venue": "PVLDB 15(8):1697-1711, 2022",
@@ -1907,35 +1919,46 @@
         "type": "absolute",
         "value": 0.15
       },
-      "notes": "Same granularity gap as the LOF entry.",
+      "notes": "Same protocol as the LOF entry.",
+      "spec_params": {},
+      "train_command": "python playground/labts.py train --algorithm registered-anomaly_detection-PyODIForestDetector --dataset tsb-yahoo --model-id bench-detection-iforest-yahoo-auc --param contamination=0.1 --param n_estimators=100",
+      "run_command": "python playground/labts.py run --model-id bench-detection-iforest-yahoo-auc --compact",
       "task": "anomaly_detection",
-      "command": "python playground/labts.py run --task anomaly_detection --algorithm registered-anomaly_detection-PyODIForestDetector --dataset yahoo --metric auc_roc --compact",
       "status": "deviation",
-      "value_reproduced": 0.9076391886059559,
-      "delta": 0.287639,
-      "delta_rel": 0.463934,
-      "ran_at": "2026-09-28T09:43:15.865451+00:00",
-      "duration_s": 13.0,
+      "values": {
+        "AUC-ROC": 0.814844461781792
+      },
+      "per_metric": {
+        "AUC-ROC": {
+          "gt": 0.62,
+          "value": 0.814844461781792,
+          "delta": 0.194844,
+          "delta_rel": 0.314265,
+          "status": "deviation"
+        }
+      },
+      "ran_at": "2026-09-29T05:23:27.840414+00:00",
+      "duration_s": 85.16,
       "error": null,
-      "metrics": {
-        "Precision": 0.04,
-        "Recall": 0.5714285714285714,
-        "F1": 0.07476635514018691,
-        "Detected": 100,
-        "Ground Truth": 7,
-        "AUC-ROC": 0.9076391886059559
+      "raw_metrics": {
+        "AUC-ROC": 0.814844461781792,
+        "Precision": 0.04143896157889429,
+        "Recall": 0.6120528364050549,
+        "F1": 0.06799557952605673,
+        "Series": 367
       }
     },
     {
       "id": "detection-iforest-mitdb-auc",
       "algorithm": "registered-anomaly_detection-PyODIForestDetector",
       "algorithm_name": "IForest",
-      "dataset": "mitdb",
-      "dataset_name": "MIT-BIH ECG (TSB-UAD MITDB subset)",
-      "metric": "AUC-ROC",
-      "metric_key": "AUC-ROC",
-      "value": 0.7,
-      "settings": "Unsupervised fit on full series; sliding-window embedding; point-wise AUC-ROC averaged over all 32 MITDB series",
+      "dataset": "tsb-mitdb",
+      "dataset_name": "MITDB (TSB-UAD, 32 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.7
+      },
+      "settings": "Unsupervised fit per series; sliding-window embedding; point-wise AUC-ROC averaged over all 32 MITDB series",
       "source": {
         "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
         "venue": "PVLDB 15(8):1697-1711, 2022",
@@ -1946,23 +1969,33 @@
         "type": "absolute",
         "value": 0.15
       },
-      "notes": "Granularity gap: 32-series average vs the single 7500-point excerpt bundled with labts.",
+      "notes": "Same protocol as the Yahoo entries, on the 32 MITDB series.",
+      "spec_params": {},
+      "train_command": "python playground/labts.py train --algorithm registered-anomaly_detection-PyODIForestDetector --dataset tsb-mitdb --model-id bench-detection-iforest-mitdb-auc --param contamination=0.1 --param n_estimators=100",
+      "run_command": "python playground/labts.py run --model-id bench-detection-iforest-mitdb-auc --compact",
       "task": "anomaly_detection",
-      "command": "python playground/labts.py run --task anomaly_detection --algorithm registered-anomaly_detection-PyODIForestDetector --dataset mitdb --metric auc_roc --compact",
       "status": "reproduced",
-      "value_reproduced": 0.694368378631022,
-      "delta": -0.005632,
-      "delta_rel": 0.008045,
-      "ran_at": "2026-09-28T09:43:29.578374+00:00",
-      "duration_s": 13.71,
+      "values": {
+        "AUC-ROC": 0.6058284957794551
+      },
+      "per_metric": {
+        "AUC-ROC": {
+          "gt": 0.7,
+          "value": 0.6058284957794551,
+          "delta": -0.094172,
+          "delta_rel": 0.134531,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-09-29T05:27:19.512215+00:00",
+      "duration_s": 231.67,
       "error": null,
-      "metrics": {
-        "Precision": 0.023004059539918808,
-        "Recall": 0.048295454545454544,
-        "F1": 0.03116406966086159,
-        "Detected": 739,
-        "Ground Truth": 352,
-        "AUC-ROC": 0.694368378631022
+      "raw_metrics": {
+        "AUC-ROC": 0.6058284957794551,
+        "Precision": 0.20208207425299596,
+        "Recall": 0.2081382072049597,
+        "F1": 0.13950586153996042,
+        "Series": 32
       }
     },
     {
@@ -1971,9 +2004,10 @@
       "algorithm_name": "NOTEARS",
       "dataset": "causal-sachs-cont",
       "dataset_name": "Sachs continuous (n=7466, d=11, 20-edge DAG)",
-      "metric": "SHD",
-      "metric_key": "SHD",
-      "value": 22,
+      "window": "full data",
+      "metrics": {
+        "SHD": 22
+      },
       "settings": "Original NOTEARS (least-squares + L1 + acyclicity); full dataset n=7466, no train/test split; SHD vs the 20-edge consensus DAG; 16 edges estimated",
       "source": {
         "title": "DAGs with NO TEARS: Continuous Optimization for Structure Learning (Zheng, Aragam, Ravikumar, Xing)",
@@ -1986,16 +2020,29 @@
         "value": 6
       },
       "notes": "Same continuous Sachs data and same 20-edge consensus DAG as the paper (vendored from cmu-phil/example-causal-datasets). labts must run with max_samples=7466 (default subsample is 2000).",
+      "spec_params": {
+        "max_samples": 7466
+      },
+      "train_command": "python playground/labts.py train --algorithm causal-notears --dataset causal-sachs-cont --model-id bench-causal-notears-sachs-shd --param max_samples=7466 --param lambda1=0.01 --param seed=7 --param w_threshold=0.3",
+      "run_command": "python playground/labts.py run --model-id bench-causal-notears-sachs-shd --compact",
       "task": "causal",
-      "command": "python playground/labts.py run --task causal --algorithm causal-notears --dataset causal-sachs-cont --param max_samples=7466 --compact",
       "status": "reproduced",
-      "value_reproduced": 23.0,
-      "delta": 1.0,
-      "delta_rel": 0.045455,
-      "ran_at": "2026-09-28T09:43:46.100389+00:00",
-      "duration_s": 16.52,
+      "values": {
+        "SHD": 23.0
+      },
+      "per_metric": {
+        "SHD": {
+          "gt": 22,
+          "value": 23.0,
+          "delta": 1.0,
+          "delta_rel": 0.045455,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-09-29T05:27:38.496082+00:00",
+      "duration_s": 18.98,
       "error": null,
-      "metrics": {
+      "raw_metrics": {
         "SHD": 23,
         "Edge Precision": 0.3333333333333333,
         "Edge Recall": 0.4,
@@ -2010,9 +2057,10 @@
       "algorithm_name": "PC",
       "dataset": "causal-sachs-cont",
       "dataset_name": "Sachs continuous (n=7466, d=11, 20-edge DAG)",
-      "metric": "SHD",
-      "metric_key": "SHD",
-      "value": 23,
+      "window": "full data",
+      "metrics": {
+        "SHD": 23
+      },
       "settings": "PC in Tetrad 7.6.7 with default settings; CPDAG with 24 estimated edges; SHD vs the 20-edge ground-truth DAG",
       "source": {
         "title": "Are You Doing Better Than Random Guessing? A Call for Using Negative Controls When Evaluating Causal Discovery Algorithms (Petersen)",
@@ -2025,16 +2073,29 @@
         "value": 8
       },
       "notes": "Implementation gap: paper uses Tetrad's PC; labts uses causal-learn's PC. Independence-test defaults may differ.",
+      "spec_params": {
+        "max_samples": 7466
+      },
+      "train_command": "python playground/labts.py train --algorithm causal-pc --dataset causal-sachs-cont --model-id bench-causal-pc-sachs-shd --param max_samples=7466 --param alpha=0.05 --param seed=7",
+      "run_command": "python playground/labts.py run --model-id bench-causal-pc-sachs-shd --compact",
       "task": "causal",
-      "command": "python playground/labts.py run --task causal --algorithm causal-pc --dataset causal-sachs-cont --param max_samples=7466 --compact",
       "status": "reproduced",
-      "value_reproduced": 22.0,
-      "delta": -1.0,
-      "delta_rel": 0.043478,
-      "ran_at": "2026-09-28T09:43:49.251148+00:00",
-      "duration_s": 3.15,
+      "values": {
+        "SHD": 22.0
+      },
+      "per_metric": {
+        "SHD": {
+          "gt": 23,
+          "value": 22.0,
+          "delta": -1.0,
+          "delta_rel": 0.043478,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-09-29T05:27:44.116432+00:00",
+      "duration_s": 5.62,
       "error": null,
-      "metrics": {
+      "raw_metrics": {
         "SHD": 22,
         "Edge Precision": 0.44,
         "Edge Recall": 0.55,
@@ -2049,9 +2110,10 @@
       "algorithm_name": "GES",
       "dataset": "causal-sachs-cont",
       "dataset_name": "Sachs continuous (n=7466, d=11, 20-edge DAG)",
-      "metric": "SHD",
-      "metric_key": "SHD",
-      "value": 30,
+      "window": "full data",
+      "metrics": {
+        "SHD": 30
+      },
       "settings": "GES in Tetrad 7.6.7 with default settings; CPDAG with 30 estimated edges; SHD vs the 20-edge ground-truth DAG",
       "source": {
         "title": "Are You Doing Better Than Random Guessing? A Call for Using Negative Controls When Evaluating Causal Discovery Algorithms (Petersen)",
@@ -2064,16 +2126,29 @@
         "value": 8
       },
       "notes": "Implementation gap: Tetrad GES vs causal-learn GES. (The NOTEARS paper reports FGS SHD=22 on the same data; Tetrad GES defaults give 30.)",
+      "spec_params": {
+        "max_samples": 7466
+      },
+      "train_command": "python playground/labts.py train --algorithm causal-ges --dataset causal-sachs-cont --model-id bench-causal-ges-sachs-shd --param max_samples=7466 --param seed=7",
+      "run_command": "python playground/labts.py run --model-id bench-causal-ges-sachs-shd --compact",
       "task": "causal",
-      "command": "python playground/labts.py run --task causal --algorithm causal-ges --dataset causal-sachs-cont --param max_samples=7466 --compact",
       "status": "reproduced",
-      "value_reproduced": 31.0,
-      "delta": 1.0,
-      "delta_rel": 0.033333,
-      "ran_at": "2026-09-28T09:43:52.074191+00:00",
-      "duration_s": 2.82,
+      "values": {
+        "SHD": 31.0
+      },
+      "per_metric": {
+        "SHD": {
+          "gt": 30,
+          "value": 31.0,
+          "delta": 1.0,
+          "delta_rel": 0.033333,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-09-29T05:27:49.293544+00:00",
+      "duration_s": 5.18,
       "error": null,
-      "metrics": {
+      "raw_metrics": {
         "SHD": 31,
         "Edge Precision": 0.23529411764705882,
         "Edge Recall": 0.4,
@@ -2088,9 +2163,10 @@
       "algorithm_name": "ROCKET",
       "dataset": "italy-power-demand",
       "dataset_name": "ItalyPowerDemand (UCR)",
-      "metric": "Accuracy",
-      "metric_key": "Accuracy",
-      "value": 0.96958,
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.96958
+      },
       "settings": "UCR default train/test split (67/1029); 10,000 random kernels; RidgeClassifierCV(alphas=logspace(-3,3,10), normalize=True); mean over 10 runs (std 0.001)",
       "source": {
         "title": "ROCKET: Exceptionally Fast and Accurate Time Series Classification Using Random Convolutional Kernels (Dempster, Petitjean, Webb)",
@@ -2103,18 +2179,29 @@
         "value": 0.02
       },
       "notes": "sktime RocketClassifier matches the paper protocol (10,000 kernels + RidgeClassifierCV). Kernels are random, so single-run accuracy varies within the paper's reported std (~0.001).",
+      "spec_params": {},
+      "train_command": "python playground/labts.py train --algorithm registered-classification-RocketClassifier --dataset italy-power-demand --model-id bench-classification-rocket-italypowerdemand --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "python playground/labts.py run --model-id bench-classification-rocket-italypowerdemand --compact",
       "task": "classification",
-      "command": "python playground/labts.py run --task classification --algorithm registered-classification-RocketClassifier --dataset italy-power-demand --metric accuracy --compact",
       "status": "reproduced",
-      "value_reproduced": 0.9689018464528668,
-      "delta": -0.000678,
-      "delta_rel": 0.000699,
-      "ran_at": "2026-09-28T09:44:21.705420+00:00",
-      "duration_s": 29.63,
+      "values": {
+        "Accuracy": 0.9698736637512148
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.96958,
+          "value": 0.9698736637512148,
+          "delta": 0.000294,
+          "delta_rel": 0.000303,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-09-29T05:28:22.194486+00:00",
+      "duration_s": 32.9,
       "error": null,
-      "metrics": {
-        "Accuracy": 0.9689018464528668,
-        "Macro F1": 0.9689018170828454
+      "raw_metrics": {
+        "Accuracy": 0.9698736637512148,
+        "Macro F1": 0.9698736637512148
       }
     },
     {
@@ -2123,9 +2210,10 @@
       "algorithm_name": "ROCKET",
       "dataset": "arrow-head",
       "dataset_name": "ArrowHead (UCR)",
-      "metric": "Accuracy",
-      "metric_key": "Accuracy",
-      "value": 0.81429,
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.81429
+      },
       "settings": "UCR default train/test split (36/175); 10,000 random kernels; RidgeClassifierCV; mean over 10 runs (std 0.0094)",
       "source": {
         "title": "ROCKET: Exceptionally Fast and Accurate Time Series Classification Using Random Convolutional Kernels (Dempster, Petitjean, Webb)",
@@ -2138,18 +2226,29 @@
         "value": 0.03
       },
       "notes": "Non-saturated dataset; paper std over 10 runs is ~0.0094, so +/-0.03 tolerance covers kernel randomness.",
+      "spec_params": {},
+      "train_command": "python playground/labts.py train --algorithm registered-classification-RocketClassifier --dataset arrow-head --model-id bench-classification-rocket-arrowhead --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "python playground/labts.py run --model-id bench-classification-rocket-arrowhead --compact",
       "task": "classification",
-      "command": "python playground/labts.py run --task classification --algorithm registered-classification-RocketClassifier --dataset arrow-head --metric accuracy --compact",
       "status": "reproduced",
-      "value_reproduced": 0.8114285714285714,
-      "delta": -0.002861,
-      "delta_rel": 0.003514,
-      "ran_at": "2026-09-28T09:44:53.129951+00:00",
-      "duration_s": 31.42,
+      "values": {
+        "Accuracy": 0.8057142857142857
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.81429,
+          "value": 0.8057142857142857,
+          "delta": -0.008576,
+          "delta_rel": 0.010532,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-09-29T05:28:56.230852+00:00",
+      "duration_s": 34.04,
       "error": null,
-      "metrics": {
-        "Accuracy": 0.8114285714285714,
-        "Macro F1": 0.811559629161399
+      "raw_metrics": {
+        "Accuracy": 0.8057142857142857,
+        "Macro F1": 0.8056072482090181
       }
     },
     {
@@ -2157,10 +2256,12 @@
       "algorithm": "registered-clustering-TimeSeriesKShapes",
       "algorithm_name": "k-Shape",
       "dataset": "arrow-head-cl",
-      "dataset_name": "ArrowHead (UCR, fused train+test)",
-      "metric": "ARI",
-      "metric_key": "ARI",
-      "value": 0.17425,
+      "dataset_name": "ArrowHead (UCR)",
+      "window": "fused train+test · k=3",
+      "metrics": {
+        "ARI": 0.17425,
+        "NMI": 0.25334
+      },
       "settings": "k=3 (= number of classes); full dataset clustered (train+test fused, N=211); mean over 10 runs of the authors' Matlab implementation",
       "source": {
         "title": "k-Shape: Efficient and Accurate Clustering of Time Series (Paparrizos & Gravano) — official Matlab repository",
@@ -2172,21 +2273,44 @@
         "type": "absolute",
         "value": 0.15
       },
-      "notes": "Paper value is the mean of 10 Matlab runs; labts runs tslearn's KShape once with a fixed seed. Random init makes single-run ARI swing; RI=0.623006 in the same row.",
+      "notes": "Paper value is the mean of 10 Matlab runs; labts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing.",
+      "spec_params": {
+        "n_clusters": 3,
+        "fit_on": "all",
+        "random_state": 42
+      },
+      "train_command": "python playground/labts.py train --algorithm registered-clustering-TimeSeriesKShapes --dataset arrow-head-cl --model-id bench-clustering-kshape-arrowhead --param n_clusters=3 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "run_command": "python playground/labts.py run --model-id bench-clustering-kshape-arrowhead --compact",
       "task": "clustering",
-      "command": "python playground/labts.py run --task clustering --algorithm registered-clustering-TimeSeriesKShapes --dataset arrow-head-cl --param n_clusters=3 --param random_state=42 --metric ari --compact",
-      "status": "deviation",
-      "value_reproduced": 0.0,
-      "delta": -0.17425,
-      "delta_rel": 1.0,
-      "ran_at": "2026-09-28T09:45:23.405971+00:00",
-      "duration_s": 30.28,
+      "status": "reproduced",
+      "values": {
+        "ARI": 0.2168668658859379,
+        "NMI": 0.30863600090432775
+      },
+      "per_metric": {
+        "ARI": {
+          "gt": 0.17425,
+          "value": 0.2168668658859379,
+          "delta": 0.042617,
+          "delta_rel": 0.244573,
+          "status": "reproduced"
+        },
+        "NMI": {
+          "gt": 0.25334,
+          "value": 0.30863600090432775,
+          "delta": 0.055296,
+          "delta_rel": 0.218268,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-09-29T05:29:34.405837+00:00",
+      "duration_s": 38.17,
       "error": null,
-      "metrics": {
-        "ARI": 0.0,
-        "NMI": 0.0,
-        "Clusters": 1,
-        "Largest Cluster": 175
+      "raw_metrics": {
+        "ARI": 0.2168668658859379,
+        "NMI": 0.30863600090432775,
+        "Clusters": 3,
+        "Largest Cluster": 150
       }
     },
     {
@@ -2194,10 +2318,12 @@
       "algorithm": "registered-clustering-TimeSeriesKShapes",
       "algorithm_name": "k-Shape",
       "dataset": "gunpoint-cl",
-      "dataset_name": "GunPoint (UCR, fused train+test)",
-      "metric": "ARI",
-      "metric_key": "ARI",
-      "value": -0.00505,
+      "dataset_name": "GunPoint (UCR)",
+      "window": "fused train+test · k=2",
+      "metrics": {
+        "ARI": -0.00505,
+        "NMI": 0.0
+      },
       "settings": "k=2 (= number of classes); full dataset clustered (train+test fused, N=306); mean over 10 runs of the authors' Matlab implementation",
       "source": {
         "title": "k-Shape: Efficient and Accurate Clustering of Time Series (Paparrizos & Gravano) — official Matlab repository",
@@ -2209,21 +2335,44 @@
         "type": "absolute",
         "value": 0.15
       },
-      "notes": "GunPoint clustering is at chance level even for the authors (RI 0.4975, NMI 0.0) — reproducing this row validates that near-chance behavior, not a bug.",
+      "notes": "GunPoint clustering is at chance level even for the authors (RI 0.4975, NMI 0.0) — reproducing this row validates near-chance behavior, not a bug.",
+      "spec_params": {
+        "n_clusters": 2,
+        "fit_on": "all",
+        "random_state": 42
+      },
+      "train_command": "python playground/labts.py train --algorithm registered-clustering-TimeSeriesKShapes --dataset gunpoint-cl --model-id bench-clustering-kshape-gunpoint --param n_clusters=2 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "run_command": "python playground/labts.py run --model-id bench-clustering-kshape-gunpoint --compact",
       "task": "clustering",
-      "command": "python playground/labts.py run --task clustering --algorithm registered-clustering-TimeSeriesKShapes --dataset gunpoint-cl --param n_clusters=2 --param random_state=42 --metric ari --compact",
       "status": "reproduced",
-      "value_reproduced": 0.0,
-      "delta": 0.00505,
-      "delta_rel": 1.0,
-      "ran_at": "2026-09-28T09:45:52.887639+00:00",
-      "duration_s": 29.48,
+      "values": {
+        "ARI": 0.003151322570691387,
+        "NMI": 0.005949004039967699
+      },
+      "per_metric": {
+        "ARI": {
+          "gt": -0.00505,
+          "value": 0.003151322570691387,
+          "delta": 0.008201,
+          "delta_rel": 1.624024,
+          "status": "reproduced"
+        },
+        "NMI": {
+          "gt": 0.0,
+          "value": 0.005949004039967699,
+          "delta": 0.005949,
+          "delta_rel": 0.005949,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-09-29T05:30:10.469277+00:00",
+      "duration_s": 36.06,
       "error": null,
-      "metrics": {
-        "ARI": 0.0,
-        "NMI": 0.0,
-        "Clusters": 1,
-        "Largest Cluster": 150
+      "raw_metrics": {
+        "ARI": 0.003151322570691387,
+        "NMI": 0.005949004039967699,
+        "Clusters": 2,
+        "Largest Cluster": 111
       }
     },
     {
@@ -2232,10 +2381,12 @@
       "algorithm_name": "DLinear",
       "dataset": "hf-etth1",
       "dataset_name": "ETTh1",
-      "metric": "MSE",
-      "metric_key": "MSE",
-      "value": 0.375,
-      "settings": "Multivariate LTSF-Linear protocol; look-back L=336, horizon 96; z-score normalized; test-set MSE averaged over 7 channels and rolling origins over the 4-month test split",
+      "window": "horizon 96 · lookback 336",
+      "metrics": {
+        "MSE": 0.375,
+        "MAE": 0.399
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
       "source": {
         "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
         "venue": "AAAI 2023",
@@ -2244,22 +2395,252 @@
       },
       "tolerance": {
         "type": "relative",
-        "value": 0.15
+        "value": 0.1
       },
-      "notes": "Protocol gap: paper trains on a 12-month split and evaluates rolling-origin over the 4-month test set across all 7 channels; labts trains on all but the last 96 points and scores a single univariate origin with num_epochs=3. Expect deviation until rolling-origin multivariate evaluation lands.",
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 96,
+        "horizon": 96,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827
+      },
+      "train_command": "python playground/labts.py train --algorithm registered-forecasting-DLinearForecaster --dataset hf-etth1 --model-id bench-forecasting-dlinear-etth1-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-etth1-96 --compact",
       "task": "forecasting",
-      "command": "python playground/labts.py run --task forecasting --algorithm registered-forecasting-DLinearForecaster --dataset hf-etth1 --param seq_len=336 --param pred_len=96 --param horizon=96 --metric mse --compact",
-      "status": "deviation",
-      "value_reproduced": 0.5574297139080636,
-      "delta": 0.18243,
-      "delta_rel": 0.486479,
-      "ran_at": "2026-09-28T09:46:38.968249+00:00",
-      "duration_s": 46.08,
+      "status": "reproduced",
+      "values": {
+        "MSE": 0.3814288462714282,
+        "MAE": 0.4045856769376426
+      },
+      "per_metric": {
+        "MSE": {
+          "gt": 0.375,
+          "value": 0.3814288462714282,
+          "delta": 0.006429,
+          "delta_rel": 0.017144,
+          "status": "reproduced"
+        },
+        "MAE": {
+          "gt": 0.399,
+          "value": 0.4045856769376426,
+          "delta": 0.005586,
+          "delta_rel": 0.013999,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-09-29T05:30:36.340939+00:00",
+      "duration_s": 25.87,
       "error": null,
+      "raw_metrics": {
+        "MAE": 0.4045856769376426,
+        "MSE": 0.3814288462714282,
+        "MAPE": 9.64502770849933,
+        "Windows": 2797
+      }
+    },
+    {
+      "id": "forecasting-dlinear-etth1-192",
+      "algorithm": "registered-forecasting-DLinearForecaster",
+      "algorithm_name": "DLinear",
+      "dataset": "hf-etth1",
+      "dataset_name": "ETTh1",
+      "window": "horizon 192 · lookback 336",
       "metrics": {
-        "MAE": 0.5706981667138867,
-        "MSE": 0.5574297139080636,
-        "MAPE": 0.5583096702883522
+        "MSE": 0.405,
+        "MAE": 0.416
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTh1/192, DLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 192,
+        "horizon": 192,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827
+      },
+      "train_command": "python playground/labts.py train --algorithm registered-forecasting-DLinearForecaster --dataset hf-etth1 --model-id bench-forecasting-dlinear-etth1-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-etth1-192 --compact",
+      "task": "forecasting",
+      "status": "reproduced",
+      "values": {
+        "MSE": 0.4174055277215981,
+        "MAE": 0.42674169571422144
+      },
+      "per_metric": {
+        "MSE": {
+          "gt": 0.405,
+          "value": 0.4174055277215981,
+          "delta": 0.012406,
+          "delta_rel": 0.030631,
+          "status": "reproduced"
+        },
+        "MAE": {
+          "gt": 0.416,
+          "value": 0.42674169571422144,
+          "delta": 0.010742,
+          "delta_rel": 0.025821,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-09-29T05:31:04.359264+00:00",
+      "duration_s": 28.02,
+      "error": null,
+      "raw_metrics": {
+        "MAE": 0.42674169571422144,
+        "MSE": 0.4174055277215981,
+        "MAPE": 8.765670874911125,
+        "Windows": 2701
+      }
+    },
+    {
+      "id": "forecasting-dlinear-etth1-336",
+      "algorithm": "registered-forecasting-DLinearForecaster",
+      "algorithm_name": "DLinear",
+      "dataset": "hf-etth1",
+      "dataset_name": "ETTh1",
+      "window": "horizon 336 · lookback 336",
+      "metrics": {
+        "MSE": 0.439,
+        "MAE": 0.443
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTh1/336, DLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 336,
+        "horizon": 336,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827
+      },
+      "train_command": "python playground/labts.py train --algorithm registered-forecasting-DLinearForecaster --dataset hf-etth1 --model-id bench-forecasting-dlinear-etth1-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-etth1-336 --compact",
+      "task": "forecasting",
+      "status": "reproduced",
+      "values": {
+        "MSE": 0.453042109947238,
+        "MAE": 0.4559668628290861
+      },
+      "per_metric": {
+        "MSE": {
+          "gt": 0.439,
+          "value": 0.453042109947238,
+          "delta": 0.014042,
+          "delta_rel": 0.031987,
+          "status": "reproduced"
+        },
+        "MAE": {
+          "gt": 0.443,
+          "value": 0.4559668628290861,
+          "delta": 0.012967,
+          "delta_rel": 0.029271,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-09-29T05:31:32.815801+00:00",
+      "duration_s": 28.46,
+      "error": null,
+      "raw_metrics": {
+        "MAE": 0.4559668628290861,
+        "MSE": 0.453042109947238,
+        "MAPE": 8.523283506210268,
+        "Windows": 2557
+      }
+    },
+    {
+      "id": "forecasting-dlinear-etth1-720",
+      "algorithm": "registered-forecasting-DLinearForecaster",
+      "algorithm_name": "DLinear",
+      "dataset": "hf-etth1",
+      "dataset_name": "ETTh1",
+      "window": "horizon 720 · lookback 336",
+      "metrics": {
+        "MSE": 0.472,
+        "MAE": 0.49
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTh1/720, DLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 720,
+        "horizon": 720,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827
+      },
+      "train_command": "python playground/labts.py train --algorithm registered-forecasting-DLinearForecaster --dataset hf-etth1 --model-id bench-forecasting-dlinear-etth1-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-etth1-720 --compact",
+      "task": "forecasting",
+      "status": "reproduced",
+      "values": {
+        "MSE": 0.5063873047055871,
+        "MAE": 0.513987971981249
+      },
+      "per_metric": {
+        "MSE": {
+          "gt": 0.472,
+          "value": 0.5063873047055871,
+          "delta": 0.034387,
+          "delta_rel": 0.072854,
+          "status": "reproduced"
+        },
+        "MAE": {
+          "gt": 0.49,
+          "value": 0.513987971981249,
+          "delta": 0.023988,
+          "delta_rel": 0.048955,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-09-29T05:32:02.200571+00:00",
+      "duration_s": 29.38,
+      "error": null,
+      "raw_metrics": {
+        "MAE": 0.513987971981249,
+        "MSE": 0.5063873047055871,
+        "MAPE": 9.92817611238649,
+        "Windows": 2173
       }
     },
     {
@@ -2268,34 +2649,262 @@
       "algorithm_name": "DLinear",
       "dataset": "hf-weather",
       "dataset_name": "Weather",
-      "metric": "MSE",
-      "metric_key": "MSE",
-      "value": 0.176,
-      "settings": "Multivariate LTSF-Linear protocol; look-back L=336, horizon 96; z-score normalized; test-set MSE averaged over 21 channels and rolling origins",
+      "window": "horizon 96 · lookback 336",
+      "metrics": {
+        "MSE": 0.176,
+        "MAE": 0.237
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
       "source": {
         "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
         "venue": "AAAI 2023",
         "url": "https://arxiv.org/html/2205.13504v3",
-        "locator": "Table 2, row Weather/96, DLinear*"
+        "locator": "Table 2, row Weather/96, DLinear* (authors' own run)"
       },
       "tolerance": {
         "type": "relative",
-        "value": 0.15
+        "value": 0.1
       },
-      "notes": "Same protocol gap as the ETTh1 entry (univariate single-origin holdout vs multivariate rolling-origin test).",
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 96,
+        "horizon": 96,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.7,
+        "test_fraction": 0.2
+      },
+      "train_command": "python playground/labts.py train --algorithm registered-forecasting-DLinearForecaster --dataset hf-weather --model-id bench-forecasting-dlinear-weather-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-weather-96 --compact",
       "task": "forecasting",
-      "command": "python playground/labts.py run --task forecasting --algorithm registered-forecasting-DLinearForecaster --dataset hf-weather --param seq_len=336 --param pred_len=96 --param horizon=96 --metric mse --compact",
-      "status": "deviation",
-      "value_reproduced": 0.11042374197575112,
-      "delta": -0.065576,
-      "delta_rel": 0.372592,
-      "ran_at": "2026-09-28T09:47:11.933941+00:00",
-      "duration_s": 32.97,
+      "status": "reproduced",
+      "values": {
+        "MSE": 0.18336618305451813,
+        "MAE": 0.25371755599240975
+      },
+      "per_metric": {
+        "MSE": {
+          "gt": 0.176,
+          "value": 0.18336618305451813,
+          "delta": 0.007366,
+          "delta_rel": 0.041853,
+          "status": "reproduced"
+        },
+        "MAE": {
+          "gt": 0.237,
+          "value": 0.25371755599240975,
+          "delta": 0.016718,
+          "delta_rel": 0.070538,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-09-29T05:33:04.925700+00:00",
+      "duration_s": 62.72,
       "error": null,
+      "raw_metrics": {
+        "MAE": 0.25371755599240975,
+        "MSE": 0.18336618305451813,
+        "MAPE": 9.682942401502599,
+        "Windows": 10445
+      }
+    },
+    {
+      "id": "forecasting-dlinear-weather-192",
+      "algorithm": "registered-forecasting-DLinearForecaster",
+      "algorithm_name": "DLinear",
+      "dataset": "hf-weather",
+      "dataset_name": "Weather",
+      "window": "horizon 192 · lookback 336",
       "metrics": {
-        "MAE": 0.24673828979333245,
-        "MSE": 0.11042374197575112,
-        "MAPE": 0.042166721886618484
+        "MSE": 0.22,
+        "MAE": 0.282
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row Weather/192, DLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 192,
+        "horizon": 192,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.7,
+        "test_fraction": 0.2
+      },
+      "train_command": "python playground/labts.py train --algorithm registered-forecasting-DLinearForecaster --dataset hf-weather --model-id bench-forecasting-dlinear-weather-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-weather-192 --compact",
+      "task": "forecasting",
+      "status": "reproduced",
+      "values": {
+        "MSE": 0.21941528309251027,
+        "MAE": 0.27696865556771794
+      },
+      "per_metric": {
+        "MSE": {
+          "gt": 0.22,
+          "value": 0.21941528309251027,
+          "delta": -0.000585,
+          "delta_rel": 0.002658,
+          "status": "reproduced"
+        },
+        "MAE": {
+          "gt": 0.282,
+          "value": 0.27696865556771794,
+          "delta": -0.005031,
+          "delta_rel": 0.017842,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-09-29T05:34:34.958488+00:00",
+      "duration_s": 90.03,
+      "error": null,
+      "raw_metrics": {
+        "MAE": 0.27696865556771794,
+        "MSE": 0.21941528309251027,
+        "MAPE": 10.68152154348807,
+        "Windows": 10349
+      }
+    },
+    {
+      "id": "forecasting-dlinear-weather-336",
+      "algorithm": "registered-forecasting-DLinearForecaster",
+      "algorithm_name": "DLinear",
+      "dataset": "hf-weather",
+      "dataset_name": "Weather",
+      "window": "horizon 336 · lookback 336",
+      "metrics": {
+        "MSE": 0.265,
+        "MAE": 0.319
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row Weather/336, DLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 336,
+        "horizon": 336,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.7,
+        "test_fraction": 0.2
+      },
+      "train_command": "python playground/labts.py train --algorithm registered-forecasting-DLinearForecaster --dataset hf-weather --model-id bench-forecasting-dlinear-weather-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-weather-336 --compact",
+      "task": "forecasting",
+      "status": "reproduced",
+      "values": {
+        "MSE": 0.2632314734155668,
+        "MAE": 0.298315336728642
+      },
+      "per_metric": {
+        "MSE": {
+          "gt": 0.265,
+          "value": 0.2632314734155668,
+          "delta": -0.001769,
+          "delta_rel": 0.006674,
+          "status": "reproduced"
+        },
+        "MAE": {
+          "gt": 0.319,
+          "value": 0.298315336728642,
+          "delta": -0.020685,
+          "delta_rel": 0.064842,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-09-29T05:35:57.268697+00:00",
+      "duration_s": 82.31,
+      "error": null,
+      "raw_metrics": {
+        "MAE": 0.298315336728642,
+        "MSE": 0.2632314734155668,
+        "MAPE": 14.277994967101643,
+        "Windows": 10205
+      }
+    },
+    {
+      "id": "forecasting-dlinear-weather-720",
+      "algorithm": "registered-forecasting-DLinearForecaster",
+      "algorithm_name": "DLinear",
+      "dataset": "hf-weather",
+      "dataset_name": "Weather",
+      "window": "horizon 720 · lookback 336",
+      "metrics": {
+        "MSE": 0.323,
+        "MAE": 0.362
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row Weather/720, DLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 720,
+        "horizon": 720,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.7,
+        "test_fraction": 0.2
+      },
+      "train_command": "python playground/labts.py train --algorithm registered-forecasting-DLinearForecaster --dataset hf-weather --model-id bench-forecasting-dlinear-weather-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-weather-720 --compact",
+      "task": "forecasting",
+      "status": "reproduced",
+      "values": {
+        "MSE": 0.3271291449738203,
+        "MAE": 0.355883907885721
+      },
+      "per_metric": {
+        "MSE": {
+          "gt": 0.323,
+          "value": 0.3271291449738203,
+          "delta": 0.004129,
+          "delta_rel": 0.012784,
+          "status": "reproduced"
+        },
+        "MAE": {
+          "gt": 0.362,
+          "value": 0.355883907885721,
+          "delta": -0.006116,
+          "delta_rel": 0.016895,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-09-29T05:37:51.825513+00:00",
+      "duration_s": 114.56,
+      "error": null,
+      "raw_metrics": {
+        "MAE": 0.355883907885721,
+        "MSE": 0.3271291449738203,
+        "MAPE": 12.496922856763343,
+        "Windows": 9821
       }
     },
     {
@@ -2304,34 +2913,266 @@
       "algorithm_name": "Autoformer",
       "dataset": "hf-etth1",
       "dataset_name": "ETTh1",
-      "metric": "MSE",
-      "metric_key": "MSE",
-      "value": 0.449,
-      "settings": "Multivariate LTSF protocol; look-back L=96 (Transformers), horizon 96; z-score normalized; test-set MSE",
+      "window": "horizon 96 · lookback 96",
+      "metrics": {
+        "MSE": 0.449,
+        "MAE": 0.459
+      },
+      "settings": "LTSF protocol (rolling origin, no refit); look-back L=96 (Transformers); z-score normalized; averaged over windows and channels",
       "source": {
         "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
         "venue": "AAAI 2023",
         "url": "https://arxiv.org/html/2205.13504v3",
-        "locator": "Table 2, row ETTh1/96, Autoformer (quoted from the FEDformer paper, ICML 2022; identical to Autoformer paper's own value)"
+        "locator": "Table 2, row ETTh1/96, Autoformer (quoted from the FEDformer paper, ICML 2022)"
       },
       "tolerance": {
         "type": "relative",
-        "value": 0.2
+        "value": 0.15
       },
-      "notes": "Same protocol gap as the DLinear entries; also num_epochs=3 default (paper trains to convergence).",
+      "notes": "Same ETT exact split as the DLinear entries; num_epochs=10 (paper trains ~10 epochs with early stopping). Residual gap: seed/implementation details.",
+      "spec_params": {
+        "seq_len": 96,
+        "pred_len": 96,
+        "horizon": 96,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827
+      },
+      "train_command": "python playground/labts.py train --algorithm registered-forecasting-AutoformerForecaster --dataset hf-etth1 --model-id bench-forecasting-autoformer-etth1-96 --param seq_len=96 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-autoformer-etth1-96 --compact",
       "task": "forecasting",
-      "command": "python playground/labts.py run --task forecasting --algorithm registered-forecasting-AutoformerForecaster --dataset hf-etth1 --param seq_len=96 --param pred_len=96 --param horizon=96 --metric mse --compact",
-      "status": "reproduced",
-      "value_reproduced": 0.4109711655225607,
-      "delta": -0.038029,
-      "delta_rel": 0.084697,
-      "ran_at": "2026-09-28T09:51:06.096717+00:00",
-      "duration_s": 234.16,
+      "status": "deviation",
+      "values": {
+        "MSE": 0.5744474237516843,
+        "MAE": 0.5096579865796645
+      },
+      "per_metric": {
+        "MSE": {
+          "gt": 0.449,
+          "value": 0.5744474237516843,
+          "delta": 0.125447,
+          "delta_rel": 0.279393,
+          "status": "deviation"
+        },
+        "MAE": {
+          "gt": 0.459,
+          "value": 0.5096579865796645,
+          "delta": 0.050658,
+          "delta_rel": 0.110366,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-09-29T05:44:30.539360+00:00",
+      "duration_s": 398.71,
       "error": null,
+      "raw_metrics": {
+        "MAE": 0.5096579865796645,
+        "MSE": 0.5744474237516843,
+        "MAPE": 12.36195511928204,
+        "Windows": 2797
+      }
+    },
+    {
+      "id": "forecasting-autoformer-etth1-192",
+      "algorithm": "registered-forecasting-AutoformerForecaster",
+      "algorithm_name": "Autoformer",
+      "dataset": "hf-etth1",
+      "dataset_name": "ETTh1",
+      "window": "horizon 192 · lookback 96",
       "metrics": {
-        "MAE": 0.515523592777731,
-        "MSE": 0.4109711655225607,
-        "MAPE": 0.7987782834133416
+        "MSE": 0.5,
+        "MAE": 0.482
+      },
+      "settings": "LTSF protocol (rolling origin, no refit); look-back L=96 (Transformers); z-score normalized; averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTh1/192, Autoformer (quoted from the FEDformer paper, ICML 2022)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.15
+      },
+      "notes": "Same ETT exact split as the DLinear entries; num_epochs=10 (paper trains ~10 epochs with early stopping). Residual gap: seed/implementation details.",
+      "spec_params": {
+        "seq_len": 96,
+        "pred_len": 192,
+        "horizon": 192,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827
+      },
+      "train_command": "python playground/labts.py train --algorithm registered-forecasting-AutoformerForecaster --dataset hf-etth1 --model-id bench-forecasting-autoformer-etth1-192 --param seq_len=96 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-autoformer-etth1-192 --compact",
+      "task": "forecasting",
+      "status": "reproduced",
+      "values": {
+        "MSE": 0.5616511974735546,
+        "MAE": 0.5137029535681268
+      },
+      "per_metric": {
+        "MSE": {
+          "gt": 0.5,
+          "value": 0.5616511974735546,
+          "delta": 0.061651,
+          "delta_rel": 0.123302,
+          "status": "reproduced"
+        },
+        "MAE": {
+          "gt": 0.482,
+          "value": 0.5137029535681268,
+          "delta": 0.031703,
+          "delta_rel": 0.065774,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-09-29T05:53:24.465333+00:00",
+      "duration_s": 533.93,
+      "error": null,
+      "raw_metrics": {
+        "MAE": 0.5137029535681268,
+        "MSE": 0.5616511974735546,
+        "MAPE": 11.735279754197746,
+        "Windows": 2701
+      }
+    },
+    {
+      "id": "forecasting-autoformer-etth1-336",
+      "algorithm": "registered-forecasting-AutoformerForecaster",
+      "algorithm_name": "Autoformer",
+      "dataset": "hf-etth1",
+      "dataset_name": "ETTh1",
+      "window": "horizon 336 · lookback 96",
+      "metrics": {
+        "MSE": 0.521,
+        "MAE": 0.496
+      },
+      "settings": "LTSF protocol (rolling origin, no refit); look-back L=96 (Transformers); z-score normalized; averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTh1/336, Autoformer (quoted from the FEDformer paper, ICML 2022)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.15
+      },
+      "notes": "Same ETT exact split as the DLinear entries; num_epochs=10 (paper trains ~10 epochs with early stopping). Residual gap: seed/implementation details.",
+      "spec_params": {
+        "seq_len": 96,
+        "pred_len": 336,
+        "horizon": 336,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827
+      },
+      "train_command": "python playground/labts.py train --algorithm registered-forecasting-AutoformerForecaster --dataset hf-etth1 --model-id bench-forecasting-autoformer-etth1-336 --param seq_len=96 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-autoformer-etth1-336 --compact",
+      "task": "forecasting",
+      "status": "deviation",
+      "values": {
+        "MSE": 0.6599290240768895,
+        "MAE": 0.5626500803005422
+      },
+      "per_metric": {
+        "MSE": {
+          "gt": 0.521,
+          "value": 0.6599290240768895,
+          "delta": 0.138929,
+          "delta_rel": 0.266658,
+          "status": "deviation"
+        },
+        "MAE": {
+          "gt": 0.496,
+          "value": 0.5626500803005422,
+          "delta": 0.06665,
+          "delta_rel": 0.134375,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-09-29T06:02:56.641855+00:00",
+      "duration_s": 572.18,
+      "error": null,
+      "raw_metrics": {
+        "MAE": 0.5626500803005422,
+        "MSE": 0.6599290240768895,
+        "MAPE": 12.848650851701526,
+        "Windows": 2557
+      }
+    },
+    {
+      "id": "forecasting-autoformer-etth1-720",
+      "algorithm": "registered-forecasting-AutoformerForecaster",
+      "algorithm_name": "Autoformer",
+      "dataset": "hf-etth1",
+      "dataset_name": "ETTh1",
+      "window": "horizon 720 · lookback 96",
+      "metrics": {
+        "MSE": 0.514,
+        "MAE": 0.512
+      },
+      "settings": "LTSF protocol (rolling origin, no refit); look-back L=96 (Transformers); z-score normalized; averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTh1/720, Autoformer (quoted from the FEDformer paper, ICML 2022)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.15
+      },
+      "notes": "Same ETT exact split as the DLinear entries; num_epochs=10 (paper trains ~10 epochs with early stopping). Residual gap: seed/implementation details.",
+      "spec_params": {
+        "seq_len": 96,
+        "pred_len": 720,
+        "horizon": 720,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827
+      },
+      "train_command": "python playground/labts.py train --algorithm registered-forecasting-AutoformerForecaster --dataset hf-etth1 --model-id bench-forecasting-autoformer-etth1-720 --param seq_len=96 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-autoformer-etth1-720 --compact",
+      "task": "forecasting",
+      "status": "deviation",
+      "values": {
+        "MSE": 0.6880968764689342,
+        "MAE": 0.5897345714189353
+      },
+      "per_metric": {
+        "MSE": {
+          "gt": 0.514,
+          "value": 0.6880968764689342,
+          "delta": 0.174097,
+          "delta_rel": 0.33871,
+          "status": "deviation"
+        },
+        "MAE": {
+          "gt": 0.512,
+          "value": 0.5897345714189353,
+          "delta": 0.077735,
+          "delta_rel": 0.151825,
+          "status": "deviation"
+        }
+      },
+      "ran_at": "2026-09-29T06:17:04.292997+00:00",
+      "duration_s": 847.65,
+      "error": null,
+      "raw_metrics": {
+        "MAE": 0.5897345714189353,
+        "MSE": 0.6880968764689342,
+        "MAPE": 14.849871997649743,
+        "Windows": 2173
       }
     },
     {
@@ -2340,9 +3181,10 @@
       "algorithm_name": "Rocket",
       "dataset": "covid-3month",
       "dataset_name": "Covid3Month (TSER archive)",
-      "metric": "RMSE",
-      "metric_key": "RMSE",
-      "value": 0.0438782,
+      "window": "default split",
+      "metrics": {
+        "RMSE": 0.0438782
+      },
       "settings": "TSER archive default train/test split (140/61); ROCKET transform with ridge-regression-style regressor; average RMSE over 5 runs",
       "source": {
         "title": "Time Series Extrinsic Regression (Tan, Bergmeir, Petitjean, Webb) — official TSER results page",
@@ -2355,19 +3197,30 @@
         "value": 0.2
       },
       "notes": "Rocket was the best-ranked algorithm in the TSER paper. sktime RocketRegressor follows the same protocol (fixed archive split, ridge on ROCKET features).",
+      "spec_params": {},
+      "train_command": "python playground/labts.py train --algorithm registered-regression-RocketRegressor --dataset covid-3month --model-id bench-regression-rocket-covid3month --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "python playground/labts.py run --model-id bench-regression-rocket-covid3month --compact",
       "task": "regression",
-      "command": "python playground/labts.py run --task regression --algorithm registered-regression-RocketRegressor --dataset covid-3month --metric rmse --compact",
       "status": "reproduced",
-      "value_reproduced": 0.0389928099603455,
-      "delta": -0.004885,
-      "delta_rel": 0.11134,
-      "ran_at": "2026-09-28T09:51:35.491437+00:00",
-      "duration_s": 29.39,
+      "values": {
+        "RMSE": 0.03817886217196469
+      },
+      "per_metric": {
+        "RMSE": {
+          "gt": 0.0438782,
+          "value": 0.03817886217196469,
+          "delta": -0.005699,
+          "delta_rel": 0.12989,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-09-29T06:17:37.781136+00:00",
+      "duration_s": 33.49,
       "error": null,
-      "metrics": {
-        "MAE": 0.028532003631796823,
-        "RMSE": 0.0389928099603455,
-        "R²": 0.23645960975254454
+      "raw_metrics": {
+        "MAE": 0.028425973430793835,
+        "RMSE": 0.03817886217196469,
+        "R²": 0.268003656474359
       }
     },
     {
@@ -2376,9 +3229,10 @@
       "algorithm_name": "RandomForest",
       "dataset": "covid-3month",
       "dataset_name": "Covid3Month (TSER archive)",
-      "metric": "RMSE",
-      "metric_key": "RMSE",
-      "value": 0.0424,
+      "window": "default split",
+      "metrics": {
+        "RMSE": 0.0424
+      },
       "settings": "TSER archive default train/test split (140/61); scikit-learn RandomForest with default parameters on the flattened raw series; average RMSE over 5 runs",
       "source": {
         "title": "Time Series Extrinsic Regression (Tan, Bergmeir, Petitjean, Webb) — official TSER results page",
@@ -2391,16 +3245,27 @@
         "value": 0.35
       },
       "notes": "Protocol mismatch on purpose: the paper flattens the raw series into sklearn defaults, while the labts pipeline fits RF(25 trees) on summary features. Kept as a demonstration that the leaderboard flags representation gaps, not only implementation bugs.",
+      "spec_params": {},
+      "train_command": "python playground/labts.py train --algorithm summary-random-forest-regressor --dataset covid-3month --model-id bench-regression-rf-covid3month --param n_estimators=25 --param random_state=7",
+      "run_command": "python playground/labts.py run --model-id bench-regression-rf-covid3month --compact",
       "task": "regression",
-      "command": "python playground/labts.py run --task regression --algorithm summary-random-forest-regressor --dataset covid-3month --metric rmse --compact",
       "status": "reproduced",
-      "value_reproduced": 0.04679649136974218,
-      "delta": 0.004396,
-      "delta_rel": 0.103691,
-      "ran_at": "2026-09-28T09:51:39.281716+00:00",
-      "duration_s": 3.79,
+      "values": {
+        "RMSE": 0.04679649136974218
+      },
+      "per_metric": {
+        "RMSE": {
+          "gt": 0.0424,
+          "value": 0.04679649136974218,
+          "delta": 0.004396,
+          "delta_rel": 0.103691,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-09-29T06:17:44.342661+00:00",
+      "duration_s": 6.56,
       "error": null,
-      "metrics": {
+      "raw_metrics": {
         "MAE": 0.03293033550832359,
         "RMSE": 0.04679649136974218,
         "R²": -0.09973876605185339
@@ -2408,12 +3273,12 @@
     }
   ],
   "summary": {
-    "entries": 15,
-    "reproduced": 10,
-    "deviation": 5,
+    "entries": 24,
+    "reproduced": 20,
+    "deviation": 4,
     "error": 0,
     "pending": 0,
-    "run_total": 15,
-    "reproduced_pct": 66.7
+    "run_total": 24,
+    "reproduced_pct": 83.3
   }
 }

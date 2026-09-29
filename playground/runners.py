@@ -137,7 +137,14 @@ def _apply_requested_metrics(result: dict, spec: dict, context: dict) -> None:
         return
     try:
         entries = resolve_metrics(metric_ids, spec["task"])
+        existing = {
+            str(k).lower().replace("_", "-"): v
+            for k, v in (result.get("metrics") or {}).items()
+        }
         for entry in entries:
+            key = entry["name"].lower().replace("_", "-")
+            if key in existing:
+                continue  # domain runner already computed it (e.g. rolling aggregates)
             result["metrics"][entry["name"]] = compute_metric(entry, spec["task"], context)
     except MetricError as exc:
         raise PlaygroundError(str(exc)) from exc
@@ -493,6 +500,23 @@ def _run_clustering(spec: dict, dataset: dict, preprocessor, log: list[str]) -> 
         n_clusters=int(params["n_clusters"]),
         random_state=int(params["random_state"]),
     )
+
+    if str(params.get("fit_on") or "") == "all":
+        # Unsupervised clustering papers (e.g. k-Shape) evaluate on the fused
+        # train+test set — there is no held-out split in this task.
+        X_all = _concat_panels(X_train, X_test)
+        y_all = np.concatenate([np.asarray(y_train), np.asarray(y_test)])
+        log.append(f"fit_on=all: fused train+test into {len(y_all)} series")
+        clusterer.fit(X_all)
+        y_pred = getattr(clusterer, "labels_", None)
+        if y_pred is None:
+            y_pred = clusterer.predict(X_all)
+        return _clustering_result(
+            y_all,
+            y_pred,
+            f"Clustered all {len(y_all)} series into {params['n_clusters']} clusters.",
+        )
+
     clusterer.fit(X_train)
     y_pred = clusterer.predict(X_test)
     log.append(f"Fitted TimeSeriesKMeans on {len(y_train)} train series")
@@ -930,6 +954,202 @@ def _build_estimator(algorithm: dict, est_params: dict):
     return klass(**coerced)
 
 
+def _load_forecasting_frame(dataset: dict, log: list[str]):
+    """Load the forecasting series as a float DataFrame (all channels)."""
+    import pandas as pd
+
+    if dataset["source"] == "huggingface":
+        from hf_data import load_hf_frame
+
+        y = load_hf_frame(dataset["hf_config"])
+        log.append(
+            f"Loaded Hugging Face config {dataset['hf_config']} "
+            f"({len(y)} rows x {y.shape[1]} channels)"
+        )
+    else:
+        y = pd.DataFrame(_load_forecasting_series(dataset, log))
+    y = y.astype(float).dropna()
+    if not isinstance(y.index, pd.RangeIndex):
+        y.index = pd.RangeIndex(start=0, stop=len(y), step=1)
+        log.append("Normalized time index to RangeIndex for reproducible forecasting")
+    return y
+
+
+def _rolling_split(n: int, horizon: int, eval_params: dict) -> tuple[int, int, int]:
+    """(train_end, test_start, test_end) for the rolling-origin protocol."""
+    test_fraction = float(eval_params.get("test_fraction") or 0.2)
+    if not 0.05 <= test_fraction <= 0.5:
+        raise PlaygroundError("test_fraction must be between 0.05 and 0.5")
+    tsf = eval_params.get("test_start_fraction")
+    tef = eval_params.get("test_end_fraction")
+    if tsf:
+        # explicit test region, e.g. the ETT protocol (test is NOT the tail)
+        test_start = int(n * float(tsf))
+        test_end = int(n * float(tef)) if tef else n
+    else:
+        test_start = int(n * (1 - test_fraction))
+        test_end = n
+    train_fraction = eval_params.get("train_fraction")
+    train_end = min(int(n * float(train_fraction)), test_start) if train_fraction else test_start
+    if not (horizon + 1 < train_end <= test_start < test_end <= n):
+        raise PlaygroundError(
+            f"Invalid rolling-eval split: n={n}, train_end={train_end}, "
+            f"test=[{test_start}, {test_end}), horizon={horizon}"
+        )
+    return train_end, test_start, test_end
+
+
+def _run_forecasting_rolling(
+    spec: dict,
+    dataset: dict,
+    algorithm: dict,
+    preprocessor,
+    log: list[str],
+    eval_params: dict,
+    est_params: dict,
+) -> dict:
+    """Rolling-origin evaluation (LTSF paper protocol).
+
+    Train once on the first (1 - test_fraction) of the series, then slide a
+    (context -> horizon) window over the test segment and average the error
+    over all windows and channels — no refit between windows. Requires a
+    forecaster with refit-free windowed prediction (tslib adapters).
+    """
+    horizon = max(1, int(eval_params.get("horizon") or 12))
+    if preprocessor and preprocessor.get("id") not in (None, "none"):
+        raise PlaygroundError("rolling evaluation does not support preprocessors yet")
+
+    y = _load_forecasting_frame(dataset, log)
+    train_end, test_start, test_end = _rolling_split(len(y), horizon, eval_params)
+
+    forecaster = _build_estimator(algorithm, est_params)
+    log.append(f"Estimator: {algorithm['name']} params={est_params or 'defaults'}")
+    if not hasattr(forecaster, "predict_windows"):
+        raise PlaygroundError(
+            f"{algorithm['name']} does not support rolling evaluation (needs "
+            "refit-free windowed prediction; tslib adapters provide it). "
+            "Use the default single-origin eval instead."
+        )
+
+    forecaster.fit(y.iloc[:train_end])
+    return _rolling_forecast_result(
+        forecaster, algorithm["name"], y, train_end, test_start, test_end, horizon, log
+    )
+
+
+def _rolling_forecast_result(
+    forecaster,
+    name: str,
+    y,
+    train_end: int,
+    test_start: int,
+    test_end: int,
+    horizon: int,
+    log: list[str],
+) -> dict:
+    """Windowed predictions + averaged metrics for a fitted rolling forecaster.
+
+    Shared by the one-shot rolling runner and `trainer` predict (persisted
+    model, no refit). ``forecaster`` must already be fitted on y[:train_end].
+    """
+    import pandas as pd
+
+    n = len(y)
+    y_train = y.iloc[:train_end]
+    starts = list(range(test_start, test_end - horizon + 1))
+    log.append(
+        f"Rolling eval: fit on {train_end} rows, {len(starts)} windows "
+        f"(test region [{test_start}, {test_end}) of {n}, horizon={horizon})"
+    )
+    preds = forecaster.predict_windows(y, starts, horizon)  # (W, h, c)
+    values = y.to_numpy(dtype=float)
+    actual = np.stack([values[s : s + horizon] for s in starts])
+    # papers report errors on the z-scored scale (train statistics), which
+    # also makes channels with heterogeneous units (e.g. Weather) comparable
+    mean = getattr(forecaster, "_mean", None)
+    scale = getattr(forecaster, "_std", None)
+    if mean is not None and scale is not None:
+        mean = np.asarray(mean, dtype=float).reshape(1, 1, -1)
+        scale = np.asarray(scale, dtype=float).reshape(1, 1, -1)
+        scale = np.where(scale == 0, 1.0, scale)
+        err = (preds - actual) / scale
+        actual_n = (actual - mean) / scale
+        preds_n = (preds - mean) / scale
+        y_train_n = (y_train.to_numpy(dtype=float) - mean.reshape(-1)) / scale.reshape(-1)
+    else:
+        err = preds - actual
+        actual_n, preds_n = actual, preds
+        y_train_n = y_train.to_numpy(dtype=float)
+    mse = float(np.mean(err**2))
+    mae = float(np.mean(np.abs(err)))
+    denom = np.where(np.abs(actual_n) < 1e-8, 1e-8, np.abs(actual_n))
+    mape = float(np.mean(np.abs(err) / denom))
+    per_window_mse = np.mean(err**2, axis=(1, 2))
+
+    # lightweight chart: sampled actuals + the last window's predictions
+    stride = max(1, n // 400)
+    last = starts[-1]
+    points = [
+        {
+            "x": i,
+            "actual": _clean_number(values[i, 0]),
+            "prediction": None,
+            "split": "train" if i < test_start else ("test" if i < test_end else "unused"),
+        }
+        for i in range(0, n, stride)
+    ]
+    for k in range(horizon):
+        points.append(
+            {
+                "x": last + k,
+                "actual": _clean_number(values[last + k, 0]),
+                "prediction": _clean_number(preds[-1, k, 0]),
+                "split": "test",
+            }
+        )
+    return {
+        "status": "ok",
+        "metrics": {
+            "MAE": mae,
+            "MSE": mse,
+            "MAPE": mape,
+            "Windows": int(len(starts)),
+        },
+        "series": {
+            "kind": "forecast",
+            "points": points,
+            "meta": {
+                "total": int(n),
+                "test_start": int(test_start),
+                "test_end": int(test_end),
+                "horizon": int(horizon),
+                "eval_mode": "rolling",
+                "windows": int(len(starts)),
+            },
+        },
+        "tables": {
+            "rolling": [
+                {"start": int(s), "mse": _clean_number(m)}
+                for s, m in list(zip(starts, per_window_mse))[:10]
+            ]
+        },
+        "summary": (
+            f"Rolling eval over {len(starts)} windows with {name}: "
+            f"MSE={mse:.4f}, MAE={mae:.4f}."
+        ),
+        # stacked windows flattened (normalized scale): registry metrics
+        # (MSE/MAE/...) then equal the window-aggregates reported above
+        "_metric_context": {
+            "values": actual_n.ravel(),
+            "predictions": preds_n.ravel(),
+            "y_train": y_train_n.ravel(),
+            "y_pred_benchmark": _naive_benchmark(
+                pd.Series(y_train_n[:, 0]), int(actual_n.size), 1
+            ),
+        },
+    }
+
+
 def _run_forecasting_generic(spec: dict, dataset: dict, algorithm: dict, preprocessor, log: list[str]) -> dict:
     import pandas as pd
     from sktime.performance_metrics.forecasting import (
@@ -939,6 +1159,10 @@ def _run_forecasting_generic(spec: dict, dataset: dict, algorithm: dict, preproc
     )
 
     eval_params, est_params = split_params("forecasting", spec.get("params") or {})
+    if str(eval_params.get("eval_mode") or "single") == "rolling":
+        return _run_forecasting_rolling(
+            spec, dataset, algorithm, preprocessor, log, eval_params, est_params
+        )
     horizon = max(1, int(eval_params.get("horizon") or 12))
     context_window = max(1, int(eval_params.get("context_window") or 36))
     forecaster = _build_estimator(algorithm, est_params)
@@ -1078,6 +1302,15 @@ def _run_regression_generic(spec: dict, dataset: dict, algorithm: dict, preproce
     )
 
 
+def _concat_panels(a, b):
+    """Concatenate two sktime panels (numpy3d or nested DataFrame) row-wise."""
+    import pandas as pd
+
+    if isinstance(a, pd.DataFrame):
+        return pd.concat([a, b], axis=0, ignore_index=True)
+    return np.concatenate([a, b], axis=0)
+
+
 def _run_clustering_generic(spec: dict, dataset: dict, algorithm: dict, preprocessor, log: list[str]) -> dict:
     _eval_params, est_params = split_params("clustering", spec.get("params") or {})
     clusterer = _build_estimator(algorithm, est_params)
@@ -1085,6 +1318,23 @@ def _run_clustering_generic(spec: dict, dataset: dict, algorithm: dict, preproce
 
     X_train, y_train, X_test, y_test = _load_panel_xy(dataset, log)
     X_train, X_test = _apply_panel_preprocessor(X_train, X_test, preprocessor, spec, log)
+
+    if str(_eval_params.get("fit_on") or "") == "all":
+        # Unsupervised clustering papers (e.g. k-Shape) evaluate on the fused
+        # train+test set — there is no held-out split in this task.
+        X_all = _concat_panels(X_train, X_test)
+        y_all = np.concatenate([np.asarray(y_train), np.asarray(y_test)])
+        log.append(f"fit_on=all: fused train+test into {len(y_all)} series")
+        clusterer.fit(X_all)
+        y_pred = getattr(clusterer, "labels_", None)
+        if y_pred is None:
+            y_pred = clusterer.predict(X_all)
+        return _clustering_result(
+            y_all,
+            y_pred,
+            f"Clustered all {len(y_all)} series with {algorithm['name']}.",
+        )
+
     if hasattr(clusterer, "predict"):
         clusterer.fit(X_train)
         y_pred = clusterer.predict(X_test)
@@ -1220,10 +1470,147 @@ def build_anomaly_result(raw, y_true, pred_indices, detector_name: str, scores=N
     }
 
 
+def resolve_series_dir(dataset: dict) -> Path:
+    """Resolve a multi-series anomaly dataset dir (TSB-UAD layout).
+
+    Root is $TSB_UAD_HOME or <playground cache>/tsb-uad; download hint on miss.
+    """
+    import os
+    from pathlib import Path
+
+    from hf_data import cache_dir
+
+    root = Path(
+        os.environ.get("TSB_UAD_HOME") or (cache_dir() / "tsb-uad")
+    )
+    path = root / dataset["series_dir"]
+    if not path.is_dir():
+        raise PlaygroundError(
+            f"Multi-series dataset dir not found: {path}. Download "
+            "https://www.thedatum.org/datasets/TSB-UAD-Public.zip and extract "
+            f"it under {root}, or set TSB_UAD_HOME."
+        )
+    return path
+
+
+def _anomaly_series_row(detector, sparse, raw, y_true, auc_entry, series_name: str) -> dict:
+    """Per-series metrics row from a fitted detector's sparse output.
+
+    Shared by the multi-series runner and `trainer` predict (persisted
+    per-series models). ``raw``/``y_true`` are the series values/labels.
+    """
+    import numpy as np
+
+    arr = np.asarray(sparse).ravel() if sparse is not None else np.array([])
+    if arr.size == len(raw) and arr.size > 0:
+        pred_indices = np.where(arr != 0)[0]
+    else:
+        pred_indices = _extract_sparse_ilocs(sparse)
+    y_pred = np.zeros(len(raw), dtype=int)
+    valid = pred_indices[(pred_indices >= 0) & (pred_indices < len(raw))]
+    y_pred[valid] = 1
+    scores = _extract_anomaly_scores(detector, raw, y_pred)
+    tp = int(((y_true == 1) & (y_pred == 1)).sum())
+    fp = int(((y_true == 0) & (y_pred == 1)).sum())
+    fn = int(((y_true == 1) & (y_pred == 0)).sum())
+    precision = tp / (tp + fp) if tp + fp else 0.0
+    recall = tp / (tp + fn) if tp + fn else 0.0
+    f1 = 2 * precision * recall / (precision + recall) if precision + recall else 0.0
+    row = {
+        "series": series_name,
+        "precision": precision,
+        "recall": recall,
+        "f1": f1,
+        "anomalies": int(y_true.sum()),
+        "points": int(len(raw)),
+    }
+    if 0 < y_true.sum() < len(y_true):
+        from metrics import compute_metric
+
+        context = {"labels": y_true, "predictions": y_pred, "scores": scores}
+        row["auc_roc"] = float(
+            compute_metric(auc_entry, "anomaly_detection", context)
+        )
+    return row
+
+
+def multiseries_anomaly_payload(per_series: list[dict], name: str, log: list[str]) -> dict:
+    """Dataset-level averaged payload for multi-series anomaly evaluation."""
+    import numpy as np
+
+    def avg(key):
+        vals = [r[key] for r in per_series if key in r]
+        return float(np.mean(vals)) if vals else None
+
+    metrics = {
+        "AUC-ROC": avg("auc_roc"),
+        "Precision": avg("precision"),
+        "Recall": avg("recall"),
+        "F1": avg("f1"),
+        "Series": int(len(per_series)),
+    }
+    auc_txt = f", AUC-ROC={metrics['AUC-ROC']:.4f}" if metrics["AUC-ROC"] else ""
+    log.append(f"Multi-series eval: {len(per_series)} series{auc_txt}")
+    return {
+        "status": "ok",
+        "metrics": metrics,
+        "series": {"kind": "none"},
+        "tables": {
+            "per_series": [
+                {k: (_clean_number(v) if isinstance(v, float) else v) for k, v in row.items()}
+                for row in per_series
+            ]
+        },
+        "summary": (
+            f"Scored {len(per_series)} series with {name}: "
+            f"AUC-ROC={metrics['AUC-ROC']:.4f}, F1={metrics['F1']:.4f}."
+        ),
+        "_metric_context": None,
+    }
+
+
+def _run_anomaly_multiseries(
+    spec: dict, dataset: dict, algorithm: dict, preprocessor, log: list[str], est_params: dict
+) -> dict:
+    """Dataset-level anomaly evaluation: run the detector per series and
+    average metrics across all series (TSB-UAD benchmark protocol)."""
+    import pandas as pd
+
+    series_dir = resolve_series_dir(dataset)
+    files = sorted(series_dir.glob("*.out"))
+    if not files:
+        raise PlaygroundError(f"No .out series files under {series_dir}")
+    if preprocessor and preprocessor.get("id") not in (None, "none"):
+        raise PlaygroundError("multi-series evaluation does not support preprocessors yet")
+
+    from metrics import resolve_metrics
+
+    auc_entry = resolve_metrics(["auc_roc"], "anomaly_detection")[0]
+    per_series = []
+    for i, path in enumerate(files):
+        frame = pd.read_csv(path, header=None, names=["data", "label"])
+        raw = frame["data"].astype(float)
+        y_true = frame["label"].astype(int).to_numpy()
+        detector = _build_estimator(algorithm, est_params)
+        sparse = detector.fit_predict(raw.to_frame("data"))
+        per_series.append(
+            _anomaly_series_row(detector, sparse, raw, y_true, auc_entry, path.name)
+        )
+        if (i + 1) % 50 == 0:
+            log.append(f"Scored {i + 1}/{len(files)} series")
+
+    return multiseries_anomaly_payload(per_series, algorithm["name"], log)
+
+
 def _run_anomaly_generic(spec: dict, dataset: dict, algorithm: dict, preprocessor, log: list[str]) -> dict:
     import numpy as np
 
     _eval_params, est_params = split_params("anomaly_detection", spec.get("params") or {})
+    if dataset.get("series_dir"):
+        log.append(f"Estimator: {algorithm['name']} params={est_params or 'defaults'}")
+        return _run_anomaly_multiseries(
+            spec, dataset, algorithm, preprocessor, log, est_params
+        )
     detector = _build_estimator(algorithm, est_params)
     log.append(f"Estimator: {algorithm['name']} params={est_params or 'defaults'}")
 
@@ -1539,7 +1926,7 @@ def _anomaly_script(dataset_id: str, params: dict) -> str:
     threshold = float(params.get("threshold", 2.0))
     window = int(params.get("window", 24))
     dataset = get_dataset(dataset_id)
-    path = dataset["path"] if dataset else "sktime/datasets/data/yahoo/yahoo.csv"
+    path = (dataset or {}).get("path") or "sktime/datasets/data/yahoo/yahoo.csv"
     return textwrap.dedent(
         f"""\
         import numpy as np
@@ -1704,7 +2091,7 @@ def _generic_script(result: dict) -> str:
         )
 
     dataset = get_dataset(dataset_id)
-    path = dataset["path"] if dataset else "sktime/datasets/data/yahoo/yahoo.csv"
+    path = (dataset or {}).get("path") or "sktime/datasets/data/yahoo/yahoo.csv"
     return (
         f"import numpy as np\n"
         f"import pandas as pd\n"

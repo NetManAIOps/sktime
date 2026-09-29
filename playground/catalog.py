@@ -27,10 +27,18 @@ REPO_ROOT = _repo_root()
 # configure the experiment (holdout size, anomaly threshold/window). Anything
 # not listed here is forwarded to the selected estimator's constructor.
 EVAL_PARAMS = {
-    "forecasting": {"horizon", "context_window"},
+    "forecasting": {
+        "horizon",
+        "context_window",
+        "eval_mode",
+        "test_fraction",
+        "train_fraction",
+        "test_start_fraction",
+        "test_end_fraction",
+    },
     "classification": set(),
     "regression": set(),
-    "clustering": set(),
+    "clustering": {"fit_on"},
     "anomaly_detection": {"threshold", "window"},
     "causal": {"max_samples", "seed"},
 }
@@ -417,6 +425,22 @@ DATASETS = [
         "task": "anomaly_detection",
         "source": "local",
         "path": "sktime/datasets/data/mitdb/mitdb.csv",
+        "enabled": True,
+    },
+    {
+        "id": "tsb-yahoo",
+        "name": "TSB-UAD YAHOO (367 series)",
+        "task": "anomaly_detection",
+        "source": "tsb_uad",
+        "series_dir": "TSB-UAD-Public/YAHOO",
+        "enabled": True,
+    },
+    {
+        "id": "tsb-mitdb",
+        "name": "TSB-UAD MITDB (32 series)",
+        "task": "anomaly_detection",
+        "source": "tsb_uad",
+        "series_dir": "TSB-UAD-Public/MITDB",
         "enabled": True,
     },
     {

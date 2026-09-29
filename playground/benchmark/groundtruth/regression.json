@@ -7,9 +7,10 @@
       "algorithm_name": "Rocket",
       "dataset": "covid-3month",
       "dataset_name": "Covid3Month (TSER archive)",
-      "metric": "RMSE",
-      "metric_key": "RMSE",
-      "value": 0.0438782,
+      "window": "default split",
+      "metrics": {
+        "RMSE": 0.0438782
+      },
       "settings": "TSER archive default train/test split (140/61); ROCKET transform with ridge-regression-style regressor; average RMSE over 5 runs",
       "source": {
         "title": "Time Series Extrinsic Regression (Tan, Bergmeir, Petitjean, Webb) — official TSER results page",
@@ -17,9 +18,14 @@
         "url": "http://tseregression.org/",
         "locator": "Results table, row Covid3Month, column Rocket"
       },
-      "command": "python playground/labts.py run --task regression --algorithm registered-regression-RocketRegressor --dataset covid-3month --metric rmse --compact",
-      "tolerance": {"type": "relative", "value": 0.2},
-      "notes": "Rocket was the best-ranked algorithm in the TSER paper. sktime RocketRegressor follows the same protocol (fixed archive split, ridge on ROCKET features)."
+      "tolerance": {
+        "type": "relative",
+        "value": 0.2
+      },
+      "notes": "Rocket was the best-ranked algorithm in the TSER paper. sktime RocketRegressor follows the same protocol (fixed archive split, ridge on ROCKET features).",
+      "spec_params": {},
+      "train_command": "python playground/labts.py train --algorithm registered-regression-RocketRegressor --dataset covid-3month --model-id bench-regression-rocket-covid3month --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "python playground/labts.py run --model-id bench-regression-rocket-covid3month --compact"
     },
     {
       "id": "regression-rf-covid3month",
@@ -27,9 +33,10 @@
       "algorithm_name": "RandomForest",
       "dataset": "covid-3month",
       "dataset_name": "Covid3Month (TSER archive)",
-      "metric": "RMSE",
-      "metric_key": "RMSE",
-      "value": 0.0424,
+      "window": "default split",
+      "metrics": {
+        "RMSE": 0.0424
+      },
       "settings": "TSER archive default train/test split (140/61); scikit-learn RandomForest with default parameters on the flattened raw series; average RMSE over 5 runs",
       "source": {
         "title": "Time Series Extrinsic Regression (Tan, Bergmeir, Petitjean, Webb) — official TSER results page",
@@ -37,9 +44,14 @@
         "url": "http://tseregression.org/",
         "locator": "Results table, row Covid3Month, column RandomForest"
       },
-      "command": "python playground/labts.py run --task regression --algorithm summary-random-forest-regressor --dataset covid-3month --metric rmse --compact",
-      "tolerance": {"type": "relative", "value": 0.35},
-      "notes": "Protocol mismatch on purpose: the paper flattens the raw series into sklearn defaults, while the labts pipeline fits RF(25 trees) on summary features. Kept as a demonstration that the leaderboard flags representation gaps, not only implementation bugs."
+      "tolerance": {
+        "type": "relative",
+        "value": 0.35
+      },
+      "notes": "Protocol mismatch on purpose: the paper flattens the raw series into sklearn defaults, while the labts pipeline fits RF(25 trees) on summary features. Kept as a demonstration that the leaderboard flags representation gaps, not only implementation bugs.",
+      "spec_params": {},
+      "train_command": "python playground/labts.py train --algorithm summary-random-forest-regressor --dataset covid-3month --model-id bench-regression-rf-covid3month --param n_estimators=25 --param random_state=7",
+      "run_command": "python playground/labts.py run --model-id bench-regression-rf-covid3month --compact"
     }
   ]
 }

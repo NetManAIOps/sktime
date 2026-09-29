@@ -1,14 +1,24 @@
 {
   "id": "regression-rf-covid3month",
   "task": "regression",
-  "ran_at": "2026-09-28T09:51:39.281716+00:00",
-  "command": "python playground/labts.py run --task regression --algorithm summary-random-forest-regressor --dataset covid-3month --metric rmse --compact",
+  "ran_at": "2026-09-29T06:17:44.342661+00:00",
+  "train_command": "python playground/labts.py train --algorithm summary-random-forest-regressor --dataset covid-3month --model-id bench-regression-rf-covid3month --param n_estimators=25 --param random_state=7",
+  "run_command": "python playground/labts.py run --model-id bench-regression-rf-covid3month --compact",
   "python": "/home/xiezhe/sktime/.venv-full/bin/python",
   "returncode": 0,
-  "duration_s": 3.79,
-  "value": 0.04679649136974218,
-  "delta": 0.004396,
-  "delta_rel": 0.103691,
+  "duration_s": 6.56,
+  "values": {
+    "RMSE": 0.04679649136974218
+  },
+  "per_metric": {
+    "RMSE": {
+      "gt": 0.0424,
+      "value": 0.04679649136974218,
+      "delta": 0.004396,
+      "delta_rel": 0.103691,
+      "status": "reproduced"
+    }
+  },
   "status": "reproduced",
   "metrics": {
     "MAE": 0.03293033550832359,
@@ -16,5 +26,5 @@
     "R²": -0.09973876605185339
   },
   "error": null,
-  "stdout_tail": "{\"api\": \"labts\", \"api_version\": \"1.0\", \"kind\": \"result\", \"status\": \"ok\", \"data\": {\"status\": \"ok\", \"metrics\": {\"MAE\": 0.03293033550832359, \"RMSE\": 0.04679649136974218, \"R²\": -0.09973876605185339}, \"summary\": \"Regressed 61 held-out time series targets with summary features + random forest.\", \"run_id\": \"b158c7a64af8\", \"spec\": {\"task\": \"regression\", \"dataset_id\": \"covid-3month\", \"algorithm_id\": \"summary-random-forest-regressor\", \"preprocessor_id\": \"none\", \"preprocessors\": [], \"params\": {}, \"preprocessor_params\": {}, \"metrics\": [\"rmse\"]}, \"task\": \"regression\", \"dataset\": {\"id\": \"covid-3month\", \"name\": \"Covid3Month\", \"task\": \"regression\", \"source\": \"local\", \"loader\": \"sktime.datasets.load_covid_3month\", \"enabled\": true, \"default\": true}, \"algorithm\": {\"id\": \"summary-random-forest-regressor\", \"name\": \"SklearnRegressorPipeline\", \"task\": \"regression\", \"module\": \"sktime.regression.compose.SklearnRegressorPipeline\", \"enabled\": true, \"template\": \"SklearnRegressorPipeline(RandomForestRegressor(n_estimators=25), SummaryTransformer())\", \"params\": {\"n_estimators\": 25, \"random_state\": 7}, \"curated\": true, \"class_name\": \"SklearnRegressorPipeline\"}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"preprocessors\": [], \"duration_ms\": 3472.2, \"log\": [\"Selected task: regression\", \"Selected dataset: Covid3Month\", \"Selected preprocessor: Identity / none\", \"Selected algorithm: SklearnRegressorPipeline\", \"Loaded Covid3Month train=140 test=61\", \"Finished in 3472.2 ms\"]}, \"error\": null}\n"
+  "stdout_tail": "rgets with SklearnRegressorPipeline (trained: bench-regression-rf-covid3month).\", \"run_id\": \"1a235e30dee9\", \"spec\": {\"task\": \"regression\", \"dataset_id\": \"covid-3month\", \"algorithm_id\": \"sktime-trained:bench-regression-rf-covid3month\", \"preprocessor_id\": \"none\", \"params\": {}}, \"task\": \"regression\", \"dataset\": {\"id\": \"covid-3month\", \"name\": \"Covid3Month\", \"task\": \"regression\", \"source\": \"local\", \"loader\": \"sktime.datasets.load_covid_3month\", \"enabled\": true, \"default\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-regression-rf-covid3month\", \"name\": \"SklearnRegressorPipeline (trained: bench-regression-rf-covid3month)\", \"task\": \"regression\", \"module\": \"sktime.regression.compose.SklearnRegressorPipeline\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/playground/models/bench-regression-rf-covid3month\", \"manifest\": {\"model_id\": \"bench-regression-rf-covid3month\", \"backend\": \"sktime\", \"task\": \"regression\", \"algorithm_id\": \"summary-random-forest-regressor\", \"algorithm_name\": \"SklearnRegressorPipeline\", \"module\": \"sktime.regression.compose.SklearnRegressorPipeline\", \"params\": {\"n_estimators\": 25, \"random_state\": 7}, \"eval_params\": {}, \"created_at\": \"2026-09-29T06:17:41.059619+00:00\", \"spec\": {\"task\": \"regression\", \"dataset_id\": \"covid-3month\", \"algorithm_id\": \"summary-random-forest-regressor\", \"preprocessor_id\": \"none\", \"params\": {\"n_estimators\": 25, \"random_state\": 7}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 2763.7, \"log\": [\"Selected dataset: Covid3Month\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-regression-rf-covid3month (sktime backend, algorithm: summary-random-forest-regressor, created: 2026-09-29T06:17:41.059619+00:00)\", \"Loaded Covid3Month train=140 test=61\", \"Finished in 2763.7 ms\"]}, \"error\": null}\n"
 }
