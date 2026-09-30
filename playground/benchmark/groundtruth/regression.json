@@ -3,7 +3,7 @@
   "entries": [
     {
       "id": "regression-rocket-covid3month",
-      "algorithm": "registered-regression-RocketRegressor",
+      "algorithm": "RocketRegressor",
       "algorithm_name": "Rocket",
       "dataset": "covid-3month",
       "dataset_name": "Covid3Month (TSER archive)",
@@ -24,7 +24,7 @@
       },
       "notes": "Rocket was the best-ranked algorithm in the TSER paper. sktime RocketRegressor follows the same protocol (fixed archive split, ridge on ROCKET features).",
       "spec_params": {},
-      "train_command": "python playground/labts.py train --algorithm registered-regression-RocketRegressor --dataset covid-3month --model-id bench-regression-rocket-covid3month --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "train_command": "python playground/labts.py train --algorithm RocketRegressor --dataset covid-3month --model-id bench-regression-rocket-covid3month --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
       "run_command": "python playground/labts.py run --model-id bench-regression-rocket-covid3month --compact"
     },
     {

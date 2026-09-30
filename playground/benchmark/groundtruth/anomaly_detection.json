@@ -3,7 +3,7 @@
   "entries": [
     {
       "id": "detection-lof-yahoo-auc",
-      "algorithm": "registered-anomaly_detection-PyODLOFDetector",
+      "algorithm": "PyODLOFDetector",
       "algorithm_name": "LOF",
       "dataset": "tsb-yahoo",
       "dataset_name": "YAHOO (TSB-UAD, 367 series)",
@@ -24,12 +24,12 @@
       },
       "notes": "Now apples-to-apples: labts scores the same 367 TSB-UAD series and averages per-series AUC. Residual gap: window-length heuristic and score normalization may differ from TSB-UAD's reference pipeline. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ).",
       "spec_params": {},
-      "train_command": "python playground/labts.py train --algorithm registered-anomaly_detection-PyODLOFDetector --dataset tsb-yahoo --model-id bench-detection-lof-yahoo-auc --param contamination=0.1 --param n_neighbors=20",
+      "train_command": "python playground/labts.py train --algorithm PyODLOFDetector --dataset tsb-yahoo --model-id bench-detection-lof-yahoo-auc --param contamination=0.1 --param n_neighbors=20",
       "run_command": "python playground/labts.py run --model-id bench-detection-lof-yahoo-auc --compact"
     },
     {
       "id": "detection-iforest-yahoo-auc",
-      "algorithm": "registered-anomaly_detection-PyODIForestDetector",
+      "algorithm": "PyODIForestDetector",
       "algorithm_name": "IForest",
       "dataset": "tsb-yahoo",
       "dataset_name": "YAHOO (TSB-UAD, 367 series)",
@@ -50,12 +50,12 @@
       },
       "notes": "Same protocol as the LOF entry.",
       "spec_params": {},
-      "train_command": "python playground/labts.py train --algorithm registered-anomaly_detection-PyODIForestDetector --dataset tsb-yahoo --model-id bench-detection-iforest-yahoo-auc --param contamination=0.1 --param n_estimators=100",
+      "train_command": "python playground/labts.py train --algorithm PyODIForestDetector --dataset tsb-yahoo --model-id bench-detection-iforest-yahoo-auc --param contamination=0.1 --param n_estimators=100",
       "run_command": "python playground/labts.py run --model-id bench-detection-iforest-yahoo-auc --compact"
     },
     {
       "id": "detection-iforest-mitdb-auc",
-      "algorithm": "registered-anomaly_detection-PyODIForestDetector",
+      "algorithm": "PyODIForestDetector",
       "algorithm_name": "IForest",
       "dataset": "tsb-mitdb",
       "dataset_name": "MITDB (TSB-UAD, 32 series)",
@@ -76,12 +76,12 @@
       },
       "notes": "Same protocol as the Yahoo entries, on the 32 MITDB series.",
       "spec_params": {},
-      "train_command": "python playground/labts.py train --algorithm registered-anomaly_detection-PyODIForestDetector --dataset tsb-mitdb --model-id bench-detection-iforest-mitdb-auc --param contamination=0.1 --param n_estimators=100",
+      "train_command": "python playground/labts.py train --algorithm PyODIForestDetector --dataset tsb-mitdb --model-id bench-detection-iforest-mitdb-auc --param contamination=0.1 --param n_estimators=100",
       "run_command": "python playground/labts.py run --model-id bench-detection-iforest-mitdb-auc --compact"
     },
     {
       "id": "detection-hbos-yahoo-auc",
-      "algorithm": "registered-anomaly_detection-PyODHBOSDetector",
+      "algorithm": "PyODHBOSDetector",
       "algorithm_name": "HBOS",
       "dataset": "tsb-yahoo",
       "dataset_name": "YAHOO (TSB-UAD, 367 series)",
@@ -101,12 +101,12 @@
         "value": 0.15
       },
       "spec_params": {},
-      "train_command": "python playground/labts.py train --algorithm registered-anomaly_detection-PyODHBOSDetector --dataset tsb-yahoo --model-id bench-detection-hbos-yahoo-auc --param contamination=0.1 --param n_bins=10",
+      "train_command": "python playground/labts.py train --algorithm PyODHBOSDetector --dataset tsb-yahoo --model-id bench-detection-hbos-yahoo-auc --param contamination=0.1 --param n_bins=10",
       "run_command": "python playground/labts.py run --model-id bench-detection-hbos-yahoo-auc --compact"
     },
     {
       "id": "detection-ocsvm-yahoo-auc",
-      "algorithm": "registered-anomaly_detection-PyODOCSVMDetector",
+      "algorithm": "PyODOCSVMDetector",
       "algorithm_name": "OCSVM",
       "dataset": "tsb-yahoo",
       "dataset_name": "YAHOO (TSB-UAD, 367 series)",
@@ -126,12 +126,12 @@
         "value": 0.15
       },
       "spec_params": {},
-      "train_command": "python playground/labts.py train --algorithm registered-anomaly_detection-PyODOCSVMDetector --dataset tsb-yahoo --model-id bench-detection-ocsvm-yahoo-auc --param contamination=0.1 --param nu=0.5",
+      "train_command": "python playground/labts.py train --algorithm PyODOCSVMDetector --dataset tsb-yahoo --model-id bench-detection-ocsvm-yahoo-auc --param contamination=0.1 --param nu=0.5",
       "run_command": "python playground/labts.py run --model-id bench-detection-ocsvm-yahoo-auc --compact"
     },
     {
       "id": "detection-hbos-mitdb-auc",
-      "algorithm": "registered-anomaly_detection-PyODHBOSDetector",
+      "algorithm": "PyODHBOSDetector",
       "algorithm_name": "HBOS",
       "dataset": "tsb-mitdb",
       "dataset_name": "MITDB (TSB-UAD, 32 series)",
@@ -151,7 +151,7 @@
         "value": 0.15
       },
       "spec_params": {},
-      "train_command": "python playground/labts.py train --algorithm registered-anomaly_detection-PyODHBOSDetector --dataset tsb-mitdb --model-id bench-detection-hbos-mitdb-auc --param contamination=0.1 --param n_bins=10",
+      "train_command": "python playground/labts.py train --algorithm PyODHBOSDetector --dataset tsb-mitdb --model-id bench-detection-hbos-mitdb-auc --param contamination=0.1 --param n_bins=10",
       "run_command": "python playground/labts.py run --model-id bench-detection-hbos-mitdb-auc --compact"
     }
   ]

@@ -997,6 +997,14 @@ def _distances_section() -> list[dict]:
         return [{"id": "distances-unavailable", "enabled": False, "disabled_reason": str(exc)}]
 
 
+def _all_enabled_algorithms() -> list[dict]:
+    items = list(ENABLED_ALGORITHMS)
+    items.extend(
+        item for item in discover_registered_algorithms() if item.get("enabled")
+    )
+    return items
+
+
 def get_enabled_algorithm(algorithm_id: str) -> dict | None:
     for item in ENABLED_ALGORITHMS:
         if item["id"] == algorithm_id:
@@ -1006,7 +1014,44 @@ def get_enabled_algorithm(algorithm_id: str) -> dict | None:
             return item
     from user_algos import get_user_algorithm
 
-    return get_user_algorithm(algorithm_id)
+    user = get_user_algorithm(algorithm_id)
+    if user is not None:
+        return user
+    return _resolve_short_name(algorithm_id)
+
+
+def _resolve_short_name(query: str) -> dict | None:
+    """Resolve a short algorithm reference to a catalog entry.
+
+    Accepts a class name (``DLinearForecaster``), a catalog display name
+    (``DLinear``), or a task-qualified form (``forecasting/DLinearForecaster``).
+    Class names are unique across tasks in the registry, so the unqualified
+    form is unambiguous in practice; ambiguous or unknown queries return None.
+    A bare user-fork stem (``my_ecod`` for ``user-my_ecod``) also resolves.
+    """
+    task_filter, sep, short = query.partition("/")
+    if not sep:
+        task_filter, short = "", task_filter
+    items = [
+        item
+        for item in _all_enabled_algorithms()
+        if not task_filter or item.get("task") == task_filter
+    ]
+    for key in ("class_name", "name"):
+        exact = [item for item in items if item.get(key) == short]
+        if len(exact) == 1:
+            return exact[0]
+        lowered = short.lower()
+        folded = [item for item in items if str(item.get(key, "")).lower() == lowered]
+        if len(folded) == 1:
+            return folded[0]
+        if exact or folded:
+            return None  # ambiguous
+    if not task_filter:
+        from user_algos import get_user_algorithm
+
+        return get_user_algorithm(f"user-{short}")
+    return None
 
 
 def get_enabled_preprocessor(preprocessor_id: str | None) -> dict | None:

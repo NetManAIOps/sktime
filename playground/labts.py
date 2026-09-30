@@ -851,8 +851,9 @@ def main(argv: list[str] | None = None) -> int:
     p_train.add_argument(
         "--algorithm",
         required=True,
-        help="Catalog algorithm id, e.g. registered-forecasting-DLinearForecaster "
-        "or registered-anomaly_detection-DevADFITSDetector.",
+        help="Catalog algorithm: short class name (DLinearForecaster), display "
+        "name (DLinear), task-qualified (forecasting/DLinearForecaster), or "
+        "full id (registered-forecasting-DLinearForecaster).",
     )
     p_train.add_argument("--dataset", help="Dataset id (default: per-task default).")
     p_train.add_argument(

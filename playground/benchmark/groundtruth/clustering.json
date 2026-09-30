@@ -3,7 +3,7 @@
   "entries": [
     {
       "id": "clustering-kshape-arrowhead",
-      "algorithm": "registered-clustering-TimeSeriesKShapes",
+      "algorithm": "TimeSeriesKShapes",
       "algorithm_name": "k-Shape",
       "dataset": "arrow-head-cl",
       "dataset_name": "ArrowHead (UCR)",
@@ -29,12 +29,12 @@
         "fit_on": "all",
         "random_state": 42
       },
-      "train_command": "python playground/labts.py train --algorithm registered-clustering-TimeSeriesKShapes --dataset arrow-head-cl --model-id bench-clustering-kshape-arrowhead --param n_clusters=3 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "train_command": "python playground/labts.py train --algorithm TimeSeriesKShapes --dataset arrow-head-cl --model-id bench-clustering-kshape-arrowhead --param n_clusters=3 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
       "run_command": "python playground/labts.py run --model-id bench-clustering-kshape-arrowhead --compact"
     },
     {
       "id": "clustering-kshape-gunpoint",
-      "algorithm": "registered-clustering-TimeSeriesKShapes",
+      "algorithm": "TimeSeriesKShapes",
       "algorithm_name": "k-Shape",
       "dataset": "gunpoint-cl",
       "dataset_name": "GunPoint (UCR)",
@@ -60,7 +60,7 @@
         "fit_on": "all",
         "random_state": 42
       },
-      "train_command": "python playground/labts.py train --algorithm registered-clustering-TimeSeriesKShapes --dataset gunpoint-cl --model-id bench-clustering-kshape-gunpoint --param n_clusters=2 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "train_command": "python playground/labts.py train --algorithm TimeSeriesKShapes --dataset gunpoint-cl --model-id bench-clustering-kshape-gunpoint --param n_clusters=2 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
       "run_command": "python playground/labts.py run --model-id bench-clustering-kshape-gunpoint --compact"
     }
   ]
