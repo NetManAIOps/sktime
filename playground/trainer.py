@@ -146,9 +146,21 @@ def train(spec: dict) -> dict:
         raise PlaygroundError(
             "`train` requires algorithm_id (see `labts.py ls algorithms`)."
         )
-    algorithm = get_enabled_algorithm(algorithm_id)
+    declared_task = spec.get("task")
+    algorithm = None
+    if declared_task and "/" not in algorithm_id:
+        # scope short-name resolution to the declared task first
+        algorithm = get_enabled_algorithm(f"{declared_task}/{algorithm_id}")
+    if algorithm is None:
+        algorithm = get_enabled_algorithm(algorithm_id)
     if algorithm is None or not algorithm.get("enabled"):
         raise PlaygroundError(f"Algorithm is not enabled: {algorithm_id}")
+    if declared_task and algorithm.get("task") != declared_task:
+        raise PlaygroundError(
+            f"Algorithm {algorithm_id} resolves to {algorithm['id']} "
+            f"(task: {algorithm.get('task')}), not the declared task "
+            f"{declared_task}. Drop --task or fix the algorithm name."
+        )
     module = algorithm.get("module") or ""
     if module.startswith(_ADAPTER_MODULE):
         result = train_devad(spec)

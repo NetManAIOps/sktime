@@ -448,6 +448,7 @@ def _main_train(args) -> int:
             "dataset_id": args.dataset,
             "model_id": args.model_id,
             "preprocessor_id": args.preprocessor,
+            "task": args.task,
             "params": _parse_kv_pairs(args.param, "--param"),
             "preprocessor_params": _parse_kv_pairs(args.pre_param, "--pre-param"),
             "val_fraction": args.val_fraction,
@@ -856,6 +857,13 @@ def main(argv: list[str] | None = None) -> int:
         "full id (registered-forecasting-DLinearForecaster).",
     )
     p_train.add_argument("--dataset", help="Dataset id (default: per-task default).")
+    p_train.add_argument(
+        "--task",
+        choices=["forecasting", "classification", "regression", "clustering",
+                 "anomaly_detection", "causal"],
+        help="Declare the expected task. Scopes short-name resolution and "
+        "validates the resolved algorithm's task (mismatch is an error).",
+    )
     p_train.add_argument(
         "--model-id",
         help="Persisted model directory name (default: <algorithm>-<dataset>). "
