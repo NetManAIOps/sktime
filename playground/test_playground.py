@@ -613,6 +613,57 @@ class PreprocessorChainTests(unittest.TestCase):
             _parse_step_kv_pairs(["5:degree=2"], 2, "--pre-param")
 
 
+class CliCoercionAndExportTests(unittest.TestCase):
+    def _cli(self, argv):
+        import contextlib
+        import io
+
+        import labts
+
+        buffer = io.StringIO()
+        with contextlib.redirect_stdout(buffer):
+            code = labts.main(argv)
+        return code, json.loads(buffer.getvalue())
+
+    def test_cli_value_literals(self):
+        from labts import _parse_kv_pairs
+
+        params = _parse_kv_pairs(
+            ["a=False", "b=true", "c=None", "d=null", "e=3", "f=0.5", "g=cpu"], "--param"
+        )
+        self.assertEqual(
+            params,
+            {"a": False, "b": True, "c": None, "d": None, "e": 3, "f": 0.5, "g": "cpu"},
+        )
+        self.assertIs(params["a"], False)
+
+    def test_bool_default_parses_strings(self):
+        from runners import _coerce_bool
+
+        self.assertIs(_coerce_bool("x", "False"), False)
+        self.assertIs(_coerce_bool("x", "yes"), True)
+        self.assertIs(_coerce_bool("x", 0), False)
+        with self.assertRaises(PlaygroundError):
+            _coerce_bool("x", "maybe")
+
+    def test_report_is_not_indented_with_several_metrics(self):
+        result = run_experiment(
+            {"task": "forecasting", "dataset_id": "airline", "algorithm_id": "naive-seasonal-last"}
+        )
+        self.assertGreater(len(result["metrics"]), 1)
+        lines = result["report"].splitlines()
+        self.assertEqual(lines[0], "# TSBox Sandbox Experiment Report")
+        self.assertIn("## Metrics", lines)
+        self.assertEqual([line for line in lines if line.startswith(" ")], [])
+
+    def test_dist_rejects_small_max_instances(self):
+        for value in ("0", "-3", "1"):
+            code, envelope = self._cli(["dist", "--metric", "dtw", "--max-instances", value])
+            self.assertEqual(code, 2, value)
+            self.assertEqual(envelope["status"], "error")
+            self.assertIn("--max-instances", envelope["error"])
+
+
 class NestedSpecTests(unittest.TestCase):
     def _run_or_skip(self, spec):
         try:

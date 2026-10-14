@@ -1492,12 +1492,21 @@ def detect_devad(spec: dict) -> dict:
         raise PlaygroundError(
             "`labts detect` requires --model-id (see `labts.py ls models`)."
         )
+    persistence.validate_model_id(model_id)
     model_dir = MODELS_ROOT / model_id
     manifest_path = model_dir / "manifest.json"
     if not manifest_path.is_file():
         raise PlaygroundError(
             f"No trained model `{model_id}` under {MODELS_ROOT} "
             "(see `labts.py ls models`)."
+        )
+    backend = persistence.detect_backend(persistence.read_manifest(model_dir))
+    if backend != persistence.DEVAD_BACKEND:
+        raise PlaygroundError(
+            f"Model `{model_id}` uses the {backend} backend; detect-time "
+            "preprocessing applies to DevAD models only. Use "
+            f"`labts.py run --model-id {model_id}` (the manifest already "
+            "fixes its preprocessing)."
         )
     dataset = _resolve_anomaly_dataset(spec.get("dataset_id"))
     preprocessor = get_enabled_preprocessor(spec.get("preprocessor_id"))

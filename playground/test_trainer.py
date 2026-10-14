@@ -558,6 +558,50 @@ class CliRunModelIdTests(TrainerTestCase):
         self.assertEqual(envelope["status"], "error")
         self.assertIn("--algorithm", envelope["error"])
 
+    def test_predict_and_detect_are_run_aliases(self):
+        trained = self._train_or_skip(
+            {
+                "algorithm_id": "naive-seasonal-last",
+                "dataset_id": "airline",
+                "model_id": "t-cli-alias",
+                "params": {"horizon": 6},
+            }
+        )
+        self.assertEqual(trained["status"], "ok")
+        argv_tail = ["--model-id", "t-cli-alias", "--metric", "mase", "--compact"]
+        code, via_run = self._cli(["run", *argv_tail])
+        self.assertEqual(code, 0)
+        for command in ("predict", "detect"):
+            code, envelope = self._cli([command, *argv_tail])
+            self.assertEqual(code, 0, command)
+            self.assertEqual(envelope["kind"], "result", command)
+            self.assertEqual(envelope["data"]["metrics"], via_run["data"]["metrics"], command)
+            self.assertIn("MASE", envelope["data"]["metrics"], command)
+
+    def test_detect_preprocessing_rejects_sktime_models(self):
+        trained = self._train_or_skip(
+            {
+                "algorithm_id": "naive-seasonal-last",
+                "dataset_id": "airline",
+                "model_id": "t-cli-detect",
+            }
+        )
+        self.assertEqual(trained["status"], "ok")
+        code, envelope = self._cli(
+            ["detect", "--model-id", "t-cli-detect", "--preprocessor", "none"]
+        )
+        self.assertEqual(code, 3)
+        self.assertIn("run --model-id", envelope["error"])
+
+    def test_detect_rejects_path_model_ids(self):
+        for argv in (
+            ["detect", "--model-id", "../models/x"],
+            ["detect", "--model-id", "../models/x", "--preprocessor", "none"],
+        ):
+            code, envelope = self._cli(argv)
+            self.assertEqual(code, 3, argv)
+            self.assertIn("single directory name", envelope["error"], argv)
+
 
 if __name__ == "__main__":
     unittest.main()

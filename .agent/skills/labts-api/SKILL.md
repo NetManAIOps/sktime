@@ -61,7 +61,7 @@ environment, see `playground/requirements.txt`)
 {
   "api": "labts",
   "api_version": "1.0",
-  "kind": "catalog" | "result" | "train" | "fork" | "check" | "evaluate" | "analyze" | "dist" | "predict",
+  "kind": "catalog" | "result" | "train" | "fork" | "check" | "evaluate" | "analyze" | "dist",
   "status": "ok" | "blocked" | "error",
   "data": { ... } | null,
   "error": null | "message"

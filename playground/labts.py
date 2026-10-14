@@ -325,14 +325,20 @@ def _parse_kv_pairs(pairs: list[str] | None, what: str) -> dict:
     return params
 
 
+_CLI_LITERALS = {"true": True, "false": False, "none": None, "null": None}
+
+
 def _coerce_cli_value(value: str):
+    """int/float when numeric; true/false/none/null (any case) as literals."""
     try:
         return int(value)
     except ValueError:
-        try:
-            return float(value)
-        except ValueError:
-            return value
+        pass
+    try:
+        return float(value)
+    except ValueError:
+        pass
+    return _CLI_LITERALS.get(value.lower(), value)
 
 
 def _parse_step_kv_pairs(pairs: list[str] | None, n_steps: int, what: str) -> list[dict]:
@@ -466,12 +472,36 @@ def _main_train(args) -> int:
     return exit_code
 
 
+def _as_run_model_args(args) -> argparse.Namespace:
+    """Map `predict`/`detect` args onto `run --model-id` args."""
+    return argparse.Namespace(
+        model_id=args.model_id,
+        dataset=args.dataset,
+        param=args.param,
+        metric=args.metric,
+        compact=args.compact,
+        out=args.out,
+        spec=None,
+        task=None,
+        algorithm=None,
+        preprocessor=None,
+        pre_param=None,
+    )
+
+
 def _main_detect(args) -> int:
-    """Run a persisted DevAD model; same result envelope as `run`."""
+    """`run --model-id` alias; detect-time preprocessing is DevAD-only."""
+    if not (args.preprocessor or args.pre_param):
+        return _main_run(_as_run_model_args(args))
     from trainer import detect_devad
 
     envelope = _envelope("result")
     try:
+        if args.metric:
+            raise UsageError(
+                "`detect --metric` cannot be combined with --preprocessor/"
+                "--pre-param; score the saved result with `evaluate --from` instead."
+            )
         spec = {
             "model_id": args.model_id,
             "dataset_id": args.dataset,
@@ -573,6 +603,10 @@ def _main_dist(args) -> int:
     try:
         from catalog import get_dataset as _get_dataset
 
+        if args.max_instances < 2:
+            raise UsageError(
+                f"--max-instances must be >= 2, got {args.max_instances}."
+            )
         dataset = _get_dataset(args.dataset or "unit-test")
         if dataset is None or not dataset.get("enabled"):
             raise PlaygroundError(f"Dataset is not enabled: {args.dataset}")
@@ -609,37 +643,8 @@ def _main_dist(args) -> int:
 
 
 def _main_predict(args) -> int:
-    """Predict with a persisted model via trainer.predict_estimator."""
-    envelope = _envelope("predict")
-    try:
-        try:
-            from trainer import predict_estimator
-        except ImportError:
-            raise PlaygroundError(
-                "The predict backend `trainer.predict_estimator` is missing "
-                "from this checkout (it lives in playground/trainer.py on "
-                "main) — update the branch. For DevAD anomaly models use "
-                "`labts detect --model-id ...` instead."
-            ) from None
-        spec = {
-            "model_id": args.model_id,
-            "dataset_id": args.dataset,
-            "params": _parse_kv_pairs(args.param, "--param"),
-        }
-        spec = {k: v for k, v in spec.items() if v not in (None, {})}
-        data = predict_estimator(**spec)
-        if args.out:
-            _write_json(args.out, {**envelope, "data": data})
-        envelope["data"] = _compact_result(data) if args.compact else data
-        exit_code = EXIT_OK
-    except UsageError as exc:
-        return _fail(envelope, sys.stdout, exc, "error", EXIT_USAGE)
-    except PlaygroundError as exc:
-        return _fail(envelope, sys.stdout, exc, "blocked", EXIT_BLOCKED)
-    except Exception as exc:
-        return _fail(envelope, sys.stdout, exc, "error", EXIT_ERROR)
-    _emit_json(sys.stdout, envelope)
-    return exit_code
+    """Alias of `run --model-id` (same flags, same `result` envelope)."""
+    return _main_run(_as_run_model_args(args))
 
 
 def _main_fork(args) -> int:
@@ -894,8 +899,9 @@ def main(argv: list[str] | None = None) -> int:
 
     p_detect = sub.add_parser(
         "detect",
-        help="Alias of `run --model-id` for persisted DevAD anomaly models; "
-        "same result envelope as `run`.",
+        help="Alias of `run --model-id` (any persisted model); same result "
+        "envelope as `run`. --preprocessor/--pre-param add detect-time "
+        "preprocessing for DevAD models only.",
     )
     p_detect.add_argument(
         "--model-id",
@@ -903,7 +909,9 @@ def main(argv: list[str] | None = None) -> int:
         help="Trained model id under playground/models/ (see `ls models`).",
     )
     p_detect.add_argument("--dataset", help="Anomaly dataset id (default: yahoo).")
-    p_detect.add_argument("--preprocessor", help="Preprocessor id (default: none).")
+    p_detect.add_argument(
+        "--preprocessor", help="DevAD only: detect-time preprocessor id (default: none)."
+    )
     p_detect.add_argument(
         "--param",
         action="append",
@@ -914,7 +922,10 @@ def main(argv: list[str] | None = None) -> int:
         "--pre-param",
         action="append",
         metavar="KEY=VALUE",
-        help="Preprocessor parameter; repeatable.",
+        help="DevAD only: preprocessor parameter; repeatable.",
+    )
+    p_detect.add_argument(
+        "--metric", action="append", metavar="ID", help="Like `run --metric`."
     )
     p_detect.add_argument("--compact", action="store_true", help="Like `run --compact`.")
     p_detect.add_argument("--out", metavar="FILE", help="Like `run --out`.")
@@ -996,9 +1007,8 @@ def main(argv: list[str] | None = None) -> int:
 
     p_predict = sub.add_parser(
         "predict",
-        help="Alias of `run --model-id`: reloads a persisted model via "
-        "trainer.predict_estimator and scores the dataset holdout; "
-        "DevAD models delegate to `detect`.",
+        help="Alias of `run --model-id`: reloads a persisted model and "
+        "scores the dataset holdout; same result envelope as `run`.",
     )
     p_predict.add_argument(
         "--model-id",
@@ -1011,6 +1021,9 @@ def main(argv: list[str] | None = None) -> int:
         action="append",
         metavar="KEY=VALUE",
         help="Predict parameter; repeatable.",
+    )
+    p_predict.add_argument(
+        "--metric", action="append", metavar="ID", help="Like `run --metric`."
     )
     p_predict.add_argument("--compact", action="store_true", help="Like `run --compact`.")
     p_predict.add_argument("--out", metavar="FILE", help="Like `run --out`.")

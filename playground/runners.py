@@ -910,6 +910,22 @@ def _resolve_nested_params(value, parent_algorithm: dict):
     return value
 
 
+_TRUE_STRINGS = {"true", "1", "yes", "on"}
+_FALSE_STRINGS = {"false", "0", "no", "off"}
+
+
+def _coerce_bool(key: str, value):
+    """Coerce a bool param; `bool("False")` would be True, so parse strings."""
+    if isinstance(value, str):
+        lowered = value.strip().lower()
+        if lowered in _TRUE_STRINGS:
+            return True
+        if lowered in _FALSE_STRINGS:
+            return False
+        raise PlaygroundError(f"Param `{key}` expects a boolean, got {value!r}.")
+    return bool(value)
+
+
 def _build_estimator(algorithm: dict, est_params: dict):
     """Instantiate a discovered estimator, coercing param types to its defaults.
 
@@ -934,7 +950,7 @@ def _build_estimator(algorithm: dict, est_params: dict):
         if _contains_nested_estimator(value):
             coerced[key] = _resolve_nested_params(value, algorithm)
         elif isinstance(default, bool):
-            coerced[key] = bool(value)
+            coerced[key] = _coerce_bool(key, value)
         elif isinstance(default, int) and not isinstance(default, bool):
             coerced[key] = int(value)
         elif isinstance(default, float):
@@ -1784,27 +1800,25 @@ def _render_sub_estimator(sub_spec: dict, imports: set) -> str:
 
 
 def generate_report(result: dict) -> str:
-    metric_lines = "\n".join(
-        f"- {name}: {_format_metric(value)}" for name, value in result["metrics"].items()
-    )
-    return textwrap.dedent(
-        f"""\
-        # TSBox Sandbox Experiment Report
-
-        - Task: {result['task']}
-        - Dataset: {result['dataset']['name']}
-        - Algorithm: {result['algorithm']['name']}
-        - Duration: {result['duration_ms']} ms
-
-        ## Metrics
-
-        {metric_lines}
-
-        ## Summary
-
-        {result['summary']}
-        """
-    )
+    # Assembled line by line: dedent on an f-string breaks as soon as an
+    # interpolated value spans several lines (e.g. more than one metric).
+    lines = [
+        "# TSBox Sandbox Experiment Report",
+        "",
+        f"- Task: {result['task']}",
+        f"- Dataset: {result['dataset']['name']}",
+        f"- Algorithm: {result['algorithm']['name']}",
+        f"- Duration: {result['duration_ms']} ms",
+        "",
+        "## Metrics",
+        "",
+        *(f"- {name}: {_format_metric(value)}" for name, value in result["metrics"].items()),
+        "",
+        "## Summary",
+        "",
+        str(result["summary"]),
+    ]
+    return "\n".join(lines) + "\n"
 
 
 def _forecasting_script(dataset_id: str, params: dict) -> str:
