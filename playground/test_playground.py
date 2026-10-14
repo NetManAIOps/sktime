@@ -656,6 +656,36 @@ class CliCoercionAndExportTests(unittest.TestCase):
         self.assertIn("## Metrics", lines)
         self.assertEqual([line for line in lines if line.startswith(" ")], [])
 
+    def test_ls_light_sections_skip_catalog_build(self):
+        from unittest import mock
+
+        import labts
+
+        with mock.patch.object(labts, "build_catalog", side_effect=AssertionError("built")):
+            for section in ("tasks", "metrics", "analyzers", "distances"):
+                code, envelope = self._cli(["ls", section])
+                self.assertEqual(code, 0, section)
+                self.assertGreater(envelope["data"]["count"], 0, section)
+
+    def test_discovery_disk_cache_roundtrip(self):
+        import os
+        import tempfile
+        from unittest import mock
+
+        import catalog
+
+        rows = [{"id": "registered-forecasting-X", "params": {"sp": 1}}]
+        with tempfile.TemporaryDirectory() as tmp:
+            with mock.patch.dict(os.environ, {"LABTS_CACHE_DIR": tmp}):
+                os.environ.pop("LABTS_NO_CACHE", None)
+                self.assertIsNone(catalog._read_disk_cache("unit"))
+                catalog._write_disk_cache("unit", rows)
+                self.assertEqual(catalog._read_disk_cache("unit"), rows)
+                with mock.patch.object(catalog, "_FINGERPRINT", "other"):
+                    self.assertIsNone(catalog._read_disk_cache("unit"))
+            with mock.patch.dict(os.environ, {"LABTS_CACHE_DIR": tmp, "LABTS_NO_CACHE": "1"}):
+                self.assertIsNone(catalog._read_disk_cache("unit"))
+
     def test_dist_rejects_small_max_instances(self):
         for value in ("0", "-3", "1"):
             code, envelope = self._cli(["dist", "--metric", "dtw", "--max-instances", value])

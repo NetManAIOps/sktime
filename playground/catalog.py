@@ -3,11 +3,14 @@
 from __future__ import annotations
 
 import datetime
+import hashlib
 import importlib
 import importlib.util
 import json
 import math
 import numbers
+import os
+import sys
 import urllib.request
 import warnings
 from pathlib import Path
@@ -54,6 +57,84 @@ _ESTIMATOR_TYPES = {
 _DISCOVERED_CACHE: list[dict] | None = None
 _PREPROCESSOR_CACHE: list[dict] | None = None
 _CLASS_CACHE: dict[str, type] = {}
+
+# Registry discovery (constructing every estimator, probing every transformer)
+# costs ~50 s per process, so its results are also cached on disk, keyed by a
+# fingerprint of everything they depend on. LABTS_NO_CACHE=1 disables it;
+# LABTS_CACHE_DIR overrides the location.
+_DISK_CACHE_SCHEMA = 1
+_FINGERPRINT: str | None = None
+
+
+def _disk_cache_dir() -> Path | None:
+    if os.environ.get("LABTS_NO_CACHE"):
+        return None
+    override = os.environ.get("LABTS_CACHE_DIR")
+    if override:
+        return Path(override)
+    base = os.environ.get("XDG_CACHE_HOME") or Path.home() / ".cache"
+    return Path(base) / "labts"
+
+
+def _discovery_fingerprint() -> str:
+    """Hash of what discovery depends on: Python, installed distributions,
+    this file, and the sktime source tree (editable installs keep the same
+    version while estimators change)."""
+    global _FINGERPRINT
+    if _FINGERPRINT is not None:
+        return _FINGERPRINT
+    from importlib.metadata import distributions
+
+    digest = hashlib.sha256()
+    digest.update(f"{_DISK_CACHE_SCHEMA}|{sys.version}".encode())
+    dists = sorted(f"{d.metadata['Name']}=={d.version}" for d in distributions())
+    digest.update("\n".join(dists).encode())
+    digest.update(Path(__file__).read_bytes())
+    spec = importlib.util.find_spec("sktime")
+    for root in (spec.submodule_search_locations or []) if spec else []:
+        count, latest = 0, 0
+        for dirpath, dirnames, filenames in os.walk(root):
+            dirnames[:] = [d for d in dirnames if d != "__pycache__"]
+            for filename in filenames:
+                if filename.endswith(".py"):
+                    count += 1
+                    latest = max(latest, os.stat(os.path.join(dirpath, filename)).st_mtime_ns)
+        digest.update(f"{root}|{count}|{latest}".encode())
+    _FINGERPRINT = digest.hexdigest()[:16]
+    return _FINGERPRINT
+
+
+def _disk_cache_path(name: str) -> Path | None:
+    cache_dir = _disk_cache_dir()
+    if cache_dir is None:
+        return None
+    return cache_dir / f"{name}-{_discovery_fingerprint()}.json"
+
+
+def _read_disk_cache(name: str) -> list[dict] | None:
+    try:
+        path = _disk_cache_path(name)
+        if path is None or not path.is_file():
+            return None
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return None
+    return data if isinstance(data, list) else None
+
+
+def _write_disk_cache(name: str, rows: list[dict]) -> None:
+    try:
+        path = _disk_cache_path(name)
+        if path is None:
+            return
+        path.parent.mkdir(parents=True, exist_ok=True)
+        for stale in path.parent.glob(f"{name}-*.json"):
+            stale.unlink(missing_ok=True)
+        tmp = path.with_suffix(f".tmp{os.getpid()}")
+        tmp.write_text(json.dumps(rows), encoding="utf-8")
+        tmp.replace(path)
+    except Exception:
+        pass  # caching is best-effort; discovery results are still returned
 
 
 def split_params(task: str, params: dict) -> tuple[dict, dict]:
@@ -675,6 +756,10 @@ def discover_registered_algorithms() -> list[dict]:
     global _DISCOVERED_CACHE
     if _DISCOVERED_CACHE is not None:
         return _DISCOVERED_CACHE
+    cached = _read_disk_cache("algorithms")
+    if cached is not None:
+        _DISCOVERED_CACHE = cached
+        return cached
 
     try:
         from sktime.registry import all_estimators
@@ -769,6 +854,8 @@ def discover_registered_algorithms() -> list[dict]:
             discovered.append(base)
 
     _DISCOVERED_CACHE = discovered
+    if not any(row["id"].endswith("-registry-error") for row in discovered):
+        _write_disk_cache("algorithms", discovered)
     return discovered
 
 
@@ -842,6 +929,10 @@ def discover_registered_preprocessors() -> list[dict]:
     global _PREPROCESSOR_CACHE
     if _PREPROCESSOR_CACHE is not None:
         return _PREPROCESSOR_CACHE
+    cached = _read_disk_cache("preprocessors")
+    if cached is not None:
+        _PREPROCESSOR_CACHE = cached
+        return cached
 
     try:
         from sktime.registry import all_estimators
@@ -909,6 +1000,7 @@ def discover_registered_preprocessors() -> list[dict]:
         )
 
     _PREPROCESSOR_CACHE = discovered
+    _write_disk_cache("preprocessors", discovered)
     return discovered
 
 

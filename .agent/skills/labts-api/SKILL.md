@@ -53,6 +53,12 @@ Run from the repository root with the repo venv:
 (any Python 3.10+ with sktime + soft deps works; `.venv` is the reference
 environment, see `playground/requirements.txt`)
 
+Registry discovery (~50 s) is cached on disk under `~/.cache/labts/`
+(`$XDG_CACHE_HOME`/`LABTS_CACHE_DIR` override, `LABTS_NO_CACHE=1` disables),
+keyed by Python, installed packages, `catalog.py`, and the sktime source tree,
+so only the first call after a change pays it. `ls tasks|metrics|analyzers|distances`
+never run discovery.
+
 ## Output contract
 
 `catalog` and `run` print a **JSON envelope on stdout** (always, incl. errors):

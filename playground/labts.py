@@ -415,6 +415,39 @@ _LS_SECTIONS = (
 )
 
 
+def _ls_metrics() -> list[dict]:
+    from metrics import all_metrics
+
+    return all_metrics()
+
+
+def _ls_analyzers() -> list[dict]:
+    from catalog import _analyzers_section
+
+    return _analyzers_section()
+
+
+def _ls_distances() -> list[dict]:
+    from catalog import _distances_section
+
+    return _distances_section()
+
+
+def _ls_tasks() -> list[dict]:
+    from catalog import TASKS
+
+    return TASKS
+
+
+# Sections that never need registry discovery (served without build_catalog).
+_LS_LIGHT_SECTIONS = {
+    "tasks": _ls_tasks,
+    "metrics": _ls_metrics,
+    "analyzers": _ls_analyzers,
+    "distances": _ls_distances,
+}
+
+
 def _main_ls(args) -> int:
     """Quick resource listing, a filtered view of the catalog."""
     envelope = _envelope("catalog")
@@ -423,6 +456,8 @@ def _main_ls(args) -> int:
             from trainer import list_trained_models
 
             rows = list_trained_models()
+        elif args.section in _LS_LIGHT_SECTIONS:
+            rows = _LS_LIGHT_SECTIONS[args.section]()
         else:
             data = build_catalog(include_registered=True)
             rows = data[args.section]
