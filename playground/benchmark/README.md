@@ -99,17 +99,22 @@ Rules of thumb:
   implementation), say so in `notes` and choose a tolerance that reflects it —
   a `deviation` badge with an honest note is a valid, useful outcome.
 
-## Current smoke coverage (24 claims, 20 reproduced)
+## Current coverage (163 claims, 125 reproduced)
 
-Remaining deviations (each entry's `notes` carries the details):
+Per task (claims / reproduced): forecasting 68/48, classification 32/28, anomaly_detection 26/20,
+clustering 20/15, regression 10/9, causal 7/5. Deviations are kept visible on purpose; each entry's
+`notes` carries the details. Main patterns:
 
-- Autoformer ETTh1 96/336/720 (+28%/+27%/+34%): our CPU reimplementation with
-  default hyperparameters converges above the paper's GPU-tuned number
-  (the paper value is quoted from the FEDformer paper's own runs);
-  horizon 192 lands within tolerance.
-- IForest on YAHOO (+0.196): our window embedding/normalization differs from
-  TSB-UAD's reference pipeline (FFT-based window length); LOF and MITDB
-  still land within tolerance.
+- Forecasting: DLinear/Linear on ETTh2, ETTm2 and Exchange land above the paper (trend/shift-heavy
+  datasets; the paper uses validation-based early stopping, labts a fixed 10 epochs). ETTh1, ETTm1,
+  Weather and Electricity (96/192/336) reproduce. Autoformer ETTh1 deviates as before.
+- Electricity at horizon 720 was dropped: the training process is killed (out of memory) on this machine.
+- Anomaly detection: TSB-UAD claims for IForest/LOF/HBOS/OCSVM on Yahoo, MITDB, NAB, Dodgers,
+  Occupancy, MGAB, Genesis. OCSVM on MITDB/MGAB was left out (RBF OCSVM on 100k-650k-point series
+  exceeds the 30 min budget).
+- Classification: ROCKET and MiniRocket on 15 UCR datasets; clustering: k-Shape on 18 more UCR datasets
+  (tiny datasets swing with the random init); regression: KNN, SVR(rbf), FCN, ResNet, InceptionTime on
+  Covid3Month (TSER archive only ships this one dataset locally).
 
 | task | claims | source |
 | --- | --- | --- |

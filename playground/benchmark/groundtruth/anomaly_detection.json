@@ -153,6 +153,523 @@
       "spec_params": {},
       "train_command": "python playground/labts.py train --algorithm PyODHBOSDetector --dataset tsb-mitdb --model-id bench-detection-hbos-mitdb-auc --param contamination=0.1 --param n_bins=10",
       "run_command": "python playground/labts.py run --model-id bench-detection-hbos-mitdb-auc --compact"
+    },
+    {
+      "id": "detection-lof-mitdb-auc",
+      "algorithm": "PyODLOFDetector",
+      "algorithm_name": "LOF",
+      "dataset": "tsb-mitdb",
+      "dataset_name": "MITDB (TSB-UAD, 32 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.61
+      },
+      "settings": "Unsupervised fit per series; sliding-window embedding with FFT-based window length; scores min-max normalized; point-wise AUC-ROC averaged over all 32 MITDB series",
+      "source": {
+        "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
+        "venue": "PVLDB 15(8):1697-1711, 2022",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "README 'Overall Results' table, row MITDB, column LOF (AUC 0.61)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "Now apples-to-apples: labts scores the same 367 TSB-UAD series and averages per-series AUC. Residual gap: window-length heuristic and score normalization may differ from TSB-UAD's reference pipeline. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ).",
+      "spec_params": {},
+      "train_command": "python playground/labts.py train --algorithm PyODLOFDetector --dataset tsb-mitdb --model-id bench-detection-lof-mitdb-auc --param contamination=0.1 --param n_neighbors=20",
+      "run_command": "python playground/labts.py run --model-id bench-detection-lof-mitdb-auc --compact"
+    },
+    {
+      "id": "detection-iforest-nab-auc",
+      "algorithm": "PyODIForestDetector",
+      "algorithm_name": "IForest",
+      "dataset": "tsb-nab",
+      "dataset_name": "NAB (TSB-UAD, 58 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.45
+      },
+      "settings": "Unsupervised fit per series; sliding-window embedding; point-wise AUC-ROC averaged over all 58 NAB series",
+      "source": {
+        "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
+        "venue": "PVLDB 15(8):1697-1711, 2022",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "README 'Overall Results' table, row NAB, column IForest (AUC 0.45)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "Same protocol as the LOF entry.",
+      "spec_params": {},
+      "train_command": "python playground/labts.py train --algorithm PyODIForestDetector --dataset tsb-nab --model-id bench-detection-iforest-nab-auc --param contamination=0.1 --param n_estimators=100",
+      "run_command": "python playground/labts.py run --model-id bench-detection-iforest-nab-auc --compact"
+    },
+    {
+      "id": "detection-lof-nab-auc",
+      "algorithm": "PyODLOFDetector",
+      "algorithm_name": "LOF",
+      "dataset": "tsb-nab",
+      "dataset_name": "NAB (TSB-UAD, 58 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.48
+      },
+      "settings": "Unsupervised fit per series; sliding-window embedding with FFT-based window length; scores min-max normalized; point-wise AUC-ROC averaged over all 58 NAB series",
+      "source": {
+        "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
+        "venue": "PVLDB 15(8):1697-1711, 2022",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "README 'Overall Results' table, row NAB, column LOF (AUC 0.48)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "Now apples-to-apples: labts scores the same 367 TSB-UAD series and averages per-series AUC. Residual gap: window-length heuristic and score normalization may differ from TSB-UAD's reference pipeline. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ).",
+      "spec_params": {},
+      "train_command": "python playground/labts.py train --algorithm PyODLOFDetector --dataset tsb-nab --model-id bench-detection-lof-nab-auc --param contamination=0.1 --param n_neighbors=20",
+      "run_command": "python playground/labts.py run --model-id bench-detection-lof-nab-auc --compact"
+    },
+    {
+      "id": "detection-hbos-nab-auc",
+      "algorithm": "PyODHBOSDetector",
+      "algorithm_name": "HBOS",
+      "dataset": "tsb-nab",
+      "dataset_name": "NAB (TSB-UAD, 58 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.68
+      },
+      "settings": "Unsupervised fit per series; sliding-window embedding; point-wise AUC-ROC averaged over all 58 NAB series",
+      "source": {
+        "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
+        "venue": "PVLDB 15(8):1697-1711, 2022",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "README 'Overall Results' table, row NAB, column HBOS (AUC 0.68)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "spec_params": {},
+      "train_command": "python playground/labts.py train --algorithm PyODHBOSDetector --dataset tsb-nab --model-id bench-detection-hbos-nab-auc --param contamination=0.1 --param n_bins=10",
+      "run_command": "python playground/labts.py run --model-id bench-detection-hbos-nab-auc --compact"
+    },
+    {
+      "id": "detection-ocsvm-nab-auc",
+      "algorithm": "PyODOCSVMDetector",
+      "algorithm_name": "OCSVM",
+      "dataset": "tsb-nab",
+      "dataset_name": "NAB (TSB-UAD, 58 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.61
+      },
+      "settings": "Unsupervised fit per series; sliding-window embedding; point-wise AUC-ROC averaged over all 58 NAB series",
+      "source": {
+        "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
+        "venue": "PVLDB 15(8):1697-1711, 2022",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "README 'Overall Results' table, row NAB, column OCSVM (AUC 0.61)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "spec_params": {},
+      "train_command": "python playground/labts.py train --algorithm PyODOCSVMDetector --dataset tsb-nab --model-id bench-detection-ocsvm-nab-auc --param contamination=0.1 --param nu=0.5",
+      "run_command": "python playground/labts.py run --model-id bench-detection-ocsvm-nab-auc --compact"
+    },
+    {
+      "id": "detection-iforest-dodgers-auc",
+      "algorithm": "PyODIForestDetector",
+      "algorithm_name": "IForest",
+      "dataset": "tsb-dodgers",
+      "dataset_name": "Dodgers (TSB-UAD, 1 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.79
+      },
+      "settings": "Unsupervised fit per series; sliding-window embedding; point-wise AUC-ROC averaged over all 1 Dodgers series",
+      "source": {
+        "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
+        "venue": "PVLDB 15(8):1697-1711, 2022",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "README 'Overall Results' table, row Dodgers, column IForest (AUC 0.79)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "Same protocol as the LOF entry. Dodgers has only 1 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
+      "spec_params": {},
+      "train_command": "python playground/labts.py train --algorithm PyODIForestDetector --dataset tsb-dodgers --model-id bench-detection-iforest-dodgers-auc --param contamination=0.1 --param n_estimators=100",
+      "run_command": "python playground/labts.py run --model-id bench-detection-iforest-dodgers-auc --compact"
+    },
+    {
+      "id": "detection-lof-dodgers-auc",
+      "algorithm": "PyODLOFDetector",
+      "algorithm_name": "LOF",
+      "dataset": "tsb-dodgers",
+      "dataset_name": "Dodgers (TSB-UAD, 1 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.54
+      },
+      "settings": "Unsupervised fit per series; sliding-window embedding with FFT-based window length; scores min-max normalized; point-wise AUC-ROC averaged over all 1 Dodgers series",
+      "source": {
+        "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
+        "venue": "PVLDB 15(8):1697-1711, 2022",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "README 'Overall Results' table, row Dodgers, column LOF (AUC 0.54)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "Now apples-to-apples: labts scores the same 367 TSB-UAD series and averages per-series AUC. Residual gap: window-length heuristic and score normalization may differ from TSB-UAD's reference pipeline. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ). Dodgers has only 1 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
+      "spec_params": {},
+      "train_command": "python playground/labts.py train --algorithm PyODLOFDetector --dataset tsb-dodgers --model-id bench-detection-lof-dodgers-auc --param contamination=0.1 --param n_neighbors=20",
+      "run_command": "python playground/labts.py run --model-id bench-detection-lof-dodgers-auc --compact"
+    },
+    {
+      "id": "detection-hbos-dodgers-auc",
+      "algorithm": "PyODHBOSDetector",
+      "algorithm_name": "HBOS",
+      "dataset": "tsb-dodgers",
+      "dataset_name": "Dodgers (TSB-UAD, 1 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.3
+      },
+      "settings": "Unsupervised fit per series; sliding-window embedding; point-wise AUC-ROC averaged over all 1 Dodgers series",
+      "source": {
+        "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
+        "venue": "PVLDB 15(8):1697-1711, 2022",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "README 'Overall Results' table, row Dodgers, column HBOS (AUC 0.3)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "spec_params": {},
+      "notes": "Same protocol as the Yahoo entries. Dodgers has only 1 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
+      "train_command": "python playground/labts.py train --algorithm PyODHBOSDetector --dataset tsb-dodgers --model-id bench-detection-hbos-dodgers-auc --param contamination=0.1 --param n_bins=10",
+      "run_command": "python playground/labts.py run --model-id bench-detection-hbos-dodgers-auc --compact"
+    },
+    {
+      "id": "detection-ocsvm-dodgers-auc",
+      "algorithm": "PyODOCSVMDetector",
+      "algorithm_name": "OCSVM",
+      "dataset": "tsb-dodgers",
+      "dataset_name": "Dodgers (TSB-UAD, 1 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.64
+      },
+      "settings": "Unsupervised fit per series; sliding-window embedding; point-wise AUC-ROC averaged over all 1 Dodgers series",
+      "source": {
+        "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
+        "venue": "PVLDB 15(8):1697-1711, 2022",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "README 'Overall Results' table, row Dodgers, column OCSVM (AUC 0.64)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "spec_params": {},
+      "notes": "Same protocol as the Yahoo entries. Dodgers has only 1 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
+      "train_command": "python playground/labts.py train --algorithm PyODOCSVMDetector --dataset tsb-dodgers --model-id bench-detection-ocsvm-dodgers-auc --param contamination=0.1 --param nu=0.5",
+      "run_command": "python playground/labts.py run --model-id bench-detection-ocsvm-dodgers-auc --compact"
+    },
+    {
+      "id": "detection-iforest-occupancy-auc",
+      "algorithm": "PyODIForestDetector",
+      "algorithm_name": "IForest",
+      "dataset": "tsb-occupancy",
+      "dataset_name": "Occupancy (TSB-UAD, 10 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.86
+      },
+      "settings": "Unsupervised fit per series; sliding-window embedding; point-wise AUC-ROC averaged over all 10 Occupancy series",
+      "source": {
+        "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
+        "venue": "PVLDB 15(8):1697-1711, 2022",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "README 'Overall Results' table, row Occupancy, column IForest (AUC 0.86)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "Same protocol as the LOF entry. Occupancy has only 10 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
+      "spec_params": {},
+      "train_command": "python playground/labts.py train --algorithm PyODIForestDetector --dataset tsb-occupancy --model-id bench-detection-iforest-occupancy-auc --param contamination=0.1 --param n_estimators=100",
+      "run_command": "python playground/labts.py run --model-id bench-detection-iforest-occupancy-auc --compact"
+    },
+    {
+      "id": "detection-lof-occupancy-auc",
+      "algorithm": "PyODLOFDetector",
+      "algorithm_name": "LOF",
+      "dataset": "tsb-occupancy",
+      "dataset_name": "Occupancy (TSB-UAD, 10 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.53
+      },
+      "settings": "Unsupervised fit per series; sliding-window embedding with FFT-based window length; scores min-max normalized; point-wise AUC-ROC averaged over all 10 Occupancy series",
+      "source": {
+        "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
+        "venue": "PVLDB 15(8):1697-1711, 2022",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "README 'Overall Results' table, row Occupancy, column LOF (AUC 0.53)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "Now apples-to-apples: labts scores the same 367 TSB-UAD series and averages per-series AUC. Residual gap: window-length heuristic and score normalization may differ from TSB-UAD's reference pipeline. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ). Occupancy has only 10 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
+      "spec_params": {},
+      "train_command": "python playground/labts.py train --algorithm PyODLOFDetector --dataset tsb-occupancy --model-id bench-detection-lof-occupancy-auc --param contamination=0.1 --param n_neighbors=20",
+      "run_command": "python playground/labts.py run --model-id bench-detection-lof-occupancy-auc --compact"
+    },
+    {
+      "id": "detection-hbos-occupancy-auc",
+      "algorithm": "PyODHBOSDetector",
+      "algorithm_name": "HBOS",
+      "dataset": "tsb-occupancy",
+      "dataset_name": "Occupancy (TSB-UAD, 10 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.89
+      },
+      "settings": "Unsupervised fit per series; sliding-window embedding; point-wise AUC-ROC averaged over all 10 Occupancy series",
+      "source": {
+        "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
+        "venue": "PVLDB 15(8):1697-1711, 2022",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "README 'Overall Results' table, row Occupancy, column HBOS (AUC 0.89)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "spec_params": {},
+      "notes": "Same protocol as the Yahoo entries. Occupancy has only 10 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
+      "train_command": "python playground/labts.py train --algorithm PyODHBOSDetector --dataset tsb-occupancy --model-id bench-detection-hbos-occupancy-auc --param contamination=0.1 --param n_bins=10",
+      "run_command": "python playground/labts.py run --model-id bench-detection-hbos-occupancy-auc --compact"
+    },
+    {
+      "id": "detection-ocsvm-occupancy-auc",
+      "algorithm": "PyODOCSVMDetector",
+      "algorithm_name": "OCSVM",
+      "dataset": "tsb-occupancy",
+      "dataset_name": "Occupancy (TSB-UAD, 10 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.66
+      },
+      "settings": "Unsupervised fit per series; sliding-window embedding; point-wise AUC-ROC averaged over all 10 Occupancy series",
+      "source": {
+        "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
+        "venue": "PVLDB 15(8):1697-1711, 2022",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "README 'Overall Results' table, row Occupancy, column OCSVM (AUC 0.66)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "spec_params": {},
+      "notes": "Same protocol as the Yahoo entries. Occupancy has only 10 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
+      "train_command": "python playground/labts.py train --algorithm PyODOCSVMDetector --dataset tsb-occupancy --model-id bench-detection-ocsvm-occupancy-auc --param contamination=0.1 --param nu=0.5",
+      "run_command": "python playground/labts.py run --model-id bench-detection-ocsvm-occupancy-auc --compact"
+    },
+    {
+      "id": "detection-iforest-mgab-auc",
+      "algorithm": "PyODIForestDetector",
+      "algorithm_name": "IForest",
+      "dataset": "tsb-mgab",
+      "dataset_name": "MGAB (TSB-UAD, 10 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.57
+      },
+      "settings": "Unsupervised fit per series; sliding-window embedding; point-wise AUC-ROC averaged over all 10 MGAB series",
+      "source": {
+        "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
+        "venue": "PVLDB 15(8):1697-1711, 2022",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "README 'Overall Results' table, row MGAB, column IForest (AUC 0.57)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "Same protocol as the LOF entry.",
+      "spec_params": {},
+      "train_command": "python playground/labts.py train --algorithm PyODIForestDetector --dataset tsb-mgab --model-id bench-detection-iforest-mgab-auc --param contamination=0.1 --param n_estimators=100",
+      "run_command": "python playground/labts.py run --model-id bench-detection-iforest-mgab-auc --compact"
+    },
+    {
+      "id": "detection-lof-mgab-auc",
+      "algorithm": "PyODLOFDetector",
+      "algorithm_name": "LOF",
+      "dataset": "tsb-mgab",
+      "dataset_name": "MGAB (TSB-UAD, 10 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.96
+      },
+      "settings": "Unsupervised fit per series; sliding-window embedding with FFT-based window length; scores min-max normalized; point-wise AUC-ROC averaged over all 10 MGAB series",
+      "source": {
+        "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
+        "venue": "PVLDB 15(8):1697-1711, 2022",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "README 'Overall Results' table, row MGAB, column LOF (AUC 0.96)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "Now apples-to-apples: labts scores the same 367 TSB-UAD series and averages per-series AUC. Residual gap: window-length heuristic and score normalization may differ from TSB-UAD's reference pipeline. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ).",
+      "spec_params": {},
+      "train_command": "python playground/labts.py train --algorithm PyODLOFDetector --dataset tsb-mgab --model-id bench-detection-lof-mgab-auc --param contamination=0.1 --param n_neighbors=20",
+      "run_command": "python playground/labts.py run --model-id bench-detection-lof-mgab-auc --compact"
+    },
+    {
+      "id": "detection-hbos-mgab-auc",
+      "algorithm": "PyODHBOSDetector",
+      "algorithm_name": "HBOS",
+      "dataset": "tsb-mgab",
+      "dataset_name": "MGAB (TSB-UAD, 10 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.54
+      },
+      "settings": "Unsupervised fit per series; sliding-window embedding; point-wise AUC-ROC averaged over all 10 MGAB series",
+      "source": {
+        "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
+        "venue": "PVLDB 15(8):1697-1711, 2022",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "README 'Overall Results' table, row MGAB, column HBOS (AUC 0.54)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "spec_params": {},
+      "train_command": "python playground/labts.py train --algorithm PyODHBOSDetector --dataset tsb-mgab --model-id bench-detection-hbos-mgab-auc --param contamination=0.1 --param n_bins=10",
+      "run_command": "python playground/labts.py run --model-id bench-detection-hbos-mgab-auc --compact"
+    },
+    {
+      "id": "detection-iforest-genesis-auc",
+      "algorithm": "PyODIForestDetector",
+      "algorithm_name": "IForest",
+      "dataset": "tsb-genesis",
+      "dataset_name": "Genesis (TSB-UAD, 6 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.78
+      },
+      "settings": "Unsupervised fit per series; sliding-window embedding; point-wise AUC-ROC averaged over all 6 Genesis series",
+      "source": {
+        "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
+        "venue": "PVLDB 15(8):1697-1711, 2022",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "README 'Overall Results' table, row Genesis, column IForest (AUC 0.78)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "Same protocol as the LOF entry. Genesis has only 6 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
+      "spec_params": {},
+      "train_command": "python playground/labts.py train --algorithm PyODIForestDetector --dataset tsb-genesis --model-id bench-detection-iforest-genesis-auc --param contamination=0.1 --param n_estimators=100",
+      "run_command": "python playground/labts.py run --model-id bench-detection-iforest-genesis-auc --compact"
+    },
+    {
+      "id": "detection-lof-genesis-auc",
+      "algorithm": "PyODLOFDetector",
+      "algorithm_name": "LOF",
+      "dataset": "tsb-genesis",
+      "dataset_name": "Genesis (TSB-UAD, 6 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.68
+      },
+      "settings": "Unsupervised fit per series; sliding-window embedding with FFT-based window length; scores min-max normalized; point-wise AUC-ROC averaged over all 6 Genesis series",
+      "source": {
+        "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
+        "venue": "PVLDB 15(8):1697-1711, 2022",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "README 'Overall Results' table, row Genesis, column LOF (AUC 0.68)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "Now apples-to-apples: labts scores the same 367 TSB-UAD series and averages per-series AUC. Residual gap: window-length heuristic and score normalization may differ from TSB-UAD's reference pipeline. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ). Genesis has only 6 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
+      "spec_params": {},
+      "train_command": "python playground/labts.py train --algorithm PyODLOFDetector --dataset tsb-genesis --model-id bench-detection-lof-genesis-auc --param contamination=0.1 --param n_neighbors=20",
+      "run_command": "python playground/labts.py run --model-id bench-detection-lof-genesis-auc --compact"
+    },
+    {
+      "id": "detection-hbos-genesis-auc",
+      "algorithm": "PyODHBOSDetector",
+      "algorithm_name": "HBOS",
+      "dataset": "tsb-genesis",
+      "dataset_name": "Genesis (TSB-UAD, 6 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.59
+      },
+      "settings": "Unsupervised fit per series; sliding-window embedding; point-wise AUC-ROC averaged over all 6 Genesis series",
+      "source": {
+        "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
+        "venue": "PVLDB 15(8):1697-1711, 2022",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "README 'Overall Results' table, row Genesis, column HBOS (AUC 0.59)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "spec_params": {},
+      "notes": "Same protocol as the Yahoo entries. Genesis has only 6 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
+      "train_command": "python playground/labts.py train --algorithm PyODHBOSDetector --dataset tsb-genesis --model-id bench-detection-hbos-genesis-auc --param contamination=0.1 --param n_bins=10",
+      "run_command": "python playground/labts.py run --model-id bench-detection-hbos-genesis-auc --compact"
+    },
+    {
+      "id": "detection-ocsvm-genesis-auc",
+      "algorithm": "PyODOCSVMDetector",
+      "algorithm_name": "OCSVM",
+      "dataset": "tsb-genesis",
+      "dataset_name": "Genesis (TSB-UAD, 6 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.7
+      },
+      "settings": "Unsupervised fit per series; sliding-window embedding; point-wise AUC-ROC averaged over all 6 Genesis series",
+      "source": {
+        "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
+        "venue": "PVLDB 15(8):1697-1711, 2022",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "README 'Overall Results' table, row Genesis, column OCSVM (AUC 0.7)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "spec_params": {},
+      "notes": "Same protocol as the Yahoo entries. Genesis has only 6 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
+      "train_command": "python playground/labts.py train --algorithm PyODOCSVMDetector --dataset tsb-genesis --model-id bench-detection-ocsvm-genesis-auc --param contamination=0.1 --param nu=0.5",
+      "run_command": "python playground/labts.py run --model-id bench-detection-ocsvm-genesis-auc --compact"
     }
   ]
 }

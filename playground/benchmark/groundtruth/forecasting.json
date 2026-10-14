@@ -703,6 +703,1749 @@
       },
       "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-weather --model-id bench-forecasting-nlinear-weather-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
       "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-weather-96 --compact"
+    },
+    {
+      "id": "forecasting-dlinear-etth2-96",
+      "algorithm": "DLinearForecaster",
+      "algorithm_name": "DLinear",
+      "dataset": "hf-etth2",
+      "dataset_name": "ETTh2",
+      "window": "horizon 96 · lookback 336",
+      "metrics": {
+        "MSE": 0.289,
+        "MAE": 0.353
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTh2/96, DLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 96,
+        "horizon": 96,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827
+      },
+      "train_command": "python playground/labts.py train --algorithm DLinearForecaster --dataset hf-etth2 --model-id bench-forecasting-dlinear-etth2-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-etth2-96 --compact"
+    },
+    {
+      "id": "forecasting-nlinear-etth2-96",
+      "algorithm": "NLinearForecaster",
+      "algorithm_name": "NLinear",
+      "dataset": "hf-etth2",
+      "dataset_name": "ETTh2",
+      "window": "horizon 96 · lookback 336",
+      "metrics": {
+        "MSE": 0.277,
+        "MAE": 0.338
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTh2/96, NLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 96,
+        "horizon": 96,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827
+      },
+      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-etth2 --model-id bench-forecasting-nlinear-etth2-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-etth2-96 --compact"
+    },
+    {
+      "id": "forecasting-linear-etth2-96",
+      "algorithm": "LinearForecaster",
+      "algorithm_name": "Linear",
+      "dataset": "hf-etth2",
+      "dataset_name": "ETTh2",
+      "window": "horizon 96 · lookback 336",
+      "metrics": {
+        "MSE": 0.288,
+        "MAE": 0.352
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTh2/96, Linear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 96,
+        "horizon": 96,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827
+      },
+      "train_command": "python playground/labts.py train --algorithm LinearForecaster --dataset hf-etth2 --model-id bench-forecasting-linear-etth2-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-linear-etth2-96 --compact"
+    },
+    {
+      "id": "forecasting-dlinear-etth2-192",
+      "algorithm": "DLinearForecaster",
+      "algorithm_name": "DLinear",
+      "dataset": "hf-etth2",
+      "dataset_name": "ETTh2",
+      "window": "horizon 192 · lookback 336",
+      "metrics": {
+        "MSE": 0.383,
+        "MAE": 0.418
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTh2/192, DLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 192,
+        "horizon": 192,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827
+      },
+      "train_command": "python playground/labts.py train --algorithm DLinearForecaster --dataset hf-etth2 --model-id bench-forecasting-dlinear-etth2-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-etth2-192 --compact"
+    },
+    {
+      "id": "forecasting-nlinear-etth2-192",
+      "algorithm": "NLinearForecaster",
+      "algorithm_name": "NLinear",
+      "dataset": "hf-etth2",
+      "dataset_name": "ETTh2",
+      "window": "horizon 192 · lookback 336",
+      "metrics": {
+        "MSE": 0.344,
+        "MAE": 0.381
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTh2/192, NLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 192,
+        "horizon": 192,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827
+      },
+      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-etth2 --model-id bench-forecasting-nlinear-etth2-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-etth2-192 --compact"
+    },
+    {
+      "id": "forecasting-linear-etth2-192",
+      "algorithm": "LinearForecaster",
+      "algorithm_name": "Linear",
+      "dataset": "hf-etth2",
+      "dataset_name": "ETTh2",
+      "window": "horizon 192 · lookback 336",
+      "metrics": {
+        "MSE": 0.377,
+        "MAE": 0.413
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTh2/192, Linear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 192,
+        "horizon": 192,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827
+      },
+      "train_command": "python playground/labts.py train --algorithm LinearForecaster --dataset hf-etth2 --model-id bench-forecasting-linear-etth2-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-linear-etth2-192 --compact"
+    },
+    {
+      "id": "forecasting-dlinear-etth2-336",
+      "algorithm": "DLinearForecaster",
+      "algorithm_name": "DLinear",
+      "dataset": "hf-etth2",
+      "dataset_name": "ETTh2",
+      "window": "horizon 336 · lookback 336",
+      "metrics": {
+        "MSE": 0.448,
+        "MAE": 0.465
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTh2/336, DLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 336,
+        "horizon": 336,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827
+      },
+      "train_command": "python playground/labts.py train --algorithm DLinearForecaster --dataset hf-etth2 --model-id bench-forecasting-dlinear-etth2-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-etth2-336 --compact"
+    },
+    {
+      "id": "forecasting-nlinear-etth2-336",
+      "algorithm": "NLinearForecaster",
+      "algorithm_name": "NLinear",
+      "dataset": "hf-etth2",
+      "dataset_name": "ETTh2",
+      "window": "horizon 336 · lookback 336",
+      "metrics": {
+        "MSE": 0.357,
+        "MAE": 0.4
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTh2/336, NLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 336,
+        "horizon": 336,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827
+      },
+      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-etth2 --model-id bench-forecasting-nlinear-etth2-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-etth2-336 --compact"
+    },
+    {
+      "id": "forecasting-linear-etth2-336",
+      "algorithm": "LinearForecaster",
+      "algorithm_name": "Linear",
+      "dataset": "hf-etth2",
+      "dataset_name": "ETTh2",
+      "window": "horizon 336 · lookback 336",
+      "metrics": {
+        "MSE": 0.452,
+        "MAE": 0.461
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTh2/336, Linear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 336,
+        "horizon": 336,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827
+      },
+      "train_command": "python playground/labts.py train --algorithm LinearForecaster --dataset hf-etth2 --model-id bench-forecasting-linear-etth2-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-linear-etth2-336 --compact"
+    },
+    {
+      "id": "forecasting-dlinear-etth2-720",
+      "algorithm": "DLinearForecaster",
+      "algorithm_name": "DLinear",
+      "dataset": "hf-etth2",
+      "dataset_name": "ETTh2",
+      "window": "horizon 720 · lookback 336",
+      "metrics": {
+        "MSE": 0.605,
+        "MAE": 0.551
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTh2/720, DLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 720,
+        "horizon": 720,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827
+      },
+      "train_command": "python playground/labts.py train --algorithm DLinearForecaster --dataset hf-etth2 --model-id bench-forecasting-dlinear-etth2-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-etth2-720 --compact"
+    },
+    {
+      "id": "forecasting-nlinear-etth2-720",
+      "algorithm": "NLinearForecaster",
+      "algorithm_name": "NLinear",
+      "dataset": "hf-etth2",
+      "dataset_name": "ETTh2",
+      "window": "horizon 720 · lookback 336",
+      "metrics": {
+        "MSE": 0.394,
+        "MAE": 0.436
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTh2/720, NLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 720,
+        "horizon": 720,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827
+      },
+      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-etth2 --model-id bench-forecasting-nlinear-etth2-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-etth2-720 --compact"
+    },
+    {
+      "id": "forecasting-linear-etth2-720",
+      "algorithm": "LinearForecaster",
+      "algorithm_name": "Linear",
+      "dataset": "hf-etth2",
+      "dataset_name": "ETTh2",
+      "window": "horizon 720 · lookback 336",
+      "metrics": {
+        "MSE": 0.698,
+        "MAE": 0.595
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTh2/720, Linear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 720,
+        "horizon": 720,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827
+      },
+      "train_command": "python playground/labts.py train --algorithm LinearForecaster --dataset hf-etth2 --model-id bench-forecasting-linear-etth2-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-linear-etth2-720 --compact"
+    },
+    {
+      "id": "forecasting-dlinear-ettm1-96",
+      "algorithm": "DLinearForecaster",
+      "algorithm_name": "DLinear",
+      "dataset": "hf-ettm1",
+      "dataset_name": "ETTm1",
+      "window": "horizon 96 · lookback 336",
+      "metrics": {
+        "MSE": 0.299,
+        "MAE": 0.343
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTm1/96, DLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 96,
+        "horizon": 96,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827
+      },
+      "train_command": "python playground/labts.py train --algorithm DLinearForecaster --dataset hf-ettm1 --model-id bench-forecasting-dlinear-ettm1-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-ettm1-96 --compact"
+    },
+    {
+      "id": "forecasting-nlinear-ettm1-96",
+      "algorithm": "NLinearForecaster",
+      "algorithm_name": "NLinear",
+      "dataset": "hf-ettm1",
+      "dataset_name": "ETTm1",
+      "window": "horizon 96 · lookback 336",
+      "metrics": {
+        "MSE": 0.306,
+        "MAE": 0.348
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTm1/96, NLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 96,
+        "horizon": 96,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827
+      },
+      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-ettm1 --model-id bench-forecasting-nlinear-ettm1-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-ettm1-96 --compact"
+    },
+    {
+      "id": "forecasting-dlinear-ettm1-192",
+      "algorithm": "DLinearForecaster",
+      "algorithm_name": "DLinear",
+      "dataset": "hf-ettm1",
+      "dataset_name": "ETTm1",
+      "window": "horizon 192 · lookback 336",
+      "metrics": {
+        "MSE": 0.335,
+        "MAE": 0.365
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTm1/192, DLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 192,
+        "horizon": 192,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827
+      },
+      "train_command": "python playground/labts.py train --algorithm DLinearForecaster --dataset hf-ettm1 --model-id bench-forecasting-dlinear-ettm1-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-ettm1-192 --compact"
+    },
+    {
+      "id": "forecasting-nlinear-ettm1-192",
+      "algorithm": "NLinearForecaster",
+      "algorithm_name": "NLinear",
+      "dataset": "hf-ettm1",
+      "dataset_name": "ETTm1",
+      "window": "horizon 192 · lookback 336",
+      "metrics": {
+        "MSE": 0.349,
+        "MAE": 0.375
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTm1/192, NLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 192,
+        "horizon": 192,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827
+      },
+      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-ettm1 --model-id bench-forecasting-nlinear-ettm1-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-ettm1-192 --compact"
+    },
+    {
+      "id": "forecasting-dlinear-ettm1-336",
+      "algorithm": "DLinearForecaster",
+      "algorithm_name": "DLinear",
+      "dataset": "hf-ettm1",
+      "dataset_name": "ETTm1",
+      "window": "horizon 336 · lookback 336",
+      "metrics": {
+        "MSE": 0.369,
+        "MAE": 0.386
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTm1/336, DLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 336,
+        "horizon": 336,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827
+      },
+      "train_command": "python playground/labts.py train --algorithm DLinearForecaster --dataset hf-ettm1 --model-id bench-forecasting-dlinear-ettm1-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-ettm1-336 --compact"
+    },
+    {
+      "id": "forecasting-nlinear-ettm1-336",
+      "algorithm": "NLinearForecaster",
+      "algorithm_name": "NLinear",
+      "dataset": "hf-ettm1",
+      "dataset_name": "ETTm1",
+      "window": "horizon 336 · lookback 336",
+      "metrics": {
+        "MSE": 0.375,
+        "MAE": 0.388
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTm1/336, NLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 336,
+        "horizon": 336,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827
+      },
+      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-ettm1 --model-id bench-forecasting-nlinear-ettm1-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-ettm1-336 --compact"
+    },
+    {
+      "id": "forecasting-dlinear-ettm1-720",
+      "algorithm": "DLinearForecaster",
+      "algorithm_name": "DLinear",
+      "dataset": "hf-ettm1",
+      "dataset_name": "ETTm1",
+      "window": "horizon 720 · lookback 336",
+      "metrics": {
+        "MSE": 0.425,
+        "MAE": 0.421
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTm1/720, DLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 720,
+        "horizon": 720,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827
+      },
+      "train_command": "python playground/labts.py train --algorithm DLinearForecaster --dataset hf-ettm1 --model-id bench-forecasting-dlinear-ettm1-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-ettm1-720 --compact"
+    },
+    {
+      "id": "forecasting-nlinear-ettm1-720",
+      "algorithm": "NLinearForecaster",
+      "algorithm_name": "NLinear",
+      "dataset": "hf-ettm1",
+      "dataset_name": "ETTm1",
+      "window": "horizon 720 · lookback 336",
+      "metrics": {
+        "MSE": 0.433,
+        "MAE": 0.422
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTm1/720, NLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 720,
+        "horizon": 720,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827
+      },
+      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-ettm1 --model-id bench-forecasting-nlinear-ettm1-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-ettm1-720 --compact"
+    },
+    {
+      "id": "forecasting-dlinear-ettm2-96",
+      "algorithm": "DLinearForecaster",
+      "algorithm_name": "DLinear",
+      "dataset": "hf-ettm2",
+      "dataset_name": "ETTm2",
+      "window": "horizon 96 · lookback 336",
+      "metrics": {
+        "MSE": 0.167,
+        "MAE": 0.26
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTm2/96, DLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 96,
+        "horizon": 96,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827
+      },
+      "train_command": "python playground/labts.py train --algorithm DLinearForecaster --dataset hf-ettm2 --model-id bench-forecasting-dlinear-ettm2-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-ettm2-96 --compact"
+    },
+    {
+      "id": "forecasting-nlinear-ettm2-96",
+      "algorithm": "NLinearForecaster",
+      "algorithm_name": "NLinear",
+      "dataset": "hf-ettm2",
+      "dataset_name": "ETTm2",
+      "window": "horizon 96 · lookback 336",
+      "metrics": {
+        "MSE": 0.167,
+        "MAE": 0.255
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTm2/96, NLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 96,
+        "horizon": 96,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827
+      },
+      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-ettm2 --model-id bench-forecasting-nlinear-ettm2-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-ettm2-96 --compact"
+    },
+    {
+      "id": "forecasting-dlinear-ettm2-192",
+      "algorithm": "DLinearForecaster",
+      "algorithm_name": "DLinear",
+      "dataset": "hf-ettm2",
+      "dataset_name": "ETTm2",
+      "window": "horizon 192 · lookback 336",
+      "metrics": {
+        "MSE": 0.224,
+        "MAE": 0.303
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTm2/192, DLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 192,
+        "horizon": 192,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827
+      },
+      "train_command": "python playground/labts.py train --algorithm DLinearForecaster --dataset hf-ettm2 --model-id bench-forecasting-dlinear-ettm2-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-ettm2-192 --compact"
+    },
+    {
+      "id": "forecasting-nlinear-ettm2-192",
+      "algorithm": "NLinearForecaster",
+      "algorithm_name": "NLinear",
+      "dataset": "hf-ettm2",
+      "dataset_name": "ETTm2",
+      "window": "horizon 192 · lookback 336",
+      "metrics": {
+        "MSE": 0.221,
+        "MAE": 0.293
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTm2/192, NLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 192,
+        "horizon": 192,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827
+      },
+      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-ettm2 --model-id bench-forecasting-nlinear-ettm2-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-ettm2-192 --compact"
+    },
+    {
+      "id": "forecasting-dlinear-ettm2-336",
+      "algorithm": "DLinearForecaster",
+      "algorithm_name": "DLinear",
+      "dataset": "hf-ettm2",
+      "dataset_name": "ETTm2",
+      "window": "horizon 336 · lookback 336",
+      "metrics": {
+        "MSE": 0.281,
+        "MAE": 0.342
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTm2/336, DLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 336,
+        "horizon": 336,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827
+      },
+      "train_command": "python playground/labts.py train --algorithm DLinearForecaster --dataset hf-ettm2 --model-id bench-forecasting-dlinear-ettm2-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-ettm2-336 --compact"
+    },
+    {
+      "id": "forecasting-nlinear-ettm2-336",
+      "algorithm": "NLinearForecaster",
+      "algorithm_name": "NLinear",
+      "dataset": "hf-ettm2",
+      "dataset_name": "ETTm2",
+      "window": "horizon 336 · lookback 336",
+      "metrics": {
+        "MSE": 0.274,
+        "MAE": 0.327
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTm2/336, NLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 336,
+        "horizon": 336,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827
+      },
+      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-ettm2 --model-id bench-forecasting-nlinear-ettm2-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-ettm2-336 --compact"
+    },
+    {
+      "id": "forecasting-dlinear-ettm2-720",
+      "algorithm": "DLinearForecaster",
+      "algorithm_name": "DLinear",
+      "dataset": "hf-ettm2",
+      "dataset_name": "ETTm2",
+      "window": "horizon 720 · lookback 336",
+      "metrics": {
+        "MSE": 0.397,
+        "MAE": 0.421
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTm2/720, DLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 720,
+        "horizon": 720,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827
+      },
+      "train_command": "python playground/labts.py train --algorithm DLinearForecaster --dataset hf-ettm2 --model-id bench-forecasting-dlinear-ettm2-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-ettm2-720 --compact"
+    },
+    {
+      "id": "forecasting-nlinear-ettm2-720",
+      "algorithm": "NLinearForecaster",
+      "algorithm_name": "NLinear",
+      "dataset": "hf-ettm2",
+      "dataset_name": "ETTm2",
+      "window": "horizon 720 · lookback 336",
+      "metrics": {
+        "MSE": 0.368,
+        "MAE": 0.384
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTm2/720, NLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 720,
+        "horizon": 720,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827
+      },
+      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-ettm2 --model-id bench-forecasting-nlinear-ettm2-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-ettm2-720 --compact"
+    },
+    {
+      "id": "forecasting-dlinear-exchange-96",
+      "algorithm": "DLinearForecaster",
+      "algorithm_name": "DLinear",
+      "dataset": "hf-exchange",
+      "dataset_name": "Exchange",
+      "window": "horizon 96 · lookback 336",
+      "metrics": {
+        "MSE": 0.081,
+        "MAE": 0.203
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row Exchange/96, DLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.15
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Exchange is tiny (7,588 rows, 8 variates) and high-variance across seeds, hence the looser 15% tolerance (chosen before running). Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 96,
+        "horizon": 96,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.7,
+        "test_fraction": 0.2
+      },
+      "train_command": "python playground/labts.py train --algorithm DLinearForecaster --dataset hf-exchange --model-id bench-forecasting-dlinear-exchange-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-exchange-96 --compact"
+    },
+    {
+      "id": "forecasting-nlinear-exchange-96",
+      "algorithm": "NLinearForecaster",
+      "algorithm_name": "NLinear",
+      "dataset": "hf-exchange",
+      "dataset_name": "Exchange",
+      "window": "horizon 96 · lookback 336",
+      "metrics": {
+        "MSE": 0.089,
+        "MAE": 0.208
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row Exchange/96, NLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.15
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Exchange is tiny (7,588 rows, 8 variates) and high-variance across seeds, hence the looser 15% tolerance (chosen before running). Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 96,
+        "horizon": 96,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.7,
+        "test_fraction": 0.2
+      },
+      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-exchange --model-id bench-forecasting-nlinear-exchange-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-exchange-96 --compact"
+    },
+    {
+      "id": "forecasting-linear-exchange-96",
+      "algorithm": "LinearForecaster",
+      "algorithm_name": "Linear",
+      "dataset": "hf-exchange",
+      "dataset_name": "Exchange",
+      "window": "horizon 96 · lookback 336",
+      "metrics": {
+        "MSE": 0.082,
+        "MAE": 0.207
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row Exchange/96, Linear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.15
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Exchange is tiny (7,588 rows, 8 variates) and high-variance across seeds, hence the looser 15% tolerance (chosen before running). Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 96,
+        "horizon": 96,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.7,
+        "test_fraction": 0.2
+      },
+      "train_command": "python playground/labts.py train --algorithm LinearForecaster --dataset hf-exchange --model-id bench-forecasting-linear-exchange-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-linear-exchange-96 --compact"
+    },
+    {
+      "id": "forecasting-dlinear-exchange-192",
+      "algorithm": "DLinearForecaster",
+      "algorithm_name": "DLinear",
+      "dataset": "hf-exchange",
+      "dataset_name": "Exchange",
+      "window": "horizon 192 · lookback 336",
+      "metrics": {
+        "MSE": 0.157,
+        "MAE": 0.293
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row Exchange/192, DLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.15
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Exchange is tiny (7,588 rows, 8 variates) and high-variance across seeds, hence the looser 15% tolerance (chosen before running). Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 192,
+        "horizon": 192,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.7,
+        "test_fraction": 0.2
+      },
+      "train_command": "python playground/labts.py train --algorithm DLinearForecaster --dataset hf-exchange --model-id bench-forecasting-dlinear-exchange-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-exchange-192 --compact"
+    },
+    {
+      "id": "forecasting-nlinear-exchange-192",
+      "algorithm": "NLinearForecaster",
+      "algorithm_name": "NLinear",
+      "dataset": "hf-exchange",
+      "dataset_name": "Exchange",
+      "window": "horizon 192 · lookback 336",
+      "metrics": {
+        "MSE": 0.18,
+        "MAE": 0.3
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row Exchange/192, NLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.15
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Exchange is tiny (7,588 rows, 8 variates) and high-variance across seeds, hence the looser 15% tolerance (chosen before running). Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 192,
+        "horizon": 192,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.7,
+        "test_fraction": 0.2
+      },
+      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-exchange --model-id bench-forecasting-nlinear-exchange-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-exchange-192 --compact"
+    },
+    {
+      "id": "forecasting-linear-exchange-192",
+      "algorithm": "LinearForecaster",
+      "algorithm_name": "Linear",
+      "dataset": "hf-exchange",
+      "dataset_name": "Exchange",
+      "window": "horizon 192 · lookback 336",
+      "metrics": {
+        "MSE": 0.167,
+        "MAE": 0.304
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row Exchange/192, Linear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.15
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Exchange is tiny (7,588 rows, 8 variates) and high-variance across seeds, hence the looser 15% tolerance (chosen before running). Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 192,
+        "horizon": 192,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.7,
+        "test_fraction": 0.2
+      },
+      "train_command": "python playground/labts.py train --algorithm LinearForecaster --dataset hf-exchange --model-id bench-forecasting-linear-exchange-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-linear-exchange-192 --compact"
+    },
+    {
+      "id": "forecasting-dlinear-exchange-336",
+      "algorithm": "DLinearForecaster",
+      "algorithm_name": "DLinear",
+      "dataset": "hf-exchange",
+      "dataset_name": "Exchange",
+      "window": "horizon 336 · lookback 336",
+      "metrics": {
+        "MSE": 0.305,
+        "MAE": 0.414
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row Exchange/336, DLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.15
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Exchange is tiny (7,588 rows, 8 variates) and high-variance across seeds, hence the looser 15% tolerance (chosen before running). Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 336,
+        "horizon": 336,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.7,
+        "test_fraction": 0.2
+      },
+      "train_command": "python playground/labts.py train --algorithm DLinearForecaster --dataset hf-exchange --model-id bench-forecasting-dlinear-exchange-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-exchange-336 --compact"
+    },
+    {
+      "id": "forecasting-nlinear-exchange-336",
+      "algorithm": "NLinearForecaster",
+      "algorithm_name": "NLinear",
+      "dataset": "hf-exchange",
+      "dataset_name": "Exchange",
+      "window": "horizon 336 · lookback 336",
+      "metrics": {
+        "MSE": 0.331,
+        "MAE": 0.415
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row Exchange/336, NLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.15
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Exchange is tiny (7,588 rows, 8 variates) and high-variance across seeds, hence the looser 15% tolerance (chosen before running). Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 336,
+        "horizon": 336,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.7,
+        "test_fraction": 0.2
+      },
+      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-exchange --model-id bench-forecasting-nlinear-exchange-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-exchange-336 --compact"
+    },
+    {
+      "id": "forecasting-linear-exchange-336",
+      "algorithm": "LinearForecaster",
+      "algorithm_name": "Linear",
+      "dataset": "hf-exchange",
+      "dataset_name": "Exchange",
+      "window": "horizon 336 · lookback 336",
+      "metrics": {
+        "MSE": 0.328,
+        "MAE": 0.432
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row Exchange/336, Linear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.15
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Exchange is tiny (7,588 rows, 8 variates) and high-variance across seeds, hence the looser 15% tolerance (chosen before running). Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 336,
+        "horizon": 336,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.7,
+        "test_fraction": 0.2
+      },
+      "train_command": "python playground/labts.py train --algorithm LinearForecaster --dataset hf-exchange --model-id bench-forecasting-linear-exchange-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-linear-exchange-336 --compact"
+    },
+    {
+      "id": "forecasting-dlinear-exchange-720",
+      "algorithm": "DLinearForecaster",
+      "algorithm_name": "DLinear",
+      "dataset": "hf-exchange",
+      "dataset_name": "Exchange",
+      "window": "horizon 720 · lookback 336",
+      "metrics": {
+        "MSE": 0.643,
+        "MAE": 0.601
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row Exchange/720, DLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.15
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Exchange is tiny (7,588 rows, 8 variates) and high-variance across seeds, hence the looser 15% tolerance (chosen before running). Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 720,
+        "horizon": 720,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.7,
+        "test_fraction": 0.2
+      },
+      "train_command": "python playground/labts.py train --algorithm DLinearForecaster --dataset hf-exchange --model-id bench-forecasting-dlinear-exchange-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-exchange-720 --compact"
+    },
+    {
+      "id": "forecasting-nlinear-exchange-720",
+      "algorithm": "NLinearForecaster",
+      "algorithm_name": "NLinear",
+      "dataset": "hf-exchange",
+      "dataset_name": "Exchange",
+      "window": "horizon 720 · lookback 336",
+      "metrics": {
+        "MSE": 1.033,
+        "MAE": 0.78
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row Exchange/720, NLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.15
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Exchange is tiny (7,588 rows, 8 variates) and high-variance across seeds, hence the looser 15% tolerance (chosen before running). Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 720,
+        "horizon": 720,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.7,
+        "test_fraction": 0.2
+      },
+      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-exchange --model-id bench-forecasting-nlinear-exchange-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-exchange-720 --compact"
+    },
+    {
+      "id": "forecasting-linear-exchange-720",
+      "algorithm": "LinearForecaster",
+      "algorithm_name": "Linear",
+      "dataset": "hf-exchange",
+      "dataset_name": "Exchange",
+      "window": "horizon 720 · lookback 336",
+      "metrics": {
+        "MSE": 0.964,
+        "MAE": 0.75
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row Exchange/720, Linear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.15
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Exchange is tiny (7,588 rows, 8 variates) and high-variance across seeds, hence the looser 15% tolerance (chosen before running). Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 720,
+        "horizon": 720,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.7,
+        "test_fraction": 0.2
+      },
+      "train_command": "python playground/labts.py train --algorithm LinearForecaster --dataset hf-exchange --model-id bench-forecasting-linear-exchange-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-linear-exchange-720 --compact"
+    },
+    {
+      "id": "forecasting-nlinear-weather-192",
+      "algorithm": "NLinearForecaster",
+      "algorithm_name": "NLinear",
+      "dataset": "hf-weather",
+      "dataset_name": "Weather",
+      "window": "horizon 192 · lookback 336",
+      "metrics": {
+        "MSE": 0.225,
+        "MAE": 0.269
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row Weather/192, NLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 192,
+        "horizon": 192,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.7,
+        "test_fraction": 0.2
+      },
+      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-weather --model-id bench-forecasting-nlinear-weather-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-weather-192 --compact"
+    },
+    {
+      "id": "forecasting-nlinear-weather-336",
+      "algorithm": "NLinearForecaster",
+      "algorithm_name": "NLinear",
+      "dataset": "hf-weather",
+      "dataset_name": "Weather",
+      "window": "horizon 336 · lookback 336",
+      "metrics": {
+        "MSE": 0.271,
+        "MAE": 0.301
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row Weather/336, NLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 336,
+        "horizon": 336,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.7,
+        "test_fraction": 0.2
+      },
+      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-weather --model-id bench-forecasting-nlinear-weather-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-weather-336 --compact"
+    },
+    {
+      "id": "forecasting-nlinear-weather-720",
+      "algorithm": "NLinearForecaster",
+      "algorithm_name": "NLinear",
+      "dataset": "hf-weather",
+      "dataset_name": "Weather",
+      "window": "horizon 720 · lookback 336",
+      "metrics": {
+        "MSE": 0.338,
+        "MAE": 0.348
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row Weather/720, NLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 720,
+        "horizon": 720,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.7,
+        "test_fraction": 0.2
+      },
+      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-weather --model-id bench-forecasting-nlinear-weather-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-weather-720 --compact"
+    },
+    {
+      "id": "forecasting-dlinear-electricity-96",
+      "algorithm": "DLinearForecaster",
+      "algorithm_name": "DLinear",
+      "dataset": "hf-electricity",
+      "dataset_name": "Electricity",
+      "window": "horizon 96 · lookback 336",
+      "metrics": {
+        "MSE": 0.14,
+        "MAE": 0.237
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row Electricity/96, DLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 96,
+        "horizon": 96,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.7,
+        "test_fraction": 0.2
+      },
+      "train_command": "python playground/labts.py train --algorithm DLinearForecaster --dataset hf-electricity --model-id bench-forecasting-dlinear-electricity-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-electricity-96 --compact"
+    },
+    {
+      "id": "forecasting-nlinear-electricity-96",
+      "algorithm": "NLinearForecaster",
+      "algorithm_name": "NLinear",
+      "dataset": "hf-electricity",
+      "dataset_name": "Electricity",
+      "window": "horizon 96 · lookback 336",
+      "metrics": {
+        "MSE": 0.141,
+        "MAE": 0.237
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row Electricity/96, NLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 96,
+        "horizon": 96,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.7,
+        "test_fraction": 0.2
+      },
+      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-electricity --model-id bench-forecasting-nlinear-electricity-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-electricity-96 --compact"
+    },
+    {
+      "id": "forecasting-dlinear-electricity-192",
+      "algorithm": "DLinearForecaster",
+      "algorithm_name": "DLinear",
+      "dataset": "hf-electricity",
+      "dataset_name": "Electricity",
+      "window": "horizon 192 · lookback 336",
+      "metrics": {
+        "MSE": 0.153,
+        "MAE": 0.249
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row Electricity/192, DLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 192,
+        "horizon": 192,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.7,
+        "test_fraction": 0.2
+      },
+      "train_command": "python playground/labts.py train --algorithm DLinearForecaster --dataset hf-electricity --model-id bench-forecasting-dlinear-electricity-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-electricity-192 --compact"
+    },
+    {
+      "id": "forecasting-nlinear-electricity-192",
+      "algorithm": "NLinearForecaster",
+      "algorithm_name": "NLinear",
+      "dataset": "hf-electricity",
+      "dataset_name": "Electricity",
+      "window": "horizon 192 · lookback 336",
+      "metrics": {
+        "MSE": 0.154,
+        "MAE": 0.248
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row Electricity/192, NLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 192,
+        "horizon": 192,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.7,
+        "test_fraction": 0.2
+      },
+      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-electricity --model-id bench-forecasting-nlinear-electricity-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-electricity-192 --compact"
+    },
+    {
+      "id": "forecasting-dlinear-electricity-336",
+      "algorithm": "DLinearForecaster",
+      "algorithm_name": "DLinear",
+      "dataset": "hf-electricity",
+      "dataset_name": "Electricity",
+      "window": "horizon 336 · lookback 336",
+      "metrics": {
+        "MSE": 0.169,
+        "MAE": 0.267
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row Electricity/336, DLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 336,
+        "horizon": 336,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.7,
+        "test_fraction": 0.2
+      },
+      "train_command": "python playground/labts.py train --algorithm DLinearForecaster --dataset hf-electricity --model-id bench-forecasting-dlinear-electricity-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-electricity-336 --compact"
+    },
+    {
+      "id": "forecasting-nlinear-electricity-336",
+      "algorithm": "NLinearForecaster",
+      "algorithm_name": "NLinear",
+      "dataset": "hf-electricity",
+      "dataset_name": "Electricity",
+      "window": "horizon 336 · lookback 336",
+      "metrics": {
+        "MSE": 0.171,
+        "MAE": 0.265
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row Electricity/336, NLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 336,
+        "horizon": 336,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.7,
+        "test_fraction": 0.2
+      },
+      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-electricity --model-id bench-forecasting-nlinear-electricity-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-electricity-336 --compact"
     }
   ]
 }
