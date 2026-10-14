@@ -11,7 +11,7 @@ import time
 import traceback
 import uuid
 from contextlib import redirect_stdout
-from catalog import REPO_ROOT, get_dataset, get_enabled_algorithm, get_enabled_preprocessor, import_estimator_class, split_params
+from catalog import REPO_ROOT, curated_param_error, get_dataset, get_enabled_algorithm, get_enabled_preprocessor, import_estimator_class, split_params
 from metrics import MetricError, compute_metric, resolve_metrics
 
 
@@ -43,6 +43,10 @@ def run_experiment(spec: dict) -> dict:
             )
     if algorithm["task"] != spec["task"] or dataset["task"] != spec["task"]:
         raise PlaygroundError("Selected task, algorithm, and dataset are incompatible.")
+
+    bad_params = curated_param_error(algorithm, spec["params"])
+    if bad_params:
+        raise PlaygroundError(bad_params)
 
     preprocessor = chain[0]["entry"] if chain else get_enabled_preprocessor("none")
     log = [

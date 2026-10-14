@@ -145,6 +145,25 @@ def split_params(task: str, params: dict) -> tuple[dict, dict]:
     return eval_params, est_params
 
 
+def curated_param_error(algorithm: dict, params: dict) -> str | None:
+    """Message for params a curated algorithm would silently ignore, else None.
+
+    Curated runners only read their advertised params plus the task's eval
+    params; anything else (e.g. ``strategy`` for NaiveForecaster) used to be
+    dropped without notice.
+    """
+    if not algorithm.get("curated"):
+        return None
+    allowed = set(algorithm.get("params") or {}) | EVAL_PARAMS.get(algorithm.get("task"), set())
+    unknown = sorted(k for k in (params or {}) if k not in allowed)
+    if not unknown:
+        return None
+    return (
+        f"{algorithm.get('class_name') or algorithm['name']} (curated) does not support "
+        f"param(s) {unknown}; supported: {sorted(allowed)}."
+    )
+
+
 def import_estimator_class(module_path: str) -> type:
     """Import and cache an estimator class from a fully-qualified module path."""
     cached = _CLASS_CACHE.get(module_path)
@@ -522,6 +541,46 @@ DATASETS = [
         "task": "anomaly_detection",
         "source": "tsb_uad",
         "series_dir": "TSB-UAD-Public/MITDB",
+        "enabled": True,
+    },
+    {
+        "id": "tsb-nab",
+        "name": "TSB-UAD NAB (58 series)",
+        "task": "anomaly_detection",
+        "source": "tsb_uad",
+        "series_dir": "TSB-UAD-Public/NAB",
+        "enabled": True,
+    },
+    {
+        "id": "tsb-dodgers",
+        "name": "TSB-UAD Dodgers (1 series)",
+        "task": "anomaly_detection",
+        "source": "tsb_uad",
+        "series_dir": "TSB-UAD-Public/Dodgers",
+        "enabled": True,
+    },
+    {
+        "id": "tsb-occupancy",
+        "name": "TSB-UAD Occupancy (10 series)",
+        "task": "anomaly_detection",
+        "source": "tsb_uad",
+        "series_dir": "TSB-UAD-Public/Occupancy",
+        "enabled": True,
+    },
+    {
+        "id": "tsb-mgab",
+        "name": "TSB-UAD MGAB (10 series)",
+        "task": "anomaly_detection",
+        "source": "tsb_uad",
+        "series_dir": "TSB-UAD-Public/MGAB",
+        "enabled": True,
+    },
+    {
+        "id": "tsb-genesis",
+        "name": "TSB-UAD Genesis (6 series)",
+        "task": "anomaly_detection",
+        "source": "tsb_uad",
+        "series_dir": "TSB-UAD-Public/Genesis",
         "enabled": True,
     },
     {

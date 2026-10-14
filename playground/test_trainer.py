@@ -558,6 +558,22 @@ class CliRunModelIdTests(TrainerTestCase):
         self.assertEqual(envelope["status"], "error")
         self.assertIn("--algorithm", envelope["error"])
 
+    def test_curated_algorithms_reject_unsupported_params(self):
+        code, envelope = self._cli(
+            ["run", "--task", "forecasting", "--dataset", "airline",
+             "--algorithm", "NaiveForecaster", "--param", "strategy=mean", "--compact"]
+        )
+        self.assertNotEqual(code, 0)
+        self.assertEqual(envelope["status"], "blocked")
+        self.assertIn("strategy", envelope["error"])
+        self.assertIn("seasonal_period", envelope["error"])
+        with self.assertRaises(trainer.PlaygroundError):
+            trainer._build_train_estimator(
+                {"id": "naive-seasonal-last", "curated": True, "task": "forecasting",
+                 "name": "NaiveForecaster", "params": {"seasonal_period": 12}},
+                {"strategy": "mean"},
+            )
+
     def test_predict_and_detect_are_run_aliases(self):
         trained = self._train_or_skip(
             {

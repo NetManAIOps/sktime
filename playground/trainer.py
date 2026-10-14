@@ -64,6 +64,7 @@ import persistence
 from catalog import (
     EVAL_PARAMS,
     REPO_ROOT,
+    curated_param_error,
     get_dataset,
     get_enabled_algorithm,
     get_enabled_preprocessor,
@@ -786,6 +787,9 @@ def _build_train_estimator(algorithm: dict, est_params: dict):
     coerced to the advertised defaults' types.
     """
     if algorithm.get("curated"):
+        bad_params = curated_param_error(algorithm, est_params)
+        if bad_params:
+            raise PlaygroundError(bad_params)
         return _build_curated_estimator(algorithm, est_params)
     return _build_module_estimator(algorithm, est_params)
 
