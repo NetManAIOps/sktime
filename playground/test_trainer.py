@@ -558,6 +558,33 @@ class CliRunModelIdTests(TrainerTestCase):
         self.assertEqual(envelope["status"], "error")
         self.assertIn("--algorithm", envelope["error"])
 
+    def test_keras_model_survives_train_run_roundtrip(self):
+        try:
+            import tensorflow  # noqa: F401
+        except ImportError:
+            self.skipTest("tensorflow not installed")
+        trained = self._train_or_skip(
+            {
+                "algorithm_id": "FCNRegressor",
+                "dataset_id": "covid-3month",
+                "model_id": "t-cli-keras",
+                "params": {"n_epochs": 1, "batch_size": 16},
+            }
+        )
+        self.assertEqual(trained["status"], "ok")
+        import contextlib
+        import io
+
+        import labts
+
+        buffer = io.StringIO()
+        with contextlib.redirect_stdout(buffer):
+            code = labts.main(["run", "--model-id", "t-cli-keras", "--compact"])
+        # keras progress bars share stdout; the envelope is the last line
+        envelope = json.loads(buffer.getvalue().strip().splitlines()[-1])
+        self.assertEqual(code, 0)
+        self.assertIn("RMSE", envelope["data"]["metrics"])
+
     def test_curated_algorithms_reject_unsupported_params(self):
         code, envelope = self._cli(
             ["run", "--task", "forecasting", "--dataset", "airline",

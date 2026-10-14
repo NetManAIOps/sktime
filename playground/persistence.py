@@ -163,9 +163,11 @@ def save_sktime_model(
 
 
 def _load_artifact(model_dir: str | Path, name: str):
-    from sktime.base import BaseEstimator
+    # sktime.base.load dispatches to the concrete class's loader; the base
+    # class loader drops the keras model of deep-learning estimators.
+    from sktime.base import load
 
-    return BaseEstimator.load_from_path(Path(model_dir) / name)
+    return load(Path(model_dir) / name)
 
 
 def load_sktime_model(model_dir: str | Path):
@@ -266,7 +268,6 @@ def save_sktime_multiseries_model(
 
 def load_sktime_series_models(model_dir: str | Path, manifest: dict) -> dict:
     """Reload {series_name: fitted estimator} persisted by `save_sktime_multiseries_model`."""
-    from sktime.base import BaseEstimator
 
     models = {}
     for entry in manifest.get("series") or []:
@@ -274,7 +275,7 @@ def load_sktime_series_models(model_dir: str | Path, manifest: dict) -> dict:
         if not path.is_file():
             raise PlaygroundError(f"Series model artifact not found: {path}")
         try:
-            models[entry["name"]] = BaseEstimator.load_from_path(path)
+            models[entry["name"]] = _load_artifact(model_dir, entry["artifact"])
         except Exception as exc:
             raise PlaygroundError(
                 f"Could not load series model {path}: {type(exc).__name__}: {exc}"
