@@ -227,19 +227,34 @@ def render_claim(entry: dict) -> str:
 </details>"""
 
 
-def render_group(algorithm_name: str, entries: list[dict]) -> str:
-    """Parent row for one algorithm: its dataset/config claims as sub-rows."""
+def _group_agg(entries: list[dict]) -> tuple[str, str]:
+    """Aggregate badge for one algorithm's claims: ``(status, text)``."""
     n = len(entries)
     k = sum(1 for e in entries if e["status"] == "reproduced")
     if all(e["status"] == "pending" for e in entries):
-        agg_status, agg_text = "pending", f"{n} configs · not run"
-    elif k == n:
-        agg_status, agg_text = "reproduced", f"{k}/{n} configs reproduced"
-    else:
-        agg_status, agg_text = "deviation", f"{k}/{n} configs reproduced"
+        return "pending", f"{n} configs · not run"
+    if k == n:
+        return "reproduced", f"{k}/{n} configs reproduced"
+    if k == 0 and all(e["status"] == "error" for e in entries):
+        return "error", f"{n} configs · error"
+    return "deviation", f"{k}/{n} configs reproduced"
+
+
+# unified list order: reproduced claims first, then deviation/error/pending,
+# then the catalog algorithms with no claims yet (gray rows)
+AGG_RANK = {"reproduced": 0, "deviation": 1, "error": 2, "pending": 3}
+
+
+def render_group(algorithm_name: str, entries: list[dict]) -> str:
+    """Parent row for one algorithm: its dataset/config claims as sub-rows."""
+    n = len(entries)
+    agg_status, agg_text = _group_agg(entries)
     venue = entries[0]["source"]["venue"].split(",")[0]
+    search = (
+        algorithm_name + " " + " ".join(sorted({e["algorithm"] for e in entries}))
+    ).lower()
     return f"""
-<details class="claim-group">
+<details class="claim-group" data-name="{esc(search)}">
   <summary>
     <div class="alg">{esc(algorithm_name)}<span class="lib">{esc(venue)}</span></div>
     <div class="grp-note">{n} dataset/config claim{"s" if n > 1 else ""}</div>
@@ -252,27 +267,41 @@ def render_group(algorithm_name: str, entries: list[dict]) -> str:
 </details>"""
 
 
+def render_notrun_row(alg: dict) -> str:
+    """Catalog algorithm without any curated claim: a gray unified-list row."""
+    runnable = (
+        "runnable in this environment"
+        if alg["enabled"]
+        else "not runnable in this environment"
+    )
+    search = (alg["name"] + " " + alg["id"]).lower()
+    return f"""
+<div class="alg-row not-run" data-name="{esc(search)}" title="{esc(alg['id'])} · {runnable}">
+  <div class="alg">{esc(alg['name'])}<span class="tag">{esc(alg['source'])}</span></div>
+  <div class="grp-note">{runnable}</div>
+  <div class="row-end">{_badge("notrun", "not run yet")}</div>
+</div>"""
+
+
 def render_section(task: dict, entries: list[dict], algs: list[dict]) -> str:
-    if entries:
-        groups: dict[str, list[dict]] = {}
-        for e in entries:
-            groups.setdefault(e["algorithm_name"], []).append(e)
-        claims = (
-            '<div class="claim-groups">'
-            + "".join(render_group(name, es) for name, es in groups.items())
-            + "</div>"
-        )
+    groups: dict[str, list[dict]] = {}
+    for e in entries:
+        groups.setdefault(e["algorithm_name"], []).append(e)
+    ordered = sorted(
+        groups.items(), key=lambda kv: (AGG_RANK[_group_agg(kv[1])[0]], kv[0].lower())
+    )
+    claimed = {e["algorithm"] for e in entries}
+    notrun = [a for a in algs if a["name"] not in claimed and a["id"] not in claimed]
+    rows = "".join(render_group(name, es) for name, es in ordered)
+    rows += "".join(render_notrun_row(a) for a in notrun)
+    if rows:
+        alg_list = f'<div class="claim-groups">{rows}</div>'
     else:
-        claims = (
-            '<div class="empty">No groundtruth claims curated yet for this task — '
+        alg_list = (
+            '<div class="empty">No algorithms or groundtruth claims yet for this task — '
             "add one under <code>playground/benchmark/groundtruth/</code>.</div>"
         )
-    chips = "".join(
-        f'<span class="chip {"enabled" if a["enabled"] else "disabled"}" '
-        f'title="{esc(a["id"])}" data-name="{esc((a["name"] + " " + a["id"]).lower())}">'
-        f'<span class="dot"></span>{esc(a["name"])}<span class="tag">{esc(a["source"])}</span></span>'
-        for a in algs
-    )
+    label = f"Algorithms — {len(ordered)} with tracked claims · {len(notrun)} not run yet"
     return f"""
 <section class="task-section panel" id="task-{esc(task['id'])}">
   <div class="panel-head">
@@ -281,12 +310,9 @@ def render_section(task: dict, entries: list[dict], algs: list[dict]) -> str:
   </div>
   <div class="panel-sub">{task['enabled_count']} of {task['algorithm_count']} algorithms runnable in this environment</div>
 
-  <div class="section-label">Tracked claims ({len(entries)})</div>
-  {claims}
-
-  <div class="section-label">Catalog — all {len(algs)} {esc(task['name'].lower())} algorithms</div>
+  <div class="section-label">{esc(label)}</div>
   <input class="filter" type="search" placeholder="Filter algorithms…" />
-  <div class="chips">{chips}</div>
+  {alg_list}
 </section>"""
 
 
