@@ -215,7 +215,7 @@
        Click a row for the citation, protocol, and commands.</p>
   </section>
 
-  <section class="stats" id="stats"><div class="stat"><div class="num">298</div><div class="lbl">algorithms tracked</div></div><div class="stat"><div class="num">346</div><div class="lbl">groundtruth claims</div></div><div class="stat"><div class="num">288/346</div><div class="lbl">claims reproduced</div></div><div class="stat"><div class="num">83.2%</div><div class="lbl">reproduction rate</div></div></section>
+  <section class="stats" id="stats"><div class="stat"><div class="num">298</div><div class="lbl">algorithms tracked</div></div><div class="stat"><div class="num">370</div><div class="lbl">groundtruth claims</div></div><div class="stat"><div class="num">312/370</div><div class="lbl">claims reproduced</div></div><div class="stat"><div class="num">84.3%</div><div class="lbl">reproduction rate</div></div></section>
 
   <nav class="tabs" id="tabs"><a class="tab" href="#forecasting" data-task="forecasting">Forecasting<span class="cnt">138</span></a><a class="tab" href="#classification" data-task="classification">Classification<span class="cnt">66</span></a><a class="tab" href="#regression" data-task="regression">Regression<span class="cnt">22</span></a><a class="tab" href="#clustering" data-task="clustering">Clustering<span class="cnt">10</span></a><a class="tab" href="#anomaly_detection" data-task="anomaly_detection">Anomaly Detection<span class="cnt">58</span></a><a class="tab" href="#causal" data-task="causal">Causal Discovery<span class="cnt">4</span></a></nav>
 
@@ -15698,9 +15698,1133 @@
   </div>
   <div class="panel-sub">58 of 58 algorithms runnable in this environment</div>
 
-  <div class="section-label">Algorithms — 4 with tracked claims · 54 not run yet</div>
+  <div class="section-label">Algorithms — 8 with tracked claims · 51 not run yet</div>
   <input class="filter" type="search" placeholder="Filter algorithms…" />
   <div class="claim-groups">
+<details class="claim-group" data-name="cblof pyodcblofdetector">
+  <summary>
+    <div class="alg">CBLOF<span class="lib">libraryts benchmark</span></div>
+    <div class="grp-note">4 dataset/config claims</div>
+    <div style="display:flex;align-items:center;justify-content:flex-end;gap:10px">
+      <span class="status reproduced"><span class="dot"></span>4/4 configs reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="group-body">
+<details class="claim">
+  <summary>
+    <div class="ds">YAHOO (TSB-UAD, 367 series)<span class="win">per-series · dataset average</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">AUC-ROC</span> 0.7771→0.7794 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm PyODCBLOFDetector --dataset tsb-yahoo --model-id bench-detection-cblof-yahoo-auc --param n_clusters=10 --param contamination=0.1<button class="copy" data-cmd="libraryts train --algorithm PyODCBLOFDetector --dataset tsb-yahoo --model-id bench-detection-cblof-yahoo-auc --param n_clusters=10 --param contamination=0.1">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-detection-cblof-yahoo-auc --compact<button class="copy" data-cmd="libraryts run --model-id bench-detection-cblof-yahoo-auc --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/TheDatumOrg/TSB-UAD" target="_blank" rel="noopener">libraryts baseline run (no public per-dataset values)</a><br/>
+          libraryts benchmark, this repository · Measured 2026-10-15 via `libraryts train/run --algorithm PyODCBLOFDetector --dataset tsb-yahoo` (model probe-cblof10-yahoo); TSB-UAD README &#x27;Overall Results&#x27; table has no CBLOF column
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 367 YAHOO series</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.1 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 11:53:22 UTC · 72.5s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">TSB-UAD (PVLDB 2022) does not evaluate CBLOF and TSB-AD (NeurIPS 2024) publishes no results for it, so no public per-dataset AUC-ROC exists for these series; the groundtruth is a libraryts baseline measured with this exact pipeline on 2026-10-15. n_clusters=10 instead of the catalog default 8: with 8, pyod CBLOF fails its cluster-separation check on 14/367 YAHOO series. NAB and Genesis are excluded: they contain constant/binary series (NAB_data_art0_1/art0_3, genesis-anomalies.test.csv@17) on which CBLOF cannot form valid clusters at any n_clusters, and libraryts aborts multi-series training on the first failing series. Dodgers is excluded as well: its single series makes the unseeded k-means baseline swing 0.36-0.41 across repeats. k-means is unseeded; three repeat runs of this pipeline spread &lt;=0.012 on the four retained datasets, so tolerance 0.10 is comfortable.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;AUC-ROC&quot;: 0.7793640104812096, &quot;Precision&quot;: 0.037465092070131704, &quot;Recall&quot;: 0.5902430663720408, &quot;F1&quot;: 0.062360630288268507, &quot;Series&quot;: 367}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">MITDB (TSB-UAD, 32 series)<span class="win">per-series · dataset average</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">AUC-ROC</span> 0.5734→0.5786 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm PyODCBLOFDetector --dataset tsb-mitdb --model-id bench-detection-cblof-mitdb-auc --param n_clusters=10 --param contamination=0.1<button class="copy" data-cmd="libraryts train --algorithm PyODCBLOFDetector --dataset tsb-mitdb --model-id bench-detection-cblof-mitdb-auc --param n_clusters=10 --param contamination=0.1">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-detection-cblof-mitdb-auc --compact<button class="copy" data-cmd="libraryts run --model-id bench-detection-cblof-mitdb-auc --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/TheDatumOrg/TSB-UAD" target="_blank" rel="noopener">libraryts baseline run (no public per-dataset values)</a><br/>
+          libraryts benchmark, this repository · Measured 2026-10-15 via `libraryts train/run --algorithm PyODCBLOFDetector --dataset tsb-mitdb` (model probe-cblof10-mitdb); TSB-UAD README &#x27;Overall Results&#x27; table has no CBLOF column
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 32 MITDB series</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.1 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 11:54:58 UTC · 95.6s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">TSB-UAD (PVLDB 2022) does not evaluate CBLOF and TSB-AD (NeurIPS 2024) publishes no results for it, so no public per-dataset AUC-ROC exists for these series; the groundtruth is a libraryts baseline measured with this exact pipeline on 2026-10-15. n_clusters=10 instead of the catalog default 8: with 8, pyod CBLOF fails its cluster-separation check on 14/367 YAHOO series. NAB and Genesis are excluded: they contain constant/binary series (NAB_data_art0_1/art0_3, genesis-anomalies.test.csv@17) on which CBLOF cannot form valid clusters at any n_clusters, and libraryts aborts multi-series training on the first failing series. Dodgers is excluded as well: its single series makes the unseeded k-means baseline swing 0.36-0.41 across repeats. k-means is unseeded; three repeat runs of this pipeline spread &lt;=0.012 on the four retained datasets, so tolerance 0.10 is comfortable.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;AUC-ROC&quot;: 0.5786153178339583, &quot;Precision&quot;: 0.20170383897844907, &quot;Recall&quot;: 0.20358925953528273, &quot;F1&quot;: 0.13839532498790236, &quot;Series&quot;: 32}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Occupancy (TSB-UAD, 10 series)<span class="win">per-series · dataset average</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">AUC-ROC</span> 0.7398→0.7446 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm PyODCBLOFDetector --dataset tsb-occupancy --model-id bench-detection-cblof-occupancy-auc --param n_clusters=10 --param contamination=0.1<button class="copy" data-cmd="libraryts train --algorithm PyODCBLOFDetector --dataset tsb-occupancy --model-id bench-detection-cblof-occupancy-auc --param n_clusters=10 --param contamination=0.1">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-detection-cblof-occupancy-auc --compact<button class="copy" data-cmd="libraryts run --model-id bench-detection-cblof-occupancy-auc --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/TheDatumOrg/TSB-UAD" target="_blank" rel="noopener">libraryts baseline run (no public per-dataset values)</a><br/>
+          libraryts benchmark, this repository · Measured 2026-10-15 via `libraryts train/run --algorithm PyODCBLOFDetector --dataset tsb-occupancy` (model probe-cblof10-occupancy); TSB-UAD README &#x27;Overall Results&#x27; table has no CBLOF column
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 10 Occupancy series</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.1 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 11:55:14 UTC · 15.8s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">TSB-UAD (PVLDB 2022) does not evaluate CBLOF and TSB-AD (NeurIPS 2024) publishes no results for it, so no public per-dataset AUC-ROC exists for these series; the groundtruth is a libraryts baseline measured with this exact pipeline on 2026-10-15. n_clusters=10 instead of the catalog default 8: with 8, pyod CBLOF fails its cluster-separation check on 14/367 YAHOO series. NAB and Genesis are excluded: they contain constant/binary series (NAB_data_art0_1/art0_3, genesis-anomalies.test.csv@17) on which CBLOF cannot form valid clusters at any n_clusters, and libraryts aborts multi-series training on the first failing series. Dodgers is excluded as well: its single series makes the unseeded k-means baseline swing 0.36-0.41 across repeats. k-means is unseeded; three repeat runs of this pipeline spread &lt;=0.012 on the four retained datasets, so tolerance 0.10 is comfortable. Occupancy has only 10 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;AUC-ROC&quot;: 0.744576355092307, &quot;Precision&quot;: 0.6350077085340385, &quot;Recall&quot;: 0.21996077134698458, &quot;F1&quot;: 0.3218920300199335, &quot;Series&quot;: 10}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">MGAB (TSB-UAD, 10 series)<span class="win">per-series · dataset average</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">AUC-ROC</span> 0.5143→0.5192 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm PyODCBLOFDetector --dataset tsb-mgab --model-id bench-detection-cblof-mgab-auc --param n_clusters=10 --param contamination=0.1<button class="copy" data-cmd="libraryts train --algorithm PyODCBLOFDetector --dataset tsb-mgab --model-id bench-detection-cblof-mgab-auc --param n_clusters=10 --param contamination=0.1">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-detection-cblof-mgab-auc --compact<button class="copy" data-cmd="libraryts run --model-id bench-detection-cblof-mgab-auc --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/TheDatumOrg/TSB-UAD" target="_blank" rel="noopener">libraryts baseline run (no public per-dataset values)</a><br/>
+          libraryts benchmark, this repository · Measured 2026-10-15 via `libraryts train/run --algorithm PyODCBLOFDetector --dataset tsb-mgab` (model probe-cblof10-mgab); TSB-UAD README &#x27;Overall Results&#x27; table has no CBLOF column
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 10 MGAB series</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.1 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 11:55:34 UTC · 20.2s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">TSB-UAD (PVLDB 2022) does not evaluate CBLOF and TSB-AD (NeurIPS 2024) publishes no results for it, so no public per-dataset AUC-ROC exists for these series; the groundtruth is a libraryts baseline measured with this exact pipeline on 2026-10-15. n_clusters=10 instead of the catalog default 8: with 8, pyod CBLOF fails its cluster-separation check on 14/367 YAHOO series. NAB and Genesis are excluded: they contain constant/binary series (NAB_data_art0_1/art0_3, genesis-anomalies.test.csv@17) on which CBLOF cannot form valid clusters at any n_clusters, and libraryts aborts multi-series training on the first failing series. Dodgers is excluded as well: its single series makes the unseeded k-means baseline swing 0.36-0.41 across repeats. k-means is unseeded; three repeat runs of this pipeline spread &lt;=0.012 on the four retained datasets, so tolerance 0.10 is comfortable.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;AUC-ROC&quot;: 0.5191824198396794, &quot;Precision&quot;: 0.00223, &quot;Recall&quot;: 0.1115, &quot;F1&quot;: 0.004372549019607844, &quot;Series&quot;: 10}</div></div>
+    </div>
+  </div>
+</details></div>
+</details>
+<details class="claim-group" data-name="copod pyodcopoddetector">
+  <summary>
+    <div class="alg">COPOD<span class="lib">libraryts benchmark</span></div>
+    <div class="grp-note">7 dataset/config claims</div>
+    <div style="display:flex;align-items:center;justify-content:flex-end;gap:10px">
+      <span class="status reproduced"><span class="dot"></span>7/7 configs reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="group-body">
+<details class="claim">
+  <summary>
+    <div class="ds">YAHOO (TSB-UAD, 367 series)<span class="win">per-series · dataset average</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">AUC-ROC</span> 0.7952→0.7952 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm PyODCOPODDetector --dataset tsb-yahoo --model-id bench-detection-copod-yahoo-auc --param contamination=0.1<button class="copy" data-cmd="libraryts train --algorithm PyODCOPODDetector --dataset tsb-yahoo --model-id bench-detection-copod-yahoo-auc --param contamination=0.1">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-detection-copod-yahoo-auc --compact<button class="copy" data-cmd="libraryts run --model-id bench-detection-copod-yahoo-auc --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/TheDatumOrg/TSB-UAD" target="_blank" rel="noopener">libraryts baseline run (no public per-dataset values)</a><br/>
+          libraryts benchmark, this repository · Measured 2026-10-15 via `libraryts train/run --algorithm PyODCOPODDetector --dataset tsb-yahoo` (model probe-copod-yahoo); TSB-UAD README &#x27;Overall Results&#x27; table has no COPOD column
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 367 YAHOO series</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.05 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 11:55:50 UTC · 16.2s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">TSB-UAD (PVLDB 2022) does not evaluate COPOD, and TSB-AD (NeurIPS 2024) lists it among its methods but publishes no results for it, so no public per-dataset AUC-ROC exists for these series; the groundtruth is a libraryts baseline measured with this exact pipeline on 2026-10-15. Tolerance 0.05 is a re-run sanity band (COPOD is deterministic), not a paper comparison. Protocol mirrors the other TSB-UAD entries: per-series unsupervised fit, detector applied point-wise.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;AUC-ROC&quot;: 0.795229529231357, &quot;Precision&quot;: 0.040748844612031286, &quot;Recall&quot;: 0.5949354751594056, &quot;F1&quot;: 0.06673925889809747, &quot;Series&quot;: 367}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">MITDB (TSB-UAD, 32 series)<span class="win">per-series · dataset average</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">AUC-ROC</span> 0.5915→0.5915 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm PyODCOPODDetector --dataset tsb-mitdb --model-id bench-detection-copod-mitdb-auc --param contamination=0.1<button class="copy" data-cmd="libraryts train --algorithm PyODCOPODDetector --dataset tsb-mitdb --model-id bench-detection-copod-mitdb-auc --param contamination=0.1">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-detection-copod-mitdb-auc --compact<button class="copy" data-cmd="libraryts run --model-id bench-detection-copod-mitdb-auc --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/TheDatumOrg/TSB-UAD" target="_blank" rel="noopener">libraryts baseline run (no public per-dataset values)</a><br/>
+          libraryts benchmark, this repository · Measured 2026-10-15 via `libraryts train/run --algorithm PyODCOPODDetector --dataset tsb-mitdb` (model probe-copod-mitdb); TSB-UAD README &#x27;Overall Results&#x27; table has no COPOD column
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 32 MITDB series</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.05 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 11:57:03 UTC · 72.5s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">TSB-UAD (PVLDB 2022) does not evaluate COPOD, and TSB-AD (NeurIPS 2024) lists it among its methods but publishes no results for it, so no public per-dataset AUC-ROC exists for these series; the groundtruth is a libraryts baseline measured with this exact pipeline on 2026-10-15. Tolerance 0.05 is a re-run sanity band (COPOD is deterministic), not a paper comparison. Protocol mirrors the other TSB-UAD entries: per-series unsupervised fit, detector applied point-wise.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;AUC-ROC&quot;: 0.5914783254361129, &quot;Precision&quot;: 0.16162747118105533, &quot;Recall&quot;: 0.17399518941809355, &quot;F1&quot;: 0.11229306160478775, &quot;Series&quot;: 32}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">NAB (TSB-UAD, 58 series)<span class="win">per-series · dataset average</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">AUC-ROC</span> 0.5555→0.5555 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm PyODCOPODDetector --dataset tsb-nab --model-id bench-detection-copod-nab-auc --param contamination=0.1<button class="copy" data-cmd="libraryts train --algorithm PyODCOPODDetector --dataset tsb-nab --model-id bench-detection-copod-nab-auc --param contamination=0.1">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-detection-copod-nab-auc --compact<button class="copy" data-cmd="libraryts run --model-id bench-detection-copod-nab-auc --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/TheDatumOrg/TSB-UAD" target="_blank" rel="noopener">libraryts baseline run (no public per-dataset values)</a><br/>
+          libraryts benchmark, this repository · Measured 2026-10-15 via `libraryts train/run --algorithm PyODCOPODDetector --dataset tsb-nab` (model probe-copod-nab); TSB-UAD README &#x27;Overall Results&#x27; table has no COPOD column
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 58 NAB series</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.05 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 11:57:13 UTC · 10.2s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">TSB-UAD (PVLDB 2022) does not evaluate COPOD, and TSB-AD (NeurIPS 2024) lists it among its methods but publishes no results for it, so no public per-dataset AUC-ROC exists for these series; the groundtruth is a libraryts baseline measured with this exact pipeline on 2026-10-15. Tolerance 0.05 is a re-run sanity band (COPOD is deterministic), not a paper comparison. Protocol mirrors the other TSB-UAD entries: per-series unsupervised fit, detector applied point-wise.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;AUC-ROC&quot;: 0.5555298446547993, &quot;Precision&quot;: 0.16352679124487898, &quot;Recall&quot;: 0.15831255773430128, &quot;F1&quot;: 0.15915186369265794, &quot;Series&quot;: 58}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Dodgers (TSB-UAD, 1 series)<span class="win">per-series · dataset average</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">AUC-ROC</span> 0.6205→0.6205 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm PyODCOPODDetector --dataset tsb-dodgers --model-id bench-detection-copod-dodgers-auc --param contamination=0.1<button class="copy" data-cmd="libraryts train --algorithm PyODCOPODDetector --dataset tsb-dodgers --model-id bench-detection-copod-dodgers-auc --param contamination=0.1">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-detection-copod-dodgers-auc --compact<button class="copy" data-cmd="libraryts run --model-id bench-detection-copod-dodgers-auc --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/TheDatumOrg/TSB-UAD" target="_blank" rel="noopener">libraryts baseline run (no public per-dataset values)</a><br/>
+          libraryts benchmark, this repository · Measured 2026-10-15 via `libraryts train/run --algorithm PyODCOPODDetector --dataset tsb-dodgers` (model probe-copod-dodgers); TSB-UAD README &#x27;Overall Results&#x27; table has no COPOD column
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 1 Dodgers series</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.05 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 11:57:22 UTC · 9.48s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">TSB-UAD (PVLDB 2022) does not evaluate COPOD, and TSB-AD (NeurIPS 2024) lists it among its methods but publishes no results for it, so no public per-dataset AUC-ROC exists for these series; the groundtruth is a libraryts baseline measured with this exact pipeline on 2026-10-15. Tolerance 0.05 is a re-run sanity band (COPOD is deterministic), not a paper comparison. Protocol mirrors the other TSB-UAD entries: per-series unsupervised fit, detector applied point-wise. Dodgers has only 1 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;AUC-ROC&quot;: 0.620458234186163, &quot;Precision&quot;: 0.051747616886064454, &quot;Recall&quot;: 0.040627227369921595, &quot;F1&quot;: 0.04551806747853863, &quot;Series&quot;: 1}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Occupancy (TSB-UAD, 10 series)<span class="win">per-series · dataset average</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">AUC-ROC</span> 0.8289→0.8289 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm PyODCOPODDetector --dataset tsb-occupancy --model-id bench-detection-copod-occupancy-auc --param contamination=0.1<button class="copy" data-cmd="libraryts train --algorithm PyODCOPODDetector --dataset tsb-occupancy --model-id bench-detection-copod-occupancy-auc --param contamination=0.1">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-detection-copod-occupancy-auc --compact<button class="copy" data-cmd="libraryts run --model-id bench-detection-copod-occupancy-auc --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/TheDatumOrg/TSB-UAD" target="_blank" rel="noopener">libraryts baseline run (no public per-dataset values)</a><br/>
+          libraryts benchmark, this repository · Measured 2026-10-15 via `libraryts train/run --algorithm PyODCOPODDetector --dataset tsb-occupancy` (model probe-copod-occupancy); TSB-UAD README &#x27;Overall Results&#x27; table has no COPOD column
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 10 Occupancy series</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.05 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 11:57:31 UTC · 8.31s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">TSB-UAD (PVLDB 2022) does not evaluate COPOD, and TSB-AD (NeurIPS 2024) lists it among its methods but publishes no results for it, so no public per-dataset AUC-ROC exists for these series; the groundtruth is a libraryts baseline measured with this exact pipeline on 2026-10-15. Tolerance 0.05 is a re-run sanity band (COPOD is deterministic), not a paper comparison. Protocol mirrors the other TSB-UAD entries: per-series unsupervised fit, detector applied point-wise. Occupancy has only 10 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;AUC-ROC&quot;: 0.828854320163299, &quot;Precision&quot;: 0.7806807041386564, &quot;Recall&quot;: 0.28163183306256945, &quot;F1&quot;: 0.40814264723320476, &quot;Series&quot;: 10}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">MGAB (TSB-UAD, 10 series)<span class="win">per-series · dataset average</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">AUC-ROC</span> 0.5881→0.5881 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm PyODCOPODDetector --dataset tsb-mgab --model-id bench-detection-copod-mgab-auc --param contamination=0.1<button class="copy" data-cmd="libraryts train --algorithm PyODCOPODDetector --dataset tsb-mgab --model-id bench-detection-copod-mgab-auc --param contamination=0.1">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-detection-copod-mgab-auc --compact<button class="copy" data-cmd="libraryts run --model-id bench-detection-copod-mgab-auc --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/TheDatumOrg/TSB-UAD" target="_blank" rel="noopener">libraryts baseline run (no public per-dataset values)</a><br/>
+          libraryts benchmark, this repository · Measured 2026-10-15 via `libraryts train/run --algorithm PyODCOPODDetector --dataset tsb-mgab` (model probe-copod-mgab); TSB-UAD README &#x27;Overall Results&#x27; table has no COPOD column
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 10 MGAB series</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.05 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 11:57:43 UTC · 12.3s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">TSB-UAD (PVLDB 2022) does not evaluate COPOD, and TSB-AD (NeurIPS 2024) lists it among its methods but publishes no results for it, so no public per-dataset AUC-ROC exists for these series; the groundtruth is a libraryts baseline measured with this exact pipeline on 2026-10-15. Tolerance 0.05 is a re-run sanity band (COPOD is deterministic), not a paper comparison. Protocol mirrors the other TSB-UAD entries: per-series unsupervised fit, detector applied point-wise.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;AUC-ROC&quot;: 0.5880918537074148, &quot;Precision&quot;: 0.0033, &quot;Recall&quot;: 0.165, &quot;F1&quot;: 0.006470588235294119, &quot;Series&quot;: 10}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Genesis (TSB-UAD, 6 series)<span class="win">per-series · dataset average</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">AUC-ROC</span> 0.6419→0.6419 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm PyODCOPODDetector --dataset tsb-genesis --model-id bench-detection-copod-genesis-auc --param contamination=0.1<button class="copy" data-cmd="libraryts train --algorithm PyODCOPODDetector --dataset tsb-genesis --model-id bench-detection-copod-genesis-auc --param contamination=0.1">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-detection-copod-genesis-auc --compact<button class="copy" data-cmd="libraryts run --model-id bench-detection-copod-genesis-auc --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/TheDatumOrg/TSB-UAD" target="_blank" rel="noopener">libraryts baseline run (no public per-dataset values)</a><br/>
+          libraryts benchmark, this repository · Measured 2026-10-15 via `libraryts train/run --algorithm PyODCOPODDetector --dataset tsb-genesis` (model probe-copod-genesis); TSB-UAD README &#x27;Overall Results&#x27; table has no COPOD column
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 6 Genesis series</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.05 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 11:58:03 UTC · 20.1s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">TSB-UAD (PVLDB 2022) does not evaluate COPOD, and TSB-AD (NeurIPS 2024) lists it among its methods but publishes no results for it, so no public per-dataset AUC-ROC exists for these series; the groundtruth is a libraryts baseline measured with this exact pipeline on 2026-10-15. Tolerance 0.05 is a re-run sanity band (COPOD is deterministic), not a paper comparison. Protocol mirrors the other TSB-UAD entries: per-series unsupervised fit, detector applied point-wise. Genesis has only 6 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;AUC-ROC&quot;: 0.6418923933209647, &quot;Precision&quot;: 0.00963837097838633, &quot;Recall&quot;: 0.3133333333333333, &quot;F1&quot;: 0.018701463710041586, &quot;Series&quot;: 6}</div></div>
+    </div>
+  </div>
+</details></div>
+</details>
+<details class="claim-group" data-name="iforest1 pyodiforestdetector">
+  <summary>
+    <div class="alg">IForest1<span class="lib">PVLDB 15(8):1697-1711</span></div>
+    <div class="grp-note">7 dataset/config claims</div>
+    <div style="display:flex;align-items:center;justify-content:flex-end;gap:10px">
+      <span class="status reproduced"><span class="dot"></span>7/7 configs reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="group-body">
+<details class="claim">
+  <summary>
+    <div class="ds">YAHOO (TSB-UAD, 367 series)<span class="win">per-series · dataset average</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">AUC-ROC</span> 0.81→0.8146 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm PyODIForestDetector --dataset tsb-yahoo --model-id bench-detection-iforest1-yahoo-auc --param contamination=0.1 --param n_estimators=100<button class="copy" data-cmd="libraryts train --algorithm PyODIForestDetector --dataset tsb-yahoo --model-id bench-detection-iforest1-yahoo-auc --param contamination=0.1 --param n_estimators=100">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-detection-iforest1-yahoo-auc --compact<button class="copy" data-cmd="libraryts run --model-id bench-detection-iforest1-yahoo-auc --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/TheDatumOrg/TSB-UAD" target="_blank" rel="noopener">TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)</a><br/>
+          PVLDB 15(8):1697-1711, 2022 · README &#x27;Overall Results&#x27; table, row YAHOO, column IForest1 (AUC 0.81, F 0.18)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Unsupervised fit per series; detector applied point-wise (TSB-UAD IForest1 uses a length-1 sliding window); point-wise AUC-ROC averaged over all 367 YAHOO series</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.15 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 11:44:36 UTC · 89.4s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">TSB-UAD&#x27;s IForest1 is point-wise IForest (sliding window of length 1) — the protocol libraryts&#x27; PyODIForestDetector actually implements (the pyod model sees raw 1-D points). Same detector class and parameters as the windowed IForest claims in this file; groundtruth comes from the IForest1 column, so these rows are the apples-to-apples counterparts of those claims.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;AUC-ROC&quot;: 0.8146121871609596, &quot;Precision&quot;: 0.041635496385999435, &quot;Recall&quot;: 0.6086409733727928, &quot;F1&quot;: 0.06814518364696952, &quot;Series&quot;: 367}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">MITDB (TSB-UAD, 32 series)<span class="win">per-series · dataset average</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">AUC-ROC</span> 0.61→0.6059 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm PyODIForestDetector --dataset tsb-mitdb --model-id bench-detection-iforest1-mitdb-auc --param contamination=0.1 --param n_estimators=100<button class="copy" data-cmd="libraryts train --algorithm PyODIForestDetector --dataset tsb-mitdb --model-id bench-detection-iforest1-mitdb-auc --param contamination=0.1 --param n_estimators=100">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-detection-iforest1-mitdb-auc --compact<button class="copy" data-cmd="libraryts run --model-id bench-detection-iforest1-mitdb-auc --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/TheDatumOrg/TSB-UAD" target="_blank" rel="noopener">TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)</a><br/>
+          PVLDB 15(8):1697-1711, 2022 · README &#x27;Overall Results&#x27; table, row MITDB, column IForest1 (AUC 0.61, F 0.06)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Unsupervised fit per series; detector applied point-wise (TSB-UAD IForest1 uses a length-1 sliding window); point-wise AUC-ROC averaged over all 32 MITDB series</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.15 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 11:49:26 UTC · 289s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">TSB-UAD&#x27;s IForest1 is point-wise IForest (sliding window of length 1) — the protocol libraryts&#x27; PyODIForestDetector actually implements (the pyod model sees raw 1-D points). Same detector class and parameters as the windowed IForest claims in this file; groundtruth comes from the IForest1 column, so these rows are the apples-to-apples counterparts of those claims.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;AUC-ROC&quot;: 0.6059062711427381, &quot;Precision&quot;: 0.1998688768429383, &quot;Recall&quot;: 0.20750846274008872, &quot;F1&quot;: 0.1384182105449134, &quot;Series&quot;: 32}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">NAB (TSB-UAD, 58 series)<span class="win">per-series · dataset average</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">AUC-ROC</span> 0.56→0.5651 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm PyODIForestDetector --dataset tsb-nab --model-id bench-detection-iforest1-nab-auc --param contamination=0.1 --param n_estimators=100<button class="copy" data-cmd="libraryts train --algorithm PyODIForestDetector --dataset tsb-nab --model-id bench-detection-iforest1-nab-auc --param contamination=0.1 --param n_estimators=100">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-detection-iforest1-nab-auc --compact<button class="copy" data-cmd="libraryts run --model-id bench-detection-iforest1-nab-auc --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/TheDatumOrg/TSB-UAD" target="_blank" rel="noopener">TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)</a><br/>
+          PVLDB 15(8):1697-1711, 2022 · README &#x27;Overall Results&#x27; table, row NAB, column IForest1 (AUC 0.56, F 0.1)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Unsupervised fit per series; detector applied point-wise (TSB-UAD IForest1 uses a length-1 sliding window); point-wise AUC-ROC averaged over all 58 NAB series</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.15 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 11:50:01 UTC · 35.5s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">TSB-UAD&#x27;s IForest1 is point-wise IForest (sliding window of length 1) — the protocol libraryts&#x27; PyODIForestDetector actually implements (the pyod model sees raw 1-D points). Same detector class and parameters as the windowed IForest claims in this file; groundtruth comes from the IForest1 column, so these rows are the apples-to-apples counterparts of those claims.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;AUC-ROC&quot;: 0.5651139687206831, &quot;Precision&quot;: 0.1629234760739216, &quot;Recall&quot;: 0.1596535273259869, &quot;F1&quot;: 0.16033300563792904, &quot;Series&quot;: 58}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Dodgers (TSB-UAD, 1 series)<span class="win">per-series · dataset average</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">AUC-ROC</span> 0.64→0.6371 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm PyODIForestDetector --dataset tsb-dodgers --model-id bench-detection-iforest1-dodgers-auc --param contamination=0.1 --param n_estimators=100<button class="copy" data-cmd="libraryts train --algorithm PyODIForestDetector --dataset tsb-dodgers --model-id bench-detection-iforest1-dodgers-auc --param contamination=0.1 --param n_estimators=100">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-detection-iforest1-dodgers-auc --compact<button class="copy" data-cmd="libraryts run --model-id bench-detection-iforest1-dodgers-auc --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/TheDatumOrg/TSB-UAD" target="_blank" rel="noopener">TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)</a><br/>
+          PVLDB 15(8):1697-1711, 2022 · README &#x27;Overall Results&#x27; table, row Dodgers, column IForest1 (AUC 0.64, F 0.02)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Unsupervised fit per series; detector applied point-wise (TSB-UAD IForest1 uses a length-1 sliding window); point-wise AUC-ROC averaged over all 1 Dodgers series</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.15 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 11:50:09 UTC · 7.62s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">TSB-UAD&#x27;s IForest1 is point-wise IForest (sliding window of length 1) — the protocol libraryts&#x27; PyODIForestDetector actually implements (the pyod model sees raw 1-D points). Same detector class and parameters as the windowed IForest claims in this file; groundtruth comes from the IForest1 column, so these rows are the apples-to-apples counterparts of those claims. Dodgers has only 1 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;AUC-ROC&quot;: 0.6370588379269445, &quot;Precision&quot;: 0.04537286612758311, &quot;Recall&quot;: 0.03599429793300071, &quot;F1&quot;: 0.04014308426073132, &quot;Series&quot;: 1}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Occupancy (TSB-UAD, 10 series)<span class="win">per-series · dataset average</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">AUC-ROC</span> 0.78→0.7891 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm PyODIForestDetector --dataset tsb-occupancy --model-id bench-detection-iforest1-occupancy-auc --param contamination=0.1 --param n_estimators=100<button class="copy" data-cmd="libraryts train --algorithm PyODIForestDetector --dataset tsb-occupancy --model-id bench-detection-iforest1-occupancy-auc --param contamination=0.1 --param n_estimators=100">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-detection-iforest1-occupancy-auc --compact<button class="copy" data-cmd="libraryts run --model-id bench-detection-iforest1-occupancy-auc --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/TheDatumOrg/TSB-UAD" target="_blank" rel="noopener">TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)</a><br/>
+          PVLDB 15(8):1697-1711, 2022 · README &#x27;Overall Results&#x27; table, row Occupancy, column IForest1 (AUC 0.78, F 0.07)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Unsupervised fit per series; detector applied point-wise (TSB-UAD IForest1 uses a length-1 sliding window); point-wise AUC-ROC averaged over all 10 Occupancy series</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.15 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 11:50:18 UTC · 9.26s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">TSB-UAD&#x27;s IForest1 is point-wise IForest (sliding window of length 1) — the protocol libraryts&#x27; PyODIForestDetector actually implements (the pyod model sees raw 1-D points). Same detector class and parameters as the windowed IForest claims in this file; groundtruth comes from the IForest1 column, so these rows are the apples-to-apples counterparts of those claims. Occupancy has only 10 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;AUC-ROC&quot;: 0.7891193146926152, &quot;Precision&quot;: 0.6457156048368241, &quot;Recall&quot;: 0.2244726169552572, &quot;F1&quot;: 0.3284510878684256, &quot;Series&quot;: 10}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">MGAB (TSB-UAD, 10 series)<span class="win">per-series · dataset average</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">AUC-ROC</span> 0.58→0.5751 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm PyODIForestDetector --dataset tsb-mgab --model-id bench-detection-iforest1-mgab-auc --param contamination=0.1 --param n_estimators=100<button class="copy" data-cmd="libraryts train --algorithm PyODIForestDetector --dataset tsb-mgab --model-id bench-detection-iforest1-mgab-auc --param contamination=0.1 --param n_estimators=100">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-detection-iforest1-mgab-auc --compact<button class="copy" data-cmd="libraryts run --model-id bench-detection-iforest1-mgab-auc --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/TheDatumOrg/TSB-UAD" target="_blank" rel="noopener">TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)</a><br/>
+          PVLDB 15(8):1697-1711, 2022 · README &#x27;Overall Results&#x27; table, row MGAB, column IForest1 (AUC 0.58, F 0.0)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Unsupervised fit per series; detector applied point-wise (TSB-UAD IForest1 uses a length-1 sliding window); point-wise AUC-ROC averaged over all 10 MGAB series</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.15 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 11:50:43 UTC · 24.9s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">TSB-UAD&#x27;s IForest1 is point-wise IForest (sliding window of length 1) — the protocol libraryts&#x27; PyODIForestDetector actually implements (the pyod model sees raw 1-D points). Same detector class and parameters as the windowed IForest claims in this file; groundtruth comes from the IForest1 column, so these rows are the apples-to-apples counterparts of those claims.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;AUC-ROC&quot;: 0.5751186097194388, &quot;Precision&quot;: 0.002334971950840398, &quot;Recall&quot;: 0.11649999999999998, &quot;F1&quot;: 0.0045781843483706725, &quot;Series&quot;: 10}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Genesis (TSB-UAD, 6 series)<span class="win">per-series · dataset average</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">AUC-ROC</span> 0.66→0.6653 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm PyODIForestDetector --dataset tsb-genesis --model-id bench-detection-iforest1-genesis-auc --param contamination=0.1 --param n_estimators=100<button class="copy" data-cmd="libraryts train --algorithm PyODIForestDetector --dataset tsb-genesis --model-id bench-detection-iforest1-genesis-auc --param contamination=0.1 --param n_estimators=100">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-detection-iforest1-genesis-auc --compact<button class="copy" data-cmd="libraryts run --model-id bench-detection-iforest1-genesis-auc --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/TheDatumOrg/TSB-UAD" target="_blank" rel="noopener">TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)</a><br/>
+          PVLDB 15(8):1697-1711, 2022 · README &#x27;Overall Results&#x27; table, row Genesis, column IForest1 (AUC 0.66, F 0.19)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Unsupervised fit per series; detector applied point-wise (TSB-UAD IForest1 uses a length-1 sliding window); point-wise AUC-ROC averaged over all 6 Genesis series</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.15 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 11:50:52 UTC · 8.89s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">TSB-UAD&#x27;s IForest1 is point-wise IForest (sliding window of length 1) — the protocol libraryts&#x27; PyODIForestDetector actually implements (the pyod model sees raw 1-D points). Same detector class and parameters as the windowed IForest claims in this file; groundtruth comes from the IForest1 column, so these rows are the apples-to-apples counterparts of those claims. Genesis has only 6 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;AUC-ROC&quot;: 0.6653145743145743, &quot;Precision&quot;: 0.010092659133330795, &quot;Recall&quot;: 0.32666666666666666, &quot;F1&quot;: 0.01958036218692538, &quot;Series&quot;: 6}</div></div>
+    </div>
+  </div>
+</details></div>
+</details>
+<details class="claim-group" data-name="knn pyodknndetector">
+  <summary>
+    <div class="alg">KNN<span class="lib">libraryts benchmark</span></div>
+    <div class="grp-note">6 dataset/config claims</div>
+    <div style="display:flex;align-items:center;justify-content:flex-end;gap:10px">
+      <span class="status reproduced"><span class="dot"></span>6/6 configs reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="group-body">
+<details class="claim">
+  <summary>
+    <div class="ds">YAHOO (TSB-UAD, 367 series)<span class="win">per-series · dataset average</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">AUC-ROC</span> 0.7975→0.7975 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm PyODKNNDetector --dataset tsb-yahoo --model-id bench-detection-knn-yahoo-auc --param contamination=0.1 --param n_neighbors=5<button class="copy" data-cmd="libraryts train --algorithm PyODKNNDetector --dataset tsb-yahoo --model-id bench-detection-knn-yahoo-auc --param contamination=0.1 --param n_neighbors=5">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-detection-knn-yahoo-auc --compact<button class="copy" data-cmd="libraryts run --model-id bench-detection-knn-yahoo-auc --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/TheDatumOrg/TSB-UAD" target="_blank" rel="noopener">libraryts baseline run (no public per-dataset values)</a><br/>
+          libraryts benchmark, this repository · Measured 2026-10-15 via `libraryts train/run --algorithm PyODKNNDetector --dataset tsb-yahoo` (model probe-knn-yahoo); TSB-UAD README &#x27;Overall Results&#x27; table has no KNN column
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 367 YAHOO series</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.05 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 11:51:06 UTC · 14.2s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">TSB-UAD (PVLDB 2022) does not evaluate KNN, and TSB-AD (NeurIPS 2024) only publishes Sub-KNN averages on its own re-curated datasets, so no public per-dataset AUC-ROC exists for these series; the groundtruth is a libraryts baseline measured with this exact pipeline on 2026-10-15. Tolerance 0.05 is a re-run sanity band (KNN is deterministic), not a paper comparison. MITDB is excluded for KNN: ~97 s per 650k-point series x 32 series ~ 52 min, over the 30-min per-command budget (the precedent that dropped OCSVM on MITDB/MGAB).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;AUC-ROC&quot;: 0.7974990360340383, &quot;Precision&quot;: 0.05455237039945108, &quot;Recall&quot;: 0.5564107672130446, &quot;F1&quot;: 0.08689672572403132, &quot;Series&quot;: 367}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">NAB (TSB-UAD, 58 series)<span class="win">per-series · dataset average</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">AUC-ROC</span> 0.5351→0.5351 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm PyODKNNDetector --dataset tsb-nab --model-id bench-detection-knn-nab-auc --param contamination=0.1 --param n_neighbors=5<button class="copy" data-cmd="libraryts train --algorithm PyODKNNDetector --dataset tsb-nab --model-id bench-detection-knn-nab-auc --param contamination=0.1 --param n_neighbors=5">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-detection-knn-nab-auc --compact<button class="copy" data-cmd="libraryts run --model-id bench-detection-knn-nab-auc --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/TheDatumOrg/TSB-UAD" target="_blank" rel="noopener">libraryts baseline run (no public per-dataset values)</a><br/>
+          libraryts benchmark, this repository · Measured 2026-10-15 via `libraryts train/run --algorithm PyODKNNDetector --dataset tsb-nab` (model probe-knn-nab); TSB-UAD README &#x27;Overall Results&#x27; table has no KNN column
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 58 NAB series</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.05 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 11:51:22 UTC · 16.6s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">TSB-UAD (PVLDB 2022) does not evaluate KNN, and TSB-AD (NeurIPS 2024) only publishes Sub-KNN averages on its own re-curated datasets, so no public per-dataset AUC-ROC exists for these series; the groundtruth is a libraryts baseline measured with this exact pipeline on 2026-10-15. Tolerance 0.05 is a re-run sanity band (KNN is deterministic), not a paper comparison. MITDB is excluded for KNN: ~97 s per 650k-point series x 32 series ~ 52 min, over the 30-min per-command budget (the precedent that dropped OCSVM on MITDB/MGAB).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;AUC-ROC&quot;: 0.5351246846499138, &quot;Precision&quot;: 0.21311770667125224, &quot;Recall&quot;: 0.11168535209273354, &quot;F1&quot;: 0.1287035825411672, &quot;Series&quot;: 58}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Dodgers (TSB-UAD, 1 series)<span class="win">per-series · dataset average</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">AUC-ROC</span> 0.4998→0.4998 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm PyODKNNDetector --dataset tsb-dodgers --model-id bench-detection-knn-dodgers-auc --param contamination=0.1 --param n_neighbors=5<button class="copy" data-cmd="libraryts train --algorithm PyODKNNDetector --dataset tsb-dodgers --model-id bench-detection-knn-dodgers-auc --param contamination=0.1 --param n_neighbors=5">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-detection-knn-dodgers-auc --compact<button class="copy" data-cmd="libraryts run --model-id bench-detection-knn-dodgers-auc --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/TheDatumOrg/TSB-UAD" target="_blank" rel="noopener">libraryts baseline run (no public per-dataset values)</a><br/>
+          libraryts benchmark, this repository · Measured 2026-10-15 via `libraryts train/run --algorithm PyODKNNDetector --dataset tsb-dodgers` (model probe-knn-dodgers); TSB-UAD README &#x27;Overall Results&#x27; table has no KNN column
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 1 Dodgers series</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.05 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 11:51:31 UTC · 8.75s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">TSB-UAD (PVLDB 2022) does not evaluate KNN, and TSB-AD (NeurIPS 2024) only publishes Sub-KNN averages on its own re-curated datasets, so no public per-dataset AUC-ROC exists for these series; the groundtruth is a libraryts baseline measured with this exact pipeline on 2026-10-15. Tolerance 0.05 is a re-run sanity band (KNN is deterministic), not a paper comparison. MITDB is excluded for KNN: ~97 s per 650k-point series x 32 series ~ 52 min, over the 30-min per-command budget (the precedent that dropped OCSVM on MITDB/MGAB). Dodgers has only 1 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;AUC-ROC&quot;: 0.49982138072698046, &quot;Precision&quot;: 0.0, &quot;Recall&quot;: 0.0, &quot;F1&quot;: 0.0, &quot;Series&quot;: 1}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Occupancy (TSB-UAD, 10 series)<span class="win">per-series · dataset average</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">AUC-ROC</span> 0.7272→0.7272 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm PyODKNNDetector --dataset tsb-occupancy --model-id bench-detection-knn-occupancy-auc --param contamination=0.1 --param n_neighbors=5<button class="copy" data-cmd="libraryts train --algorithm PyODKNNDetector --dataset tsb-occupancy --model-id bench-detection-knn-occupancy-auc --param contamination=0.1 --param n_neighbors=5">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-detection-knn-occupancy-auc --compact<button class="copy" data-cmd="libraryts run --model-id bench-detection-knn-occupancy-auc --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/TheDatumOrg/TSB-UAD" target="_blank" rel="noopener">libraryts baseline run (no public per-dataset values)</a><br/>
+          libraryts benchmark, this repository · Measured 2026-10-15 via `libraryts train/run --algorithm PyODKNNDetector --dataset tsb-occupancy` (model probe-knn-occupancy); TSB-UAD README &#x27;Overall Results&#x27; table has no KNN column
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 10 Occupancy series</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.05 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 11:51:39 UTC · 7.84s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">TSB-UAD (PVLDB 2022) does not evaluate KNN, and TSB-AD (NeurIPS 2024) only publishes Sub-KNN averages on its own re-curated datasets, so no public per-dataset AUC-ROC exists for these series; the groundtruth is a libraryts baseline measured with this exact pipeline on 2026-10-15. Tolerance 0.05 is a re-run sanity band (KNN is deterministic), not a paper comparison. MITDB is excluded for KNN: ~97 s per 650k-point series x 32 series ~ 52 min, over the 30-min per-command budget (the precedent that dropped OCSVM on MITDB/MGAB). Occupancy has only 10 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;AUC-ROC&quot;: 0.7272330199484285, &quot;Precision&quot;: 0.6236377546422057, &quot;Recall&quot;: 0.15983722123388028, &quot;F1&quot;: 0.2499856950750447, &quot;Series&quot;: 10}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">MGAB (TSB-UAD, 10 series)<span class="win">per-series · dataset average</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">AUC-ROC</span> 0.5462→0.5462 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm PyODKNNDetector --dataset tsb-mgab --model-id bench-detection-knn-mgab-auc --param contamination=0.1 --param n_neighbors=5<button class="copy" data-cmd="libraryts train --algorithm PyODKNNDetector --dataset tsb-mgab --model-id bench-detection-knn-mgab-auc --param contamination=0.1 --param n_neighbors=5">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-detection-knn-mgab-auc --compact<button class="copy" data-cmd="libraryts run --model-id bench-detection-knn-mgab-auc --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/TheDatumOrg/TSB-UAD" target="_blank" rel="noopener">libraryts baseline run (no public per-dataset values)</a><br/>
+          libraryts benchmark, this repository · Measured 2026-10-15 via `libraryts train/run --algorithm PyODKNNDetector --dataset tsb-mgab` (model probe-knn-mgab); TSB-UAD README &#x27;Overall Results&#x27; table has no KNN column
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 10 MGAB series</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.05 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 11:51:54 UTC · 15.1s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">TSB-UAD (PVLDB 2022) does not evaluate KNN, and TSB-AD (NeurIPS 2024) only publishes Sub-KNN averages on its own re-curated datasets, so no public per-dataset AUC-ROC exists for these series; the groundtruth is a libraryts baseline measured with this exact pipeline on 2026-10-15. Tolerance 0.05 is a re-run sanity band (KNN is deterministic), not a paper comparison. MITDB is excluded for KNN: ~97 s per 650k-point series x 32 series ~ 52 min, over the 30-min per-command budget (the precedent that dropped OCSVM on MITDB/MGAB).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;AUC-ROC&quot;: 0.5462205235470943, &quot;Precision&quot;: 0.002042724383208433, &quot;Recall&quot;: 0.066, &quot;F1&quot;: 0.0039627887186337325, &quot;Series&quot;: 10}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Genesis (TSB-UAD, 6 series)<span class="win">per-series · dataset average</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">AUC-ROC</span> 0.5737→0.5737 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm PyODKNNDetector --dataset tsb-genesis --model-id bench-detection-knn-genesis-auc --param contamination=0.1 --param n_neighbors=5<button class="copy" data-cmd="libraryts train --algorithm PyODKNNDetector --dataset tsb-genesis --model-id bench-detection-knn-genesis-auc --param contamination=0.1 --param n_neighbors=5">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-detection-knn-genesis-auc --compact<button class="copy" data-cmd="libraryts run --model-id bench-detection-knn-genesis-auc --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/TheDatumOrg/TSB-UAD" target="_blank" rel="noopener">libraryts baseline run (no public per-dataset values)</a><br/>
+          libraryts benchmark, this repository · Measured 2026-10-15 via `libraryts train/run --algorithm PyODKNNDetector --dataset tsb-genesis` (model probe-knn-genesis); TSB-UAD README &#x27;Overall Results&#x27; table has no KNN column
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 6 Genesis series</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.05 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 11:52:10 UTC · 15.8s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">TSB-UAD (PVLDB 2022) does not evaluate KNN, and TSB-AD (NeurIPS 2024) only publishes Sub-KNN averages on its own re-curated datasets, so no public per-dataset AUC-ROC exists for these series; the groundtruth is a libraryts baseline measured with this exact pipeline on 2026-10-15. Tolerance 0.05 is a re-run sanity band (KNN is deterministic), not a paper comparison. MITDB is excluded for KNN: ~97 s per 650k-point series x 32 series ~ 52 min, over the 30-min per-command budget (the precedent that dropped OCSVM on MITDB/MGAB). Genesis has only 6 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;AUC-ROC&quot;: 0.573716244073387, &quot;Precision&quot;: 0.011152448716387335, &quot;Recall&quot;: 0.08666666666666667, &quot;F1&quot;: 0.01871366775387788, &quot;Series&quot;: 6}</div></div>
+    </div>
+  </div>
+</details></div>
+</details>
 <details class="claim-group" data-name="hbos pyodhbosdetector">
   <summary>
     <div class="alg">HBOS<span class="lib">PVLDB 15(8):1697-1711</span></div>
@@ -17115,16 +18239,6 @@
   <div class="grp-note">runnable in this environment</div>
   <div class="row-end"><span class="status notrun"><span class="dot"></span>not run yet</span></div>
 </div>
-<div class="alg-row not-run" data-name="pyodcblofdetector registered-anomaly_detection-pyodcblofdetector" title="registered-anomaly_detection-PyODCBLOFDetector · runnable in this environment">
-  <div class="alg">PyODCBLOFDetector<span class="tag">registry</span></div>
-  <div class="grp-note">runnable in this environment</div>
-  <div class="row-end"><span class="status notrun"><span class="dot"></span>not run yet</span></div>
-</div>
-<div class="alg-row not-run" data-name="pyodcopoddetector registered-anomaly_detection-pyodcopoddetector" title="registered-anomaly_detection-PyODCOPODDetector · runnable in this environment">
-  <div class="alg">PyODCOPODDetector<span class="tag">registry</span></div>
-  <div class="grp-note">runnable in this environment</div>
-  <div class="row-end"><span class="status notrun"><span class="dot"></span>not run yet</span></div>
-</div>
 <div class="alg-row not-run" data-name="pyoddetector registered-anomaly_detection-pyoddetector" title="registered-anomaly_detection-PyODDetector · runnable in this environment">
   <div class="alg">PyODDetector<span class="tag">registry</span></div>
   <div class="grp-note">runnable in this environment</div>
@@ -17132,11 +18246,6 @@
 </div>
 <div class="alg-row not-run" data-name="pyodecoddetector registered-anomaly_detection-pyodecoddetector" title="registered-anomaly_detection-PyODECODDetector · runnable in this environment">
   <div class="alg">PyODECODDetector<span class="tag">registry</span></div>
-  <div class="grp-note">runnable in this environment</div>
-  <div class="row-end"><span class="status notrun"><span class="dot"></span>not run yet</span></div>
-</div>
-<div class="alg-row not-run" data-name="pyodknndetector registered-anomaly_detection-pyodknndetector" title="registered-anomaly_detection-PyODKNNDetector · runnable in this environment">
-  <div class="alg">PyODKNNDetector<span class="tag">registry</span></div>
   <div class="grp-note">runnable in this environment</div>
   <div class="row-end"><span class="status notrun"><span class="dot"></span>not run yet</span></div>
 </div>
@@ -17552,7 +18661,7 @@
 </section></div>
 
   <footer>
-    Built by LibraryTS · state generated 2026-10-15 11:51:35 UTC · groundtruth curated under
+    Built by LibraryTS · state generated 2026-10-15 12:06:59 UTC · groundtruth curated under
     <code>playground/benchmark/groundtruth/</code> ·
     re-run with <code>python playground/benchmark/reproduce.py</code> ·
     refresh with <code>python playground/benchmark/build_state.py</code>
