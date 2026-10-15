@@ -16,6 +16,7 @@ async function init() {
   const response = await fetch("/api/catalog");
   state.catalog = await response.json();
   renderCatalog();
+  await refreshModels();
   window.scrollTo(0, 0);
   setTimeout(() => window.scrollTo(0, 0), 0);
   bindEvents();
@@ -30,12 +31,20 @@ function bindEvents() {
       }
       if (id === "taskSelect") {
         renderPreprocessorOptions();
+        renderModelOptions();
       }
       renderParams();
       renderPipeline();
     });
   });
   el("runButton").addEventListener("click", runExperiment);
+  el("trainButton").addEventListener("click", trainModel);
+  el("runModelButton").addEventListener("click", runSavedModel);
+  el("algoSearch").addEventListener("input", () => {
+    refreshOptions();
+    renderParams();
+    renderPipeline();
+  });
   el("detectorSubtypeSelect").addEventListener("change", () => {
     refreshOptions();
     renderParams();
@@ -126,6 +135,10 @@ function refreshOptions() {
       visibleAlgorithms = algorithms.filter((algorithm) => (algorithm.subtype || "other") === subtype);
     }
   }
+  const query = (el("algoSearch")?.value || "").trim().toLowerCase();
+  if (query) {
+    visibleAlgorithms = visibleAlgorithms.filter((algorithm) => algorithm.name.toLowerCase().includes(query));
+  }
   const enabledAlgorithms = visibleAlgorithms.filter((algorithm) => algorithm.enabled);
   el("algorithmSelect").innerHTML = [
     ...enabledAlgorithms.map((algorithm) => `<option value="${algorithm.id}">${algorithm.name}</option>`),
@@ -166,9 +179,92 @@ function renderParams() {
   });
   const algorithmInputs = Object.entries(algorithmParams).map(([key, value]) => {
     const label = key.replaceAll("_", " ");
-    return `<label>${label}<input data-param="${key}" type="number" step="any" value="${value}"></label>`;
+    return `<label>${label}<input data-param="${key}" data-default="${value}" type="number" step="any" value="${value}"></label>`;
   });
-  el("params").innerHTML = [...preprocessorInputs, ...algorithmInputs].join("");
+  const extraInputs = Object.entries(algorithm?.extra_params || {}).map(([key, spec]) => {
+    const label = key.replaceAll("_", " ");
+    const shown = spec.default === null || spec.default === undefined ? "" : spec.default;
+    if (spec.type === "bool") {
+      return `<label>${label}<select data-extra="${key}" data-type="bool" data-default="${spec.default}">`
+        + `<option value="true"${spec.default ? " selected" : ""}>true</option>`
+        + `<option value="false"${spec.default ? "" : " selected"}>false</option></select></label>`;
+    }
+    const placeholder = spec.type === "optional" ? "unset (None)" : "";
+    return `<label>${label}<input data-extra="${key}" data-type="${spec.type}" data-default="${escapeHtml(shown)}" type="text" value="${escapeHtml(shown)}" placeholder="${placeholder}"></label>`;
+  });
+  el("params").innerHTML = [...preprocessorInputs, ...algorithmInputs, ...extraInputs].join("");
+  renderEvalParams(algorithm);
+  renderMetricOptions();
+}
+
+function renderEvalParams(algorithm) {
+  const task = el("taskSelect").value;
+  const known = new Set(Object.keys(algorithm?.params || {}));
+  const specs = ((state.catalog.eval_param_specs || {})[task] || []).filter((spec) => !known.has(spec.name));
+  el("evalDetails").hidden = specs.length === 0;
+  el("evalParams").innerHTML = specs
+    .map((spec) => {
+      const label = spec.name.replaceAll("_", " ");
+      const title = escapeHtml(spec.help || "");
+      if (spec.type === "choice") {
+        const options = spec.choices
+          .map((choice) => `<option value="${choice}"${choice === spec.default ? " selected" : ""}>${choice}</option>`)
+          .join("");
+        return `<label title="${title}">${label}<select data-eval="${spec.name}" data-default="${spec.default}">${options}</select></label>`;
+      }
+      const shown = spec.default === null || spec.default === undefined ? "" : spec.default;
+      return `<label title="${title}">${label}<input data-eval="${spec.name}" data-default="${shown}" type="number" step="any" value="${shown}" placeholder="unset"></label>`;
+    })
+    .join("");
+}
+
+function renderMetricOptions() {
+  const task = el("taskSelect").value;
+  const previous = new Set([...el("metricsSelect").selectedOptions].map((option) => option.value));
+  el("metricsSelect").innerHTML = (state.catalog.metrics || [])
+    .filter((metric) => metric.task === task)
+    .map((metric) => `<option value="${metric.id}"${previous.has(metric.id) ? " selected" : ""}>${metric.name}${metric.default ? " (default)" : ""}</option>`)
+    .join("");
+}
+
+function parseLoose(text) {
+  const value = text.trim();
+  if (value === "") return undefined;
+  if (/^(none|null)$/i.test(value)) return null;
+  if (/^true$/i.test(value)) return true;
+  if (/^false$/i.test(value)) return false;
+  if (!Number.isNaN(Number(value))) return Number(value);
+  return value;
+}
+
+function collectEvalParams() {
+  const out = {};
+  document.querySelectorAll("[data-eval]").forEach((input) => {
+    if (input.value === "" || input.value === input.dataset.default) return;
+    out[input.dataset.eval] = input.tagName === "SELECT" ? input.value : Number(input.value);
+  });
+  return out;
+}
+
+function collectParams() {
+  const params = {};
+  document.querySelectorAll("[data-param]").forEach((input) => {
+    params[input.dataset.param] = Number(input.value);
+  });
+  document.querySelectorAll("[data-extra]").forEach((input) => {
+    if (input.value === input.dataset.default) return;
+    if (input.dataset.type === "bool") {
+      params[input.dataset.extra] = input.value === "true";
+    } else {
+      const parsed = parseLoose(input.value);
+      if (parsed !== undefined) params[input.dataset.extra] = parsed;
+    }
+  });
+  return { ...params, ...collectEvalParams() };
+}
+
+function selectedMetrics() {
+  return [...el("metricsSelect").selectedOptions].map((option) => option.value);
 }
 
 function renderPipeline(result = null) {
@@ -264,10 +360,7 @@ function evaluationDetail(result) {
 }
 
 async function runExperiment() {
-  const params = {};
-  document.querySelectorAll("[data-param]").forEach((input) => {
-    params[input.dataset.param] = Number(input.value);
-  });
+  const params = collectParams();
   const preprocessorParams = {};
   document.querySelectorAll("[data-preprocessor-param]").forEach((input) => {
     preprocessorParams[input.dataset.preprocessorParam] = Number(input.value);
@@ -280,10 +373,20 @@ async function runExperiment() {
     params,
     preprocessor_params: preprocessorParams,
   };
-  showProgress("Running");
-  el("runButton").disabled = true;
+  const metrics = selectedMetrics();
+  if (metrics.length) spec.metrics = metrics;
+  const result = await submitRun("/api/run", spec, "Running", "runButton");
+  if (result) {
+    renderResult(result);
+    setStatus("Complete");
+  }
+}
+
+async function submitRun(url, spec, label, buttonId) {
+  showProgress(label);
+  el(buttonId).disabled = true;
   try {
-    const response = await fetch("/api/run", {
+    const response = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(spec),
@@ -294,16 +397,79 @@ async function runExperiment() {
       renderError(result.error || "Unknown error");
       renderPipeline(result);
       setStatus("Blocked");
-    } else {
-      renderResult(result);
-      setStatus("Complete");
+      return null;
     }
+    return result;
   } catch (error) {
     renderError(String(error));
     setStatus("Error");
+    return null;
   } finally {
     hideProgress();
-    el("runButton").disabled = false;
+    el(buttonId).disabled = false;
+  }
+}
+
+async function trainModel() {
+  const modelId = el("modelIdInput").value.trim();
+  const preprocessorParams = {};
+  document.querySelectorAll("[data-preprocessor-param]").forEach((input) => {
+    preprocessorParams[input.dataset.preprocessorParam] = Number(input.value);
+  });
+  const spec = {
+    task: el("taskSelect").value,
+    dataset_id: el("datasetSelect").value,
+    algorithm_id: el("algorithmSelect").value,
+    preprocessor_id: el("preprocessorSelect").value,
+    params: collectParams(),
+    preprocessor_params: preprocessorParams,
+  };
+  if (modelId) spec.model_id = modelId;
+  const result = await submitRun("/api/train", spec, "Training", "trainButton");
+  if (!result) return;
+  await refreshModels(result.model_id);
+  el("modelHint").textContent = `Saved model ${result.model_id}. Pick it above and press "Run saved model".`;
+  el("logBlock").textContent = JSON.stringify(result, null, 2);
+  showTab("log");
+  setStatus("Trained");
+}
+
+async function runSavedModel() {
+  const modelId = el("modelSelect").value;
+  if (!modelId) {
+    el("modelHint").textContent = "No saved model selected; train one first.";
+    return;
+  }
+  const spec = { model_id: modelId, dataset_id: el("datasetSelect").value, params: collectEvalParams() };
+  const metrics = selectedMetrics();
+  if (metrics.length) spec.metrics = metrics;
+  const result = await submitRun("/api/run", spec, "Running saved model", "runModelButton");
+  if (result) {
+    renderResult(result);
+    setStatus("Complete");
+  }
+}
+
+async function refreshModels(select = null) {
+  try {
+    const response = await fetch("/api/models");
+    const payload = await response.json();
+    state.models = payload.models || [];
+  } catch (error) {
+    state.models = [];
+  }
+  renderModelOptions(select);
+}
+
+function renderModelOptions(select = null) {
+  const task = el("taskSelect").value;
+  const previous = select || el("modelSelect").value;
+  el("modelSelect").innerHTML = (state.models || [])
+    .filter((model) => !model.task || model.task === task)
+    .map((model) => `<option value="${escapeHtml(model.model_id)}">${escapeHtml(model.model_id)} · ${escapeHtml(model.task || "?")} · ${escapeHtml(model.algorithm_id || model.family || "")}</option>`)
+    .join("");
+  if (previous && [...el("modelSelect").options].some((option) => option.value === previous)) {
+    el("modelSelect").value = previous;
   }
 }
 

@@ -193,6 +193,44 @@ def train(spec: dict) -> dict:
     return _train_sktime(spec, algorithm)
 
 
+class SavedRunUsageError(PlaygroundError):
+    """The request combines options a saved-model run does not support."""
+
+
+def run_trained_model(
+    model_id: str,
+    dataset_id: str | None = None,
+    params: dict | None = None,
+    metrics: list[str] | None = None,
+) -> dict:
+    """Evaluate a persisted model, optionally adding registry metrics.
+
+    Shared by `labts run --model-id` and the web ``/api/run`` model path.
+    """
+    from runners import _apply_requested_metrics, _saved_run_context
+
+    data = predict_estimator(model_id, dataset_id, params or {})
+    metric_ids = list(metrics or [])
+    if metric_ids:
+        if (data.get("tables") or {}).get("per_series") is not None:
+            raise SavedRunUsageError(
+                "--metric is not supported for multi-series models; "
+                "dataset-averaged metrics are reported directly."
+            )
+        meta = (data.get("series") or {}).get("meta") or {}
+        if meta.get("eval_mode") == "rolling":
+            raise SavedRunUsageError(
+                "--metric on rolling model runs is not supported; the rolling "
+                "aggregate MSE/MAE/MAPE are reported directly. Use a one-shot "
+                "`run` (fit+evaluate) for registry metrics on rolling eval."
+            )
+        context = _saved_run_context(data, data["task"])
+        _apply_requested_metrics(
+            data, {"task": data["task"], "metrics": metric_ids}, context
+        )
+    return data
+
+
 def predict_estimator(
     model_id: str, dataset_id: str | None = None, params: dict | None = None
 ) -> dict:

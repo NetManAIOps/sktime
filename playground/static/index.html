@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Time Series Sandbox Playground</title>
-  <link rel="stylesheet" href="/styles.css?v=20260713">
+  <link rel="stylesheet" href="/styles.css?v=20261015">
 </head>
 <body>
   <div id="progressBar" class="progress-bar" hidden><div class="progress-bar-inner"></div></div>
@@ -48,12 +48,35 @@
       </label>
 
       <label>Algorithm
+        <input id="algoSearch" type="search" placeholder="filter algorithms by name…" autocomplete="off">
         <select id="algorithmSelect"></select>
       </label>
 
       <div class="param-grid" id="params"></div>
 
+      <details id="evalDetails" class="fold">
+        <summary>Evaluation parameters</summary>
+        <div class="param-grid" id="evalParams"></div>
+      </details>
+
+      <label>Extra metrics <small>(Ctrl/Cmd-click for several)</small>
+        <select id="metricsSelect" multiple size="4"></select>
+      </label>
+
       <button id="runButton" type="button">Run Experiment</button>
+
+      <details id="modelPanel" class="fold">
+        <summary>Train once, run many</summary>
+        <label>New model id
+          <input id="modelIdInput" type="text" placeholder="my-model" autocomplete="off">
+        </label>
+        <button id="trainButton" type="button">Train &amp; save model</button>
+        <label>Saved model
+          <select id="modelSelect"></select>
+        </label>
+        <button id="runModelButton" type="button">Run saved model (no refit)</button>
+        <p class="hint" id="modelHint">Uses the dataset, evaluation parameters and metrics selected above.</p>
+      </details>
       <p class="hint" id="compatHint"></p>
       <div class="deps" id="dependencies"></div>
     </aside>
@@ -113,7 +136,7 @@
       </div>
     </aside>
   </main>
-  <script src="/app.js?v=20260713"></script>
+  <script src="/app.js?v=20261015"></script>
 </body>
 </html>
 

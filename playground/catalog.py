@@ -46,6 +46,34 @@ EVAL_PARAMS = {
     "causal": {"max_samples", "seed"},
 }
 
+# Typed descriptions of EVAL_PARAMS for UIs (the web form renders these).
+EVAL_PARAM_SPECS = {
+    "forecasting": [
+        {"name": "horizon", "type": "int", "default": 12, "help": "forecast steps scored on the holdout"},
+        {"name": "context_window", "type": "int", "default": 36, "help": "history length shown / used for windows"},
+        {"name": "eval_mode", "type": "choice", "choices": ["single", "rolling"], "default": "single",
+         "help": "rolling = slide a (context, horizon) window over the test region without refitting"},
+        {"name": "train_fraction", "type": "float", "default": None, "help": "fraction of rows used for training"},
+        {"name": "test_fraction", "type": "float", "default": None, "help": "fraction of rows used for testing (default 0.2)"},
+        {"name": "test_start_fraction", "type": "float", "default": None, "help": "start of the test region (fraction of rows)"},
+        {"name": "test_end_fraction", "type": "float", "default": None, "help": "end of the test region (fraction of rows)"},
+    ],
+    "clustering": [
+        {"name": "fit_on", "type": "choice", "choices": ["train", "all"], "default": "train",
+         "help": "all = cluster train+test fused (paper protocol)"},
+    ],
+    "anomaly_detection": [
+        {"name": "threshold", "type": "float", "default": None, "help": "z-score threshold (threshold-detector)"},
+        {"name": "window", "type": "int", "default": None, "help": "rolling window (threshold-detector)"},
+    ],
+    "causal": [
+        {"name": "max_samples", "type": "int", "default": 2000, "help": "subsample size (use the full n for paper runs)"},
+        {"name": "seed", "type": "int", "default": 7, "help": "subsampling seed"},
+    ],
+    "classification": [],
+    "regression": [],
+}
+
 _ESTIMATOR_TYPES = {
     "forecaster": "forecasting",
     "classifier": "classification",
@@ -984,6 +1012,39 @@ def _constructor_param_info(klass) -> tuple[list[str], dict, list[str]]:
     return required, numeric, est_names
 
 
+def _extra_param_specs(klass) -> dict:
+    """Non-numeric scalar constructor defaults (bool/str/None) for typed UIs.
+
+    ``params`` only carries numeric defaults; these are the knobs it hides,
+    e.g. ``kernel='rbf'``, ``rocket_transform='minirocket'``, ``distance``.
+    Estimator-typed params are excluded (they need nested specs).
+    """
+    import inspect
+
+    try:
+        sig = inspect.signature(klass.__init__)
+    except (TypeError, ValueError):
+        return {}
+    extra: dict = {}
+    for pname, param in sig.parameters.items():
+        if pname == "self" or pname.startswith("_"):
+            continue
+        if param.kind in (param.VAR_KEYWORD, param.VAR_POSITIONAL):
+            continue
+        if _looks_like_estimator_param(pname):
+            continue
+        default = param.default
+        if default is inspect.Parameter.empty:
+            continue
+        if isinstance(default, bool):
+            extra[pname] = {"type": "bool", "default": default}
+        elif isinstance(default, str):
+            extra[pname] = {"type": "str", "default": default}
+        elif default is None:
+            extra[pname] = {"type": "optional", "default": None}
+    return extra
+
+
 def discover_registered_algorithms() -> list[dict]:
     """Discover sktime estimators and enable the default-constructible ones.
 
@@ -1087,6 +1148,7 @@ def discover_registered_algorithms() -> list[dict]:
             if task == "forecasting":
                 params = {"horizon": 12, "context_window": 36, **params}
             base.update(enabled=True, params=params)
+            base["extra_params"] = _extra_param_specs(klass)
             _required, _numeric, est_names = _constructor_param_info(klass)
             if est_names:
                 base["accepts_estimators"] = est_names
@@ -1300,6 +1362,7 @@ def build_catalog(include_registered: bool = True) -> dict:
         "preprocessors": preprocessors,
         "datasets": datasets,
         "metrics": all_metrics(),
+        "eval_param_specs": EVAL_PARAM_SPECS,
         "analyzers": _analyzers_section(),
         "distances": _distances_section(),
         "compatibility": compatibility,

@@ -268,8 +268,7 @@ def _main_run(args) -> int:
 
 def _run_trained_model(args) -> dict:
     """`run --model-id`: evaluate a persisted model (train once, run many)."""
-    from trainer import predict_estimator
-    from runners import _apply_requested_metrics, _saved_run_context
+    from trainer import SavedRunUsageError, run_trained_model
 
     for flag, value in (
         ("--spec", args.spec),
@@ -285,25 +284,12 @@ def _run_trained_model(args) -> dict:
                 "Only --dataset/--param/--metric/--compact/--out apply."
             )
     params = _parse_kv_pairs(args.param, "--param")
-    data = predict_estimator(args.model_id, args.dataset, params)
-    metric_ids = list(args.metric or [])
-    if metric_ids:
-        if (data.get("tables") or {}).get("per_series") is not None:
-            raise UsageError(
-                "--metric is not supported for multi-series models; "
-                "dataset-averaged metrics are reported directly."
-            )
-        meta = (data.get("series") or {}).get("meta") or {}
-        if meta.get("eval_mode") == "rolling":
-            raise UsageError(
-                "--metric on rolling model runs is not supported; the rolling "
-                "aggregate MSE/MAE/MAPE are reported directly. Use a one-shot "
-                "`run` (fit+evaluate) for registry metrics on rolling eval."
-            )
-        context = _saved_run_context(data, data["task"])
-        _apply_requested_metrics(
-            data, {"task": data["task"], "metrics": metric_ids}, context
+    try:
+        data = run_trained_model(
+            args.model_id, args.dataset, params, list(args.metric or [])
         )
+    except SavedRunUsageError as exc:
+        raise UsageError(str(exc)) from exc
     return data
 
 

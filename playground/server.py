@@ -17,7 +17,7 @@ if str(HERE) not in sys.path:
     sys.path.insert(0, str(HERE))
 
 from catalog import REPO_ROOT, build_catalog, write_snapshot
-from runners import PlaygroundError, get_run, run_experiment
+from runners import RUNS, PlaygroundError, get_run, run_experiment
 
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
@@ -36,6 +36,11 @@ class PlaygroundHandler(BaseHTTPRequestHandler):
             return
         if parsed.path == "/api/export/report":
             self._export(parsed.query, "report", "text/markdown", "experiment.md")
+            return
+        if parsed.path == "/api/models":
+            from trainer import list_trained_models
+
+            self._json({"status": "ok", "models": list_trained_models()})
             return
         if parsed.path in {"/", "/index.html"}:
             self._file(STATIC_ROOT / "index.html")
@@ -72,14 +77,31 @@ class PlaygroundHandler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         parsed = urlparse(self.path)
-        if parsed.path != "/api/run":
+        if parsed.path not in {"/api/run", "/api/train"}:
             self._json({"status": "error", "error": "Not found"}, status=404)
             return
         try:
             length = int(self.headers.get("Content-Length", "0"))
             body = self.rfile.read(length).decode("utf-8")
             spec = json.loads(body) if body else {}
-            result = run_experiment(spec)
+            if parsed.path == "/api/train":
+                from trainer import train as train_model
+
+                result = train_model(spec)
+            elif spec.get("model_id"):
+                # same code path as `labts run --model-id`
+                from trainer import run_trained_model
+
+                result = run_trained_model(
+                    spec["model_id"],
+                    spec.get("dataset_id"),
+                    spec.get("params") or {},
+                    spec.get("metrics") or [],
+                )
+                if result.get("run_id"):
+                    RUNS[result["run_id"]] = result
+            else:
+                result = run_experiment(spec)
             self._json(result)
         except PlaygroundError as exc:
             self._json({"status": "blocked", "error": str(exc)}, status=200)

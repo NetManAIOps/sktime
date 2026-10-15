@@ -489,6 +489,74 @@ class RollingForecastTrainTests(TrainerTestCase):
             self.assertTrue(math.isfinite(result["metrics"][key]))
 
 
+class WebApiTests(TrainerTestCase):
+    """The web server exposes train / models / saved-model runs like the CLI."""
+
+    def setUp(self):
+        super().setUp()
+        import threading
+        from http.server import ThreadingHTTPServer
+
+        import server
+
+        self._httpd = ThreadingHTTPServer(("127.0.0.1", 0), server.PlaygroundHandler)
+        self.addCleanup(self._httpd.server_close)
+        thread = threading.Thread(target=self._httpd.serve_forever, daemon=True)
+        thread.start()
+        self.addCleanup(self._httpd.shutdown)
+
+    def _call(self, path, spec=None):
+        import urllib.request
+
+        url = f"http://127.0.0.1:{self._httpd.server_address[1]}{path}"
+        request = urllib.request.Request(
+            url, data=None if spec is None else json.dumps(spec).encode(),
+            method="GET" if spec is None else "POST",
+        )
+        with urllib.request.urlopen(request, timeout=300) as response:
+            return json.loads(response.read())
+
+    def test_train_list_and_run_saved_model_match_cli(self):
+        trained = self._call(
+            "/api/train",
+            {"task": "forecasting", "dataset_id": "airline",
+             "algorithm_id": "naive-seasonal-last", "model_id": "t-web",
+             "params": {"horizon": 6}},
+        )
+        self.assertEqual(trained["status"], "ok")
+        models = self._call("/api/models")["models"]
+        self.assertEqual([m["model_id"] for m in models], ["t-web"])
+        via_web = self._call(
+            "/api/run", {"model_id": "t-web", "dataset_id": "airline", "metrics": ["mase"]}
+        )
+        self.assertEqual(via_web["status"], "ok")
+        self.assertIn("MASE", via_web["metrics"])
+        direct = trainer.run_trained_model("t-web", "airline", {}, ["mase"])
+        self.assertEqual(via_web["metrics"], direct["metrics"])
+
+    def test_blocked_errors_and_unknown_model(self):
+        blocked = self._call(
+            "/api/run",
+            {"task": "forecasting", "dataset_id": "airline",
+             "algorithm_id": "NaiveForecaster", "params": {"strategy": "mean"}},
+        )
+        self.assertEqual(blocked["status"], "blocked")
+        missing = self._call("/api/run", {"model_id": "does-not-exist"})
+        self.assertEqual(missing["status"], "blocked")
+
+
+class CatalogTypedParamTests(unittest.TestCase):
+    def test_extra_params_expose_non_numeric_defaults(self):
+        from catalog import EVAL_PARAMS, EVAL_PARAM_SPECS, _extra_param_specs
+
+        from sktime.classification.kernel_based import RocketClassifier
+
+        extra = _extra_param_specs(RocketClassifier)
+        self.assertEqual(extra["rocket_transform"], {"type": "str", "default": "rocket"})
+        for task, specs in EVAL_PARAM_SPECS.items():
+            self.assertLessEqual({s["name"] for s in specs}, EVAL_PARAMS[task], task)
+
+
 class CliRunModelIdTests(TrainerTestCase):
     """`labts run --model-id` end-to-end through the CLI entry point."""
 
