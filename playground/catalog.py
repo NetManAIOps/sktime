@@ -11,6 +11,7 @@ import math
 import numbers
 import os
 import sys
+import time
 import urllib.request
 import warnings
 from pathlib import Path
@@ -111,12 +112,24 @@ def _discovery_fingerprint() -> str:
     global _FINGERPRINT
     if _FINGERPRINT is not None:
         return _FINGERPRINT
-    from importlib.metadata import distributions
+    import sysconfig
 
     digest = hashlib.sha256()
-    digest.update(f"{_DISK_CACHE_SCHEMA}|{sys.version}".encode())
-    dists = sorted(f"{d.metadata['Name']}=={d.version}" for d in distributions())
-    digest.update("\n".join(dists).encode())
+    digest.update(f"{_DISK_CACHE_SCHEMA}|{sys.version}|{sys.prefix}".encode())
+    # Installed distributions = the *.dist-info / *.egg-info directory names
+    # (they embed name and version). Listing them is ~1000x cheaper than
+    # importlib.metadata.distributions(), which parses every METADATA file.
+    names: set[str] = set()
+    for key in ("purelib", "platlib"):
+        root = sysconfig.get_paths().get(key)
+        if root and os.path.isdir(root):
+            with os.scandir(root) as entries:
+                names.update(
+                    entry.name
+                    for entry in entries
+                    if entry.name.endswith((".dist-info", ".egg-info"))
+                )
+    digest.update("\n".join(sorted(names)).encode())
     digest.update(Path(__file__).read_bytes())
     spec = importlib.util.find_spec("sktime")
     for root in (spec.submodule_search_locations or []) if spec else []:
@@ -232,6 +245,7 @@ HF_CONFIGS_FALLBACK = ["ETTm1", "ETTh1", "Exchange", "ILI", "NASDAQ", "Weather"]
 # Backward-compatible alias for older imports.
 HF_CONFIGS = HF_CONFIGS_FALLBACK
 _HF_METADATA_CACHE: dict | None = None
+_HF_CACHE_TTL_S = 7 * 24 * 3600
 
 
 def hf_dataset_configs() -> list[str]:
@@ -833,12 +847,15 @@ DATASETS = [
 
 def ucr_classification_datasets() -> list[dict]:
     """Discover UCR/UEA classification datasets from sktime's archive list."""
-    try:
-        from sktime.datasets import UCRUEADataset
+    names = _read_disk_cache("ucr-names")
+    if names is None:
+        try:
+            from sktime.datasets import UCRUEADataset
 
-        names = sorted(UCRUEADataset.list_all())
-    except Exception:
-        return []
+            names = sorted(UCRUEADataset.list_all())
+        except Exception:
+            return []
+        _write_disk_cache("ucr-names", names)
     return [
         {
             "id": f"ucr-{name.lower()}",
@@ -1311,19 +1328,43 @@ def hf_metadata() -> dict:
     if _HF_METADATA_CACHE is not None:
         return _HF_METADATA_CACHE
 
+    # The config list changes rarely: reuse an on-disk copy for a week so a
+    # cold start does not wait on the network (a stale copy still beats the
+    # offline fallback when the refresh fails).
+    cache_dir = _disk_cache_dir()
+    cache_file = cache_dir / "hf-metadata.json" if cache_dir else None
+    stale = None
+    if cache_file is not None and cache_file.is_file():
+        try:
+            stale = json.loads(cache_file.read_text(encoding="utf-8"))
+            if time.time() - cache_file.stat().st_mtime < _HF_CACHE_TTL_S and stale.get("configs"):
+                _HF_METADATA_CACHE = stale
+                return stale
+        except (OSError, ValueError):
+            stale = None
+
     url = f"https://datasets-server.huggingface.co/splits?dataset={HF_DATASET_ID}"
     try:
-        with urllib.request.urlopen(url, timeout=8) as response:
+        with urllib.request.urlopen(url, timeout=3) as response:
             payload = json.loads(response.read().decode("utf-8"))
         configs = sorted({row["config"] for row in payload.get("splits", []) if row.get("config")})
         _HF_METADATA_CACHE = {"available": True, "dataset": HF_DATASET_ID, "configs": configs}
+        if cache_file is not None and configs:
+            try:
+                cache_file.parent.mkdir(parents=True, exist_ok=True)
+                cache_file.write_text(json.dumps(_HF_METADATA_CACHE), encoding="utf-8")
+            except OSError:
+                pass
     except Exception as exc:
-        _HF_METADATA_CACHE = {
-            "available": False,
-            "dataset": HF_DATASET_ID,
-            "error": f"{type(exc).__name__}: {exc}",
-            "configs": list(HF_CONFIGS_FALLBACK),
-        }
+        if stale and stale.get("configs"):
+            _HF_METADATA_CACHE = {**stale, "available": True, "stale": True}
+        else:
+            _HF_METADATA_CACHE = {
+                "available": False,
+                "dataset": HF_DATASET_ID,
+                "error": f"{type(exc).__name__}: {exc}",
+                "configs": list(HF_CONFIGS_FALLBACK),
+            }
     return _HF_METADATA_CACHE
 
 
@@ -1461,6 +1502,19 @@ def get_enabled_preprocessor(preprocessor_id: str | None) -> dict | None:
 
 
 def get_dataset(dataset_id: str) -> dict | None:
+    # Static datasets first: no network or archive discovery for the common case.
+    for item in DATASETS:
+        if item["id"] == dataset_id:
+            return item
+    if dataset_id.startswith("hf-"):
+        pool = hf_datasets()
+    elif dataset_id.startswith("ucr-"):
+        pool = ucr_classification_datasets()
+    else:
+        pool = []
+    found = next((item for item in pool if item["id"] == dataset_id), None)
+    if found is not None:
+        return found
     return next((item for item in all_datasets() if item["id"] == dataset_id), None)
 
 

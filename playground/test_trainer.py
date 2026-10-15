@@ -534,6 +534,32 @@ class WebApiTests(TrainerTestCase):
         direct = trainer.run_trained_model("t-web", "airline", {}, ["mase"])
         self.assertEqual(via_web["metrics"], direct["metrics"])
 
+    def test_analyze_dist_evaluate_and_chain_endpoints(self):
+        analyzed = self._call(
+            "/api/analyze", {"analyzer_id": "seasonality-acf", "dataset_id": "airline"}
+        )
+        self.assertEqual(analyzed["status"], "ok")
+        self.assertIn("sp", analyzed["estimates"])
+        dist = self._call(
+            "/api/dist", {"dataset_id": "unit-test", "metrics": ["euclidean"], "max_instances": 3}
+        )
+        self.assertEqual(dist["results"][0]["shape"], [3, 3])
+        too_few = self._call("/api/dist", {"dataset_id": "unit-test", "metrics": ["euclidean"], "max_instances": 1})
+        self.assertEqual(too_few["status"], "blocked")
+        run = self._call(
+            "/api/run",
+            {"task": "forecasting", "dataset_id": "airline",
+             "algorithm_id": "registered-forecasting-ThetaForecaster",
+             "preprocessors": [{"id": "registered-preprocessor-LogTransformer", "params": {}}]},
+        )
+        self.assertEqual(run["status"], "ok")
+        self.assertEqual(len(run["preprocessors"]), 1)
+        evaluated = self._call("/api/evaluate", {"run_id": run["run_id"], "metrics": ["rmse"]})
+        self.assertEqual(evaluated["status"], "ok")
+        self.assertIn("RMSE", evaluated["metrics"])
+        unknown = self._call("/api/evaluate", {"run_id": "nope", "metrics": ["rmse"]})
+        self.assertEqual(unknown["status"], "blocked")
+
     def test_blocked_errors_and_unknown_model(self):
         blocked = self._call(
             "/api/run",

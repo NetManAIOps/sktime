@@ -77,14 +77,47 @@ class PlaygroundHandler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         parsed = urlparse(self.path)
-        if parsed.path not in {"/api/run", "/api/train"}:
+        if parsed.path not in {
+            "/api/run", "/api/train", "/api/analyze", "/api/dist", "/api/evaluate"
+        }:
             self._json({"status": "error", "error": "Not found"}, status=404)
             return
         try:
             length = int(self.headers.get("Content-Length", "0"))
             body = self.rfile.read(length).decode("utf-8")
             spec = json.loads(body) if body else {}
-            if parsed.path == "/api/train":
+            if parsed.path == "/api/analyze":
+                from analyzer import run_analysis
+
+                result = run_analysis(spec)
+            elif parsed.path == "/api/dist":
+                from domain_runners import distance_report
+
+                max_instances = int(spec.get("max_instances") or 20)
+                if max_instances < 2:
+                    raise PlaygroundError("max_instances must be >= 2.")
+                result = {
+                    "status": "ok",
+                    **distance_report(
+                        spec.get("dataset_id"),
+                        list(spec.get("metrics") or []),
+                        spec.get("params") or {},
+                        max_instances,
+                    ),
+                }
+            elif parsed.path == "/api/evaluate":
+                from runners import evaluate_saved_run
+
+                saved = get_run(spec.get("run_id") or "")
+                if saved is None:
+                    raise PlaygroundError(
+                        f"Unknown run_id: {spec.get('run_id')!r}; run an experiment first."
+                    )
+                metric_ids = list(spec.get("metrics") or [])
+                if not metric_ids:
+                    raise PlaygroundError("Pick at least one metric to evaluate.")
+                result = evaluate_saved_run(saved, metric_ids)
+            elif parsed.path == "/api/train":
                 from trainer import train as train_model
 
                 result = train_model(spec)
@@ -175,6 +208,13 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--host", default="127.0.0.1")
     parser.add_argument("--port", type=int, default=8765)
+    parser.add_argument(
+        "--refresh-snapshot",
+        action="store_true",
+        help="also rewrite the tracked agent catalog snapshot "
+        "(.agent/skills/time-series-sandbox/catalog_snapshot.json); off by default "
+        "so starting the server never dirties the working tree",
+    )
     args = parser.parse_args()
 
     httpd = ThreadingHTTPServer((args.host, args.port), PlaygroundHandler)
@@ -182,16 +222,17 @@ def main():
 
     import threading
 
-    def _refresh_snapshot():
+    def _warm_catalog():
+        # Build the catalog (disk-cached) in the background so the first
+        # page load does not pay for discovery.
         try:
-            snapshot = write_snapshot()
-            sys.stderr.write(f"Catalog snapshot refreshed: {snapshot}\n")
+            build_catalog(include_registered=True)
+            if args.refresh_snapshot:
+                sys.stderr.write(f"Catalog snapshot refreshed: {write_snapshot()}\n")
         except Exception as exc:
-            sys.stderr.write(
-                f"Catalog snapshot skipped: {type(exc).__name__}: {exc}\n"
-            )
+            sys.stderr.write(f"Catalog warm-up skipped: {type(exc).__name__}: {exc}\n")
 
-    threading.Thread(target=_refresh_snapshot, daemon=True).start()
+    threading.Thread(target=_warm_catalog, daemon=True).start()
 
     print(f"LibraryTS Playground running at {url}")
     print("Press Ctrl+C to stop.")

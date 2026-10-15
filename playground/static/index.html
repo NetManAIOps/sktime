@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>LibraryTS Playground</title>
-  <link rel="stylesheet" href="/styles.css?v=20261015">
+  <link rel="stylesheet" href="/styles.css?v=20261016">
 </head>
 <body>
   <div id="progressBar" class="progress-bar" hidden><div class="progress-bar-inner"></div></div>
@@ -33,9 +33,11 @@
         <select id="datasetSelect"></select>
       </label>
 
-      <label>Preprocessor
+      <label>Preprocessor chain <small>(applied in order)</small>
         <select id="preprocessorSelect"></select>
       </label>
+      <button id="addStepButton" type="button" class="secondary">+ Add step to chain</button>
+      <div id="chain" class="chain"></div>
 
       <label id="subtypeWrap" hidden>Detector type
         <select id="detectorSubtypeSelect">
@@ -64,6 +66,24 @@
       </label>
 
       <button id="runButton" type="button">Run Experiment</button>
+
+      <details id="toolsPanel" class="fold">
+        <summary>Evaluate · Analyze · Distances</summary>
+        <p class="hint">Evaluate re-scores the last run with the metrics picked above (no refit).</p>
+        <button id="evaluateButton" type="button">Evaluate last run</button>
+        <label>Analyzer
+          <select id="analyzerSelect"></select>
+        </label>
+        <div class="param-grid" id="analyzerParams"></div>
+        <button id="analyzeButton" type="button">Analyze selected dataset</button>
+        <label>Distance metrics <small>(Ctrl/Cmd-click for several)</small>
+          <select id="distanceSelect" multiple size="4"></select>
+        </label>
+        <label>Max instances
+          <input id="distMaxInstances" type="number" min="2" step="1" value="10">
+        </label>
+        <button id="distButton" type="button">Compute distance matrix</button>
+      </details>
 
       <details id="modelPanel" class="fold">
         <summary>Train once, run many</summary>
@@ -136,7 +156,7 @@
       </div>
     </aside>
   </main>
-  <script src="/app.js?v=20261015"></script>
+  <script src="/app.js?v=20261016"></script>
 </body>
 </html>
 

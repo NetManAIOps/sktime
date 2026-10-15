@@ -385,3 +385,35 @@ def compute_distance_matrix(
         "matrix": [[_clean_number(v) for v in row] for row in matrix],
         "instance_ids": list(range(int(n))),
     }
+
+
+def distance_report(
+    dataset_id: str | None,
+    metric_ids: list[str],
+    params: dict | None = None,
+    max_instances: int = 20,
+) -> dict:
+    """Pairwise distance matrices over a panel dataset (CLI `dist` / web)."""
+    from catalog import get_dataset
+    from runners import PlaygroundError
+
+    dataset = get_dataset(dataset_id or "unit-test")
+    if dataset is None or not dataset.get("enabled"):
+        raise PlaygroundError(f"Dataset is not enabled: {dataset_id}")
+    if not metric_ids:
+        raise PlaygroundError("Pick at least one distance metric.")
+    log: list[str] = []
+    results = [
+        compute_distance_matrix(
+            dataset, metric_id, params=params or {}, max_instances=max_instances, log=log
+        )
+        for metric_id in metric_ids
+    ]
+    return {
+        "dataset_id": dataset["id"],
+        "dataset_name": dataset["name"],
+        "split": "train",
+        "max_instances": max_instances,
+        "results": results,
+        "log": log,
+    }

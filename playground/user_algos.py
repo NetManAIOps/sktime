@@ -85,10 +85,53 @@ def _validate_plugin(module, path: Path) -> dict:
     return {"task": task, "name": str(name), "params": dict(params), "klass": klass}
 
 
+def _plugin_cache_file() -> Path | None:
+    from catalog import _disk_cache_dir
+
+    cache_dir = _disk_cache_dir()
+    return cache_dir / "user-plugins.json" if cache_dir else None
+
+
+def _load_plugin_cache() -> dict:
+    cache_file = _plugin_cache_file()
+    try:
+        return json.loads(cache_file.read_text(encoding="utf-8")) if cache_file else {}
+    except (OSError, ValueError):
+        return {}
+
+
+def _save_plugin_cache(cache: dict) -> None:
+    cache_file = _plugin_cache_file()
+    if cache_file is None:
+        return
+    try:
+        cache_file.parent.mkdir(parents=True, exist_ok=True)
+        tmp = cache_file.with_suffix(f".tmp{__import__('os').getpid()}")
+        tmp.write_text(json.dumps(cache), encoding="utf-8")
+        tmp.replace(cache_file)
+    except OSError:
+        pass
+
+
 def discover_user_algorithms() -> list[dict]:
-    """Discover experiment plugins; never raises on a broken file."""
+    """Discover experiment plugins; never raises on a broken file.
+
+    Importing a plugin can pull in heavy dependencies (torch, tensorflow), so
+    validated plugins are cached by (path, mtime, size, this file's mtime) and
+    only re-imported when they change. Broken plugins are never cached.
+    """
     entries = []
+    cache = _load_plugin_cache()
+    fresh_cache: dict = {}
+    self_stamp = Path(__file__).stat().st_mtime_ns
     for path in iter_plugin_files():
+        stat = path.stat()
+        stamp = [stat.st_mtime_ns, stat.st_size, self_stamp]
+        cached = cache.get(str(path))
+        if cached and cached.get("stamp") == stamp:
+            entries.append(cached["entry"])
+            fresh_cache[str(path)] = cached
+            continue
         base = {
             "id": user_algorithm_id(path.stem),
             "task": "all",
@@ -119,6 +162,10 @@ def discover_user_algorithms() -> list[dict]:
                 params={},
             )
         entries.append(base)
+        if base.get("enabled"):
+            fresh_cache[str(path)] = {"stamp": stamp, "entry": base}
+    if fresh_cache != cache:
+        _save_plugin_cache(fresh_cache)
     return entries
 
 

@@ -12,6 +12,12 @@ has a CLI counterpart (same catalog/runner code, identical results):
                                       --algorithm naive-seasonal-last --param horizon=6
     GET  /api/export/script       libraryts script (--spec '<json>' | --from run.json)
     GET  /api/export/report       libraryts report (--spec '<json>' | --from run.json)
+    POST /api/train               libraryts train --algorithm <id> [--model-id M] ...
+    GET  /api/models              libraryts ls models
+    POST /api/run {"model_id": M} libraryts run --model-id M
+    POST /api/evaluate            libraryts evaluate --from run.json --metric ...   (web: last run's run_id)
+    POST /api/analyze             libraryts analyze --algorithm <id> --dataset D
+    POST /api/dist                libraryts dist --dataset D --metric dtw
 
     Discovery shortcut            libraryts ls tasks|algorithms|datasets|preprocessors|metrics|models|analyzers|distances \
                                       [--task forecasting] [--all]
@@ -618,40 +624,20 @@ def _main_analyze(args) -> int:
 
 def _main_dist(args) -> int:
     """Pairwise distance matrix over a panel dataset."""
-    from domain_runners import compute_distance_matrix
+    from domain_runners import distance_report
 
     envelope = _envelope("dist")
     try:
-        from catalog import get_dataset as _get_dataset
-
         if args.max_instances < 2:
             raise UsageError(
                 f"--max-instances must be >= 2, got {args.max_instances}."
             )
-        dataset = _get_dataset(args.dataset or "unit-test")
-        if dataset is None or not dataset.get("enabled"):
-            raise PlaygroundError(f"Dataset is not enabled: {args.dataset}")
-        params = _parse_kv_pairs(args.param, "--param")
-        log = []
-        results = []
-        for metric_id in args.metric:
-            results.append(
-                compute_distance_matrix(
-                    dataset,
-                    metric_id,
-                    params=params,
-                    max_instances=args.max_instances,
-                    log=log,
-                )
-            )
-        envelope["data"] = {
-            "dataset_id": dataset["id"],
-            "dataset_name": dataset["name"],
-            "split": "train",
-            "max_instances": args.max_instances,
-            "results": results,
-            "log": log,
-        }
+        envelope["data"] = distance_report(
+            args.dataset,
+            list(args.metric or []),
+            _parse_kv_pairs(args.param, "--param"),
+            args.max_instances,
+        )
         exit_code = EXIT_OK
     except UsageError as exc:
         return _fail(envelope, sys.stdout, exc, "error", EXIT_USAGE)
