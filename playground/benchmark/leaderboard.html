@@ -215,7 +215,7 @@
        Click a row for the citation, protocol, and commands.</p>
   </section>
 
-  <section class="stats" id="stats"><div class="stat"><div class="num">298</div><div class="lbl">algorithms tracked</div></div><div class="stat"><div class="num">567</div><div class="lbl">groundtruth claims</div></div><div class="stat"><div class="num">493/567</div><div class="lbl">claims reproduced</div></div><div class="stat"><div class="num">86.9%</div><div class="lbl">reproduction rate</div></div></section>
+  <section class="stats" id="stats"><div class="stat"><div class="num">298</div><div class="lbl">algorithms tracked</div></div><div class="stat"><div class="num">617</div><div class="lbl">groundtruth claims</div></div><div class="stat"><div class="num">542/617</div><div class="lbl">claims reproduced</div></div><div class="stat"><div class="num">87.8%</div><div class="lbl">reproduction rate</div></div></section>
 
   <nav class="tabs" id="tabs"><a class="tab" href="#forecasting" data-task="forecasting">Forecasting<span class="cnt">138</span></a><a class="tab" href="#classification" data-task="classification">Classification<span class="cnt">66</span></a><a class="tab" href="#regression" data-task="regression">Regression<span class="cnt">22</span></a><a class="tab" href="#clustering" data-task="clustering">Clustering<span class="cnt">10</span></a><a class="tab" href="#anomaly_detection" data-task="anomaly_detection">Anomaly Detection<span class="cnt">58</span></a><a class="tab" href="#causal" data-task="causal">Causal Discovery<span class="cnt">4</span></a></nav>
 
@@ -6449,7 +6449,7 @@
   </div>
   <div class="panel-sub">64 of 66 algorithms runnable in this environment</div>
 
-  <div class="section-label">Algorithms — 7 with tracked claims · 60 not run yet</div>
+  <div class="section-label">Algorithms — 11 with tracked claims · 56 not run yet</div>
   <input class="filter" type="search" placeholder="Filter algorithms…" />
   <div class="claim-groups">
 <details class="claim-group" data-name="1nn-dtw kneighborstimeseriesclassifier">
@@ -7775,6 +7775,1749 @@
       </div>
 
       <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 0.37037037037037035, &quot;Macro F1&quot;: 0.36250000000000004}</div></div>
+    </div>
+  </div>
+</details></div>
+</details>
+<details class="claim-group" data-name="rise randomintervalspectralensemble">
+  <summary>
+    <div class="alg">RISE<span class="lib">tsml reference classification results (timeseriesclassification.com ReferenceResults</span></div>
+    <div class="grp-note">13 dataset/config claims</div>
+    <div style="display:flex;align-items:center;justify-content:flex-end;gap:10px">
+      <span class="status reproduced"><span class="dot"></span>13/13 configs reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="group-body">
+<details class="claim">
+  <summary>
+    <div class="ds">ArrowHead (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 0.7886→0.7886 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm RandomIntervalSpectralEnsemble --dataset arrow-head --model-id bench-classification-rise-arrowhead --param random_state=0 --param acf_lag=100 --param acf_min_values=4 --param max_interval=0 --param min_interval=16 --param n_estimators=500 --param n_jobs=1<button class="copy" data-cmd="libraryts train --algorithm RandomIntervalSpectralEnsemble --dataset arrow-head --model-id bench-classification-rise-arrowhead --param random_state=0 --param acf_lag=100 --param acf_min_values=4 --param max_interval=0 --param min_interval=16 --param n_estimators=500 --param n_jobs=1">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-rise-arrowhead --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-rise-arrowhead --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/RISE_accuracy.csv" target="_blank" rel="noopener">Time series classification with HIVE-COTE: the hierarchical vote collective of transformation-based ensembles (Lines, Taylor &amp; Bagnall, ACM TKDD 12(4) 2018) - RISE; tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · RISE_accuracy.csv, row ArrowHead, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; Random Interval Spectral Ensemble, 500 trees over random intervals with periodogram + ACF features (sktime RandomIntervalSpectralEnsemble defaults, random_state=0); reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.04 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:43:03 UTC · 17.1s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">sktime&#x27;s RISE shares the aeon code lineage used for the reference, so near-exact agreement is expected (Chinatown smoke test matched the reference to full precision). Interval selection is seeded (random_state=0, the tsml fold-0 convention); residual deltas come from seed/version drift, covered by the 0.04 tolerance. Reference accuracy for ArrowHead across the 30 resamples ranges [0.72571, 0.87429] (resample 0 = 0.78857).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 0.7885714285714286, &quot;Macro F1&quot;: 0.7888683177260817}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">ItalyPowerDemand (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 0.9563→0.9563 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm RandomIntervalSpectralEnsemble --dataset italy-power-demand --model-id bench-classification-rise-italypowerdemand --param random_state=0 --param acf_lag=100 --param acf_min_values=4 --param max_interval=0 --param min_interval=16 --param n_estimators=500 --param n_jobs=1<button class="copy" data-cmd="libraryts train --algorithm RandomIntervalSpectralEnsemble --dataset italy-power-demand --model-id bench-classification-rise-italypowerdemand --param random_state=0 --param acf_lag=100 --param acf_min_values=4 --param max_interval=0 --param min_interval=16 --param n_estimators=500 --param n_jobs=1">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-rise-italypowerdemand --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-rise-italypowerdemand --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/RISE_accuracy.csv" target="_blank" rel="noopener">Time series classification with HIVE-COTE: the hierarchical vote collective of transformation-based ensembles (Lines, Taylor &amp; Bagnall, ACM TKDD 12(4) 2018) - RISE; tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · RISE_accuracy.csv, row ItalyPowerDemand, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; Random Interval Spectral Ensemble, 500 trees over random intervals with periodogram + ACF features (sktime RandomIntervalSpectralEnsemble defaults, random_state=0); reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.04 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:43:54 UTC · 50.2s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">sktime&#x27;s RISE shares the aeon code lineage used for the reference, so near-exact agreement is expected (Chinatown smoke test matched the reference to full precision). Interval selection is seeded (random_state=0, the tsml fold-0 convention); residual deltas come from seed/version drift, covered by the 0.04 tolerance. Reference accuracy for ItalyPowerDemand across the 30 resamples ranges [0.91934, 0.96793] (resample 0 = 0.95627).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 0.956268221574344, &quot;Macro F1&quot;: 0.9562667346678567}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Beef (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 0.8667→0.8667 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm RandomIntervalSpectralEnsemble --dataset ucr-beef --model-id bench-classification-rise-beef --param random_state=0 --param acf_lag=100 --param acf_min_values=4 --param max_interval=0 --param min_interval=16 --param n_estimators=500 --param n_jobs=1<button class="copy" data-cmd="libraryts train --algorithm RandomIntervalSpectralEnsemble --dataset ucr-beef --model-id bench-classification-rise-beef --param random_state=0 --param acf_lag=100 --param acf_min_values=4 --param max_interval=0 --param min_interval=16 --param n_estimators=500 --param n_jobs=1">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-rise-beef --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-rise-beef --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/RISE_accuracy.csv" target="_blank" rel="noopener">Time series classification with HIVE-COTE: the hierarchical vote collective of transformation-based ensembles (Lines, Taylor &amp; Bagnall, ACM TKDD 12(4) 2018) - RISE; tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · RISE_accuracy.csv, row Beef, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; Random Interval Spectral Ensemble, 500 trees over random intervals with periodogram + ACF features (sktime RandomIntervalSpectralEnsemble defaults, random_state=0); reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.04 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:44:18 UTC · 24.9s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">sktime&#x27;s RISE shares the aeon code lineage used for the reference, so near-exact agreement is expected (Chinatown smoke test matched the reference to full precision). Interval selection is seeded (random_state=0, the tsml fold-0 convention); residual deltas come from seed/version drift, covered by the 0.04 tolerance. Reference accuracy for Beef across the 30 resamples ranges [0.6, 0.93333] (resample 0 = 0.86667).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 0.8666666666666667, &quot;Macro F1&quot;: 0.8721212121212121}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Car (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 0.7833→0.7833 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm RandomIntervalSpectralEnsemble --dataset ucr-car --model-id bench-classification-rise-car --param random_state=0 --param acf_lag=100 --param acf_min_values=4 --param max_interval=0 --param min_interval=16 --param n_estimators=500 --param n_jobs=1<button class="copy" data-cmd="libraryts train --algorithm RandomIntervalSpectralEnsemble --dataset ucr-car --model-id bench-classification-rise-car --param random_state=0 --param acf_lag=100 --param acf_min_values=4 --param max_interval=0 --param min_interval=16 --param n_estimators=500 --param n_jobs=1">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-rise-car --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-rise-car --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/RISE_accuracy.csv" target="_blank" rel="noopener">Time series classification with HIVE-COTE: the hierarchical vote collective of transformation-based ensembles (Lines, Taylor &amp; Bagnall, ACM TKDD 12(4) 2018) - RISE; tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · RISE_accuracy.csv, row Car, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; Random Interval Spectral Ensemble, 500 trees over random intervals with periodogram + ACF features (sktime RandomIntervalSpectralEnsemble defaults, random_state=0); reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.04 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:44:38 UTC · 19.3s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">sktime&#x27;s RISE shares the aeon code lineage used for the reference, so near-exact agreement is expected (Chinatown smoke test matched the reference to full precision). Interval selection is seeded (random_state=0, the tsml fold-0 convention); residual deltas come from seed/version drift, covered by the 0.04 tolerance. Reference accuracy for Car across the 30 resamples ranges [0.68333, 0.86667] (resample 0 = 0.78333).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 0.7833333333333333, &quot;Macro F1&quot;: 0.788433908045977}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">CBF (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 0.9578→0.9578 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm RandomIntervalSpectralEnsemble --dataset ucr-cbf --model-id bench-classification-rise-cbf --param random_state=0 --param acf_lag=100 --param acf_min_values=4 --param max_interval=0 --param min_interval=16 --param n_estimators=500 --param n_jobs=1<button class="copy" data-cmd="libraryts train --algorithm RandomIntervalSpectralEnsemble --dataset ucr-cbf --model-id bench-classification-rise-cbf --param random_state=0 --param acf_lag=100 --param acf_min_values=4 --param max_interval=0 --param min_interval=16 --param n_estimators=500 --param n_jobs=1">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-rise-cbf --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-rise-cbf --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/RISE_accuracy.csv" target="_blank" rel="noopener">Time series classification with HIVE-COTE: the hierarchical vote collective of transformation-based ensembles (Lines, Taylor &amp; Bagnall, ACM TKDD 12(4) 2018) - RISE; tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · RISE_accuracy.csv, row CBF, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; Random Interval Spectral Ensemble, 500 trees over random intervals with periodogram + ACF features (sktime RandomIntervalSpectralEnsemble defaults, random_state=0); reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.04 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:45:29 UTC · 50.9s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">sktime&#x27;s RISE shares the aeon code lineage used for the reference, so near-exact agreement is expected (Chinatown smoke test matched the reference to full precision). Interval selection is seeded (random_state=0, the tsml fold-0 convention); residual deltas come from seed/version drift, covered by the 0.04 tolerance. Reference accuracy for CBF across the 30 resamples ranges [0.91222, 0.99667] (resample 0 = 0.95778).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 0.9577777777777777, &quot;Macro F1&quot;: 0.9572325034628104}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Chinatown (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 0.9708→0.9708 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm RandomIntervalSpectralEnsemble --dataset ucr-chinatown --model-id bench-classification-rise-chinatown --param random_state=0 --param acf_lag=100 --param acf_min_values=4 --param max_interval=0 --param min_interval=16 --param n_estimators=500 --param n_jobs=1<button class="copy" data-cmd="libraryts train --algorithm RandomIntervalSpectralEnsemble --dataset ucr-chinatown --model-id bench-classification-rise-chinatown --param random_state=0 --param acf_lag=100 --param acf_min_values=4 --param max_interval=0 --param min_interval=16 --param n_estimators=500 --param n_jobs=1">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-rise-chinatown --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-rise-chinatown --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/RISE_accuracy.csv" target="_blank" rel="noopener">Time series classification with HIVE-COTE: the hierarchical vote collective of transformation-based ensembles (Lines, Taylor &amp; Bagnall, ACM TKDD 12(4) 2018) - RISE; tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · RISE_accuracy.csv, row Chinatown, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; Random Interval Spectral Ensemble, 500 trees over random intervals with periodogram + ACF features (sktime RandomIntervalSpectralEnsemble defaults, random_state=0); reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.04 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:46:00 UTC · 30.8s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">sktime&#x27;s RISE shares the aeon code lineage used for the reference, so near-exact agreement is expected (Chinatown smoke test matched the reference to full precision). Interval selection is seeded (random_state=0, the tsml fold-0 convention); residual deltas come from seed/version drift, covered by the 0.04 tolerance. Reference accuracy for Chinatown across the 30 resamples ranges [0.82799, 0.97085] (resample 0 = 0.97085).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 0.9708454810495627, &quot;Macro F1&quot;: 0.9645015731081306}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Coffee (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 1→1 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm RandomIntervalSpectralEnsemble --dataset ucr-coffee --model-id bench-classification-rise-coffee --param random_state=0 --param acf_lag=100 --param acf_min_values=4 --param max_interval=0 --param min_interval=16 --param n_estimators=500 --param n_jobs=1<button class="copy" data-cmd="libraryts train --algorithm RandomIntervalSpectralEnsemble --dataset ucr-coffee --model-id bench-classification-rise-coffee --param random_state=0 --param acf_lag=100 --param acf_min_values=4 --param max_interval=0 --param min_interval=16 --param n_estimators=500 --param n_jobs=1">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-rise-coffee --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-rise-coffee --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/RISE_accuracy.csv" target="_blank" rel="noopener">Time series classification with HIVE-COTE: the hierarchical vote collective of transformation-based ensembles (Lines, Taylor &amp; Bagnall, ACM TKDD 12(4) 2018) - RISE; tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · RISE_accuracy.csv, row Coffee, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; Random Interval Spectral Ensemble, 500 trees over random intervals with periodogram + ACF features (sktime RandomIntervalSpectralEnsemble defaults, random_state=0); reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.04 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:46:10 UTC · 10.7s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">sktime&#x27;s RISE shares the aeon code lineage used for the reference, so near-exact agreement is expected (Chinatown smoke test matched the reference to full precision). Interval selection is seeded (random_state=0, the tsml fold-0 convention); residual deltas come from seed/version drift, covered by the 0.04 tolerance. Reference accuracy for Coffee across the 30 resamples ranges [0.89286, 1.0] (resample 0 = 1.0).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 1.0, &quot;Macro F1&quot;: 1.0}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">ECG200 (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 0.88→0.88 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm RandomIntervalSpectralEnsemble --dataset ucr-ecg200 --model-id bench-classification-rise-ecg200 --param random_state=0 --param acf_lag=100 --param acf_min_values=4 --param max_interval=0 --param min_interval=16 --param n_estimators=500 --param n_jobs=1<button class="copy" data-cmd="libraryts train --algorithm RandomIntervalSpectralEnsemble --dataset ucr-ecg200 --model-id bench-classification-rise-ecg200 --param random_state=0 --param acf_lag=100 --param acf_min_values=4 --param max_interval=0 --param min_interval=16 --param n_estimators=500 --param n_jobs=1">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-rise-ecg200 --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-rise-ecg200 --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/RISE_accuracy.csv" target="_blank" rel="noopener">Time series classification with HIVE-COTE: the hierarchical vote collective of transformation-based ensembles (Lines, Taylor &amp; Bagnall, ACM TKDD 12(4) 2018) - RISE; tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · RISE_accuracy.csv, row ECG200, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; Random Interval Spectral Ensemble, 500 trees over random intervals with periodogram + ACF features (sktime RandomIntervalSpectralEnsemble defaults, random_state=0); reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.04 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:46:28 UTC · 17.9s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">sktime&#x27;s RISE shares the aeon code lineage used for the reference, so near-exact agreement is expected (Chinatown smoke test matched the reference to full precision). Interval selection is seeded (random_state=0, the tsml fold-0 convention); residual deltas come from seed/version drift, covered by the 0.04 tolerance. Reference accuracy for ECG200 across the 30 resamples ranges [0.79, 0.92] (resample 0 = 0.88).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 0.88, &quot;Macro F1&quot;: 0.8663101604278074}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">ECG5000 (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 0.9349→0.9349 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm RandomIntervalSpectralEnsemble --dataset ucr-ecg5000 --model-id bench-classification-rise-ecg5000 --param random_state=0 --param acf_lag=100 --param acf_min_values=4 --param max_interval=0 --param min_interval=16 --param n_estimators=500 --param n_jobs=1<button class="copy" data-cmd="libraryts train --algorithm RandomIntervalSpectralEnsemble --dataset ucr-ecg5000 --model-id bench-classification-rise-ecg5000 --param random_state=0 --param acf_lag=100 --param acf_min_values=4 --param max_interval=0 --param min_interval=16 --param n_estimators=500 --param n_jobs=1">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-rise-ecg5000 --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-rise-ecg5000 --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/RISE_accuracy.csv" target="_blank" rel="noopener">Time series classification with HIVE-COTE: the hierarchical vote collective of transformation-based ensembles (Lines, Taylor &amp; Bagnall, ACM TKDD 12(4) 2018) - RISE; tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · RISE_accuracy.csv, row ECG5000, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; Random Interval Spectral Ensemble, 500 trees over random intervals with periodogram + ACF features (sktime RandomIntervalSpectralEnsemble defaults, random_state=0); reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.04 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:50:43 UTC · 255s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">sktime&#x27;s RISE shares the aeon code lineage used for the reference, so near-exact agreement is expected (Chinatown smoke test matched the reference to full precision). Interval selection is seeded (random_state=0, the tsml fold-0 convention); residual deltas come from seed/version drift, covered by the 0.04 tolerance. Reference accuracy for ECG5000 across the 30 resamples ranges [0.93111, 0.94289] (resample 0 = 0.93489).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 0.9348888888888889, &quot;Macro F1&quot;: 0.4594803916729585}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Fish (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 0.8629→0.8629 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm RandomIntervalSpectralEnsemble --dataset ucr-fish --model-id bench-classification-rise-fish --param random_state=0 --param acf_lag=100 --param acf_min_values=4 --param max_interval=0 --param min_interval=16 --param n_estimators=500 --param n_jobs=1<button class="copy" data-cmd="libraryts train --algorithm RandomIntervalSpectralEnsemble --dataset ucr-fish --model-id bench-classification-rise-fish --param random_state=0 --param acf_lag=100 --param acf_min_values=4 --param max_interval=0 --param min_interval=16 --param n_estimators=500 --param n_jobs=1">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-rise-fish --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-rise-fish --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/RISE_accuracy.csv" target="_blank" rel="noopener">Time series classification with HIVE-COTE: the hierarchical vote collective of transformation-based ensembles (Lines, Taylor &amp; Bagnall, ACM TKDD 12(4) 2018) - RISE; tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · RISE_accuracy.csv, row Fish, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; Random Interval Spectral Ensemble, 500 trees over random intervals with periodogram + ACF features (sktime RandomIntervalSpectralEnsemble defaults, random_state=0); reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.04 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:51:43 UTC · 59s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">sktime&#x27;s RISE shares the aeon code lineage used for the reference, so near-exact agreement is expected (Chinatown smoke test matched the reference to full precision). Interval selection is seeded (random_state=0, the tsml fold-0 convention); residual deltas come from seed/version drift, covered by the 0.04 tolerance. Reference accuracy for Fish across the 30 resamples ranges [0.83429, 0.93714] (resample 0 = 0.86286).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 0.8628571428571429, &quot;Macro F1&quot;: 0.8685090279514209}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">GunPoint (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 0.98→0.98 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm RandomIntervalSpectralEnsemble --dataset ucr-gunpoint --model-id bench-classification-rise-gunpoint --param random_state=0 --param acf_lag=100 --param acf_min_values=4 --param max_interval=0 --param min_interval=16 --param n_estimators=500 --param n_jobs=1<button class="copy" data-cmd="libraryts train --algorithm RandomIntervalSpectralEnsemble --dataset ucr-gunpoint --model-id bench-classification-rise-gunpoint --param random_state=0 --param acf_lag=100 --param acf_min_values=4 --param max_interval=0 --param min_interval=16 --param n_estimators=500 --param n_jobs=1">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-rise-gunpoint --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-rise-gunpoint --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/RISE_accuracy.csv" target="_blank" rel="noopener">Time series classification with HIVE-COTE: the hierarchical vote collective of transformation-based ensembles (Lines, Taylor &amp; Bagnall, ACM TKDD 12(4) 2018) - RISE; tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · RISE_accuracy.csv, row GunPoint, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; Random Interval Spectral Ensemble, 500 trees over random intervals with periodogram + ACF features (sktime RandomIntervalSpectralEnsemble defaults, random_state=0); reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.04 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:52:13 UTC · 30.6s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">sktime&#x27;s RISE shares the aeon code lineage used for the reference, so near-exact agreement is expected (Chinatown smoke test matched the reference to full precision). Interval selection is seeded (random_state=0, the tsml fold-0 convention); residual deltas come from seed/version drift, covered by the 0.04 tolerance. Reference accuracy for GunPoint across the 30 resamples ranges [0.94, 1.0] (resample 0 = 0.98).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 0.98, &quot;Macro F1&quot;: 0.9799991110716032}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Meat (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 0.9333→0.9333 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm RandomIntervalSpectralEnsemble --dataset ucr-meat --model-id bench-classification-rise-meat --param random_state=0 --param acf_lag=100 --param acf_min_values=4 --param max_interval=0 --param min_interval=16 --param n_estimators=500 --param n_jobs=1<button class="copy" data-cmd="libraryts train --algorithm RandomIntervalSpectralEnsemble --dataset ucr-meat --model-id bench-classification-rise-meat --param random_state=0 --param acf_lag=100 --param acf_min_values=4 --param max_interval=0 --param min_interval=16 --param n_estimators=500 --param n_jobs=1">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-rise-meat --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-rise-meat --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/RISE_accuracy.csv" target="_blank" rel="noopener">Time series classification with HIVE-COTE: the hierarchical vote collective of transformation-based ensembles (Lines, Taylor &amp; Bagnall, ACM TKDD 12(4) 2018) - RISE; tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · RISE_accuracy.csv, row Meat, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; Random Interval Spectral Ensemble, 500 trees over random intervals with periodogram + ACF features (sktime RandomIntervalSpectralEnsemble defaults, random_state=0); reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.04 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:52:30 UTC · 16.7s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">sktime&#x27;s RISE shares the aeon code lineage used for the reference, so near-exact agreement is expected (Chinatown smoke test matched the reference to full precision). Interval selection is seeded (random_state=0, the tsml fold-0 convention); residual deltas come from seed/version drift, covered by the 0.04 tolerance. Reference accuracy for Meat across the 30 resamples ranges [0.93333, 1.0] (resample 0 = 0.93333).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 0.9333333333333333, &quot;Macro F1&quot;: 0.933249791144528}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Wafer (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 0.9958→0.9958 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm RandomIntervalSpectralEnsemble --dataset ucr-wafer --model-id bench-classification-rise-wafer --param random_state=0 --param acf_lag=100 --param acf_min_values=4 --param max_interval=0 --param min_interval=16 --param n_estimators=500 --param n_jobs=1<button class="copy" data-cmd="libraryts train --algorithm RandomIntervalSpectralEnsemble --dataset ucr-wafer --model-id bench-classification-rise-wafer --param random_state=0 --param acf_lag=100 --param acf_min_values=4 --param max_interval=0 --param min_interval=16 --param n_estimators=500 --param n_jobs=1">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-rise-wafer --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-rise-wafer --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/RISE_accuracy.csv" target="_blank" rel="noopener">Time series classification with HIVE-COTE: the hierarchical vote collective of transformation-based ensembles (Lines, Taylor &amp; Bagnall, ACM TKDD 12(4) 2018) - RISE; tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · RISE_accuracy.csv, row Wafer, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; Random Interval Spectral Ensemble, 500 trees over random intervals with periodogram + ACF features (sktime RandomIntervalSpectralEnsemble defaults, random_state=0); reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.04 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:00:26 UTC · 476s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">sktime&#x27;s RISE shares the aeon code lineage used for the reference, so near-exact agreement is expected (Chinatown smoke test matched the reference to full precision). Interval selection is seeded (random_state=0, the tsml fold-0 convention); residual deltas come from seed/version drift, covered by the 0.04 tolerance. Reference accuracy for Wafer across the 30 resamples ranges [0.99059, 0.99838] (resample 0 = 0.99578).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 0.9957819597663855, &quot;Macro F1&quot;: 0.988926228939562}</div></div>
+    </div>
+  </div>
+</details></div>
+</details>
+<details class="claim-group" data-name="shapedtw shapedtw">
+  <summary>
+    <div class="alg">ShapeDTW<span class="lib">tsml reference classification results (timeseriesclassification.com ReferenceResults</span></div>
+    <div class="grp-note">13 dataset/config claims</div>
+    <div style="display:flex;align-items:center;justify-content:flex-end;gap:10px">
+      <span class="status reproduced"><span class="dot"></span>13/13 configs reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="group-body">
+<details class="claim">
+  <summary>
+    <div class="ds">Beef (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 0.6667→0.6667 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm ShapeDTW --dataset ucr-beef --model-id bench-classification-shapedtw-beef --param n_neighbors=1 --param n_splits=10 --param subsequence_length=30<button class="copy" data-cmd="libraryts train --algorithm ShapeDTW --dataset ucr-beef --model-id bench-classification-shapedtw-beef --param n_neighbors=1 --param n_splits=10 --param subsequence_length=30">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-shapedtw-beef --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-shapedtw-beef --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/ShapeDTW_accuracy.csv" target="_blank" rel="noopener">shapeDTW: shape dynamic time warping (Zhao &amp; Itti, Pattern Recognition 74, 2018); tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · ShapeDTW_accuracy.csv, row Beef, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; 1-NN over the shapeDTW alignment (raw subsequence descriptor, subsequence_length=30, n_splits=10; sktime ShapeDTW defaults); deterministic, no randomness; reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:27:43 UTC · 16.6s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (1-NN on a fixed transform): like 1NN-DTW, the delta vs the reference should be ~0; non-zero deltas flag implementation/version drift in the transform or distance (Chinatown smoke test matched the reference to full precision). Reference accuracy for Beef across the 30 resamples ranges [0.3, 0.66667] (resample 0 = 0.66667).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 0.6666666666666666, &quot;Macro F1&quot;: 0.6723809523809524}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">CBF (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 0.9056→0.9056 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm ShapeDTW --dataset ucr-cbf --model-id bench-classification-shapedtw-cbf --param n_neighbors=1 --param n_splits=10 --param subsequence_length=30<button class="copy" data-cmd="libraryts train --algorithm ShapeDTW --dataset ucr-cbf --model-id bench-classification-shapedtw-cbf --param n_neighbors=1 --param n_splits=10 --param subsequence_length=30">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-shapedtw-cbf --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-shapedtw-cbf --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/ShapeDTW_accuracy.csv" target="_blank" rel="noopener">shapeDTW: shape dynamic time warping (Zhao &amp; Itti, Pattern Recognition 74, 2018); tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · ShapeDTW_accuracy.csv, row CBF, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; 1-NN over the shapeDTW alignment (raw subsequence descriptor, subsequence_length=30, n_splits=10; sktime ShapeDTW defaults); deterministic, no randomness; reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:28:37 UTC · 54.5s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (1-NN on a fixed transform): like 1NN-DTW, the delta vs the reference should be ~0; non-zero deltas flag implementation/version drift in the transform or distance (Chinatown smoke test matched the reference to full precision). Reference accuracy for CBF across the 30 resamples ranges [0.85444, 0.97333] (resample 0 = 0.90556).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 0.9055555555555556, &quot;Macro F1&quot;: 0.904532142394823}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Chinatown (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 0.9621→0.9621 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm ShapeDTW --dataset ucr-chinatown --model-id bench-classification-shapedtw-chinatown --param n_neighbors=1 --param n_splits=10 --param subsequence_length=30<button class="copy" data-cmd="libraryts train --algorithm ShapeDTW --dataset ucr-chinatown --model-id bench-classification-shapedtw-chinatown --param n_neighbors=1 --param n_splits=10 --param subsequence_length=30">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-shapedtw-chinatown --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-shapedtw-chinatown --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/ShapeDTW_accuracy.csv" target="_blank" rel="noopener">shapeDTW: shape dynamic time warping (Zhao &amp; Itti, Pattern Recognition 74, 2018); tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · ShapeDTW_accuracy.csv, row Chinatown, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; 1-NN over the shapeDTW alignment (raw subsequence descriptor, subsequence_length=30, n_splits=10; sktime ShapeDTW defaults); deterministic, no randomness; reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:28:48 UTC · 10.3s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (1-NN on a fixed transform): like 1NN-DTW, the delta vs the reference should be ~0; non-zero deltas flag implementation/version drift in the transform or distance (Chinatown smoke test matched the reference to full precision). Reference accuracy for Chinatown across the 30 resamples ranges [0.81633, 0.97668] (resample 0 = 0.9621).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 0.9620991253644315, &quot;Macro F1&quot;: 0.9528372732561214}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Coffee (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 1→1 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm ShapeDTW --dataset ucr-coffee --model-id bench-classification-shapedtw-coffee --param n_neighbors=1 --param n_splits=10 --param subsequence_length=30<button class="copy" data-cmd="libraryts train --algorithm ShapeDTW --dataset ucr-coffee --model-id bench-classification-shapedtw-coffee --param n_neighbors=1 --param n_splits=10 --param subsequence_length=30">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-shapedtw-coffee --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-shapedtw-coffee --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/ShapeDTW_accuracy.csv" target="_blank" rel="noopener">shapeDTW: shape dynamic time warping (Zhao &amp; Itti, Pattern Recognition 74, 2018); tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · ShapeDTW_accuracy.csv, row Coffee, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; 1-NN over the shapeDTW alignment (raw subsequence descriptor, subsequence_length=30, n_splits=10; sktime ShapeDTW defaults); deterministic, no randomness; reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:29:00 UTC · 11.9s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (1-NN on a fixed transform): like 1NN-DTW, the delta vs the reference should be ~0; non-zero deltas flag implementation/version drift in the transform or distance (Chinatown smoke test matched the reference to full precision). Reference accuracy for Coffee across the 30 resamples ranges [0.92857, 1.0] (resample 0 = 1.0).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 1.0, &quot;Macro F1&quot;: 1.0}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">DiatomSizeReduction (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 0.9575→0.9575 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm ShapeDTW --dataset ucr-diatomsizereduction --model-id bench-classification-shapedtw-diatomsizereduction --param n_neighbors=1 --param n_splits=10 --param subsequence_length=30<button class="copy" data-cmd="libraryts train --algorithm ShapeDTW --dataset ucr-diatomsizereduction --model-id bench-classification-shapedtw-diatomsizereduction --param n_neighbors=1 --param n_splits=10 --param subsequence_length=30">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-shapedtw-diatomsizereduction --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-shapedtw-diatomsizereduction --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/ShapeDTW_accuracy.csv" target="_blank" rel="noopener">shapeDTW: shape dynamic time warping (Zhao &amp; Itti, Pattern Recognition 74, 2018); tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · ShapeDTW_accuracy.csv, row DiatomSizeReduction, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; 1-NN over the shapeDTW alignment (raw subsequence descriptor, subsequence_length=30, n_splits=10; sktime ShapeDTW defaults); deterministic, no randomness; reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:29:50 UTC · 50.7s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (1-NN on a fixed transform): like 1NN-DTW, the delta vs the reference should be ~0; non-zero deltas flag implementation/version drift in the transform or distance (Chinatown smoke test matched the reference to full precision). Reference accuracy for DiatomSizeReduction across the 30 resamples ranges [0.88562, 0.98366] (resample 0 = 0.95752).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 0.9575163398692811, &quot;Macro F1&quot;: 0.921456902985901}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">ECG200 (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 0.87→0.87 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm ShapeDTW --dataset ucr-ecg200 --model-id bench-classification-shapedtw-ecg200 --param n_neighbors=1 --param n_splits=10 --param subsequence_length=30<button class="copy" data-cmd="libraryts train --algorithm ShapeDTW --dataset ucr-ecg200 --model-id bench-classification-shapedtw-ecg200 --param n_neighbors=1 --param n_splits=10 --param subsequence_length=30">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-shapedtw-ecg200 --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-shapedtw-ecg200 --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/ShapeDTW_accuracy.csv" target="_blank" rel="noopener">shapeDTW: shape dynamic time warping (Zhao &amp; Itti, Pattern Recognition 74, 2018); tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · ShapeDTW_accuracy.csv, row ECG200, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; 1-NN over the shapeDTW alignment (raw subsequence descriptor, subsequence_length=30, n_splits=10; sktime ShapeDTW defaults); deterministic, no randomness; reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:30:04 UTC · 13.9s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (1-NN on a fixed transform): like 1NN-DTW, the delta vs the reference should be ~0; non-zero deltas flag implementation/version drift in the transform or distance (Chinatown smoke test matched the reference to full precision). Reference accuracy for ECG200 across the 30 resamples ranges [0.78, 0.94] (resample 0 = 0.87).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 0.87, &quot;Macro F1&quot;: 0.8597778017473843}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">ECGFiveDays (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 0.9199→0.9199 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm ShapeDTW --dataset ucr-ecgfivedays --model-id bench-classification-shapedtw-ecgfivedays --param n_neighbors=1 --param n_splits=10 --param subsequence_length=30<button class="copy" data-cmd="libraryts train --algorithm ShapeDTW --dataset ucr-ecgfivedays --model-id bench-classification-shapedtw-ecgfivedays --param n_neighbors=1 --param n_splits=10 --param subsequence_length=30">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-shapedtw-ecgfivedays --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-shapedtw-ecgfivedays --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/ShapeDTW_accuracy.csv" target="_blank" rel="noopener">shapeDTW: shape dynamic time warping (Zhao &amp; Itti, Pattern Recognition 74, 2018); tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · ShapeDTW_accuracy.csv, row ECGFiveDays, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; 1-NN over the shapeDTW alignment (raw subsequence descriptor, subsequence_length=30, n_splits=10; sktime ShapeDTW defaults); deterministic, no randomness; reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:31:01 UTC · 56.7s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (1-NN on a fixed transform): like 1NN-DTW, the delta vs the reference should be ~0; non-zero deltas flag implementation/version drift in the transform or distance (Chinatown smoke test matched the reference to full precision). Reference accuracy for ECGFiveDays across the 30 resamples ranges [0.83391, 0.964] (resample 0 = 0.91986).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 0.9198606271777003, &quot;Macro F1&quot;: 0.9198082709151946}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">FaceFour (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 0.8636→0.8636 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm ShapeDTW --dataset ucr-facefour --model-id bench-classification-shapedtw-facefour --param n_neighbors=1 --param n_splits=10 --param subsequence_length=30<button class="copy" data-cmd="libraryts train --algorithm ShapeDTW --dataset ucr-facefour --model-id bench-classification-shapedtw-facefour --param n_neighbors=1 --param n_splits=10 --param subsequence_length=30">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-shapedtw-facefour --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-shapedtw-facefour --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/ShapeDTW_accuracy.csv" target="_blank" rel="noopener">shapeDTW: shape dynamic time warping (Zhao &amp; Itti, Pattern Recognition 74, 2018); tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · ShapeDTW_accuracy.csv, row FaceFour, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; 1-NN over the shapeDTW alignment (raw subsequence descriptor, subsequence_length=30, n_splits=10; sktime ShapeDTW defaults); deterministic, no randomness; reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:31:22 UTC · 21.4s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (1-NN on a fixed transform): like 1NN-DTW, the delta vs the reference should be ~0; non-zero deltas flag implementation/version drift in the transform or distance (Chinatown smoke test matched the reference to full precision). Reference accuracy for FaceFour across the 30 resamples ranges [0.73864, 0.92045] (resample 0 = 0.86364).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 0.8636363636363636, &quot;Macro F1&quot;: 0.8648038279687217}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">GunPoint (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 0.96→0.96 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm ShapeDTW --dataset ucr-gunpoint --model-id bench-classification-shapedtw-gunpoint --param n_neighbors=1 --param n_splits=10 --param subsequence_length=30<button class="copy" data-cmd="libraryts train --algorithm ShapeDTW --dataset ucr-gunpoint --model-id bench-classification-shapedtw-gunpoint --param n_neighbors=1 --param n_splits=10 --param subsequence_length=30">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-shapedtw-gunpoint --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-shapedtw-gunpoint --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/ShapeDTW_accuracy.csv" target="_blank" rel="noopener">shapeDTW: shape dynamic time warping (Zhao &amp; Itti, Pattern Recognition 74, 2018); tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · ShapeDTW_accuracy.csv, row GunPoint, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; 1-NN over the shapeDTW alignment (raw subsequence descriptor, subsequence_length=30, n_splits=10; sktime ShapeDTW defaults); deterministic, no randomness; reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:31:41 UTC · 18.6s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (1-NN on a fixed transform): like 1NN-DTW, the delta vs the reference should be ~0; non-zero deltas flag implementation/version drift in the transform or distance (Chinatown smoke test matched the reference to full precision). Reference accuracy for GunPoint across the 30 resamples ranges [0.88667, 0.98] (resample 0 = 0.96).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 0.96, &quot;Macro F1&quot;: 0.959971535314001}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Meat (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 0.9333→0.9333 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm ShapeDTW --dataset ucr-meat --model-id bench-classification-shapedtw-meat --param n_neighbors=1 --param n_splits=10 --param subsequence_length=30<button class="copy" data-cmd="libraryts train --algorithm ShapeDTW --dataset ucr-meat --model-id bench-classification-shapedtw-meat --param n_neighbors=1 --param n_splits=10 --param subsequence_length=30">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-shapedtw-meat --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-shapedtw-meat --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/ShapeDTW_accuracy.csv" target="_blank" rel="noopener">shapeDTW: shape dynamic time warping (Zhao &amp; Itti, Pattern Recognition 74, 2018); tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · ShapeDTW_accuracy.csv, row Meat, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; 1-NN over the shapeDTW alignment (raw subsequence descriptor, subsequence_length=30, n_splits=10; sktime ShapeDTW defaults); deterministic, no randomness; reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:32:09 UTC · 28.3s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (1-NN on a fixed transform): like 1NN-DTW, the delta vs the reference should be ~0; non-zero deltas flag implementation/version drift in the transform or distance (Chinatown smoke test matched the reference to full precision). Reference accuracy for Meat across the 30 resamples ranges [0.93333, 1.0] (resample 0 = 0.93333).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 0.9333333333333333, &quot;Macro F1&quot;: 0.934609250398724}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">OSULeaf (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 0.5661→0.5661 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm ShapeDTW --dataset ucr-osuleaf --model-id bench-classification-shapedtw-osuleaf --param n_neighbors=1 --param n_splits=10 --param subsequence_length=30<button class="copy" data-cmd="libraryts train --algorithm ShapeDTW --dataset ucr-osuleaf --model-id bench-classification-shapedtw-osuleaf --param n_neighbors=1 --param n_splits=10 --param subsequence_length=30">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-shapedtw-osuleaf --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-shapedtw-osuleaf --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/ShapeDTW_accuracy.csv" target="_blank" rel="noopener">shapeDTW: shape dynamic time warping (Zhao &amp; Itti, Pattern Recognition 74, 2018); tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · ShapeDTW_accuracy.csv, row OSULeaf, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; 1-NN over the shapeDTW alignment (raw subsequence descriptor, subsequence_length=30, n_splits=10; sktime ShapeDTW defaults); deterministic, no randomness; reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:33:48 UTC · 99s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (1-NN on a fixed transform): like 1NN-DTW, the delta vs the reference should be ~0; non-zero deltas flag implementation/version drift in the transform or distance (Chinatown smoke test matched the reference to full precision). Reference accuracy for OSULeaf across the 30 resamples ranges [0.54545, 0.63636] (resample 0 = 0.56612).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 0.5661157024793388, &quot;Macro F1&quot;: 0.5674435590049965}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Trace (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 0.9→0.9 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm ShapeDTW --dataset ucr-trace --model-id bench-classification-shapedtw-trace --param n_neighbors=1 --param n_splits=10 --param subsequence_length=30<button class="copy" data-cmd="libraryts train --algorithm ShapeDTW --dataset ucr-trace --model-id bench-classification-shapedtw-trace --param n_neighbors=1 --param n_splits=10 --param subsequence_length=30">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-shapedtw-trace --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-shapedtw-trace --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/ShapeDTW_accuracy.csv" target="_blank" rel="noopener">shapeDTW: shape dynamic time warping (Zhao &amp; Itti, Pattern Recognition 74, 2018); tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · ShapeDTW_accuracy.csv, row Trace, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; 1-NN over the shapeDTW alignment (raw subsequence descriptor, subsequence_length=30, n_splits=10; sktime ShapeDTW defaults); deterministic, no randomness; reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:34:17 UTC · 28.5s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (1-NN on a fixed transform): like 1NN-DTW, the delta vs the reference should be ~0; non-zero deltas flag implementation/version drift in the transform or distance (Chinatown smoke test matched the reference to full precision). Reference accuracy for Trace across the 30 resamples ranges [0.87, 0.93] (resample 0 = 0.9).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 0.9, &quot;Macro F1&quot;: 0.8947673134203289}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Wine (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 0.5926→0.5926 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm ShapeDTW --dataset ucr-wine --model-id bench-classification-shapedtw-wine --param n_neighbors=1 --param n_splits=10 --param subsequence_length=30<button class="copy" data-cmd="libraryts train --algorithm ShapeDTW --dataset ucr-wine --model-id bench-classification-shapedtw-wine --param n_neighbors=1 --param n_splits=10 --param subsequence_length=30">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-shapedtw-wine --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-shapedtw-wine --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/ShapeDTW_accuracy.csv" target="_blank" rel="noopener">shapeDTW: shape dynamic time warping (Zhao &amp; Itti, Pattern Recognition 74, 2018); tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · ShapeDTW_accuracy.csv, row Wine, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; 1-NN over the shapeDTW alignment (raw subsequence descriptor, subsequence_length=30, n_splits=10; sktime ShapeDTW defaults); deterministic, no randomness; reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:34:35 UTC · 18.3s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (1-NN on a fixed transform): like 1NN-DTW, the delta vs the reference should be ~0; non-zero deltas flag implementation/version drift in the transform or distance (Chinatown smoke test matched the reference to full precision). Reference accuracy for Wine across the 30 resamples ranges [0.59259, 1.0] (resample 0 = 0.59259).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 0.5925925925925926, &quot;Macro F1&quot;: 0.5925925925925926}</div></div>
+    </div>
+  </div>
+</details></div>
+</details>
+<details class="claim-group" data-name="stsf supervisedtimeseriesforest">
+  <summary>
+    <div class="alg">STSF<span class="lib">tsml reference classification results (timeseriesclassification.com ReferenceResults</span></div>
+    <div class="grp-note">12 dataset/config claims</div>
+    <div style="display:flex;align-items:center;justify-content:flex-end;gap:10px">
+      <span class="status reproduced"><span class="dot"></span>12/12 configs reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="group-body">
+<details class="claim">
+  <summary>
+    <div class="ds">ArrowHead (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 0.6743→0.6571 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm SupervisedTimeSeriesForest --dataset arrow-head --model-id bench-classification-stsf-arrowhead --param random_state=0 --param n_estimators=200 --param n_jobs=1<button class="copy" data-cmd="libraryts train --algorithm SupervisedTimeSeriesForest --dataset arrow-head --model-id bench-classification-stsf-arrowhead --param random_state=0 --param n_estimators=200 --param n_jobs=1">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-stsf-arrowhead --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-stsf-arrowhead --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/STSF_accuracy.csv" target="_blank" rel="noopener">Fast and accurate time series classification through supervised interval search (Cabello, Naghizade, Qi &amp; Kulik, ICDM 2020) - STSF; tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · STSF_accuracy.csv, row ArrowHead, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; Supervised Time Series Forest, 200 trees over supervised (Fisher-score) intervals on multiple series representations (sktime SupervisedTimeSeriesForest defaults, random_state=0); reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.04 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:01:17 UTC · 51.5s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Interval search is seeded (random_state=0, the tsml fold-0 convention); residual deltas vs the aeon-generated reference reflect seed/version drift between the sktime and aeon builds, covered by the 0.04 tolerance. Reference accuracy for ArrowHead across the 30 resamples ranges [0.67429, 0.87429] (resample 0 = 0.67429).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 0.6571428571428571, &quot;Macro F1&quot;: 0.6590738423028786}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">ItalyPowerDemand (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 0.9708→0.9708 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm SupervisedTimeSeriesForest --dataset italy-power-demand --model-id bench-classification-stsf-italypowerdemand --param random_state=0 --param n_estimators=200 --param n_jobs=1<button class="copy" data-cmd="libraryts train --algorithm SupervisedTimeSeriesForest --dataset italy-power-demand --model-id bench-classification-stsf-italypowerdemand --param random_state=0 --param n_estimators=200 --param n_jobs=1">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-stsf-italypowerdemand --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-stsf-italypowerdemand --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/STSF_accuracy.csv" target="_blank" rel="noopener">Fast and accurate time series classification through supervised interval search (Cabello, Naghizade, Qi &amp; Kulik, ICDM 2020) - STSF; tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · STSF_accuracy.csv, row ItalyPowerDemand, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; Supervised Time Series Forest, 200 trees over supervised (Fisher-score) intervals on multiple series representations (sktime SupervisedTimeSeriesForest defaults, random_state=0); reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.04 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:01:33 UTC · 15.7s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Interval search is seeded (random_state=0, the tsml fold-0 convention); residual deltas vs the aeon-generated reference reflect seed/version drift between the sktime and aeon builds, covered by the 0.04 tolerance. Reference accuracy for ItalyPowerDemand across the 30 resamples ranges [0.94461, 0.97279] (resample 0 = 0.97085).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 0.9708454810495627, &quot;Macro F1&quot;: 0.9708432505950357}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">BeetleFly (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 0.95→0.95 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm SupervisedTimeSeriesForest --dataset ucr-beetlefly --model-id bench-classification-stsf-beetlefly --param random_state=0 --param n_estimators=200 --param n_jobs=1<button class="copy" data-cmd="libraryts train --algorithm SupervisedTimeSeriesForest --dataset ucr-beetlefly --model-id bench-classification-stsf-beetlefly --param random_state=0 --param n_estimators=200 --param n_jobs=1">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-stsf-beetlefly --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-stsf-beetlefly --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/STSF_accuracy.csv" target="_blank" rel="noopener">Fast and accurate time series classification through supervised interval search (Cabello, Naghizade, Qi &amp; Kulik, ICDM 2020) - STSF; tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · STSF_accuracy.csv, row BeetleFly, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; Supervised Time Series Forest, 200 trees over supervised (Fisher-score) intervals on multiple series representations (sktime SupervisedTimeSeriesForest defaults, random_state=0); reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.04 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:02:04 UTC · 31.3s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Interval search is seeded (random_state=0, the tsml fold-0 convention); residual deltas vs the aeon-generated reference reflect seed/version drift between the sktime and aeon builds, covered by the 0.04 tolerance. Reference accuracy for BeetleFly across the 30 resamples ranges [0.7, 1.0] (resample 0 = 0.95).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 0.95, &quot;Macro F1&quot;: 0.949874686716792}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">BirdChicken (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 0.95→0.95 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm SupervisedTimeSeriesForest --dataset ucr-birdchicken --model-id bench-classification-stsf-birdchicken --param random_state=0 --param n_estimators=200 --param n_jobs=1<button class="copy" data-cmd="libraryts train --algorithm SupervisedTimeSeriesForest --dataset ucr-birdchicken --model-id bench-classification-stsf-birdchicken --param random_state=0 --param n_estimators=200 --param n_jobs=1">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-stsf-birdchicken --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-stsf-birdchicken --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/STSF_accuracy.csv" target="_blank" rel="noopener">Fast and accurate time series classification through supervised interval search (Cabello, Naghizade, Qi &amp; Kulik, ICDM 2020) - STSF; tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · STSF_accuracy.csv, row BirdChicken, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; Supervised Time Series Forest, 200 trees over supervised (Fisher-score) intervals on multiple series representations (sktime SupervisedTimeSeriesForest defaults, random_state=0); reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.04 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:02:48 UTC · 43.7s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Interval search is seeded (random_state=0, the tsml fold-0 convention); residual deltas vs the aeon-generated reference reflect seed/version drift between the sktime and aeon builds, covered by the 0.04 tolerance. Reference accuracy for BirdChicken across the 30 resamples ranges [0.9, 1.0] (resample 0 = 0.95).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 0.95, &quot;Macro F1&quot;: 0.949874686716792}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">CBF (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 0.9856→0.9856 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm SupervisedTimeSeriesForest --dataset ucr-cbf --model-id bench-classification-stsf-cbf --param random_state=0 --param n_estimators=200 --param n_jobs=1<button class="copy" data-cmd="libraryts train --algorithm SupervisedTimeSeriesForest --dataset ucr-cbf --model-id bench-classification-stsf-cbf --param random_state=0 --param n_estimators=200 --param n_jobs=1">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-stsf-cbf --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-stsf-cbf --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/STSF_accuracy.csv" target="_blank" rel="noopener">Fast and accurate time series classification through supervised interval search (Cabello, Naghizade, Qi &amp; Kulik, ICDM 2020) - STSF; tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · STSF_accuracy.csv, row CBF, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; Supervised Time Series Forest, 200 trees over supervised (Fisher-score) intervals on multiple series representations (sktime SupervisedTimeSeriesForest defaults, random_state=0); reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.04 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:03:29 UTC · 40.9s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Interval search is seeded (random_state=0, the tsml fold-0 convention); residual deltas vs the aeon-generated reference reflect seed/version drift between the sktime and aeon builds, covered by the 0.04 tolerance. Reference accuracy for CBF across the 30 resamples ranges [0.91556, 0.99444] (resample 0 = 0.98556).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 0.9855555555555555, &quot;Macro F1&quot;: 0.9855279402133247}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Chinatown (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 0.9796→0.9796 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm SupervisedTimeSeriesForest --dataset ucr-chinatown --model-id bench-classification-stsf-chinatown --param random_state=0 --param n_estimators=200 --param n_jobs=1<button class="copy" data-cmd="libraryts train --algorithm SupervisedTimeSeriesForest --dataset ucr-chinatown --model-id bench-classification-stsf-chinatown --param random_state=0 --param n_estimators=200 --param n_jobs=1">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-stsf-chinatown --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-stsf-chinatown --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/STSF_accuracy.csv" target="_blank" rel="noopener">Fast and accurate time series classification through supervised interval search (Cabello, Naghizade, Qi &amp; Kulik, ICDM 2020) - STSF; tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · STSF_accuracy.csv, row Chinatown, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; Supervised Time Series Forest, 200 trees over supervised (Fisher-score) intervals on multiple series representations (sktime SupervisedTimeSeriesForest defaults, random_state=0); reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.04 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:03:56 UTC · 26.7s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Interval search is seeded (random_state=0, the tsml fold-0 convention); residual deltas vs the aeon-generated reference reflect seed/version drift between the sktime and aeon builds, covered by the 0.04 tolerance. Reference accuracy for Chinatown across the 30 resamples ranges [0.94169, 0.98834] (resample 0 = 0.97959).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 0.9795918367346939, &quot;Macro F1&quot;: 0.9749229724789806}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Coffee (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 1→1 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm SupervisedTimeSeriesForest --dataset ucr-coffee --model-id bench-classification-stsf-coffee --param random_state=0 --param n_estimators=200 --param n_jobs=1<button class="copy" data-cmd="libraryts train --algorithm SupervisedTimeSeriesForest --dataset ucr-coffee --model-id bench-classification-stsf-coffee --param random_state=0 --param n_estimators=200 --param n_jobs=1">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-stsf-coffee --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-stsf-coffee --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/STSF_accuracy.csv" target="_blank" rel="noopener">Fast and accurate time series classification through supervised interval search (Cabello, Naghizade, Qi &amp; Kulik, ICDM 2020) - STSF; tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · STSF_accuracy.csv, row Coffee, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; Supervised Time Series Forest, 200 trees over supervised (Fisher-score) intervals on multiple series representations (sktime SupervisedTimeSeriesForest defaults, random_state=0); reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.04 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:04:21 UTC · 25.8s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Interval search is seeded (random_state=0, the tsml fold-0 convention); residual deltas vs the aeon-generated reference reflect seed/version drift between the sktime and aeon builds, covered by the 0.04 tolerance. Reference accuracy for Coffee across the 30 resamples ranges [1.0, 1.0] (resample 0 = 1.0).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 1.0, &quot;Macro F1&quot;: 1.0}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">ECG200 (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 0.85→0.87 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm SupervisedTimeSeriesForest --dataset ucr-ecg200 --model-id bench-classification-stsf-ecg200 --param random_state=0 --param n_estimators=200 --param n_jobs=1<button class="copy" data-cmd="libraryts train --algorithm SupervisedTimeSeriesForest --dataset ucr-ecg200 --model-id bench-classification-stsf-ecg200 --param random_state=0 --param n_estimators=200 --param n_jobs=1">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-stsf-ecg200 --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-stsf-ecg200 --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/STSF_accuracy.csv" target="_blank" rel="noopener">Fast and accurate time series classification through supervised interval search (Cabello, Naghizade, Qi &amp; Kulik, ICDM 2020) - STSF; tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · STSF_accuracy.csv, row ECG200, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; Supervised Time Series Forest, 200 trees over supervised (Fisher-score) intervals on multiple series representations (sktime SupervisedTimeSeriesForest defaults, random_state=0); reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.04 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:04:58 UTC · 36.3s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Interval search is seeded (random_state=0, the tsml fold-0 convention); residual deltas vs the aeon-generated reference reflect seed/version drift between the sktime and aeon builds, covered by the 0.04 tolerance. Reference accuracy for ECG200 across the 30 resamples ranges [0.77, 0.89] (resample 0 = 0.85).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 0.87, &quot;Macro F1&quot;: 0.864002510722879}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">FaceFour (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 1→1 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm SupervisedTimeSeriesForest --dataset ucr-facefour --model-id bench-classification-stsf-facefour --param random_state=0 --param n_estimators=200 --param n_jobs=1<button class="copy" data-cmd="libraryts train --algorithm SupervisedTimeSeriesForest --dataset ucr-facefour --model-id bench-classification-stsf-facefour --param random_state=0 --param n_estimators=200 --param n_jobs=1">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-stsf-facefour --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-stsf-facefour --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/STSF_accuracy.csv" target="_blank" rel="noopener">Fast and accurate time series classification through supervised interval search (Cabello, Naghizade, Qi &amp; Kulik, ICDM 2020) - STSF; tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · STSF_accuracy.csv, row FaceFour, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; Supervised Time Series Forest, 200 trees over supervised (Fisher-score) intervals on multiple series representations (sktime SupervisedTimeSeriesForest defaults, random_state=0); reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.04 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:05:46 UTC · 48.2s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Interval search is seeded (random_state=0, the tsml fold-0 convention); residual deltas vs the aeon-generated reference reflect seed/version drift between the sktime and aeon builds, covered by the 0.04 tolerance. Reference accuracy for FaceFour across the 30 resamples ranges [0.85227, 1.0] (resample 0 = 1.0).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 1.0, &quot;Macro F1&quot;: 1.0}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Fish (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 0.9086→0.9029 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm SupervisedTimeSeriesForest --dataset ucr-fish --model-id bench-classification-stsf-fish --param random_state=0 --param n_estimators=200 --param n_jobs=1<button class="copy" data-cmd="libraryts train --algorithm SupervisedTimeSeriesForest --dataset ucr-fish --model-id bench-classification-stsf-fish --param random_state=0 --param n_estimators=200 --param n_jobs=1">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-stsf-fish --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-stsf-fish --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/STSF_accuracy.csv" target="_blank" rel="noopener">Fast and accurate time series classification through supervised interval search (Cabello, Naghizade, Qi &amp; Kulik, ICDM 2020) - STSF; tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · STSF_accuracy.csv, row Fish, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; Supervised Time Series Forest, 200 trees over supervised (Fisher-score) intervals on multiple series representations (sktime SupervisedTimeSeriesForest defaults, random_state=0); reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.04 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:07:04 UTC · 78.4s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Interval search is seeded (random_state=0, the tsml fold-0 convention); residual deltas vs the aeon-generated reference reflect seed/version drift between the sktime and aeon builds, covered by the 0.04 tolerance. Reference accuracy for Fish across the 30 resamples ranges [0.86286, 0.94857] (resample 0 = 0.90857).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 0.9028571428571428, &quot;Macro F1&quot;: 0.9030535979076095}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">GunPoint (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 0.9067→0.9267 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm SupervisedTimeSeriesForest --dataset ucr-gunpoint --model-id bench-classification-stsf-gunpoint --param random_state=0 --param n_estimators=200 --param n_jobs=1<button class="copy" data-cmd="libraryts train --algorithm SupervisedTimeSeriesForest --dataset ucr-gunpoint --model-id bench-classification-stsf-gunpoint --param random_state=0 --param n_estimators=200 --param n_jobs=1">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-stsf-gunpoint --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-stsf-gunpoint --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/STSF_accuracy.csv" target="_blank" rel="noopener">Fast and accurate time series classification through supervised interval search (Cabello, Naghizade, Qi &amp; Kulik, ICDM 2020) - STSF; tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · STSF_accuracy.csv, row GunPoint, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; Supervised Time Series Forest, 200 trees over supervised (Fisher-score) intervals on multiple series representations (sktime SupervisedTimeSeriesForest defaults, random_state=0); reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.04 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:07:48 UTC · 44s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Interval search is seeded (random_state=0, the tsml fold-0 convention); residual deltas vs the aeon-generated reference reflect seed/version drift between the sktime and aeon builds, covered by the 0.04 tolerance. Reference accuracy for GunPoint across the 30 resamples ranges [0.84, 1.0] (resample 0 = 0.90667).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 0.9266666666666666, &quot;Macro F1&quot;: 0.9265850945494994}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Trace (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 1→1 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm SupervisedTimeSeriesForest --dataset ucr-trace --model-id bench-classification-stsf-trace --param random_state=0 --param n_estimators=200 --param n_jobs=1<button class="copy" data-cmd="libraryts train --algorithm SupervisedTimeSeriesForest --dataset ucr-trace --model-id bench-classification-stsf-trace --param random_state=0 --param n_estimators=200 --param n_jobs=1">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-stsf-trace --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-stsf-trace --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/STSF_accuracy.csv" target="_blank" rel="noopener">Fast and accurate time series classification through supervised interval search (Cabello, Naghizade, Qi &amp; Kulik, ICDM 2020) - STSF; tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · STSF_accuracy.csv, row Trace, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; Supervised Time Series Forest, 200 trees over supervised (Fisher-score) intervals on multiple series representations (sktime SupervisedTimeSeriesForest defaults, random_state=0); reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.04 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:08:30 UTC · 41.6s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Interval search is seeded (random_state=0, the tsml fold-0 convention); residual deltas vs the aeon-generated reference reflect seed/version drift between the sktime and aeon builds, covered by the 0.04 tolerance. Reference accuracy for Trace across the 30 resamples ranges [1.0, 1.0] (resample 0 = 1.0).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 1.0, &quot;Macro F1&quot;: 1.0}</div></div>
     </div>
   </div>
 </details></div>
@@ -13223,6 +14966,557 @@
   </div>
 </details></div>
 </details>
+<details class="claim-group" data-name="tde temporaldictionaryensemble">
+  <summary>
+    <div class="alg">TDE<span class="lib">tsml reference classification results (timeseriesclassification.com ReferenceResults</span></div>
+    <div class="grp-note">12 dataset/config claims</div>
+    <div style="display:flex;align-items:center;justify-content:flex-end;gap:10px">
+      <span class="status deviation"><span class="dot"></span>11/12 configs reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="group-body">
+<details class="claim">
+  <summary>
+    <div class="ds">ArrowHead (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 0.8629→0.8629 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm TemporalDictionaryEnsemble --dataset arrow-head --model-id bench-classification-tde-arrowhead --param random_state=0 --param dim_threshold=0.85 --param max_dims=20 --param max_ensemble_size=50 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param n_parameter_samples=250 --param randomly_selected_params=50 --param time_limit_in_minutes=0<button class="copy" data-cmd="libraryts train --algorithm TemporalDictionaryEnsemble --dataset arrow-head --model-id bench-classification-tde-arrowhead --param random_state=0 --param dim_threshold=0.85 --param max_dims=20 --param max_ensemble_size=50 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param n_parameter_samples=250 --param randomly_selected_params=50 --param time_limit_in_minutes=0">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-tde-arrowhead --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-tde-arrowhead --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/TDE_accuracy.csv" target="_blank" rel="noopener">The Temporal Dictionary Ensemble (TDE) classifier for time series classification (Middlehurst, Large, Cawley &amp; Bagnall, ECML-PKDD 2020); tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · TDE_accuracy.csv, row ArrowHead, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; Temporal Dictionary Ensemble over SFA histograms with information-gain binning, 250 random parameter samples, LOOCV-selected ensemble of up to 50 (sktime TemporalDictionaryEnsemble defaults, random_state=0); reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.04 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:09:44 UTC · 74.3s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Parameter sampling and ensemble selection are seeded (random_state=0, the tsml fold-0 convention). The recorded command runs the sktime defaults (max_ensemble_size=50, n_parameter_samples=250); the reference was generated with the aeon implementation&#x27;s own defaults, so small systematic deltas on top of seed noise are possible, covered by the 0.04 tolerance. Reference accuracy for ArrowHead across the 30 resamples ranges [0.85143, 0.96] (resample 0 = 0.86286).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 0.8628571428571429, &quot;Macro F1&quot;: 0.8626548889706784}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">ItalyPowerDemand (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 0.9504→0.9563 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm TemporalDictionaryEnsemble --dataset italy-power-demand --model-id bench-classification-tde-italypowerdemand --param random_state=0 --param dim_threshold=0.85 --param max_dims=20 --param max_ensemble_size=50 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param n_parameter_samples=250 --param randomly_selected_params=50 --param time_limit_in_minutes=0<button class="copy" data-cmd="libraryts train --algorithm TemporalDictionaryEnsemble --dataset italy-power-demand --model-id bench-classification-tde-italypowerdemand --param random_state=0 --param dim_threshold=0.85 --param max_dims=20 --param max_ensemble_size=50 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param n_parameter_samples=250 --param randomly_selected_params=50 --param time_limit_in_minutes=0">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-tde-italypowerdemand --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-tde-italypowerdemand --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/TDE_accuracy.csv" target="_blank" rel="noopener">The Temporal Dictionary Ensemble (TDE) classifier for time series classification (Middlehurst, Large, Cawley &amp; Bagnall, ECML-PKDD 2020); tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · TDE_accuracy.csv, row ItalyPowerDemand, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; Temporal Dictionary Ensemble over SFA histograms with information-gain binning, 250 random parameter samples, LOOCV-selected ensemble of up to 50 (sktime TemporalDictionaryEnsemble defaults, random_state=0); reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.04 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:11:06 UTC · 82.1s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Parameter sampling and ensemble selection are seeded (random_state=0, the tsml fold-0 convention). The recorded command runs the sktime defaults (max_ensemble_size=50, n_parameter_samples=250); the reference was generated with the aeon implementation&#x27;s own defaults, so small systematic deltas on top of seed noise are possible, covered by the 0.04 tolerance. Reference accuracy for ItalyPowerDemand across the 30 resamples ranges [0.90185, 0.96793] (resample 0 = 0.95044).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 0.956268221574344, &quot;Macro F1&quot;: 0.9562680563675051}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Beef (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-bad"><span class="m-name">Accuracy</span> 0.9→0.8333 ✗</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status deviation"><span class="dot"></span>Deviation</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm TemporalDictionaryEnsemble --dataset ucr-beef --model-id bench-classification-tde-beef --param random_state=0 --param dim_threshold=0.85 --param max_dims=20 --param max_ensemble_size=50 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param n_parameter_samples=250 --param randomly_selected_params=50 --param time_limit_in_minutes=0<button class="copy" data-cmd="libraryts train --algorithm TemporalDictionaryEnsemble --dataset ucr-beef --model-id bench-classification-tde-beef --param random_state=0 --param dim_threshold=0.85 --param max_dims=20 --param max_ensemble_size=50 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param n_parameter_samples=250 --param randomly_selected_params=50 --param time_limit_in_minutes=0">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-tde-beef --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-tde-beef --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/TDE_accuracy.csv" target="_blank" rel="noopener">The Temporal Dictionary Ensemble (TDE) classifier for time series classification (Middlehurst, Large, Cawley &amp; Bagnall, ECML-PKDD 2020); tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · TDE_accuracy.csv, row Beef, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; Temporal Dictionary Ensemble over SFA histograms with information-gain binning, 250 random parameter samples, LOOCV-selected ensemble of up to 50 (sktime TemporalDictionaryEnsemble defaults, random_state=0); reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.04 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:12:24 UTC · 77.5s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Parameter sampling and ensemble selection are seeded (random_state=0, the tsml fold-0 convention). The recorded command runs the sktime defaults (max_ensemble_size=50, n_parameter_samples=250); the reference was generated with the aeon implementation&#x27;s own defaults, so small systematic deltas on top of seed noise are possible, covered by the 0.04 tolerance. Reference accuracy for Beef across the 30 resamples ranges [0.5, 0.9] (resample 0 = 0.9).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 0.8333333333333334, &quot;Macro F1&quot;: 0.8337595737595738}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Car (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 0.85→0.8667 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm TemporalDictionaryEnsemble --dataset ucr-car --model-id bench-classification-tde-car --param random_state=0 --param dim_threshold=0.85 --param max_dims=20 --param max_ensemble_size=50 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param n_parameter_samples=250 --param randomly_selected_params=50 --param time_limit_in_minutes=0<button class="copy" data-cmd="libraryts train --algorithm TemporalDictionaryEnsemble --dataset ucr-car --model-id bench-classification-tde-car --param random_state=0 --param dim_threshold=0.85 --param max_dims=20 --param max_ensemble_size=50 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param n_parameter_samples=250 --param randomly_selected_params=50 --param time_limit_in_minutes=0">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-tde-car --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-tde-car --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/TDE_accuracy.csv" target="_blank" rel="noopener">The Temporal Dictionary Ensemble (TDE) classifier for time series classification (Middlehurst, Large, Cawley &amp; Bagnall, ECML-PKDD 2020); tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · TDE_accuracy.csv, row Car, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; Temporal Dictionary Ensemble over SFA histograms with information-gain binning, 250 random parameter samples, LOOCV-selected ensemble of up to 50 (sktime TemporalDictionaryEnsemble defaults, random_state=0); reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.04 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:14:34 UTC · 130s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Parameter sampling and ensemble selection are seeded (random_state=0, the tsml fold-0 convention). The recorded command runs the sktime defaults (max_ensemble_size=50, n_parameter_samples=250); the reference was generated with the aeon implementation&#x27;s own defaults, so small systematic deltas on top of seed noise are possible, covered by the 0.04 tolerance. Reference accuracy for Car across the 30 resamples ranges [0.78333, 0.95] (resample 0 = 0.85).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 0.8666666666666667, &quot;Macro F1&quot;: 0.8631741821396993}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Chinatown (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 0.9621→0.9534 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm TemporalDictionaryEnsemble --dataset ucr-chinatown --model-id bench-classification-tde-chinatown --param random_state=0 --param dim_threshold=0.85 --param max_dims=20 --param max_ensemble_size=50 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param n_parameter_samples=250 --param randomly_selected_params=50 --param time_limit_in_minutes=0<button class="copy" data-cmd="libraryts train --algorithm TemporalDictionaryEnsemble --dataset ucr-chinatown --model-id bench-classification-tde-chinatown --param random_state=0 --param dim_threshold=0.85 --param max_dims=20 --param max_ensemble_size=50 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param n_parameter_samples=250 --param randomly_selected_params=50 --param time_limit_in_minutes=0">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-tde-chinatown --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-tde-chinatown --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/TDE_accuracy.csv" target="_blank" rel="noopener">The Temporal Dictionary Ensemble (TDE) classifier for time series classification (Middlehurst, Large, Cawley &amp; Bagnall, ECML-PKDD 2020); tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · TDE_accuracy.csv, row Chinatown, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; Temporal Dictionary Ensemble over SFA histograms with information-gain binning, 250 random parameter samples, LOOCV-selected ensemble of up to 50 (sktime TemporalDictionaryEnsemble defaults, random_state=0); reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.04 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:15:09 UTC · 34.9s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Parameter sampling and ensemble selection are seeded (random_state=0, the tsml fold-0 convention). The recorded command runs the sktime defaults (max_ensemble_size=50, n_parameter_samples=250); the reference was generated with the aeon implementation&#x27;s own defaults, so small systematic deltas on top of seed noise are possible, covered by the 0.04 tolerance. Reference accuracy for Chinatown across the 30 resamples ranges [0.93294, 0.97085] (resample 0 = 0.9621).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 0.9533527696793003, &quot;Macro F1&quot;: 0.9428571428571428}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Coffee (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 1→1 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm TemporalDictionaryEnsemble --dataset ucr-coffee --model-id bench-classification-tde-coffee --param random_state=0 --param dim_threshold=0.85 --param max_dims=20 --param max_ensemble_size=50 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param n_parameter_samples=250 --param randomly_selected_params=50 --param time_limit_in_minutes=0<button class="copy" data-cmd="libraryts train --algorithm TemporalDictionaryEnsemble --dataset ucr-coffee --model-id bench-classification-tde-coffee --param random_state=0 --param dim_threshold=0.85 --param max_dims=20 --param max_ensemble_size=50 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param n_parameter_samples=250 --param randomly_selected_params=50 --param time_limit_in_minutes=0">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-tde-coffee --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-tde-coffee --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/TDE_accuracy.csv" target="_blank" rel="noopener">The Temporal Dictionary Ensemble (TDE) classifier for time series classification (Middlehurst, Large, Cawley &amp; Bagnall, ECML-PKDD 2020); tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · TDE_accuracy.csv, row Coffee, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; Temporal Dictionary Ensemble over SFA histograms with information-gain binning, 250 random parameter samples, LOOCV-selected ensemble of up to 50 (sktime TemporalDictionaryEnsemble defaults, random_state=0); reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.04 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:15:45 UTC · 35.4s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Parameter sampling and ensemble selection are seeded (random_state=0, the tsml fold-0 convention). The recorded command runs the sktime defaults (max_ensemble_size=50, n_parameter_samples=250); the reference was generated with the aeon implementation&#x27;s own defaults, so small systematic deltas on top of seed noise are possible, covered by the 0.04 tolerance. Reference accuracy for Coffee across the 30 resamples ranges [0.96429, 1.0] (resample 0 = 1.0).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 1.0, &quot;Macro F1&quot;: 1.0}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Earthquakes (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 0.7482→0.7482 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm TemporalDictionaryEnsemble --dataset ucr-earthquakes --model-id bench-classification-tde-earthquakes --param random_state=0 --param dim_threshold=0.85 --param max_dims=20 --param max_ensemble_size=50 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param n_parameter_samples=250 --param randomly_selected_params=50 --param time_limit_in_minutes=0<button class="copy" data-cmd="libraryts train --algorithm TemporalDictionaryEnsemble --dataset ucr-earthquakes --model-id bench-classification-tde-earthquakes --param random_state=0 --param dim_threshold=0.85 --param max_dims=20 --param max_ensemble_size=50 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param n_parameter_samples=250 --param randomly_selected_params=50 --param time_limit_in_minutes=0">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-tde-earthquakes --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-tde-earthquakes --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/TDE_accuracy.csv" target="_blank" rel="noopener">The Temporal Dictionary Ensemble (TDE) classifier for time series classification (Middlehurst, Large, Cawley &amp; Bagnall, ECML-PKDD 2020); tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · TDE_accuracy.csv, row Earthquakes, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; Temporal Dictionary Ensemble over SFA histograms with information-gain binning, 250 random parameter samples, LOOCV-selected ensemble of up to 50 (sktime TemporalDictionaryEnsemble defaults, random_state=0); reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.04 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:21:59 UTC · 375s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Parameter sampling and ensemble selection are seeded (random_state=0, the tsml fold-0 convention). The recorded command runs the sktime defaults (max_ensemble_size=50, n_parameter_samples=250); the reference was generated with the aeon implementation&#x27;s own defaults, so small systematic deltas on top of seed noise are possible, covered by the 0.04 tolerance. Reference accuracy for Earthquakes across the 30 resamples ranges [0.74101, 0.7482] (resample 0 = 0.7482).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 0.7482014388489209, &quot;Macro F1&quot;: 0.4279835390946502}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">ECG200 (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 0.85→0.85 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm TemporalDictionaryEnsemble --dataset ucr-ecg200 --model-id bench-classification-tde-ecg200 --param random_state=0 --param dim_threshold=0.85 --param max_dims=20 --param max_ensemble_size=50 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param n_parameter_samples=250 --param randomly_selected_params=50 --param time_limit_in_minutes=0<button class="copy" data-cmd="libraryts train --algorithm TemporalDictionaryEnsemble --dataset ucr-ecg200 --model-id bench-classification-tde-ecg200 --param random_state=0 --param dim_threshold=0.85 --param max_dims=20 --param max_ensemble_size=50 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param n_parameter_samples=250 --param randomly_selected_params=50 --param time_limit_in_minutes=0">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-tde-ecg200 --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-tde-ecg200 --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/TDE_accuracy.csv" target="_blank" rel="noopener">The Temporal Dictionary Ensemble (TDE) classifier for time series classification (Middlehurst, Large, Cawley &amp; Bagnall, ECML-PKDD 2020); tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · TDE_accuracy.csv, row ECG200, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; Temporal Dictionary Ensemble over SFA histograms with information-gain binning, 250 random parameter samples, LOOCV-selected ensemble of up to 50 (sktime TemporalDictionaryEnsemble defaults, random_state=0); reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.04 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:22:51 UTC · 51.7s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Parameter sampling and ensemble selection are seeded (random_state=0, the tsml fold-0 convention). The recorded command runs the sktime defaults (max_ensemble_size=50, n_parameter_samples=250); the reference was generated with the aeon implementation&#x27;s own defaults, so small systematic deltas on top of seed noise are possible, covered by the 0.04 tolerance. Reference accuracy for ECG200 across the 30 resamples ranges [0.73, 0.9] (resample 0 = 0.85).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 0.85, &quot;Macro F1&quot;: 0.8340524394291404}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">GunPoint (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 1→1 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm TemporalDictionaryEnsemble --dataset ucr-gunpoint --model-id bench-classification-tde-gunpoint --param random_state=0 --param dim_threshold=0.85 --param max_dims=20 --param max_ensemble_size=50 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param n_parameter_samples=250 --param randomly_selected_params=50 --param time_limit_in_minutes=0<button class="copy" data-cmd="libraryts train --algorithm TemporalDictionaryEnsemble --dataset ucr-gunpoint --model-id bench-classification-tde-gunpoint --param random_state=0 --param dim_threshold=0.85 --param max_dims=20 --param max_ensemble_size=50 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param n_parameter_samples=250 --param randomly_selected_params=50 --param time_limit_in_minutes=0">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-tde-gunpoint --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-tde-gunpoint --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/TDE_accuracy.csv" target="_blank" rel="noopener">The Temporal Dictionary Ensemble (TDE) classifier for time series classification (Middlehurst, Large, Cawley &amp; Bagnall, ECML-PKDD 2020); tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · TDE_accuracy.csv, row GunPoint, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; Temporal Dictionary Ensemble over SFA histograms with information-gain binning, 250 random parameter samples, LOOCV-selected ensemble of up to 50 (sktime TemporalDictionaryEnsemble defaults, random_state=0); reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.04 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:23:40 UTC · 48.6s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Parameter sampling and ensemble selection are seeded (random_state=0, the tsml fold-0 convention). The recorded command runs the sktime defaults (max_ensemble_size=50, n_parameter_samples=250); the reference was generated with the aeon implementation&#x27;s own defaults, so small systematic deltas on top of seed noise are possible, covered by the 0.04 tolerance. Reference accuracy for GunPoint across the 30 resamples ranges [1.0, 1.0] (resample 0 = 1.0).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 1.0, &quot;Macro F1&quot;: 1.0}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">OliveOil (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 0.8333→0.8667 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm TemporalDictionaryEnsemble --dataset ucr-oliveoil --model-id bench-classification-tde-oliveoil --param random_state=0 --param dim_threshold=0.85 --param max_dims=20 --param max_ensemble_size=50 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param n_parameter_samples=250 --param randomly_selected_params=50 --param time_limit_in_minutes=0<button class="copy" data-cmd="libraryts train --algorithm TemporalDictionaryEnsemble --dataset ucr-oliveoil --model-id bench-classification-tde-oliveoil --param random_state=0 --param dim_threshold=0.85 --param max_dims=20 --param max_ensemble_size=50 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param n_parameter_samples=250 --param randomly_selected_params=50 --param time_limit_in_minutes=0">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-tde-oliveoil --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-tde-oliveoil --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/TDE_accuracy.csv" target="_blank" rel="noopener">The Temporal Dictionary Ensemble (TDE) classifier for time series classification (Middlehurst, Large, Cawley &amp; Bagnall, ECML-PKDD 2020); tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · TDE_accuracy.csv, row OliveOil, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; Temporal Dictionary Ensemble over SFA histograms with information-gain binning, 250 random parameter samples, LOOCV-selected ensemble of up to 50 (sktime TemporalDictionaryEnsemble defaults, random_state=0); reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.04 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:24:25 UTC · 45.8s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Parameter sampling and ensemble selection are seeded (random_state=0, the tsml fold-0 convention). The recorded command runs the sktime defaults (max_ensemble_size=50, n_parameter_samples=250); the reference was generated with the aeon implementation&#x27;s own defaults, so small systematic deltas on top of seed noise are possible, covered by the 0.04 tolerance. Reference accuracy for OliveOil across the 30 resamples ranges [0.83333, 0.96667] (resample 0 = 0.83333).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 0.8666666666666667, &quot;Macro F1&quot;: 0.7949999999999999}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">SyntheticControl (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 0.9933→0.9933 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm TemporalDictionaryEnsemble --dataset ucr-syntheticcontrol --model-id bench-classification-tde-syntheticcontrol --param random_state=0 --param dim_threshold=0.85 --param max_dims=20 --param max_ensemble_size=50 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param n_parameter_samples=250 --param randomly_selected_params=50 --param time_limit_in_minutes=0<button class="copy" data-cmd="libraryts train --algorithm TemporalDictionaryEnsemble --dataset ucr-syntheticcontrol --model-id bench-classification-tde-syntheticcontrol --param random_state=0 --param dim_threshold=0.85 --param max_dims=20 --param max_ensemble_size=50 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param n_parameter_samples=250 --param randomly_selected_params=50 --param time_limit_in_minutes=0">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-tde-syntheticcontrol --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-tde-syntheticcontrol --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/TDE_accuracy.csv" target="_blank" rel="noopener">The Temporal Dictionary Ensemble (TDE) classifier for time series classification (Middlehurst, Large, Cawley &amp; Bagnall, ECML-PKDD 2020); tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · TDE_accuracy.csv, row SyntheticControl, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; Temporal Dictionary Ensemble over SFA histograms with information-gain binning, 250 random parameter samples, LOOCV-selected ensemble of up to 50 (sktime TemporalDictionaryEnsemble defaults, random_state=0); reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.04 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:26:21 UTC · 116s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Parameter sampling and ensemble selection are seeded (random_state=0, the tsml fold-0 convention). The recorded command runs the sktime defaults (max_ensemble_size=50, n_parameter_samples=250); the reference was generated with the aeon implementation&#x27;s own defaults, so small systematic deltas on top of seed noise are possible, covered by the 0.04 tolerance. Reference accuracy for SyntheticControl across the 30 resamples ranges [0.98, 1.0] (resample 0 = 0.99333).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 0.9933333333333333, &quot;Macro F1&quot;: 0.9933326665999934}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Trace (UCR)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">Accuracy</span> 1→1 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm TemporalDictionaryEnsemble --dataset ucr-trace --model-id bench-classification-tde-trace --param random_state=0 --param dim_threshold=0.85 --param max_dims=20 --param max_ensemble_size=50 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param n_parameter_samples=250 --param randomly_selected_params=50 --param time_limit_in_minutes=0<button class="copy" data-cmd="libraryts train --algorithm TemporalDictionaryEnsemble --dataset ucr-trace --model-id bench-classification-tde-trace --param random_state=0 --param dim_threshold=0.85 --param max_dims=20 --param max_ensemble_size=50 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param n_parameter_samples=250 --param randomly_selected_params=50 --param time_limit_in_minutes=0">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-classification-tde-trace --compact<button class="copy" data-cmd="libraryts run --model-id bench-classification-tde-trace --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/TDE_accuracy.csv" target="_blank" rel="noopener">The Temporal Dictionary Ensemble (TDE) classifier for time series classification (Middlehurst, Large, Cawley &amp; Bagnall, ECML-PKDD 2020); tsml reference results</a><br/>
+          tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer &amp; Bagnall, Bake off redux, Machine Learning 113 (2024) · TDE_accuracy.csv, row Trace, column resample 0 (default UCR train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">UCR default train/test split; Temporal Dictionary Ensemble over SFA histograms with information-gain binning, 250 random parameter samples, LOOCV-selected ensemble of up to 50 (sktime TemporalDictionaryEnsemble defaults, random_state=0); reference = tsml resample 0</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.04 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:27:26 UTC · 65.1s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Parameter sampling and ensemble selection are seeded (random_state=0, the tsml fold-0 convention). The recorded command runs the sktime defaults (max_ensemble_size=50, n_parameter_samples=250); the reference was generated with the aeon implementation&#x27;s own defaults, so small systematic deltas on top of seed noise are possible, covered by the 0.04 tolerance. Reference accuracy for Trace across the 30 resamples ranges [1.0, 1.0] (resample 0 = 1.0).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;Accuracy&quot;: 1.0, &quot;Macro F1&quot;: 1.0}</div></div>
+    </div>
+  </div>
+</details></div>
+</details>
 <details class="claim-group" data-name="weasel weasel">
   <summary>
     <div class="alg">WEASEL<span class="lib">tsml reference classification results (timeseriesclassification.com ReferenceResults</span></div>
@@ -14059,18 +16353,8 @@
   <div class="grp-note">runnable in this environment</div>
   <div class="row-end"><span class="status notrun"><span class="dot"></span>not run yet</span></div>
 </div>
-<div class="alg-row not-run" data-name="randomintervalspectralensemble registered-classification-randomintervalspectralensemble" title="registered-classification-RandomIntervalSpectralEnsemble · runnable in this environment">
-  <div class="alg">RandomIntervalSpectralEnsemble<span class="tag">registry</span></div>
-  <div class="grp-note">runnable in this environment</div>
-  <div class="row-end"><span class="status notrun"><span class="dot"></span>not run yet</span></div>
-</div>
 <div class="alg-row not-run" data-name="resnetclassifier registered-classification-resnetclassifier" title="registered-classification-ResNetClassifier · runnable in this environment">
   <div class="alg">ResNetClassifier<span class="tag">registry</span></div>
-  <div class="grp-note">runnable in this environment</div>
-  <div class="row-end"><span class="status notrun"><span class="dot"></span>not run yet</span></div>
-</div>
-<div class="alg-row not-run" data-name="shapedtw registered-classification-shapedtw" title="registered-classification-ShapeDTW · runnable in this environment">
-  <div class="alg">ShapeDTW<span class="tag">registry</span></div>
   <div class="grp-note">runnable in this environment</div>
   <div class="row-end"><span class="status notrun"><span class="dot"></span>not run yet</span></div>
 </div>
@@ -14114,18 +16398,8 @@
   <div class="grp-note">runnable in this environment</div>
   <div class="row-end"><span class="status notrun"><span class="dot"></span>not run yet</span></div>
 </div>
-<div class="alg-row not-run" data-name="supervisedtimeseriesforest registered-classification-supervisedtimeseriesforest" title="registered-classification-SupervisedTimeSeriesForest · runnable in this environment">
-  <div class="alg">SupervisedTimeSeriesForest<span class="tag">registry</span></div>
-  <div class="grp-note">runnable in this environment</div>
-  <div class="row-end"><span class="status notrun"><span class="dot"></span>not run yet</span></div>
-</div>
 <div class="alg-row not-run" data-name="tapnetclassifier registered-classification-tapnetclassifier" title="registered-classification-TapNetClassifier · runnable in this environment">
   <div class="alg">TapNetClassifier<span class="tag">registry</span></div>
-  <div class="grp-note">runnable in this environment</div>
-  <div class="row-end"><span class="status notrun"><span class="dot"></span>not run yet</span></div>
-</div>
-<div class="alg-row not-run" data-name="temporaldictionaryensemble registered-classification-temporaldictionaryensemble" title="registered-classification-TemporalDictionaryEnsemble · runnable in this environment">
-  <div class="alg">TemporalDictionaryEnsemble<span class="tag">registry</span></div>
   <div class="grp-note">runnable in this environment</div>
   <div class="row-end"><span class="status notrun"><span class="dot"></span>not run yet</span></div>
 </div>
@@ -27620,7 +29894,7 @@
 </section></div>
 
   <footer>
-    Built by LibraryTS · state generated 2026-10-15 13:24:26 UTC · groundtruth curated under
+    Built by LibraryTS · state generated 2026-10-15 13:37:45 UTC · groundtruth curated under
     <code>playground/benchmark/groundtruth/</code> ·
     re-run with <code>python playground/benchmark/reproduce.py</code> ·
     refresh with <code>python playground/benchmark/build_state.py</code>
