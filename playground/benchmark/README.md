@@ -27,9 +27,12 @@ Optionally serve it instead (live state via `/api/benchmark`):
 python playground/server.py                    # http://127.0.0.1:8765/benchmark
 ```
 
-The page shows every catalog algorithm per task (green = runnable in the
-current environment), and for each curated claim: the reported value, the
-reproduced value, the delta vs. tolerance, the citation, and the exact
+The page shows one unified algorithm list per task: algorithms with curated
+claims come first (sorted by aggregate status — reproduced, then
+deviation/error/pending), followed by every other catalog algorithm as a
+gray "not run yet" row (with its runnable/disabled state in this
+environment). For each curated claim: the reported value, the reproduced
+value, the delta vs. tolerance, the citation, and the exact
 **train + run command pair** (every parameter, including catalog defaults,
 is an explicit `--param` flag; `run --model-id` evaluates the persisted
 model without refitting).
