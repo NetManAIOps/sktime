@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-15T12:32:50.535698+00:00",
+  "generated_at": "2026-10-15T13:15:16.799446+00:00",
   "catalog_source": "snapshot",
   "tasks": [
     {
@@ -22501,6 +22501,2138 @@
       }
     },
     {
+      "id": "clustering-agglomerative-arrowhead",
+      "algorithm": "user-agglomerative",
+      "algorithm_name": "Agglomerative (Euclidean)",
+      "dataset": "arrow-head-cl",
+      "dataset_name": "ArrowHead (UCR)",
+      "window": "fused train+test · k=3",
+      "metrics": {
+        "ARI": 0.073341
+      },
+      "settings": "k=3 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run",
+      "source": {
+        "title": "A Benchmark Study on Time Series Clustering (Javed, Lee & Rizzo) — official per-dataset scores repository",
+        "venue": "Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546",
+        "url": "https://github.com/ali-javed/clusteringBenchmark",
+        "locator": "Scores/Adjusted Rand Score.csv, row ArrowHead, column 'Agglomerative (Euclidean)' (= 0.073341)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (no random init): the paper's published scores (Scores/Adjusted Rand Score.csv) match sklearn's AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark's code/main.py:135 reads linkage='complete', but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.",
+      "spec_params": {
+        "n_clusters": 3,
+        "fit_on": "all"
+      },
+      "train_command": "libraryts train --algorithm user-agglomerative --dataset arrow-head-cl --model-id bench-clustering-agglomerative-arrowhead --param n_clusters=3 --param fit_on=all --param linkage=ward --param metric=euclidean",
+      "run_command": "libraryts run --model-id bench-clustering-agglomerative-arrowhead --compact",
+      "task": "clustering",
+      "status": "reproduced",
+      "values": {
+        "ARI": 0.07334100753428387
+      },
+      "per_metric": {
+        "ARI": {
+          "gt": 0.073341,
+          "value": 0.07334100753428387,
+          "delta": 0.0,
+          "delta_rel": 0.0,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T12:53:25.188822+00:00",
+      "duration_s": 4.54,
+      "error": null,
+      "raw_metrics": {
+        "ARI": 0.07334100753428387,
+        "NMI": 0.21946089071334607,
+        "Clusters": 3,
+        "Largest Cluster": 168
+      }
+    },
+    {
+      "id": "clustering-agglomerative-gunpoint",
+      "algorithm": "user-agglomerative",
+      "algorithm_name": "Agglomerative (Euclidean)",
+      "dataset": "gunpoint-cl",
+      "dataset_name": "GunPoint (UCR)",
+      "window": "fused train+test · k=2",
+      "metrics": {
+        "ARI": -0.005051
+      },
+      "settings": "k=2 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run",
+      "source": {
+        "title": "A Benchmark Study on Time Series Clustering (Javed, Lee & Rizzo) — official per-dataset scores repository",
+        "venue": "Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546",
+        "url": "https://github.com/ali-javed/clusteringBenchmark",
+        "locator": "Scores/Adjusted Rand Score.csv, row GunPoint, column 'Agglomerative (Euclidean)' (= -0.005051)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (no random init): the paper's published scores (Scores/Adjusted Rand Score.csv) match sklearn's AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark's code/main.py:135 reads linkage='complete', but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.",
+      "spec_params": {
+        "n_clusters": 2,
+        "fit_on": "all"
+      },
+      "train_command": "libraryts train --algorithm user-agglomerative --dataset gunpoint-cl --model-id bench-clustering-agglomerative-gunpoint --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean",
+      "run_command": "libraryts run --model-id bench-clustering-agglomerative-gunpoint --compact",
+      "task": "clustering",
+      "status": "reproduced",
+      "values": {
+        "ARI": -0.005050505050505051
+      },
+      "per_metric": {
+        "ARI": {
+          "gt": -0.005051,
+          "value": -0.005050505050505051,
+          "delta": 0.0,
+          "delta_rel": 9.8e-05,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T12:53:30.133712+00:00",
+      "duration_s": 4.94,
+      "error": null,
+      "raw_metrics": {
+        "ARI": -0.005050505050505051,
+        "NMI": 0.0,
+        "Clusters": 2,
+        "Largest Cluster": 100
+      }
+    },
+    {
+      "id": "clustering-agglomerative-coffee",
+      "algorithm": "user-agglomerative",
+      "algorithm_name": "Agglomerative (Euclidean)",
+      "dataset": "coffee-cl",
+      "dataset_name": "Coffee (UCR)",
+      "window": "fused train+test · k=2",
+      "metrics": {
+        "ARI": 0.668846
+      },
+      "settings": "k=2 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run",
+      "source": {
+        "title": "A Benchmark Study on Time Series Clustering (Javed, Lee & Rizzo) — official per-dataset scores repository",
+        "venue": "Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546",
+        "url": "https://github.com/ali-javed/clusteringBenchmark",
+        "locator": "Scores/Adjusted Rand Score.csv, row Coffee, column 'Agglomerative (Euclidean)' (= 0.668846)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (no random init): the paper's published scores (Scores/Adjusted Rand Score.csv) match sklearn's AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark's code/main.py:135 reads linkage='complete', but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.",
+      "spec_params": {
+        "n_clusters": 2,
+        "fit_on": "all"
+      },
+      "train_command": "libraryts train --algorithm user-agglomerative --dataset coffee-cl --model-id bench-clustering-agglomerative-coffee --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean",
+      "run_command": "libraryts run --model-id bench-clustering-agglomerative-coffee --compact",
+      "task": "clustering",
+      "status": "reproduced",
+      "values": {
+        "ARI": 0.6688456906932737
+      },
+      "per_metric": {
+        "ARI": {
+          "gt": 0.668846,
+          "value": 0.6688456906932737,
+          "delta": -0.0,
+          "delta_rel": 0.0,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T12:53:35.414422+00:00",
+      "duration_s": 5.28,
+      "error": null,
+      "raw_metrics": {
+        "ARI": 0.6688456906932737,
+        "NMI": 0.6468622435098071,
+        "Clusters": 2,
+        "Largest Cluster": 32
+      }
+    },
+    {
+      "id": "clustering-agglomerative-bme",
+      "algorithm": "user-agglomerative",
+      "algorithm_name": "Agglomerative (Euclidean)",
+      "dataset": "bme-cl",
+      "dataset_name": "BME (UCR)",
+      "window": "fused train+test · k=3",
+      "metrics": {
+        "ARI": 0.18372
+      },
+      "settings": "k=3 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run",
+      "source": {
+        "title": "A Benchmark Study on Time Series Clustering (Javed, Lee & Rizzo) — official per-dataset scores repository",
+        "venue": "Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546",
+        "url": "https://github.com/ali-javed/clusteringBenchmark",
+        "locator": "Scores/Adjusted Rand Score.csv, row BME, column 'Agglomerative (Euclidean)' (= 0.18372)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (no random init): the paper's published scores (Scores/Adjusted Rand Score.csv) match sklearn's AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark's code/main.py:135 reads linkage='complete', but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.",
+      "spec_params": {
+        "n_clusters": 3,
+        "fit_on": "all"
+      },
+      "train_command": "libraryts train --algorithm user-agglomerative --dataset bme-cl --model-id bench-clustering-agglomerative-bme --param n_clusters=3 --param fit_on=all --param linkage=ward --param metric=euclidean",
+      "run_command": "libraryts run --model-id bench-clustering-agglomerative-bme --compact",
+      "task": "clustering",
+      "status": "reproduced",
+      "values": {
+        "ARI": 0.18371993827702576
+      },
+      "per_metric": {
+        "ARI": {
+          "gt": 0.18372,
+          "value": 0.18371993827702576,
+          "delta": -0.0,
+          "delta_rel": 0.0,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T12:53:40.129233+00:00",
+      "duration_s": 4.71,
+      "error": null,
+      "raw_metrics": {
+        "ARI": 0.18371993827702576,
+        "NMI": 0.2468804522381719,
+        "Clusters": 3,
+        "Largest Cluster": 64
+      }
+    },
+    {
+      "id": "clustering-agglomerative-cbf",
+      "algorithm": "user-agglomerative",
+      "algorithm_name": "Agglomerative (Euclidean)",
+      "dataset": "cbf-cl",
+      "dataset_name": "CBF (UCR)",
+      "window": "fused train+test · k=3",
+      "metrics": {
+        "ARI": 0.440821
+      },
+      "settings": "k=3 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run",
+      "source": {
+        "title": "A Benchmark Study on Time Series Clustering (Javed, Lee & Rizzo) — official per-dataset scores repository",
+        "venue": "Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546",
+        "url": "https://github.com/ali-javed/clusteringBenchmark",
+        "locator": "Scores/Adjusted Rand Score.csv, row CBF, column 'Agglomerative (Euclidean)' (= 0.440821)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (no random init): the paper's published scores (Scores/Adjusted Rand Score.csv) match sklearn's AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark's code/main.py:135 reads linkage='complete', but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.",
+      "spec_params": {
+        "n_clusters": 3,
+        "fit_on": "all"
+      },
+      "train_command": "libraryts train --algorithm user-agglomerative --dataset cbf-cl --model-id bench-clustering-agglomerative-cbf --param n_clusters=3 --param fit_on=all --param linkage=ward --param metric=euclidean",
+      "run_command": "libraryts run --model-id bench-clustering-agglomerative-cbf --compact",
+      "task": "clustering",
+      "status": "reproduced",
+      "values": {
+        "ARI": 0.4408214818908665
+      },
+      "per_metric": {
+        "ARI": {
+          "gt": 0.440821,
+          "value": 0.4408214818908665,
+          "delta": 0.0,
+          "delta_rel": 1e-06,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T12:53:45.777755+00:00",
+      "duration_s": 5.65,
+      "error": null,
+      "raw_metrics": {
+        "ARI": 0.4408214818908665,
+        "NMI": 0.485877282401096,
+        "Clusters": 3,
+        "Largest Cluster": 352
+      }
+    },
+    {
+      "id": "clustering-agglomerative-beef",
+      "algorithm": "user-agglomerative",
+      "algorithm_name": "Agglomerative (Euclidean)",
+      "dataset": "beef-cl",
+      "dataset_name": "Beef (UCR)",
+      "window": "fused train+test · k=5",
+      "metrics": {
+        "ARI": 0.071335
+      },
+      "settings": "k=5 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run",
+      "source": {
+        "title": "A Benchmark Study on Time Series Clustering (Javed, Lee & Rizzo) — official per-dataset scores repository",
+        "venue": "Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546",
+        "url": "https://github.com/ali-javed/clusteringBenchmark",
+        "locator": "Scores/Adjusted Rand Score.csv, row Beef, column 'Agglomerative (Euclidean)' (= 0.071335)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (no random init): the paper's published scores (Scores/Adjusted Rand Score.csv) match sklearn's AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark's code/main.py:135 reads linkage='complete', but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.",
+      "spec_params": {
+        "n_clusters": 5,
+        "fit_on": "all"
+      },
+      "train_command": "libraryts train --algorithm user-agglomerative --dataset beef-cl --model-id bench-clustering-agglomerative-beef --param n_clusters=5 --param fit_on=all --param linkage=ward --param metric=euclidean",
+      "run_command": "libraryts run --model-id bench-clustering-agglomerative-beef --compact",
+      "task": "clustering",
+      "status": "reproduced",
+      "values": {
+        "ARI": 0.07133532034386778
+      },
+      "per_metric": {
+        "ARI": {
+          "gt": 0.071335,
+          "value": 0.07133532034386778,
+          "delta": 0.0,
+          "delta_rel": 4e-06,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T12:53:50.833803+00:00",
+      "duration_s": 5.06,
+      "error": null,
+      "raw_metrics": {
+        "ARI": 0.07133532034386778,
+        "NMI": 0.2901918405533434,
+        "Clusters": 5,
+        "Largest Cluster": 24
+      }
+    },
+    {
+      "id": "clustering-agglomerative-beetlefly",
+      "algorithm": "user-agglomerative",
+      "algorithm_name": "Agglomerative (Euclidean)",
+      "dataset": "beetlefly-cl",
+      "dataset_name": "BeetleFly (UCR)",
+      "window": "fused train+test · k=2",
+      "metrics": {
+        "ARI": -0.015665
+      },
+      "settings": "k=2 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run",
+      "source": {
+        "title": "A Benchmark Study on Time Series Clustering (Javed, Lee & Rizzo) — official per-dataset scores repository",
+        "venue": "Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546",
+        "url": "https://github.com/ali-javed/clusteringBenchmark",
+        "locator": "Scores/Adjusted Rand Score.csv, row BeetleFly, column 'Agglomerative (Euclidean)' (= -0.015665)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (no random init): the paper's published scores (Scores/Adjusted Rand Score.csv) match sklearn's AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark's code/main.py:135 reads linkage='complete', but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.",
+      "spec_params": {
+        "n_clusters": 2,
+        "fit_on": "all"
+      },
+      "train_command": "libraryts train --algorithm user-agglomerative --dataset beetlefly-cl --model-id bench-clustering-agglomerative-beetlefly --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean",
+      "run_command": "libraryts run --model-id bench-clustering-agglomerative-beetlefly --compact",
+      "task": "clustering",
+      "status": "reproduced",
+      "values": {
+        "ARI": -0.015664773839827686
+      },
+      "per_metric": {
+        "ARI": {
+          "gt": -0.015665,
+          "value": -0.015664773839827686,
+          "delta": 0.0,
+          "delta_rel": 1.4e-05,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T12:53:55.521362+00:00",
+      "duration_s": 4.69,
+      "error": null,
+      "raw_metrics": {
+        "ARI": -0.015664773839827686,
+        "NMI": 0.002927571599089393,
+        "Clusters": 2,
+        "Largest Cluster": 31
+      }
+    },
+    {
+      "id": "clustering-agglomerative-birdchicken",
+      "algorithm": "user-agglomerative",
+      "algorithm_name": "Agglomerative (Euclidean)",
+      "dataset": "birdchicken-cl",
+      "dataset_name": "BirdChicken (UCR)",
+      "window": "fused train+test · k=2",
+      "metrics": {
+        "ARI": 0.038398
+      },
+      "settings": "k=2 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run",
+      "source": {
+        "title": "A Benchmark Study on Time Series Clustering (Javed, Lee & Rizzo) — official per-dataset scores repository",
+        "venue": "Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546",
+        "url": "https://github.com/ali-javed/clusteringBenchmark",
+        "locator": "Scores/Adjusted Rand Score.csv, row BirdChicken, column 'Agglomerative (Euclidean)' (= 0.038398)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (no random init): the paper's published scores (Scores/Adjusted Rand Score.csv) match sklearn's AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark's code/main.py:135 reads linkage='complete', but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.",
+      "spec_params": {
+        "n_clusters": 2,
+        "fit_on": "all"
+      },
+      "train_command": "libraryts train --algorithm user-agglomerative --dataset birdchicken-cl --model-id bench-clustering-agglomerative-birdchicken --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean",
+      "run_command": "libraryts run --model-id bench-clustering-agglomerative-birdchicken --compact",
+      "task": "clustering",
+      "status": "reproduced",
+      "values": {
+        "ARI": 0.03839831678611349
+      },
+      "per_metric": {
+        "ARI": {
+          "gt": 0.038398,
+          "value": 0.03839831678611349,
+          "delta": 0.0,
+          "delta_rel": 8e-06,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T12:54:00.740343+00:00",
+      "duration_s": 5.22,
+      "error": null,
+      "raw_metrics": {
+        "ARI": 0.03839831678611349,
+        "NMI": 0.0470589218116303,
+        "Clusters": 2,
+        "Largest Cluster": 23
+      }
+    },
+    {
+      "id": "clustering-agglomerative-chinatown",
+      "algorithm": "user-agglomerative",
+      "algorithm_name": "Agglomerative (Euclidean)",
+      "dataset": "chinatown-cl",
+      "dataset_name": "Chinatown (UCR)",
+      "window": "fused train+test · k=2",
+      "metrics": {
+        "ARI": 0.156013
+      },
+      "settings": "k=2 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run",
+      "source": {
+        "title": "A Benchmark Study on Time Series Clustering (Javed, Lee & Rizzo) — official per-dataset scores repository",
+        "venue": "Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546",
+        "url": "https://github.com/ali-javed/clusteringBenchmark",
+        "locator": "Scores/Adjusted Rand Score.csv, row Chinatown, column 'Agglomerative (Euclidean)' (= 0.156013)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (no random init): the paper's published scores (Scores/Adjusted Rand Score.csv) match sklearn's AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark's code/main.py:135 reads linkage='complete', but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions. Chinatown's heavily quantized values produce exact distance ties; the observed libraryts run differs by +0.0022 ARI from the CSV (tie-breaking), within the tightened tolerance.",
+      "spec_params": {
+        "n_clusters": 2,
+        "fit_on": "all"
+      },
+      "train_command": "libraryts train --algorithm user-agglomerative --dataset chinatown-cl --model-id bench-clustering-agglomerative-chinatown --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean",
+      "run_command": "libraryts run --model-id bench-clustering-agglomerative-chinatown --compact",
+      "task": "clustering",
+      "status": "reproduced",
+      "values": {
+        "ARI": 0.1582332541236703
+      },
+      "per_metric": {
+        "ARI": {
+          "gt": 0.156013,
+          "value": 0.1582332541236703,
+          "delta": 0.00222,
+          "delta_rel": 0.014231,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T12:54:05.683367+00:00",
+      "duration_s": 4.94,
+      "error": null,
+      "raw_metrics": {
+        "ARI": 0.1582332541236703,
+        "NMI": 0.0752216420254753,
+        "Clusters": 2,
+        "Largest Cluster": 258
+      }
+    },
+    {
+      "id": "clustering-agglomerative-italypowerdemand",
+      "algorithm": "user-agglomerative",
+      "algorithm_name": "Agglomerative (Euclidean)",
+      "dataset": "italypowerdemand-cl",
+      "dataset_name": "ItalyPowerDemand (UCR)",
+      "window": "fused train+test · k=2",
+      "metrics": {
+        "ARI": -0.000211
+      },
+      "settings": "k=2 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run",
+      "source": {
+        "title": "A Benchmark Study on Time Series Clustering (Javed, Lee & Rizzo) — official per-dataset scores repository",
+        "venue": "Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546",
+        "url": "https://github.com/ali-javed/clusteringBenchmark",
+        "locator": "Scores/Adjusted Rand Score.csv, row ItalyPowerDemand, column 'Agglomerative (Euclidean)' (= -0.000211)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (no random init): the paper's published scores (Scores/Adjusted Rand Score.csv) match sklearn's AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark's code/main.py:135 reads linkage='complete', but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.",
+      "spec_params": {
+        "n_clusters": 2,
+        "fit_on": "all"
+      },
+      "train_command": "libraryts train --algorithm user-agglomerative --dataset italypowerdemand-cl --model-id bench-clustering-agglomerative-italypowerdemand --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean",
+      "run_command": "libraryts run --model-id bench-clustering-agglomerative-italypowerdemand --compact",
+      "task": "clustering",
+      "status": "reproduced",
+      "values": {
+        "ARI": -0.00021130594258732586
+      },
+      "per_metric": {
+        "ARI": {
+          "gt": -0.000211,
+          "value": -0.00021130594258732586,
+          "delta": -0.0,
+          "delta_rel": 0.00145,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T12:54:10.249785+00:00",
+      "duration_s": 4.56,
+      "error": null,
+      "raw_metrics": {
+        "ARI": -0.00021130594258732586,
+        "NMI": 0.000543423854945195,
+        "Clusters": 2,
+        "Largest Cluster": 897
+      }
+    },
+    {
+      "id": "clustering-agglomerative-plane",
+      "algorithm": "user-agglomerative",
+      "algorithm_name": "Agglomerative (Euclidean)",
+      "dataset": "plane-cl",
+      "dataset_name": "Plane (UCR)",
+      "window": "fused train+test · k=7",
+      "metrics": {
+        "ARI": 0.804349
+      },
+      "settings": "k=7 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run",
+      "source": {
+        "title": "A Benchmark Study on Time Series Clustering (Javed, Lee & Rizzo) — official per-dataset scores repository",
+        "venue": "Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546",
+        "url": "https://github.com/ali-javed/clusteringBenchmark",
+        "locator": "Scores/Adjusted Rand Score.csv, row Plane, column 'Agglomerative (Euclidean)' (= 0.804349)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (no random init): the paper's published scores (Scores/Adjusted Rand Score.csv) match sklearn's AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark's code/main.py:135 reads linkage='complete', but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.",
+      "spec_params": {
+        "n_clusters": 7,
+        "fit_on": "all"
+      },
+      "train_command": "libraryts train --algorithm user-agglomerative --dataset plane-cl --model-id bench-clustering-agglomerative-plane --param n_clusters=7 --param fit_on=all --param linkage=ward --param metric=euclidean",
+      "run_command": "libraryts run --model-id bench-clustering-agglomerative-plane --compact",
+      "task": "clustering",
+      "status": "reproduced",
+      "values": {
+        "ARI": 0.804349491793066
+      },
+      "per_metric": {
+        "ARI": {
+          "gt": 0.804349,
+          "value": 0.804349491793066,
+          "delta": 0.0,
+          "delta_rel": 1e-06,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T12:54:15.967125+00:00",
+      "duration_s": 5.72,
+      "error": null,
+      "raw_metrics": {
+        "ARI": 0.804349491793066,
+        "NMI": 0.8982343648181306,
+        "Clusters": 7,
+        "Largest Cluster": 56
+      }
+    },
+    {
+      "id": "clustering-agglomerative-trace",
+      "algorithm": "user-agglomerative",
+      "algorithm_name": "Agglomerative (Euclidean)",
+      "dataset": "trace-cl",
+      "dataset_name": "Trace (UCR)",
+      "window": "fused train+test · k=4",
+      "metrics": {
+        "ARI": 0.330479
+      },
+      "settings": "k=4 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run",
+      "source": {
+        "title": "A Benchmark Study on Time Series Clustering (Javed, Lee & Rizzo) — official per-dataset scores repository",
+        "venue": "Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546",
+        "url": "https://github.com/ali-javed/clusteringBenchmark",
+        "locator": "Scores/Adjusted Rand Score.csv, row Trace, column 'Agglomerative (Euclidean)' (= 0.330479)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (no random init): the paper's published scores (Scores/Adjusted Rand Score.csv) match sklearn's AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark's code/main.py:135 reads linkage='complete', but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.",
+      "spec_params": {
+        "n_clusters": 4,
+        "fit_on": "all"
+      },
+      "train_command": "libraryts train --algorithm user-agglomerative --dataset trace-cl --model-id bench-clustering-agglomerative-trace --param n_clusters=4 --param fit_on=all --param linkage=ward --param metric=euclidean",
+      "run_command": "libraryts run --model-id bench-clustering-agglomerative-trace --compact",
+      "task": "clustering",
+      "status": "reproduced",
+      "values": {
+        "ARI": 0.3304789123928919
+      },
+      "per_metric": {
+        "ARI": {
+          "gt": 0.330479,
+          "value": 0.3304789123928919,
+          "delta": -0.0,
+          "delta_rel": 0.0,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T12:54:22.814808+00:00",
+      "duration_s": 6.85,
+      "error": null,
+      "raw_metrics": {
+        "ARI": 0.3304789123928919,
+        "NMI": 0.5029997726981531,
+        "Clusters": 4,
+        "Largest Cluster": 62
+      }
+    },
+    {
+      "id": "clustering-agglomerative-twoleadecg",
+      "algorithm": "user-agglomerative",
+      "algorithm_name": "Agglomerative (Euclidean)",
+      "dataset": "twoleadecg-cl",
+      "dataset_name": "TwoLeadECG (UCR)",
+      "window": "fused train+test · k=2",
+      "metrics": {
+        "ARI": 0.001152
+      },
+      "settings": "k=2 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run",
+      "source": {
+        "title": "A Benchmark Study on Time Series Clustering (Javed, Lee & Rizzo) — official per-dataset scores repository",
+        "venue": "Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546",
+        "url": "https://github.com/ali-javed/clusteringBenchmark",
+        "locator": "Scores/Adjusted Rand Score.csv, row TwoLeadECG, column 'Agglomerative (Euclidean)' (= 0.001152)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (no random init): the paper's published scores (Scores/Adjusted Rand Score.csv) match sklearn's AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark's code/main.py:135 reads linkage='complete', but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.",
+      "spec_params": {
+        "n_clusters": 2,
+        "fit_on": "all"
+      },
+      "train_command": "libraryts train --algorithm user-agglomerative --dataset twoleadecg-cl --model-id bench-clustering-agglomerative-twoleadecg --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean",
+      "run_command": "libraryts run --model-id bench-clustering-agglomerative-twoleadecg --compact",
+      "task": "clustering",
+      "status": "reproduced",
+      "values": {
+        "ARI": 0.0011523828443995424
+      },
+      "per_metric": {
+        "ARI": {
+          "gt": 0.001152,
+          "value": 0.0011523828443995424,
+          "delta": 0.0,
+          "delta_rel": 0.000332,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T12:54:27.307537+00:00",
+      "duration_s": 4.49,
+      "error": null,
+      "raw_metrics": {
+        "ARI": 0.0011523828443995424,
+        "NMI": 0.0014685159732250755,
+        "Clusters": 2,
+        "Largest Cluster": 644
+      }
+    },
+    {
+      "id": "clustering-agglomerative-syntheticcontrol",
+      "algorithm": "user-agglomerative",
+      "algorithm_name": "Agglomerative (Euclidean)",
+      "dataset": "syntheticcontrol-cl",
+      "dataset_name": "SyntheticControl (UCR)",
+      "window": "fused train+test · k=6",
+      "metrics": {
+        "ARI": 0.612692
+      },
+      "settings": "k=6 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run",
+      "source": {
+        "title": "A Benchmark Study on Time Series Clustering (Javed, Lee & Rizzo) — official per-dataset scores repository",
+        "venue": "Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546",
+        "url": "https://github.com/ali-javed/clusteringBenchmark",
+        "locator": "Scores/Adjusted Rand Score.csv, row SyntheticControl, column 'Agglomerative (Euclidean)' (= 0.612692)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (no random init): the paper's published scores (Scores/Adjusted Rand Score.csv) match sklearn's AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark's code/main.py:135 reads linkage='complete', but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.",
+      "spec_params": {
+        "n_clusters": 6,
+        "fit_on": "all"
+      },
+      "train_command": "libraryts train --algorithm user-agglomerative --dataset syntheticcontrol-cl --model-id bench-clustering-agglomerative-syntheticcontrol --param n_clusters=6 --param fit_on=all --param linkage=ward --param metric=euclidean",
+      "run_command": "libraryts run --model-id bench-clustering-agglomerative-syntheticcontrol --compact",
+      "task": "clustering",
+      "status": "reproduced",
+      "values": {
+        "ARI": 0.6126920568086942
+      },
+      "per_metric": {
+        "ARI": {
+          "gt": 0.612692,
+          "value": 0.6126920568086942,
+          "delta": 0.0,
+          "delta_rel": 0.0,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T12:54:34.511328+00:00",
+      "duration_s": 7.2,
+      "error": null,
+      "raw_metrics": {
+        "ARI": 0.6126920568086942,
+        "NMI": 0.7994730415830553,
+        "Clusters": 6,
+        "Largest Cluster": 201
+      }
+    },
+    {
+      "id": "clustering-agglomerative-facefour",
+      "algorithm": "user-agglomerative",
+      "algorithm_name": "Agglomerative (Euclidean)",
+      "dataset": "facefour-cl",
+      "dataset_name": "FaceFour (UCR)",
+      "window": "fused train+test · k=4",
+      "metrics": {
+        "ARI": 0.319784
+      },
+      "settings": "k=4 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run",
+      "source": {
+        "title": "A Benchmark Study on Time Series Clustering (Javed, Lee & Rizzo) — official per-dataset scores repository",
+        "venue": "Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546",
+        "url": "https://github.com/ali-javed/clusteringBenchmark",
+        "locator": "Scores/Adjusted Rand Score.csv, row FaceFour, column 'Agglomerative (Euclidean)' (= 0.319784)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (no random init): the paper's published scores (Scores/Adjusted Rand Score.csv) match sklearn's AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark's code/main.py:135 reads linkage='complete', but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.",
+      "spec_params": {
+        "n_clusters": 4,
+        "fit_on": "all"
+      },
+      "train_command": "libraryts train --algorithm user-agglomerative --dataset facefour-cl --model-id bench-clustering-agglomerative-facefour --param n_clusters=4 --param fit_on=all --param linkage=ward --param metric=euclidean",
+      "run_command": "libraryts run --model-id bench-clustering-agglomerative-facefour --compact",
+      "task": "clustering",
+      "status": "reproduced",
+      "values": {
+        "ARI": 0.3197844909455622
+      },
+      "per_metric": {
+        "ARI": {
+          "gt": 0.319784,
+          "value": 0.3197844909455622,
+          "delta": 0.0,
+          "delta_rel": 2e-06,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T12:54:40.965056+00:00",
+      "duration_s": 6.45,
+      "error": null,
+      "raw_metrics": {
+        "ARI": 0.3197844909455622,
+        "NMI": 0.4352260669047194,
+        "Clusters": 4,
+        "Largest Cluster": 52
+      }
+    },
+    {
+      "id": "clustering-agglomerative-motestrain",
+      "algorithm": "user-agglomerative",
+      "algorithm_name": "Agglomerative (Euclidean)",
+      "dataset": "motestrain-cl",
+      "dataset_name": "MoteStrain (UCR)",
+      "window": "fused train+test · k=2",
+      "metrics": {
+        "ARI": 0.381091
+      },
+      "settings": "k=2 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run",
+      "source": {
+        "title": "A Benchmark Study on Time Series Clustering (Javed, Lee & Rizzo) — official per-dataset scores repository",
+        "venue": "Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546",
+        "url": "https://github.com/ali-javed/clusteringBenchmark",
+        "locator": "Scores/Adjusted Rand Score.csv, row MoteStrain, column 'Agglomerative (Euclidean)' (= 0.381091)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (no random init): the paper's published scores (Scores/Adjusted Rand Score.csv) match sklearn's AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark's code/main.py:135 reads linkage='complete', but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.",
+      "spec_params": {
+        "n_clusters": 2,
+        "fit_on": "all"
+      },
+      "train_command": "libraryts train --algorithm user-agglomerative --dataset motestrain-cl --model-id bench-clustering-agglomerative-motestrain --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean",
+      "run_command": "libraryts run --model-id bench-clustering-agglomerative-motestrain --compact",
+      "task": "clustering",
+      "status": "reproduced",
+      "values": {
+        "ARI": 0.3810911766386128
+      },
+      "per_metric": {
+        "ARI": {
+          "gt": 0.381091,
+          "value": 0.3810911766386128,
+          "delta": 0.0,
+          "delta_rel": 0.0,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T12:54:45.993661+00:00",
+      "duration_s": 5.03,
+      "error": null,
+      "raw_metrics": {
+        "ARI": 0.3810911766386128,
+        "NMI": 0.41095175698264563,
+        "Clusters": 2,
+        "Largest Cluster": 816
+      }
+    },
+    {
+      "id": "clustering-agglomerative-wine",
+      "algorithm": "user-agglomerative",
+      "algorithm_name": "Agglomerative (Euclidean)",
+      "dataset": "wine-cl",
+      "dataset_name": "Wine (UCR)",
+      "window": "fused train+test · k=2",
+      "metrics": {
+        "ARI": -0.006639
+      },
+      "settings": "k=2 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run",
+      "source": {
+        "title": "A Benchmark Study on Time Series Clustering (Javed, Lee & Rizzo) — official per-dataset scores repository",
+        "venue": "Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546",
+        "url": "https://github.com/ali-javed/clusteringBenchmark",
+        "locator": "Scores/Adjusted Rand Score.csv, row Wine, column 'Agglomerative (Euclidean)' (= -0.006639)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (no random init): the paper's published scores (Scores/Adjusted Rand Score.csv) match sklearn's AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark's code/main.py:135 reads linkage='complete', but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.",
+      "spec_params": {
+        "n_clusters": 2,
+        "fit_on": "all"
+      },
+      "train_command": "libraryts train --algorithm user-agglomerative --dataset wine-cl --model-id bench-clustering-agglomerative-wine --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean",
+      "run_command": "libraryts run --model-id bench-clustering-agglomerative-wine --compact",
+      "task": "clustering",
+      "status": "reproduced",
+      "values": {
+        "ARI": -0.006638896120801875
+      },
+      "per_metric": {
+        "ARI": {
+          "gt": -0.006639,
+          "value": -0.006638896120801875,
+          "delta": 0.0,
+          "delta_rel": 1.6e-05,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T12:54:54.638742+00:00",
+      "duration_s": 8.64,
+      "error": null,
+      "raw_metrics": {
+        "ARI": -0.006638896120801875,
+        "NMI": 0.00021208089458740767,
+        "Clusters": 2,
+        "Largest Cluster": 81
+      }
+    },
+    {
+      "id": "clustering-agglomerative-sonyaiborobotsurface1",
+      "algorithm": "user-agglomerative",
+      "algorithm_name": "Agglomerative (Euclidean)",
+      "dataset": "sonyaiborobotsurface1-cl",
+      "dataset_name": "SonyAIBORobotSurface1 (UCR)",
+      "window": "fused train+test · k=2",
+      "metrics": {
+        "ARI": 0.411445
+      },
+      "settings": "k=2 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run",
+      "source": {
+        "title": "A Benchmark Study on Time Series Clustering (Javed, Lee & Rizzo) — official per-dataset scores repository",
+        "venue": "Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546",
+        "url": "https://github.com/ali-javed/clusteringBenchmark",
+        "locator": "Scores/Adjusted Rand Score.csv, row SonyAIBORobotSurface1, column 'Agglomerative (Euclidean)' (= 0.411445)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (no random init): the paper's published scores (Scores/Adjusted Rand Score.csv) match sklearn's AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark's code/main.py:135 reads linkage='complete', but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.",
+      "spec_params": {
+        "n_clusters": 2,
+        "fit_on": "all"
+      },
+      "train_command": "libraryts train --algorithm user-agglomerative --dataset sonyaiborobotsurface1-cl --model-id bench-clustering-agglomerative-sonyaiborobotsurface1 --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean",
+      "run_command": "libraryts run --model-id bench-clustering-agglomerative-sonyaiborobotsurface1 --compact",
+      "task": "clustering",
+      "status": "reproduced",
+      "values": {
+        "ARI": 0.41144470933001737
+      },
+      "per_metric": {
+        "ARI": {
+          "gt": 0.411445,
+          "value": 0.41144470933001737,
+          "delta": -0.0,
+          "delta_rel": 1e-06,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T12:55:00.064168+00:00",
+      "duration_s": 5.43,
+      "error": null,
+      "raw_metrics": {
+        "ARI": 0.41144470933001737,
+        "NMI": 0.4650607191270606,
+        "Clusters": 2,
+        "Largest Cluster": 383
+      }
+    },
+    {
+      "id": "clustering-agglomerative-lightning7",
+      "algorithm": "user-agglomerative",
+      "algorithm_name": "Agglomerative (Euclidean)",
+      "dataset": "lightning7-cl",
+      "dataset_name": "Lightning7 (UCR)",
+      "window": "fused train+test · k=7",
+      "metrics": {
+        "ARI": 0.298948
+      },
+      "settings": "k=7 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run",
+      "source": {
+        "title": "A Benchmark Study on Time Series Clustering (Javed, Lee & Rizzo) — official per-dataset scores repository",
+        "venue": "Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546",
+        "url": "https://github.com/ali-javed/clusteringBenchmark",
+        "locator": "Scores/Adjusted Rand Score.csv, row Lightning7, column 'Agglomerative (Euclidean)' (= 0.298948)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (no random init): the paper's published scores (Scores/Adjusted Rand Score.csv) match sklearn's AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark's code/main.py:135 reads linkage='complete', but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.",
+      "spec_params": {
+        "n_clusters": 7,
+        "fit_on": "all"
+      },
+      "train_command": "libraryts train --algorithm user-agglomerative --dataset lightning7-cl --model-id bench-clustering-agglomerative-lightning7 --param n_clusters=7 --param fit_on=all --param linkage=ward --param metric=euclidean",
+      "run_command": "libraryts run --model-id bench-clustering-agglomerative-lightning7 --compact",
+      "task": "clustering",
+      "status": "reproduced",
+      "values": {
+        "ARI": 0.29894750207500925
+      },
+      "per_metric": {
+        "ARI": {
+          "gt": 0.298948,
+          "value": 0.29894750207500925,
+          "delta": -0.0,
+          "delta_rel": 2e-06,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T12:55:08.837810+00:00",
+      "duration_s": 8.77,
+      "error": null,
+      "raw_metrics": {
+        "ARI": 0.29894750207500925,
+        "NMI": 0.4826937087690454,
+        "Clusters": 7,
+        "Largest Cluster": 37
+      }
+    },
+    {
+      "id": "clustering-agglomerative-adiac",
+      "algorithm": "user-agglomerative",
+      "algorithm_name": "Agglomerative (Euclidean)",
+      "dataset": "adiac-cl",
+      "dataset_name": "Adiac (UCR)",
+      "window": "fused train+test · k=37",
+      "metrics": {
+        "ARI": 0.178342
+      },
+      "settings": "k=37 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run",
+      "source": {
+        "title": "A Benchmark Study on Time Series Clustering (Javed, Lee & Rizzo) — official per-dataset scores repository",
+        "venue": "Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546",
+        "url": "https://github.com/ali-javed/clusteringBenchmark",
+        "locator": "Scores/Adjusted Rand Score.csv, row Adiac, column 'Agglomerative (Euclidean)' (= 0.178342)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (no random init): the paper's published scores (Scores/Adjusted Rand Score.csv) match sklearn's AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark's code/main.py:135 reads linkage='complete', but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.",
+      "spec_params": {
+        "n_clusters": 37,
+        "fit_on": "all"
+      },
+      "train_command": "libraryts train --algorithm user-agglomerative --dataset adiac-cl --model-id bench-clustering-agglomerative-adiac --param n_clusters=37 --param fit_on=all --param linkage=ward --param metric=euclidean",
+      "run_command": "libraryts run --model-id bench-clustering-agglomerative-adiac --compact",
+      "task": "clustering",
+      "status": "reproduced",
+      "values": {
+        "ARI": 0.1783421326798299
+      },
+      "per_metric": {
+        "ARI": {
+          "gt": 0.178342,
+          "value": 0.1783421326798299,
+          "delta": 0.0,
+          "delta_rel": 1e-06,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T12:55:18.620759+00:00",
+      "duration_s": 9.78,
+      "error": null,
+      "raw_metrics": {
+        "ARI": 0.1783421326798299,
+        "NMI": 0.553784639661385,
+        "Clusters": 37,
+        "Largest Cluster": 111
+      }
+    },
+    {
+      "id": "clustering-agglomerative-car",
+      "algorithm": "user-agglomerative",
+      "algorithm_name": "Agglomerative (Euclidean)",
+      "dataset": "car-cl",
+      "dataset_name": "Car (UCR)",
+      "window": "fused train+test · k=4",
+      "metrics": {
+        "ARI": 0.107863
+      },
+      "settings": "k=4 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run",
+      "source": {
+        "title": "A Benchmark Study on Time Series Clustering (Javed, Lee & Rizzo) — official per-dataset scores repository",
+        "venue": "Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546",
+        "url": "https://github.com/ali-javed/clusteringBenchmark",
+        "locator": "Scores/Adjusted Rand Score.csv, row Car, column 'Agglomerative (Euclidean)' (= 0.107863)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (no random init): the paper's published scores (Scores/Adjusted Rand Score.csv) match sklearn's AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark's code/main.py:135 reads linkage='complete', but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.",
+      "spec_params": {
+        "n_clusters": 4,
+        "fit_on": "all"
+      },
+      "train_command": "libraryts train --algorithm user-agglomerative --dataset car-cl --model-id bench-clustering-agglomerative-car --param n_clusters=4 --param fit_on=all --param linkage=ward --param metric=euclidean",
+      "run_command": "libraryts run --model-id bench-clustering-agglomerative-car --compact",
+      "task": "clustering",
+      "status": "reproduced",
+      "values": {
+        "ARI": 0.10786270341014927
+      },
+      "per_metric": {
+        "ARI": {
+          "gt": 0.107863,
+          "value": 0.10786270341014927,
+          "delta": -0.0,
+          "delta_rel": 3e-06,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T12:55:24.139547+00:00",
+      "duration_s": 5.52,
+      "error": null,
+      "raw_metrics": {
+        "ARI": 0.10786270341014927,
+        "NMI": 0.23160756992653916,
+        "Clusters": 4,
+        "Largest Cluster": 64
+      }
+    },
+    {
+      "id": "clustering-agglomerative-cricketx",
+      "algorithm": "user-agglomerative",
+      "algorithm_name": "Agglomerative (Euclidean)",
+      "dataset": "cricketx-cl",
+      "dataset_name": "CricketX (UCR)",
+      "window": "fused train+test · k=12",
+      "metrics": {
+        "ARI": 0.114169
+      },
+      "settings": "k=12 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run",
+      "source": {
+        "title": "A Benchmark Study on Time Series Clustering (Javed, Lee & Rizzo) — official per-dataset scores repository",
+        "venue": "Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546",
+        "url": "https://github.com/ali-javed/clusteringBenchmark",
+        "locator": "Scores/Adjusted Rand Score.csv, row CricketX, column 'Agglomerative (Euclidean)' (= 0.114169)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (no random init): the paper's published scores (Scores/Adjusted Rand Score.csv) match sklearn's AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark's code/main.py:135 reads linkage='complete', but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.",
+      "spec_params": {
+        "n_clusters": 12,
+        "fit_on": "all"
+      },
+      "train_command": "libraryts train --algorithm user-agglomerative --dataset cricketx-cl --model-id bench-clustering-agglomerative-cricketx --param n_clusters=12 --param fit_on=all --param linkage=ward --param metric=euclidean",
+      "run_command": "libraryts run --model-id bench-clustering-agglomerative-cricketx --compact",
+      "task": "clustering",
+      "status": "reproduced",
+      "values": {
+        "ARI": 0.11416897202103442
+      },
+      "per_metric": {
+        "ARI": {
+          "gt": 0.114169,
+          "value": 0.11416897202103442,
+          "delta": -0.0,
+          "delta_rel": 0.0,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T12:55:32.354330+00:00",
+      "duration_s": 8.21,
+      "error": null,
+      "raw_metrics": {
+        "ARI": 0.11416897202103442,
+        "NMI": 0.2775817234273391,
+        "Clusters": 12,
+        "Largest Cluster": 133
+      }
+    },
+    {
+      "id": "clustering-agglomerative-diatomsizereduction",
+      "algorithm": "user-agglomerative",
+      "algorithm_name": "Agglomerative (Euclidean)",
+      "dataset": "diatomsizereduction-cl",
+      "dataset_name": "DiatomSizeReduction (UCR)",
+      "window": "fused train+test · k=4",
+      "metrics": {
+        "ARI": 0.857049
+      },
+      "settings": "k=4 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run",
+      "source": {
+        "title": "A Benchmark Study on Time Series Clustering (Javed, Lee & Rizzo) — official per-dataset scores repository",
+        "venue": "Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546",
+        "url": "https://github.com/ali-javed/clusteringBenchmark",
+        "locator": "Scores/Adjusted Rand Score.csv, row DiatomSizeReduction, column 'Agglomerative (Euclidean)' (= 0.857049)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (no random init): the paper's published scores (Scores/Adjusted Rand Score.csv) match sklearn's AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark's code/main.py:135 reads linkage='complete', but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.",
+      "spec_params": {
+        "n_clusters": 4,
+        "fit_on": "all"
+      },
+      "train_command": "libraryts train --algorithm user-agglomerative --dataset diatomsizereduction-cl --model-id bench-clustering-agglomerative-diatomsizereduction --param n_clusters=4 --param fit_on=all --param linkage=ward --param metric=euclidean",
+      "run_command": "libraryts run --model-id bench-clustering-agglomerative-diatomsizereduction --compact",
+      "task": "clustering",
+      "status": "reproduced",
+      "values": {
+        "ARI": 0.857049116326134
+      },
+      "per_metric": {
+        "ARI": {
+          "gt": 0.857049,
+          "value": 0.857049116326134,
+          "delta": 0.0,
+          "delta_rel": 0.0,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T12:55:40.519490+00:00",
+      "duration_s": 8.16,
+      "error": null,
+      "raw_metrics": {
+        "ARI": 0.857049116326134,
+        "NMI": 0.8784791621036482,
+        "Clusters": 4,
+        "Largest Cluster": 127
+      }
+    },
+    {
+      "id": "clustering-agglomerative-earthquakes",
+      "algorithm": "user-agglomerative",
+      "algorithm_name": "Agglomerative (Euclidean)",
+      "dataset": "earthquakes-cl",
+      "dataset_name": "Earthquakes (UCR)",
+      "window": "fused train+test · k=2",
+      "metrics": {
+        "ARI": -0.008273
+      },
+      "settings": "k=2 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run",
+      "source": {
+        "title": "A Benchmark Study on Time Series Clustering (Javed, Lee & Rizzo) — official per-dataset scores repository",
+        "venue": "Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546",
+        "url": "https://github.com/ali-javed/clusteringBenchmark",
+        "locator": "Scores/Adjusted Rand Score.csv, row Earthquakes, column 'Agglomerative (Euclidean)' (= -0.008273)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (no random init): the paper's published scores (Scores/Adjusted Rand Score.csv) match sklearn's AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark's code/main.py:135 reads linkage='complete', but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.",
+      "spec_params": {
+        "n_clusters": 2,
+        "fit_on": "all"
+      },
+      "train_command": "libraryts train --algorithm user-agglomerative --dataset earthquakes-cl --model-id bench-clustering-agglomerative-earthquakes --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean",
+      "run_command": "libraryts run --model-id bench-clustering-agglomerative-earthquakes --compact",
+      "task": "clustering",
+      "status": "reproduced",
+      "values": {
+        "ARI": -0.008273111332614097
+      },
+      "per_metric": {
+        "ARI": {
+          "gt": -0.008273,
+          "value": -0.008273111332614097,
+          "delta": -0.0,
+          "delta_rel": 1.3e-05,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T12:55:46.267798+00:00",
+      "duration_s": 5.75,
+      "error": null,
+      "raw_metrics": {
+        "ARI": -0.008273111332614097,
+        "NMI": 0.0006847930454749882,
+        "Clusters": 2,
+        "Largest Cluster": 295
+      }
+    },
+    {
+      "id": "clustering-agglomerative-ecgfivedays",
+      "algorithm": "user-agglomerative",
+      "algorithm_name": "Agglomerative (Euclidean)",
+      "dataset": "ecgfivedays-cl",
+      "dataset_name": "ECGFiveDays (UCR)",
+      "window": "fused train+test · k=2",
+      "metrics": {
+        "ARI": 0.02058
+      },
+      "settings": "k=2 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run",
+      "source": {
+        "title": "A Benchmark Study on Time Series Clustering (Javed, Lee & Rizzo) — official per-dataset scores repository",
+        "venue": "Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546",
+        "url": "https://github.com/ali-javed/clusteringBenchmark",
+        "locator": "Scores/Adjusted Rand Score.csv, row ECGFiveDays, column 'Agglomerative (Euclidean)' (= 0.02058)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (no random init): the paper's published scores (Scores/Adjusted Rand Score.csv) match sklearn's AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark's code/main.py:135 reads linkage='complete', but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.",
+      "spec_params": {
+        "n_clusters": 2,
+        "fit_on": "all"
+      },
+      "train_command": "libraryts train --algorithm user-agglomerative --dataset ecgfivedays-cl --model-id bench-clustering-agglomerative-ecgfivedays --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean",
+      "run_command": "libraryts run --model-id bench-clustering-agglomerative-ecgfivedays --compact",
+      "task": "clustering",
+      "status": "reproduced",
+      "values": {
+        "ARI": 0.020579696717088588
+      },
+      "per_metric": {
+        "ARI": {
+          "gt": 0.02058,
+          "value": 0.020579696717088588,
+          "delta": -0.0,
+          "delta_rel": 1.5e-05,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T12:55:52.739483+00:00",
+      "duration_s": 6.47,
+      "error": null,
+      "raw_metrics": {
+        "ARI": 0.020579696717088588,
+        "NMI": 0.016960946932232667,
+        "Clusters": 2,
+        "Largest Cluster": 547
+      }
+    },
+    {
+      "id": "clustering-agglomerative-fiftywords",
+      "algorithm": "user-agglomerative",
+      "algorithm_name": "Agglomerative (Euclidean)",
+      "dataset": "fiftywords-cl",
+      "dataset_name": "FiftyWords (UCR)",
+      "window": "fused train+test · k=50",
+      "metrics": {
+        "ARI": 0.311531
+      },
+      "settings": "k=50 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run",
+      "source": {
+        "title": "A Benchmark Study on Time Series Clustering (Javed, Lee & Rizzo) — official per-dataset scores repository",
+        "venue": "Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546",
+        "url": "https://github.com/ali-javed/clusteringBenchmark",
+        "locator": "Scores/Adjusted Rand Score.csv, row FiftyWords, column 'Agglomerative (Euclidean)' (= 0.311531)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (no random init): the paper's published scores (Scores/Adjusted Rand Score.csv) match sklearn's AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark's code/main.py:135 reads linkage='complete', but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.",
+      "spec_params": {
+        "n_clusters": 50,
+        "fit_on": "all"
+      },
+      "train_command": "libraryts train --algorithm user-agglomerative --dataset fiftywords-cl --model-id bench-clustering-agglomerative-fiftywords --param n_clusters=50 --param fit_on=all --param linkage=ward --param metric=euclidean",
+      "run_command": "libraryts run --model-id bench-clustering-agglomerative-fiftywords --compact",
+      "task": "clustering",
+      "status": "reproduced",
+      "values": {
+        "ARI": 0.3115306369871424
+      },
+      "per_metric": {
+        "ARI": {
+          "gt": 0.311531,
+          "value": 0.3115306369871424,
+          "delta": -0.0,
+          "delta_rel": 1e-06,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T12:56:00.317190+00:00",
+      "duration_s": 7.58,
+      "error": null,
+      "raw_metrics": {
+        "ARI": 0.3115306369871424,
+        "NMI": 0.6638655678071947,
+        "Clusters": 50,
+        "Largest Cluster": 37
+      }
+    },
+    {
+      "id": "clustering-agglomerative-fish",
+      "algorithm": "user-agglomerative",
+      "algorithm_name": "Agglomerative (Euclidean)",
+      "dataset": "fish-cl",
+      "dataset_name": "Fish (UCR)",
+      "window": "fused train+test · k=7",
+      "metrics": {
+        "ARI": 0.24347
+      },
+      "settings": "k=7 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run",
+      "source": {
+        "title": "A Benchmark Study on Time Series Clustering (Javed, Lee & Rizzo) — official per-dataset scores repository",
+        "venue": "Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546",
+        "url": "https://github.com/ali-javed/clusteringBenchmark",
+        "locator": "Scores/Adjusted Rand Score.csv, row Fish, column 'Agglomerative (Euclidean)' (= 0.24347)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (no random init): the paper's published scores (Scores/Adjusted Rand Score.csv) match sklearn's AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark's code/main.py:135 reads linkage='complete', but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.",
+      "spec_params": {
+        "n_clusters": 7,
+        "fit_on": "all"
+      },
+      "train_command": "libraryts train --algorithm user-agglomerative --dataset fish-cl --model-id bench-clustering-agglomerative-fish --param n_clusters=7 --param fit_on=all --param linkage=ward --param metric=euclidean",
+      "run_command": "libraryts run --model-id bench-clustering-agglomerative-fish --compact",
+      "task": "clustering",
+      "status": "reproduced",
+      "values": {
+        "ARI": 0.24346952969768823
+      },
+      "per_metric": {
+        "ARI": {
+          "gt": 0.24347,
+          "value": 0.24346952969768823,
+          "delta": -0.0,
+          "delta_rel": 2e-06,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T12:56:04.903792+00:00",
+      "duration_s": 4.58,
+      "error": null,
+      "raw_metrics": {
+        "ARI": 0.24346952969768823,
+        "NMI": 0.35444241978857194,
+        "Clusters": 7,
+        "Largest Cluster": 77
+      }
+    },
+    {
+      "id": "clustering-agglomerative-ham",
+      "algorithm": "user-agglomerative",
+      "algorithm_name": "Agglomerative (Euclidean)",
+      "dataset": "ham-cl",
+      "dataset_name": "Ham (UCR)",
+      "window": "fused train+test · k=2",
+      "metrics": {
+        "ARI": 0.059268
+      },
+      "settings": "k=2 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run",
+      "source": {
+        "title": "A Benchmark Study on Time Series Clustering (Javed, Lee & Rizzo) — official per-dataset scores repository",
+        "venue": "Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546",
+        "url": "https://github.com/ali-javed/clusteringBenchmark",
+        "locator": "Scores/Adjusted Rand Score.csv, row Ham, column 'Agglomerative (Euclidean)' (= 0.059268)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (no random init): the paper's published scores (Scores/Adjusted Rand Score.csv) match sklearn's AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark's code/main.py:135 reads linkage='complete', but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.",
+      "spec_params": {
+        "n_clusters": 2,
+        "fit_on": "all"
+      },
+      "train_command": "libraryts train --algorithm user-agglomerative --dataset ham-cl --model-id bench-clustering-agglomerative-ham --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean",
+      "run_command": "libraryts run --model-id bench-clustering-agglomerative-ham --compact",
+      "task": "clustering",
+      "status": "reproduced",
+      "values": {
+        "ARI": 0.05926759772558551
+      },
+      "per_metric": {
+        "ARI": {
+          "gt": 0.059268,
+          "value": 0.05926759772558551,
+          "delta": -0.0,
+          "delta_rel": 7e-06,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T12:56:12.468977+00:00",
+      "duration_s": 7.56,
+      "error": null,
+      "raw_metrics": {
+        "ARI": 0.05926759772558551,
+        "NMI": 0.046071840260084214,
+        "Clusters": 2,
+        "Largest Cluster": 111
+      }
+    },
+    {
+      "id": "clustering-agglomerative-herring",
+      "algorithm": "user-agglomerative",
+      "algorithm_name": "Agglomerative (Euclidean)",
+      "dataset": "herring-cl",
+      "dataset_name": "Herring (UCR)",
+      "window": "fused train+test · k=2",
+      "metrics": {
+        "ARI": 0.019525
+      },
+      "settings": "k=2 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run",
+      "source": {
+        "title": "A Benchmark Study on Time Series Clustering (Javed, Lee & Rizzo) — official per-dataset scores repository",
+        "venue": "Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546",
+        "url": "https://github.com/ali-javed/clusteringBenchmark",
+        "locator": "Scores/Adjusted Rand Score.csv, row Herring, column 'Agglomerative (Euclidean)' (= 0.019525)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (no random init): the paper's published scores (Scores/Adjusted Rand Score.csv) match sklearn's AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark's code/main.py:135 reads linkage='complete', but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.",
+      "spec_params": {
+        "n_clusters": 2,
+        "fit_on": "all"
+      },
+      "train_command": "libraryts train --algorithm user-agglomerative --dataset herring-cl --model-id bench-clustering-agglomerative-herring --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean",
+      "run_command": "libraryts run --model-id bench-clustering-agglomerative-herring --compact",
+      "task": "clustering",
+      "status": "reproduced",
+      "values": {
+        "ARI": 0.019524775656751613
+      },
+      "per_metric": {
+        "ARI": {
+          "gt": 0.019525,
+          "value": 0.019524775656751613,
+          "delta": -0.0,
+          "delta_rel": 1.1e-05,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T12:56:18.683887+00:00",
+      "duration_s": 6.21,
+      "error": null,
+      "raw_metrics": {
+        "ARI": 0.019524775656751613,
+        "NMI": 0.011182011983953886,
+        "Clusters": 2,
+        "Largest Cluster": 82
+      }
+    },
+    {
+      "id": "clustering-agglomerative-meat",
+      "algorithm": "user-agglomerative",
+      "algorithm_name": "Agglomerative (Euclidean)",
+      "dataset": "meat-cl",
+      "dataset_name": "Meat (UCR)",
+      "window": "fused train+test · k=3",
+      "metrics": {
+        "ARI": 0.443506
+      },
+      "settings": "k=3 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run",
+      "source": {
+        "title": "A Benchmark Study on Time Series Clustering (Javed, Lee & Rizzo) — official per-dataset scores repository",
+        "venue": "Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546",
+        "url": "https://github.com/ali-javed/clusteringBenchmark",
+        "locator": "Scores/Adjusted Rand Score.csv, row Meat, column 'Agglomerative (Euclidean)' (= 0.443506)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (no random init): the paper's published scores (Scores/Adjusted Rand Score.csv) match sklearn's AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark's code/main.py:135 reads linkage='complete', but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.",
+      "spec_params": {
+        "n_clusters": 3,
+        "fit_on": "all"
+      },
+      "train_command": "libraryts train --algorithm user-agglomerative --dataset meat-cl --model-id bench-clustering-agglomerative-meat --param n_clusters=3 --param fit_on=all --param linkage=ward --param metric=euclidean",
+      "run_command": "libraryts run --model-id bench-clustering-agglomerative-meat --compact",
+      "task": "clustering",
+      "status": "reproduced",
+      "values": {
+        "ARI": 0.44350580781414994
+      },
+      "per_metric": {
+        "ARI": {
+          "gt": 0.443506,
+          "value": 0.44350580781414994,
+          "delta": -0.0,
+          "delta_rel": 0.0,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T12:56:23.112101+00:00",
+      "duration_s": 4.43,
+      "error": null,
+      "raw_metrics": {
+        "ARI": 0.44350580781414994,
+        "NMI": 0.649682027811217,
+        "Clusters": 3,
+        "Largest Cluster": 80
+      }
+    },
+    {
+      "id": "clustering-agglomerative-medicalimages",
+      "algorithm": "user-agglomerative",
+      "algorithm_name": "Agglomerative (Euclidean)",
+      "dataset": "medicalimages-cl",
+      "dataset_name": "MedicalImages (UCR)",
+      "window": "fused train+test · k=10",
+      "metrics": {
+        "ARI": 0.04243
+      },
+      "settings": "k=10 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run",
+      "source": {
+        "title": "A Benchmark Study on Time Series Clustering (Javed, Lee & Rizzo) — official per-dataset scores repository",
+        "venue": "Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546",
+        "url": "https://github.com/ali-javed/clusteringBenchmark",
+        "locator": "Scores/Adjusted Rand Score.csv, row MedicalImages, column 'Agglomerative (Euclidean)' (= 0.04243)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (no random init): the paper's published scores (Scores/Adjusted Rand Score.csv) match sklearn's AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark's code/main.py:135 reads linkage='complete', but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.",
+      "spec_params": {
+        "n_clusters": 10,
+        "fit_on": "all"
+      },
+      "train_command": "libraryts train --algorithm user-agglomerative --dataset medicalimages-cl --model-id bench-clustering-agglomerative-medicalimages --param n_clusters=10 --param fit_on=all --param linkage=ward --param metric=euclidean",
+      "run_command": "libraryts run --model-id bench-clustering-agglomerative-medicalimages --compact",
+      "task": "clustering",
+      "status": "reproduced",
+      "values": {
+        "ARI": 0.04243041843769729
+      },
+      "per_metric": {
+        "ARI": {
+          "gt": 0.04243,
+          "value": 0.04243041843769729,
+          "delta": 0.0,
+          "delta_rel": 1e-05,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T12:56:28.850697+00:00",
+      "duration_s": 5.74,
+      "error": null,
+      "raw_metrics": {
+        "ARI": 0.04243041843769729,
+        "NMI": 0.2599440470492483,
+        "Clusters": 10,
+        "Largest Cluster": 231
+      }
+    },
+    {
+      "id": "clustering-agglomerative-middlephalanxoutlinecorrect",
+      "algorithm": "user-agglomerative",
+      "algorithm_name": "Agglomerative (Euclidean)",
+      "dataset": "middlephalanxoutlinecorrect-cl",
+      "dataset_name": "MiddlePhalanxOutlineCorrect (UCR)",
+      "window": "fused train+test · k=2",
+      "metrics": {
+        "ARI": -0.00538
+      },
+      "settings": "k=2 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run",
+      "source": {
+        "title": "A Benchmark Study on Time Series Clustering (Javed, Lee & Rizzo) — official per-dataset scores repository",
+        "venue": "Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546",
+        "url": "https://github.com/ali-javed/clusteringBenchmark",
+        "locator": "Scores/Adjusted Rand Score.csv, row MiddlePhalanxOutlineCorrect, column 'Agglomerative (Euclidean)' (= -0.00538)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (no random init): the paper's published scores (Scores/Adjusted Rand Score.csv) match sklearn's AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark's code/main.py:135 reads linkage='complete', but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.",
+      "spec_params": {
+        "n_clusters": 2,
+        "fit_on": "all"
+      },
+      "train_command": "libraryts train --algorithm user-agglomerative --dataset middlephalanxoutlinecorrect-cl --model-id bench-clustering-agglomerative-middlephalanxoutlinecorrect --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean",
+      "run_command": "libraryts run --model-id bench-clustering-agglomerative-middlephalanxoutlinecorrect --compact",
+      "task": "clustering",
+      "status": "reproduced",
+      "values": {
+        "ARI": -0.005380139338141913
+      },
+      "per_metric": {
+        "ARI": {
+          "gt": -0.00538,
+          "value": -0.005380139338141913,
+          "delta": -0.0,
+          "delta_rel": 2.6e-05,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T12:56:35.155868+00:00",
+      "duration_s": 6.3,
+      "error": null,
+      "raw_metrics": {
+        "ARI": -0.005380139338141913,
+        "NMI": 0.007869376001794832,
+        "Clusters": 2,
+        "Largest Cluster": 574
+      }
+    },
+    {
+      "id": "clustering-agglomerative-oliveoil",
+      "algorithm": "user-agglomerative",
+      "algorithm_name": "Agglomerative (Euclidean)",
+      "dataset": "oliveoil-cl",
+      "dataset_name": "OliveOil (UCR)",
+      "window": "fused train+test · k=4",
+      "metrics": {
+        "ARI": 0.626487
+      },
+      "settings": "k=4 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run",
+      "source": {
+        "title": "A Benchmark Study on Time Series Clustering (Javed, Lee & Rizzo) — official per-dataset scores repository",
+        "venue": "Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546",
+        "url": "https://github.com/ali-javed/clusteringBenchmark",
+        "locator": "Scores/Adjusted Rand Score.csv, row OliveOil, column 'Agglomerative (Euclidean)' (= 0.626487)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (no random init): the paper's published scores (Scores/Adjusted Rand Score.csv) match sklearn's AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark's code/main.py:135 reads linkage='complete', but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.",
+      "spec_params": {
+        "n_clusters": 4,
+        "fit_on": "all"
+      },
+      "train_command": "libraryts train --algorithm user-agglomerative --dataset oliveoil-cl --model-id bench-clustering-agglomerative-oliveoil --param n_clusters=4 --param fit_on=all --param linkage=ward --param metric=euclidean",
+      "run_command": "libraryts run --model-id bench-clustering-agglomerative-oliveoil --compact",
+      "task": "clustering",
+      "status": "reproduced",
+      "values": {
+        "ARI": 0.6264867121940707
+      },
+      "per_metric": {
+        "ARI": {
+          "gt": 0.626487,
+          "value": 0.6264867121940707,
+          "delta": -0.0,
+          "delta_rel": 0.0,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T12:56:40.233260+00:00",
+      "duration_s": 5.08,
+      "error": null,
+      "raw_metrics": {
+        "ARI": 0.6264867121940707,
+        "NMI": 0.6657965662720392,
+        "Clusters": 4,
+        "Largest Cluster": 25
+      }
+    },
+    {
+      "id": "clustering-agglomerative-osuleaf",
+      "algorithm": "user-agglomerative",
+      "algorithm_name": "Agglomerative (Euclidean)",
+      "dataset": "osuleaf-cl",
+      "dataset_name": "OSULeaf (UCR)",
+      "window": "fused train+test · k=6",
+      "metrics": {
+        "ARI": 0.179955
+      },
+      "settings": "k=6 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run",
+      "source": {
+        "title": "A Benchmark Study on Time Series Clustering (Javed, Lee & Rizzo) — official per-dataset scores repository",
+        "venue": "Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546",
+        "url": "https://github.com/ali-javed/clusteringBenchmark",
+        "locator": "Scores/Adjusted Rand Score.csv, row OSULeaf, column 'Agglomerative (Euclidean)' (= 0.179955)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (no random init): the paper's published scores (Scores/Adjusted Rand Score.csv) match sklearn's AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark's code/main.py:135 reads linkage='complete', but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.",
+      "spec_params": {
+        "n_clusters": 6,
+        "fit_on": "all"
+      },
+      "train_command": "libraryts train --algorithm user-agglomerative --dataset osuleaf-cl --model-id bench-clustering-agglomerative-osuleaf --param n_clusters=6 --param fit_on=all --param linkage=ward --param metric=euclidean",
+      "run_command": "libraryts run --model-id bench-clustering-agglomerative-osuleaf --compact",
+      "task": "clustering",
+      "status": "reproduced",
+      "values": {
+        "ARI": 0.1799551311014753
+      },
+      "per_metric": {
+        "ARI": {
+          "gt": 0.179955,
+          "value": 0.1799551311014753,
+          "delta": 0.0,
+          "delta_rel": 1e-06,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T12:56:47.009329+00:00",
+      "duration_s": 6.78,
+      "error": null,
+      "raw_metrics": {
+        "ARI": 0.1799551311014753,
+        "NMI": 0.25997138772248546,
+        "Clusters": 6,
+        "Largest Cluster": 108
+      }
+    },
+    {
+      "id": "clustering-agglomerative-proximalphalanxoutlinecorrect",
+      "algorithm": "user-agglomerative",
+      "algorithm_name": "Agglomerative (Euclidean)",
+      "dataset": "proximalphalanxoutlinecorrect-cl",
+      "dataset_name": "ProximalPhalanxOutlineCorrect (UCR)",
+      "window": "fused train+test · k=2",
+      "metrics": {
+        "ARI": 0.048306
+      },
+      "settings": "k=2 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run",
+      "source": {
+        "title": "A Benchmark Study on Time Series Clustering (Javed, Lee & Rizzo) — official per-dataset scores repository",
+        "venue": "Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546",
+        "url": "https://github.com/ali-javed/clusteringBenchmark",
+        "locator": "Scores/Adjusted Rand Score.csv, row ProximalPhalanxOutlineCorrect, column 'Agglomerative (Euclidean)' (= 0.048306)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (no random init): the paper's published scores (Scores/Adjusted Rand Score.csv) match sklearn's AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark's code/main.py:135 reads linkage='complete', but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.",
+      "spec_params": {
+        "n_clusters": 2,
+        "fit_on": "all"
+      },
+      "train_command": "libraryts train --algorithm user-agglomerative --dataset proximalphalanxoutlinecorrect-cl --model-id bench-clustering-agglomerative-proximalphalanxoutlinecorrect --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean",
+      "run_command": "libraryts run --model-id bench-clustering-agglomerative-proximalphalanxoutlinecorrect --compact",
+      "task": "clustering",
+      "status": "reproduced",
+      "values": {
+        "ARI": 0.048306276835356904
+      },
+      "per_metric": {
+        "ARI": {
+          "gt": 0.048306,
+          "value": 0.048306276835356904,
+          "delta": 0.0,
+          "delta_rel": 6e-06,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T12:56:52.899756+00:00",
+      "duration_s": 5.89,
+      "error": null,
+      "raw_metrics": {
+        "ARI": 0.048306276835356904,
+        "NMI": 0.05618385845494835,
+        "Clusters": 2,
+        "Largest Cluster": 478
+      }
+    },
+    {
+      "id": "clustering-agglomerative-shapeletsim",
+      "algorithm": "user-agglomerative",
+      "algorithm_name": "Agglomerative (Euclidean)",
+      "dataset": "shapeletsim-cl",
+      "dataset_name": "ShapeletSim (UCR)",
+      "window": "fused train+test · k=2",
+      "metrics": {
+        "ARI": -0.005
+      },
+      "settings": "k=2 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run",
+      "source": {
+        "title": "A Benchmark Study on Time Series Clustering (Javed, Lee & Rizzo) — official per-dataset scores repository",
+        "venue": "Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546",
+        "url": "https://github.com/ali-javed/clusteringBenchmark",
+        "locator": "Scores/Adjusted Rand Score.csv, row ShapeletSim, column 'Agglomerative (Euclidean)' (= -0.005)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (no random init): the paper's published scores (Scores/Adjusted Rand Score.csv) match sklearn's AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark's code/main.py:135 reads linkage='complete', but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.",
+      "spec_params": {
+        "n_clusters": 2,
+        "fit_on": "all"
+      },
+      "train_command": "libraryts train --algorithm user-agglomerative --dataset shapeletsim-cl --model-id bench-clustering-agglomerative-shapeletsim --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean",
+      "run_command": "libraryts run --model-id bench-clustering-agglomerative-shapeletsim --compact",
+      "task": "clustering",
+      "status": "reproduced",
+      "values": {
+        "ARI": -0.004999747487500632
+      },
+      "per_metric": {
+        "ARI": {
+          "gt": -0.005,
+          "value": -0.004999747487500632,
+          "delta": 0.0,
+          "delta_rel": 5.1e-05,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T12:56:57.446779+00:00",
+      "duration_s": 4.55,
+      "error": null,
+      "raw_metrics": {
+        "ARI": -0.004999747487500632,
+        "NMI": 0.0,
+        "Clusters": 2,
+        "Largest Cluster": 110
+      }
+    },
+    {
+      "id": "clustering-agglomerative-swedishleaf",
+      "algorithm": "user-agglomerative",
+      "algorithm_name": "Agglomerative (Euclidean)",
+      "dataset": "swedishleaf-cl",
+      "dataset_name": "SwedishLeaf (UCR)",
+      "window": "fused train+test · k=15",
+      "metrics": {
+        "ARI": 0.300316
+      },
+      "settings": "k=15 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run",
+      "source": {
+        "title": "A Benchmark Study on Time Series Clustering (Javed, Lee & Rizzo) — official per-dataset scores repository",
+        "venue": "Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546",
+        "url": "https://github.com/ali-javed/clusteringBenchmark",
+        "locator": "Scores/Adjusted Rand Score.csv, row SwedishLeaf, column 'Agglomerative (Euclidean)' (= 0.300316)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (no random init): the paper's published scores (Scores/Adjusted Rand Score.csv) match sklearn's AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark's code/main.py:135 reads linkage='complete', but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.",
+      "spec_params": {
+        "n_clusters": 15,
+        "fit_on": "all"
+      },
+      "train_command": "libraryts train --algorithm user-agglomerative --dataset swedishleaf-cl --model-id bench-clustering-agglomerative-swedishleaf --param n_clusters=15 --param fit_on=all --param linkage=ward --param metric=euclidean",
+      "run_command": "libraryts run --model-id bench-clustering-agglomerative-swedishleaf --compact",
+      "task": "clustering",
+      "status": "reproduced",
+      "values": {
+        "ARI": 0.30031557502563216
+      },
+      "per_metric": {
+        "ARI": {
+          "gt": 0.300316,
+          "value": 0.30031557502563216,
+          "delta": -0.0,
+          "delta_rel": 1e-06,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T12:57:03.454261+00:00",
+      "duration_s": 6.01,
+      "error": null,
+      "raw_metrics": {
+        "ARI": 0.30031557502563216,
+        "NMI": 0.5696573934762496,
+        "Clusters": 15,
+        "Largest Cluster": 288
+      }
+    },
+    {
+      "id": "clustering-agglomerative-symbols",
+      "algorithm": "user-agglomerative",
+      "algorithm_name": "Agglomerative (Euclidean)",
+      "dataset": "symbols-cl",
+      "dataset_name": "Symbols (UCR)",
+      "window": "fused train+test · k=6",
+      "metrics": {
+        "ARI": 0.679369
+      },
+      "settings": "k=6 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run",
+      "source": {
+        "title": "A Benchmark Study on Time Series Clustering (Javed, Lee & Rizzo) — official per-dataset scores repository",
+        "venue": "Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546",
+        "url": "https://github.com/ali-javed/clusteringBenchmark",
+        "locator": "Scores/Adjusted Rand Score.csv, row Symbols, column 'Agglomerative (Euclidean)' (= 0.679369)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (no random init): the paper's published scores (Scores/Adjusted Rand Score.csv) match sklearn's AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark's code/main.py:135 reads linkage='complete', but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.",
+      "spec_params": {
+        "n_clusters": 6,
+        "fit_on": "all"
+      },
+      "train_command": "libraryts train --algorithm user-agglomerative --dataset symbols-cl --model-id bench-clustering-agglomerative-symbols --param n_clusters=6 --param fit_on=all --param linkage=ward --param metric=euclidean",
+      "run_command": "libraryts run --model-id bench-clustering-agglomerative-symbols --compact",
+      "task": "clustering",
+      "status": "reproduced",
+      "values": {
+        "ARI": 0.6793689943504646
+      },
+      "per_metric": {
+        "ARI": {
+          "gt": 0.679369,
+          "value": 0.6793689943504646,
+          "delta": -0.0,
+          "delta_rel": 0.0,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T12:57:09.749182+00:00",
+      "duration_s": 6.29,
+      "error": null,
+      "raw_metrics": {
+        "ARI": 0.6793689943504646,
+        "NMI": 0.7987658308387947,
+        "Clusters": 6,
+        "Largest Cluster": 344
+      }
+    },
+    {
+      "id": "clustering-agglomerative-toesegmentation1",
+      "algorithm": "user-agglomerative",
+      "algorithm_name": "Agglomerative (Euclidean)",
+      "dataset": "toesegmentation1-cl",
+      "dataset_name": "ToeSegmentation1 (UCR)",
+      "window": "fused train+test · k=2",
+      "metrics": {
+        "ARI": 0.016545
+      },
+      "settings": "k=2 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run",
+      "source": {
+        "title": "A Benchmark Study on Time Series Clustering (Javed, Lee & Rizzo) — official per-dataset scores repository",
+        "venue": "Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546",
+        "url": "https://github.com/ali-javed/clusteringBenchmark",
+        "locator": "Scores/Adjusted Rand Score.csv, row ToeSegmentation1, column 'Agglomerative (Euclidean)' (= 0.016545)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (no random init): the paper's published scores (Scores/Adjusted Rand Score.csv) match sklearn's AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark's code/main.py:135 reads linkage='complete', but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.",
+      "spec_params": {
+        "n_clusters": 2,
+        "fit_on": "all"
+      },
+      "train_command": "libraryts train --algorithm user-agglomerative --dataset toesegmentation1-cl --model-id bench-clustering-agglomerative-toesegmentation1 --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean",
+      "run_command": "libraryts run --model-id bench-clustering-agglomerative-toesegmentation1 --compact",
+      "task": "clustering",
+      "status": "reproduced",
+      "values": {
+        "ARI": 0.01654500011449694
+      },
+      "per_metric": {
+        "ARI": {
+          "gt": 0.016545,
+          "value": 0.01654500011449694,
+          "delta": 0.0,
+          "delta_rel": 0.0,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T12:57:14.301566+00:00",
+      "duration_s": 4.55,
+      "error": null,
+      "raw_metrics": {
+        "ARI": 0.01654500011449694,
+        "NMI": 0.01890971608393632,
+        "Clusters": 2,
+        "Largest Cluster": 169
+      }
+    },
+    {
+      "id": "clustering-agglomerative-computers",
+      "algorithm": "user-agglomerative",
+      "algorithm_name": "Agglomerative (Euclidean)",
+      "dataset": "computers-cl",
+      "dataset_name": "Computers (UCR)",
+      "window": "fused train+test · k=2",
+      "metrics": {
+        "ARI": -0.001719
+      },
+      "settings": "k=2 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run",
+      "source": {
+        "title": "A Benchmark Study on Time Series Clustering (Javed, Lee & Rizzo) — official per-dataset scores repository",
+        "venue": "Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546",
+        "url": "https://github.com/ali-javed/clusteringBenchmark",
+        "locator": "Scores/Adjusted Rand Score.csv, row Computers, column 'Agglomerative (Euclidean)' (= -0.001719)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (no random init): the paper's published scores (Scores/Adjusted Rand Score.csv) match sklearn's AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark's code/main.py:135 reads linkage='complete', but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.",
+      "spec_params": {
+        "n_clusters": 2,
+        "fit_on": "all"
+      },
+      "train_command": "libraryts train --algorithm user-agglomerative --dataset computers-cl --model-id bench-clustering-agglomerative-computers --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean",
+      "run_command": "libraryts run --model-id bench-clustering-agglomerative-computers --compact",
+      "task": "clustering",
+      "status": "reproduced",
+      "values": {
+        "ARI": -0.0017185619338981426
+      },
+      "per_metric": {
+        "ARI": {
+          "gt": -0.001719,
+          "value": -0.0017185619338981426,
+          "delta": 0.0,
+          "delta_rel": 0.000255,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T12:57:21.094617+00:00",
+      "duration_s": 6.79,
+      "error": null,
+      "raw_metrics": {
+        "ARI": -0.0017185619338981426,
+        "NMI": 0.00018886874554149927,
+        "Clusters": 2,
+        "Largest Cluster": 282
+      }
+    },
+    {
+      "id": "clustering-agglomerative-strawberry",
+      "algorithm": "user-agglomerative",
+      "algorithm_name": "Agglomerative (Euclidean)",
+      "dataset": "strawberry-cl",
+      "dataset_name": "Strawberry (UCR)",
+      "window": "fused train+test · k=2",
+      "metrics": {
+        "ARI": -0.048055
+      },
+      "settings": "k=2 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run",
+      "source": {
+        "title": "A Benchmark Study on Time Series Clustering (Javed, Lee & Rizzo) — official per-dataset scores repository",
+        "venue": "Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546",
+        "url": "https://github.com/ali-javed/clusteringBenchmark",
+        "locator": "Scores/Adjusted Rand Score.csv, row Strawberry, column 'Agglomerative (Euclidean)' (= -0.048055)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (no random init): the paper's published scores (Scores/Adjusted Rand Score.csv) match sklearn's AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark's code/main.py:135 reads linkage='complete', but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.",
+      "spec_params": {
+        "n_clusters": 2,
+        "fit_on": "all"
+      },
+      "train_command": "libraryts train --algorithm user-agglomerative --dataset strawberry-cl --model-id bench-clustering-agglomerative-strawberry --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean",
+      "run_command": "libraryts run --model-id bench-clustering-agglomerative-strawberry --compact",
+      "task": "clustering",
+      "status": "reproduced",
+      "values": {
+        "ARI": -0.04805523113839849
+      },
+      "per_metric": {
+        "ARI": {
+          "gt": -0.048055,
+          "value": -0.04805523113839849,
+          "delta": -0.0,
+          "delta_rel": 5e-06,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T12:57:27.854978+00:00",
+      "duration_s": 6.76,
+      "error": null,
+      "raw_metrics": {
+        "ARI": -0.04805523113839849,
+        "NMI": 0.1005616571325655,
+        "Clusters": 2,
+        "Largest Cluster": 880
+      }
+    },
+    {
       "id": "forecasting-dlinear-etth1-96",
       "algorithm": "DLinearForecaster",
       "algorithm_name": "DLinear",
@@ -29582,12 +31714,12 @@
     }
   ],
   "summary": {
-    "entries": 502,
-    "reproduced": 428,
+    "entries": 543,
+    "reproduced": 469,
     "deviation": 74,
     "error": 0,
     "pending": 0,
-    "run_total": 502,
-    "reproduced_pct": 85.3
+    "run_total": 543,
+    "reproduced_pct": 86.4
   }
 }

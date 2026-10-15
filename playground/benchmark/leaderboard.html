@@ -215,7 +215,7 @@
        Click a row for the citation, protocol, and commands.</p>
   </section>
 
-  <section class="stats" id="stats"><div class="stat"><div class="num">298</div><div class="lbl">algorithms tracked</div></div><div class="stat"><div class="num">502</div><div class="lbl">groundtruth claims</div></div><div class="stat"><div class="num">428/502</div><div class="lbl">claims reproduced</div></div><div class="stat"><div class="num">85.3%</div><div class="lbl">reproduction rate</div></div></section>
+  <section class="stats" id="stats"><div class="stat"><div class="num">298</div><div class="lbl">algorithms tracked</div></div><div class="stat"><div class="num">543</div><div class="lbl">groundtruth claims</div></div><div class="stat"><div class="num">469/543</div><div class="lbl">claims reproduced</div></div><div class="stat"><div class="num">86.4%</div><div class="lbl">reproduction rate</div></div></section>
 
   <nav class="tabs" id="tabs"><a class="tab" href="#forecasting" data-task="forecasting">Forecasting<span class="cnt">138</span></a><a class="tab" href="#classification" data-task="classification">Classification<span class="cnt">66</span></a><a class="tab" href="#regression" data-task="regression">Regression<span class="cnt">22</span></a><a class="tab" href="#clustering" data-task="clustering">Clustering<span class="cnt">10</span></a><a class="tab" href="#anomaly_detection" data-task="anomaly_detection">Anomaly Detection<span class="cnt">58</span></a><a class="tab" href="#causal" data-task="causal">Causal Discovery<span class="cnt">4</span></a></nav>
 
@@ -13798,9 +13798,1865 @@
   </div>
   <div class="panel-sub">10 of 10 algorithms runnable in this environment</div>
 
-  <div class="section-label">Algorithms — 4 with tracked claims · 7 not run yet</div>
+  <div class="section-label">Algorithms — 5 with tracked claims · 7 not run yet</div>
   <input class="filter" type="search" placeholder="Filter algorithms…" />
   <div class="claim-groups">
+<details class="claim-group" data-name="agglomerative (euclidean) user-agglomerative">
+  <summary>
+    <div class="alg">Agglomerative (Euclidean)<span class="lib">Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546</span></div>
+    <div class="grp-note">41 dataset/config claims</div>
+    <div style="display:flex;align-items:center;justify-content:flex-end;gap:10px">
+      <span class="status reproduced"><span class="dot"></span>41/41 configs reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="group-body">
+<details class="claim">
+  <summary>
+    <div class="ds">ArrowHead (UCR)<span class="win">fused train+test · k=3</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">ARI</span> 0.07334→0.07334 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm user-agglomerative --dataset arrow-head-cl --model-id bench-clustering-agglomerative-arrowhead --param n_clusters=3 --param fit_on=all --param linkage=ward --param metric=euclidean<button class="copy" data-cmd="libraryts train --algorithm user-agglomerative --dataset arrow-head-cl --model-id bench-clustering-agglomerative-arrowhead --param n_clusters=3 --param fit_on=all --param linkage=ward --param metric=euclidean">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-clustering-agglomerative-arrowhead --compact<button class="copy" data-cmd="libraryts run --model-id bench-clustering-agglomerative-arrowhead --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/ali-javed/clusteringBenchmark" target="_blank" rel="noopener">A Benchmark Study on Time Series Clustering (Javed, Lee &amp; Rizzo) — official per-dataset scores repository</a><br/>
+          Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546 · Scores/Adjusted Rand Score.csv, row ArrowHead, column &#x27;Agglomerative (Euclidean)&#x27; (= 0.073341)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">k=3 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:53:25 UTC · 4.54s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (no random init): the paper&#x27;s published scores (Scores/Adjusted Rand Score.csv) match sklearn&#x27;s AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark&#x27;s code/main.py:135 reads linkage=&#x27;complete&#x27;, but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;ARI&quot;: 0.07334100753428387, &quot;NMI&quot;: 0.21946089071334607, &quot;Clusters&quot;: 3, &quot;Largest Cluster&quot;: 168}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">GunPoint (UCR)<span class="win">fused train+test · k=2</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">ARI</span> -0.005051→-0.005051 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm user-agglomerative --dataset gunpoint-cl --model-id bench-clustering-agglomerative-gunpoint --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean<button class="copy" data-cmd="libraryts train --algorithm user-agglomerative --dataset gunpoint-cl --model-id bench-clustering-agglomerative-gunpoint --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-clustering-agglomerative-gunpoint --compact<button class="copy" data-cmd="libraryts run --model-id bench-clustering-agglomerative-gunpoint --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/ali-javed/clusteringBenchmark" target="_blank" rel="noopener">A Benchmark Study on Time Series Clustering (Javed, Lee &amp; Rizzo) — official per-dataset scores repository</a><br/>
+          Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546 · Scores/Adjusted Rand Score.csv, row GunPoint, column &#x27;Agglomerative (Euclidean)&#x27; (= -0.005051)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">k=2 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:53:30 UTC · 4.94s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (no random init): the paper&#x27;s published scores (Scores/Adjusted Rand Score.csv) match sklearn&#x27;s AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark&#x27;s code/main.py:135 reads linkage=&#x27;complete&#x27;, but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;ARI&quot;: -0.005050505050505051, &quot;NMI&quot;: 0.0, &quot;Clusters&quot;: 2, &quot;Largest Cluster&quot;: 100}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Coffee (UCR)<span class="win">fused train+test · k=2</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">ARI</span> 0.6688→0.6688 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm user-agglomerative --dataset coffee-cl --model-id bench-clustering-agglomerative-coffee --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean<button class="copy" data-cmd="libraryts train --algorithm user-agglomerative --dataset coffee-cl --model-id bench-clustering-agglomerative-coffee --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-clustering-agglomerative-coffee --compact<button class="copy" data-cmd="libraryts run --model-id bench-clustering-agglomerative-coffee --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/ali-javed/clusteringBenchmark" target="_blank" rel="noopener">A Benchmark Study on Time Series Clustering (Javed, Lee &amp; Rizzo) — official per-dataset scores repository</a><br/>
+          Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546 · Scores/Adjusted Rand Score.csv, row Coffee, column &#x27;Agglomerative (Euclidean)&#x27; (= 0.668846)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">k=2 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:53:35 UTC · 5.28s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (no random init): the paper&#x27;s published scores (Scores/Adjusted Rand Score.csv) match sklearn&#x27;s AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark&#x27;s code/main.py:135 reads linkage=&#x27;complete&#x27;, but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;ARI&quot;: 0.6688456906932737, &quot;NMI&quot;: 0.6468622435098071, &quot;Clusters&quot;: 2, &quot;Largest Cluster&quot;: 32}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">BME (UCR)<span class="win">fused train+test · k=3</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">ARI</span> 0.1837→0.1837 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm user-agglomerative --dataset bme-cl --model-id bench-clustering-agglomerative-bme --param n_clusters=3 --param fit_on=all --param linkage=ward --param metric=euclidean<button class="copy" data-cmd="libraryts train --algorithm user-agglomerative --dataset bme-cl --model-id bench-clustering-agglomerative-bme --param n_clusters=3 --param fit_on=all --param linkage=ward --param metric=euclidean">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-clustering-agglomerative-bme --compact<button class="copy" data-cmd="libraryts run --model-id bench-clustering-agglomerative-bme --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/ali-javed/clusteringBenchmark" target="_blank" rel="noopener">A Benchmark Study on Time Series Clustering (Javed, Lee &amp; Rizzo) — official per-dataset scores repository</a><br/>
+          Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546 · Scores/Adjusted Rand Score.csv, row BME, column &#x27;Agglomerative (Euclidean)&#x27; (= 0.18372)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">k=3 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:53:40 UTC · 4.71s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (no random init): the paper&#x27;s published scores (Scores/Adjusted Rand Score.csv) match sklearn&#x27;s AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark&#x27;s code/main.py:135 reads linkage=&#x27;complete&#x27;, but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;ARI&quot;: 0.18371993827702576, &quot;NMI&quot;: 0.2468804522381719, &quot;Clusters&quot;: 3, &quot;Largest Cluster&quot;: 64}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">CBF (UCR)<span class="win">fused train+test · k=3</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">ARI</span> 0.4408→0.4408 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm user-agglomerative --dataset cbf-cl --model-id bench-clustering-agglomerative-cbf --param n_clusters=3 --param fit_on=all --param linkage=ward --param metric=euclidean<button class="copy" data-cmd="libraryts train --algorithm user-agglomerative --dataset cbf-cl --model-id bench-clustering-agglomerative-cbf --param n_clusters=3 --param fit_on=all --param linkage=ward --param metric=euclidean">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-clustering-agglomerative-cbf --compact<button class="copy" data-cmd="libraryts run --model-id bench-clustering-agglomerative-cbf --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/ali-javed/clusteringBenchmark" target="_blank" rel="noopener">A Benchmark Study on Time Series Clustering (Javed, Lee &amp; Rizzo) — official per-dataset scores repository</a><br/>
+          Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546 · Scores/Adjusted Rand Score.csv, row CBF, column &#x27;Agglomerative (Euclidean)&#x27; (= 0.440821)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">k=3 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:53:45 UTC · 5.65s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (no random init): the paper&#x27;s published scores (Scores/Adjusted Rand Score.csv) match sklearn&#x27;s AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark&#x27;s code/main.py:135 reads linkage=&#x27;complete&#x27;, but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;ARI&quot;: 0.4408214818908665, &quot;NMI&quot;: 0.485877282401096, &quot;Clusters&quot;: 3, &quot;Largest Cluster&quot;: 352}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Beef (UCR)<span class="win">fused train+test · k=5</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">ARI</span> 0.07133→0.07134 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm user-agglomerative --dataset beef-cl --model-id bench-clustering-agglomerative-beef --param n_clusters=5 --param fit_on=all --param linkage=ward --param metric=euclidean<button class="copy" data-cmd="libraryts train --algorithm user-agglomerative --dataset beef-cl --model-id bench-clustering-agglomerative-beef --param n_clusters=5 --param fit_on=all --param linkage=ward --param metric=euclidean">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-clustering-agglomerative-beef --compact<button class="copy" data-cmd="libraryts run --model-id bench-clustering-agglomerative-beef --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/ali-javed/clusteringBenchmark" target="_blank" rel="noopener">A Benchmark Study on Time Series Clustering (Javed, Lee &amp; Rizzo) — official per-dataset scores repository</a><br/>
+          Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546 · Scores/Adjusted Rand Score.csv, row Beef, column &#x27;Agglomerative (Euclidean)&#x27; (= 0.071335)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">k=5 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:53:50 UTC · 5.06s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (no random init): the paper&#x27;s published scores (Scores/Adjusted Rand Score.csv) match sklearn&#x27;s AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark&#x27;s code/main.py:135 reads linkage=&#x27;complete&#x27;, but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;ARI&quot;: 0.07133532034386778, &quot;NMI&quot;: 0.2901918405533434, &quot;Clusters&quot;: 5, &quot;Largest Cluster&quot;: 24}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">BeetleFly (UCR)<span class="win">fused train+test · k=2</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">ARI</span> -0.01566→-0.01566 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm user-agglomerative --dataset beetlefly-cl --model-id bench-clustering-agglomerative-beetlefly --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean<button class="copy" data-cmd="libraryts train --algorithm user-agglomerative --dataset beetlefly-cl --model-id bench-clustering-agglomerative-beetlefly --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-clustering-agglomerative-beetlefly --compact<button class="copy" data-cmd="libraryts run --model-id bench-clustering-agglomerative-beetlefly --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/ali-javed/clusteringBenchmark" target="_blank" rel="noopener">A Benchmark Study on Time Series Clustering (Javed, Lee &amp; Rizzo) — official per-dataset scores repository</a><br/>
+          Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546 · Scores/Adjusted Rand Score.csv, row BeetleFly, column &#x27;Agglomerative (Euclidean)&#x27; (= -0.015665)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">k=2 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:53:55 UTC · 4.69s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (no random init): the paper&#x27;s published scores (Scores/Adjusted Rand Score.csv) match sklearn&#x27;s AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark&#x27;s code/main.py:135 reads linkage=&#x27;complete&#x27;, but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;ARI&quot;: -0.015664773839827686, &quot;NMI&quot;: 0.002927571599089393, &quot;Clusters&quot;: 2, &quot;Largest Cluster&quot;: 31}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">BirdChicken (UCR)<span class="win">fused train+test · k=2</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">ARI</span> 0.0384→0.0384 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm user-agglomerative --dataset birdchicken-cl --model-id bench-clustering-agglomerative-birdchicken --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean<button class="copy" data-cmd="libraryts train --algorithm user-agglomerative --dataset birdchicken-cl --model-id bench-clustering-agglomerative-birdchicken --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-clustering-agglomerative-birdchicken --compact<button class="copy" data-cmd="libraryts run --model-id bench-clustering-agglomerative-birdchicken --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/ali-javed/clusteringBenchmark" target="_blank" rel="noopener">A Benchmark Study on Time Series Clustering (Javed, Lee &amp; Rizzo) — official per-dataset scores repository</a><br/>
+          Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546 · Scores/Adjusted Rand Score.csv, row BirdChicken, column &#x27;Agglomerative (Euclidean)&#x27; (= 0.038398)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">k=2 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:54:00 UTC · 5.22s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (no random init): the paper&#x27;s published scores (Scores/Adjusted Rand Score.csv) match sklearn&#x27;s AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark&#x27;s code/main.py:135 reads linkage=&#x27;complete&#x27;, but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;ARI&quot;: 0.03839831678611349, &quot;NMI&quot;: 0.0470589218116303, &quot;Clusters&quot;: 2, &quot;Largest Cluster&quot;: 23}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Chinatown (UCR)<span class="win">fused train+test · k=2</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">ARI</span> 0.156→0.1582 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm user-agglomerative --dataset chinatown-cl --model-id bench-clustering-agglomerative-chinatown --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean<button class="copy" data-cmd="libraryts train --algorithm user-agglomerative --dataset chinatown-cl --model-id bench-clustering-agglomerative-chinatown --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-clustering-agglomerative-chinatown --compact<button class="copy" data-cmd="libraryts run --model-id bench-clustering-agglomerative-chinatown --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/ali-javed/clusteringBenchmark" target="_blank" rel="noopener">A Benchmark Study on Time Series Clustering (Javed, Lee &amp; Rizzo) — official per-dataset scores repository</a><br/>
+          Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546 · Scores/Adjusted Rand Score.csv, row Chinatown, column &#x27;Agglomerative (Euclidean)&#x27; (= 0.156013)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">k=2 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:54:05 UTC · 4.94s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (no random init): the paper&#x27;s published scores (Scores/Adjusted Rand Score.csv) match sklearn&#x27;s AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark&#x27;s code/main.py:135 reads linkage=&#x27;complete&#x27;, but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions. Chinatown&#x27;s heavily quantized values produce exact distance ties; the observed libraryts run differs by +0.0022 ARI from the CSV (tie-breaking), within the tightened tolerance.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;ARI&quot;: 0.1582332541236703, &quot;NMI&quot;: 0.0752216420254753, &quot;Clusters&quot;: 2, &quot;Largest Cluster&quot;: 258}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">ItalyPowerDemand (UCR)<span class="win">fused train+test · k=2</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">ARI</span> -2.11e-04→-2.11e-04 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm user-agglomerative --dataset italypowerdemand-cl --model-id bench-clustering-agglomerative-italypowerdemand --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean<button class="copy" data-cmd="libraryts train --algorithm user-agglomerative --dataset italypowerdemand-cl --model-id bench-clustering-agglomerative-italypowerdemand --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-clustering-agglomerative-italypowerdemand --compact<button class="copy" data-cmd="libraryts run --model-id bench-clustering-agglomerative-italypowerdemand --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/ali-javed/clusteringBenchmark" target="_blank" rel="noopener">A Benchmark Study on Time Series Clustering (Javed, Lee &amp; Rizzo) — official per-dataset scores repository</a><br/>
+          Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546 · Scores/Adjusted Rand Score.csv, row ItalyPowerDemand, column &#x27;Agglomerative (Euclidean)&#x27; (= -0.000211)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">k=2 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:54:10 UTC · 4.56s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (no random init): the paper&#x27;s published scores (Scores/Adjusted Rand Score.csv) match sklearn&#x27;s AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark&#x27;s code/main.py:135 reads linkage=&#x27;complete&#x27;, but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;ARI&quot;: -0.00021130594258732586, &quot;NMI&quot;: 0.000543423854945195, &quot;Clusters&quot;: 2, &quot;Largest Cluster&quot;: 897}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Plane (UCR)<span class="win">fused train+test · k=7</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">ARI</span> 0.8043→0.8043 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm user-agglomerative --dataset plane-cl --model-id bench-clustering-agglomerative-plane --param n_clusters=7 --param fit_on=all --param linkage=ward --param metric=euclidean<button class="copy" data-cmd="libraryts train --algorithm user-agglomerative --dataset plane-cl --model-id bench-clustering-agglomerative-plane --param n_clusters=7 --param fit_on=all --param linkage=ward --param metric=euclidean">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-clustering-agglomerative-plane --compact<button class="copy" data-cmd="libraryts run --model-id bench-clustering-agglomerative-plane --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/ali-javed/clusteringBenchmark" target="_blank" rel="noopener">A Benchmark Study on Time Series Clustering (Javed, Lee &amp; Rizzo) — official per-dataset scores repository</a><br/>
+          Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546 · Scores/Adjusted Rand Score.csv, row Plane, column &#x27;Agglomerative (Euclidean)&#x27; (= 0.804349)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">k=7 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:54:15 UTC · 5.72s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (no random init): the paper&#x27;s published scores (Scores/Adjusted Rand Score.csv) match sklearn&#x27;s AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark&#x27;s code/main.py:135 reads linkage=&#x27;complete&#x27;, but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;ARI&quot;: 0.804349491793066, &quot;NMI&quot;: 0.8982343648181306, &quot;Clusters&quot;: 7, &quot;Largest Cluster&quot;: 56}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Trace (UCR)<span class="win">fused train+test · k=4</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">ARI</span> 0.3305→0.3305 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm user-agglomerative --dataset trace-cl --model-id bench-clustering-agglomerative-trace --param n_clusters=4 --param fit_on=all --param linkage=ward --param metric=euclidean<button class="copy" data-cmd="libraryts train --algorithm user-agglomerative --dataset trace-cl --model-id bench-clustering-agglomerative-trace --param n_clusters=4 --param fit_on=all --param linkage=ward --param metric=euclidean">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-clustering-agglomerative-trace --compact<button class="copy" data-cmd="libraryts run --model-id bench-clustering-agglomerative-trace --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/ali-javed/clusteringBenchmark" target="_blank" rel="noopener">A Benchmark Study on Time Series Clustering (Javed, Lee &amp; Rizzo) — official per-dataset scores repository</a><br/>
+          Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546 · Scores/Adjusted Rand Score.csv, row Trace, column &#x27;Agglomerative (Euclidean)&#x27; (= 0.330479)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">k=4 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:54:22 UTC · 6.85s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (no random init): the paper&#x27;s published scores (Scores/Adjusted Rand Score.csv) match sklearn&#x27;s AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark&#x27;s code/main.py:135 reads linkage=&#x27;complete&#x27;, but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;ARI&quot;: 0.3304789123928919, &quot;NMI&quot;: 0.5029997726981531, &quot;Clusters&quot;: 4, &quot;Largest Cluster&quot;: 62}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">TwoLeadECG (UCR)<span class="win">fused train+test · k=2</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">ARI</span> 0.001152→0.001152 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm user-agglomerative --dataset twoleadecg-cl --model-id bench-clustering-agglomerative-twoleadecg --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean<button class="copy" data-cmd="libraryts train --algorithm user-agglomerative --dataset twoleadecg-cl --model-id bench-clustering-agglomerative-twoleadecg --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-clustering-agglomerative-twoleadecg --compact<button class="copy" data-cmd="libraryts run --model-id bench-clustering-agglomerative-twoleadecg --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/ali-javed/clusteringBenchmark" target="_blank" rel="noopener">A Benchmark Study on Time Series Clustering (Javed, Lee &amp; Rizzo) — official per-dataset scores repository</a><br/>
+          Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546 · Scores/Adjusted Rand Score.csv, row TwoLeadECG, column &#x27;Agglomerative (Euclidean)&#x27; (= 0.001152)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">k=2 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:54:27 UTC · 4.49s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (no random init): the paper&#x27;s published scores (Scores/Adjusted Rand Score.csv) match sklearn&#x27;s AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark&#x27;s code/main.py:135 reads linkage=&#x27;complete&#x27;, but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;ARI&quot;: 0.0011523828443995424, &quot;NMI&quot;: 0.0014685159732250755, &quot;Clusters&quot;: 2, &quot;Largest Cluster&quot;: 644}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">SyntheticControl (UCR)<span class="win">fused train+test · k=6</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">ARI</span> 0.6127→0.6127 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm user-agglomerative --dataset syntheticcontrol-cl --model-id bench-clustering-agglomerative-syntheticcontrol --param n_clusters=6 --param fit_on=all --param linkage=ward --param metric=euclidean<button class="copy" data-cmd="libraryts train --algorithm user-agglomerative --dataset syntheticcontrol-cl --model-id bench-clustering-agglomerative-syntheticcontrol --param n_clusters=6 --param fit_on=all --param linkage=ward --param metric=euclidean">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-clustering-agglomerative-syntheticcontrol --compact<button class="copy" data-cmd="libraryts run --model-id bench-clustering-agglomerative-syntheticcontrol --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/ali-javed/clusteringBenchmark" target="_blank" rel="noopener">A Benchmark Study on Time Series Clustering (Javed, Lee &amp; Rizzo) — official per-dataset scores repository</a><br/>
+          Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546 · Scores/Adjusted Rand Score.csv, row SyntheticControl, column &#x27;Agglomerative (Euclidean)&#x27; (= 0.612692)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">k=6 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:54:34 UTC · 7.2s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (no random init): the paper&#x27;s published scores (Scores/Adjusted Rand Score.csv) match sklearn&#x27;s AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark&#x27;s code/main.py:135 reads linkage=&#x27;complete&#x27;, but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;ARI&quot;: 0.6126920568086942, &quot;NMI&quot;: 0.7994730415830553, &quot;Clusters&quot;: 6, &quot;Largest Cluster&quot;: 201}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">FaceFour (UCR)<span class="win">fused train+test · k=4</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">ARI</span> 0.3198→0.3198 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm user-agglomerative --dataset facefour-cl --model-id bench-clustering-agglomerative-facefour --param n_clusters=4 --param fit_on=all --param linkage=ward --param metric=euclidean<button class="copy" data-cmd="libraryts train --algorithm user-agglomerative --dataset facefour-cl --model-id bench-clustering-agglomerative-facefour --param n_clusters=4 --param fit_on=all --param linkage=ward --param metric=euclidean">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-clustering-agglomerative-facefour --compact<button class="copy" data-cmd="libraryts run --model-id bench-clustering-agglomerative-facefour --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/ali-javed/clusteringBenchmark" target="_blank" rel="noopener">A Benchmark Study on Time Series Clustering (Javed, Lee &amp; Rizzo) — official per-dataset scores repository</a><br/>
+          Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546 · Scores/Adjusted Rand Score.csv, row FaceFour, column &#x27;Agglomerative (Euclidean)&#x27; (= 0.319784)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">k=4 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:54:40 UTC · 6.45s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (no random init): the paper&#x27;s published scores (Scores/Adjusted Rand Score.csv) match sklearn&#x27;s AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark&#x27;s code/main.py:135 reads linkage=&#x27;complete&#x27;, but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;ARI&quot;: 0.3197844909455622, &quot;NMI&quot;: 0.4352260669047194, &quot;Clusters&quot;: 4, &quot;Largest Cluster&quot;: 52}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">MoteStrain (UCR)<span class="win">fused train+test · k=2</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">ARI</span> 0.3811→0.3811 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm user-agglomerative --dataset motestrain-cl --model-id bench-clustering-agglomerative-motestrain --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean<button class="copy" data-cmd="libraryts train --algorithm user-agglomerative --dataset motestrain-cl --model-id bench-clustering-agglomerative-motestrain --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-clustering-agglomerative-motestrain --compact<button class="copy" data-cmd="libraryts run --model-id bench-clustering-agglomerative-motestrain --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/ali-javed/clusteringBenchmark" target="_blank" rel="noopener">A Benchmark Study on Time Series Clustering (Javed, Lee &amp; Rizzo) — official per-dataset scores repository</a><br/>
+          Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546 · Scores/Adjusted Rand Score.csv, row MoteStrain, column &#x27;Agglomerative (Euclidean)&#x27; (= 0.381091)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">k=2 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:54:45 UTC · 5.03s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (no random init): the paper&#x27;s published scores (Scores/Adjusted Rand Score.csv) match sklearn&#x27;s AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark&#x27;s code/main.py:135 reads linkage=&#x27;complete&#x27;, but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;ARI&quot;: 0.3810911766386128, &quot;NMI&quot;: 0.41095175698264563, &quot;Clusters&quot;: 2, &quot;Largest Cluster&quot;: 816}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Wine (UCR)<span class="win">fused train+test · k=2</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">ARI</span> -0.006639→-0.006639 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm user-agglomerative --dataset wine-cl --model-id bench-clustering-agglomerative-wine --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean<button class="copy" data-cmd="libraryts train --algorithm user-agglomerative --dataset wine-cl --model-id bench-clustering-agglomerative-wine --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-clustering-agglomerative-wine --compact<button class="copy" data-cmd="libraryts run --model-id bench-clustering-agglomerative-wine --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/ali-javed/clusteringBenchmark" target="_blank" rel="noopener">A Benchmark Study on Time Series Clustering (Javed, Lee &amp; Rizzo) — official per-dataset scores repository</a><br/>
+          Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546 · Scores/Adjusted Rand Score.csv, row Wine, column &#x27;Agglomerative (Euclidean)&#x27; (= -0.006639)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">k=2 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:54:54 UTC · 8.64s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (no random init): the paper&#x27;s published scores (Scores/Adjusted Rand Score.csv) match sklearn&#x27;s AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark&#x27;s code/main.py:135 reads linkage=&#x27;complete&#x27;, but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;ARI&quot;: -0.006638896120801875, &quot;NMI&quot;: 0.00021208089458740767, &quot;Clusters&quot;: 2, &quot;Largest Cluster&quot;: 81}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">SonyAIBORobotSurface1 (UCR)<span class="win">fused train+test · k=2</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">ARI</span> 0.4114→0.4114 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm user-agglomerative --dataset sonyaiborobotsurface1-cl --model-id bench-clustering-agglomerative-sonyaiborobotsurface1 --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean<button class="copy" data-cmd="libraryts train --algorithm user-agglomerative --dataset sonyaiborobotsurface1-cl --model-id bench-clustering-agglomerative-sonyaiborobotsurface1 --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-clustering-agglomerative-sonyaiborobotsurface1 --compact<button class="copy" data-cmd="libraryts run --model-id bench-clustering-agglomerative-sonyaiborobotsurface1 --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/ali-javed/clusteringBenchmark" target="_blank" rel="noopener">A Benchmark Study on Time Series Clustering (Javed, Lee &amp; Rizzo) — official per-dataset scores repository</a><br/>
+          Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546 · Scores/Adjusted Rand Score.csv, row SonyAIBORobotSurface1, column &#x27;Agglomerative (Euclidean)&#x27; (= 0.411445)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">k=2 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:55:00 UTC · 5.43s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (no random init): the paper&#x27;s published scores (Scores/Adjusted Rand Score.csv) match sklearn&#x27;s AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark&#x27;s code/main.py:135 reads linkage=&#x27;complete&#x27;, but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;ARI&quot;: 0.41144470933001737, &quot;NMI&quot;: 0.4650607191270606, &quot;Clusters&quot;: 2, &quot;Largest Cluster&quot;: 383}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Lightning7 (UCR)<span class="win">fused train+test · k=7</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">ARI</span> 0.2989→0.2989 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm user-agglomerative --dataset lightning7-cl --model-id bench-clustering-agglomerative-lightning7 --param n_clusters=7 --param fit_on=all --param linkage=ward --param metric=euclidean<button class="copy" data-cmd="libraryts train --algorithm user-agglomerative --dataset lightning7-cl --model-id bench-clustering-agglomerative-lightning7 --param n_clusters=7 --param fit_on=all --param linkage=ward --param metric=euclidean">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-clustering-agglomerative-lightning7 --compact<button class="copy" data-cmd="libraryts run --model-id bench-clustering-agglomerative-lightning7 --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/ali-javed/clusteringBenchmark" target="_blank" rel="noopener">A Benchmark Study on Time Series Clustering (Javed, Lee &amp; Rizzo) — official per-dataset scores repository</a><br/>
+          Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546 · Scores/Adjusted Rand Score.csv, row Lightning7, column &#x27;Agglomerative (Euclidean)&#x27; (= 0.298948)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">k=7 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:55:08 UTC · 8.77s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (no random init): the paper&#x27;s published scores (Scores/Adjusted Rand Score.csv) match sklearn&#x27;s AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark&#x27;s code/main.py:135 reads linkage=&#x27;complete&#x27;, but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;ARI&quot;: 0.29894750207500925, &quot;NMI&quot;: 0.4826937087690454, &quot;Clusters&quot;: 7, &quot;Largest Cluster&quot;: 37}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Adiac (UCR)<span class="win">fused train+test · k=37</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">ARI</span> 0.1783→0.1783 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm user-agglomerative --dataset adiac-cl --model-id bench-clustering-agglomerative-adiac --param n_clusters=37 --param fit_on=all --param linkage=ward --param metric=euclidean<button class="copy" data-cmd="libraryts train --algorithm user-agglomerative --dataset adiac-cl --model-id bench-clustering-agglomerative-adiac --param n_clusters=37 --param fit_on=all --param linkage=ward --param metric=euclidean">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-clustering-agglomerative-adiac --compact<button class="copy" data-cmd="libraryts run --model-id bench-clustering-agglomerative-adiac --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/ali-javed/clusteringBenchmark" target="_blank" rel="noopener">A Benchmark Study on Time Series Clustering (Javed, Lee &amp; Rizzo) — official per-dataset scores repository</a><br/>
+          Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546 · Scores/Adjusted Rand Score.csv, row Adiac, column &#x27;Agglomerative (Euclidean)&#x27; (= 0.178342)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">k=37 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:55:18 UTC · 9.78s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (no random init): the paper&#x27;s published scores (Scores/Adjusted Rand Score.csv) match sklearn&#x27;s AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark&#x27;s code/main.py:135 reads linkage=&#x27;complete&#x27;, but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;ARI&quot;: 0.1783421326798299, &quot;NMI&quot;: 0.553784639661385, &quot;Clusters&quot;: 37, &quot;Largest Cluster&quot;: 111}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Car (UCR)<span class="win">fused train+test · k=4</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">ARI</span> 0.1079→0.1079 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm user-agglomerative --dataset car-cl --model-id bench-clustering-agglomerative-car --param n_clusters=4 --param fit_on=all --param linkage=ward --param metric=euclidean<button class="copy" data-cmd="libraryts train --algorithm user-agglomerative --dataset car-cl --model-id bench-clustering-agglomerative-car --param n_clusters=4 --param fit_on=all --param linkage=ward --param metric=euclidean">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-clustering-agglomerative-car --compact<button class="copy" data-cmd="libraryts run --model-id bench-clustering-agglomerative-car --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/ali-javed/clusteringBenchmark" target="_blank" rel="noopener">A Benchmark Study on Time Series Clustering (Javed, Lee &amp; Rizzo) — official per-dataset scores repository</a><br/>
+          Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546 · Scores/Adjusted Rand Score.csv, row Car, column &#x27;Agglomerative (Euclidean)&#x27; (= 0.107863)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">k=4 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:55:24 UTC · 5.52s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (no random init): the paper&#x27;s published scores (Scores/Adjusted Rand Score.csv) match sklearn&#x27;s AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark&#x27;s code/main.py:135 reads linkage=&#x27;complete&#x27;, but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;ARI&quot;: 0.10786270341014927, &quot;NMI&quot;: 0.23160756992653916, &quot;Clusters&quot;: 4, &quot;Largest Cluster&quot;: 64}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">CricketX (UCR)<span class="win">fused train+test · k=12</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">ARI</span> 0.1142→0.1142 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm user-agglomerative --dataset cricketx-cl --model-id bench-clustering-agglomerative-cricketx --param n_clusters=12 --param fit_on=all --param linkage=ward --param metric=euclidean<button class="copy" data-cmd="libraryts train --algorithm user-agglomerative --dataset cricketx-cl --model-id bench-clustering-agglomerative-cricketx --param n_clusters=12 --param fit_on=all --param linkage=ward --param metric=euclidean">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-clustering-agglomerative-cricketx --compact<button class="copy" data-cmd="libraryts run --model-id bench-clustering-agglomerative-cricketx --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/ali-javed/clusteringBenchmark" target="_blank" rel="noopener">A Benchmark Study on Time Series Clustering (Javed, Lee &amp; Rizzo) — official per-dataset scores repository</a><br/>
+          Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546 · Scores/Adjusted Rand Score.csv, row CricketX, column &#x27;Agglomerative (Euclidean)&#x27; (= 0.114169)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">k=12 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:55:32 UTC · 8.21s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (no random init): the paper&#x27;s published scores (Scores/Adjusted Rand Score.csv) match sklearn&#x27;s AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark&#x27;s code/main.py:135 reads linkage=&#x27;complete&#x27;, but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;ARI&quot;: 0.11416897202103442, &quot;NMI&quot;: 0.2775817234273391, &quot;Clusters&quot;: 12, &quot;Largest Cluster&quot;: 133}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">DiatomSizeReduction (UCR)<span class="win">fused train+test · k=4</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">ARI</span> 0.857→0.857 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm user-agglomerative --dataset diatomsizereduction-cl --model-id bench-clustering-agglomerative-diatomsizereduction --param n_clusters=4 --param fit_on=all --param linkage=ward --param metric=euclidean<button class="copy" data-cmd="libraryts train --algorithm user-agglomerative --dataset diatomsizereduction-cl --model-id bench-clustering-agglomerative-diatomsizereduction --param n_clusters=4 --param fit_on=all --param linkage=ward --param metric=euclidean">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-clustering-agglomerative-diatomsizereduction --compact<button class="copy" data-cmd="libraryts run --model-id bench-clustering-agglomerative-diatomsizereduction --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/ali-javed/clusteringBenchmark" target="_blank" rel="noopener">A Benchmark Study on Time Series Clustering (Javed, Lee &amp; Rizzo) — official per-dataset scores repository</a><br/>
+          Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546 · Scores/Adjusted Rand Score.csv, row DiatomSizeReduction, column &#x27;Agglomerative (Euclidean)&#x27; (= 0.857049)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">k=4 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:55:40 UTC · 8.16s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (no random init): the paper&#x27;s published scores (Scores/Adjusted Rand Score.csv) match sklearn&#x27;s AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark&#x27;s code/main.py:135 reads linkage=&#x27;complete&#x27;, but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;ARI&quot;: 0.857049116326134, &quot;NMI&quot;: 0.8784791621036482, &quot;Clusters&quot;: 4, &quot;Largest Cluster&quot;: 127}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Earthquakes (UCR)<span class="win">fused train+test · k=2</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">ARI</span> -0.008273→-0.008273 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm user-agglomerative --dataset earthquakes-cl --model-id bench-clustering-agglomerative-earthquakes --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean<button class="copy" data-cmd="libraryts train --algorithm user-agglomerative --dataset earthquakes-cl --model-id bench-clustering-agglomerative-earthquakes --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-clustering-agglomerative-earthquakes --compact<button class="copy" data-cmd="libraryts run --model-id bench-clustering-agglomerative-earthquakes --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/ali-javed/clusteringBenchmark" target="_blank" rel="noopener">A Benchmark Study on Time Series Clustering (Javed, Lee &amp; Rizzo) — official per-dataset scores repository</a><br/>
+          Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546 · Scores/Adjusted Rand Score.csv, row Earthquakes, column &#x27;Agglomerative (Euclidean)&#x27; (= -0.008273)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">k=2 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:55:46 UTC · 5.75s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (no random init): the paper&#x27;s published scores (Scores/Adjusted Rand Score.csv) match sklearn&#x27;s AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark&#x27;s code/main.py:135 reads linkage=&#x27;complete&#x27;, but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;ARI&quot;: -0.008273111332614097, &quot;NMI&quot;: 0.0006847930454749882, &quot;Clusters&quot;: 2, &quot;Largest Cluster&quot;: 295}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">ECGFiveDays (UCR)<span class="win">fused train+test · k=2</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">ARI</span> 0.02058→0.02058 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm user-agglomerative --dataset ecgfivedays-cl --model-id bench-clustering-agglomerative-ecgfivedays --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean<button class="copy" data-cmd="libraryts train --algorithm user-agglomerative --dataset ecgfivedays-cl --model-id bench-clustering-agglomerative-ecgfivedays --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-clustering-agglomerative-ecgfivedays --compact<button class="copy" data-cmd="libraryts run --model-id bench-clustering-agglomerative-ecgfivedays --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/ali-javed/clusteringBenchmark" target="_blank" rel="noopener">A Benchmark Study on Time Series Clustering (Javed, Lee &amp; Rizzo) — official per-dataset scores repository</a><br/>
+          Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546 · Scores/Adjusted Rand Score.csv, row ECGFiveDays, column &#x27;Agglomerative (Euclidean)&#x27; (= 0.02058)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">k=2 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:55:52 UTC · 6.47s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (no random init): the paper&#x27;s published scores (Scores/Adjusted Rand Score.csv) match sklearn&#x27;s AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark&#x27;s code/main.py:135 reads linkage=&#x27;complete&#x27;, but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;ARI&quot;: 0.020579696717088588, &quot;NMI&quot;: 0.016960946932232667, &quot;Clusters&quot;: 2, &quot;Largest Cluster&quot;: 547}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">FiftyWords (UCR)<span class="win">fused train+test · k=50</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">ARI</span> 0.3115→0.3115 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm user-agglomerative --dataset fiftywords-cl --model-id bench-clustering-agglomerative-fiftywords --param n_clusters=50 --param fit_on=all --param linkage=ward --param metric=euclidean<button class="copy" data-cmd="libraryts train --algorithm user-agglomerative --dataset fiftywords-cl --model-id bench-clustering-agglomerative-fiftywords --param n_clusters=50 --param fit_on=all --param linkage=ward --param metric=euclidean">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-clustering-agglomerative-fiftywords --compact<button class="copy" data-cmd="libraryts run --model-id bench-clustering-agglomerative-fiftywords --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/ali-javed/clusteringBenchmark" target="_blank" rel="noopener">A Benchmark Study on Time Series Clustering (Javed, Lee &amp; Rizzo) — official per-dataset scores repository</a><br/>
+          Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546 · Scores/Adjusted Rand Score.csv, row FiftyWords, column &#x27;Agglomerative (Euclidean)&#x27; (= 0.311531)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">k=50 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:56:00 UTC · 7.58s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (no random init): the paper&#x27;s published scores (Scores/Adjusted Rand Score.csv) match sklearn&#x27;s AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark&#x27;s code/main.py:135 reads linkage=&#x27;complete&#x27;, but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;ARI&quot;: 0.3115306369871424, &quot;NMI&quot;: 0.6638655678071947, &quot;Clusters&quot;: 50, &quot;Largest Cluster&quot;: 37}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Fish (UCR)<span class="win">fused train+test · k=7</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">ARI</span> 0.2435→0.2435 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm user-agglomerative --dataset fish-cl --model-id bench-clustering-agglomerative-fish --param n_clusters=7 --param fit_on=all --param linkage=ward --param metric=euclidean<button class="copy" data-cmd="libraryts train --algorithm user-agglomerative --dataset fish-cl --model-id bench-clustering-agglomerative-fish --param n_clusters=7 --param fit_on=all --param linkage=ward --param metric=euclidean">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-clustering-agglomerative-fish --compact<button class="copy" data-cmd="libraryts run --model-id bench-clustering-agglomerative-fish --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/ali-javed/clusteringBenchmark" target="_blank" rel="noopener">A Benchmark Study on Time Series Clustering (Javed, Lee &amp; Rizzo) — official per-dataset scores repository</a><br/>
+          Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546 · Scores/Adjusted Rand Score.csv, row Fish, column &#x27;Agglomerative (Euclidean)&#x27; (= 0.24347)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">k=7 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:56:04 UTC · 4.58s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (no random init): the paper&#x27;s published scores (Scores/Adjusted Rand Score.csv) match sklearn&#x27;s AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark&#x27;s code/main.py:135 reads linkage=&#x27;complete&#x27;, but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;ARI&quot;: 0.24346952969768823, &quot;NMI&quot;: 0.35444241978857194, &quot;Clusters&quot;: 7, &quot;Largest Cluster&quot;: 77}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Ham (UCR)<span class="win">fused train+test · k=2</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">ARI</span> 0.05927→0.05927 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm user-agglomerative --dataset ham-cl --model-id bench-clustering-agglomerative-ham --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean<button class="copy" data-cmd="libraryts train --algorithm user-agglomerative --dataset ham-cl --model-id bench-clustering-agglomerative-ham --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-clustering-agglomerative-ham --compact<button class="copy" data-cmd="libraryts run --model-id bench-clustering-agglomerative-ham --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/ali-javed/clusteringBenchmark" target="_blank" rel="noopener">A Benchmark Study on Time Series Clustering (Javed, Lee &amp; Rizzo) — official per-dataset scores repository</a><br/>
+          Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546 · Scores/Adjusted Rand Score.csv, row Ham, column &#x27;Agglomerative (Euclidean)&#x27; (= 0.059268)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">k=2 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:56:12 UTC · 7.56s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (no random init): the paper&#x27;s published scores (Scores/Adjusted Rand Score.csv) match sklearn&#x27;s AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark&#x27;s code/main.py:135 reads linkage=&#x27;complete&#x27;, but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;ARI&quot;: 0.05926759772558551, &quot;NMI&quot;: 0.046071840260084214, &quot;Clusters&quot;: 2, &quot;Largest Cluster&quot;: 111}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Herring (UCR)<span class="win">fused train+test · k=2</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">ARI</span> 0.01953→0.01952 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm user-agglomerative --dataset herring-cl --model-id bench-clustering-agglomerative-herring --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean<button class="copy" data-cmd="libraryts train --algorithm user-agglomerative --dataset herring-cl --model-id bench-clustering-agglomerative-herring --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-clustering-agglomerative-herring --compact<button class="copy" data-cmd="libraryts run --model-id bench-clustering-agglomerative-herring --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/ali-javed/clusteringBenchmark" target="_blank" rel="noopener">A Benchmark Study on Time Series Clustering (Javed, Lee &amp; Rizzo) — official per-dataset scores repository</a><br/>
+          Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546 · Scores/Adjusted Rand Score.csv, row Herring, column &#x27;Agglomerative (Euclidean)&#x27; (= 0.019525)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">k=2 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:56:18 UTC · 6.21s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (no random init): the paper&#x27;s published scores (Scores/Adjusted Rand Score.csv) match sklearn&#x27;s AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark&#x27;s code/main.py:135 reads linkage=&#x27;complete&#x27;, but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;ARI&quot;: 0.019524775656751613, &quot;NMI&quot;: 0.011182011983953886, &quot;Clusters&quot;: 2, &quot;Largest Cluster&quot;: 82}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Meat (UCR)<span class="win">fused train+test · k=3</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">ARI</span> 0.4435→0.4435 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm user-agglomerative --dataset meat-cl --model-id bench-clustering-agglomerative-meat --param n_clusters=3 --param fit_on=all --param linkage=ward --param metric=euclidean<button class="copy" data-cmd="libraryts train --algorithm user-agglomerative --dataset meat-cl --model-id bench-clustering-agglomerative-meat --param n_clusters=3 --param fit_on=all --param linkage=ward --param metric=euclidean">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-clustering-agglomerative-meat --compact<button class="copy" data-cmd="libraryts run --model-id bench-clustering-agglomerative-meat --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/ali-javed/clusteringBenchmark" target="_blank" rel="noopener">A Benchmark Study on Time Series Clustering (Javed, Lee &amp; Rizzo) — official per-dataset scores repository</a><br/>
+          Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546 · Scores/Adjusted Rand Score.csv, row Meat, column &#x27;Agglomerative (Euclidean)&#x27; (= 0.443506)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">k=3 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:56:23 UTC · 4.43s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (no random init): the paper&#x27;s published scores (Scores/Adjusted Rand Score.csv) match sklearn&#x27;s AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark&#x27;s code/main.py:135 reads linkage=&#x27;complete&#x27;, but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;ARI&quot;: 0.44350580781414994, &quot;NMI&quot;: 0.649682027811217, &quot;Clusters&quot;: 3, &quot;Largest Cluster&quot;: 80}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">MedicalImages (UCR)<span class="win">fused train+test · k=10</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">ARI</span> 0.04243→0.04243 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm user-agglomerative --dataset medicalimages-cl --model-id bench-clustering-agglomerative-medicalimages --param n_clusters=10 --param fit_on=all --param linkage=ward --param metric=euclidean<button class="copy" data-cmd="libraryts train --algorithm user-agglomerative --dataset medicalimages-cl --model-id bench-clustering-agglomerative-medicalimages --param n_clusters=10 --param fit_on=all --param linkage=ward --param metric=euclidean">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-clustering-agglomerative-medicalimages --compact<button class="copy" data-cmd="libraryts run --model-id bench-clustering-agglomerative-medicalimages --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/ali-javed/clusteringBenchmark" target="_blank" rel="noopener">A Benchmark Study on Time Series Clustering (Javed, Lee &amp; Rizzo) — official per-dataset scores repository</a><br/>
+          Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546 · Scores/Adjusted Rand Score.csv, row MedicalImages, column &#x27;Agglomerative (Euclidean)&#x27; (= 0.04243)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">k=10 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:56:28 UTC · 5.74s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (no random init): the paper&#x27;s published scores (Scores/Adjusted Rand Score.csv) match sklearn&#x27;s AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark&#x27;s code/main.py:135 reads linkage=&#x27;complete&#x27;, but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;ARI&quot;: 0.04243041843769729, &quot;NMI&quot;: 0.2599440470492483, &quot;Clusters&quot;: 10, &quot;Largest Cluster&quot;: 231}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">MiddlePhalanxOutlineCorrect (UCR)<span class="win">fused train+test · k=2</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">ARI</span> -0.00538→-0.00538 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm user-agglomerative --dataset middlephalanxoutlinecorrect-cl --model-id bench-clustering-agglomerative-middlephalanxoutlinecorrect --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean<button class="copy" data-cmd="libraryts train --algorithm user-agglomerative --dataset middlephalanxoutlinecorrect-cl --model-id bench-clustering-agglomerative-middlephalanxoutlinecorrect --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-clustering-agglomerative-middlephalanxoutlinecorrect --compact<button class="copy" data-cmd="libraryts run --model-id bench-clustering-agglomerative-middlephalanxoutlinecorrect --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/ali-javed/clusteringBenchmark" target="_blank" rel="noopener">A Benchmark Study on Time Series Clustering (Javed, Lee &amp; Rizzo) — official per-dataset scores repository</a><br/>
+          Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546 · Scores/Adjusted Rand Score.csv, row MiddlePhalanxOutlineCorrect, column &#x27;Agglomerative (Euclidean)&#x27; (= -0.00538)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">k=2 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:56:35 UTC · 6.3s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (no random init): the paper&#x27;s published scores (Scores/Adjusted Rand Score.csv) match sklearn&#x27;s AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark&#x27;s code/main.py:135 reads linkage=&#x27;complete&#x27;, but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;ARI&quot;: -0.005380139338141913, &quot;NMI&quot;: 0.007869376001794832, &quot;Clusters&quot;: 2, &quot;Largest Cluster&quot;: 574}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">OliveOil (UCR)<span class="win">fused train+test · k=4</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">ARI</span> 0.6265→0.6265 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm user-agglomerative --dataset oliveoil-cl --model-id bench-clustering-agglomerative-oliveoil --param n_clusters=4 --param fit_on=all --param linkage=ward --param metric=euclidean<button class="copy" data-cmd="libraryts train --algorithm user-agglomerative --dataset oliveoil-cl --model-id bench-clustering-agglomerative-oliveoil --param n_clusters=4 --param fit_on=all --param linkage=ward --param metric=euclidean">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-clustering-agglomerative-oliveoil --compact<button class="copy" data-cmd="libraryts run --model-id bench-clustering-agglomerative-oliveoil --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/ali-javed/clusteringBenchmark" target="_blank" rel="noopener">A Benchmark Study on Time Series Clustering (Javed, Lee &amp; Rizzo) — official per-dataset scores repository</a><br/>
+          Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546 · Scores/Adjusted Rand Score.csv, row OliveOil, column &#x27;Agglomerative (Euclidean)&#x27; (= 0.626487)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">k=4 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:56:40 UTC · 5.08s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (no random init): the paper&#x27;s published scores (Scores/Adjusted Rand Score.csv) match sklearn&#x27;s AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark&#x27;s code/main.py:135 reads linkage=&#x27;complete&#x27;, but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;ARI&quot;: 0.6264867121940707, &quot;NMI&quot;: 0.6657965662720392, &quot;Clusters&quot;: 4, &quot;Largest Cluster&quot;: 25}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">OSULeaf (UCR)<span class="win">fused train+test · k=6</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">ARI</span> 0.18→0.18 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm user-agglomerative --dataset osuleaf-cl --model-id bench-clustering-agglomerative-osuleaf --param n_clusters=6 --param fit_on=all --param linkage=ward --param metric=euclidean<button class="copy" data-cmd="libraryts train --algorithm user-agglomerative --dataset osuleaf-cl --model-id bench-clustering-agglomerative-osuleaf --param n_clusters=6 --param fit_on=all --param linkage=ward --param metric=euclidean">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-clustering-agglomerative-osuleaf --compact<button class="copy" data-cmd="libraryts run --model-id bench-clustering-agglomerative-osuleaf --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/ali-javed/clusteringBenchmark" target="_blank" rel="noopener">A Benchmark Study on Time Series Clustering (Javed, Lee &amp; Rizzo) — official per-dataset scores repository</a><br/>
+          Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546 · Scores/Adjusted Rand Score.csv, row OSULeaf, column &#x27;Agglomerative (Euclidean)&#x27; (= 0.179955)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">k=6 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:56:47 UTC · 6.78s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (no random init): the paper&#x27;s published scores (Scores/Adjusted Rand Score.csv) match sklearn&#x27;s AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark&#x27;s code/main.py:135 reads linkage=&#x27;complete&#x27;, but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;ARI&quot;: 0.1799551311014753, &quot;NMI&quot;: 0.25997138772248546, &quot;Clusters&quot;: 6, &quot;Largest Cluster&quot;: 108}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">ProximalPhalanxOutlineCorrect (UCR)<span class="win">fused train+test · k=2</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">ARI</span> 0.04831→0.04831 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm user-agglomerative --dataset proximalphalanxoutlinecorrect-cl --model-id bench-clustering-agglomerative-proximalphalanxoutlinecorrect --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean<button class="copy" data-cmd="libraryts train --algorithm user-agglomerative --dataset proximalphalanxoutlinecorrect-cl --model-id bench-clustering-agglomerative-proximalphalanxoutlinecorrect --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-clustering-agglomerative-proximalphalanxoutlinecorrect --compact<button class="copy" data-cmd="libraryts run --model-id bench-clustering-agglomerative-proximalphalanxoutlinecorrect --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/ali-javed/clusteringBenchmark" target="_blank" rel="noopener">A Benchmark Study on Time Series Clustering (Javed, Lee &amp; Rizzo) — official per-dataset scores repository</a><br/>
+          Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546 · Scores/Adjusted Rand Score.csv, row ProximalPhalanxOutlineCorrect, column &#x27;Agglomerative (Euclidean)&#x27; (= 0.048306)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">k=2 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:56:52 UTC · 5.89s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (no random init): the paper&#x27;s published scores (Scores/Adjusted Rand Score.csv) match sklearn&#x27;s AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark&#x27;s code/main.py:135 reads linkage=&#x27;complete&#x27;, but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;ARI&quot;: 0.048306276835356904, &quot;NMI&quot;: 0.05618385845494835, &quot;Clusters&quot;: 2, &quot;Largest Cluster&quot;: 478}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">ShapeletSim (UCR)<span class="win">fused train+test · k=2</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">ARI</span> -0.005→-0.005 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm user-agglomerative --dataset shapeletsim-cl --model-id bench-clustering-agglomerative-shapeletsim --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean<button class="copy" data-cmd="libraryts train --algorithm user-agglomerative --dataset shapeletsim-cl --model-id bench-clustering-agglomerative-shapeletsim --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-clustering-agglomerative-shapeletsim --compact<button class="copy" data-cmd="libraryts run --model-id bench-clustering-agglomerative-shapeletsim --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/ali-javed/clusteringBenchmark" target="_blank" rel="noopener">A Benchmark Study on Time Series Clustering (Javed, Lee &amp; Rizzo) — official per-dataset scores repository</a><br/>
+          Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546 · Scores/Adjusted Rand Score.csv, row ShapeletSim, column &#x27;Agglomerative (Euclidean)&#x27; (= -0.005)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">k=2 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:56:57 UTC · 4.55s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (no random init): the paper&#x27;s published scores (Scores/Adjusted Rand Score.csv) match sklearn&#x27;s AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark&#x27;s code/main.py:135 reads linkage=&#x27;complete&#x27;, but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;ARI&quot;: -0.004999747487500632, &quot;NMI&quot;: 0.0, &quot;Clusters&quot;: 2, &quot;Largest Cluster&quot;: 110}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">SwedishLeaf (UCR)<span class="win">fused train+test · k=15</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">ARI</span> 0.3003→0.3003 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm user-agglomerative --dataset swedishleaf-cl --model-id bench-clustering-agglomerative-swedishleaf --param n_clusters=15 --param fit_on=all --param linkage=ward --param metric=euclidean<button class="copy" data-cmd="libraryts train --algorithm user-agglomerative --dataset swedishleaf-cl --model-id bench-clustering-agglomerative-swedishleaf --param n_clusters=15 --param fit_on=all --param linkage=ward --param metric=euclidean">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-clustering-agglomerative-swedishleaf --compact<button class="copy" data-cmd="libraryts run --model-id bench-clustering-agglomerative-swedishleaf --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/ali-javed/clusteringBenchmark" target="_blank" rel="noopener">A Benchmark Study on Time Series Clustering (Javed, Lee &amp; Rizzo) — official per-dataset scores repository</a><br/>
+          Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546 · Scores/Adjusted Rand Score.csv, row SwedishLeaf, column &#x27;Agglomerative (Euclidean)&#x27; (= 0.300316)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">k=15 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:57:03 UTC · 6.01s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (no random init): the paper&#x27;s published scores (Scores/Adjusted Rand Score.csv) match sklearn&#x27;s AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark&#x27;s code/main.py:135 reads linkage=&#x27;complete&#x27;, but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;ARI&quot;: 0.30031557502563216, &quot;NMI&quot;: 0.5696573934762496, &quot;Clusters&quot;: 15, &quot;Largest Cluster&quot;: 288}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Symbols (UCR)<span class="win">fused train+test · k=6</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">ARI</span> 0.6794→0.6794 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm user-agglomerative --dataset symbols-cl --model-id bench-clustering-agglomerative-symbols --param n_clusters=6 --param fit_on=all --param linkage=ward --param metric=euclidean<button class="copy" data-cmd="libraryts train --algorithm user-agglomerative --dataset symbols-cl --model-id bench-clustering-agglomerative-symbols --param n_clusters=6 --param fit_on=all --param linkage=ward --param metric=euclidean">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-clustering-agglomerative-symbols --compact<button class="copy" data-cmd="libraryts run --model-id bench-clustering-agglomerative-symbols --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/ali-javed/clusteringBenchmark" target="_blank" rel="noopener">A Benchmark Study on Time Series Clustering (Javed, Lee &amp; Rizzo) — official per-dataset scores repository</a><br/>
+          Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546 · Scores/Adjusted Rand Score.csv, row Symbols, column &#x27;Agglomerative (Euclidean)&#x27; (= 0.679369)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">k=6 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:57:09 UTC · 6.29s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (no random init): the paper&#x27;s published scores (Scores/Adjusted Rand Score.csv) match sklearn&#x27;s AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark&#x27;s code/main.py:135 reads linkage=&#x27;complete&#x27;, but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;ARI&quot;: 0.6793689943504646, &quot;NMI&quot;: 0.7987658308387947, &quot;Clusters&quot;: 6, &quot;Largest Cluster&quot;: 344}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">ToeSegmentation1 (UCR)<span class="win">fused train+test · k=2</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">ARI</span> 0.01655→0.01655 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm user-agglomerative --dataset toesegmentation1-cl --model-id bench-clustering-agglomerative-toesegmentation1 --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean<button class="copy" data-cmd="libraryts train --algorithm user-agglomerative --dataset toesegmentation1-cl --model-id bench-clustering-agglomerative-toesegmentation1 --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-clustering-agglomerative-toesegmentation1 --compact<button class="copy" data-cmd="libraryts run --model-id bench-clustering-agglomerative-toesegmentation1 --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/ali-javed/clusteringBenchmark" target="_blank" rel="noopener">A Benchmark Study on Time Series Clustering (Javed, Lee &amp; Rizzo) — official per-dataset scores repository</a><br/>
+          Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546 · Scores/Adjusted Rand Score.csv, row ToeSegmentation1, column &#x27;Agglomerative (Euclidean)&#x27; (= 0.016545)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">k=2 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:57:14 UTC · 4.55s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (no random init): the paper&#x27;s published scores (Scores/Adjusted Rand Score.csv) match sklearn&#x27;s AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark&#x27;s code/main.py:135 reads linkage=&#x27;complete&#x27;, but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;ARI&quot;: 0.01654500011449694, &quot;NMI&quot;: 0.01890971608393632, &quot;Clusters&quot;: 2, &quot;Largest Cluster&quot;: 169}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Computers (UCR)<span class="win">fused train+test · k=2</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">ARI</span> -0.001719→-0.001719 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm user-agglomerative --dataset computers-cl --model-id bench-clustering-agglomerative-computers --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean<button class="copy" data-cmd="libraryts train --algorithm user-agglomerative --dataset computers-cl --model-id bench-clustering-agglomerative-computers --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-clustering-agglomerative-computers --compact<button class="copy" data-cmd="libraryts run --model-id bench-clustering-agglomerative-computers --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/ali-javed/clusteringBenchmark" target="_blank" rel="noopener">A Benchmark Study on Time Series Clustering (Javed, Lee &amp; Rizzo) — official per-dataset scores repository</a><br/>
+          Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546 · Scores/Adjusted Rand Score.csv, row Computers, column &#x27;Agglomerative (Euclidean)&#x27; (= -0.001719)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">k=2 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:57:21 UTC · 6.79s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (no random init): the paper&#x27;s published scores (Scores/Adjusted Rand Score.csv) match sklearn&#x27;s AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark&#x27;s code/main.py:135 reads linkage=&#x27;complete&#x27;, but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;ARI&quot;: -0.0017185619338981426, &quot;NMI&quot;: 0.00018886874554149927, &quot;Clusters&quot;: 2, &quot;Largest Cluster&quot;: 282}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Strawberry (UCR)<span class="win">fused train+test · k=2</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">ARI</span> -0.04806→-0.04806 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm user-agglomerative --dataset strawberry-cl --model-id bench-clustering-agglomerative-strawberry --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean<button class="copy" data-cmd="libraryts train --algorithm user-agglomerative --dataset strawberry-cl --model-id bench-clustering-agglomerative-strawberry --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-clustering-agglomerative-strawberry --compact<button class="copy" data-cmd="libraryts run --model-id bench-clustering-agglomerative-strawberry --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/ali-javed/clusteringBenchmark" target="_blank" rel="noopener">A Benchmark Study on Time Series Clustering (Javed, Lee &amp; Rizzo) — official per-dataset scores repository</a><br/>
+          Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546 · Scores/Adjusted Rand Score.csv, row Strawberry, column &#x27;Agglomerative (Euclidean)&#x27; (= -0.048055)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">k=2 (= number of classes); full dataset clustered (train+test fused); Javed et al. benchmark: sklearn AgglomerativeClustering(n_clusters=k) — default ward linkage, deterministic, single run</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±0.02 absolute</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:57:27 UTC · 6.76s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Deterministic algorithm (no random init): the paper&#x27;s published scores (Scores/Adjusted Rand Score.csv) match sklearn&#x27;s AgglomerativeClustering(n_clusters=k) with its default ward linkage exactly — 40/41 datasets reproduce to machine precision on the raw fused train+test vectors, and libraryts runs the same sklearn implementation through the AgglomerativePanelClusterer wrapper (flattened series, fit_on=all). Note: the benchmark&#x27;s code/main.py:135 reads linkage=&#x27;complete&#x27;, but that variant does NOT reproduce the published column (e.g. Coffee 0.0158 vs 0.6688); the CSV was evidently generated with sklearn defaults. Tolerance is tightened to 0.02 absolute (vs 0.15 for the stochastic k-Means/k-Medoids claims); residual deviation can only stem from distance tie-breaking across sklearn versions.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;ARI&quot;: -0.04805523113839849, &quot;NMI&quot;: 0.1005616571325655, &quot;Clusters&quot;: 2, &quot;Largest Cluster&quot;: 880}</div></div>
+    </div>
+  </div>
+</details></div>
+</details>
 <details class="claim-group" data-name="k-means (dtw) timeserieskmeanstslearn">
   <summary>
     <div class="alg">k-Means (DTW)<span class="lib">Machine Learning with Applications 1 (2020) 100001 / arXiv:2004.09546</span></div>
@@ -24642,7 +26498,7 @@
 </section></div>
 
   <footer>
-    Built by LibraryTS · state generated 2026-10-15 12:32:50 UTC · groundtruth curated under
+    Built by LibraryTS · state generated 2026-10-15 13:15:16 UTC · groundtruth curated under
     <code>playground/benchmark/groundtruth/</code> ·
     re-run with <code>python playground/benchmark/reproduce.py</code> ·
     refresh with <code>python playground/benchmark/build_state.py</code>
