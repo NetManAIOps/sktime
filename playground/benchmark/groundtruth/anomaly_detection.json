@@ -670,6 +670,638 @@
       "notes": "Same protocol as the Yahoo entries. Genesis has only 6 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
       "train_command": "libraryts train --algorithm PyODOCSVMDetector --dataset tsb-genesis --model-id bench-detection-ocsvm-genesis-auc --param contamination=0.1 --param nu=0.5",
       "run_command": "libraryts run --model-id bench-detection-ocsvm-genesis-auc --compact"
+    },
+    {
+      "id": "detection-iforest1-yahoo-auc",
+      "algorithm": "PyODIForestDetector",
+      "algorithm_name": "IForest1",
+      "dataset": "tsb-yahoo",
+      "dataset_name": "YAHOO (TSB-UAD, 367 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.81
+      },
+      "settings": "Unsupervised fit per series; detector applied point-wise (TSB-UAD IForest1 uses a length-1 sliding window); point-wise AUC-ROC averaged over all 367 YAHOO series",
+      "source": {
+        "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
+        "venue": "PVLDB 15(8):1697-1711, 2022",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "README 'Overall Results' table, row YAHOO, column IForest1 (AUC 0.81, F 0.18)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "TSB-UAD's IForest1 is point-wise IForest (sliding window of length 1) — the protocol libraryts' PyODIForestDetector actually implements (the pyod model sees raw 1-D points). Same detector class and parameters as the windowed IForest claims in this file; groundtruth comes from the IForest1 column, so these rows are the apples-to-apples counterparts of those claims.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm PyODIForestDetector --dataset tsb-yahoo --model-id bench-detection-iforest1-yahoo-auc --param contamination=0.1 --param n_estimators=100",
+      "run_command": "libraryts run --model-id bench-detection-iforest1-yahoo-auc --compact"
+    },
+    {
+      "id": "detection-iforest1-mitdb-auc",
+      "algorithm": "PyODIForestDetector",
+      "algorithm_name": "IForest1",
+      "dataset": "tsb-mitdb",
+      "dataset_name": "MITDB (TSB-UAD, 32 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.61
+      },
+      "settings": "Unsupervised fit per series; detector applied point-wise (TSB-UAD IForest1 uses a length-1 sliding window); point-wise AUC-ROC averaged over all 32 MITDB series",
+      "source": {
+        "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
+        "venue": "PVLDB 15(8):1697-1711, 2022",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "README 'Overall Results' table, row MITDB, column IForest1 (AUC 0.61, F 0.06)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "TSB-UAD's IForest1 is point-wise IForest (sliding window of length 1) — the protocol libraryts' PyODIForestDetector actually implements (the pyod model sees raw 1-D points). Same detector class and parameters as the windowed IForest claims in this file; groundtruth comes from the IForest1 column, so these rows are the apples-to-apples counterparts of those claims.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm PyODIForestDetector --dataset tsb-mitdb --model-id bench-detection-iforest1-mitdb-auc --param contamination=0.1 --param n_estimators=100",
+      "run_command": "libraryts run --model-id bench-detection-iforest1-mitdb-auc --compact"
+    },
+    {
+      "id": "detection-iforest1-nab-auc",
+      "algorithm": "PyODIForestDetector",
+      "algorithm_name": "IForest1",
+      "dataset": "tsb-nab",
+      "dataset_name": "NAB (TSB-UAD, 58 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.56
+      },
+      "settings": "Unsupervised fit per series; detector applied point-wise (TSB-UAD IForest1 uses a length-1 sliding window); point-wise AUC-ROC averaged over all 58 NAB series",
+      "source": {
+        "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
+        "venue": "PVLDB 15(8):1697-1711, 2022",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "README 'Overall Results' table, row NAB, column IForest1 (AUC 0.56, F 0.1)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "TSB-UAD's IForest1 is point-wise IForest (sliding window of length 1) — the protocol libraryts' PyODIForestDetector actually implements (the pyod model sees raw 1-D points). Same detector class and parameters as the windowed IForest claims in this file; groundtruth comes from the IForest1 column, so these rows are the apples-to-apples counterparts of those claims.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm PyODIForestDetector --dataset tsb-nab --model-id bench-detection-iforest1-nab-auc --param contamination=0.1 --param n_estimators=100",
+      "run_command": "libraryts run --model-id bench-detection-iforest1-nab-auc --compact"
+    },
+    {
+      "id": "detection-iforest1-dodgers-auc",
+      "algorithm": "PyODIForestDetector",
+      "algorithm_name": "IForest1",
+      "dataset": "tsb-dodgers",
+      "dataset_name": "Dodgers (TSB-UAD, 1 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.64
+      },
+      "settings": "Unsupervised fit per series; detector applied point-wise (TSB-UAD IForest1 uses a length-1 sliding window); point-wise AUC-ROC averaged over all 1 Dodgers series",
+      "source": {
+        "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
+        "venue": "PVLDB 15(8):1697-1711, 2022",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "README 'Overall Results' table, row Dodgers, column IForest1 (AUC 0.64, F 0.02)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "TSB-UAD's IForest1 is point-wise IForest (sliding window of length 1) — the protocol libraryts' PyODIForestDetector actually implements (the pyod model sees raw 1-D points). Same detector class and parameters as the windowed IForest claims in this file; groundtruth comes from the IForest1 column, so these rows are the apples-to-apples counterparts of those claims. Dodgers has only 1 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm PyODIForestDetector --dataset tsb-dodgers --model-id bench-detection-iforest1-dodgers-auc --param contamination=0.1 --param n_estimators=100",
+      "run_command": "libraryts run --model-id bench-detection-iforest1-dodgers-auc --compact"
+    },
+    {
+      "id": "detection-iforest1-occupancy-auc",
+      "algorithm": "PyODIForestDetector",
+      "algorithm_name": "IForest1",
+      "dataset": "tsb-occupancy",
+      "dataset_name": "Occupancy (TSB-UAD, 10 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.78
+      },
+      "settings": "Unsupervised fit per series; detector applied point-wise (TSB-UAD IForest1 uses a length-1 sliding window); point-wise AUC-ROC averaged over all 10 Occupancy series",
+      "source": {
+        "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
+        "venue": "PVLDB 15(8):1697-1711, 2022",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "README 'Overall Results' table, row Occupancy, column IForest1 (AUC 0.78, F 0.07)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "TSB-UAD's IForest1 is point-wise IForest (sliding window of length 1) — the protocol libraryts' PyODIForestDetector actually implements (the pyod model sees raw 1-D points). Same detector class and parameters as the windowed IForest claims in this file; groundtruth comes from the IForest1 column, so these rows are the apples-to-apples counterparts of those claims. Occupancy has only 10 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm PyODIForestDetector --dataset tsb-occupancy --model-id bench-detection-iforest1-occupancy-auc --param contamination=0.1 --param n_estimators=100",
+      "run_command": "libraryts run --model-id bench-detection-iforest1-occupancy-auc --compact"
+    },
+    {
+      "id": "detection-iforest1-mgab-auc",
+      "algorithm": "PyODIForestDetector",
+      "algorithm_name": "IForest1",
+      "dataset": "tsb-mgab",
+      "dataset_name": "MGAB (TSB-UAD, 10 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.58
+      },
+      "settings": "Unsupervised fit per series; detector applied point-wise (TSB-UAD IForest1 uses a length-1 sliding window); point-wise AUC-ROC averaged over all 10 MGAB series",
+      "source": {
+        "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
+        "venue": "PVLDB 15(8):1697-1711, 2022",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "README 'Overall Results' table, row MGAB, column IForest1 (AUC 0.58, F 0.0)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "TSB-UAD's IForest1 is point-wise IForest (sliding window of length 1) — the protocol libraryts' PyODIForestDetector actually implements (the pyod model sees raw 1-D points). Same detector class and parameters as the windowed IForest claims in this file; groundtruth comes from the IForest1 column, so these rows are the apples-to-apples counterparts of those claims.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm PyODIForestDetector --dataset tsb-mgab --model-id bench-detection-iforest1-mgab-auc --param contamination=0.1 --param n_estimators=100",
+      "run_command": "libraryts run --model-id bench-detection-iforest1-mgab-auc --compact"
+    },
+    {
+      "id": "detection-iforest1-genesis-auc",
+      "algorithm": "PyODIForestDetector",
+      "algorithm_name": "IForest1",
+      "dataset": "tsb-genesis",
+      "dataset_name": "Genesis (TSB-UAD, 6 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.66
+      },
+      "settings": "Unsupervised fit per series; detector applied point-wise (TSB-UAD IForest1 uses a length-1 sliding window); point-wise AUC-ROC averaged over all 6 Genesis series",
+      "source": {
+        "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
+        "venue": "PVLDB 15(8):1697-1711, 2022",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "README 'Overall Results' table, row Genesis, column IForest1 (AUC 0.66, F 0.19)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "TSB-UAD's IForest1 is point-wise IForest (sliding window of length 1) — the protocol libraryts' PyODIForestDetector actually implements (the pyod model sees raw 1-D points). Same detector class and parameters as the windowed IForest claims in this file; groundtruth comes from the IForest1 column, so these rows are the apples-to-apples counterparts of those claims. Genesis has only 6 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm PyODIForestDetector --dataset tsb-genesis --model-id bench-detection-iforest1-genesis-auc --param contamination=0.1 --param n_estimators=100",
+      "run_command": "libraryts run --model-id bench-detection-iforest1-genesis-auc --compact"
+    },
+    {
+      "id": "detection-knn-yahoo-auc",
+      "algorithm": "PyODKNNDetector",
+      "algorithm_name": "KNN",
+      "dataset": "tsb-yahoo",
+      "dataset_name": "YAHOO (TSB-UAD, 367 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.7975
+      },
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 367 YAHOO series",
+      "source": {
+        "title": "libraryts baseline run (no public per-dataset values)",
+        "venue": "libraryts benchmark, this repository",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "Measured 2026-10-15 via `libraryts train/run --algorithm PyODKNNDetector --dataset tsb-yahoo` (model probe-knn-yahoo); TSB-UAD README 'Overall Results' table has no KNN column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.05
+      },
+      "notes": "TSB-UAD (PVLDB 2022) does not evaluate KNN, and TSB-AD (NeurIPS 2024) only publishes Sub-KNN averages on its own re-curated datasets, so no public per-dataset AUC-ROC exists for these series; the groundtruth is a libraryts baseline measured with this exact pipeline on 2026-10-15. Tolerance 0.05 is a re-run sanity band (KNN is deterministic), not a paper comparison. MITDB is excluded for KNN: ~97 s per 650k-point series x 32 series ~ 52 min, over the 30-min per-command budget (the precedent that dropped OCSVM on MITDB/MGAB).",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm PyODKNNDetector --dataset tsb-yahoo --model-id bench-detection-knn-yahoo-auc --param contamination=0.1 --param n_neighbors=5",
+      "run_command": "libraryts run --model-id bench-detection-knn-yahoo-auc --compact"
+    },
+    {
+      "id": "detection-knn-nab-auc",
+      "algorithm": "PyODKNNDetector",
+      "algorithm_name": "KNN",
+      "dataset": "tsb-nab",
+      "dataset_name": "NAB (TSB-UAD, 58 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.5351
+      },
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 58 NAB series",
+      "source": {
+        "title": "libraryts baseline run (no public per-dataset values)",
+        "venue": "libraryts benchmark, this repository",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "Measured 2026-10-15 via `libraryts train/run --algorithm PyODKNNDetector --dataset tsb-nab` (model probe-knn-nab); TSB-UAD README 'Overall Results' table has no KNN column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.05
+      },
+      "notes": "TSB-UAD (PVLDB 2022) does not evaluate KNN, and TSB-AD (NeurIPS 2024) only publishes Sub-KNN averages on its own re-curated datasets, so no public per-dataset AUC-ROC exists for these series; the groundtruth is a libraryts baseline measured with this exact pipeline on 2026-10-15. Tolerance 0.05 is a re-run sanity band (KNN is deterministic), not a paper comparison. MITDB is excluded for KNN: ~97 s per 650k-point series x 32 series ~ 52 min, over the 30-min per-command budget (the precedent that dropped OCSVM on MITDB/MGAB).",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm PyODKNNDetector --dataset tsb-nab --model-id bench-detection-knn-nab-auc --param contamination=0.1 --param n_neighbors=5",
+      "run_command": "libraryts run --model-id bench-detection-knn-nab-auc --compact"
+    },
+    {
+      "id": "detection-knn-dodgers-auc",
+      "algorithm": "PyODKNNDetector",
+      "algorithm_name": "KNN",
+      "dataset": "tsb-dodgers",
+      "dataset_name": "Dodgers (TSB-UAD, 1 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.4998
+      },
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 1 Dodgers series",
+      "source": {
+        "title": "libraryts baseline run (no public per-dataset values)",
+        "venue": "libraryts benchmark, this repository",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "Measured 2026-10-15 via `libraryts train/run --algorithm PyODKNNDetector --dataset tsb-dodgers` (model probe-knn-dodgers); TSB-UAD README 'Overall Results' table has no KNN column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.05
+      },
+      "notes": "TSB-UAD (PVLDB 2022) does not evaluate KNN, and TSB-AD (NeurIPS 2024) only publishes Sub-KNN averages on its own re-curated datasets, so no public per-dataset AUC-ROC exists for these series; the groundtruth is a libraryts baseline measured with this exact pipeline on 2026-10-15. Tolerance 0.05 is a re-run sanity band (KNN is deterministic), not a paper comparison. MITDB is excluded for KNN: ~97 s per 650k-point series x 32 series ~ 52 min, over the 30-min per-command budget (the precedent that dropped OCSVM on MITDB/MGAB). Dodgers has only 1 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm PyODKNNDetector --dataset tsb-dodgers --model-id bench-detection-knn-dodgers-auc --param contamination=0.1 --param n_neighbors=5",
+      "run_command": "libraryts run --model-id bench-detection-knn-dodgers-auc --compact"
+    },
+    {
+      "id": "detection-knn-occupancy-auc",
+      "algorithm": "PyODKNNDetector",
+      "algorithm_name": "KNN",
+      "dataset": "tsb-occupancy",
+      "dataset_name": "Occupancy (TSB-UAD, 10 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.7272
+      },
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 10 Occupancy series",
+      "source": {
+        "title": "libraryts baseline run (no public per-dataset values)",
+        "venue": "libraryts benchmark, this repository",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "Measured 2026-10-15 via `libraryts train/run --algorithm PyODKNNDetector --dataset tsb-occupancy` (model probe-knn-occupancy); TSB-UAD README 'Overall Results' table has no KNN column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.05
+      },
+      "notes": "TSB-UAD (PVLDB 2022) does not evaluate KNN, and TSB-AD (NeurIPS 2024) only publishes Sub-KNN averages on its own re-curated datasets, so no public per-dataset AUC-ROC exists for these series; the groundtruth is a libraryts baseline measured with this exact pipeline on 2026-10-15. Tolerance 0.05 is a re-run sanity band (KNN is deterministic), not a paper comparison. MITDB is excluded for KNN: ~97 s per 650k-point series x 32 series ~ 52 min, over the 30-min per-command budget (the precedent that dropped OCSVM on MITDB/MGAB). Occupancy has only 10 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm PyODKNNDetector --dataset tsb-occupancy --model-id bench-detection-knn-occupancy-auc --param contamination=0.1 --param n_neighbors=5",
+      "run_command": "libraryts run --model-id bench-detection-knn-occupancy-auc --compact"
+    },
+    {
+      "id": "detection-knn-mgab-auc",
+      "algorithm": "PyODKNNDetector",
+      "algorithm_name": "KNN",
+      "dataset": "tsb-mgab",
+      "dataset_name": "MGAB (TSB-UAD, 10 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.5462
+      },
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 10 MGAB series",
+      "source": {
+        "title": "libraryts baseline run (no public per-dataset values)",
+        "venue": "libraryts benchmark, this repository",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "Measured 2026-10-15 via `libraryts train/run --algorithm PyODKNNDetector --dataset tsb-mgab` (model probe-knn-mgab); TSB-UAD README 'Overall Results' table has no KNN column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.05
+      },
+      "notes": "TSB-UAD (PVLDB 2022) does not evaluate KNN, and TSB-AD (NeurIPS 2024) only publishes Sub-KNN averages on its own re-curated datasets, so no public per-dataset AUC-ROC exists for these series; the groundtruth is a libraryts baseline measured with this exact pipeline on 2026-10-15. Tolerance 0.05 is a re-run sanity band (KNN is deterministic), not a paper comparison. MITDB is excluded for KNN: ~97 s per 650k-point series x 32 series ~ 52 min, over the 30-min per-command budget (the precedent that dropped OCSVM on MITDB/MGAB).",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm PyODKNNDetector --dataset tsb-mgab --model-id bench-detection-knn-mgab-auc --param contamination=0.1 --param n_neighbors=5",
+      "run_command": "libraryts run --model-id bench-detection-knn-mgab-auc --compact"
+    },
+    {
+      "id": "detection-knn-genesis-auc",
+      "algorithm": "PyODKNNDetector",
+      "algorithm_name": "KNN",
+      "dataset": "tsb-genesis",
+      "dataset_name": "Genesis (TSB-UAD, 6 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.5737
+      },
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 6 Genesis series",
+      "source": {
+        "title": "libraryts baseline run (no public per-dataset values)",
+        "venue": "libraryts benchmark, this repository",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "Measured 2026-10-15 via `libraryts train/run --algorithm PyODKNNDetector --dataset tsb-genesis` (model probe-knn-genesis); TSB-UAD README 'Overall Results' table has no KNN column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.05
+      },
+      "notes": "TSB-UAD (PVLDB 2022) does not evaluate KNN, and TSB-AD (NeurIPS 2024) only publishes Sub-KNN averages on its own re-curated datasets, so no public per-dataset AUC-ROC exists for these series; the groundtruth is a libraryts baseline measured with this exact pipeline on 2026-10-15. Tolerance 0.05 is a re-run sanity band (KNN is deterministic), not a paper comparison. MITDB is excluded for KNN: ~97 s per 650k-point series x 32 series ~ 52 min, over the 30-min per-command budget (the precedent that dropped OCSVM on MITDB/MGAB). Genesis has only 6 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm PyODKNNDetector --dataset tsb-genesis --model-id bench-detection-knn-genesis-auc --param contamination=0.1 --param n_neighbors=5",
+      "run_command": "libraryts run --model-id bench-detection-knn-genesis-auc --compact"
+    },
+    {
+      "id": "detection-cblof-yahoo-auc",
+      "algorithm": "PyODCBLOFDetector",
+      "algorithm_name": "CBLOF",
+      "dataset": "tsb-yahoo",
+      "dataset_name": "YAHOO (TSB-UAD, 367 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.7771
+      },
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 367 YAHOO series",
+      "source": {
+        "title": "libraryts baseline run (no public per-dataset values)",
+        "venue": "libraryts benchmark, this repository",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "Measured 2026-10-15 via `libraryts train/run --algorithm PyODCBLOFDetector --dataset tsb-yahoo` (model probe-cblof10-yahoo); TSB-UAD README 'Overall Results' table has no CBLOF column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.1
+      },
+      "notes": "TSB-UAD (PVLDB 2022) does not evaluate CBLOF and TSB-AD (NeurIPS 2024) publishes no results for it, so no public per-dataset AUC-ROC exists for these series; the groundtruth is a libraryts baseline measured with this exact pipeline on 2026-10-15. n_clusters=10 instead of the catalog default 8: with 8, pyod CBLOF fails its cluster-separation check on 14/367 YAHOO series. NAB and Genesis are excluded: they contain constant/binary series (NAB_data_art0_1/art0_3, genesis-anomalies.test.csv@17) on which CBLOF cannot form valid clusters at any n_clusters, and libraryts aborts multi-series training on the first failing series. Dodgers is excluded as well: its single series makes the unseeded k-means baseline swing 0.36-0.41 across repeats. k-means is unseeded; three repeat runs of this pipeline spread <=0.012 on the four retained datasets, so tolerance 0.10 is comfortable.",
+      "spec_params": {
+        "n_clusters": 10
+      },
+      "train_command": "libraryts train --algorithm PyODCBLOFDetector --dataset tsb-yahoo --model-id bench-detection-cblof-yahoo-auc --param n_clusters=10 --param contamination=0.1",
+      "run_command": "libraryts run --model-id bench-detection-cblof-yahoo-auc --compact"
+    },
+    {
+      "id": "detection-cblof-mitdb-auc",
+      "algorithm": "PyODCBLOFDetector",
+      "algorithm_name": "CBLOF",
+      "dataset": "tsb-mitdb",
+      "dataset_name": "MITDB (TSB-UAD, 32 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.5734
+      },
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 32 MITDB series",
+      "source": {
+        "title": "libraryts baseline run (no public per-dataset values)",
+        "venue": "libraryts benchmark, this repository",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "Measured 2026-10-15 via `libraryts train/run --algorithm PyODCBLOFDetector --dataset tsb-mitdb` (model probe-cblof10-mitdb); TSB-UAD README 'Overall Results' table has no CBLOF column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.1
+      },
+      "notes": "TSB-UAD (PVLDB 2022) does not evaluate CBLOF and TSB-AD (NeurIPS 2024) publishes no results for it, so no public per-dataset AUC-ROC exists for these series; the groundtruth is a libraryts baseline measured with this exact pipeline on 2026-10-15. n_clusters=10 instead of the catalog default 8: with 8, pyod CBLOF fails its cluster-separation check on 14/367 YAHOO series. NAB and Genesis are excluded: they contain constant/binary series (NAB_data_art0_1/art0_3, genesis-anomalies.test.csv@17) on which CBLOF cannot form valid clusters at any n_clusters, and libraryts aborts multi-series training on the first failing series. Dodgers is excluded as well: its single series makes the unseeded k-means baseline swing 0.36-0.41 across repeats. k-means is unseeded; three repeat runs of this pipeline spread <=0.012 on the four retained datasets, so tolerance 0.10 is comfortable.",
+      "spec_params": {
+        "n_clusters": 10
+      },
+      "train_command": "libraryts train --algorithm PyODCBLOFDetector --dataset tsb-mitdb --model-id bench-detection-cblof-mitdb-auc --param n_clusters=10 --param contamination=0.1",
+      "run_command": "libraryts run --model-id bench-detection-cblof-mitdb-auc --compact"
+    },
+    {
+      "id": "detection-cblof-occupancy-auc",
+      "algorithm": "PyODCBLOFDetector",
+      "algorithm_name": "CBLOF",
+      "dataset": "tsb-occupancy",
+      "dataset_name": "Occupancy (TSB-UAD, 10 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.7398
+      },
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 10 Occupancy series",
+      "source": {
+        "title": "libraryts baseline run (no public per-dataset values)",
+        "venue": "libraryts benchmark, this repository",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "Measured 2026-10-15 via `libraryts train/run --algorithm PyODCBLOFDetector --dataset tsb-occupancy` (model probe-cblof10-occupancy); TSB-UAD README 'Overall Results' table has no CBLOF column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.1
+      },
+      "notes": "TSB-UAD (PVLDB 2022) does not evaluate CBLOF and TSB-AD (NeurIPS 2024) publishes no results for it, so no public per-dataset AUC-ROC exists for these series; the groundtruth is a libraryts baseline measured with this exact pipeline on 2026-10-15. n_clusters=10 instead of the catalog default 8: with 8, pyod CBLOF fails its cluster-separation check on 14/367 YAHOO series. NAB and Genesis are excluded: they contain constant/binary series (NAB_data_art0_1/art0_3, genesis-anomalies.test.csv@17) on which CBLOF cannot form valid clusters at any n_clusters, and libraryts aborts multi-series training on the first failing series. Dodgers is excluded as well: its single series makes the unseeded k-means baseline swing 0.36-0.41 across repeats. k-means is unseeded; three repeat runs of this pipeline spread <=0.012 on the four retained datasets, so tolerance 0.10 is comfortable. Occupancy has only 10 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
+      "spec_params": {
+        "n_clusters": 10
+      },
+      "train_command": "libraryts train --algorithm PyODCBLOFDetector --dataset tsb-occupancy --model-id bench-detection-cblof-occupancy-auc --param n_clusters=10 --param contamination=0.1",
+      "run_command": "libraryts run --model-id bench-detection-cblof-occupancy-auc --compact"
+    },
+    {
+      "id": "detection-cblof-mgab-auc",
+      "algorithm": "PyODCBLOFDetector",
+      "algorithm_name": "CBLOF",
+      "dataset": "tsb-mgab",
+      "dataset_name": "MGAB (TSB-UAD, 10 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.5143
+      },
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 10 MGAB series",
+      "source": {
+        "title": "libraryts baseline run (no public per-dataset values)",
+        "venue": "libraryts benchmark, this repository",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "Measured 2026-10-15 via `libraryts train/run --algorithm PyODCBLOFDetector --dataset tsb-mgab` (model probe-cblof10-mgab); TSB-UAD README 'Overall Results' table has no CBLOF column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.1
+      },
+      "notes": "TSB-UAD (PVLDB 2022) does not evaluate CBLOF and TSB-AD (NeurIPS 2024) publishes no results for it, so no public per-dataset AUC-ROC exists for these series; the groundtruth is a libraryts baseline measured with this exact pipeline on 2026-10-15. n_clusters=10 instead of the catalog default 8: with 8, pyod CBLOF fails its cluster-separation check on 14/367 YAHOO series. NAB and Genesis are excluded: they contain constant/binary series (NAB_data_art0_1/art0_3, genesis-anomalies.test.csv@17) on which CBLOF cannot form valid clusters at any n_clusters, and libraryts aborts multi-series training on the first failing series. Dodgers is excluded as well: its single series makes the unseeded k-means baseline swing 0.36-0.41 across repeats. k-means is unseeded; three repeat runs of this pipeline spread <=0.012 on the four retained datasets, so tolerance 0.10 is comfortable.",
+      "spec_params": {
+        "n_clusters": 10
+      },
+      "train_command": "libraryts train --algorithm PyODCBLOFDetector --dataset tsb-mgab --model-id bench-detection-cblof-mgab-auc --param n_clusters=10 --param contamination=0.1",
+      "run_command": "libraryts run --model-id bench-detection-cblof-mgab-auc --compact"
+    },
+    {
+      "id": "detection-copod-yahoo-auc",
+      "algorithm": "PyODCOPODDetector",
+      "algorithm_name": "COPOD",
+      "dataset": "tsb-yahoo",
+      "dataset_name": "YAHOO (TSB-UAD, 367 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.7952
+      },
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 367 YAHOO series",
+      "source": {
+        "title": "libraryts baseline run (no public per-dataset values)",
+        "venue": "libraryts benchmark, this repository",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "Measured 2026-10-15 via `libraryts train/run --algorithm PyODCOPODDetector --dataset tsb-yahoo` (model probe-copod-yahoo); TSB-UAD README 'Overall Results' table has no COPOD column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.05
+      },
+      "notes": "TSB-UAD (PVLDB 2022) does not evaluate COPOD, and TSB-AD (NeurIPS 2024) lists it among its methods but publishes no results for it, so no public per-dataset AUC-ROC exists for these series; the groundtruth is a libraryts baseline measured with this exact pipeline on 2026-10-15. Tolerance 0.05 is a re-run sanity band (COPOD is deterministic), not a paper comparison. Protocol mirrors the other TSB-UAD entries: per-series unsupervised fit, detector applied point-wise.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm PyODCOPODDetector --dataset tsb-yahoo --model-id bench-detection-copod-yahoo-auc --param contamination=0.1",
+      "run_command": "libraryts run --model-id bench-detection-copod-yahoo-auc --compact"
+    },
+    {
+      "id": "detection-copod-mitdb-auc",
+      "algorithm": "PyODCOPODDetector",
+      "algorithm_name": "COPOD",
+      "dataset": "tsb-mitdb",
+      "dataset_name": "MITDB (TSB-UAD, 32 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.5915
+      },
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 32 MITDB series",
+      "source": {
+        "title": "libraryts baseline run (no public per-dataset values)",
+        "venue": "libraryts benchmark, this repository",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "Measured 2026-10-15 via `libraryts train/run --algorithm PyODCOPODDetector --dataset tsb-mitdb` (model probe-copod-mitdb); TSB-UAD README 'Overall Results' table has no COPOD column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.05
+      },
+      "notes": "TSB-UAD (PVLDB 2022) does not evaluate COPOD, and TSB-AD (NeurIPS 2024) lists it among its methods but publishes no results for it, so no public per-dataset AUC-ROC exists for these series; the groundtruth is a libraryts baseline measured with this exact pipeline on 2026-10-15. Tolerance 0.05 is a re-run sanity band (COPOD is deterministic), not a paper comparison. Protocol mirrors the other TSB-UAD entries: per-series unsupervised fit, detector applied point-wise.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm PyODCOPODDetector --dataset tsb-mitdb --model-id bench-detection-copod-mitdb-auc --param contamination=0.1",
+      "run_command": "libraryts run --model-id bench-detection-copod-mitdb-auc --compact"
+    },
+    {
+      "id": "detection-copod-nab-auc",
+      "algorithm": "PyODCOPODDetector",
+      "algorithm_name": "COPOD",
+      "dataset": "tsb-nab",
+      "dataset_name": "NAB (TSB-UAD, 58 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.5555
+      },
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 58 NAB series",
+      "source": {
+        "title": "libraryts baseline run (no public per-dataset values)",
+        "venue": "libraryts benchmark, this repository",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "Measured 2026-10-15 via `libraryts train/run --algorithm PyODCOPODDetector --dataset tsb-nab` (model probe-copod-nab); TSB-UAD README 'Overall Results' table has no COPOD column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.05
+      },
+      "notes": "TSB-UAD (PVLDB 2022) does not evaluate COPOD, and TSB-AD (NeurIPS 2024) lists it among its methods but publishes no results for it, so no public per-dataset AUC-ROC exists for these series; the groundtruth is a libraryts baseline measured with this exact pipeline on 2026-10-15. Tolerance 0.05 is a re-run sanity band (COPOD is deterministic), not a paper comparison. Protocol mirrors the other TSB-UAD entries: per-series unsupervised fit, detector applied point-wise.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm PyODCOPODDetector --dataset tsb-nab --model-id bench-detection-copod-nab-auc --param contamination=0.1",
+      "run_command": "libraryts run --model-id bench-detection-copod-nab-auc --compact"
+    },
+    {
+      "id": "detection-copod-dodgers-auc",
+      "algorithm": "PyODCOPODDetector",
+      "algorithm_name": "COPOD",
+      "dataset": "tsb-dodgers",
+      "dataset_name": "Dodgers (TSB-UAD, 1 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.6205
+      },
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 1 Dodgers series",
+      "source": {
+        "title": "libraryts baseline run (no public per-dataset values)",
+        "venue": "libraryts benchmark, this repository",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "Measured 2026-10-15 via `libraryts train/run --algorithm PyODCOPODDetector --dataset tsb-dodgers` (model probe-copod-dodgers); TSB-UAD README 'Overall Results' table has no COPOD column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.05
+      },
+      "notes": "TSB-UAD (PVLDB 2022) does not evaluate COPOD, and TSB-AD (NeurIPS 2024) lists it among its methods but publishes no results for it, so no public per-dataset AUC-ROC exists for these series; the groundtruth is a libraryts baseline measured with this exact pipeline on 2026-10-15. Tolerance 0.05 is a re-run sanity band (COPOD is deterministic), not a paper comparison. Protocol mirrors the other TSB-UAD entries: per-series unsupervised fit, detector applied point-wise. Dodgers has only 1 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm PyODCOPODDetector --dataset tsb-dodgers --model-id bench-detection-copod-dodgers-auc --param contamination=0.1",
+      "run_command": "libraryts run --model-id bench-detection-copod-dodgers-auc --compact"
+    },
+    {
+      "id": "detection-copod-occupancy-auc",
+      "algorithm": "PyODCOPODDetector",
+      "algorithm_name": "COPOD",
+      "dataset": "tsb-occupancy",
+      "dataset_name": "Occupancy (TSB-UAD, 10 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.8289
+      },
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 10 Occupancy series",
+      "source": {
+        "title": "libraryts baseline run (no public per-dataset values)",
+        "venue": "libraryts benchmark, this repository",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "Measured 2026-10-15 via `libraryts train/run --algorithm PyODCOPODDetector --dataset tsb-occupancy` (model probe-copod-occupancy); TSB-UAD README 'Overall Results' table has no COPOD column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.05
+      },
+      "notes": "TSB-UAD (PVLDB 2022) does not evaluate COPOD, and TSB-AD (NeurIPS 2024) lists it among its methods but publishes no results for it, so no public per-dataset AUC-ROC exists for these series; the groundtruth is a libraryts baseline measured with this exact pipeline on 2026-10-15. Tolerance 0.05 is a re-run sanity band (COPOD is deterministic), not a paper comparison. Protocol mirrors the other TSB-UAD entries: per-series unsupervised fit, detector applied point-wise. Occupancy has only 10 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm PyODCOPODDetector --dataset tsb-occupancy --model-id bench-detection-copod-occupancy-auc --param contamination=0.1",
+      "run_command": "libraryts run --model-id bench-detection-copod-occupancy-auc --compact"
+    },
+    {
+      "id": "detection-copod-mgab-auc",
+      "algorithm": "PyODCOPODDetector",
+      "algorithm_name": "COPOD",
+      "dataset": "tsb-mgab",
+      "dataset_name": "MGAB (TSB-UAD, 10 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.5881
+      },
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 10 MGAB series",
+      "source": {
+        "title": "libraryts baseline run (no public per-dataset values)",
+        "venue": "libraryts benchmark, this repository",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "Measured 2026-10-15 via `libraryts train/run --algorithm PyODCOPODDetector --dataset tsb-mgab` (model probe-copod-mgab); TSB-UAD README 'Overall Results' table has no COPOD column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.05
+      },
+      "notes": "TSB-UAD (PVLDB 2022) does not evaluate COPOD, and TSB-AD (NeurIPS 2024) lists it among its methods but publishes no results for it, so no public per-dataset AUC-ROC exists for these series; the groundtruth is a libraryts baseline measured with this exact pipeline on 2026-10-15. Tolerance 0.05 is a re-run sanity band (COPOD is deterministic), not a paper comparison. Protocol mirrors the other TSB-UAD entries: per-series unsupervised fit, detector applied point-wise.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm PyODCOPODDetector --dataset tsb-mgab --model-id bench-detection-copod-mgab-auc --param contamination=0.1",
+      "run_command": "libraryts run --model-id bench-detection-copod-mgab-auc --compact"
+    },
+    {
+      "id": "detection-copod-genesis-auc",
+      "algorithm": "PyODCOPODDetector",
+      "algorithm_name": "COPOD",
+      "dataset": "tsb-genesis",
+      "dataset_name": "Genesis (TSB-UAD, 6 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.6419
+      },
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 6 Genesis series",
+      "source": {
+        "title": "libraryts baseline run (no public per-dataset values)",
+        "venue": "libraryts benchmark, this repository",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "Measured 2026-10-15 via `libraryts train/run --algorithm PyODCOPODDetector --dataset tsb-genesis` (model probe-copod-genesis); TSB-UAD README 'Overall Results' table has no COPOD column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.05
+      },
+      "notes": "TSB-UAD (PVLDB 2022) does not evaluate COPOD, and TSB-AD (NeurIPS 2024) lists it among its methods but publishes no results for it, so no public per-dataset AUC-ROC exists for these series; the groundtruth is a libraryts baseline measured with this exact pipeline on 2026-10-15. Tolerance 0.05 is a re-run sanity band (COPOD is deterministic), not a paper comparison. Protocol mirrors the other TSB-UAD entries: per-series unsupervised fit, detector applied point-wise. Genesis has only 6 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm PyODCOPODDetector --dataset tsb-genesis --model-id bench-detection-copod-genesis-auc --param contamination=0.1",
+      "run_command": "libraryts run --model-id bench-detection-copod-genesis-auc --compact"
     }
   ]
 }
