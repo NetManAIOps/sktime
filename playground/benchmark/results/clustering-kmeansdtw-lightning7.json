@@ -1,0 +1,31 @@
+{
+  "id": "clustering-kmeansdtw-lightning7",
+  "task": "clustering",
+  "ran_at": "2026-10-15T11:38:53.411581+00:00",
+  "train_command": "libraryts train --algorithm TimeSeriesKMeansTslearn --dataset lightning7-cl --model-id bench-clustering-kmeansdtw-lightning7 --param n_clusters=7 --param fit_on=all --param random_state=42 --param metric=dtw --param max_iter=15 --param max_iter_barycenter=30 --param n_init=1 --param tol=1e-06 --param verbose=0",
+  "run_command": "libraryts run --model-id bench-clustering-kmeansdtw-lightning7 --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 34.05,
+  "values": {
+    "ARI": 0.33064912944171715
+  },
+  "per_metric": {
+    "ARI": {
+      "gt": 0.203096,
+      "value": 0.33064912944171715,
+      "delta": 0.127553,
+      "delta_rel": 0.628044,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "ARI": 0.33064912944171715,
+    "NMI": 0.5074541622990666,
+    "Clusters": 7,
+    "Largest Cluster": 49
+  },
+  "error": null,
+  "stdout_tail": " \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"Lightning7\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-clustering-kmeansdtw-lightning7\", \"name\": \"TimeSeriesKMeansTslearn (trained: bench-clustering-kmeansdtw-lightning7)\", \"task\": \"clustering\", \"module\": \"sktime.clustering.k_means._k_means_tslearn.TimeSeriesKMeansTslearn\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-10/playground/models/bench-clustering-kmeansdtw-lightning7\", \"manifest\": {\"model_id\": \"bench-clustering-kmeansdtw-lightning7\", \"backend\": \"sktime\", \"task\": \"clustering\", \"algorithm_id\": \"registered-clustering-TimeSeriesKMeansTslearn\", \"algorithm_name\": \"TimeSeriesKMeansTslearn\", \"module\": \"sktime.clustering.k_means._k_means_tslearn.TimeSeriesKMeansTslearn\", \"params\": {\"n_clusters\": 7, \"random_state\": 42, \"metric\": \"dtw\", \"max_iter\": 15, \"max_iter_barycenter\": 30, \"n_init\": 1, \"tol\": 1e-06, \"verbose\": 0}, \"eval_params\": {\"fit_on\": \"all\"}, \"created_at\": \"2026-10-15T11:38:47.706140+00:00\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"lightning7-cl\", \"algorithm_id\": \"registered-clustering-TimeSeriesKMeansTslearn\", \"preprocessor_id\": \"none\", \"params\": {\"n_clusters\": 7, \"fit_on\": \"all\", \"random_state\": 42, \"metric\": \"dtw\", \"max_iter\": 15, \"max_iter_barycenter\": 30, \"n_init\": 1, \"tol\": 1e-06, \"verbose\": 0}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 3295.0, \"log\": [\"Selected dataset: Lightning7 (labels for ARI)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-clustering-kmeansdtw-lightning7 (sktime backend, algorithm: registered-clustering-TimeSeriesKMeansTslearn, created: 2026-10-15T11:38:47.706140+00:00)\", \"Loaded UCR/UEA Lightning7 train=70 test=73\", \"Finished in 3295.0 ms\"]}, \"error\": null}\n"
+}

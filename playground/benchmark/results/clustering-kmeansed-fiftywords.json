@@ -1,0 +1,31 @@
+{
+  "id": "clustering-kmeansed-fiftywords",
+  "task": "clustering",
+  "ran_at": "2026-10-15T11:22:45.558134+00:00",
+  "train_command": "libraryts train --algorithm TimeSeriesKMeansTslearn --dataset fiftywords-cl --model-id bench-clustering-kmeansed-fiftywords --param n_clusters=50 --param fit_on=all --param random_state=42 --param metric=euclidean --param init=k-means++ --param n_init=10 --param max_iter=300 --param max_iter_barycenter=100 --param tol=1e-06 --param verbose=0",
+  "run_command": "libraryts run --model-id bench-clustering-kmeansed-fiftywords --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 15.89,
+  "values": {
+    "ARI": 0.26496025350947644
+  },
+  "per_metric": {
+    "ARI": {
+      "gt": 0.261685,
+      "value": 0.26496025350947644,
+      "delta": 0.003275,
+      "delta_rel": 0.012516,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "ARI": 0.26496025350947644,
+    "NMI": 0.6347209116274449,
+    "Clusters": 50,
+    "Largest Cluster": 34
+  },
+  "error": null,
+  "stdout_tail": "Words\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-clustering-kmeansed-fiftywords\", \"name\": \"TimeSeriesKMeansTslearn (trained: bench-clustering-kmeansed-fiftywords)\", \"task\": \"clustering\", \"module\": \"sktime.clustering.k_means._k_means_tslearn.TimeSeriesKMeansTslearn\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-10/playground/models/bench-clustering-kmeansed-fiftywords\", \"manifest\": {\"model_id\": \"bench-clustering-kmeansed-fiftywords\", \"backend\": \"sktime\", \"task\": \"clustering\", \"algorithm_id\": \"registered-clustering-TimeSeriesKMeansTslearn\", \"algorithm_name\": \"TimeSeriesKMeansTslearn\", \"module\": \"sktime.clustering.k_means._k_means_tslearn.TimeSeriesKMeansTslearn\", \"params\": {\"n_clusters\": 50, \"random_state\": 42, \"metric\": \"euclidean\", \"init\": \"k-means++\", \"n_init\": 10, \"max_iter\": 300, \"max_iter_barycenter\": 100, \"tol\": 1e-06, \"verbose\": 0}, \"eval_params\": {\"fit_on\": \"all\"}, \"created_at\": \"2026-10-15T11:22:39.838532+00:00\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"fiftywords-cl\", \"algorithm_id\": \"registered-clustering-TimeSeriesKMeansTslearn\", \"preprocessor_id\": \"none\", \"params\": {\"n_clusters\": 50, \"fit_on\": \"all\", \"random_state\": 42, \"metric\": \"euclidean\", \"init\": \"k-means++\", \"n_init\": 10, \"max_iter\": 300, \"max_iter_barycenter\": 100, \"tol\": 1e-06, \"verbose\": 0}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 3689.6, \"log\": [\"Selected dataset: FiftyWords (labels for ARI)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-clustering-kmeansed-fiftywords (sktime backend, algorithm: registered-clustering-TimeSeriesKMeansTslearn, created: 2026-10-15T11:22:39.838532+00:00)\", \"Loaded UCR/UEA FiftyWords train=450 test=455\", \"Finished in 3689.6 ms\"]}, \"error\": null}\n"
+}

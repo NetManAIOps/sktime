@@ -1,0 +1,31 @@
+{
+  "id": "clustering-kmedoids-medicalimages",
+  "task": "clustering",
+  "ran_at": "2026-10-15T11:24:45.334099+00:00",
+  "train_command": "libraryts train --algorithm TimeSeriesKMedoids --dataset medicalimages-cl --model-id bench-clustering-kmedoids-medicalimages --param n_clusters=10 --param fit_on=all --param random_state=42 --param metric=euclidean --param max_iter=300 --param n_init=10 --param tol=1e-06",
+  "run_command": "libraryts run --model-id bench-clustering-kmedoids-medicalimages --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 15.31,
+  "values": {
+    "ARI": 0.03104930182978389
+  },
+  "per_metric": {
+    "ARI": {
+      "gt": 0.04413,
+      "value": 0.03104930182978389,
+      "delta": -0.013081,
+      "delta_rel": 0.296413,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "ARI": 0.03104930182978389,
+    "NMI": 0.20451377454752556,
+    "Clusters": 10,
+    "Largest Cluster": 226
+  },
+  "error": null,
+  "stdout_tail": "mages-cl\", \"name\": \"MedicalImages (labels for ARI)\", \"task\": \"clustering\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"MedicalImages\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-clustering-kmedoids-medicalimages\", \"name\": \"TimeSeriesKMedoids (trained: bench-clustering-kmedoids-medicalimages)\", \"task\": \"clustering\", \"module\": \"sktime.clustering.k_medoids.TimeSeriesKMedoids\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-10/playground/models/bench-clustering-kmedoids-medicalimages\", \"manifest\": {\"model_id\": \"bench-clustering-kmedoids-medicalimages\", \"backend\": \"sktime\", \"task\": \"clustering\", \"algorithm_id\": \"registered-clustering-TimeSeriesKMedoids\", \"algorithm_name\": \"TimeSeriesKMedoids\", \"module\": \"sktime.clustering.k_medoids.TimeSeriesKMedoids\", \"params\": {\"n_clusters\": 10, \"random_state\": 42, \"metric\": \"euclidean\", \"max_iter\": 300, \"n_init\": 10, \"tol\": 1e-06}, \"eval_params\": {\"fit_on\": \"all\"}, \"created_at\": \"2026-10-15T11:24:42.183826+00:00\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"medicalimages-cl\", \"algorithm_id\": \"registered-clustering-TimeSeriesKMedoids\", \"preprocessor_id\": \"none\", \"params\": {\"n_clusters\": 10, \"fit_on\": \"all\", \"random_state\": 42, \"metric\": \"euclidean\", \"max_iter\": 300, \"n_init\": 10, \"tol\": 1e-06}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 2263.6, \"log\": [\"Selected dataset: MedicalImages (labels for ARI)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-clustering-kmedoids-medicalimages (sktime backend, algorithm: registered-clustering-TimeSeriesKMedoids, created: 2026-10-15T11:24:42.183826+00:00)\", \"Loaded UCR/UEA MedicalImages train=381 test=760\", \"Finished in 2263.6 ms\"]}, \"error\": null}\n"
+}

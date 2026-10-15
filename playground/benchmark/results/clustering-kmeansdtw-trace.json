@@ -1,0 +1,31 @@
+{
+  "id": "clustering-kmeansdtw-trace",
+  "task": "clustering",
+  "ran_at": "2026-10-15T11:35:56.525504+00:00",
+  "train_command": "libraryts train --algorithm TimeSeriesKMeansTslearn --dataset trace-cl --model-id bench-clustering-kmeansdtw-trace --param n_clusters=4 --param fit_on=all --param random_state=42 --param metric=dtw --param max_iter=15 --param max_iter_barycenter=30 --param n_init=1 --param tol=1e-06 --param verbose=0",
+  "run_command": "libraryts run --model-id bench-clustering-kmeansdtw-trace --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 37.4,
+  "values": {
+    "ARI": 0.663572323010511
+  },
+  "per_metric": {
+    "ARI": {
+      "gt": 0.407411,
+      "value": 0.663572323010511,
+      "delta": 0.256161,
+      "delta_rel": 0.628754,
+      "status": "deviation"
+    }
+  },
+  "status": "deviation",
+  "metrics": {
+    "ARI": 0.663572323010511,
+    "NMI": 0.7522843471933999,
+    "Clusters": 4,
+    "Largest Cluster": 59
+  },
+  "error": null,
+  "stdout_tail": "clustering\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"Trace\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-clustering-kmeansdtw-trace\", \"name\": \"TimeSeriesKMeansTslearn (trained: bench-clustering-kmeansdtw-trace)\", \"task\": \"clustering\", \"module\": \"sktime.clustering.k_means._k_means_tslearn.TimeSeriesKMeansTslearn\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-10/playground/models/bench-clustering-kmeansdtw-trace\", \"manifest\": {\"model_id\": \"bench-clustering-kmeansdtw-trace\", \"backend\": \"sktime\", \"task\": \"clustering\", \"algorithm_id\": \"registered-clustering-TimeSeriesKMeansTslearn\", \"algorithm_name\": \"TimeSeriesKMeansTslearn\", \"module\": \"sktime.clustering.k_means._k_means_tslearn.TimeSeriesKMeansTslearn\", \"params\": {\"n_clusters\": 4, \"random_state\": 42, \"metric\": \"dtw\", \"max_iter\": 15, \"max_iter_barycenter\": 30, \"n_init\": 1, \"tol\": 1e-06, \"verbose\": 0}, \"eval_params\": {\"fit_on\": \"all\"}, \"created_at\": \"2026-10-15T11:35:52.170436+00:00\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"trace-cl\", \"algorithm_id\": \"registered-clustering-TimeSeriesKMeansTslearn\", \"preprocessor_id\": \"none\", \"params\": {\"n_clusters\": 4, \"fit_on\": \"all\", \"random_state\": 42, \"metric\": \"dtw\", \"max_iter\": 15, \"max_iter_barycenter\": 30, \"n_init\": 1, \"tol\": 1e-06, \"verbose\": 0}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 2823.7, \"log\": [\"Selected dataset: Trace (labels for ARI)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-clustering-kmeansdtw-trace (sktime backend, algorithm: registered-clustering-TimeSeriesKMeansTslearn, created: 2026-10-15T11:35:52.170436+00:00)\", \"Loaded UCR/UEA Trace train=100 test=100\", \"Finished in 2823.7 ms\"]}, \"error\": null}\n"
+}

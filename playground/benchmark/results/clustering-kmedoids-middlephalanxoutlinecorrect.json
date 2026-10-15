@@ -1,0 +1,31 @@
+{
+  "id": "clustering-kmedoids-middlephalanxoutlinecorrect",
+  "task": "clustering",
+  "ran_at": "2026-10-15T11:25:12.416793+00:00",
+  "train_command": "libraryts train --algorithm TimeSeriesKMedoids --dataset middlephalanxoutlinecorrect-cl --model-id bench-clustering-kmedoids-middlephalanxoutlinecorrect --param n_clusters=2 --param fit_on=all --param random_state=42 --param metric=euclidean --param max_iter=300 --param n_init=10 --param tol=1e-06",
+  "run_command": "libraryts run --model-id bench-clustering-kmedoids-middlephalanxoutlinecorrect --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 16.76,
+  "values": {
+    "ARI": -0.0029425787566206042
+  },
+  "per_metric": {
+    "ARI": {
+      "gt": -0.002943,
+      "value": -0.0029425787566206042,
+      "delta": 0.0,
+      "delta_rel": 0.000143,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "ARI": -0.0029425787566206042,
+    "NMI": 0.0003816680305576753,
+    "Clusters": 2,
+    "Largest Cluster": 548
+  },
+  "error": null,
+  "stdout_tail": "oad_UCR_UEA_dataset\", \"ucr_name\": \"MiddlePhalanxOutlineCorrect\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-clustering-kmedoids-middlephalanxoutlinecorrect\", \"name\": \"TimeSeriesKMedoids (trained: bench-clustering-kmedoids-middlephalanxoutlinecorrect)\", \"task\": \"clustering\", \"module\": \"sktime.clustering.k_medoids.TimeSeriesKMedoids\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-10/playground/models/bench-clustering-kmedoids-middlephalanxoutlinecorrect\", \"manifest\": {\"model_id\": \"bench-clustering-kmedoids-middlephalanxoutlinecorrect\", \"backend\": \"sktime\", \"task\": \"clustering\", \"algorithm_id\": \"registered-clustering-TimeSeriesKMedoids\", \"algorithm_name\": \"TimeSeriesKMedoids\", \"module\": \"sktime.clustering.k_medoids.TimeSeriesKMedoids\", \"params\": {\"n_clusters\": 2, \"random_state\": 42, \"metric\": \"euclidean\", \"max_iter\": 300, \"n_init\": 10, \"tol\": 1e-06}, \"eval_params\": {\"fit_on\": \"all\"}, \"created_at\": \"2026-10-15T11:25:08.435212+00:00\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"middlephalanxoutlinecorrect-cl\", \"algorithm_id\": \"registered-clustering-TimeSeriesKMedoids\", \"preprocessor_id\": \"none\", \"params\": {\"n_clusters\": 2, \"fit_on\": \"all\", \"random_state\": 42, \"metric\": \"euclidean\", \"max_iter\": 300, \"n_init\": 10, \"tol\": 1e-06}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 2527.1, \"log\": [\"Selected dataset: MiddlePhalanxOutlineCorrect (labels for ARI)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-clustering-kmedoids-middlephalanxoutlinecorrect (sktime backend, algorithm: registered-clustering-TimeSeriesKMedoids, created: 2026-10-15T11:25:08.435212+00:00)\", \"Loaded UCR/UEA MiddlePhalanxOutlineCorrect train=600 test=291\", \"Finished in 2527.1 ms\"]}, \"error\": null}\n"
+}

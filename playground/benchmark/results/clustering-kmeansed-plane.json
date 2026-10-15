@@ -1,0 +1,31 @@
+{
+  "id": "clustering-kmeansed-plane",
+  "task": "clustering",
+  "ran_at": "2026-10-15T11:17:18.963158+00:00",
+  "train_command": "libraryts train --algorithm TimeSeriesKMeansTslearn --dataset plane-cl --model-id bench-clustering-kmeansed-plane --param n_clusters=7 --param fit_on=all --param random_state=42 --param metric=euclidean --param init=k-means++ --param n_init=10 --param max_iter=300 --param max_iter_barycenter=100 --param tol=1e-06 --param verbose=0",
+  "run_command": "libraryts run --model-id bench-clustering-kmeansed-plane --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 10.15,
+  "values": {
+    "ARI": 0.8102466808930917
+  },
+  "per_metric": {
+    "ARI": {
+      "gt": 0.701236,
+      "value": 0.8102466808930917,
+      "delta": 0.109011,
+      "delta_rel": 0.155455,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "ARI": 0.8102466808930917,
+    "NMI": 0.9015895879982476,
+    "Clusters": 7,
+    "Largest Cluster": 57
+  },
+  "error": null,
+  "stdout_tail": "asets.load_UCR_UEA_dataset\", \"ucr_name\": \"Plane\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-clustering-kmeansed-plane\", \"name\": \"TimeSeriesKMeansTslearn (trained: bench-clustering-kmeansed-plane)\", \"task\": \"clustering\", \"module\": \"sktime.clustering.k_means._k_means_tslearn.TimeSeriesKMeansTslearn\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-10/playground/models/bench-clustering-kmeansed-plane\", \"manifest\": {\"model_id\": \"bench-clustering-kmeansed-plane\", \"backend\": \"sktime\", \"task\": \"clustering\", \"algorithm_id\": \"registered-clustering-TimeSeriesKMeansTslearn\", \"algorithm_name\": \"TimeSeriesKMeansTslearn\", \"module\": \"sktime.clustering.k_means._k_means_tslearn.TimeSeriesKMeansTslearn\", \"params\": {\"n_clusters\": 7, \"random_state\": 42, \"metric\": \"euclidean\", \"init\": \"k-means++\", \"n_init\": 10, \"max_iter\": 300, \"max_iter_barycenter\": 100, \"tol\": 1e-06, \"verbose\": 0}, \"eval_params\": {\"fit_on\": \"all\"}, \"created_at\": \"2026-10-15T11:17:13.157559+00:00\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"plane-cl\", \"algorithm_id\": \"registered-clustering-TimeSeriesKMeansTslearn\", \"preprocessor_id\": \"none\", \"params\": {\"n_clusters\": 7, \"fit_on\": \"all\", \"random_state\": 42, \"metric\": \"euclidean\", \"init\": \"k-means++\", \"n_init\": 10, \"max_iter\": 300, \"max_iter_barycenter\": 100, \"tol\": 1e-06, \"verbose\": 0}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 3476.5, \"log\": [\"Selected dataset: Plane (labels for ARI)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-clustering-kmeansed-plane (sktime backend, algorithm: registered-clustering-TimeSeriesKMeansTslearn, created: 2026-10-15T11:17:13.157559+00:00)\", \"Loaded UCR/UEA Plane train=105 test=105\", \"Finished in 3476.5 ms\"]}, \"error\": null}\n"
+}

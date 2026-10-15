@@ -1,0 +1,31 @@
+{
+  "id": "clustering-kmeansed-cricketx",
+  "task": "clustering",
+  "ran_at": "2026-10-15T11:21:10.382367+00:00",
+  "train_command": "libraryts train --algorithm TimeSeriesKMeansTslearn --dataset cricketx-cl --model-id bench-clustering-kmeansed-cricketx --param n_clusters=12 --param fit_on=all --param random_state=42 --param metric=euclidean --param init=k-means++ --param n_init=10 --param max_iter=300 --param max_iter_barycenter=100 --param tol=1e-06 --param verbose=0",
+  "run_command": "libraryts run --model-id bench-clustering-kmeansed-cricketx --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 13.82,
+  "values": {
+    "ARI": 0.10647441899950093
+  },
+  "per_metric": {
+    "ARI": {
+      "gt": 0.099804,
+      "value": 0.10647441899950093,
+      "delta": 0.00667,
+      "delta_rel": 0.066835,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "ARI": 0.10647441899950093,
+    "NMI": 0.2589506557651142,
+    "Clusters": 12,
+    "Largest Cluster": 109
+  },
+  "error": null,
+  "stdout_tail": "\"ucr_name\": \"CricketX\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-clustering-kmeansed-cricketx\", \"name\": \"TimeSeriesKMeansTslearn (trained: bench-clustering-kmeansed-cricketx)\", \"task\": \"clustering\", \"module\": \"sktime.clustering.k_means._k_means_tslearn.TimeSeriesKMeansTslearn\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-10/playground/models/bench-clustering-kmeansed-cricketx\", \"manifest\": {\"model_id\": \"bench-clustering-kmeansed-cricketx\", \"backend\": \"sktime\", \"task\": \"clustering\", \"algorithm_id\": \"registered-clustering-TimeSeriesKMeansTslearn\", \"algorithm_name\": \"TimeSeriesKMeansTslearn\", \"module\": \"sktime.clustering.k_means._k_means_tslearn.TimeSeriesKMeansTslearn\", \"params\": {\"n_clusters\": 12, \"random_state\": 42, \"metric\": \"euclidean\", \"init\": \"k-means++\", \"n_init\": 10, \"max_iter\": 300, \"max_iter_barycenter\": 100, \"tol\": 1e-06, \"verbose\": 0}, \"eval_params\": {\"fit_on\": \"all\"}, \"created_at\": \"2026-10-15T11:21:03.635071+00:00\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"cricketx-cl\", \"algorithm_id\": \"registered-clustering-TimeSeriesKMeansTslearn\", \"preprocessor_id\": \"none\", \"params\": {\"n_clusters\": 12, \"fit_on\": \"all\", \"random_state\": 42, \"metric\": \"euclidean\", \"init\": \"k-means++\", \"n_init\": 10, \"max_iter\": 300, \"max_iter_barycenter\": 100, \"tol\": 1e-06, \"verbose\": 0}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 4127.6, \"log\": [\"Selected dataset: CricketX (labels for ARI)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-clustering-kmeansed-cricketx (sktime backend, algorithm: registered-clustering-TimeSeriesKMeansTslearn, created: 2026-10-15T11:21:03.635071+00:00)\", \"Loaded UCR/UEA CricketX train=390 test=390\", \"Finished in 4127.6 ms\"]}, \"error\": null}\n"
+}

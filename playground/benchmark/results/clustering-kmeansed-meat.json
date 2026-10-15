@@ -1,0 +1,31 @@
+{
+  "id": "clustering-kmeansed-meat",
+  "task": "clustering",
+  "ran_at": "2026-10-15T11:24:09.548046+00:00",
+  "train_command": "libraryts train --algorithm TimeSeriesKMeansTslearn --dataset meat-cl --model-id bench-clustering-kmeansed-meat --param n_clusters=3 --param fit_on=all --param random_state=42 --param metric=euclidean --param init=k-means++ --param n_init=10 --param max_iter=300 --param max_iter_barycenter=100 --param tol=1e-06 --param verbose=0",
+  "run_command": "libraryts run --model-id bench-clustering-kmeansed-meat --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 11.48,
+  "values": {
+    "ARI": 0.41973488940264303
+  },
+  "per_metric": {
+    "ARI": {
+      "gt": 0.619705,
+      "value": 0.41973488940264303,
+      "delta": -0.19997,
+      "delta_rel": 0.322686,
+      "status": "deviation"
+    }
+  },
+  "status": "deviation",
+  "metrics": {
+    "ARI": 0.41973488940264303,
+    "NMI": 0.5066581538044792,
+    "Clusters": 3,
+    "Largest Cluster": 66
+  },
+  "error": null,
+  "stdout_tail": "\"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"Meat\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-clustering-kmeansed-meat\", \"name\": \"TimeSeriesKMeansTslearn (trained: bench-clustering-kmeansed-meat)\", \"task\": \"clustering\", \"module\": \"sktime.clustering.k_means._k_means_tslearn.TimeSeriesKMeansTslearn\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-10/playground/models/bench-clustering-kmeansed-meat\", \"manifest\": {\"model_id\": \"bench-clustering-kmeansed-meat\", \"backend\": \"sktime\", \"task\": \"clustering\", \"algorithm_id\": \"registered-clustering-TimeSeriesKMeansTslearn\", \"algorithm_name\": \"TimeSeriesKMeansTslearn\", \"module\": \"sktime.clustering.k_means._k_means_tslearn.TimeSeriesKMeansTslearn\", \"params\": {\"n_clusters\": 3, \"random_state\": 42, \"metric\": \"euclidean\", \"init\": \"k-means++\", \"n_init\": 10, \"max_iter\": 300, \"max_iter_barycenter\": 100, \"tol\": 1e-06, \"verbose\": 0}, \"eval_params\": {\"fit_on\": \"all\"}, \"created_at\": \"2026-10-15T11:24:03.065426+00:00\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"meat-cl\", \"algorithm_id\": \"registered-clustering-TimeSeriesKMeansTslearn\", \"preprocessor_id\": \"none\", \"params\": {\"n_clusters\": 3, \"fit_on\": \"all\", \"random_state\": 42, \"metric\": \"euclidean\", \"init\": \"k-means++\", \"n_init\": 10, \"max_iter\": 300, \"max_iter_barycenter\": 100, \"tol\": 1e-06, \"verbose\": 0}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 4210.4, \"log\": [\"Selected dataset: Meat (labels for ARI)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-clustering-kmeansed-meat (sktime backend, algorithm: registered-clustering-TimeSeriesKMeansTslearn, created: 2026-10-15T11:24:03.065426+00:00)\", \"Loaded UCR/UEA Meat train=60 test=60\", \"Finished in 4210.4 ms\"]}, \"error\": null}\n"
+}

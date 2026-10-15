@@ -1,0 +1,31 @@
+{
+  "id": "clustering-kmedoids-adiac",
+  "task": "clustering",
+  "ran_at": "2026-10-15T11:20:38.084555+00:00",
+  "train_command": "libraryts train --algorithm TimeSeriesKMedoids --dataset adiac-cl --model-id bench-clustering-kmedoids-adiac --param n_clusters=37 --param fit_on=all --param random_state=42 --param metric=euclidean --param max_iter=300 --param n_init=10 --param tol=1e-06",
+  "run_command": "libraryts run --model-id bench-clustering-kmedoids-adiac --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 12.93,
+  "values": {
+    "ARI": 0.22751925945050824
+  },
+  "per_metric": {
+    "ARI": {
+      "gt": 0.251558,
+      "value": 0.22751925945050824,
+      "delta": -0.024039,
+      "delta_rel": 0.095559,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "ARI": 0.22751925945050824,
+    "NMI": 0.5658103678818714,
+    "Clusters": 31,
+    "Largest Cluster": 82
+  },
+  "error": null,
+  "stdout_tail": "eprocessor_id\": \"none\", \"params\": {}}, \"task\": \"clustering\", \"dataset\": {\"id\": \"adiac-cl\", \"name\": \"Adiac (labels for ARI)\", \"task\": \"clustering\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"Adiac\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-clustering-kmedoids-adiac\", \"name\": \"TimeSeriesKMedoids (trained: bench-clustering-kmedoids-adiac)\", \"task\": \"clustering\", \"module\": \"sktime.clustering.k_medoids.TimeSeriesKMedoids\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-10/playground/models/bench-clustering-kmedoids-adiac\", \"manifest\": {\"model_id\": \"bench-clustering-kmedoids-adiac\", \"backend\": \"sktime\", \"task\": \"clustering\", \"algorithm_id\": \"registered-clustering-TimeSeriesKMedoids\", \"algorithm_name\": \"TimeSeriesKMedoids\", \"module\": \"sktime.clustering.k_medoids.TimeSeriesKMedoids\", \"params\": {\"n_clusters\": 37, \"random_state\": 42, \"metric\": \"euclidean\", \"max_iter\": 300, \"n_init\": 10, \"tol\": 1e-06}, \"eval_params\": {\"fit_on\": \"all\"}, \"created_at\": \"2026-10-15T11:20:33.768256+00:00\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"adiac-cl\", \"algorithm_id\": \"registered-clustering-TimeSeriesKMedoids\", \"preprocessor_id\": \"none\", \"params\": {\"n_clusters\": 37, \"fit_on\": \"all\", \"random_state\": 42, \"metric\": \"euclidean\", \"max_iter\": 300, \"n_init\": 10, \"tol\": 1e-06}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 2814.2, \"log\": [\"Selected dataset: Adiac (labels for ARI)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-clustering-kmedoids-adiac (sktime backend, algorithm: registered-clustering-TimeSeriesKMedoids, created: 2026-10-15T11:20:33.768256+00:00)\", \"Loaded UCR/UEA Adiac train=390 test=391\", \"Finished in 2814.2 ms\"]}, \"error\": null}\n"
+}

@@ -1,0 +1,31 @@
+{
+  "id": "clustering-kmedoids-herring",
+  "task": "clustering",
+  "ran_at": "2026-10-15T11:23:57.956456+00:00",
+  "train_command": "libraryts train --algorithm TimeSeriesKMedoids --dataset herring-cl --model-id bench-clustering-kmedoids-herring --param n_clusters=2 --param fit_on=all --param random_state=42 --param metric=euclidean --param max_iter=300 --param n_init=10 --param tol=1e-06",
+  "run_command": "libraryts run --model-id bench-clustering-kmedoids-herring --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 6.69,
+  "values": {
+    "ARI": 0.001241075926813384
+  },
+  "per_metric": {
+    "ARI": {
+      "gt": 0.001609,
+      "value": 0.001241075926813384,
+      "delta": -0.000368,
+      "delta_rel": 0.228666,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "ARI": 0.001241075926813384,
+    "NMI": 0.00719499713140222,
+    "Clusters": 2,
+    "Largest Cluster": 65
+  },
+  "error": null,
+  "stdout_tail": "one\", \"params\": {}}, \"task\": \"clustering\", \"dataset\": {\"id\": \"herring-cl\", \"name\": \"Herring (labels for ARI)\", \"task\": \"clustering\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"Herring\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-clustering-kmedoids-herring\", \"name\": \"TimeSeriesKMedoids (trained: bench-clustering-kmedoids-herring)\", \"task\": \"clustering\", \"module\": \"sktime.clustering.k_medoids.TimeSeriesKMedoids\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-10/playground/models/bench-clustering-kmedoids-herring\", \"manifest\": {\"model_id\": \"bench-clustering-kmedoids-herring\", \"backend\": \"sktime\", \"task\": \"clustering\", \"algorithm_id\": \"registered-clustering-TimeSeriesKMedoids\", \"algorithm_name\": \"TimeSeriesKMedoids\", \"module\": \"sktime.clustering.k_medoids.TimeSeriesKMedoids\", \"params\": {\"n_clusters\": 2, \"random_state\": 42, \"metric\": \"euclidean\", \"max_iter\": 300, \"n_init\": 10, \"tol\": 1e-06}, \"eval_params\": {\"fit_on\": \"all\"}, \"created_at\": \"2026-10-15T11:23:55.006705+00:00\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"herring-cl\", \"algorithm_id\": \"registered-clustering-TimeSeriesKMedoids\", \"preprocessor_id\": \"none\", \"params\": {\"n_clusters\": 2, \"fit_on\": \"all\", \"random_state\": 42, \"metric\": \"euclidean\", \"max_iter\": 300, \"n_init\": 10, \"tol\": 1e-06}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 2021.6, \"log\": [\"Selected dataset: Herring (labels for ARI)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-clustering-kmedoids-herring (sktime backend, algorithm: registered-clustering-TimeSeriesKMedoids, created: 2026-10-15T11:23:55.006705+00:00)\", \"Loaded UCR/UEA Herring train=64 test=64\", \"Finished in 2021.6 ms\"]}, \"error\": null}\n"
+}

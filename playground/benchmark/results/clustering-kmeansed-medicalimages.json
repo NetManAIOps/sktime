@@ -1,0 +1,31 @@
+{
+  "id": "clustering-kmeansed-medicalimages",
+  "task": "clustering",
+  "ran_at": "2026-10-15T11:24:29.910803+00:00",
+  "train_command": "libraryts train --algorithm TimeSeriesKMeansTslearn --dataset medicalimages-cl --model-id bench-clustering-kmeansed-medicalimages --param n_clusters=10 --param fit_on=all --param random_state=42 --param metric=euclidean --param init=k-means++ --param n_init=10 --param max_iter=300 --param max_iter_barycenter=100 --param tol=1e-06 --param verbose=0",
+  "run_command": "libraryts run --model-id bench-clustering-kmeansed-medicalimages --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 13.47,
+  "values": {
+    "ARI": 0.04370153235746766
+  },
+  "per_metric": {
+    "ARI": {
+      "gt": 0.050479,
+      "value": 0.04370153235746766,
+      "delta": -0.006777,
+      "delta_rel": 0.134263,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "ARI": 0.04370153235746766,
+    "NMI": 0.2381203709370428,
+    "Clusters": 10,
+    "Largest Cluster": 207
+  },
+  "error": null,
+  "stdout_tail": " \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-clustering-kmeansed-medicalimages\", \"name\": \"TimeSeriesKMeansTslearn (trained: bench-clustering-kmeansed-medicalimages)\", \"task\": \"clustering\", \"module\": \"sktime.clustering.k_means._k_means_tslearn.TimeSeriesKMeansTslearn\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-10/playground/models/bench-clustering-kmeansed-medicalimages\", \"manifest\": {\"model_id\": \"bench-clustering-kmeansed-medicalimages\", \"backend\": \"sktime\", \"task\": \"clustering\", \"algorithm_id\": \"registered-clustering-TimeSeriesKMeansTslearn\", \"algorithm_name\": \"TimeSeriesKMeansTslearn\", \"module\": \"sktime.clustering.k_means._k_means_tslearn.TimeSeriesKMeansTslearn\", \"params\": {\"n_clusters\": 10, \"random_state\": 42, \"metric\": \"euclidean\", \"init\": \"k-means++\", \"n_init\": 10, \"max_iter\": 300, \"max_iter_barycenter\": 100, \"tol\": 1e-06, \"verbose\": 0}, \"eval_params\": {\"fit_on\": \"all\"}, \"created_at\": \"2026-10-15T11:24:23.728291+00:00\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"medicalimages-cl\", \"algorithm_id\": \"registered-clustering-TimeSeriesKMeansTslearn\", \"preprocessor_id\": \"none\", \"params\": {\"n_clusters\": 10, \"fit_on\": \"all\", \"random_state\": 42, \"metric\": \"euclidean\", \"init\": \"k-means++\", \"n_init\": 10, \"max_iter\": 300, \"max_iter_barycenter\": 100, \"tol\": 1e-06, \"verbose\": 0}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 4383.3, \"log\": [\"Selected dataset: MedicalImages (labels for ARI)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-clustering-kmeansed-medicalimages (sktime backend, algorithm: registered-clustering-TimeSeriesKMeansTslearn, created: 2026-10-15T11:24:23.728291+00:00)\", \"Loaded UCR/UEA MedicalImages train=381 test=760\", \"Finished in 4383.3 ms\"]}, \"error\": null}\n"
+}
