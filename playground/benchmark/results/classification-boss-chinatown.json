@@ -1,0 +1,29 @@
+{
+  "id": "classification-boss-chinatown",
+  "task": "classification",
+  "ran_at": "2026-10-15T11:36:01.617353+00:00",
+  "train_command": "libraryts train --algorithm BOSSEnsemble --dataset ucr-chinatown --model-id bench-classification-boss-chinatown --param random_state=0 --param alphabet_size=2 --param max_ensemble_size=500 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param threshold=0.92",
+  "run_command": "libraryts run --model-id bench-classification-boss-chinatown --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 16.36,
+  "values": {
+    "Accuracy": 0.8833819241982507
+  },
+  "per_metric": {
+    "Accuracy": {
+      "gt": 0.89504,
+      "value": 0.8833819241982507,
+      "delta": -0.011658,
+      "delta_rel": 0.013025,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "Accuracy": 0.8833819241982507,
+    "Macro F1": 0.8627450980392157
+  },
+  "error": null,
+  "stdout_tail": " \"ucr-chinatown\", \"name\": \"UCR/UEA Chinatown\", \"task\": \"classification\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"Chinatown\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-classification-boss-chinatown\", \"name\": \"BOSSEnsemble (trained: bench-classification-boss-chinatown)\", \"task\": \"classification\", \"module\": \"sktime.classification.dictionary_based._boss.BOSSEnsemble\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-9/playground/models/bench-classification-boss-chinatown\", \"manifest\": {\"model_id\": \"bench-classification-boss-chinatown\", \"backend\": \"sktime\", \"task\": \"classification\", \"algorithm_id\": \"registered-classification-BOSSEnsemble\", \"algorithm_name\": \"BOSSEnsemble\", \"module\": \"sktime.classification.dictionary_based._boss.BOSSEnsemble\", \"params\": {\"random_state\": 0, \"alphabet_size\": 2, \"max_ensemble_size\": 500, \"max_win_len_prop\": 1, \"min_window\": 10, \"n_jobs\": 1, \"threshold\": 0.92}, \"eval_params\": {}, \"created_at\": \"2026-10-15T11:35:56.688129+00:00\", \"spec\": {\"task\": \"classification\", \"dataset_id\": \"ucr-chinatown\", \"algorithm_id\": \"registered-classification-BOSSEnsemble\", \"preprocessor_id\": \"none\", \"params\": {\"random_state\": 0, \"alphabet_size\": 2, \"max_ensemble_size\": 500, \"max_win_len_prop\": 1, \"min_window\": 10, \"n_jobs\": 1, \"threshold\": 0.92}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 2516.9, \"log\": [\"Selected dataset: UCR/UEA Chinatown\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-classification-boss-chinatown (sktime backend, algorithm: registered-classification-BOSSEnsemble, created: 2026-10-15T11:35:56.688129+00:00)\", \"Loaded UCR/UEA Chinatown train=20 test=343\", \"Finished in 2516.9 ms\"]}, \"error\": null}\n"
+}

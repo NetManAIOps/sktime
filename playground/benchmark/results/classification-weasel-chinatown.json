@@ -1,0 +1,29 @@
+{
+  "id": "classification-weasel-chinatown",
+  "task": "classification",
+  "ran_at": "2026-10-15T11:28:37.834850+00:00",
+  "train_command": "libraryts train --algorithm WEASEL --dataset ucr-chinatown --model-id bench-classification-weasel-chinatown --param random_state=0 --param alphabet_size=2 --param n_jobs=1 --param p_threshold=0.05 --param window_inc=2",
+  "run_command": "libraryts run --model-id bench-classification-weasel-chinatown --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 9.73,
+  "values": {
+    "Accuracy": 0.9620991253644315
+  },
+  "per_metric": {
+    "Accuracy": {
+      "gt": 0.9621,
+      "value": 0.9620991253644315,
+      "delta": -1e-06,
+      "delta_rel": 1e-06,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "Accuracy": 0.9620991253644315,
+    "Macro F1": 0.9539896608298164
+  },
+  "error": null,
+  "stdout_tail": "ench-classification-weasel-chinatown\", \"preprocessor_id\": \"none\", \"params\": {}}, \"task\": \"classification\", \"dataset\": {\"id\": \"ucr-chinatown\", \"name\": \"UCR/UEA Chinatown\", \"task\": \"classification\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"Chinatown\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-classification-weasel-chinatown\", \"name\": \"WEASEL (trained: bench-classification-weasel-chinatown)\", \"task\": \"classification\", \"module\": \"sktime.classification.dictionary_based._weasel.WEASEL\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-9/playground/models/bench-classification-weasel-chinatown\", \"manifest\": {\"model_id\": \"bench-classification-weasel-chinatown\", \"backend\": \"sktime\", \"task\": \"classification\", \"algorithm_id\": \"registered-classification-WEASEL\", \"algorithm_name\": \"WEASEL\", \"module\": \"sktime.classification.dictionary_based._weasel.WEASEL\", \"params\": {\"random_state\": 0, \"alphabet_size\": 2, \"n_jobs\": 1, \"p_threshold\": 0.05, \"window_inc\": 2}, \"eval_params\": {}, \"created_at\": \"2026-10-15T11:28:33.048689+00:00\", \"spec\": {\"task\": \"classification\", \"dataset_id\": \"ucr-chinatown\", \"algorithm_id\": \"registered-classification-WEASEL\", \"preprocessor_id\": \"none\", \"params\": {\"random_state\": 0, \"alphabet_size\": 2, \"n_jobs\": 1, \"p_threshold\": 0.05, \"window_inc\": 2}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 3519.0, \"log\": [\"Selected dataset: UCR/UEA Chinatown\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-classification-weasel-chinatown (sktime backend, algorithm: registered-classification-WEASEL, created: 2026-10-15T11:28:33.048689+00:00)\", \"Loaded UCR/UEA Chinatown train=20 test=343\", \"Finished in 3519.0 ms\"]}, \"error\": null}\n"
+}

@@ -1,0 +1,29 @@
+{
+  "id": "classification-catch22-shapeletsim",
+  "task": "classification",
+  "ran_at": "2026-10-15T11:24:23.271814+00:00",
+  "train_command": "libraryts train --algorithm Catch22Classifier --dataset ucr-shapeletsim --model-id bench-classification-catch22-shapeletsim --param random_state=0 --param n_jobs=1",
+  "run_command": "libraryts run --model-id bench-classification-catch22-shapeletsim --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 12.07,
+  "values": {
+    "Accuracy": 1.0
+  },
+  "per_metric": {
+    "Accuracy": {
+      "gt": 0.98889,
+      "value": 1.0,
+      "delta": 0.01111,
+      "delta_rel": 0.011235,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "Accuracy": 1.0,
+    "Macro F1": 1.0
+  },
+  "error": null,
+  "stdout_tail": "sification-catch22-shapeletsim\", \"preprocessor_id\": \"none\", \"params\": {}}, \"task\": \"classification\", \"dataset\": {\"id\": \"ucr-shapeletsim\", \"name\": \"UCR/UEA ShapeletSim\", \"task\": \"classification\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"ShapeletSim\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-classification-catch22-shapeletsim\", \"name\": \"Catch22Classifier (trained: bench-classification-catch22-shapeletsim)\", \"task\": \"classification\", \"module\": \"sktime.classification.feature_based._catch22_classifier.Catch22Classifier\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-9/playground/models/bench-classification-catch22-shapeletsim\", \"manifest\": {\"model_id\": \"bench-classification-catch22-shapeletsim\", \"backend\": \"sktime\", \"task\": \"classification\", \"algorithm_id\": \"registered-classification-Catch22Classifier\", \"algorithm_name\": \"Catch22Classifier\", \"module\": \"sktime.classification.feature_based._catch22_classifier.Catch22Classifier\", \"params\": {\"random_state\": 0, \"n_jobs\": 1}, \"eval_params\": {}, \"created_at\": \"2026-10-15T11:24:17.431249+00:00\", \"spec\": {\"task\": \"classification\", \"dataset_id\": \"ucr-shapeletsim\", \"algorithm_id\": \"registered-classification-Catch22Classifier\", \"preprocessor_id\": \"none\", \"params\": {\"random_state\": 0, \"n_jobs\": 1}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 4527.4, \"log\": [\"Selected dataset: UCR/UEA ShapeletSim\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-classification-catch22-shapeletsim (sktime backend, algorithm: registered-classification-Catch22Classifier, created: 2026-10-15T11:24:17.431249+00:00)\", \"Loaded UCR/UEA ShapeletSim train=20 test=180\", \"Finished in 4527.4 ms\"]}, \"error\": null}\n"
+}
