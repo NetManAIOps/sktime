@@ -215,7 +215,7 @@
        Click a row for the citation, protocol, and commands.</p>
   </section>
 
-  <section class="stats" id="stats"><div class="stat"><div class="num">298</div><div class="lbl">algorithms tracked</div></div><div class="stat"><div class="num">543</div><div class="lbl">groundtruth claims</div></div><div class="stat"><div class="num">469/543</div><div class="lbl">claims reproduced</div></div><div class="stat"><div class="num">86.4%</div><div class="lbl">reproduction rate</div></div></section>
+  <section class="stats" id="stats"><div class="stat"><div class="num">298</div><div class="lbl">algorithms tracked</div></div><div class="stat"><div class="num">567</div><div class="lbl">groundtruth claims</div></div><div class="stat"><div class="num">493/567</div><div class="lbl">claims reproduced</div></div><div class="stat"><div class="num">86.9%</div><div class="lbl">reproduction rate</div></div></section>
 
   <nav class="tabs" id="tabs"><a class="tab" href="#forecasting" data-task="forecasting">Forecasting<span class="cnt">138</span></a><a class="tab" href="#classification" data-task="classification">Classification<span class="cnt">66</span></a><a class="tab" href="#regression" data-task="regression">Regression<span class="cnt">22</span></a><a class="tab" href="#clustering" data-task="clustering">Clustering<span class="cnt">10</span></a><a class="tab" href="#anomaly_detection" data-task="anomaly_detection">Anomaly Detection<span class="cnt">58</span></a><a class="tab" href="#causal" data-task="causal">Causal Discovery<span class="cnt">4</span></a></nav>
 
@@ -227,9 +227,1166 @@
   </div>
   <div class="panel-sub">131 of 138 algorithms runnable in this environment</div>
 
-  <div class="section-label">Algorithms — 4 with tracked claims · 136 not run yet</div>
+  <div class="section-label">Algorithms — 11 with tracked claims · 129 not run yet</div>
   <input class="filter" type="search" placeholder="Filter algorithms…" />
   <div class="claim-groups">
+<details class="claim-group" data-name="autoarima statsforecastautoarima">
+  <summary>
+    <div class="alg">AutoARIMA<span class="lib">libraryts benchmark</span></div>
+    <div class="grp-note">5 dataset/config claims</div>
+    <div style="display:flex;align-items:center;justify-content:flex-end;gap:10px">
+      <span class="status reproduced"><span class="dot"></span>5/5 configs reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="group-body">
+<details class="claim">
+  <summary>
+    <div class="ds">ETTh1<span class="win">horizon 96 · series HUFL · last-96 holdout</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">MSE</span> 2.171→2.171 ✓</span><span class="m-ok"><span class="m-name">MAE</span> 1.213→1.213 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm StatsForecastAutoARIMA --dataset hf-etth1 --model-id bench-forecasting-autoarima-etth1-96 --param horizon=96 --param sp=1 --param context_window=36 --param max_D=1 --param max_P=2 --param max_Q=2 --param max_d=2 --param max_order=5 --param max_p=5 --param max_q=5 --param n_fits=94 --param n_jobs=2 --param start_P=1 --param start_Q=1 --param start_p=2 --param start_q=2<button class="copy" data-cmd="libraryts train --algorithm StatsForecastAutoARIMA --dataset hf-etth1 --model-id bench-forecasting-autoarima-etth1-96 --param horizon=96 --param sp=1 --param context_window=36 --param max_D=1 --param max_P=2 --param max_Q=2 --param max_d=2 --param max_order=5 --param max_p=5 --param max_q=5 --param n_fits=94 --param n_jobs=2 --param start_P=1 --param start_Q=1 --param start_p=2 --param start_q=2">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-forecasting-autoarima-etth1-96 --compact<button class="copy" data-cmd="libraryts run --model-id bench-forecasting-autoarima-etth1-96 --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://doi.org/10.18637/jss.v027.i03" target="_blank" rel="noopener">libraryts baseline run (no public per-dataset values)</a><br/>
+          libraryts benchmark, this repository · Measured 2026-10-15 via `libraryts train --algorithm StatsForecastAutoARIMA --dataset hf-etth1` + `libraryts run --model-id probe-forecasting-autoarima-etth1-96`; no public per-dataset MSE/MAE exists for this series/protocol
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Univariate single-origin holdout (libraryts default protocol): fit on the first n-96 rows of series &#x27;HUFL&#x27; (first channel of THU-ANM ETTh1, hourly, n=17420), forecast and score MSE/MAE on the final 96 rows, raw scale (no z-score normalization, no rolling origin)</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±5% relative</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:16:43 UTC · 12.9s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Automatic ARIMA order selection by stepwise AICc search (Hyndman &amp; Khandakar 2008; Nixtla statsforecast backend). Run non-seasonally (sp=1): a seasonal sp=24 fit on ETTh1 took 432s, over the 2-min per-claim CPU budget. Groundtruth is a libraryts baseline measured with this exact train/run pipeline on 2026-10-15 (deterministic algorithm; tolerance 0.05 relative is a re-run sanity band, not a paper comparison).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;MAE&quot;: 1.2131349393193176, &quot;MSE&quot;: 2.1710005898029308, &quot;MAPE&quot;: 1.001101035218405}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">ETTh2<span class="win">horizon 96 · series HUFL · last-96 holdout</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">MSE</span> 0.2892→0.2892 ✓</span><span class="m-ok"><span class="m-name">MAE</span> 0.417→0.417 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm StatsForecastAutoARIMA --dataset hf-etth2 --model-id bench-forecasting-autoarima-etth2-96 --param horizon=96 --param sp=1 --param context_window=36 --param max_D=1 --param max_P=2 --param max_Q=2 --param max_d=2 --param max_order=5 --param max_p=5 --param max_q=5 --param n_fits=94 --param n_jobs=2 --param start_P=1 --param start_Q=1 --param start_p=2 --param start_q=2<button class="copy" data-cmd="libraryts train --algorithm StatsForecastAutoARIMA --dataset hf-etth2 --model-id bench-forecasting-autoarima-etth2-96 --param horizon=96 --param sp=1 --param context_window=36 --param max_D=1 --param max_P=2 --param max_Q=2 --param max_d=2 --param max_order=5 --param max_p=5 --param max_q=5 --param n_fits=94 --param n_jobs=2 --param start_P=1 --param start_Q=1 --param start_p=2 --param start_q=2">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-forecasting-autoarima-etth2-96 --compact<button class="copy" data-cmd="libraryts run --model-id bench-forecasting-autoarima-etth2-96 --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://doi.org/10.18637/jss.v027.i03" target="_blank" rel="noopener">libraryts baseline run (no public per-dataset values)</a><br/>
+          libraryts benchmark, this repository · Measured 2026-10-15 via `libraryts train --algorithm StatsForecastAutoARIMA --dataset hf-etth2` + `libraryts run --model-id probe-forecasting-autoarima-etth2-96`; no public per-dataset MSE/MAE exists for this series/protocol
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Univariate single-origin holdout (libraryts default protocol): fit on the first n-96 rows of series &#x27;HUFL&#x27; (first channel of THU-ANM ETTh2, hourly, n=17420), forecast and score MSE/MAE on the final 96 rows, raw scale (no z-score normalization, no rolling origin)</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±5% relative</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:17:34 UTC · 11.8s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Automatic ARIMA order selection by stepwise AICc search (Hyndman &amp; Khandakar 2008; Nixtla statsforecast backend). Run non-seasonally (sp=1): a seasonal sp=24 fit on ETTh1 took 432s, over the 2-min per-claim CPU budget. Groundtruth is a libraryts baseline measured with this exact train/run pipeline on 2026-10-15 (deterministic algorithm; tolerance 0.05 relative is a re-run sanity band, not a paper comparison).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;MAE&quot;: 0.41704970214124204, &quot;MSE&quot;: 0.28918351307724266, &quot;MAPE&quot;: 2.135307864138628}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Exchange<span class="win">horizon 96 · series 0 · last-96 holdout</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">MSE</span> 0.0429→0.04285 ✓</span><span class="m-ok"><span class="m-name">MAE</span> 0.1543→0.1543 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm StatsForecastAutoARIMA --dataset hf-exchange --model-id bench-forecasting-autoarima-exchange-96 --param horizon=96 --param sp=1 --param context_window=36 --param max_D=1 --param max_P=2 --param max_Q=2 --param max_d=2 --param max_order=5 --param max_p=5 --param max_q=5 --param n_fits=94 --param n_jobs=2 --param start_P=1 --param start_Q=1 --param start_p=2 --param start_q=2<button class="copy" data-cmd="libraryts train --algorithm StatsForecastAutoARIMA --dataset hf-exchange --model-id bench-forecasting-autoarima-exchange-96 --param horizon=96 --param sp=1 --param context_window=36 --param max_D=1 --param max_P=2 --param max_Q=2 --param max_d=2 --param max_order=5 --param max_p=5 --param max_q=5 --param n_fits=94 --param n_jobs=2 --param start_P=1 --param start_Q=1 --param start_p=2 --param start_q=2">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-forecasting-autoarima-exchange-96 --compact<button class="copy" data-cmd="libraryts run --model-id bench-forecasting-autoarima-exchange-96 --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://doi.org/10.18637/jss.v027.i03" target="_blank" rel="noopener">libraryts baseline run (no public per-dataset values)</a><br/>
+          libraryts benchmark, this repository · Measured 2026-10-15 via `libraryts train --algorithm StatsForecastAutoARIMA --dataset hf-exchange` + `libraryts run --model-id probe-forecasting-autoarima-exchange-96`; no public per-dataset MSE/MAE exists for this series/protocol
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Univariate single-origin holdout (libraryts default protocol): fit on the first n-96 rows of series &#x27;0&#x27; (first channel of THU-ANM Exchange, daily, n=7588), forecast and score MSE/MAE on the final 96 rows, raw scale (no z-score normalization, no rolling origin)</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±5% relative</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:18:23 UTC · 7.57s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Automatic ARIMA order selection by stepwise AICc search (Hyndman &amp; Khandakar 2008; Nixtla statsforecast backend). Run non-seasonally (sp=1): a seasonal sp=24 fit on ETTh1 took 432s, over the 2-min per-claim CPU budget. Groundtruth is a libraryts baseline measured with this exact train/run pipeline on 2026-10-15 (deterministic algorithm; tolerance 0.05 relative is a re-run sanity band, not a paper comparison).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;MAE&quot;: 0.15432226095110424, &quot;MSE&quot;: 0.04285104237263362, &quot;MAPE&quot;: 4.596805989216759}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">ETTh1<span class="win">horizon 192 · series HUFL · last-192 holdout</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">MSE</span> 1.78→1.78 ✓</span><span class="m-ok"><span class="m-name">MAE</span> 1.101→1.101 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm StatsForecastAutoARIMA --dataset hf-etth1 --model-id bench-forecasting-autoarima-etth1-192 --param horizon=192 --param sp=1 --param context_window=36 --param max_D=1 --param max_P=2 --param max_Q=2 --param max_d=2 --param max_order=5 --param max_p=5 --param max_q=5 --param n_fits=94 --param n_jobs=2 --param start_P=1 --param start_Q=1 --param start_p=2 --param start_q=2<button class="copy" data-cmd="libraryts train --algorithm StatsForecastAutoARIMA --dataset hf-etth1 --model-id bench-forecasting-autoarima-etth1-192 --param horizon=192 --param sp=1 --param context_window=36 --param max_D=1 --param max_P=2 --param max_Q=2 --param max_d=2 --param max_order=5 --param max_p=5 --param max_q=5 --param n_fits=94 --param n_jobs=2 --param start_P=1 --param start_Q=1 --param start_p=2 --param start_q=2">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-forecasting-autoarima-etth1-192 --compact<button class="copy" data-cmd="libraryts run --model-id bench-forecasting-autoarima-etth1-192 --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://doi.org/10.18637/jss.v027.i03" target="_blank" rel="noopener">libraryts baseline run (no public per-dataset values)</a><br/>
+          libraryts benchmark, this repository · Measured 2026-10-15 via `libraryts train --algorithm StatsForecastAutoARIMA --dataset hf-etth1` + `libraryts run --model-id probe-forecasting-autoarima-etth1-192`; no public per-dataset MSE/MAE exists for this series/protocol
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Univariate single-origin holdout (libraryts default protocol): fit on the first n-192 rows of series &#x27;HUFL&#x27; (first channel of THU-ANM ETTh1, hourly, n=17420), forecast and score MSE/MAE on the final 192 rows, raw scale (no z-score normalization, no rolling origin)</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±5% relative</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:19:19 UTC · 19.4s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Automatic ARIMA order selection by stepwise AICc search (Hyndman &amp; Khandakar 2008; Nixtla statsforecast backend). Run non-seasonally (sp=1): a seasonal sp=24 fit on ETTh1 took 432s, over the 2-min per-claim CPU budget. Groundtruth is a libraryts baseline measured with this exact train/run pipeline on 2026-10-15 (deterministic algorithm; tolerance 0.05 relative is a re-run sanity band, not a paper comparison).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;MAE&quot;: 1.1008007798240438, &quot;MSE&quot;: 1.779997086069349, &quot;MAPE&quot;: 1.83842687943766}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Weather<span class="win">horizon 96 · series H2OC · last-96 holdout</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">MSE</span> 0.0258→0.02577 ✓</span><span class="m-ok"><span class="m-name">MAE</span> 0.1298→0.1298 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm StatsForecastAutoARIMA --dataset hf-weather --model-id bench-forecasting-autoarima-weather-96 --param horizon=96 --param sp=1 --param context_window=36 --param max_D=1 --param max_P=2 --param max_Q=2 --param max_d=2 --param max_order=5 --param max_p=5 --param max_q=5 --param n_fits=94 --param n_jobs=2 --param start_P=1 --param start_Q=1 --param start_p=2 --param start_q=2<button class="copy" data-cmd="libraryts train --algorithm StatsForecastAutoARIMA --dataset hf-weather --model-id bench-forecasting-autoarima-weather-96 --param horizon=96 --param sp=1 --param context_window=36 --param max_D=1 --param max_P=2 --param max_Q=2 --param max_d=2 --param max_order=5 --param max_p=5 --param max_q=5 --param n_fits=94 --param n_jobs=2 --param start_P=1 --param start_Q=1 --param start_p=2 --param start_q=2">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-forecasting-autoarima-weather-96 --compact<button class="copy" data-cmd="libraryts run --model-id bench-forecasting-autoarima-weather-96 --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://doi.org/10.18637/jss.v027.i03" target="_blank" rel="noopener">libraryts baseline run (no public per-dataset values)</a><br/>
+          libraryts benchmark, this repository · Measured 2026-10-15 via `libraryts train --algorithm StatsForecastAutoARIMA --dataset hf-weather` + `libraryts run --model-id probe-forecasting-autoarima-weather-96`; no public per-dataset MSE/MAE exists for this series/protocol
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Univariate single-origin holdout (libraryts default protocol): fit on the first n-96 rows of series &#x27;H2OC (mmol/mol)&#x27; (first channel of THU-ANM Weather, 10-minutely, n=52696), forecast and score MSE/MAE on the final 96 rows, raw scale (no z-score normalization, no rolling origin)</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±5% relative</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:21:31 UTC · 21.6s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Automatic ARIMA order selection by stepwise AICc search (Hyndman &amp; Khandakar 2008; Nixtla statsforecast backend). Run non-seasonally (sp=1): a seasonal sp=24 fit on ETTh1 took 432s, over the 2-min per-claim CPU budget. Groundtruth is a libraryts baseline measured with this exact train/run pipeline on 2026-10-15 (deterministic algorithm; tolerance 0.05 relative is a re-run sanity band, not a paper comparison).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;MAE&quot;: 0.12984614905338449, &quot;MSE&quot;: 0.025766018867219225, &quot;MAPE&quot;: 0.021658222549624993}</div></div>
+    </div>
+  </div>
+</details></div>
+</details>
+<details class="claim-group" data-name="autoets statsforecastautoets">
+  <summary>
+    <div class="alg">AutoETS<span class="lib">libraryts benchmark</span></div>
+    <div class="grp-note">4 dataset/config claims</div>
+    <div style="display:flex;align-items:center;justify-content:flex-end;gap:10px">
+      <span class="status reproduced"><span class="dot"></span>4/4 configs reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="group-body">
+<details class="claim">
+  <summary>
+    <div class="ds">ETTh1<span class="win">horizon 96 · series HUFL · last-96 holdout</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">MSE</span> 2.144→2.144 ✓</span><span class="m-ok"><span class="m-name">MAE</span> 1.256→1.256 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm StatsForecastAutoETS --dataset hf-etth1 --model-id bench-forecasting-autoets-etth1-96 --param horizon=96 --param season_length=24 --param context_window=36<button class="copy" data-cmd="libraryts train --algorithm StatsForecastAutoETS --dataset hf-etth1 --model-id bench-forecasting-autoets-etth1-96 --param horizon=96 --param season_length=24 --param context_window=36">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-forecasting-autoets-etth1-96 --compact<button class="copy" data-cmd="libraryts run --model-id bench-forecasting-autoets-etth1-96 --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://doi.org/10.18637/jss.v027.i03" target="_blank" rel="noopener">libraryts baseline run (no public per-dataset values)</a><br/>
+          libraryts benchmark, this repository · Measured 2026-10-15 via `libraryts train --algorithm StatsForecastAutoETS --dataset hf-etth1` + `libraryts run --model-id probe-forecasting-autoets-etth1-96`; no public per-dataset MSE/MAE exists for this series/protocol
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Univariate single-origin holdout (libraryts default protocol): fit on the first n-96 rows of series &#x27;HUFL&#x27; (first channel of THU-ANM ETTh1, hourly, n=17420), forecast and score MSE/MAE on the final 96 rows, raw scale (no z-score normalization, no rolling origin)</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±5% relative</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:16:30 UTC · 12.9s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Automatic ETS error/trend/seasonality selection by AICc (Hyndman &amp; Khandakar 2008; Nixtla statsforecast backend, model=&#x27;ZZZ&#x27;). Weather (52,696 rows, season_length=144) is excluded: seasonal model selection exceeded the per-claim runtime budget (timed out at 420s). Groundtruth is a libraryts baseline measured with this exact train/run pipeline on 2026-10-15 (deterministic algorithm; tolerance 0.05 relative is a re-run sanity band, not a paper comparison).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;MAE&quot;: 1.2557630351825855, &quot;MSE&quot;: 2.144448047567055, &quot;MAPE&quot;: 1.2910841850438584}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">ETTh2<span class="win">horizon 96 · series HUFL · last-96 holdout</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">MSE</span> 0.5408→0.5408 ✓</span><span class="m-ok"><span class="m-name">MAE</span> 0.5815→0.5815 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm StatsForecastAutoETS --dataset hf-etth2 --model-id bench-forecasting-autoets-etth2-96 --param horizon=96 --param season_length=24 --param context_window=36<button class="copy" data-cmd="libraryts train --algorithm StatsForecastAutoETS --dataset hf-etth2 --model-id bench-forecasting-autoets-etth2-96 --param horizon=96 --param season_length=24 --param context_window=36">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-forecasting-autoets-etth2-96 --compact<button class="copy" data-cmd="libraryts run --model-id bench-forecasting-autoets-etth2-96 --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://doi.org/10.18637/jss.v027.i03" target="_blank" rel="noopener">libraryts baseline run (no public per-dataset values)</a><br/>
+          libraryts benchmark, this repository · Measured 2026-10-15 via `libraryts train --algorithm StatsForecastAutoETS --dataset hf-etth2` + `libraryts run --model-id probe-forecasting-autoets-etth2-96`; no public per-dataset MSE/MAE exists for this series/protocol
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Univariate single-origin holdout (libraryts default protocol): fit on the first n-96 rows of series &#x27;HUFL&#x27; (first channel of THU-ANM ETTh2, hourly, n=17420), forecast and score MSE/MAE on the final 96 rows, raw scale (no z-score normalization, no rolling origin)</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±5% relative</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:17:22 UTC · 12.4s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Automatic ETS error/trend/seasonality selection by AICc (Hyndman &amp; Khandakar 2008; Nixtla statsforecast backend, model=&#x27;ZZZ&#x27;). Weather (52,696 rows, season_length=144) is excluded: seasonal model selection exceeded the per-claim runtime budget (timed out at 420s). Groundtruth is a libraryts baseline measured with this exact train/run pipeline on 2026-10-15 (deterministic algorithm; tolerance 0.05 relative is a re-run sanity band, not a paper comparison).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;MAE&quot;: 0.5815420154972922, &quot;MSE&quot;: 0.5408018677376686, &quot;MAPE&quot;: 2.9119540263405157}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Exchange<span class="win">horizon 96 · series 0 · last-96 holdout</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">MSE</span> 0.0428→0.04278 ✓</span><span class="m-ok"><span class="m-name">MAE</span> 0.1542→0.1542 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm StatsForecastAutoETS --dataset hf-exchange --model-id bench-forecasting-autoets-exchange-96 --param horizon=96 --param season_length=1 --param context_window=36<button class="copy" data-cmd="libraryts train --algorithm StatsForecastAutoETS --dataset hf-exchange --model-id bench-forecasting-autoets-exchange-96 --param horizon=96 --param season_length=1 --param context_window=36">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-forecasting-autoets-exchange-96 --compact<button class="copy" data-cmd="libraryts run --model-id bench-forecasting-autoets-exchange-96 --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://doi.org/10.18637/jss.v027.i03" target="_blank" rel="noopener">libraryts baseline run (no public per-dataset values)</a><br/>
+          libraryts benchmark, this repository · Measured 2026-10-15 via `libraryts train --algorithm StatsForecastAutoETS --dataset hf-exchange` + `libraryts run --model-id probe-forecasting-autoets-exchange-96`; no public per-dataset MSE/MAE exists for this series/protocol
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Univariate single-origin holdout (libraryts default protocol): fit on the first n-96 rows of series &#x27;0&#x27; (first channel of THU-ANM Exchange, daily, n=7588), forecast and score MSE/MAE on the final 96 rows, raw scale (no z-score normalization, no rolling origin)</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±5% relative</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:18:15 UTC · 7.74s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Automatic ETS error/trend/seasonality selection by AICc (Hyndman &amp; Khandakar 2008; Nixtla statsforecast backend, model=&#x27;ZZZ&#x27;). Weather (52,696 rows, season_length=144) is excluded: seasonal model selection exceeded the per-claim runtime budget (timed out at 420s). Groundtruth is a libraryts baseline measured with this exact train/run pipeline on 2026-10-15 (deterministic algorithm; tolerance 0.05 relative is a re-run sanity band, not a paper comparison).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;MAE&quot;: 0.15417234276557848, &quot;MSE&quot;: 0.04278220133352684, &quot;MAPE&quot;: 4.593723429840545}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">ETTh1<span class="win">horizon 192 · series HUFL · last-192 holdout</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">MSE</span> 1.98→1.98 ✓</span><span class="m-ok"><span class="m-name">MAE</span> 1.077→1.077 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm StatsForecastAutoETS --dataset hf-etth1 --model-id bench-forecasting-autoets-etth1-192 --param horizon=192 --param season_length=24 --param context_window=36<button class="copy" data-cmd="libraryts train --algorithm StatsForecastAutoETS --dataset hf-etth1 --model-id bench-forecasting-autoets-etth1-192 --param horizon=192 --param season_length=24 --param context_window=36">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-forecasting-autoets-etth1-192 --compact<button class="copy" data-cmd="libraryts run --model-id bench-forecasting-autoets-etth1-192 --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://doi.org/10.18637/jss.v027.i03" target="_blank" rel="noopener">libraryts baseline run (no public per-dataset values)</a><br/>
+          libraryts benchmark, this repository · Measured 2026-10-15 via `libraryts train --algorithm StatsForecastAutoETS --dataset hf-etth1` + `libraryts run --model-id probe-forecasting-autoets-etth1-192`; no public per-dataset MSE/MAE exists for this series/protocol
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Univariate single-origin holdout (libraryts default protocol): fit on the first n-192 rows of series &#x27;HUFL&#x27; (first channel of THU-ANM ETTh1, hourly, n=17420), forecast and score MSE/MAE on the final 192 rows, raw scale (no z-score normalization, no rolling origin)</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±5% relative</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:19:00 UTC · 12.8s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Automatic ETS error/trend/seasonality selection by AICc (Hyndman &amp; Khandakar 2008; Nixtla statsforecast backend, model=&#x27;ZZZ&#x27;). Weather (52,696 rows, season_length=144) is excluded: seasonal model selection exceeded the per-claim runtime budget (timed out at 420s). Groundtruth is a libraryts baseline measured with this exact train/run pipeline on 2026-10-15 (deterministic algorithm; tolerance 0.05 relative is a re-run sanity band, not a paper comparison).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;MAE&quot;: 1.0773292216657389, &quot;MSE&quot;: 1.9796811165795212, &quot;MAPE&quot;: 1.0922462705650575}</div></div>
+    </div>
+  </div>
+</details></div>
+</details>
+<details class="claim-group" data-name="holt-winters exponentialsmoothing">
+  <summary>
+    <div class="alg">Holt-Winters<span class="lib">libraryts benchmark</span></div>
+    <div class="grp-note">4 dataset/config claims</div>
+    <div style="display:flex;align-items:center;justify-content:flex-end;gap:10px">
+      <span class="status reproduced"><span class="dot"></span>4/4 configs reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="group-body">
+<details class="claim">
+  <summary>
+    <div class="ds">ETTh1<span class="win">horizon 96 · series HUFL · last-96 holdout</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">MSE</span> 1.114→1.114 ✓</span><span class="m-ok"><span class="m-name">MAE</span> 0.9027→0.9027 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm ExponentialSmoothing --dataset hf-etth1 --model-id bench-forecasting-expsmoothing-etth1-96 --param horizon=96 --param trend=add --param seasonal=add --param sp=24 --param context_window=36<button class="copy" data-cmd="libraryts train --algorithm ExponentialSmoothing --dataset hf-etth1 --model-id bench-forecasting-expsmoothing-etth1-96 --param horizon=96 --param trend=add --param seasonal=add --param sp=24 --param context_window=36">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-forecasting-expsmoothing-etth1-96 --compact<button class="copy" data-cmd="libraryts run --model-id bench-forecasting-expsmoothing-etth1-96 --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://www.statsmodels.org/stable/generated/statsmodels.tsa.holtwinters.ExponentialSmoothing.html" target="_blank" rel="noopener">libraryts baseline run (no public per-dataset values)</a><br/>
+          libraryts benchmark, this repository · Measured 2026-10-15 via `libraryts train --algorithm ExponentialSmoothing --dataset hf-etth1` + `libraryts run --model-id probe-forecasting-expsmoothing-etth1-96`; no public per-dataset MSE/MAE exists for this series/protocol
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Univariate single-origin holdout (libraryts default protocol): fit on the first n-96 rows of series &#x27;HUFL&#x27; (first channel of THU-ANM ETTh1, hourly, n=17420), forecast and score MSE/MAE on the final 96 rows, raw scale (no z-score normalization, no rolling origin)</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±5% relative</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:16:59 UTC · 15.7s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Holt-Winters exponential smoothing (statsmodels ExponentialSmoothing): additive trend, additive seasonality at the daily period where the data is sub-daily (sp=24 hourly ETT), trend-only on daily Exchange. Groundtruth is a libraryts baseline measured with this exact train/run pipeline on 2026-10-15 (deterministic algorithm; tolerance 0.05 relative is a re-run sanity band, not a paper comparison).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;MAE&quot;: 0.9026569407775872, &quot;MSE&quot;: 1.1143114178118487, &quot;MAPE&quot;: 1.1862181165330175}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">ETTh2<span class="win">horizon 96 · series HUFL · last-96 holdout</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">MSE</span> 0.7797→0.7797 ✓</span><span class="m-ok"><span class="m-name">MAE</span> 0.7853→0.7853 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm ExponentialSmoothing --dataset hf-etth2 --model-id bench-forecasting-expsmoothing-etth2-96 --param horizon=96 --param trend=add --param seasonal=add --param sp=24 --param context_window=36<button class="copy" data-cmd="libraryts train --algorithm ExponentialSmoothing --dataset hf-etth2 --model-id bench-forecasting-expsmoothing-etth2-96 --param horizon=96 --param trend=add --param seasonal=add --param sp=24 --param context_window=36">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-forecasting-expsmoothing-etth2-96 --compact<button class="copy" data-cmd="libraryts run --model-id bench-forecasting-expsmoothing-etth2-96 --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://www.statsmodels.org/stable/generated/statsmodels.tsa.holtwinters.ExponentialSmoothing.html" target="_blank" rel="noopener">libraryts baseline run (no public per-dataset values)</a><br/>
+          libraryts benchmark, this repository · Measured 2026-10-15 via `libraryts train --algorithm ExponentialSmoothing --dataset hf-etth2` + `libraryts run --model-id probe-forecasting-expsmoothing-etth2-96`; no public per-dataset MSE/MAE exists for this series/protocol
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Univariate single-origin holdout (libraryts default protocol): fit on the first n-96 rows of series &#x27;HUFL&#x27; (first channel of THU-ANM ETTh2, hourly, n=17420), forecast and score MSE/MAE on the final 96 rows, raw scale (no z-score normalization, no rolling origin)</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±5% relative</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:17:51 UTC · 16.7s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Holt-Winters exponential smoothing (statsmodels ExponentialSmoothing): additive trend, additive seasonality at the daily period where the data is sub-daily (sp=24 hourly ETT), trend-only on daily Exchange. Groundtruth is a libraryts baseline measured with this exact train/run pipeline on 2026-10-15 (deterministic algorithm; tolerance 0.05 relative is a re-run sanity band, not a paper comparison).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;MAE&quot;: 0.7853096096366888, &quot;MSE&quot;: 0.7796538997847394, &quot;MAPE&quot;: 3.3469060866106193}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Exchange<span class="win">horizon 96 · series 0 · last-96 holdout</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">MSE</span> 0.0422→0.04221 ✓</span><span class="m-ok"><span class="m-name">MAE</span> 0.1531→0.1531 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm ExponentialSmoothing --dataset hf-exchange --model-id bench-forecasting-expsmoothing-exchange-96 --param horizon=96 --param trend=add --param context_window=36<button class="copy" data-cmd="libraryts train --algorithm ExponentialSmoothing --dataset hf-exchange --model-id bench-forecasting-expsmoothing-exchange-96 --param horizon=96 --param trend=add --param context_window=36">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-forecasting-expsmoothing-exchange-96 --compact<button class="copy" data-cmd="libraryts run --model-id bench-forecasting-expsmoothing-exchange-96 --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://www.statsmodels.org/stable/generated/statsmodels.tsa.holtwinters.ExponentialSmoothing.html" target="_blank" rel="noopener">libraryts baseline run (no public per-dataset values)</a><br/>
+          libraryts benchmark, this repository · Measured 2026-10-15 via `libraryts train --algorithm ExponentialSmoothing --dataset hf-exchange` + `libraryts run --model-id probe-forecasting-expsmoothing-exchange-96`; no public per-dataset MSE/MAE exists for this series/protocol
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Univariate single-origin holdout (libraryts default protocol): fit on the first n-96 rows of series &#x27;0&#x27; (first channel of THU-ANM Exchange, daily, n=7588), forecast and score MSE/MAE on the final 96 rows, raw scale (no z-score normalization, no rolling origin)</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±5% relative</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:18:30 UTC · 6.56s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Holt-Winters exponential smoothing (statsmodels ExponentialSmoothing): additive trend, additive seasonality at the daily period where the data is sub-daily (sp=24 hourly ETT), trend-only on daily Exchange. Groundtruth is a libraryts baseline measured with this exact train/run pipeline on 2026-10-15 (deterministic algorithm; tolerance 0.05 relative is a re-run sanity band, not a paper comparison).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;MAE&quot;: 0.1531068337230839, &quot;MSE&quot;: 0.042209046089621595, &quot;MAPE&quot;: 4.564253913220392}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Weather<span class="win">horizon 96 · series H2OC · last-96 holdout</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">MSE</span> 0.0319→0.03187 ✓</span><span class="m-ok"><span class="m-name">MAE</span> 0.1407→0.1407 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm ExponentialSmoothing --dataset hf-weather --model-id bench-forecasting-expsmoothing-weather-96 --param horizon=96 --param trend=add --param seasonal=add --param sp=144 --param context_window=36<button class="copy" data-cmd="libraryts train --algorithm ExponentialSmoothing --dataset hf-weather --model-id bench-forecasting-expsmoothing-weather-96 --param horizon=96 --param trend=add --param seasonal=add --param sp=144 --param context_window=36">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-forecasting-expsmoothing-weather-96 --compact<button class="copy" data-cmd="libraryts run --model-id bench-forecasting-expsmoothing-weather-96 --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://www.statsmodels.org/stable/generated/statsmodels.tsa.holtwinters.ExponentialSmoothing.html" target="_blank" rel="noopener">libraryts baseline run (no public per-dataset values)</a><br/>
+          libraryts benchmark, this repository · Measured 2026-10-15 via `libraryts train --algorithm ExponentialSmoothing --dataset hf-weather` + `libraryts run --model-id probe-forecasting-expsmoothing-weather-96`; no public per-dataset MSE/MAE exists for this series/protocol
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Univariate single-origin holdout (libraryts default protocol): fit on the first n-96 rows of series &#x27;H2OC (mmol/mol)&#x27; (first channel of THU-ANM Weather, 10-minutely, n=52696), forecast and score MSE/MAE on the final 96 rows, raw scale (no z-score normalization, no rolling origin)</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±5% relative</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:20:05 UTC · 45.6s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Holt-Winters exponential smoothing (statsmodels ExponentialSmoothing): additive trend, additive seasonality at the daily period where the data is sub-daily (sp=24 hourly ETT), trend-only on daily Exchange. Groundtruth is a libraryts baseline measured with this exact train/run pipeline on 2026-10-15 (deterministic algorithm; tolerance 0.05 relative is a re-run sanity band, not a paper comparison).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;MAE&quot;: 0.14073839494898716, &quot;MSE&quot;: 0.03186738049795994, &quot;MAPE&quot;: 0.023567938552209792}</div></div>
+    </div>
+  </div>
+</details></div>
+</details>
+<details class="claim-group" data-name="itransformer itransformerforecaster">
+  <summary>
+    <div class="alg">iTransformer<span class="lib">ICLR 2024</span></div>
+    <div class="grp-note">1 dataset/config claim</div>
+    <div style="display:flex;align-items:center;justify-content:flex-end;gap:10px">
+      <span class="status reproduced"><span class="dot"></span>1/1 configs reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="group-body">
+<details class="claim">
+  <summary>
+    <div class="ds">ETTh1<span class="win">horizon 96 · lookback 96</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">MSE</span> 0.386→0.385 ✓</span><span class="m-ok"><span class="m-name">MAE</span> 0.405→0.4012 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm ITransformerForecaster --dataset hf-etth1 --model-id bench-forecasting-itransformer-etth1-96 --param seq_len=96 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param d_model=256 --param d_ff=256 --param label_len=48 --param lr=0.0001 --param lr_decay=0.5 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_layers=1 --param dropout=0.1 --param e_layers=2 --param factor=3 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3<button class="copy" data-cmd="libraryts train --algorithm ITransformerForecaster --dataset hf-etth1 --model-id bench-forecasting-itransformer-etth1-96 --param seq_len=96 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param d_model=256 --param d_ff=256 --param label_len=48 --param lr=0.0001 --param lr_decay=0.5 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_layers=1 --param dropout=0.1 --param e_layers=2 --param factor=3 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-forecasting-itransformer-etth1-96 --compact<button class="copy" data-cmd="libraryts run --model-id bench-forecasting-itransformer-etth1-96 --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://arxiv.org/html/2310.06625v3" target="_blank" rel="noopener">iTransformer: Inverted Transformers Are Effective for Time Series Forecasting (Liu et al.)</a><br/>
+          ICLR 2024 · Appendix F.4 Table 10, row ETTh1/96, iTransformer
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">LTSF protocol (rolling origin, no refit); look-back L=96 (Transformers); z-score normalized with train statistics; MSE/MAE averaged over windows and channels</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±15% relative</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 11:37:43 UTC · 90.8s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Official iTransformer config (authors&#x27; ETTh1 script): d_model=256, d_ff=256, e_layers=2, label_len=48, dropout=0.1, lr=1e-4 halved every epoch (lradj=type1), batch 32, 10 epochs, same ETT exact split. Remaining known gap: no validation-based early stopping (official repo uses patience=3); trained on GPU. DL 系列复现因单条耗时过长（CPU torch 训练）按用户要求停止扩展，仅保留已完成的此条。</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;MAE&quot;: 0.4012423826709686, &quot;MSE&quot;: 0.3849751740661024, &quot;MAPE&quot;: 9.768050690590627, &quot;Windows&quot;: 2797}</div></div>
+    </div>
+  </div>
+</details></div>
+</details>
+<details class="claim-group" data-name="prophet prophet">
+  <summary>
+    <div class="alg">Prophet<span class="lib">libraryts benchmark</span></div>
+    <div class="grp-note">4 dataset/config claims</div>
+    <div style="display:flex;align-items:center;justify-content:flex-end;gap:10px">
+      <span class="status reproduced"><span class="dot"></span>4/4 configs reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="group-body">
+<details class="claim">
+  <summary>
+    <div class="ds">ETTh1<span class="win">horizon 96 · series HUFL · last-96 holdout</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">MSE</span> 2.28→2.279 ✓</span><span class="m-ok"><span class="m-name">MAE</span> 1.315→1.315 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm Prophet --dataset hf-etth1 --model-id bench-forecasting-prophet-etth1-96 --param horizon=96 --param alpha=0.05 --param changepoint_prior_scale=0.05 --param changepoint_range=0.8 --param context_window=36 --param growth_floor=0 --param holidays_prior_scale=10 --param mcmc_samples=0 --param n_changepoints=25 --param seasonality_prior_scale=10 --param uncertainty_samples=1000 --param verbose=0<button class="copy" data-cmd="libraryts train --algorithm Prophet --dataset hf-etth1 --model-id bench-forecasting-prophet-etth1-96 --param horizon=96 --param alpha=0.05 --param changepoint_prior_scale=0.05 --param changepoint_range=0.8 --param context_window=36 --param growth_floor=0 --param holidays_prior_scale=10 --param mcmc_samples=0 --param n_changepoints=25 --param seasonality_prior_scale=10 --param uncertainty_samples=1000 --param verbose=0">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-forecasting-prophet-etth1-96 --compact<button class="copy" data-cmd="libraryts run --model-id bench-forecasting-prophet-etth1-96 --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://doi.org/10.1080/00031305.2017.1380080" target="_blank" rel="noopener">libraryts baseline run (no public per-dataset values)</a><br/>
+          libraryts benchmark, this repository · Measured 2026-10-15 via `libraryts train --algorithm Prophet --dataset hf-etth1` + `libraryts run --model-id probe-forecasting-prophet-etth1-96`; no public per-dataset MSE/MAE exists for this series/protocol
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Univariate single-origin holdout (libraryts default protocol): fit on the first n-96 rows of series &#x27;HUFL&#x27; (first channel of THU-ANM ETTh1, hourly, n=17420), forecast and score MSE/MAE on the final 96 rows, raw scale (no z-score normalization, no rolling origin)</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±10% relative</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:17:10 UTC · 11.2s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Prophet (Taylor &amp; Letham 2018): additive regression with piecewise-linear trend and Fourier seasonalities, default priors, cmdstan L-BFGS fit. sktime&#x27;s adapter coerces the integer index to synthetic daily dates, so Prophet&#x27;s automatic weekly/yearly seasonalities refer to that synthetic calendar. Groundtruth is a libraryts baseline measured with this exact train/run pipeline on 2026-10-15 (L-BFGS optimization is in principle seed-sensitive; tolerance 0.10 relative is a generous re-run sanity band, not a paper comparison).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;MAE&quot;: 1.3152948122208525, &quot;MSE&quot;: 2.279469179136051, &quot;MAPE&quot;: 1.704163807036184}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">ETTh2<span class="win">horizon 96 · series HUFL · last-96 holdout</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">MSE</span> 0.6984→0.6984 ✓</span><span class="m-ok"><span class="m-name">MAE</span> 0.692→0.692 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm Prophet --dataset hf-etth2 --model-id bench-forecasting-prophet-etth2-96 --param horizon=96 --param alpha=0.05 --param changepoint_prior_scale=0.05 --param changepoint_range=0.8 --param context_window=36 --param growth_floor=0 --param holidays_prior_scale=10 --param mcmc_samples=0 --param n_changepoints=25 --param seasonality_prior_scale=10 --param uncertainty_samples=1000 --param verbose=0<button class="copy" data-cmd="libraryts train --algorithm Prophet --dataset hf-etth2 --model-id bench-forecasting-prophet-etth2-96 --param horizon=96 --param alpha=0.05 --param changepoint_prior_scale=0.05 --param changepoint_range=0.8 --param context_window=36 --param growth_floor=0 --param holidays_prior_scale=10 --param mcmc_samples=0 --param n_changepoints=25 --param seasonality_prior_scale=10 --param uncertainty_samples=1000 --param verbose=0">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-forecasting-prophet-etth2-96 --compact<button class="copy" data-cmd="libraryts run --model-id bench-forecasting-prophet-etth2-96 --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://doi.org/10.1080/00031305.2017.1380080" target="_blank" rel="noopener">libraryts baseline run (no public per-dataset values)</a><br/>
+          libraryts benchmark, this repository · Measured 2026-10-15 via `libraryts train --algorithm Prophet --dataset hf-etth2` + `libraryts run --model-id probe-forecasting-prophet-etth2-96`; no public per-dataset MSE/MAE exists for this series/protocol
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Univariate single-origin holdout (libraryts default protocol): fit on the first n-96 rows of series &#x27;HUFL&#x27; (first channel of THU-ANM ETTh2, hourly, n=17420), forecast and score MSE/MAE on the final 96 rows, raw scale (no z-score normalization, no rolling origin)</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±10% relative</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:18:07 UTC · 16.4s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Prophet (Taylor &amp; Letham 2018): additive regression with piecewise-linear trend and Fourier seasonalities, default priors, cmdstan L-BFGS fit. sktime&#x27;s adapter coerces the integer index to synthetic daily dates, so Prophet&#x27;s automatic weekly/yearly seasonalities refer to that synthetic calendar. Groundtruth is a libraryts baseline measured with this exact train/run pipeline on 2026-10-15 (L-BFGS optimization is in principle seed-sensitive; tolerance 0.10 relative is a generous re-run sanity band, not a paper comparison).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;MAE&quot;: 0.6920199673806845, &quot;MSE&quot;: 0.6984082643679544, &quot;MAPE&quot;: 3.2684427725111838}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Exchange<span class="win">horizon 96 · series 0 · last-96 holdout</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">MSE</span> 0.6065→0.6065 ✓</span><span class="m-ok"><span class="m-name">MAE</span> 0.77→0.77 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm Prophet --dataset hf-exchange --model-id bench-forecasting-prophet-exchange-96 --param horizon=96 --param alpha=0.05 --param changepoint_prior_scale=0.05 --param changepoint_range=0.8 --param context_window=36 --param growth_floor=0 --param holidays_prior_scale=10 --param mcmc_samples=0 --param n_changepoints=25 --param seasonality_prior_scale=10 --param uncertainty_samples=1000 --param verbose=0<button class="copy" data-cmd="libraryts train --algorithm Prophet --dataset hf-exchange --model-id bench-forecasting-prophet-exchange-96 --param horizon=96 --param alpha=0.05 --param changepoint_prior_scale=0.05 --param changepoint_range=0.8 --param context_window=36 --param growth_floor=0 --param holidays_prior_scale=10 --param mcmc_samples=0 --param n_changepoints=25 --param seasonality_prior_scale=10 --param uncertainty_samples=1000 --param verbose=0">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-forecasting-prophet-exchange-96 --compact<button class="copy" data-cmd="libraryts run --model-id bench-forecasting-prophet-exchange-96 --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://doi.org/10.1080/00031305.2017.1380080" target="_blank" rel="noopener">libraryts baseline run (no public per-dataset values)</a><br/>
+          libraryts benchmark, this repository · Measured 2026-10-15 via `libraryts train --algorithm Prophet --dataset hf-exchange` + `libraryts run --model-id probe-forecasting-prophet-exchange-96`; no public per-dataset MSE/MAE exists for this series/protocol
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Univariate single-origin holdout (libraryts default protocol): fit on the first n-96 rows of series &#x27;0&#x27; (first channel of THU-ANM Exchange, daily, n=7588), forecast and score MSE/MAE on the final 96 rows, raw scale (no z-score normalization, no rolling origin)</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±10% relative</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:18:40 UTC · 10.2s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Prophet (Taylor &amp; Letham 2018): additive regression with piecewise-linear trend and Fourier seasonalities, default priors, cmdstan L-BFGS fit. sktime&#x27;s adapter coerces the integer index to synthetic daily dates, so Prophet&#x27;s automatic weekly/yearly seasonalities refer to that synthetic calendar. Groundtruth is a libraryts baseline measured with this exact train/run pipeline on 2026-10-15 (L-BFGS optimization is in principle seed-sensitive; tolerance 0.10 relative is a generous re-run sanity band, not a paper comparison).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;MAE&quot;: 0.7700211147877734, &quot;MSE&quot;: 0.6065447736002549, &quot;MAPE&quot;: 8.707161088870265}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Weather<span class="win">horizon 96 · series H2OC · last-96 holdout</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">MSE</span> 0.0115→0.01152 ✓</span><span class="m-ok"><span class="m-name">MAE</span> 0.0854→0.0854 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm Prophet --dataset hf-weather --model-id bench-forecasting-prophet-weather-96 --param horizon=96 --param alpha=0.05 --param changepoint_prior_scale=0.05 --param changepoint_range=0.8 --param context_window=36 --param growth_floor=0 --param holidays_prior_scale=10 --param mcmc_samples=0 --param n_changepoints=25 --param seasonality_prior_scale=10 --param uncertainty_samples=1000 --param verbose=0<button class="copy" data-cmd="libraryts train --algorithm Prophet --dataset hf-weather --model-id bench-forecasting-prophet-weather-96 --param horizon=96 --param alpha=0.05 --param changepoint_prior_scale=0.05 --param changepoint_range=0.8 --param context_window=36 --param growth_floor=0 --param holidays_prior_scale=10 --param mcmc_samples=0 --param n_changepoints=25 --param seasonality_prior_scale=10 --param uncertainty_samples=1000 --param verbose=0">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-forecasting-prophet-weather-96 --compact<button class="copy" data-cmd="libraryts run --model-id bench-forecasting-prophet-weather-96 --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://doi.org/10.1080/00031305.2017.1380080" target="_blank" rel="noopener">libraryts baseline run (no public per-dataset values)</a><br/>
+          libraryts benchmark, this repository · Measured 2026-10-15 via `libraryts train --algorithm Prophet --dataset hf-weather` + `libraryts run --model-id probe-forecasting-prophet-weather-96`; no public per-dataset MSE/MAE exists for this series/protocol
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Univariate single-origin holdout (libraryts default protocol): fit on the first n-96 rows of series &#x27;H2OC (mmol/mol)&#x27; (first channel of THU-ANM Weather, 10-minutely, n=52696), forecast and score MSE/MAE on the final 96 rows, raw scale (no z-score normalization, no rolling origin)</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±10% relative</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:21:09 UTC · 64.2s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Prophet (Taylor &amp; Letham 2018): additive regression with piecewise-linear trend and Fourier seasonalities, default priors, cmdstan L-BFGS fit. sktime&#x27;s adapter coerces the integer index to synthetic daily dates, so Prophet&#x27;s automatic weekly/yearly seasonalities refer to that synthetic calendar. Groundtruth is a libraryts baseline measured with this exact train/run pipeline on 2026-10-15 (L-BFGS optimization is in principle seed-sensitive; tolerance 0.10 relative is a generous re-run sanity band, not a paper comparison).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;MAE&quot;: 0.08539786536725286, &quot;MSE&quot;: 0.011524607605788882, &quot;MAPE&quot;: 0.014344162835176774}</div></div>
+    </div>
+  </div>
+</details></div>
+</details>
+<details class="claim-group" data-name="theta thetaforecaster">
+  <summary>
+    <div class="alg">Theta<span class="lib">libraryts benchmark</span></div>
+    <div class="grp-note">5 dataset/config claims</div>
+    <div style="display:flex;align-items:center;justify-content:flex-end;gap:10px">
+      <span class="status reproduced"><span class="dot"></span>5/5 configs reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="group-body">
+<details class="claim">
+  <summary>
+    <div class="ds">ETTh1<span class="win">horizon 96 · series HUFL · last-96 holdout</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">MSE</span> 0.7861→0.7861 ✓</span><span class="m-ok"><span class="m-name">MAE</span> 0.7557→0.7557 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm ThetaForecaster --dataset hf-etth1 --model-id bench-forecasting-theta-etth1-96 --param horizon=96 --param deseasonalize_model=additive --param sp=24 --param context_window=36<button class="copy" data-cmd="libraryts train --algorithm ThetaForecaster --dataset hf-etth1 --model-id bench-forecasting-theta-etth1-96 --param horizon=96 --param deseasonalize_model=additive --param sp=24 --param context_window=36">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-forecasting-theta-etth1-96 --compact<button class="copy" data-cmd="libraryts run --model-id bench-forecasting-theta-etth1-96 --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://doi.org/10.1016/S0169-2070(00)00066-2" target="_blank" rel="noopener">libraryts baseline run (no public per-dataset values)</a><br/>
+          libraryts benchmark, this repository · Measured 2026-10-15 via `libraryts train --algorithm ThetaForecaster --dataset hf-etth1` + `libraryts run --model-id probe-forecasting-theta-etth1-96`; no public per-dataset MSE/MAE exists for this series/protocol
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Univariate single-origin holdout (libraryts default protocol): fit on the first n-96 rows of series &#x27;HUFL&#x27; (first channel of THU-ANM ETTh1, hourly, n=17420), forecast and score MSE/MAE on the final 96 rows, raw scale (no z-score normalization, no rolling origin)</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±5% relative</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:15:45 UTC · 7s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Theta method (Assimakopoulos &amp; Nikolopoulos, IJF 2000): additive classical decomposition at the given sp, SES on the seasonally adjusted series plus a linear-trend Theta line (sktime ThetaForecaster). deseasonalize_model=&#x27;additive&#x27; because the series contains non-positive values (sktime&#x27;s default &#x27;multiplicative&#x27; raises). Groundtruth is a libraryts baseline measured with this exact train/run pipeline on 2026-10-15 (deterministic algorithm; tolerance 0.05 relative is a re-run sanity band, not a paper comparison).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;MAE&quot;: 0.7556694614143985, &quot;MSE&quot;: 0.786081748419568, &quot;MAPE&quot;: 0.9344030607711385}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">ETTh2<span class="win">horizon 96 · series HUFL · last-96 holdout</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">MSE</span> 0.7305→0.7305 ✓</span><span class="m-ok"><span class="m-name">MAE</span> 0.7553→0.7553 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm ThetaForecaster --dataset hf-etth2 --model-id bench-forecasting-theta-etth2-96 --param horizon=96 --param deseasonalize_model=additive --param sp=24 --param context_window=36<button class="copy" data-cmd="libraryts train --algorithm ThetaForecaster --dataset hf-etth2 --model-id bench-forecasting-theta-etth2-96 --param horizon=96 --param deseasonalize_model=additive --param sp=24 --param context_window=36">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-forecasting-theta-etth2-96 --compact<button class="copy" data-cmd="libraryts run --model-id bench-forecasting-theta-etth2-96 --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://doi.org/10.1016/S0169-2070(00)00066-2" target="_blank" rel="noopener">libraryts baseline run (no public per-dataset values)</a><br/>
+          libraryts benchmark, this repository · Measured 2026-10-15 via `libraryts train --algorithm ThetaForecaster --dataset hf-etth2` + `libraryts run --model-id probe-forecasting-theta-etth2-96`; no public per-dataset MSE/MAE exists for this series/protocol
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Univariate single-origin holdout (libraryts default protocol): fit on the first n-96 rows of series &#x27;HUFL&#x27; (first channel of THU-ANM ETTh2, hourly, n=17420), forecast and score MSE/MAE on the final 96 rows, raw scale (no z-score normalization, no rolling origin)</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±5% relative</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:15:52 UTC · 6.95s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Theta method (Assimakopoulos &amp; Nikolopoulos, IJF 2000): additive classical decomposition at the given sp, SES on the seasonally adjusted series plus a linear-trend Theta line (sktime ThetaForecaster). deseasonalize_model=&#x27;additive&#x27; because the series contains non-positive values (sktime&#x27;s default &#x27;multiplicative&#x27; raises). Groundtruth is a libraryts baseline measured with this exact train/run pipeline on 2026-10-15 (deterministic algorithm; tolerance 0.05 relative is a re-run sanity band, not a paper comparison).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;MAE&quot;: 0.7552709547563193, &quot;MSE&quot;: 0.73046442904529, &quot;MAPE&quot;: 3.2432207840313816}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Weather<span class="win">horizon 96 · series H2OC · last-96 holdout</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">MSE</span> 0.0324→0.0324 ✓</span><span class="m-ok"><span class="m-name">MAE</span> 0.1499→0.1499 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm ThetaForecaster --dataset hf-weather --model-id bench-forecasting-theta-weather-96 --param horizon=96 --param deseasonalize_model=additive --param sp=144 --param context_window=36<button class="copy" data-cmd="libraryts train --algorithm ThetaForecaster --dataset hf-weather --model-id bench-forecasting-theta-weather-96 --param horizon=96 --param deseasonalize_model=additive --param sp=144 --param context_window=36">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-forecasting-theta-weather-96 --compact<button class="copy" data-cmd="libraryts run --model-id bench-forecasting-theta-weather-96 --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://doi.org/10.1016/S0169-2070(00)00066-2" target="_blank" rel="noopener">libraryts baseline run (no public per-dataset values)</a><br/>
+          libraryts benchmark, this repository · Measured 2026-10-15 via `libraryts train --algorithm ThetaForecaster --dataset hf-weather` + `libraryts run --model-id probe-forecasting-theta-weather-96`; no public per-dataset MSE/MAE exists for this series/protocol
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Univariate single-origin holdout (libraryts default protocol): fit on the first n-96 rows of series &#x27;H2OC (mmol/mol)&#x27; (first channel of THU-ANM Weather, 10-minutely, n=52696), forecast and score MSE/MAE on the final 96 rows, raw scale (no z-score normalization, no rolling origin)</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±5% relative</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:15:59 UTC · 7.12s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Theta method (Assimakopoulos &amp; Nikolopoulos, IJF 2000): additive classical decomposition at the given sp, SES on the seasonally adjusted series plus a linear-trend Theta line (sktime ThetaForecaster). deseasonalize_model=&#x27;additive&#x27; because the series contains non-positive values (sktime&#x27;s default &#x27;multiplicative&#x27; raises). Groundtruth is a libraryts baseline measured with this exact train/run pipeline on 2026-10-15 (deterministic algorithm; tolerance 0.05 relative is a re-run sanity band, not a paper comparison).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;MAE&quot;: 0.14988658562408494, &quot;MSE&quot;: 0.03240153929727149, &quot;MAPE&quot;: 0.02516984330391811}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">Exchange<span class="win">horizon 96 · series 0 · last-96 holdout</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">MSE</span> 0.0462→0.04619 ✓</span><span class="m-ok"><span class="m-name">MAE</span> 0.1604→0.1604 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm ThetaForecaster --dataset hf-exchange --model-id bench-forecasting-theta-exchange-96 --param horizon=96 --param deseasonalize_model=additive --param sp=1 --param context_window=36<button class="copy" data-cmd="libraryts train --algorithm ThetaForecaster --dataset hf-exchange --model-id bench-forecasting-theta-exchange-96 --param horizon=96 --param deseasonalize_model=additive --param sp=1 --param context_window=36">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-forecasting-theta-exchange-96 --compact<button class="copy" data-cmd="libraryts run --model-id bench-forecasting-theta-exchange-96 --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://doi.org/10.1016/S0169-2070(00)00066-2" target="_blank" rel="noopener">libraryts baseline run (no public per-dataset values)</a><br/>
+          libraryts benchmark, this repository · Measured 2026-10-15 via `libraryts train --algorithm ThetaForecaster --dataset hf-exchange` + `libraryts run --model-id probe-forecasting-theta-exchange-96`; no public per-dataset MSE/MAE exists for this series/protocol
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Univariate single-origin holdout (libraryts default protocol): fit on the first n-96 rows of series &#x27;0&#x27; (first channel of THU-ANM Exchange, daily, n=7588), forecast and score MSE/MAE on the final 96 rows, raw scale (no z-score normalization, no rolling origin)</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±5% relative</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:16:17 UTC · 18.3s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Theta method (Assimakopoulos &amp; Nikolopoulos, IJF 2000): additive classical decomposition at the given sp, SES on the seasonally adjusted series plus a linear-trend Theta line (sktime ThetaForecaster). deseasonalize_model=&#x27;additive&#x27; because the series contains non-positive values (sktime&#x27;s default &#x27;multiplicative&#x27; raises). Groundtruth is a libraryts baseline measured with this exact train/run pipeline on 2026-10-15 (deterministic algorithm; tolerance 0.05 relative is a re-run sanity band, not a paper comparison).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;MAE&quot;: 0.16038400651021364, &quot;MSE&quot;: 0.04618568746042554, &quot;MAPE&quot;: 4.763731030064858}</div></div>
+    </div>
+  </div>
+</details>
+<details class="claim">
+  <summary>
+    <div class="ds">ETTh1<span class="win">horizon 192 · series HUFL · last-192 holdout</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">MSE</span> 0.6038→0.6038 ✓</span><span class="m-ok"><span class="m-name">MAE</span> 0.5776→0.5776 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm ThetaForecaster --dataset hf-etth1 --model-id bench-forecasting-theta-etth1-192 --param horizon=192 --param deseasonalize_model=additive --param sp=24 --param context_window=36<button class="copy" data-cmd="libraryts train --algorithm ThetaForecaster --dataset hf-etth1 --model-id bench-forecasting-theta-etth1-192 --param horizon=192 --param deseasonalize_model=additive --param sp=24 --param context_window=36">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-forecasting-theta-etth1-192 --compact<button class="copy" data-cmd="libraryts run --model-id bench-forecasting-theta-etth1-192 --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://doi.org/10.1016/S0169-2070(00)00066-2" target="_blank" rel="noopener">libraryts baseline run (no public per-dataset values)</a><br/>
+          libraryts benchmark, this repository · Measured 2026-10-15 via `libraryts train --algorithm ThetaForecaster --dataset hf-etth1` + `libraryts run --model-id probe-forecasting-theta-etth1-192`; no public per-dataset MSE/MAE exists for this series/protocol
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">Univariate single-origin holdout (libraryts default protocol): fit on the first n-192 rows of series &#x27;HUFL&#x27; (first channel of THU-ANM ETTh1, hourly, n=17420), forecast and score MSE/MAE on the final 192 rows, raw scale (no z-score normalization, no rolling origin)</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±5% relative</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 13:18:47 UTC · 7.21s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Theta method (Assimakopoulos &amp; Nikolopoulos, IJF 2000): additive classical decomposition at the given sp, SES on the seasonally adjusted series plus a linear-trend Theta line (sktime ThetaForecaster). deseasonalize_model=&#x27;additive&#x27; because the series contains non-positive values (sktime&#x27;s default &#x27;multiplicative&#x27; raises). Groundtruth is a libraryts baseline measured with this exact train/run pipeline on 2026-10-15 (deterministic algorithm; tolerance 0.05 relative is a re-run sanity band, not a paper comparison).</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;MAE&quot;: 0.5776330089040395, &quot;MSE&quot;: 0.6038498002522008, &quot;MAPE&quot;: 0.8666849180172491}</div></div>
+    </div>
+  </div>
+</details></div>
+</details>
+<details class="claim-group" data-name="timesnet timesnetforecaster">
+  <summary>
+    <div class="alg">TimesNet<span class="lib">ICLR 2023</span></div>
+    <div class="grp-note">1 dataset/config claim</div>
+    <div style="display:flex;align-items:center;justify-content:flex-end;gap:10px">
+      <span class="status reproduced"><span class="dot"></span>1/1 configs reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="group-body">
+<details class="claim">
+  <summary>
+    <div class="ds">ETTh1<span class="win">horizon 96 · lookback 96</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">MSE</span> 0.384→0.422 ✓</span><span class="m-ok"><span class="m-name">MAE</span> 0.402→0.4343 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm TimesNetForecaster --dataset hf-etth1 --model-id bench-forecasting-timesnet-etth1-96 --param seq_len=96 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param d_model=16 --param d_ff=32 --param label_len=48 --param top_k=5 --param lr=0.0001 --param lr_decay=0.5 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_layers=1 --param dropout=0.1 --param e_layers=2 --param factor=3 --param moving_avg=25 --param n_heads=8 --param num_kernels=6<button class="copy" data-cmd="libraryts train --algorithm TimesNetForecaster --dataset hf-etth1 --model-id bench-forecasting-timesnet-etth1-96 --param seq_len=96 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param d_model=16 --param d_ff=32 --param label_len=48 --param top_k=5 --param lr=0.0001 --param lr_decay=0.5 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_layers=1 --param dropout=0.1 --param e_layers=2 --param factor=3 --param moving_avg=25 --param n_heads=8 --param num_kernels=6">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-forecasting-timesnet-etth1-96 --compact<button class="copy" data-cmd="libraryts run --model-id bench-forecasting-timesnet-etth1-96 --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://arxiv.org/html/2210.02186" target="_blank" rel="noopener">TimesNet: Temporal 2D-Variation Modeling for General Time Series Analysis (Wu et al.)</a><br/>
+          ICLR 2023 · Appendix Table 13, row ETTh1/96, TimesNet
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">LTSF protocol (rolling origin, no refit); look-back L=96 (Transformers); z-score normalized with train statistics; MSE/MAE averaged over windows and channels</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±15% relative</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:23:21 UTC · 856s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Official TimesNet config (TSLib ETTh1 script): d_model=16, d_ff=32, e_layers=2, top_k=5, num_kernels=6, label_len=48, dropout=0.1, lr=1e-4 halved every epoch (lradj=type1), batch 32, 10 epochs, same ETT exact split. Remaining known gap: no validation-based early stopping (official repo uses patience=3); trained on GPU. DL 系列复现因单条耗时过长（CPU torch 训练）按用户要求停止扩展，仅保留已完成的此条。</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;MAE&quot;: 0.43432659977075205, &quot;MSE&quot;: 0.4220028888692239, &quot;MAPE&quot;: 9.90419286805167, &quot;Windows&quot;: 2797}</div></div>
+    </div>
+  </div>
+</details></div>
+</details>
 <details class="claim-group" data-name="autoformer autoformerforecaster">
   <summary>
     <div class="alg">Autoformer<span class="lib">AAAI 2023</span></div>
@@ -4809,11 +5966,6 @@
   <div class="grp-note">runnable in this environment</div>
   <div class="row-end"><span class="status notrun"><span class="dot"></span>not run yet</span></div>
 </div>
-<div class="alg-row not-run" data-name="exponentialsmoothing registered-forecasting-exponentialsmoothing" title="registered-forecasting-ExponentialSmoothing · runnable in this environment">
-  <div class="alg">ExponentialSmoothing<span class="tag">registry</span></div>
-  <div class="grp-note">runnable in this environment</div>
-  <div class="row-end"><span class="status notrun"><span class="dot"></span>not run yet</span></div>
-</div>
 <div class="alg-row not-run" data-name="fallbackforecaster registered-forecasting-fallbackforecaster" title="registered-forecasting-FallbackForecaster · runnable in this environment">
   <div class="alg">FallbackForecaster<span class="tag">registry</span></div>
   <div class="grp-note">runnable in this environment</div>
@@ -4896,11 +6048,6 @@
 </div>
 <div class="alg-row not-run" data-name="ignorex registered-forecasting-ignorex" title="registered-forecasting-IgnoreX · runnable in this environment">
   <div class="alg">IgnoreX<span class="tag">registry</span></div>
-  <div class="grp-note">runnable in this environment</div>
-  <div class="row-end"><span class="status notrun"><span class="dot"></span>not run yet</span></div>
-</div>
-<div class="alg-row not-run" data-name="itransformerforecaster registered-forecasting-itransformerforecaster" title="registered-forecasting-ITransformerForecaster · runnable in this environment">
-  <div class="alg">ITransformerForecaster<span class="tag">registry</span></div>
   <div class="grp-note">runnable in this environment</div>
   <div class="row-end"><span class="status notrun"><span class="dot"></span>not run yet</span></div>
 </div>
@@ -5019,11 +6166,6 @@
   <div class="grp-note">runnable in this environment</div>
   <div class="row-end"><span class="status notrun"><span class="dot"></span>not run yet</span></div>
 </div>
-<div class="alg-row not-run" data-name="prophet registered-forecasting-prophet" title="registered-forecasting-Prophet · runnable in this environment">
-  <div class="alg">Prophet<span class="tag">registry</span></div>
-  <div class="grp-note">runnable in this environment</div>
-  <div class="row-end"><span class="status notrun"><span class="dot"></span>not run yet</span></div>
-</div>
 <div class="alg-row not-run" data-name="prophetpiecewiselineartrendforecaster registered-forecasting-prophetpiecewiselineartrendforecaster" title="registered-forecasting-ProphetPiecewiseLinearTrendForecaster · runnable in this environment">
   <div class="alg">ProphetPiecewiseLinearTrendForecaster<span class="tag">registry</span></div>
   <div class="grp-note">runnable in this environment</div>
@@ -5139,18 +6281,8 @@
   <div class="grp-note">runnable in this environment</div>
   <div class="row-end"><span class="status notrun"><span class="dot"></span>not run yet</span></div>
 </div>
-<div class="alg-row not-run" data-name="statsforecastautoarima registered-forecasting-statsforecastautoarima" title="registered-forecasting-StatsForecastAutoARIMA · runnable in this environment">
-  <div class="alg">StatsForecastAutoARIMA<span class="tag">registry</span></div>
-  <div class="grp-note">runnable in this environment</div>
-  <div class="row-end"><span class="status notrun"><span class="dot"></span>not run yet</span></div>
-</div>
 <div class="alg-row not-run" data-name="statsforecastautoces registered-forecasting-statsforecastautoces" title="registered-forecasting-StatsForecastAutoCES · runnable in this environment">
   <div class="alg">StatsForecastAutoCES<span class="tag">registry</span></div>
-  <div class="grp-note">runnable in this environment</div>
-  <div class="row-end"><span class="status notrun"><span class="dot"></span>not run yet</span></div>
-</div>
-<div class="alg-row not-run" data-name="statsforecastautoets registered-forecasting-statsforecastautoets" title="registered-forecasting-StatsForecastAutoETS · runnable in this environment">
-  <div class="alg">StatsForecastAutoETS<span class="tag">registry</span></div>
   <div class="grp-note">runnable in this environment</div>
   <div class="row-end"><span class="status notrun"><span class="dot"></span>not run yet</span></div>
 </div>
@@ -5189,11 +6321,6 @@
   <div class="grp-note">runnable in this environment</div>
   <div class="row-end"><span class="status notrun"><span class="dot"></span>not run yet</span></div>
 </div>
-<div class="alg-row not-run" data-name="thetaforecaster registered-forecasting-thetaforecaster" title="registered-forecasting-ThetaForecaster · runnable in this environment">
-  <div class="alg">ThetaForecaster<span class="tag">registry</span></div>
-  <div class="grp-note">runnable in this environment</div>
-  <div class="row-end"><span class="status notrun"><span class="dot"></span>not run yet</span></div>
-</div>
 <div class="alg-row not-run" data-name="thetamodularforecaster registered-forecasting-thetamodularforecaster" title="registered-forecasting-ThetaModularForecaster · runnable in this environment">
   <div class="alg">ThetaModularForecaster<span class="tag">registry</span></div>
   <div class="grp-note">runnable in this environment</div>
@@ -5206,11 +6333,6 @@
 </div>
 <div class="alg-row not-run" data-name="timemoeforecaster registered-forecasting-timemoeforecaster" title="registered-forecasting-TimeMoEForecaster · runnable in this environment">
   <div class="alg">TimeMoEForecaster<span class="tag">registry</span></div>
-  <div class="grp-note">runnable in this environment</div>
-  <div class="row-end"><span class="status notrun"><span class="dot"></span>not run yet</span></div>
-</div>
-<div class="alg-row not-run" data-name="timesnetforecaster registered-forecasting-timesnetforecaster" title="registered-forecasting-TimesNetForecaster · runnable in this environment">
-  <div class="alg">TimesNetForecaster<span class="tag">registry</span></div>
   <div class="grp-note">runnable in this environment</div>
   <div class="row-end"><span class="status notrun"><span class="dot"></span>not run yet</span></div>
 </div>
@@ -26498,7 +27620,7 @@
 </section></div>
 
   <footer>
-    Built by LibraryTS · state generated 2026-10-15 13:15:16 UTC · groundtruth curated under
+    Built by LibraryTS · state generated 2026-10-15 13:24:26 UTC · groundtruth curated under
     <code>playground/benchmark/groundtruth/</code> ·
     re-run with <code>python playground/benchmark/reproduce.py</code> ·
     refresh with <code>python playground/benchmark/build_state.py</code>

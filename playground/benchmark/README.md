@@ -102,9 +102,9 @@ Rules of thumb:
   implementation), say so in `notes` and choose a tolerance that reflects it —
   a `deviation` badge with an honest note is a valid, useful outcome.
 
-## Current coverage (543 claims, 469 reproduced)
+## Current coverage (567 claims, 493 reproduced)
 
-Per task (claims / reproduced / distinct algorithms): forecasting 97/70/4, classification 163/148/7,
+Per task (claims / reproduced / distinct algorithms): forecasting 121/94/11, classification 163/148/7,
 clustering 207/184/5, anomaly_detection 57/51/9, regression 12/11/12 (one dataset), causal 7/5/3
 (one dataset). Deviations are kept visible on purpose; each entry's `notes` carries the details.
 

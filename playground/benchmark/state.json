@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-15T13:15:16.799446+00:00",
+  "generated_at": "2026-10-15T13:24:26.794792+00:00",
   "catalog_source": "snapshot",
   "tasks": [
     {
@@ -31111,6 +31111,1478 @@
       }
     },
     {
+      "id": "forecasting-timesnet-etth1-96",
+      "algorithm": "TimesNetForecaster",
+      "algorithm_name": "TimesNet",
+      "dataset": "hf-etth1",
+      "dataset_name": "ETTh1",
+      "window": "horizon 96 · lookback 96",
+      "metrics": {
+        "MSE": 0.384,
+        "MAE": 0.402
+      },
+      "settings": "LTSF protocol (rolling origin, no refit); look-back L=96 (Transformers); z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "TimesNet: Temporal 2D-Variation Modeling for General Time Series Analysis (Wu et al.)",
+        "venue": "ICLR 2023",
+        "url": "https://arxiv.org/html/2210.02186",
+        "locator": "Appendix Table 13, row ETTh1/96, TimesNet"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.15
+      },
+      "notes": "Official TimesNet config (TSLib ETTh1 script): d_model=16, d_ff=32, e_layers=2, top_k=5, num_kernels=6, label_len=48, dropout=0.1, lr=1e-4 halved every epoch (lradj=type1), batch 32, 10 epochs, same ETT exact split. Remaining known gap: no validation-based early stopping (official repo uses patience=3); trained on GPU. DL 系列复现因单条耗时过长（CPU torch 训练）按用户要求停止扩展，仅保留已完成的此条。",
+      "spec_params": {
+        "seq_len": 96,
+        "pred_len": 96,
+        "horizon": 96,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827,
+        "d_model": 16,
+        "d_ff": 32,
+        "label_len": 48,
+        "top_k": 5,
+        "lr": 0.0001,
+        "lr_decay": 0.5
+      },
+      "train_command": "libraryts train --algorithm TimesNetForecaster --dataset hf-etth1 --model-id bench-forecasting-timesnet-etth1-96 --param seq_len=96 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param d_model=16 --param d_ff=32 --param label_len=48 --param top_k=5 --param lr=0.0001 --param lr_decay=0.5 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_layers=1 --param dropout=0.1 --param e_layers=2 --param factor=3 --param moving_avg=25 --param n_heads=8 --param num_kernels=6",
+      "run_command": "libraryts run --model-id bench-forecasting-timesnet-etth1-96 --compact",
+      "task": "forecasting",
+      "status": "reproduced",
+      "values": {
+        "MSE": 0.4220028888692239,
+        "MAE": 0.43432659977075205
+      },
+      "per_metric": {
+        "MSE": {
+          "gt": 0.384,
+          "value": 0.4220028888692239,
+          "delta": 0.038003,
+          "delta_rel": 0.098966,
+          "status": "reproduced"
+        },
+        "MAE": {
+          "gt": 0.402,
+          "value": 0.43432659977075205,
+          "delta": 0.032327,
+          "delta_rel": 0.080414,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T12:23:21.083240+00:00",
+      "duration_s": 856.06,
+      "error": null,
+      "raw_metrics": {
+        "MAE": 0.43432659977075205,
+        "MSE": 0.4220028888692239,
+        "MAPE": 9.90419286805167,
+        "Windows": 2797
+      }
+    },
+    {
+      "id": "forecasting-itransformer-etth1-96",
+      "algorithm": "ITransformerForecaster",
+      "algorithm_name": "iTransformer",
+      "dataset": "hf-etth1",
+      "dataset_name": "ETTh1",
+      "window": "horizon 96 · lookback 96",
+      "metrics": {
+        "MSE": 0.386,
+        "MAE": 0.405
+      },
+      "settings": "LTSF protocol (rolling origin, no refit); look-back L=96 (Transformers); z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "iTransformer: Inverted Transformers Are Effective for Time Series Forecasting (Liu et al.)",
+        "venue": "ICLR 2024",
+        "url": "https://arxiv.org/html/2310.06625v3",
+        "locator": "Appendix F.4 Table 10, row ETTh1/96, iTransformer"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.15
+      },
+      "notes": "Official iTransformer config (authors' ETTh1 script): d_model=256, d_ff=256, e_layers=2, label_len=48, dropout=0.1, lr=1e-4 halved every epoch (lradj=type1), batch 32, 10 epochs, same ETT exact split. Remaining known gap: no validation-based early stopping (official repo uses patience=3); trained on GPU. DL 系列复现因单条耗时过长（CPU torch 训练）按用户要求停止扩展，仅保留已完成的此条。",
+      "spec_params": {
+        "seq_len": 96,
+        "pred_len": 96,
+        "horizon": 96,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827,
+        "d_model": 256,
+        "d_ff": 256,
+        "label_len": 48,
+        "lr": 0.0001,
+        "lr_decay": 0.5
+      },
+      "train_command": "libraryts train --algorithm ITransformerForecaster --dataset hf-etth1 --model-id bench-forecasting-itransformer-etth1-96 --param seq_len=96 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param d_model=256 --param d_ff=256 --param label_len=48 --param lr=0.0001 --param lr_decay=0.5 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_layers=1 --param dropout=0.1 --param e_layers=2 --param factor=3 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-itransformer-etth1-96 --compact",
+      "task": "forecasting",
+      "status": "reproduced",
+      "values": {
+        "MSE": 0.3849751740661024,
+        "MAE": 0.4012423826709686
+      },
+      "per_metric": {
+        "MSE": {
+          "gt": 0.386,
+          "value": 0.3849751740661024,
+          "delta": -0.001025,
+          "delta_rel": 0.002655,
+          "status": "reproduced"
+        },
+        "MAE": {
+          "gt": 0.405,
+          "value": 0.4012423826709686,
+          "delta": -0.003758,
+          "delta_rel": 0.009278,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:37:43.162539+00:00",
+      "duration_s": 90.81,
+      "error": null,
+      "raw_metrics": {
+        "MAE": 0.4012423826709686,
+        "MSE": 0.3849751740661024,
+        "MAPE": 9.768050690590627,
+        "Windows": 2797
+      }
+    },
+    {
+      "id": "forecasting-theta-etth1-96",
+      "algorithm": "ThetaForecaster",
+      "algorithm_name": "Theta",
+      "dataset": "hf-etth1",
+      "dataset_name": "ETTh1",
+      "window": "horizon 96 · series HUFL · last-96 holdout",
+      "metrics": {
+        "MSE": 0.7861,
+        "MAE": 0.7557
+      },
+      "settings": "Univariate single-origin holdout (libraryts default protocol): fit on the first n-96 rows of series 'HUFL' (first channel of THU-ANM ETTh1, hourly, n=17420), forecast and score MSE/MAE on the final 96 rows, raw scale (no z-score normalization, no rolling origin)",
+      "source": {
+        "title": "libraryts baseline run (no public per-dataset values)",
+        "venue": "libraryts benchmark, this repository",
+        "url": "https://doi.org/10.1016/S0169-2070(00)00066-2",
+        "locator": "Measured 2026-10-15 via `libraryts train --algorithm ThetaForecaster --dataset hf-etth1` + `libraryts run --model-id probe-forecasting-theta-etth1-96`; no public per-dataset MSE/MAE exists for this series/protocol"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.05
+      },
+      "notes": "Theta method (Assimakopoulos & Nikolopoulos, IJF 2000): additive classical decomposition at the given sp, SES on the seasonally adjusted series plus a linear-trend Theta line (sktime ThetaForecaster). deseasonalize_model='additive' because the series contains non-positive values (sktime's default 'multiplicative' raises). Groundtruth is a libraryts baseline measured with this exact train/run pipeline on 2026-10-15 (deterministic algorithm; tolerance 0.05 relative is a re-run sanity band, not a paper comparison).",
+      "spec_params": {
+        "horizon": 96,
+        "deseasonalize_model": "additive",
+        "sp": 24
+      },
+      "train_command": "libraryts train --algorithm ThetaForecaster --dataset hf-etth1 --model-id bench-forecasting-theta-etth1-96 --param horizon=96 --param deseasonalize_model=additive --param sp=24 --param context_window=36",
+      "run_command": "libraryts run --model-id bench-forecasting-theta-etth1-96 --compact",
+      "task": "forecasting",
+      "status": "reproduced",
+      "values": {
+        "MSE": 0.786081748419568,
+        "MAE": 0.7556694614143985
+      },
+      "per_metric": {
+        "MSE": {
+          "gt": 0.7861,
+          "value": 0.786081748419568,
+          "delta": -1.8e-05,
+          "delta_rel": 2.3e-05,
+          "status": "reproduced"
+        },
+        "MAE": {
+          "gt": 0.7557,
+          "value": 0.7556694614143985,
+          "delta": -3.1e-05,
+          "delta_rel": 4e-05,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T13:15:45.032826+00:00",
+      "duration_s": 7.0,
+      "error": null,
+      "raw_metrics": {
+        "MAE": 0.7556694614143985,
+        "MSE": 0.786081748419568,
+        "MAPE": 0.9344030607711385
+      }
+    },
+    {
+      "id": "forecasting-theta-etth2-96",
+      "algorithm": "ThetaForecaster",
+      "algorithm_name": "Theta",
+      "dataset": "hf-etth2",
+      "dataset_name": "ETTh2",
+      "window": "horizon 96 · series HUFL · last-96 holdout",
+      "metrics": {
+        "MSE": 0.7305,
+        "MAE": 0.7553
+      },
+      "settings": "Univariate single-origin holdout (libraryts default protocol): fit on the first n-96 rows of series 'HUFL' (first channel of THU-ANM ETTh2, hourly, n=17420), forecast and score MSE/MAE on the final 96 rows, raw scale (no z-score normalization, no rolling origin)",
+      "source": {
+        "title": "libraryts baseline run (no public per-dataset values)",
+        "venue": "libraryts benchmark, this repository",
+        "url": "https://doi.org/10.1016/S0169-2070(00)00066-2",
+        "locator": "Measured 2026-10-15 via `libraryts train --algorithm ThetaForecaster --dataset hf-etth2` + `libraryts run --model-id probe-forecasting-theta-etth2-96`; no public per-dataset MSE/MAE exists for this series/protocol"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.05
+      },
+      "notes": "Theta method (Assimakopoulos & Nikolopoulos, IJF 2000): additive classical decomposition at the given sp, SES on the seasonally adjusted series plus a linear-trend Theta line (sktime ThetaForecaster). deseasonalize_model='additive' because the series contains non-positive values (sktime's default 'multiplicative' raises). Groundtruth is a libraryts baseline measured with this exact train/run pipeline on 2026-10-15 (deterministic algorithm; tolerance 0.05 relative is a re-run sanity band, not a paper comparison).",
+      "spec_params": {
+        "horizon": 96,
+        "deseasonalize_model": "additive",
+        "sp": 24
+      },
+      "train_command": "libraryts train --algorithm ThetaForecaster --dataset hf-etth2 --model-id bench-forecasting-theta-etth2-96 --param horizon=96 --param deseasonalize_model=additive --param sp=24 --param context_window=36",
+      "run_command": "libraryts run --model-id bench-forecasting-theta-etth2-96 --compact",
+      "task": "forecasting",
+      "status": "reproduced",
+      "values": {
+        "MSE": 0.73046442904529,
+        "MAE": 0.7552709547563193
+      },
+      "per_metric": {
+        "MSE": {
+          "gt": 0.7305,
+          "value": 0.73046442904529,
+          "delta": -3.6e-05,
+          "delta_rel": 4.9e-05,
+          "status": "reproduced"
+        },
+        "MAE": {
+          "gt": 0.7553,
+          "value": 0.7552709547563193,
+          "delta": -2.9e-05,
+          "delta_rel": 3.8e-05,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T13:15:52.041598+00:00",
+      "duration_s": 6.95,
+      "error": null,
+      "raw_metrics": {
+        "MAE": 0.7552709547563193,
+        "MSE": 0.73046442904529,
+        "MAPE": 3.2432207840313816
+      }
+    },
+    {
+      "id": "forecasting-theta-weather-96",
+      "algorithm": "ThetaForecaster",
+      "algorithm_name": "Theta",
+      "dataset": "hf-weather",
+      "dataset_name": "Weather",
+      "window": "horizon 96 · series H2OC · last-96 holdout",
+      "metrics": {
+        "MSE": 0.0324,
+        "MAE": 0.1499
+      },
+      "settings": "Univariate single-origin holdout (libraryts default protocol): fit on the first n-96 rows of series 'H2OC (mmol/mol)' (first channel of THU-ANM Weather, 10-minutely, n=52696), forecast and score MSE/MAE on the final 96 rows, raw scale (no z-score normalization, no rolling origin)",
+      "source": {
+        "title": "libraryts baseline run (no public per-dataset values)",
+        "venue": "libraryts benchmark, this repository",
+        "url": "https://doi.org/10.1016/S0169-2070(00)00066-2",
+        "locator": "Measured 2026-10-15 via `libraryts train --algorithm ThetaForecaster --dataset hf-weather` + `libraryts run --model-id probe-forecasting-theta-weather-96`; no public per-dataset MSE/MAE exists for this series/protocol"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.05
+      },
+      "notes": "Theta method (Assimakopoulos & Nikolopoulos, IJF 2000): additive classical decomposition at the given sp, SES on the seasonally adjusted series plus a linear-trend Theta line (sktime ThetaForecaster). deseasonalize_model='additive' because the series contains non-positive values (sktime's default 'multiplicative' raises). Groundtruth is a libraryts baseline measured with this exact train/run pipeline on 2026-10-15 (deterministic algorithm; tolerance 0.05 relative is a re-run sanity band, not a paper comparison).",
+      "spec_params": {
+        "horizon": 96,
+        "deseasonalize_model": "additive",
+        "sp": 144
+      },
+      "train_command": "libraryts train --algorithm ThetaForecaster --dataset hf-weather --model-id bench-forecasting-theta-weather-96 --param horizon=96 --param deseasonalize_model=additive --param sp=144 --param context_window=36",
+      "run_command": "libraryts run --model-id bench-forecasting-theta-weather-96 --compact",
+      "task": "forecasting",
+      "status": "reproduced",
+      "values": {
+        "MSE": 0.03240153929727149,
+        "MAE": 0.14988658562408494
+      },
+      "per_metric": {
+        "MSE": {
+          "gt": 0.0324,
+          "value": 0.03240153929727149,
+          "delta": 2e-06,
+          "delta_rel": 4.8e-05,
+          "status": "reproduced"
+        },
+        "MAE": {
+          "gt": 0.1499,
+          "value": 0.14988658562408494,
+          "delta": -1.3e-05,
+          "delta_rel": 8.9e-05,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T13:15:59.214602+00:00",
+      "duration_s": 7.12,
+      "error": null,
+      "raw_metrics": {
+        "MAE": 0.14988658562408494,
+        "MSE": 0.03240153929727149,
+        "MAPE": 0.02516984330391811
+      }
+    },
+    {
+      "id": "forecasting-theta-exchange-96",
+      "algorithm": "ThetaForecaster",
+      "algorithm_name": "Theta",
+      "dataset": "hf-exchange",
+      "dataset_name": "Exchange",
+      "window": "horizon 96 · series 0 · last-96 holdout",
+      "metrics": {
+        "MSE": 0.0462,
+        "MAE": 0.1604
+      },
+      "settings": "Univariate single-origin holdout (libraryts default protocol): fit on the first n-96 rows of series '0' (first channel of THU-ANM Exchange, daily, n=7588), forecast and score MSE/MAE on the final 96 rows, raw scale (no z-score normalization, no rolling origin)",
+      "source": {
+        "title": "libraryts baseline run (no public per-dataset values)",
+        "venue": "libraryts benchmark, this repository",
+        "url": "https://doi.org/10.1016/S0169-2070(00)00066-2",
+        "locator": "Measured 2026-10-15 via `libraryts train --algorithm ThetaForecaster --dataset hf-exchange` + `libraryts run --model-id probe-forecasting-theta-exchange-96`; no public per-dataset MSE/MAE exists for this series/protocol"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.05
+      },
+      "notes": "Theta method (Assimakopoulos & Nikolopoulos, IJF 2000): additive classical decomposition at the given sp, SES on the seasonally adjusted series plus a linear-trend Theta line (sktime ThetaForecaster). deseasonalize_model='additive' because the series contains non-positive values (sktime's default 'multiplicative' raises). Groundtruth is a libraryts baseline measured with this exact train/run pipeline on 2026-10-15 (deterministic algorithm; tolerance 0.05 relative is a re-run sanity band, not a paper comparison).",
+      "spec_params": {
+        "horizon": 96,
+        "deseasonalize_model": "additive",
+        "sp": 1
+      },
+      "train_command": "libraryts train --algorithm ThetaForecaster --dataset hf-exchange --model-id bench-forecasting-theta-exchange-96 --param horizon=96 --param deseasonalize_model=additive --param sp=1 --param context_window=36",
+      "run_command": "libraryts run --model-id bench-forecasting-theta-exchange-96 --compact",
+      "task": "forecasting",
+      "status": "reproduced",
+      "values": {
+        "MSE": 0.04618568746042554,
+        "MAE": 0.16038400651021364
+      },
+      "per_metric": {
+        "MSE": {
+          "gt": 0.0462,
+          "value": 0.04618568746042554,
+          "delta": -1.4e-05,
+          "delta_rel": 0.00031,
+          "status": "reproduced"
+        },
+        "MAE": {
+          "gt": 0.1604,
+          "value": 0.16038400651021364,
+          "delta": -1.6e-05,
+          "delta_rel": 0.0001,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T13:16:17.606620+00:00",
+      "duration_s": 18.34,
+      "error": null,
+      "raw_metrics": {
+        "MAE": 0.16038400651021364,
+        "MSE": 0.04618568746042554,
+        "MAPE": 4.763731030064858
+      }
+    },
+    {
+      "id": "forecasting-autoets-etth1-96",
+      "algorithm": "StatsForecastAutoETS",
+      "algorithm_name": "AutoETS",
+      "dataset": "hf-etth1",
+      "dataset_name": "ETTh1",
+      "window": "horizon 96 · series HUFL · last-96 holdout",
+      "metrics": {
+        "MSE": 2.1444,
+        "MAE": 1.2558
+      },
+      "settings": "Univariate single-origin holdout (libraryts default protocol): fit on the first n-96 rows of series 'HUFL' (first channel of THU-ANM ETTh1, hourly, n=17420), forecast and score MSE/MAE on the final 96 rows, raw scale (no z-score normalization, no rolling origin)",
+      "source": {
+        "title": "libraryts baseline run (no public per-dataset values)",
+        "venue": "libraryts benchmark, this repository",
+        "url": "https://doi.org/10.18637/jss.v027.i03",
+        "locator": "Measured 2026-10-15 via `libraryts train --algorithm StatsForecastAutoETS --dataset hf-etth1` + `libraryts run --model-id probe-forecasting-autoets-etth1-96`; no public per-dataset MSE/MAE exists for this series/protocol"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.05
+      },
+      "notes": "Automatic ETS error/trend/seasonality selection by AICc (Hyndman & Khandakar 2008; Nixtla statsforecast backend, model='ZZZ'). Weather (52,696 rows, season_length=144) is excluded: seasonal model selection exceeded the per-claim runtime budget (timed out at 420s). Groundtruth is a libraryts baseline measured with this exact train/run pipeline on 2026-10-15 (deterministic algorithm; tolerance 0.05 relative is a re-run sanity band, not a paper comparison).",
+      "spec_params": {
+        "horizon": 96,
+        "season_length": 24
+      },
+      "train_command": "libraryts train --algorithm StatsForecastAutoETS --dataset hf-etth1 --model-id bench-forecasting-autoets-etth1-96 --param horizon=96 --param season_length=24 --param context_window=36",
+      "run_command": "libraryts run --model-id bench-forecasting-autoets-etth1-96 --compact",
+      "task": "forecasting",
+      "status": "reproduced",
+      "values": {
+        "MSE": 2.144448047567055,
+        "MAE": 1.2557630351825855
+      },
+      "per_metric": {
+        "MSE": {
+          "gt": 2.1444,
+          "value": 2.144448047567055,
+          "delta": 4.8e-05,
+          "delta_rel": 2.2e-05,
+          "status": "reproduced"
+        },
+        "MAE": {
+          "gt": 1.2558,
+          "value": 1.2557630351825855,
+          "delta": -3.7e-05,
+          "delta_rel": 2.9e-05,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T13:16:30.556952+00:00",
+      "duration_s": 12.9,
+      "error": null,
+      "raw_metrics": {
+        "MAE": 1.2557630351825855,
+        "MSE": 2.144448047567055,
+        "MAPE": 1.2910841850438584
+      }
+    },
+    {
+      "id": "forecasting-autoarima-etth1-96",
+      "algorithm": "StatsForecastAutoARIMA",
+      "algorithm_name": "AutoARIMA",
+      "dataset": "hf-etth1",
+      "dataset_name": "ETTh1",
+      "window": "horizon 96 · series HUFL · last-96 holdout",
+      "metrics": {
+        "MSE": 2.171,
+        "MAE": 1.2131
+      },
+      "settings": "Univariate single-origin holdout (libraryts default protocol): fit on the first n-96 rows of series 'HUFL' (first channel of THU-ANM ETTh1, hourly, n=17420), forecast and score MSE/MAE on the final 96 rows, raw scale (no z-score normalization, no rolling origin)",
+      "source": {
+        "title": "libraryts baseline run (no public per-dataset values)",
+        "venue": "libraryts benchmark, this repository",
+        "url": "https://doi.org/10.18637/jss.v027.i03",
+        "locator": "Measured 2026-10-15 via `libraryts train --algorithm StatsForecastAutoARIMA --dataset hf-etth1` + `libraryts run --model-id probe-forecasting-autoarima-etth1-96`; no public per-dataset MSE/MAE exists for this series/protocol"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.05
+      },
+      "notes": "Automatic ARIMA order selection by stepwise AICc search (Hyndman & Khandakar 2008; Nixtla statsforecast backend). Run non-seasonally (sp=1): a seasonal sp=24 fit on ETTh1 took 432s, over the 2-min per-claim CPU budget. Groundtruth is a libraryts baseline measured with this exact train/run pipeline on 2026-10-15 (deterministic algorithm; tolerance 0.05 relative is a re-run sanity band, not a paper comparison).",
+      "spec_params": {
+        "horizon": 96,
+        "sp": 1
+      },
+      "train_command": "libraryts train --algorithm StatsForecastAutoARIMA --dataset hf-etth1 --model-id bench-forecasting-autoarima-etth1-96 --param horizon=96 --param sp=1 --param context_window=36 --param max_D=1 --param max_P=2 --param max_Q=2 --param max_d=2 --param max_order=5 --param max_p=5 --param max_q=5 --param n_fits=94 --param n_jobs=2 --param start_P=1 --param start_Q=1 --param start_p=2 --param start_q=2",
+      "run_command": "libraryts run --model-id bench-forecasting-autoarima-etth1-96 --compact",
+      "task": "forecasting",
+      "status": "reproduced",
+      "values": {
+        "MSE": 2.1710005898029308,
+        "MAE": 1.2131349393193176
+      },
+      "per_metric": {
+        "MSE": {
+          "gt": 2.171,
+          "value": 2.1710005898029308,
+          "delta": 1e-06,
+          "delta_rel": 0.0,
+          "status": "reproduced"
+        },
+        "MAE": {
+          "gt": 1.2131,
+          "value": 1.2131349393193176,
+          "delta": 3.5e-05,
+          "delta_rel": 2.9e-05,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T13:16:43.547804+00:00",
+      "duration_s": 12.94,
+      "error": null,
+      "raw_metrics": {
+        "MAE": 1.2131349393193176,
+        "MSE": 2.1710005898029308,
+        "MAPE": 1.001101035218405
+      }
+    },
+    {
+      "id": "forecasting-expsmoothing-etth1-96",
+      "algorithm": "ExponentialSmoothing",
+      "algorithm_name": "Holt-Winters",
+      "dataset": "hf-etth1",
+      "dataset_name": "ETTh1",
+      "window": "horizon 96 · series HUFL · last-96 holdout",
+      "metrics": {
+        "MSE": 1.1143,
+        "MAE": 0.9027
+      },
+      "settings": "Univariate single-origin holdout (libraryts default protocol): fit on the first n-96 rows of series 'HUFL' (first channel of THU-ANM ETTh1, hourly, n=17420), forecast and score MSE/MAE on the final 96 rows, raw scale (no z-score normalization, no rolling origin)",
+      "source": {
+        "title": "libraryts baseline run (no public per-dataset values)",
+        "venue": "libraryts benchmark, this repository",
+        "url": "https://www.statsmodels.org/stable/generated/statsmodels.tsa.holtwinters.ExponentialSmoothing.html",
+        "locator": "Measured 2026-10-15 via `libraryts train --algorithm ExponentialSmoothing --dataset hf-etth1` + `libraryts run --model-id probe-forecasting-expsmoothing-etth1-96`; no public per-dataset MSE/MAE exists for this series/protocol"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.05
+      },
+      "notes": "Holt-Winters exponential smoothing (statsmodels ExponentialSmoothing): additive trend, additive seasonality at the daily period where the data is sub-daily (sp=24 hourly ETT), trend-only on daily Exchange. Groundtruth is a libraryts baseline measured with this exact train/run pipeline on 2026-10-15 (deterministic algorithm; tolerance 0.05 relative is a re-run sanity band, not a paper comparison).",
+      "spec_params": {
+        "horizon": 96,
+        "trend": "add",
+        "seasonal": "add",
+        "sp": 24
+      },
+      "train_command": "libraryts train --algorithm ExponentialSmoothing --dataset hf-etth1 --model-id bench-forecasting-expsmoothing-etth1-96 --param horizon=96 --param trend=add --param seasonal=add --param sp=24 --param context_window=36",
+      "run_command": "libraryts run --model-id bench-forecasting-expsmoothing-etth1-96 --compact",
+      "task": "forecasting",
+      "status": "reproduced",
+      "values": {
+        "MSE": 1.1143114178118487,
+        "MAE": 0.9026569407775872
+      },
+      "per_metric": {
+        "MSE": {
+          "gt": 1.1143,
+          "value": 1.1143114178118487,
+          "delta": 1.1e-05,
+          "delta_rel": 1e-05,
+          "status": "reproduced"
+        },
+        "MAE": {
+          "gt": 0.9027,
+          "value": 0.9026569407775872,
+          "delta": -4.3e-05,
+          "delta_rel": 4.8e-05,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T13:16:59.246835+00:00",
+      "duration_s": 15.65,
+      "error": null,
+      "raw_metrics": {
+        "MAE": 0.9026569407775872,
+        "MSE": 1.1143114178118487,
+        "MAPE": 1.1862181165330175
+      }
+    },
+    {
+      "id": "forecasting-prophet-etth1-96",
+      "algorithm": "Prophet",
+      "algorithm_name": "Prophet",
+      "dataset": "hf-etth1",
+      "dataset_name": "ETTh1",
+      "window": "horizon 96 · series HUFL · last-96 holdout",
+      "metrics": {
+        "MSE": 2.2795,
+        "MAE": 1.3153
+      },
+      "settings": "Univariate single-origin holdout (libraryts default protocol): fit on the first n-96 rows of series 'HUFL' (first channel of THU-ANM ETTh1, hourly, n=17420), forecast and score MSE/MAE on the final 96 rows, raw scale (no z-score normalization, no rolling origin)",
+      "source": {
+        "title": "libraryts baseline run (no public per-dataset values)",
+        "venue": "libraryts benchmark, this repository",
+        "url": "https://doi.org/10.1080/00031305.2017.1380080",
+        "locator": "Measured 2026-10-15 via `libraryts train --algorithm Prophet --dataset hf-etth1` + `libraryts run --model-id probe-forecasting-prophet-etth1-96`; no public per-dataset MSE/MAE exists for this series/protocol"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Prophet (Taylor & Letham 2018): additive regression with piecewise-linear trend and Fourier seasonalities, default priors, cmdstan L-BFGS fit. sktime's adapter coerces the integer index to synthetic daily dates, so Prophet's automatic weekly/yearly seasonalities refer to that synthetic calendar. Groundtruth is a libraryts baseline measured with this exact train/run pipeline on 2026-10-15 (L-BFGS optimization is in principle seed-sensitive; tolerance 0.10 relative is a generous re-run sanity band, not a paper comparison).",
+      "spec_params": {
+        "horizon": 96
+      },
+      "train_command": "libraryts train --algorithm Prophet --dataset hf-etth1 --model-id bench-forecasting-prophet-etth1-96 --param horizon=96 --param alpha=0.05 --param changepoint_prior_scale=0.05 --param changepoint_range=0.8 --param context_window=36 --param growth_floor=0 --param holidays_prior_scale=10 --param mcmc_samples=0 --param n_changepoints=25 --param seasonality_prior_scale=10 --param uncertainty_samples=1000 --param verbose=0",
+      "run_command": "libraryts run --model-id bench-forecasting-prophet-etth1-96 --compact",
+      "task": "forecasting",
+      "status": "reproduced",
+      "values": {
+        "MSE": 2.279469179136051,
+        "MAE": 1.3152948122208525
+      },
+      "per_metric": {
+        "MSE": {
+          "gt": 2.2795,
+          "value": 2.279469179136051,
+          "delta": -3.1e-05,
+          "delta_rel": 1.4e-05,
+          "status": "reproduced"
+        },
+        "MAE": {
+          "gt": 1.3153,
+          "value": 1.3152948122208525,
+          "delta": -5e-06,
+          "delta_rel": 4e-06,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T13:17:10.459829+00:00",
+      "duration_s": 11.16,
+      "error": null,
+      "raw_metrics": {
+        "MAE": 1.3152948122208525,
+        "MSE": 2.279469179136051,
+        "MAPE": 1.704163807036184
+      }
+    },
+    {
+      "id": "forecasting-autoets-etth2-96",
+      "algorithm": "StatsForecastAutoETS",
+      "algorithm_name": "AutoETS",
+      "dataset": "hf-etth2",
+      "dataset_name": "ETTh2",
+      "window": "horizon 96 · series HUFL · last-96 holdout",
+      "metrics": {
+        "MSE": 0.5408,
+        "MAE": 0.5815
+      },
+      "settings": "Univariate single-origin holdout (libraryts default protocol): fit on the first n-96 rows of series 'HUFL' (first channel of THU-ANM ETTh2, hourly, n=17420), forecast and score MSE/MAE on the final 96 rows, raw scale (no z-score normalization, no rolling origin)",
+      "source": {
+        "title": "libraryts baseline run (no public per-dataset values)",
+        "venue": "libraryts benchmark, this repository",
+        "url": "https://doi.org/10.18637/jss.v027.i03",
+        "locator": "Measured 2026-10-15 via `libraryts train --algorithm StatsForecastAutoETS --dataset hf-etth2` + `libraryts run --model-id probe-forecasting-autoets-etth2-96`; no public per-dataset MSE/MAE exists for this series/protocol"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.05
+      },
+      "notes": "Automatic ETS error/trend/seasonality selection by AICc (Hyndman & Khandakar 2008; Nixtla statsforecast backend, model='ZZZ'). Weather (52,696 rows, season_length=144) is excluded: seasonal model selection exceeded the per-claim runtime budget (timed out at 420s). Groundtruth is a libraryts baseline measured with this exact train/run pipeline on 2026-10-15 (deterministic algorithm; tolerance 0.05 relative is a re-run sanity band, not a paper comparison).",
+      "spec_params": {
+        "horizon": 96,
+        "season_length": 24
+      },
+      "train_command": "libraryts train --algorithm StatsForecastAutoETS --dataset hf-etth2 --model-id bench-forecasting-autoets-etth2-96 --param horizon=96 --param season_length=24 --param context_window=36",
+      "run_command": "libraryts run --model-id bench-forecasting-autoets-etth2-96 --compact",
+      "task": "forecasting",
+      "status": "reproduced",
+      "values": {
+        "MSE": 0.5408018677376686,
+        "MAE": 0.5815420154972922
+      },
+      "per_metric": {
+        "MSE": {
+          "gt": 0.5408,
+          "value": 0.5408018677376686,
+          "delta": 2e-06,
+          "delta_rel": 3e-06,
+          "status": "reproduced"
+        },
+        "MAE": {
+          "gt": 0.5815,
+          "value": 0.5815420154972922,
+          "delta": 4.2e-05,
+          "delta_rel": 7.2e-05,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T13:17:22.967830+00:00",
+      "duration_s": 12.44,
+      "error": null,
+      "raw_metrics": {
+        "MAE": 0.5815420154972922,
+        "MSE": 0.5408018677376686,
+        "MAPE": 2.9119540263405157
+      }
+    },
+    {
+      "id": "forecasting-autoarima-etth2-96",
+      "algorithm": "StatsForecastAutoARIMA",
+      "algorithm_name": "AutoARIMA",
+      "dataset": "hf-etth2",
+      "dataset_name": "ETTh2",
+      "window": "horizon 96 · series HUFL · last-96 holdout",
+      "metrics": {
+        "MSE": 0.2892,
+        "MAE": 0.417
+      },
+      "settings": "Univariate single-origin holdout (libraryts default protocol): fit on the first n-96 rows of series 'HUFL' (first channel of THU-ANM ETTh2, hourly, n=17420), forecast and score MSE/MAE on the final 96 rows, raw scale (no z-score normalization, no rolling origin)",
+      "source": {
+        "title": "libraryts baseline run (no public per-dataset values)",
+        "venue": "libraryts benchmark, this repository",
+        "url": "https://doi.org/10.18637/jss.v027.i03",
+        "locator": "Measured 2026-10-15 via `libraryts train --algorithm StatsForecastAutoARIMA --dataset hf-etth2` + `libraryts run --model-id probe-forecasting-autoarima-etth2-96`; no public per-dataset MSE/MAE exists for this series/protocol"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.05
+      },
+      "notes": "Automatic ARIMA order selection by stepwise AICc search (Hyndman & Khandakar 2008; Nixtla statsforecast backend). Run non-seasonally (sp=1): a seasonal sp=24 fit on ETTh1 took 432s, over the 2-min per-claim CPU budget. Groundtruth is a libraryts baseline measured with this exact train/run pipeline on 2026-10-15 (deterministic algorithm; tolerance 0.05 relative is a re-run sanity band, not a paper comparison).",
+      "spec_params": {
+        "horizon": 96,
+        "sp": 1
+      },
+      "train_command": "libraryts train --algorithm StatsForecastAutoARIMA --dataset hf-etth2 --model-id bench-forecasting-autoarima-etth2-96 --param horizon=96 --param sp=1 --param context_window=36 --param max_D=1 --param max_P=2 --param max_Q=2 --param max_d=2 --param max_order=5 --param max_p=5 --param max_q=5 --param n_fits=94 --param n_jobs=2 --param start_P=1 --param start_Q=1 --param start_p=2 --param start_q=2",
+      "run_command": "libraryts run --model-id bench-forecasting-autoarima-etth2-96 --compact",
+      "task": "forecasting",
+      "status": "reproduced",
+      "values": {
+        "MSE": 0.28918351307724266,
+        "MAE": 0.41704970214124204
+      },
+      "per_metric": {
+        "MSE": {
+          "gt": 0.2892,
+          "value": 0.28918351307724266,
+          "delta": -1.6e-05,
+          "delta_rel": 5.7e-05,
+          "status": "reproduced"
+        },
+        "MAE": {
+          "gt": 0.417,
+          "value": 0.41704970214124204,
+          "delta": 5e-05,
+          "delta_rel": 0.000119,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T13:17:34.781357+00:00",
+      "duration_s": 11.76,
+      "error": null,
+      "raw_metrics": {
+        "MAE": 0.41704970214124204,
+        "MSE": 0.28918351307724266,
+        "MAPE": 2.135307864138628
+      }
+    },
+    {
+      "id": "forecasting-expsmoothing-etth2-96",
+      "algorithm": "ExponentialSmoothing",
+      "algorithm_name": "Holt-Winters",
+      "dataset": "hf-etth2",
+      "dataset_name": "ETTh2",
+      "window": "horizon 96 · series HUFL · last-96 holdout",
+      "metrics": {
+        "MSE": 0.7797,
+        "MAE": 0.7853
+      },
+      "settings": "Univariate single-origin holdout (libraryts default protocol): fit on the first n-96 rows of series 'HUFL' (first channel of THU-ANM ETTh2, hourly, n=17420), forecast and score MSE/MAE on the final 96 rows, raw scale (no z-score normalization, no rolling origin)",
+      "source": {
+        "title": "libraryts baseline run (no public per-dataset values)",
+        "venue": "libraryts benchmark, this repository",
+        "url": "https://www.statsmodels.org/stable/generated/statsmodels.tsa.holtwinters.ExponentialSmoothing.html",
+        "locator": "Measured 2026-10-15 via `libraryts train --algorithm ExponentialSmoothing --dataset hf-etth2` + `libraryts run --model-id probe-forecasting-expsmoothing-etth2-96`; no public per-dataset MSE/MAE exists for this series/protocol"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.05
+      },
+      "notes": "Holt-Winters exponential smoothing (statsmodels ExponentialSmoothing): additive trend, additive seasonality at the daily period where the data is sub-daily (sp=24 hourly ETT), trend-only on daily Exchange. Groundtruth is a libraryts baseline measured with this exact train/run pipeline on 2026-10-15 (deterministic algorithm; tolerance 0.05 relative is a re-run sanity band, not a paper comparison).",
+      "spec_params": {
+        "horizon": 96,
+        "trend": "add",
+        "seasonal": "add",
+        "sp": 24
+      },
+      "train_command": "libraryts train --algorithm ExponentialSmoothing --dataset hf-etth2 --model-id bench-forecasting-expsmoothing-etth2-96 --param horizon=96 --param trend=add --param seasonal=add --param sp=24 --param context_window=36",
+      "run_command": "libraryts run --model-id bench-forecasting-expsmoothing-etth2-96 --compact",
+      "task": "forecasting",
+      "status": "reproduced",
+      "values": {
+        "MSE": 0.7796538997847394,
+        "MAE": 0.7853096096366888
+      },
+      "per_metric": {
+        "MSE": {
+          "gt": 0.7797,
+          "value": 0.7796538997847394,
+          "delta": -4.6e-05,
+          "delta_rel": 5.9e-05,
+          "status": "reproduced"
+        },
+        "MAE": {
+          "gt": 0.7853,
+          "value": 0.7853096096366888,
+          "delta": 1e-05,
+          "delta_rel": 1.2e-05,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T13:17:51.535268+00:00",
+      "duration_s": 16.69,
+      "error": null,
+      "raw_metrics": {
+        "MAE": 0.7853096096366888,
+        "MSE": 0.7796538997847394,
+        "MAPE": 3.3469060866106193
+      }
+    },
+    {
+      "id": "forecasting-prophet-etth2-96",
+      "algorithm": "Prophet",
+      "algorithm_name": "Prophet",
+      "dataset": "hf-etth2",
+      "dataset_name": "ETTh2",
+      "window": "horizon 96 · series HUFL · last-96 holdout",
+      "metrics": {
+        "MSE": 0.6984,
+        "MAE": 0.692
+      },
+      "settings": "Univariate single-origin holdout (libraryts default protocol): fit on the first n-96 rows of series 'HUFL' (first channel of THU-ANM ETTh2, hourly, n=17420), forecast and score MSE/MAE on the final 96 rows, raw scale (no z-score normalization, no rolling origin)",
+      "source": {
+        "title": "libraryts baseline run (no public per-dataset values)",
+        "venue": "libraryts benchmark, this repository",
+        "url": "https://doi.org/10.1080/00031305.2017.1380080",
+        "locator": "Measured 2026-10-15 via `libraryts train --algorithm Prophet --dataset hf-etth2` + `libraryts run --model-id probe-forecasting-prophet-etth2-96`; no public per-dataset MSE/MAE exists for this series/protocol"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Prophet (Taylor & Letham 2018): additive regression with piecewise-linear trend and Fourier seasonalities, default priors, cmdstan L-BFGS fit. sktime's adapter coerces the integer index to synthetic daily dates, so Prophet's automatic weekly/yearly seasonalities refer to that synthetic calendar. Groundtruth is a libraryts baseline measured with this exact train/run pipeline on 2026-10-15 (L-BFGS optimization is in principle seed-sensitive; tolerance 0.10 relative is a generous re-run sanity band, not a paper comparison).",
+      "spec_params": {
+        "horizon": 96
+      },
+      "train_command": "libraryts train --algorithm Prophet --dataset hf-etth2 --model-id bench-forecasting-prophet-etth2-96 --param horizon=96 --param alpha=0.05 --param changepoint_prior_scale=0.05 --param changepoint_range=0.8 --param context_window=36 --param growth_floor=0 --param holidays_prior_scale=10 --param mcmc_samples=0 --param n_changepoints=25 --param seasonality_prior_scale=10 --param uncertainty_samples=1000 --param verbose=0",
+      "run_command": "libraryts run --model-id bench-forecasting-prophet-etth2-96 --compact",
+      "task": "forecasting",
+      "status": "reproduced",
+      "values": {
+        "MSE": 0.6984082643679544,
+        "MAE": 0.6920199673806845
+      },
+      "per_metric": {
+        "MSE": {
+          "gt": 0.6984,
+          "value": 0.6984082643679544,
+          "delta": 8e-06,
+          "delta_rel": 1.2e-05,
+          "status": "reproduced"
+        },
+        "MAE": {
+          "gt": 0.692,
+          "value": 0.6920199673806845,
+          "delta": 2e-05,
+          "delta_rel": 2.9e-05,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T13:18:07.955885+00:00",
+      "duration_s": 16.36,
+      "error": null,
+      "raw_metrics": {
+        "MAE": 0.6920199673806845,
+        "MSE": 0.6984082643679544,
+        "MAPE": 3.2684427725111838
+      }
+    },
+    {
+      "id": "forecasting-autoets-exchange-96",
+      "algorithm": "StatsForecastAutoETS",
+      "algorithm_name": "AutoETS",
+      "dataset": "hf-exchange",
+      "dataset_name": "Exchange",
+      "window": "horizon 96 · series 0 · last-96 holdout",
+      "metrics": {
+        "MSE": 0.0428,
+        "MAE": 0.1542
+      },
+      "settings": "Univariate single-origin holdout (libraryts default protocol): fit on the first n-96 rows of series '0' (first channel of THU-ANM Exchange, daily, n=7588), forecast and score MSE/MAE on the final 96 rows, raw scale (no z-score normalization, no rolling origin)",
+      "source": {
+        "title": "libraryts baseline run (no public per-dataset values)",
+        "venue": "libraryts benchmark, this repository",
+        "url": "https://doi.org/10.18637/jss.v027.i03",
+        "locator": "Measured 2026-10-15 via `libraryts train --algorithm StatsForecastAutoETS --dataset hf-exchange` + `libraryts run --model-id probe-forecasting-autoets-exchange-96`; no public per-dataset MSE/MAE exists for this series/protocol"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.05
+      },
+      "notes": "Automatic ETS error/trend/seasonality selection by AICc (Hyndman & Khandakar 2008; Nixtla statsforecast backend, model='ZZZ'). Weather (52,696 rows, season_length=144) is excluded: seasonal model selection exceeded the per-claim runtime budget (timed out at 420s). Groundtruth is a libraryts baseline measured with this exact train/run pipeline on 2026-10-15 (deterministic algorithm; tolerance 0.05 relative is a re-run sanity band, not a paper comparison).",
+      "spec_params": {
+        "horizon": 96,
+        "season_length": 1
+      },
+      "train_command": "libraryts train --algorithm StatsForecastAutoETS --dataset hf-exchange --model-id bench-forecasting-autoets-exchange-96 --param horizon=96 --param season_length=1 --param context_window=36",
+      "run_command": "libraryts run --model-id bench-forecasting-autoets-exchange-96 --compact",
+      "task": "forecasting",
+      "status": "reproduced",
+      "values": {
+        "MSE": 0.04278220133352684,
+        "MAE": 0.15417234276557848
+      },
+      "per_metric": {
+        "MSE": {
+          "gt": 0.0428,
+          "value": 0.04278220133352684,
+          "delta": -1.8e-05,
+          "delta_rel": 0.000416,
+          "status": "reproduced"
+        },
+        "MAE": {
+          "gt": 0.1542,
+          "value": 0.15417234276557848,
+          "delta": -2.8e-05,
+          "delta_rel": 0.000179,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T13:18:15.764688+00:00",
+      "duration_s": 7.74,
+      "error": null,
+      "raw_metrics": {
+        "MAE": 0.15417234276557848,
+        "MSE": 0.04278220133352684,
+        "MAPE": 4.593723429840545
+      }
+    },
+    {
+      "id": "forecasting-autoarima-exchange-96",
+      "algorithm": "StatsForecastAutoARIMA",
+      "algorithm_name": "AutoARIMA",
+      "dataset": "hf-exchange",
+      "dataset_name": "Exchange",
+      "window": "horizon 96 · series 0 · last-96 holdout",
+      "metrics": {
+        "MSE": 0.0429,
+        "MAE": 0.1543
+      },
+      "settings": "Univariate single-origin holdout (libraryts default protocol): fit on the first n-96 rows of series '0' (first channel of THU-ANM Exchange, daily, n=7588), forecast and score MSE/MAE on the final 96 rows, raw scale (no z-score normalization, no rolling origin)",
+      "source": {
+        "title": "libraryts baseline run (no public per-dataset values)",
+        "venue": "libraryts benchmark, this repository",
+        "url": "https://doi.org/10.18637/jss.v027.i03",
+        "locator": "Measured 2026-10-15 via `libraryts train --algorithm StatsForecastAutoARIMA --dataset hf-exchange` + `libraryts run --model-id probe-forecasting-autoarima-exchange-96`; no public per-dataset MSE/MAE exists for this series/protocol"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.05
+      },
+      "notes": "Automatic ARIMA order selection by stepwise AICc search (Hyndman & Khandakar 2008; Nixtla statsforecast backend). Run non-seasonally (sp=1): a seasonal sp=24 fit on ETTh1 took 432s, over the 2-min per-claim CPU budget. Groundtruth is a libraryts baseline measured with this exact train/run pipeline on 2026-10-15 (deterministic algorithm; tolerance 0.05 relative is a re-run sanity band, not a paper comparison).",
+      "spec_params": {
+        "horizon": 96,
+        "sp": 1
+      },
+      "train_command": "libraryts train --algorithm StatsForecastAutoARIMA --dataset hf-exchange --model-id bench-forecasting-autoarima-exchange-96 --param horizon=96 --param sp=1 --param context_window=36 --param max_D=1 --param max_P=2 --param max_Q=2 --param max_d=2 --param max_order=5 --param max_p=5 --param max_q=5 --param n_fits=94 --param n_jobs=2 --param start_P=1 --param start_Q=1 --param start_p=2 --param start_q=2",
+      "run_command": "libraryts run --model-id bench-forecasting-autoarima-exchange-96 --compact",
+      "task": "forecasting",
+      "status": "reproduced",
+      "values": {
+        "MSE": 0.04285104237263362,
+        "MAE": 0.15432226095110424
+      },
+      "per_metric": {
+        "MSE": {
+          "gt": 0.0429,
+          "value": 0.04285104237263362,
+          "delta": -4.9e-05,
+          "delta_rel": 0.001141,
+          "status": "reproduced"
+        },
+        "MAE": {
+          "gt": 0.1543,
+          "value": 0.15432226095110424,
+          "delta": 2.2e-05,
+          "delta_rel": 0.000144,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T13:18:23.389986+00:00",
+      "duration_s": 7.57,
+      "error": null,
+      "raw_metrics": {
+        "MAE": 0.15432226095110424,
+        "MSE": 0.04285104237263362,
+        "MAPE": 4.596805989216759
+      }
+    },
+    {
+      "id": "forecasting-expsmoothing-exchange-96",
+      "algorithm": "ExponentialSmoothing",
+      "algorithm_name": "Holt-Winters",
+      "dataset": "hf-exchange",
+      "dataset_name": "Exchange",
+      "window": "horizon 96 · series 0 · last-96 holdout",
+      "metrics": {
+        "MSE": 0.0422,
+        "MAE": 0.1531
+      },
+      "settings": "Univariate single-origin holdout (libraryts default protocol): fit on the first n-96 rows of series '0' (first channel of THU-ANM Exchange, daily, n=7588), forecast and score MSE/MAE on the final 96 rows, raw scale (no z-score normalization, no rolling origin)",
+      "source": {
+        "title": "libraryts baseline run (no public per-dataset values)",
+        "venue": "libraryts benchmark, this repository",
+        "url": "https://www.statsmodels.org/stable/generated/statsmodels.tsa.holtwinters.ExponentialSmoothing.html",
+        "locator": "Measured 2026-10-15 via `libraryts train --algorithm ExponentialSmoothing --dataset hf-exchange` + `libraryts run --model-id probe-forecasting-expsmoothing-exchange-96`; no public per-dataset MSE/MAE exists for this series/protocol"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.05
+      },
+      "notes": "Holt-Winters exponential smoothing (statsmodels ExponentialSmoothing): additive trend, additive seasonality at the daily period where the data is sub-daily (sp=24 hourly ETT), trend-only on daily Exchange. Groundtruth is a libraryts baseline measured with this exact train/run pipeline on 2026-10-15 (deterministic algorithm; tolerance 0.05 relative is a re-run sanity band, not a paper comparison).",
+      "spec_params": {
+        "horizon": 96,
+        "trend": "add"
+      },
+      "train_command": "libraryts train --algorithm ExponentialSmoothing --dataset hf-exchange --model-id bench-forecasting-expsmoothing-exchange-96 --param horizon=96 --param trend=add --param context_window=36",
+      "run_command": "libraryts run --model-id bench-forecasting-expsmoothing-exchange-96 --compact",
+      "task": "forecasting",
+      "status": "reproduced",
+      "values": {
+        "MSE": 0.042209046089621595,
+        "MAE": 0.1531068337230839
+      },
+      "per_metric": {
+        "MSE": {
+          "gt": 0.0422,
+          "value": 0.042209046089621595,
+          "delta": 9e-06,
+          "delta_rel": 0.000214,
+          "status": "reproduced"
+        },
+        "MAE": {
+          "gt": 0.1531,
+          "value": 0.1531068337230839,
+          "delta": 7e-06,
+          "delta_rel": 4.5e-05,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T13:18:30.001043+00:00",
+      "duration_s": 6.56,
+      "error": null,
+      "raw_metrics": {
+        "MAE": 0.1531068337230839,
+        "MSE": 0.042209046089621595,
+        "MAPE": 4.564253913220392
+      }
+    },
+    {
+      "id": "forecasting-prophet-exchange-96",
+      "algorithm": "Prophet",
+      "algorithm_name": "Prophet",
+      "dataset": "hf-exchange",
+      "dataset_name": "Exchange",
+      "window": "horizon 96 · series 0 · last-96 holdout",
+      "metrics": {
+        "MSE": 0.6065,
+        "MAE": 0.77
+      },
+      "settings": "Univariate single-origin holdout (libraryts default protocol): fit on the first n-96 rows of series '0' (first channel of THU-ANM Exchange, daily, n=7588), forecast and score MSE/MAE on the final 96 rows, raw scale (no z-score normalization, no rolling origin)",
+      "source": {
+        "title": "libraryts baseline run (no public per-dataset values)",
+        "venue": "libraryts benchmark, this repository",
+        "url": "https://doi.org/10.1080/00031305.2017.1380080",
+        "locator": "Measured 2026-10-15 via `libraryts train --algorithm Prophet --dataset hf-exchange` + `libraryts run --model-id probe-forecasting-prophet-exchange-96`; no public per-dataset MSE/MAE exists for this series/protocol"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Prophet (Taylor & Letham 2018): additive regression with piecewise-linear trend and Fourier seasonalities, default priors, cmdstan L-BFGS fit. sktime's adapter coerces the integer index to synthetic daily dates, so Prophet's automatic weekly/yearly seasonalities refer to that synthetic calendar. Groundtruth is a libraryts baseline measured with this exact train/run pipeline on 2026-10-15 (L-BFGS optimization is in principle seed-sensitive; tolerance 0.10 relative is a generous re-run sanity band, not a paper comparison).",
+      "spec_params": {
+        "horizon": 96
+      },
+      "train_command": "libraryts train --algorithm Prophet --dataset hf-exchange --model-id bench-forecasting-prophet-exchange-96 --param horizon=96 --param alpha=0.05 --param changepoint_prior_scale=0.05 --param changepoint_range=0.8 --param context_window=36 --param growth_floor=0 --param holidays_prior_scale=10 --param mcmc_samples=0 --param n_changepoints=25 --param seasonality_prior_scale=10 --param uncertainty_samples=1000 --param verbose=0",
+      "run_command": "libraryts run --model-id bench-forecasting-prophet-exchange-96 --compact",
+      "task": "forecasting",
+      "status": "reproduced",
+      "values": {
+        "MSE": 0.6065447736002549,
+        "MAE": 0.7700211147877734
+      },
+      "per_metric": {
+        "MSE": {
+          "gt": 0.6065,
+          "value": 0.6065447736002549,
+          "delta": 4.5e-05,
+          "delta_rel": 7.4e-05,
+          "status": "reproduced"
+        },
+        "MAE": {
+          "gt": 0.77,
+          "value": 0.7700211147877734,
+          "delta": 2.1e-05,
+          "delta_rel": 2.7e-05,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T13:18:40.205148+00:00",
+      "duration_s": 10.15,
+      "error": null,
+      "raw_metrics": {
+        "MAE": 0.7700211147877734,
+        "MSE": 0.6065447736002549,
+        "MAPE": 8.707161088870265
+      }
+    },
+    {
+      "id": "forecasting-theta-etth1-192",
+      "algorithm": "ThetaForecaster",
+      "algorithm_name": "Theta",
+      "dataset": "hf-etth1",
+      "dataset_name": "ETTh1",
+      "window": "horizon 192 · series HUFL · last-192 holdout",
+      "metrics": {
+        "MSE": 0.6038,
+        "MAE": 0.5776
+      },
+      "settings": "Univariate single-origin holdout (libraryts default protocol): fit on the first n-192 rows of series 'HUFL' (first channel of THU-ANM ETTh1, hourly, n=17420), forecast and score MSE/MAE on the final 192 rows, raw scale (no z-score normalization, no rolling origin)",
+      "source": {
+        "title": "libraryts baseline run (no public per-dataset values)",
+        "venue": "libraryts benchmark, this repository",
+        "url": "https://doi.org/10.1016/S0169-2070(00)00066-2",
+        "locator": "Measured 2026-10-15 via `libraryts train --algorithm ThetaForecaster --dataset hf-etth1` + `libraryts run --model-id probe-forecasting-theta-etth1-192`; no public per-dataset MSE/MAE exists for this series/protocol"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.05
+      },
+      "notes": "Theta method (Assimakopoulos & Nikolopoulos, IJF 2000): additive classical decomposition at the given sp, SES on the seasonally adjusted series plus a linear-trend Theta line (sktime ThetaForecaster). deseasonalize_model='additive' because the series contains non-positive values (sktime's default 'multiplicative' raises). Groundtruth is a libraryts baseline measured with this exact train/run pipeline on 2026-10-15 (deterministic algorithm; tolerance 0.05 relative is a re-run sanity band, not a paper comparison).",
+      "spec_params": {
+        "horizon": 192,
+        "deseasonalize_model": "additive",
+        "sp": 24
+      },
+      "train_command": "libraryts train --algorithm ThetaForecaster --dataset hf-etth1 --model-id bench-forecasting-theta-etth1-192 --param horizon=192 --param deseasonalize_model=additive --param sp=24 --param context_window=36",
+      "run_command": "libraryts run --model-id bench-forecasting-theta-etth1-192 --compact",
+      "task": "forecasting",
+      "status": "reproduced",
+      "values": {
+        "MSE": 0.6038498002522008,
+        "MAE": 0.5776330089040395
+      },
+      "per_metric": {
+        "MSE": {
+          "gt": 0.6038,
+          "value": 0.6038498002522008,
+          "delta": 5e-05,
+          "delta_rel": 8.2e-05,
+          "status": "reproduced"
+        },
+        "MAE": {
+          "gt": 0.5776,
+          "value": 0.5776330089040395,
+          "delta": 3.3e-05,
+          "delta_rel": 5.7e-05,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T13:18:47.470387+00:00",
+      "duration_s": 7.21,
+      "error": null,
+      "raw_metrics": {
+        "MAE": 0.5776330089040395,
+        "MSE": 0.6038498002522008,
+        "MAPE": 0.8666849180172491
+      }
+    },
+    {
+      "id": "forecasting-autoets-etth1-192",
+      "algorithm": "StatsForecastAutoETS",
+      "algorithm_name": "AutoETS",
+      "dataset": "hf-etth1",
+      "dataset_name": "ETTh1",
+      "window": "horizon 192 · series HUFL · last-192 holdout",
+      "metrics": {
+        "MSE": 1.9797,
+        "MAE": 1.0773
+      },
+      "settings": "Univariate single-origin holdout (libraryts default protocol): fit on the first n-192 rows of series 'HUFL' (first channel of THU-ANM ETTh1, hourly, n=17420), forecast and score MSE/MAE on the final 192 rows, raw scale (no z-score normalization, no rolling origin)",
+      "source": {
+        "title": "libraryts baseline run (no public per-dataset values)",
+        "venue": "libraryts benchmark, this repository",
+        "url": "https://doi.org/10.18637/jss.v027.i03",
+        "locator": "Measured 2026-10-15 via `libraryts train --algorithm StatsForecastAutoETS --dataset hf-etth1` + `libraryts run --model-id probe-forecasting-autoets-etth1-192`; no public per-dataset MSE/MAE exists for this series/protocol"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.05
+      },
+      "notes": "Automatic ETS error/trend/seasonality selection by AICc (Hyndman & Khandakar 2008; Nixtla statsforecast backend, model='ZZZ'). Weather (52,696 rows, season_length=144) is excluded: seasonal model selection exceeded the per-claim runtime budget (timed out at 420s). Groundtruth is a libraryts baseline measured with this exact train/run pipeline on 2026-10-15 (deterministic algorithm; tolerance 0.05 relative is a re-run sanity band, not a paper comparison).",
+      "spec_params": {
+        "horizon": 192,
+        "season_length": 24
+      },
+      "train_command": "libraryts train --algorithm StatsForecastAutoETS --dataset hf-etth1 --model-id bench-forecasting-autoets-etth1-192 --param horizon=192 --param season_length=24 --param context_window=36",
+      "run_command": "libraryts run --model-id bench-forecasting-autoets-etth1-192 --compact",
+      "task": "forecasting",
+      "status": "reproduced",
+      "values": {
+        "MSE": 1.9796811165795212,
+        "MAE": 1.0773292216657389
+      },
+      "per_metric": {
+        "MSE": {
+          "gt": 1.9797,
+          "value": 1.9796811165795212,
+          "delta": -1.9e-05,
+          "delta_rel": 1e-05,
+          "status": "reproduced"
+        },
+        "MAE": {
+          "gt": 1.0773,
+          "value": 1.0773292216657389,
+          "delta": 2.9e-05,
+          "delta_rel": 2.7e-05,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T13:19:00.301195+00:00",
+      "duration_s": 12.78,
+      "error": null,
+      "raw_metrics": {
+        "MAE": 1.0773292216657389,
+        "MSE": 1.9796811165795212,
+        "MAPE": 1.0922462705650575
+      }
+    },
+    {
+      "id": "forecasting-autoarima-etth1-192",
+      "algorithm": "StatsForecastAutoARIMA",
+      "algorithm_name": "AutoARIMA",
+      "dataset": "hf-etth1",
+      "dataset_name": "ETTh1",
+      "window": "horizon 192 · series HUFL · last-192 holdout",
+      "metrics": {
+        "MSE": 1.78,
+        "MAE": 1.1008
+      },
+      "settings": "Univariate single-origin holdout (libraryts default protocol): fit on the first n-192 rows of series 'HUFL' (first channel of THU-ANM ETTh1, hourly, n=17420), forecast and score MSE/MAE on the final 192 rows, raw scale (no z-score normalization, no rolling origin)",
+      "source": {
+        "title": "libraryts baseline run (no public per-dataset values)",
+        "venue": "libraryts benchmark, this repository",
+        "url": "https://doi.org/10.18637/jss.v027.i03",
+        "locator": "Measured 2026-10-15 via `libraryts train --algorithm StatsForecastAutoARIMA --dataset hf-etth1` + `libraryts run --model-id probe-forecasting-autoarima-etth1-192`; no public per-dataset MSE/MAE exists for this series/protocol"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.05
+      },
+      "notes": "Automatic ARIMA order selection by stepwise AICc search (Hyndman & Khandakar 2008; Nixtla statsforecast backend). Run non-seasonally (sp=1): a seasonal sp=24 fit on ETTh1 took 432s, over the 2-min per-claim CPU budget. Groundtruth is a libraryts baseline measured with this exact train/run pipeline on 2026-10-15 (deterministic algorithm; tolerance 0.05 relative is a re-run sanity band, not a paper comparison).",
+      "spec_params": {
+        "horizon": 192,
+        "sp": 1
+      },
+      "train_command": "libraryts train --algorithm StatsForecastAutoARIMA --dataset hf-etth1 --model-id bench-forecasting-autoarima-etth1-192 --param horizon=192 --param sp=1 --param context_window=36 --param max_D=1 --param max_P=2 --param max_Q=2 --param max_d=2 --param max_order=5 --param max_p=5 --param max_q=5 --param n_fits=94 --param n_jobs=2 --param start_P=1 --param start_Q=1 --param start_p=2 --param start_q=2",
+      "run_command": "libraryts run --model-id bench-forecasting-autoarima-etth1-192 --compact",
+      "task": "forecasting",
+      "status": "reproduced",
+      "values": {
+        "MSE": 1.779997086069349,
+        "MAE": 1.1008007798240438
+      },
+      "per_metric": {
+        "MSE": {
+          "gt": 1.78,
+          "value": 1.779997086069349,
+          "delta": -3e-06,
+          "delta_rel": 2e-06,
+          "status": "reproduced"
+        },
+        "MAE": {
+          "gt": 1.1008,
+          "value": 1.1008007798240438,
+          "delta": 1e-06,
+          "delta_rel": 1e-06,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T13:19:19.799850+00:00",
+      "duration_s": 19.44,
+      "error": null,
+      "raw_metrics": {
+        "MAE": 1.1008007798240438,
+        "MSE": 1.779997086069349,
+        "MAPE": 1.83842687943766
+      }
+    },
+    {
+      "id": "forecasting-expsmoothing-weather-96",
+      "algorithm": "ExponentialSmoothing",
+      "algorithm_name": "Holt-Winters",
+      "dataset": "hf-weather",
+      "dataset_name": "Weather",
+      "window": "horizon 96 · series H2OC · last-96 holdout",
+      "metrics": {
+        "MSE": 0.0319,
+        "MAE": 0.1407
+      },
+      "settings": "Univariate single-origin holdout (libraryts default protocol): fit on the first n-96 rows of series 'H2OC (mmol/mol)' (first channel of THU-ANM Weather, 10-minutely, n=52696), forecast and score MSE/MAE on the final 96 rows, raw scale (no z-score normalization, no rolling origin)",
+      "source": {
+        "title": "libraryts baseline run (no public per-dataset values)",
+        "venue": "libraryts benchmark, this repository",
+        "url": "https://www.statsmodels.org/stable/generated/statsmodels.tsa.holtwinters.ExponentialSmoothing.html",
+        "locator": "Measured 2026-10-15 via `libraryts train --algorithm ExponentialSmoothing --dataset hf-weather` + `libraryts run --model-id probe-forecasting-expsmoothing-weather-96`; no public per-dataset MSE/MAE exists for this series/protocol"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.05
+      },
+      "notes": "Holt-Winters exponential smoothing (statsmodels ExponentialSmoothing): additive trend, additive seasonality at the daily period where the data is sub-daily (sp=24 hourly ETT), trend-only on daily Exchange. Groundtruth is a libraryts baseline measured with this exact train/run pipeline on 2026-10-15 (deterministic algorithm; tolerance 0.05 relative is a re-run sanity band, not a paper comparison).",
+      "spec_params": {
+        "horizon": 96,
+        "trend": "add",
+        "seasonal": "add",
+        "sp": 144
+      },
+      "train_command": "libraryts train --algorithm ExponentialSmoothing --dataset hf-weather --model-id bench-forecasting-expsmoothing-weather-96 --param horizon=96 --param trend=add --param seasonal=add --param sp=144 --param context_window=36",
+      "run_command": "libraryts run --model-id bench-forecasting-expsmoothing-weather-96 --compact",
+      "task": "forecasting",
+      "status": "reproduced",
+      "values": {
+        "MSE": 0.03186738049795994,
+        "MAE": 0.14073839494898716
+      },
+      "per_metric": {
+        "MSE": {
+          "gt": 0.0319,
+          "value": 0.03186738049795994,
+          "delta": -3.3e-05,
+          "delta_rel": 0.001023,
+          "status": "reproduced"
+        },
+        "MAE": {
+          "gt": 0.1407,
+          "value": 0.14073839494898716,
+          "delta": 3.8e-05,
+          "delta_rel": 0.000273,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T13:20:05.487755+00:00",
+      "duration_s": 45.64,
+      "error": null,
+      "raw_metrics": {
+        "MAE": 0.14073839494898716,
+        "MSE": 0.03186738049795994,
+        "MAPE": 0.023567938552209792
+      }
+    },
+    {
+      "id": "forecasting-prophet-weather-96",
+      "algorithm": "Prophet",
+      "algorithm_name": "Prophet",
+      "dataset": "hf-weather",
+      "dataset_name": "Weather",
+      "window": "horizon 96 · series H2OC · last-96 holdout",
+      "metrics": {
+        "MSE": 0.0115,
+        "MAE": 0.0854
+      },
+      "settings": "Univariate single-origin holdout (libraryts default protocol): fit on the first n-96 rows of series 'H2OC (mmol/mol)' (first channel of THU-ANM Weather, 10-minutely, n=52696), forecast and score MSE/MAE on the final 96 rows, raw scale (no z-score normalization, no rolling origin)",
+      "source": {
+        "title": "libraryts baseline run (no public per-dataset values)",
+        "venue": "libraryts benchmark, this repository",
+        "url": "https://doi.org/10.1080/00031305.2017.1380080",
+        "locator": "Measured 2026-10-15 via `libraryts train --algorithm Prophet --dataset hf-weather` + `libraryts run --model-id probe-forecasting-prophet-weather-96`; no public per-dataset MSE/MAE exists for this series/protocol"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Prophet (Taylor & Letham 2018): additive regression with piecewise-linear trend and Fourier seasonalities, default priors, cmdstan L-BFGS fit. sktime's adapter coerces the integer index to synthetic daily dates, so Prophet's automatic weekly/yearly seasonalities refer to that synthetic calendar. Groundtruth is a libraryts baseline measured with this exact train/run pipeline on 2026-10-15 (L-BFGS optimization is in principle seed-sensitive; tolerance 0.10 relative is a generous re-run sanity band, not a paper comparison).",
+      "spec_params": {
+        "horizon": 96
+      },
+      "train_command": "libraryts train --algorithm Prophet --dataset hf-weather --model-id bench-forecasting-prophet-weather-96 --param horizon=96 --param alpha=0.05 --param changepoint_prior_scale=0.05 --param changepoint_range=0.8 --param context_window=36 --param growth_floor=0 --param holidays_prior_scale=10 --param mcmc_samples=0 --param n_changepoints=25 --param seasonality_prior_scale=10 --param uncertainty_samples=1000 --param verbose=0",
+      "run_command": "libraryts run --model-id bench-forecasting-prophet-weather-96 --compact",
+      "task": "forecasting",
+      "status": "reproduced",
+      "values": {
+        "MSE": 0.011524607605788882,
+        "MAE": 0.08539786536725286
+      },
+      "per_metric": {
+        "MSE": {
+          "gt": 0.0115,
+          "value": 0.011524607605788882,
+          "delta": 2.5e-05,
+          "delta_rel": 0.00214,
+          "status": "reproduced"
+        },
+        "MAE": {
+          "gt": 0.0854,
+          "value": 0.08539786536725286,
+          "delta": -2e-06,
+          "delta_rel": 2.5e-05,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T13:21:09.699672+00:00",
+      "duration_s": 64.16,
+      "error": null,
+      "raw_metrics": {
+        "MAE": 0.08539786536725286,
+        "MSE": 0.011524607605788882,
+        "MAPE": 0.014344162835176774
+      }
+    },
+    {
+      "id": "forecasting-autoarima-weather-96",
+      "algorithm": "StatsForecastAutoARIMA",
+      "algorithm_name": "AutoARIMA",
+      "dataset": "hf-weather",
+      "dataset_name": "Weather",
+      "window": "horizon 96 · series H2OC · last-96 holdout",
+      "metrics": {
+        "MSE": 0.0258,
+        "MAE": 0.1298
+      },
+      "settings": "Univariate single-origin holdout (libraryts default protocol): fit on the first n-96 rows of series 'H2OC (mmol/mol)' (first channel of THU-ANM Weather, 10-minutely, n=52696), forecast and score MSE/MAE on the final 96 rows, raw scale (no z-score normalization, no rolling origin)",
+      "source": {
+        "title": "libraryts baseline run (no public per-dataset values)",
+        "venue": "libraryts benchmark, this repository",
+        "url": "https://doi.org/10.18637/jss.v027.i03",
+        "locator": "Measured 2026-10-15 via `libraryts train --algorithm StatsForecastAutoARIMA --dataset hf-weather` + `libraryts run --model-id probe-forecasting-autoarima-weather-96`; no public per-dataset MSE/MAE exists for this series/protocol"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.05
+      },
+      "notes": "Automatic ARIMA order selection by stepwise AICc search (Hyndman & Khandakar 2008; Nixtla statsforecast backend). Run non-seasonally (sp=1): a seasonal sp=24 fit on ETTh1 took 432s, over the 2-min per-claim CPU budget. Groundtruth is a libraryts baseline measured with this exact train/run pipeline on 2026-10-15 (deterministic algorithm; tolerance 0.05 relative is a re-run sanity band, not a paper comparison).",
+      "spec_params": {
+        "horizon": 96,
+        "sp": 1
+      },
+      "train_command": "libraryts train --algorithm StatsForecastAutoARIMA --dataset hf-weather --model-id bench-forecasting-autoarima-weather-96 --param horizon=96 --param sp=1 --param context_window=36 --param max_D=1 --param max_P=2 --param max_Q=2 --param max_d=2 --param max_order=5 --param max_p=5 --param max_q=5 --param n_fits=94 --param n_jobs=2 --param start_P=1 --param start_Q=1 --param start_p=2 --param start_q=2",
+      "run_command": "libraryts run --model-id bench-forecasting-autoarima-weather-96 --compact",
+      "task": "forecasting",
+      "status": "reproduced",
+      "values": {
+        "MSE": 0.025766018867219225,
+        "MAE": 0.12984614905338449
+      },
+      "per_metric": {
+        "MSE": {
+          "gt": 0.0258,
+          "value": 0.025766018867219225,
+          "delta": -3.4e-05,
+          "delta_rel": 0.001317,
+          "status": "reproduced"
+        },
+        "MAE": {
+          "gt": 0.1298,
+          "value": 0.12984614905338449,
+          "delta": 4.6e-05,
+          "delta_rel": 0.000356,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T13:21:31.333990+00:00",
+      "duration_s": 21.55,
+      "error": null,
+      "raw_metrics": {
+        "MAE": 0.12984614905338449,
+        "MSE": 0.025766018867219225,
+        "MAPE": 0.021658222549624993
+      }
+    },
+    {
       "id": "regression-rocket-covid3month",
       "algorithm": "RocketRegressor",
       "algorithm_name": "Rocket",
@@ -31714,12 +33186,12 @@
     }
   ],
   "summary": {
-    "entries": 543,
-    "reproduced": 469,
+    "entries": 567,
+    "reproduced": 493,
     "deviation": 74,
     "error": 0,
     "pending": 0,
-    "run_total": 543,
-    "reproduced_pct": 86.4
+    "run_total": 567,
+    "reproduced_pct": 86.9
   }
 }
