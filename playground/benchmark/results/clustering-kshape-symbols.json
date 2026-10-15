@@ -1,0 +1,39 @@
+{
+  "id": "clustering-kshape-symbols",
+  "task": "clustering",
+  "ran_at": "2026-10-15T07:27:09.513996+00:00",
+  "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset symbols-cl --model-id bench-clustering-kshape-symbols --param n_clusters=6 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+  "run_command": "libraryts run --model-id bench-clustering-kshape-symbols --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 120.07,
+  "values": {
+    "ARI": 0.7235143063770909,
+    "NMI": 0.8031584736409113
+  },
+  "per_metric": {
+    "ARI": {
+      "gt": 0.65001,
+      "value": 0.7235143063770909,
+      "delta": 0.073504,
+      "delta_rel": 0.113082,
+      "status": "reproduced"
+    },
+    "NMI": {
+      "gt": 0.77754,
+      "value": 0.8031584736409113,
+      "delta": 0.025618,
+      "delta_rel": 0.032948,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "ARI": 0.7235143063770909,
+    "NMI": 0.8031584736409113,
+    "Clusters": 6,
+    "Largest Cluster": 204
+  },
+  "error": null,
+  "stdout_tail": "lgorithm_id\": \"sktime-trained:bench-clustering-kshape-symbols\", \"preprocessor_id\": \"none\", \"params\": {}}, \"task\": \"clustering\", \"dataset\": {\"id\": \"symbols-cl\", \"name\": \"Symbols (labels for ARI)\", \"task\": \"clustering\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"Symbols\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-clustering-kshape-symbols\", \"name\": \"TimeSeriesKShapes (trained: bench-clustering-kshape-symbols)\", \"task\": \"clustering\", \"module\": \"sktime.clustering.k_shapes.TimeSeriesKShapes\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/playground/models/bench-clustering-kshape-symbols\", \"manifest\": {\"model_id\": \"bench-clustering-kshape-symbols\", \"backend\": \"sktime\", \"task\": \"clustering\", \"algorithm_id\": \"registered-clustering-TimeSeriesKShapes\", \"algorithm_name\": \"TimeSeriesKShapes\", \"module\": \"sktime.clustering.k_shapes.TimeSeriesKShapes\", \"params\": {\"n_clusters\": 6, \"random_state\": 42, \"max_iter\": 300, \"n_init\": 10, \"tol\": 0.0001}, \"eval_params\": {\"fit_on\": \"all\"}, \"created_at\": \"2026-10-15T07:27:04.779649+00:00\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"symbols-cl\", \"algorithm_id\": \"registered-clustering-TimeSeriesKShapes\", \"preprocessor_id\": \"none\", \"params\": {\"n_clusters\": 6, \"fit_on\": \"all\", \"random_state\": 42, \"max_iter\": 300, \"n_init\": 10, \"tol\": 0.0001}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 2930.5, \"log\": [\"Selected dataset: Symbols (labels for ARI)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-clustering-kshape-symbols (sktime backend, algorithm: registered-clustering-TimeSeriesKShapes, created: 2026-10-15T07:27:04.779649+00:00)\", \"Loaded UCR/UEA Symbols train=25 test=995\", \"Finished in 2930.5 ms\"]}, \"error\": null}\n"
+}

@@ -1,0 +1,30 @@
+{
+  "id": "regression-fcn-covid3month",
+  "task": "regression",
+  "ran_at": "2026-10-14T18:11:59.121811+00:00",
+  "train_command": "libraryts train --algorithm FCNRegressor --dataset covid-3month --model-id bench-regression-fcn-covid3month --param n_epochs=2000 --param batch_size=16",
+  "run_command": "libraryts run --model-id bench-regression-fcn-covid3month --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 507.22,
+  "values": {
+    "RMSE": 0.09932225695725026
+  },
+  "per_metric": {
+    "RMSE": {
+      "gt": 0.07434,
+      "value": 0.09932225695725026,
+      "delta": 0.024982,
+      "delta_rel": 0.336054,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "MAE": 0.09303145548023406,
+    "RMSE": 0.09932225695725026,
+    "R²": -3.9540012153134256
+  },
+  "error": null,
+  "stdout_tail": "sed 61 held-out time series targets with FCNRegressor (trained: bench-regression-fcn-covid3month).\", \"run_id\": \"98f378b12dd8\", \"spec\": {\"task\": \"regression\", \"dataset_id\": \"covid-3month\", \"algorithm_id\": \"sktime-trained:bench-regression-fcn-covid3month\", \"preprocessor_id\": \"none\", \"params\": {}}, \"task\": \"regression\", \"dataset\": {\"id\": \"covid-3month\", \"name\": \"Covid3Month\", \"task\": \"regression\", \"source\": \"local\", \"loader\": \"sktime.datasets.load_covid_3month\", \"enabled\": true, \"default\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-regression-fcn-covid3month\", \"name\": \"FCNRegressor (trained: bench-regression-fcn-covid3month)\", \"task\": \"regression\", \"module\": \"sktime.regression.deep_learning.fcn.FCNRegressor\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/playground/models/bench-regression-fcn-covid3month\", \"manifest\": {\"model_id\": \"bench-regression-fcn-covid3month\", \"backend\": \"sktime\", \"task\": \"regression\", \"algorithm_id\": \"registered-regression-FCNRegressor\", \"algorithm_name\": \"FCNRegressor\", \"module\": \"sktime.regression.deep_learning.fcn.FCNRegressor\", \"params\": {\"n_epochs\": 2000, \"batch_size\": 16}, \"eval_params\": {}, \"created_at\": \"2026-10-14T18:11:48.165603+00:00\", \"spec\": {\"task\": \"regression\", \"dataset_id\": \"covid-3month\", \"algorithm_id\": \"registered-regression-FCNRegressor\", \"preprocessor_id\": \"none\", \"params\": {\"n_epochs\": 2000, \"batch_size\": 16}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 7652.1, \"log\": [\"Selected dataset: Covid3Month\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-regression-fcn-covid3month (sktime backend, algorithm: registered-regression-FCNRegressor, created: 2026-10-14T18:11:48.165603+00:00)\", \"Loaded Covid3Month train=140 test=61\", \"Finished in 7652.1 ms\"]}, \"error\": null}\n"
+}

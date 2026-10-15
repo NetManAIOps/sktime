@@ -1,0 +1,32 @@
+{
+  "id": "detection-hbos-yahoo-auc",
+  "task": "anomaly_detection",
+  "ran_at": "2026-09-29T11:06:22.214253+00:00",
+  "train_command": "libraryts train --algorithm registered-anomaly_detection-PyODHBOSDetector --dataset tsb-yahoo --model-id bench-detection-hbos-yahoo-auc --param contamination=0.1 --param n_bins=10",
+  "run_command": "libraryts run --model-id bench-detection-hbos-yahoo-auc --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 26.09,
+  "values": {
+    "AUC-ROC": 0.808205580327725
+  },
+  "per_metric": {
+    "AUC-ROC": {
+      "gt": 0.57,
+      "value": 0.808205580327725,
+      "delta": 0.238206,
+      "delta_rel": 0.417905,
+      "status": "deviation"
+    }
+  },
+  "status": "deviation",
+  "metrics": {
+    "AUC-ROC": 0.808205580327725,
+    "Precision": 0.1264356007197957,
+    "Recall": 0.5535190717671797,
+    "F1": 0.15853989045698522,
+    "Series": 367
+  },
+  "error": null,
+  "stdout_tail": "ic_86_data.out\", \"artifact\": \"series/0351/model.zip\"}, {\"name\": \"Yahoo_A2synthetic_87_data.out\", \"artifact\": \"series/0352/model.zip\"}, {\"name\": \"Yahoo_A2synthetic_88_data.out\", \"artifact\": \"series/0353/model.zip\"}, {\"name\": \"Yahoo_A2synthetic_89_data.out\", \"artifact\": \"series/0354/model.zip\"}, {\"name\": \"Yahoo_A2synthetic_8_data.out\", \"artifact\": \"series/0355/model.zip\"}, {\"name\": \"Yahoo_A2synthetic_90_data.out\", \"artifact\": \"series/0356/model.zip\"}, {\"name\": \"Yahoo_A2synthetic_91_data.out\", \"artifact\": \"series/0357/model.zip\"}, {\"name\": \"Yahoo_A2synthetic_92_data.out\", \"artifact\": \"series/0358/model.zip\"}, {\"name\": \"Yahoo_A2synthetic_93_data.out\", \"artifact\": \"series/0359/model.zip\"}, {\"name\": \"Yahoo_A2synthetic_94_data.out\", \"artifact\": \"series/0360/model.zip\"}, {\"name\": \"Yahoo_A2synthetic_95_data.out\", \"artifact\": \"series/0361/model.zip\"}, {\"name\": \"Yahoo_A2synthetic_96_data.out\", \"artifact\": \"series/0362/model.zip\"}, {\"name\": \"Yahoo_A2synthetic_97_data.out\", \"artifact\": \"series/0363/model.zip\"}, {\"name\": \"Yahoo_A2synthetic_98_data.out\", \"artifact\": \"series/0364/model.zip\"}, {\"name\": \"Yahoo_A2synthetic_99_data.out\", \"artifact\": \"series/0365/model.zip\"}, {\"name\": \"Yahoo_A2synthetic_9_data.out\", \"artifact\": \"series/0366/model.zip\"}], \"artifacts\": {\"model\": null, \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 7429.4, \"log\": [\"Selected dataset: TSB-UAD YAHOO (367 series)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-detection-hbos-yahoo-auc (sktime backend, algorithm: registered-anomaly_detection-PyODHBOSDetector, created: 2026-09-29T11:06:11.779054+00:00)\", \"Scored 50/367 series\", \"Scored 100/367 series\", \"Scored 150/367 series\", \"Scored 200/367 series\", \"Scored 250/367 series\", \"Scored 300/367 series\", \"Scored 350/367 series\", \"Multi-series eval: 367 series, AUC-ROC=0.8082\", \"Finished in 7429.4 ms\"]}, \"error\": null}\n"
+}

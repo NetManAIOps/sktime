@@ -28,6 +28,9 @@ share/python-wheels/
 
 #TSC results
 results/
+# Benchmark reproduction records are source data for the Pages leaderboard.
+!/playground/benchmark/results/
+!/playground/benchmark/results/*.json
 
 # Local generated artifacts
 outputs/

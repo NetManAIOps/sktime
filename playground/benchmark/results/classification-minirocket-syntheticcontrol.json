@@ -1,0 +1,29 @@
+{
+  "id": "classification-minirocket-syntheticcontrol",
+  "task": "classification",
+  "ran_at": "2026-10-14T17:41:34.831879+00:00",
+  "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-syntheticcontrol --model-id bench-classification-minirocket-syntheticcontrol --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+  "run_command": "libraryts run --model-id bench-classification-minirocket-syntheticcontrol --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 20.38,
+  "values": {
+    "Accuracy": 0.9866666666666667
+  },
+  "per_metric": {
+    "Accuracy": {
+      "gt": 0.99011,
+      "value": 0.9866666666666667,
+      "delta": -0.003443,
+      "delta_rel": 0.003478,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "Accuracy": 0.9866666666666667,
+    "Macro F1": 0.9866636655662365
+  },
+  "error": null,
+  "stdout_tail": "r\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"SyntheticControl\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-classification-minirocket-syntheticcontrol\", \"name\": \"RocketClassifier (trained: bench-classification-minirocket-syntheticcontrol)\", \"task\": \"classification\", \"module\": \"sktime.classification.kernel_based._rocket_classifier.RocketClassifier\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/playground/models/bench-classification-minirocket-syntheticcontrol\", \"manifest\": {\"model_id\": \"bench-classification-minirocket-syntheticcontrol\", \"backend\": \"sktime\", \"task\": \"classification\", \"algorithm_id\": \"registered-classification-RocketClassifier\", \"algorithm_name\": \"RocketClassifier\", \"module\": \"sktime.classification.kernel_based._rocket_classifier.RocketClassifier\", \"params\": {\"rocket_transform\": \"minirocket\", \"max_dilations_per_kernel\": 32, \"n_features_per_kernel\": 4, \"n_jobs\": 1, \"num_kernels\": 10000}, \"eval_params\": {}, \"created_at\": \"2026-10-14T17:41:28.297340+00:00\", \"spec\": {\"task\": \"classification\", \"dataset_id\": \"ucr-syntheticcontrol\", \"algorithm_id\": \"registered-classification-RocketClassifier\", \"preprocessor_id\": \"none\", \"params\": {\"rocket_transform\": \"minirocket\", \"max_dilations_per_kernel\": 32, \"n_features_per_kernel\": 4, \"n_jobs\": 1, \"num_kernels\": 10000}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 5074.5, \"log\": [\"Selected dataset: UCR/UEA SyntheticControl\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-classification-minirocket-syntheticcontrol (sktime backend, algorithm: registered-classification-RocketClassifier, created: 2026-10-14T17:41:28.297340+00:00)\", \"Loaded UCR/UEA SyntheticControl train=300 test=300\", \"Finished in 5074.5 ms\"]}, \"error\": null}\n"
+}

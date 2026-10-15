@@ -1,0 +1,29 @@
+{
+  "id": "classification-rocket-distalphalanxoutlinecorrect",
+  "task": "classification",
+  "ran_at": "2026-10-15T06:26:48.495542+00:00",
+  "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-distalphalanxoutlinecorrect --model-id bench-classification-rocket-distalphalanxoutlinecorrect --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+  "run_command": "libraryts run --model-id bench-classification-rocket-distalphalanxoutlinecorrect --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 30.39,
+  "values": {
+    "Accuracy": 0.7572463768115942
+  },
+  "per_metric": {
+    "Accuracy": {
+      "gt": 0.76957,
+      "value": 0.7572463768115942,
+      "delta": -0.012324,
+      "delta_rel": 0.016014,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "Accuracy": 0.7572463768115942,
+    "Macro F1": 0.7389868307761797
+  },
+  "error": null,
+  "stdout_tail": ".datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"DistalPhalanxOutlineCorrect\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-classification-rocket-distalphalanxoutlinecorrect\", \"name\": \"RocketClassifier (trained: bench-classification-rocket-distalphalanxoutlinecorrect)\", \"task\": \"classification\", \"module\": \"sktime.classification.kernel_based._rocket_classifier.RocketClassifier\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/playground/models/bench-classification-rocket-distalphalanxoutlinecorrect\", \"manifest\": {\"model_id\": \"bench-classification-rocket-distalphalanxoutlinecorrect\", \"backend\": \"sktime\", \"task\": \"classification\", \"algorithm_id\": \"registered-classification-RocketClassifier\", \"algorithm_name\": \"RocketClassifier\", \"module\": \"sktime.classification.kernel_based._rocket_classifier.RocketClassifier\", \"params\": {\"max_dilations_per_kernel\": 32, \"n_features_per_kernel\": 4, \"n_jobs\": 1, \"num_kernels\": 10000}, \"eval_params\": {}, \"created_at\": \"2026-10-15T06:26:40.821009+00:00\", \"spec\": {\"task\": \"classification\", \"dataset_id\": \"ucr-distalphalanxoutlinecorrect\", \"algorithm_id\": \"registered-classification-RocketClassifier\", \"preprocessor_id\": \"none\", \"params\": {\"max_dilations_per_kernel\": 32, \"n_features_per_kernel\": 4, \"n_jobs\": 1, \"num_kernels\": 10000}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 6894.0, \"log\": [\"Selected dataset: UCR/UEA DistalPhalanxOutlineCorrect\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-classification-rocket-distalphalanxoutlinecorrect (sktime backend, algorithm: registered-classification-RocketClassifier, created: 2026-10-15T06:26:40.821009+00:00)\", \"Loaded UCR/UEA DistalPhalanxOutlineCorrect train=600 test=276\", \"Finished in 6894.0 ms\"]}, \"error\": null}\n"
+}

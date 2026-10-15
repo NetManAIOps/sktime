@@ -325,12 +325,13 @@ def render_page(state: dict) -> str:
         for task in state["tasks"]
     )
     generated = esc(state["generated_at"].replace("T", " ")[:19] + " UTC")
-    return (
+    page = (
         template.replace("<!--BENCH:STATS-->", render_stats(state["summary"], total_algorithms))
         .replace("<!--BENCH:TABS-->", render_tabs(state["tasks"]))
         .replace("<!--BENCH:SECTIONS-->", sections)
         .replace("<!--BENCH:GENERATED-->", generated)
     )
+    return "\n".join(line.rstrip() for line in page.splitlines()) + "\n"
 
 
 def main() -> int:

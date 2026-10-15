@@ -1,0 +1,33 @@
+{
+  "id": "causal-ges-sachs-edges",
+  "task": "causal",
+  "ran_at": "2026-10-14T16:34:32.748729+00:00",
+  "train_command": "libraryts train --algorithm causal-ges --dataset causal-sachs-cont --model-id bench-causal-ges-sachs-edges --param max_samples=7466 --param seed=7",
+  "run_command": "libraryts run --model-id bench-causal-ges-sachs-edges --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 7.37,
+  "values": {
+    "Edges": 34.0
+  },
+  "per_metric": {
+    "Edges": {
+      "gt": 30,
+      "value": 34.0,
+      "delta": 4.0,
+      "delta_rel": 0.133333,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "SHD": 31,
+    "Edge Precision": 0.23529411764705882,
+    "Edge Recall": 0.4,
+    "Edge F1": 0.29629629629629634,
+    "Edges": 34,
+    "True Edges": 20
+  },
+  "error": null,
+  "stdout_tail": "irected\", \"in_true_graph\": false}]}, \"summary\": \"Discovered 34 edges (20 true) with GES (trained: bench-causal-ges-sachs-edges): SHD=31, edge F1=0.296.\", \"run_id\": \"30648060de0c\", \"spec\": {\"task\": \"causal\", \"dataset_id\": \"causal-sachs-cont\", \"algorithm_id\": \"sktime-trained:bench-causal-ges-sachs-edges\", \"preprocessor_id\": \"none\", \"params\": {}}, \"task\": \"causal\", \"dataset\": {\"id\": \"causal-sachs-cont\", \"name\": \"Sachs continuous (7466×11, 20-edge DAG)\", \"task\": \"causal\", \"source\": \"local\", \"loader\": \"domain_runners.load_sachs_continuous\", \"true_graph\": true, \"enabled\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-causal-ges-sachs-edges\", \"name\": \"GES (trained: bench-causal-ges-sachs-edges)\", \"task\": \"causal\", \"module\": \"sktime.causal_discovery.ges.GES\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/playground/models/bench-causal-ges-sachs-edges\", \"manifest\": {\"model_id\": \"bench-causal-ges-sachs-edges\", \"backend\": \"sktime\", \"task\": \"causal\", \"algorithm_id\": \"causal-ges\", \"algorithm_name\": \"GES\", \"module\": \"sktime.causal_discovery.ges.GES\", \"params\": {}, \"eval_params\": {\"max_samples\": 7466, \"seed\": 7}, \"created_at\": \"2026-10-14T16:34:28.939961+00:00\", \"spec\": {\"task\": \"causal\", \"dataset_id\": \"causal-sachs-cont\", \"algorithm_id\": \"causal-ges\", \"preprocessor_id\": \"none\", \"params\": {\"max_samples\": 7466, \"seed\": 7}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 2667.4, \"log\": [\"Selected dataset: Sachs continuous (7466×11, 20-edge DAG)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-causal-ges-sachs-edges (sktime backend, algorithm: causal-ges, created: 2026-10-14T16:34:28.939961+00:00)\", \"Loaded Sachs continuous (7466×11, 20-edge DAG) samples=7466 variables=11 true_edges=20\", \"Finished in 2667.4 ms\"]}, \"error\": null}\n"
+}

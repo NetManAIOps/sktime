@@ -1,0 +1,39 @@
+{
+  "id": "clustering-kshape-middlephalanxoutlinecorrect",
+  "task": "clustering",
+  "ran_at": "2026-10-15T07:18:36.457868+00:00",
+  "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset middlephalanxoutlinecorrect-cl --model-id bench-clustering-kshape-middlephalanxoutlinecorrect --param n_clusters=2 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+  "run_command": "libraryts run --model-id bench-clustering-kshape-middlephalanxoutlinecorrect --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 32.53,
+  "values": {
+    "ARI": -0.003736340033088139,
+    "NMI": 0.0008948491919371358
+  },
+  "per_metric": {
+    "ARI": {
+      "gt": -0.00374,
+      "value": -0.003736340033088139,
+      "delta": 4e-06,
+      "delta_rel": 0.000979,
+      "status": "reproduced"
+    },
+    "NMI": {
+      "gt": 0.00089,
+      "value": 0.0008948491919371358,
+      "delta": 5e-06,
+      "delta_rel": 0.005449,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "ARI": -0.003736340033088139,
+    "NMI": 0.0008948491919371358,
+    "Clusters": 2,
+    "Largest Cluster": 552
+  },
+  "error": null,
+  "stdout_tail": "els for ARI)\", \"task\": \"clustering\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"MiddlePhalanxOutlineCorrect\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-clustering-kshape-middlephalanxoutlinecorrect\", \"name\": \"TimeSeriesKShapes (trained: bench-clustering-kshape-middlephalanxoutlinecorrect)\", \"task\": \"clustering\", \"module\": \"sktime.clustering.k_shapes.TimeSeriesKShapes\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/playground/models/bench-clustering-kshape-middlephalanxoutlinecorrect\", \"manifest\": {\"model_id\": \"bench-clustering-kshape-middlephalanxoutlinecorrect\", \"backend\": \"sktime\", \"task\": \"clustering\", \"algorithm_id\": \"registered-clustering-TimeSeriesKShapes\", \"algorithm_name\": \"TimeSeriesKShapes\", \"module\": \"sktime.clustering.k_shapes.TimeSeriesKShapes\", \"params\": {\"n_clusters\": 2, \"random_state\": 42, \"max_iter\": 300, \"n_init\": 10, \"tol\": 0.0001}, \"eval_params\": {\"fit_on\": \"all\"}, \"created_at\": \"2026-10-15T07:18:31.904775+00:00\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"middlephalanxoutlinecorrect-cl\", \"algorithm_id\": \"registered-clustering-TimeSeriesKShapes\", \"preprocessor_id\": \"none\", \"params\": {\"n_clusters\": 2, \"fit_on\": \"all\", \"random_state\": 42, \"max_iter\": 300, \"n_init\": 10, \"tol\": 0.0001}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 2924.0, \"log\": [\"Selected dataset: MiddlePhalanxOutlineCorrect (labels for ARI)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-clustering-kshape-middlephalanxoutlinecorrect (sktime backend, algorithm: registered-clustering-TimeSeriesKShapes, created: 2026-10-15T07:18:31.904775+00:00)\", \"Loaded UCR/UEA MiddlePhalanxOutlineCorrect train=600 test=291\", \"Finished in 2924.0 ms\"]}, \"error\": null}\n"
+}

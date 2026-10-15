@@ -1,0 +1,39 @@
+{
+  "id": "clustering-kshape-wine",
+  "task": "clustering",
+  "ran_at": "2026-10-14T17:47:37.287132+00:00",
+  "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset wine-cl --model-id bench-clustering-kshape-wine --param n_clusters=2 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+  "run_command": "libraryts run --model-id bench-clustering-kshape-wine --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 62.37,
+  "values": {
+    "ARI": -0.005155979202772964,
+    "NMI": 0.0026690640014526384
+  },
+  "per_metric": {
+    "ARI": {
+      "gt": -0.00519,
+      "value": -0.005155979202772964,
+      "delta": 3.4e-05,
+      "delta_rel": 0.006555,
+      "status": "reproduced"
+    },
+    "NMI": {
+      "gt": 0.00106,
+      "value": 0.0026690640014526384,
+      "delta": 0.001609,
+      "delta_rel": 1.517985,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "ARI": -0.005155979202772964,
+    "NMI": 0.0026690640014526384,
+    "Clusters": 2,
+    "Largest Cluster": 90
+  },
+  "error": null,
+  "stdout_tail": "stering\", \"dataset_id\": \"wine-cl\", \"algorithm_id\": \"sktime-trained:bench-clustering-kshape-wine\", \"preprocessor_id\": \"none\", \"params\": {}}, \"task\": \"clustering\", \"dataset\": {\"id\": \"wine-cl\", \"name\": \"Wine (labels for ARI)\", \"task\": \"clustering\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"Wine\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-clustering-kshape-wine\", \"name\": \"TimeSeriesKShapes (trained: bench-clustering-kshape-wine)\", \"task\": \"clustering\", \"module\": \"sktime.clustering.k_shapes.TimeSeriesKShapes\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/playground/models/bench-clustering-kshape-wine\", \"manifest\": {\"model_id\": \"bench-clustering-kshape-wine\", \"backend\": \"sktime\", \"task\": \"clustering\", \"algorithm_id\": \"registered-clustering-TimeSeriesKShapes\", \"algorithm_name\": \"TimeSeriesKShapes\", \"module\": \"sktime.clustering.k_shapes.TimeSeriesKShapes\", \"params\": {\"n_clusters\": 2, \"random_state\": 42, \"max_iter\": 300, \"n_init\": 10, \"tol\": 0.0001}, \"eval_params\": {\"fit_on\": \"all\"}, \"created_at\": \"2026-10-14T17:47:30.677477+00:00\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"wine-cl\", \"algorithm_id\": \"registered-clustering-TimeSeriesKShapes\", \"preprocessor_id\": \"none\", \"params\": {\"n_clusters\": 2, \"fit_on\": \"all\", \"random_state\": 42, \"max_iter\": 300, \"n_init\": 10, \"tol\": 0.0001}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 4192.1, \"log\": [\"Selected dataset: Wine (labels for ARI)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-clustering-kshape-wine (sktime backend, algorithm: registered-clustering-TimeSeriesKShapes, created: 2026-10-14T17:47:30.677477+00:00)\", \"Loaded UCR/UEA Wine train=57 test=54\", \"Finished in 4192.1 ms\"]}, \"error\": null}\n"
+}

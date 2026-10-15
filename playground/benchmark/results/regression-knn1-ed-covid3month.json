@@ -1,0 +1,30 @@
+{
+  "id": "regression-knn1-ed-covid3month",
+  "task": "regression",
+  "ran_at": "2026-10-14T16:25:39.883171+00:00",
+  "train_command": "libraryts train --algorithm KNeighborsTimeSeriesRegressor --dataset covid-3month --model-id bench-regression-knn1-ed-covid3month --param n_neighbors=1 --param distance=euclidean --param leaf_size=30",
+  "run_command": "libraryts run --model-id bench-regression-knn1-ed-covid3month --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 7.52,
+  "values": {
+    "RMSE": 0.0530602167211732
+  },
+  "per_metric": {
+    "RMSE": {
+      "gt": 0.05306,
+      "value": 0.0530602167211732,
+      "delta": 0.0,
+      "delta_rel": 4e-06,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "MAE": 0.036174349364687185,
+    "RMSE": 0.0530602167211732,
+    "R²": -0.4138423566516243
+  },
+  "error": null,
+  "stdout_tail": "ssion-knn1-ed-covid3month\", \"preprocessor_id\": \"none\", \"params\": {}}, \"task\": \"regression\", \"dataset\": {\"id\": \"covid-3month\", \"name\": \"Covid3Month\", \"task\": \"regression\", \"source\": \"local\", \"loader\": \"sktime.datasets.load_covid_3month\", \"enabled\": true, \"default\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-regression-knn1-ed-covid3month\", \"name\": \"KNeighborsTimeSeriesRegressor (trained: bench-regression-knn1-ed-covid3month)\", \"task\": \"regression\", \"module\": \"sktime.regression.distance_based._time_series_neighbors.KNeighborsTimeSeriesRegressor\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/playground/models/bench-regression-knn1-ed-covid3month\", \"manifest\": {\"model_id\": \"bench-regression-knn1-ed-covid3month\", \"backend\": \"sktime\", \"task\": \"regression\", \"algorithm_id\": \"registered-regression-KNeighborsTimeSeriesRegressor\", \"algorithm_name\": \"KNeighborsTimeSeriesRegressor\", \"module\": \"sktime.regression.distance_based._time_series_neighbors.KNeighborsTimeSeriesRegressor\", \"params\": {\"n_neighbors\": 1, \"distance\": \"euclidean\", \"leaf_size\": 30}, \"eval_params\": {}, \"created_at\": \"2026-10-14T16:25:35.733466+00:00\", \"spec\": {\"task\": \"regression\", \"dataset_id\": \"covid-3month\", \"algorithm_id\": \"registered-regression-KNeighborsTimeSeriesRegressor\", \"preprocessor_id\": \"none\", \"params\": {\"n_neighbors\": 1, \"distance\": \"euclidean\", \"leaf_size\": 30}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 3298.9, \"log\": [\"Selected dataset: Covid3Month\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-regression-knn1-ed-covid3month (sktime backend, algorithm: registered-regression-KNeighborsTimeSeriesRegressor, created: 2026-10-14T16:25:35.733466+00:00)\", \"Loaded Covid3Month train=140 test=61\", \"Finished in 3298.9 ms\"]}, \"error\": null}\n"
+}

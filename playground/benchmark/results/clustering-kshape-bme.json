@@ -1,0 +1,39 @@
+{
+  "id": "clustering-kshape-bme",
+  "task": "clustering",
+  "ran_at": "2026-10-14T16:33:02.455383+00:00",
+  "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset bme-cl --model-id bench-clustering-kshape-bme --param n_clusters=3 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+  "run_command": "libraryts run --model-id bench-clustering-kshape-bme --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 213.81,
+  "values": {
+    "ARI": 0.1588345864661654,
+    "NMI": 0.24794516630512
+  },
+  "per_metric": {
+    "ARI": {
+      "gt": 0.19056,
+      "value": 0.1588345864661654,
+      "delta": -0.031725,
+      "delta_rel": 0.166485,
+      "status": "reproduced"
+    },
+    "NMI": {
+      "gt": 0.28772,
+      "value": 0.24794516630512,
+      "delta": -0.039775,
+      "delta_rel": 0.138241,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "ARI": 0.1588345864661654,
+    "NMI": 0.24794516630512,
+    "Clusters": 3,
+    "Largest Cluster": 72
+  },
+  "error": null,
+  "stdout_tail": "\"task\": \"clustering\", \"dataset_id\": \"bme-cl\", \"algorithm_id\": \"sktime-trained:bench-clustering-kshape-bme\", \"preprocessor_id\": \"none\", \"params\": {}}, \"task\": \"clustering\", \"dataset\": {\"id\": \"bme-cl\", \"name\": \"BME (labels for ARI)\", \"task\": \"clustering\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"BME\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-clustering-kshape-bme\", \"name\": \"TimeSeriesKShapes (trained: bench-clustering-kshape-bme)\", \"task\": \"clustering\", \"module\": \"sktime.clustering.k_shapes.TimeSeriesKShapes\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/playground/models/bench-clustering-kshape-bme\", \"manifest\": {\"model_id\": \"bench-clustering-kshape-bme\", \"backend\": \"sktime\", \"task\": \"clustering\", \"algorithm_id\": \"registered-clustering-TimeSeriesKShapes\", \"algorithm_name\": \"TimeSeriesKShapes\", \"module\": \"sktime.clustering.k_shapes.TimeSeriesKShapes\", \"params\": {\"n_clusters\": 3, \"random_state\": 42, \"max_iter\": 300, \"n_init\": 10, \"tol\": 0.0001}, \"eval_params\": {\"fit_on\": \"all\"}, \"created_at\": \"2026-10-14T16:32:56.089314+00:00\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"bme-cl\", \"algorithm_id\": \"registered-clustering-TimeSeriesKShapes\", \"preprocessor_id\": \"none\", \"params\": {\"n_clusters\": 3, \"fit_on\": \"all\", \"random_state\": 42, \"max_iter\": 300, \"n_init\": 10, \"tol\": 0.0001}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 4323.8, \"log\": [\"Selected dataset: BME (labels for ARI)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-clustering-kshape-bme (sktime backend, algorithm: registered-clustering-TimeSeriesKShapes, created: 2026-10-14T16:32:56.089314+00:00)\", \"Loaded UCR/UEA BME train=30 test=150\", \"Finished in 4323.8 ms\"]}, \"error\": null}\n"
+}

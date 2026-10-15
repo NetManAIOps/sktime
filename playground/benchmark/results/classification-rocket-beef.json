@@ -1,0 +1,29 @@
+{
+  "id": "classification-rocket-beef",
+  "task": "classification",
+  "ran_at": "2026-10-14T16:21:20.488502+00:00",
+  "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-beef --model-id bench-classification-rocket-beef --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+  "run_command": "libraryts run --model-id bench-classification-rocket-beef --compact",
+  "python": "/home/xiezhe/sktime/.venv/bin/python",
+  "returncode": 0,
+  "duration_s": 37.13,
+  "values": {
+    "Accuracy": 0.8
+  },
+  "per_metric": {
+    "Accuracy": {
+      "gt": 0.83333,
+      "value": 0.8,
+      "delta": -0.03333,
+      "delta_rel": 0.039996,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "Accuracy": 0.8,
+    "Macro F1": 0.8051881451881453
+  },
+  "error": null,
+  "stdout_tail": "fication-rocket-beef\", \"preprocessor_id\": \"none\", \"params\": {}}, \"task\": \"classification\", \"dataset\": {\"id\": \"ucr-beef\", \"name\": \"UCR/UEA Beef\", \"task\": \"classification\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"Beef\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-classification-rocket-beef\", \"name\": \"RocketClassifier (trained: bench-classification-rocket-beef)\", \"task\": \"classification\", \"module\": \"sktime.classification.kernel_based._rocket_classifier.RocketClassifier\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/playground/models/bench-classification-rocket-beef\", \"manifest\": {\"model_id\": \"bench-classification-rocket-beef\", \"backend\": \"sktime\", \"task\": \"classification\", \"algorithm_id\": \"registered-classification-RocketClassifier\", \"algorithm_name\": \"RocketClassifier\", \"module\": \"sktime.classification.kernel_based._rocket_classifier.RocketClassifier\", \"params\": {\"max_dilations_per_kernel\": 32, \"n_features_per_kernel\": 4, \"n_jobs\": 1, \"num_kernels\": 10000}, \"eval_params\": {}, \"created_at\": \"2026-10-14T16:21:09.682319+00:00\", \"spec\": {\"task\": \"classification\", \"dataset_id\": \"ucr-beef\", \"algorithm_id\": \"registered-classification-RocketClassifier\", \"preprocessor_id\": \"none\", \"params\": {\"max_dilations_per_kernel\": 32, \"n_features_per_kernel\": 4, \"n_jobs\": 1, \"num_kernels\": 10000}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 9815.1, \"log\": [\"Selected dataset: UCR/UEA Beef\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-classification-rocket-beef (sktime backend, algorithm: registered-classification-RocketClassifier, created: 2026-10-14T16:21:09.682319+00:00)\", \"Loaded UCR/UEA Beef train=30 test=30\", \"Finished in 9815.1 ms\"]}, \"error\": null}\n"
+}

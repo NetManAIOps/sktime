@@ -1,13 +1,13 @@
 {
-  "generated_at": "2026-10-15T08:08:22.091273+00:00",
-  "catalog_source": "live",
+  "generated_at": "2026-10-15T10:39:30.050743+00:00",
+  "catalog_source": "snapshot",
   "tasks": [
     {
       "id": "forecasting",
       "name": "Forecasting",
       "description": "Predict future values of a series.",
-      "algorithm_count": 140,
-      "enabled_count": 133
+      "algorithm_count": 138,
+      "enabled_count": 131
     },
     {
       "id": "classification",
@@ -378,12 +378,6 @@
         "source": "registry"
       },
       {
-        "id": "registered-forecasting-LinearForecaster",
-        "name": "LinearForecaster",
-        "enabled": true,
-        "source": "registry"
-      },
-      {
         "id": "registered-forecasting-LTSFDLinearForecaster",
         "name": "LTSFDLinearForecaster",
         "enabled": true,
@@ -488,12 +482,6 @@
       {
         "id": "registered-forecasting-NeuralForecastTCN",
         "name": "NeuralForecastTCN",
-        "enabled": true,
-        "source": "registry"
-      },
-      {
-        "id": "registered-forecasting-NLinearForecaster",
-        "name": "NLinearForecaster",
         "enabled": true,
         "source": "registry"
       },

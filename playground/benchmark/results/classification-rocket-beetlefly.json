@@ -1,0 +1,29 @@
+{
+  "id": "classification-rocket-beetlefly",
+  "task": "classification",
+  "ran_at": "2026-10-15T06:42:58.615407+00:00",
+  "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-beetlefly --model-id bench-classification-rocket-beetlefly --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+  "run_command": "libraryts run --model-id bench-classification-rocket-beetlefly --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 20.67,
+  "values": {
+    "Accuracy": 0.9
+  },
+  "per_metric": {
+    "Accuracy": {
+      "gt": 0.9,
+      "value": 0.9,
+      "delta": 0.0,
+      "delta_rel": 0.0,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "Accuracy": 0.9,
+    "Macro F1": 0.898989898989899
+  },
+  "error": null,
+  "stdout_tail": "ms\": {}}, \"task\": \"classification\", \"dataset\": {\"id\": \"ucr-beetlefly\", \"name\": \"UCR/UEA BeetleFly\", \"task\": \"classification\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"BeetleFly\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-classification-rocket-beetlefly\", \"name\": \"RocketClassifier (trained: bench-classification-rocket-beetlefly)\", \"task\": \"classification\", \"module\": \"sktime.classification.kernel_based._rocket_classifier.RocketClassifier\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/playground/models/bench-classification-rocket-beetlefly\", \"manifest\": {\"model_id\": \"bench-classification-rocket-beetlefly\", \"backend\": \"sktime\", \"task\": \"classification\", \"algorithm_id\": \"registered-classification-RocketClassifier\", \"algorithm_name\": \"RocketClassifier\", \"module\": \"sktime.classification.kernel_based._rocket_classifier.RocketClassifier\", \"params\": {\"max_dilations_per_kernel\": 32, \"n_features_per_kernel\": 4, \"n_jobs\": 1, \"num_kernels\": 10000}, \"eval_params\": {}, \"created_at\": \"2026-10-15T06:42:51.855360+00:00\", \"spec\": {\"task\": \"classification\", \"dataset_id\": \"ucr-beetlefly\", \"algorithm_id\": \"registered-classification-RocketClassifier\", \"preprocessor_id\": \"none\", \"params\": {\"max_dilations_per_kernel\": 32, \"n_features_per_kernel\": 4, \"n_jobs\": 1, \"num_kernels\": 10000}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 5990.8, \"log\": [\"Selected dataset: UCR/UEA BeetleFly\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-classification-rocket-beetlefly (sktime backend, algorithm: registered-classification-RocketClassifier, created: 2026-10-15T06:42:51.855360+00:00)\", \"Loaded UCR/UEA BeetleFly train=20 test=20\", \"Finished in 5990.8 ms\"]}, \"error\": null}\n"
+}

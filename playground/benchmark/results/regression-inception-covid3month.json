@@ -1,0 +1,30 @@
+{
+  "id": "regression-inception-covid3month",
+  "task": "regression",
+  "ran_at": "2026-10-14T18:32:09.175939+00:00",
+  "train_command": "libraryts train --algorithm InceptionTimeRegressor --dataset covid-3month --model-id bench-regression-inception-covid3month --param n_epochs=1500 --param batch_size=64 --param bottleneck_size=32 --param depth=6 --param kernel_size=40 --param n_filters=32",
+  "run_command": "libraryts run --model-id bench-regression-inception-covid3month --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 454.28,
+  "values": {
+    "RMSE": 0.05461963262108997
+  },
+  "per_metric": {
+    "RMSE": {
+      "gt": 0.053769,
+      "value": 0.05461963262108997,
+      "delta": 0.000851,
+      "delta_rel": 0.01582,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "MAE": 0.03545627349865486,
+    "RMSE": 0.05461963262108997,
+    "R²": -0.4981679385174731
+  },
+  "error": null,
+  "stdout_tail": "cessor_id\": \"none\", \"params\": {}}, \"task\": \"regression\", \"dataset\": {\"id\": \"covid-3month\", \"name\": \"Covid3Month\", \"task\": \"regression\", \"source\": \"local\", \"loader\": \"sktime.datasets.load_covid_3month\", \"enabled\": true, \"default\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-regression-inception-covid3month\", \"name\": \"InceptionTimeRegressor (trained: bench-regression-inception-covid3month)\", \"task\": \"regression\", \"module\": \"sktime.regression.deep_learning.inceptiontime.InceptionTimeRegressor\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/playground/models/bench-regression-inception-covid3month\", \"manifest\": {\"model_id\": \"bench-regression-inception-covid3month\", \"backend\": \"sktime\", \"task\": \"regression\", \"algorithm_id\": \"registered-regression-InceptionTimeRegressor\", \"algorithm_name\": \"InceptionTimeRegressor\", \"module\": \"sktime.regression.deep_learning.inceptiontime.InceptionTimeRegressor\", \"params\": {\"n_epochs\": 1500, \"batch_size\": 64, \"bottleneck_size\": 32, \"depth\": 6, \"kernel_size\": 40, \"n_filters\": 32}, \"eval_params\": {}, \"created_at\": \"2026-10-14T18:31:58.517224+00:00\", \"spec\": {\"task\": \"regression\", \"dataset_id\": \"covid-3month\", \"algorithm_id\": \"registered-regression-InceptionTimeRegressor\", \"preprocessor_id\": \"none\", \"params\": {\"n_epochs\": 1500, \"batch_size\": 64, \"bottleneck_size\": 32, \"depth\": 6, \"kernel_size\": 40, \"n_filters\": 32}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 7543.1, \"log\": [\"Selected dataset: Covid3Month\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-regression-inception-covid3month (sktime backend, algorithm: registered-regression-InceptionTimeRegressor, created: 2026-10-14T18:31:58.517224+00:00)\", \"Loaded Covid3Month train=140 test=61\", \"Finished in 7543.1 ms\"]}, \"error\": null}\n"
+}
