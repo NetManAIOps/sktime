@@ -1,0 +1,29 @@
+{
+  "id": "classification-stsf-italypowerdemand",
+  "task": "classification",
+  "ran_at": "2026-10-15T13:01:33.495251+00:00",
+  "train_command": "libraryts train --algorithm SupervisedTimeSeriesForest --dataset italy-power-demand --model-id bench-classification-stsf-italypowerdemand --param random_state=0 --param n_estimators=200 --param n_jobs=1",
+  "run_command": "libraryts run --model-id bench-classification-stsf-italypowerdemand --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 15.69,
+  "values": {
+    "Accuracy": 0.9708454810495627
+  },
+  "per_metric": {
+    "Accuracy": {
+      "gt": 0.97085,
+      "value": 0.9708454810495627,
+      "delta": -5e-06,
+      "delta_rel": 5e-06,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "Accuracy": 0.9708454810495627,
+    "Macro F1": 0.9708432505950357
+  },
+  "error": null,
+  "stdout_tail": "_id\": \"none\", \"params\": {}}, \"task\": \"classification\", \"dataset\": {\"id\": \"italy-power-demand\", \"name\": \"ItalyPowerDemand\", \"task\": \"classification\", \"source\": \"local\", \"loader\": \"sktime.datasets.load_italy_power_demand\", \"enabled\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-classification-stsf-italypowerdemand\", \"name\": \"SupervisedTimeSeriesForest (trained: bench-classification-stsf-italypowerdemand)\", \"task\": \"classification\", \"module\": \"sktime.classification.interval_based._stsf.SupervisedTimeSeriesForest\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-14/playground/models/bench-classification-stsf-italypowerdemand\", \"manifest\": {\"model_id\": \"bench-classification-stsf-italypowerdemand\", \"backend\": \"sktime\", \"task\": \"classification\", \"algorithm_id\": \"registered-classification-SupervisedTimeSeriesForest\", \"algorithm_name\": \"SupervisedTimeSeriesForest\", \"module\": \"sktime.classification.interval_based._stsf.SupervisedTimeSeriesForest\", \"params\": {\"random_state\": 0, \"n_estimators\": 200, \"n_jobs\": 1}, \"eval_params\": {}, \"created_at\": \"2026-10-15T13:01:27.690298+00:00\", \"spec\": {\"task\": \"classification\", \"dataset_id\": \"italy-power-demand\", \"algorithm_id\": \"registered-classification-SupervisedTimeSeriesForest\", \"preprocessor_id\": \"none\", \"params\": {\"random_state\": 0, \"n_estimators\": 200, \"n_jobs\": 1}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 5011.7, \"log\": [\"Selected dataset: ItalyPowerDemand\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-classification-stsf-italypowerdemand (sktime backend, algorithm: registered-classification-SupervisedTimeSeriesForest, created: 2026-10-15T13:01:27.690298+00:00)\", \"Loaded ItalyPowerDemand train=67 test=1029\", \"Finished in 5011.7 ms\"]}, \"error\": null}\n"
+}

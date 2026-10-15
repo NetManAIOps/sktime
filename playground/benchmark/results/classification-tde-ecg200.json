@@ -1,0 +1,29 @@
+{
+  "id": "classification-tde-ecg200",
+  "task": "classification",
+  "ran_at": "2026-10-15T13:22:51.619821+00:00",
+  "train_command": "libraryts train --algorithm TemporalDictionaryEnsemble --dataset ucr-ecg200 --model-id bench-classification-tde-ecg200 --param random_state=0 --param dim_threshold=0.85 --param max_dims=20 --param max_ensemble_size=50 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param n_parameter_samples=250 --param randomly_selected_params=50 --param time_limit_in_minutes=0",
+  "run_command": "libraryts run --model-id bench-classification-tde-ecg200 --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 51.66,
+  "values": {
+    "Accuracy": 0.85
+  },
+  "per_metric": {
+    "Accuracy": {
+      "gt": 0.85,
+      "value": 0.85,
+      "delta": 0.0,
+      "delta_rel": 0.0,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "Accuracy": 0.85,
+    "Macro F1": 0.8340524394291404
+  },
+  "error": null,
+  "stdout_tail": "classification-tde-ecg200\", \"name\": \"TemporalDictionaryEnsemble (trained: bench-classification-tde-ecg200)\", \"task\": \"classification\", \"module\": \"sktime.classification.dictionary_based._tde.TemporalDictionaryEnsemble\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-14/playground/models/bench-classification-tde-ecg200\", \"manifest\": {\"model_id\": \"bench-classification-tde-ecg200\", \"backend\": \"sktime\", \"task\": \"classification\", \"algorithm_id\": \"registered-classification-TemporalDictionaryEnsemble\", \"algorithm_name\": \"TemporalDictionaryEnsemble\", \"module\": \"sktime.classification.dictionary_based._tde.TemporalDictionaryEnsemble\", \"params\": {\"random_state\": 0, \"dim_threshold\": 0.85, \"max_dims\": 20, \"max_ensemble_size\": 50, \"max_win_len_prop\": 1, \"min_window\": 10, \"n_jobs\": 1, \"n_parameter_samples\": 250, \"randomly_selected_params\": 50, \"time_limit_in_minutes\": 0}, \"eval_params\": {}, \"created_at\": \"2026-10-15T13:22:38.889069+00:00\", \"spec\": {\"task\": \"classification\", \"dataset_id\": \"ucr-ecg200\", \"algorithm_id\": \"registered-classification-TemporalDictionaryEnsemble\", \"preprocessor_id\": \"none\", \"params\": {\"random_state\": 0, \"dim_threshold\": 0.85, \"max_dims\": 20, \"max_ensemble_size\": 50, \"max_win_len_prop\": 1, \"min_window\": 10, \"n_jobs\": 1, \"n_parameter_samples\": 250, \"randomly_selected_params\": 50, \"time_limit_in_minutes\": 0}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 10071.8, \"log\": [\"Selected dataset: UCR/UEA ECG200\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-classification-tde-ecg200 (sktime backend, algorithm: registered-classification-TemporalDictionaryEnsemble, created: 2026-10-15T13:22:38.889069+00:00)\", \"Loaded UCR/UEA ECG200 train=100 test=100\", \"Finished in 10071.8 ms\"]}, \"error\": null}\n"
+}

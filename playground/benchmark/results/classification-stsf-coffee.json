@@ -1,0 +1,29 @@
+{
+  "id": "classification-stsf-coffee",
+  "task": "classification",
+  "ran_at": "2026-10-15T13:04:21.904288+00:00",
+  "train_command": "libraryts train --algorithm SupervisedTimeSeriesForest --dataset ucr-coffee --model-id bench-classification-stsf-coffee --param random_state=0 --param n_estimators=200 --param n_jobs=1",
+  "run_command": "libraryts run --model-id bench-classification-stsf-coffee --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 25.81,
+  "values": {
+    "Accuracy": 1.0
+  },
+  "per_metric": {
+    "Accuracy": {
+      "gt": 1.0,
+      "value": 1.0,
+      "delta": 0.0,
+      "delta_rel": 0.0,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "Accuracy": 1.0,
+    "Macro F1": 1.0
+  },
+  "error": null,
+  "stdout_tail": "ification-stsf-coffee\", \"preprocessor_id\": \"none\", \"params\": {}}, \"task\": \"classification\", \"dataset\": {\"id\": \"ucr-coffee\", \"name\": \"UCR/UEA Coffee\", \"task\": \"classification\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"Coffee\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-classification-stsf-coffee\", \"name\": \"SupervisedTimeSeriesForest (trained: bench-classification-stsf-coffee)\", \"task\": \"classification\", \"module\": \"sktime.classification.interval_based._stsf.SupervisedTimeSeriesForest\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-14/playground/models/bench-classification-stsf-coffee\", \"manifest\": {\"model_id\": \"bench-classification-stsf-coffee\", \"backend\": \"sktime\", \"task\": \"classification\", \"algorithm_id\": \"registered-classification-SupervisedTimeSeriesForest\", \"algorithm_name\": \"SupervisedTimeSeriesForest\", \"module\": \"sktime.classification.interval_based._stsf.SupervisedTimeSeriesForest\", \"params\": {\"random_state\": 0, \"n_estimators\": 200, \"n_jobs\": 1}, \"eval_params\": {}, \"created_at\": \"2026-10-15T13:04:15.445157+00:00\", \"spec\": {\"task\": \"classification\", \"dataset_id\": \"ucr-coffee\", \"algorithm_id\": \"registered-classification-SupervisedTimeSeriesForest\", \"preprocessor_id\": \"none\", \"params\": {\"random_state\": 0, \"n_estimators\": 200, \"n_jobs\": 1}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 5757.4, \"log\": [\"Selected dataset: UCR/UEA Coffee\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-classification-stsf-coffee (sktime backend, algorithm: registered-classification-SupervisedTimeSeriesForest, created: 2026-10-15T13:04:15.445157+00:00)\", \"Loaded UCR/UEA Coffee train=28 test=28\", \"Finished in 5757.4 ms\"]}, \"error\": null}\n"
+}

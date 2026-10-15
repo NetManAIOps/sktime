@@ -1,0 +1,29 @@
+{
+  "id": "classification-stsf-birdchicken",
+  "task": "classification",
+  "ran_at": "2026-10-15T13:02:48.511836+00:00",
+  "train_command": "libraryts train --algorithm SupervisedTimeSeriesForest --dataset ucr-birdchicken --model-id bench-classification-stsf-birdchicken --param random_state=0 --param n_estimators=200 --param n_jobs=1",
+  "run_command": "libraryts run --model-id bench-classification-stsf-birdchicken --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 43.68,
+  "values": {
+    "Accuracy": 0.95
+  },
+  "per_metric": {
+    "Accuracy": {
+      "gt": 0.95,
+      "value": 0.95,
+      "delta": 0.0,
+      "delta_rel": 0.0,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "Accuracy": 0.95,
+    "Macro F1": 0.949874686716792
+  },
+  "error": null,
+  "stdout_tail": "ams\": {}}, \"task\": \"classification\", \"dataset\": {\"id\": \"ucr-birdchicken\", \"name\": \"UCR/UEA BirdChicken\", \"task\": \"classification\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"BirdChicken\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-classification-stsf-birdchicken\", \"name\": \"SupervisedTimeSeriesForest (trained: bench-classification-stsf-birdchicken)\", \"task\": \"classification\", \"module\": \"sktime.classification.interval_based._stsf.SupervisedTimeSeriesForest\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-14/playground/models/bench-classification-stsf-birdchicken\", \"manifest\": {\"model_id\": \"bench-classification-stsf-birdchicken\", \"backend\": \"sktime\", \"task\": \"classification\", \"algorithm_id\": \"registered-classification-SupervisedTimeSeriesForest\", \"algorithm_name\": \"SupervisedTimeSeriesForest\", \"module\": \"sktime.classification.interval_based._stsf.SupervisedTimeSeriesForest\", \"params\": {\"random_state\": 0, \"n_estimators\": 200, \"n_jobs\": 1}, \"eval_params\": {}, \"created_at\": \"2026-10-15T13:02:38.556114+00:00\", \"spec\": {\"task\": \"classification\", \"dataset_id\": \"ucr-birdchicken\", \"algorithm_id\": \"registered-classification-SupervisedTimeSeriesForest\", \"preprocessor_id\": \"none\", \"params\": {\"random_state\": 0, \"n_estimators\": 200, \"n_jobs\": 1}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 6661.1, \"log\": [\"Selected dataset: UCR/UEA BirdChicken\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-classification-stsf-birdchicken (sktime backend, algorithm: registered-classification-SupervisedTimeSeriesForest, created: 2026-10-15T13:02:38.556114+00:00)\", \"Loaded UCR/UEA BirdChicken train=20 test=20\", \"Finished in 6661.1 ms\"]}, \"error\": null}\n"
+}

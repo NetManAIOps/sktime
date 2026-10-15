@@ -1,0 +1,29 @@
+{
+  "id": "classification-rise-cbf",
+  "task": "classification",
+  "ran_at": "2026-10-15T12:45:29.196541+00:00",
+  "train_command": "libraryts train --algorithm RandomIntervalSpectralEnsemble --dataset ucr-cbf --model-id bench-classification-rise-cbf --param random_state=0 --param acf_lag=100 --param acf_min_values=4 --param max_interval=0 --param min_interval=16 --param n_estimators=500 --param n_jobs=1",
+  "run_command": "libraryts run --model-id bench-classification-rise-cbf --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 50.94,
+  "values": {
+    "Accuracy": 0.9577777777777777
+  },
+  "per_metric": {
+    "Accuracy": {
+      "gt": 0.95778,
+      "value": 0.9577777777777777,
+      "delta": -2e-06,
+      "delta_rel": 2e-06,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "Accuracy": 0.9577777777777777,
+    "Macro F1": 0.9572325034628104
+  },
+  "error": null,
+  "stdout_tail": ": \"classification\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"CBF\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-classification-rise-cbf\", \"name\": \"RandomIntervalSpectralEnsemble (trained: bench-classification-rise-cbf)\", \"task\": \"classification\", \"module\": \"sktime.classification.interval_based._rise.RandomIntervalSpectralEnsemble\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-14/playground/models/bench-classification-rise-cbf\", \"manifest\": {\"model_id\": \"bench-classification-rise-cbf\", \"backend\": \"sktime\", \"task\": \"classification\", \"algorithm_id\": \"registered-classification-RandomIntervalSpectralEnsemble\", \"algorithm_name\": \"RandomIntervalSpectralEnsemble\", \"module\": \"sktime.classification.interval_based._rise.RandomIntervalSpectralEnsemble\", \"params\": {\"random_state\": 0, \"acf_lag\": 100, \"acf_min_values\": 4, \"max_interval\": 0, \"min_interval\": 16, \"n_estimators\": 500, \"n_jobs\": 1}, \"eval_params\": {}, \"created_at\": \"2026-10-15T12:44:45.241053+00:00\", \"spec\": {\"task\": \"classification\", \"dataset_id\": \"ucr-cbf\", \"algorithm_id\": \"registered-classification-RandomIntervalSpectralEnsemble\", \"preprocessor_id\": \"none\", \"params\": {\"random_state\": 0, \"acf_lag\": 100, \"acf_min_values\": 4, \"max_interval\": 0, \"min_interval\": 16, \"n_estimators\": 500, \"n_jobs\": 1}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 42624.7, \"log\": [\"Selected dataset: UCR/UEA CBF\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-classification-rise-cbf (sktime backend, algorithm: registered-classification-RandomIntervalSpectralEnsemble, created: 2026-10-15T12:44:45.241053+00:00)\", \"Loaded UCR/UEA CBF train=30 test=900\", \"Finished in 42624.7 ms\"]}, \"error\": null}\n"
+}
