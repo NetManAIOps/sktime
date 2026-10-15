@@ -1,0 +1,38 @@
+{
+  "id": "forecasting-theta-exchange-96",
+  "task": "forecasting",
+  "ran_at": "2026-10-15T13:16:17.606620+00:00",
+  "train_command": "libraryts train --algorithm ThetaForecaster --dataset hf-exchange --model-id bench-forecasting-theta-exchange-96 --param horizon=96 --param deseasonalize_model=additive --param sp=1 --param context_window=36",
+  "run_command": "libraryts run --model-id bench-forecasting-theta-exchange-96 --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 18.34,
+  "values": {
+    "MSE": 0.04618568746042554,
+    "MAE": 0.16038400651021364
+  },
+  "per_metric": {
+    "MSE": {
+      "gt": 0.0462,
+      "value": 0.04618568746042554,
+      "delta": -1.4e-05,
+      "delta_rel": 0.00031,
+      "status": "reproduced"
+    },
+    "MAE": {
+      "gt": 0.1604,
+      "value": 0.16038400651021364,
+      "delta": -1.6e-05,
+      "delta_rel": 0.0001,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "MAE": 0.16038400651021364,
+    "MSE": 0.04618568746042554,
+    "MAPE": 4.763731030064858
+  },
+  "error": null,
+  "stdout_tail": "ange-96\", \"preprocessor_id\": \"none\", \"params\": {}}, \"task\": \"forecasting\", \"dataset\": {\"id\": \"hf-exchange\", \"name\": \"THU-ANM Exchange\", \"task\": \"forecasting\", \"source\": \"huggingface\", \"hf_dataset\": \"Skyoung13/THU-ANM-DATASET\", \"hf_config\": \"Exchange\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-forecasting-theta-exchange-96\", \"name\": \"ThetaForecaster (trained: bench-forecasting-theta-exchange-96)\", \"task\": \"forecasting\", \"module\": \"sktime.forecasting.theta.ThetaForecaster\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-8/playground/models/bench-forecasting-theta-exchange-96\", \"manifest\": {\"model_id\": \"bench-forecasting-theta-exchange-96\", \"backend\": \"sktime\", \"task\": \"forecasting\", \"algorithm_id\": \"registered-forecasting-ThetaForecaster\", \"algorithm_name\": \"ThetaForecaster\", \"module\": \"sktime.forecasting.theta.ThetaForecaster\", \"params\": {\"deseasonalize_model\": \"additive\", \"sp\": 1}, \"eval_params\": {\"horizon\": 96, \"context_window\": 36}, \"created_at\": \"2026-10-15T13:16:11.424530+00:00\", \"spec\": {\"task\": \"forecasting\", \"dataset_id\": \"hf-exchange\", \"algorithm_id\": \"registered-forecasting-ThetaForecaster\", \"preprocessor_id\": \"none\", \"params\": {\"horizon\": 96, \"deseasonalize_model\": \"additive\", \"sp\": 1, \"context_window\": 36}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 2771.4, \"log\": [\"Selected dataset: THU-ANM Exchange\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-forecasting-theta-exchange-96 (sktime backend, algorithm: registered-forecasting-ThetaForecaster, created: 2026-10-15T13:16:11.424530+00:00)\", \"Loaded Hugging Face config Exchange (7588 rows)\", \"Normalized time index to RangeIndex for reproducible forecasting\", \"Finished in 2771.4 ms\"]}, \"error\": null}\n"
+}

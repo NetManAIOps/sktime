@@ -1,0 +1,39 @@
+{
+  "id": "forecasting-timesnet-etth1-96",
+  "task": "forecasting",
+  "ran_at": "2026-10-15T12:23:21.083240+00:00",
+  "train_command": "libraryts train --algorithm TimesNetForecaster --dataset hf-etth1 --model-id bench-forecasting-timesnet-etth1-96 --param seq_len=96 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param d_model=16 --param d_ff=32 --param label_len=48 --param top_k=5 --param lr=0.0001 --param lr_decay=0.5 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_layers=1 --param dropout=0.1 --param e_layers=2 --param factor=3 --param moving_avg=25 --param n_heads=8 --param num_kernels=6",
+  "run_command": "libraryts run --model-id bench-forecasting-timesnet-etth1-96 --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 856.06,
+  "values": {
+    "MSE": 0.4220028888692239,
+    "MAE": 0.43432659977075205
+  },
+  "per_metric": {
+    "MSE": {
+      "gt": 0.384,
+      "value": 0.4220028888692239,
+      "delta": 0.038003,
+      "delta_rel": 0.098966,
+      "status": "reproduced"
+    },
+    "MAE": {
+      "gt": 0.402,
+      "value": 0.43432659977075205,
+      "delta": 0.032327,
+      "delta_rel": 0.080414,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "MAE": 0.43432659977075205,
+    "MSE": 0.4220028888692239,
+    "MAPE": 9.90419286805167,
+    "Windows": 2797
+  },
+  "error": null,
+  "stdout_tail": "-TimesNetForecaster\", \"algorithm_name\": \"TimesNetForecaster\", \"module\": \"sktime.forecasting.tslib.TimesNetForecaster\", \"params\": {\"seq_len\": 96, \"pred_len\": 96, \"num_epochs\": 10, \"d_model\": 16, \"d_ff\": 32, \"label_len\": 48, \"top_k\": 5, \"lr\": 0.0001, \"lr_decay\": 0.5, \"batch_size\": 32, \"channel_independence\": 1, \"d_layers\": 1, \"dropout\": 0.1, \"e_layers\": 2, \"factor\": 3, \"moving_avg\": 25, \"n_heads\": 8, \"num_kernels\": 6}, \"eval_params\": {\"horizon\": 96, \"eval_mode\": \"rolling\", \"train_fraction\": 0.496, \"test_start_fraction\": 0.661, \"test_end_fraction\": 0.827, \"context_window\": 36}, \"created_at\": \"2026-10-15T12:23:04.448760+00:00\", \"spec\": {\"task\": \"forecasting\", \"dataset_id\": \"hf-etth1\", \"algorithm_id\": \"registered-forecasting-TimesNetForecaster\", \"preprocessor_id\": \"none\", \"params\": {\"seq_len\": 96, \"pred_len\": 96, \"horizon\": 96, \"num_epochs\": 10, \"eval_mode\": \"rolling\", \"train_fraction\": 0.496, \"test_start_fraction\": 0.661, \"test_end_fraction\": 0.827, \"d_model\": 16, \"d_ff\": 32, \"label_len\": 48, \"top_k\": 5, \"lr\": 0.0001, \"lr_decay\": 0.5, \"batch_size\": 32, \"channel_independence\": 1, \"context_window\": 36, \"d_layers\": 1, \"dropout\": 0.1, \"e_layers\": 2, \"factor\": 3, \"moving_avg\": 25, \"n_heads\": 8, \"num_kernels\": 6}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 12730.0, \"log\": [\"Selected dataset: THU-ANM ETTh1\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-forecasting-timesnet-etth1-96 (sktime backend, algorithm: registered-forecasting-TimesNetForecaster, created: 2026-10-15T12:23:04.448760+00:00)\", \"Loaded Hugging Face config ETTh1 (17420 rows x 7 channels)\", \"Normalized time index to RangeIndex for reproducible forecasting\", \"Rolling eval: fit on 8640 rows, 2797 windows (test region [11514, 14406) of 17420, horizon=96)\", \"Finished in 12730.0 ms\"]}, \"error\": null}\n"
+}

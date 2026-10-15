@@ -1,0 +1,38 @@
+{
+  "id": "forecasting-prophet-etth1-96",
+  "task": "forecasting",
+  "ran_at": "2026-10-15T13:17:10.459829+00:00",
+  "train_command": "libraryts train --algorithm Prophet --dataset hf-etth1 --model-id bench-forecasting-prophet-etth1-96 --param horizon=96 --param alpha=0.05 --param changepoint_prior_scale=0.05 --param changepoint_range=0.8 --param context_window=36 --param growth_floor=0 --param holidays_prior_scale=10 --param mcmc_samples=0 --param n_changepoints=25 --param seasonality_prior_scale=10 --param uncertainty_samples=1000 --param verbose=0",
+  "run_command": "libraryts run --model-id bench-forecasting-prophet-etth1-96 --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 11.16,
+  "values": {
+    "MSE": 2.279469179136051,
+    "MAE": 1.3152948122208525
+  },
+  "per_metric": {
+    "MSE": {
+      "gt": 2.2795,
+      "value": 2.279469179136051,
+      "delta": -3.1e-05,
+      "delta_rel": 1.4e-05,
+      "status": "reproduced"
+    },
+    "MAE": {
+      "gt": 1.3153,
+      "value": 1.3152948122208525,
+      "delta": -5e-06,
+      "delta_rel": 4e-06,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "MAE": 1.3152948122208525,
+    "MSE": 2.279469179136051,
+    "MAPE": 1.704163807036184
+  },
+  "error": null,
+  "stdout_tail": "ench-forecasting-prophet-etth1-96\", \"name\": \"Prophet (trained: bench-forecasting-prophet-etth1-96)\", \"task\": \"forecasting\", \"module\": \"sktime.forecasting.fbprophet.Prophet\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-8/playground/models/bench-forecasting-prophet-etth1-96\", \"manifest\": {\"model_id\": \"bench-forecasting-prophet-etth1-96\", \"backend\": \"sktime\", \"task\": \"forecasting\", \"algorithm_id\": \"registered-forecasting-Prophet\", \"algorithm_name\": \"Prophet\", \"module\": \"sktime.forecasting.fbprophet.Prophet\", \"params\": {\"alpha\": 0.05, \"changepoint_prior_scale\": 0.05, \"changepoint_range\": 0.8, \"growth_floor\": 0, \"holidays_prior_scale\": 10, \"mcmc_samples\": 0, \"n_changepoints\": 25, \"seasonality_prior_scale\": 10, \"uncertainty_samples\": 1000, \"verbose\": 0}, \"eval_params\": {\"horizon\": 96, \"context_window\": 36}, \"created_at\": \"2026-10-15T13:17:05.952848+00:00\", \"spec\": {\"task\": \"forecasting\", \"dataset_id\": \"hf-etth1\", \"algorithm_id\": \"registered-forecasting-Prophet\", \"preprocessor_id\": \"none\", \"params\": {\"horizon\": 96, \"alpha\": 0.05, \"changepoint_prior_scale\": 0.05, \"changepoint_range\": 0.8, \"context_window\": 36, \"growth_floor\": 0, \"holidays_prior_scale\": 10, \"mcmc_samples\": 0, \"n_changepoints\": 25, \"seasonality_prior_scale\": 10, \"uncertainty_samples\": 1000, \"verbose\": 0}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 3338.3, \"log\": [\"Selected dataset: THU-ANM ETTh1\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-forecasting-prophet-etth1-96 (sktime backend, algorithm: registered-forecasting-Prophet, created: 2026-10-15T13:17:05.952848+00:00)\", \"Loaded Hugging Face config ETTh1 (17420 rows)\", \"Normalized time index to RangeIndex for reproducible forecasting\", \"Finished in 3338.3 ms\"]}, \"error\": null}\n"
+}
