@@ -1,0 +1,38 @@
+{
+  "id": "forecasting-autoarima-etth2-96",
+  "task": "forecasting",
+  "ran_at": "2026-10-15T13:17:34.781357+00:00",
+  "train_command": "libraryts train --algorithm StatsForecastAutoARIMA --dataset hf-etth2 --model-id bench-forecasting-autoarima-etth2-96 --param horizon=96 --param sp=1 --param context_window=36 --param max_D=1 --param max_P=2 --param max_Q=2 --param max_d=2 --param max_order=5 --param max_p=5 --param max_q=5 --param n_fits=94 --param n_jobs=2 --param start_P=1 --param start_Q=1 --param start_p=2 --param start_q=2",
+  "run_command": "libraryts run --model-id bench-forecasting-autoarima-etth2-96 --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 11.76,
+  "values": {
+    "MSE": 0.28918351307724266,
+    "MAE": 0.41704970214124204
+  },
+  "per_metric": {
+    "MSE": {
+      "gt": 0.2892,
+      "value": 0.28918351307724266,
+      "delta": -1.6e-05,
+      "delta_rel": 5.7e-05,
+      "status": "reproduced"
+    },
+    "MAE": {
+      "gt": 0.417,
+      "value": 0.41704970214124204,
+      "delta": 5e-05,
+      "delta_rel": 0.000119,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "MAE": 0.41704970214124204,
+    "MSE": 0.28918351307724266,
+    "MAPE": 2.135307864138628
+  },
+  "error": null,
+  "stdout_tail": "sting-autoarima-etth2-96\", \"name\": \"StatsForecastAutoARIMA (trained: bench-forecasting-autoarima-etth2-96)\", \"task\": \"forecasting\", \"module\": \"sktime.forecasting.statsforecast.StatsForecastAutoARIMA\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-8/playground/models/bench-forecasting-autoarima-etth2-96\", \"manifest\": {\"model_id\": \"bench-forecasting-autoarima-etth2-96\", \"backend\": \"sktime\", \"task\": \"forecasting\", \"algorithm_id\": \"registered-forecasting-StatsForecastAutoARIMA\", \"algorithm_name\": \"StatsForecastAutoARIMA\", \"module\": \"sktime.forecasting.statsforecast.StatsForecastAutoARIMA\", \"params\": {\"sp\": 1, \"max_D\": 1, \"max_P\": 2, \"max_Q\": 2, \"max_d\": 2, \"max_order\": 5, \"max_p\": 5, \"max_q\": 5, \"n_fits\": 94, \"n_jobs\": 2, \"start_P\": 1, \"start_Q\": 1, \"start_p\": 2, \"start_q\": 2}, \"eval_params\": {\"horizon\": 96, \"context_window\": 36}, \"created_at\": \"2026-10-15T13:17:30.098754+00:00\", \"spec\": {\"task\": \"forecasting\", \"dataset_id\": \"hf-etth2\", \"algorithm_id\": \"registered-forecasting-StatsForecastAutoARIMA\", \"preprocessor_id\": \"none\", \"params\": {\"horizon\": 96, \"sp\": 1, \"context_window\": 36, \"max_D\": 1, \"max_P\": 2, \"max_Q\": 2, \"max_d\": 2, \"max_order\": 5, \"max_p\": 5, \"max_q\": 5, \"n_fits\": 94, \"n_jobs\": 2, \"start_P\": 1, \"start_Q\": 1, \"start_p\": 2, \"start_q\": 2}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 3546.0, \"log\": [\"Selected dataset: THU-ANM ETTh2\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-forecasting-autoarima-etth2-96 (sktime backend, algorithm: registered-forecasting-StatsForecastAutoARIMA, created: 2026-10-15T13:17:30.098754+00:00)\", \"Loaded Hugging Face config ETTh2 (17420 rows)\", \"Normalized time index to RangeIndex for reproducible forecasting\", \"Finished in 3546.0 ms\"]}, \"error\": null}\n"
+}
