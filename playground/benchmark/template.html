@@ -157,22 +157,25 @@
   .copy:hover { color: var(--text); border-color: var(--text-3); }
   .raw-metrics { font-family: var(--mono); font-size: 12px; color: var(--text-2); white-space: pre-wrap; }
 
-  /* ---------- catalog chips ---------- */
+  /* ---------- unified algorithm list (claims + not-run catalog rows) ---------- */
   .filter {
     width: 260px; padding: 8px 12px; font: inherit; font-size: 13px;
     border: 1px solid var(--hairline); border-radius: 8px; outline: none; margin-bottom: 16px;
   }
   .filter:focus { border-color: var(--text-3); }
-  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
-  .chip {
-    display: inline-flex; align-items: center; gap: 7px;
-    border: 1px solid var(--hairline); border-radius: 999px;
-    padding: 5px 12px; font-size: 12.5px; color: var(--text-2);
+  .alg-row {
+    display: grid; grid-template-columns: 1.4fr 1fr 1.2fr;
+    gap: 12px; align-items: center; padding: 12px 18px;
+    border-top: 1px solid var(--hairline-2);
   }
-  .chip .dot { width: 6px; height: 6px; }
-  .chip.enabled .dot { background: var(--green); }
-  .chip.disabled { color: var(--text-3); } .chip.disabled .dot { background: #d4d4d4; }
-  .chip .tag { font-size: 10px; color: var(--text-3); border: 1px solid var(--hairline); border-radius: 4px; padding: 0 4px; }
+  .alg-row:first-child { border-top: none; }
+  .alg-row .alg { font-weight: 500; font-size: 14px; color: var(--text-2); }
+  .alg-row .tag {
+    font-size: 10px; color: var(--text-3); border: 1px solid var(--hairline);
+    border-radius: 4px; padding: 0 4px; margin-left: 8px; font-weight: 400;
+  }
+  .alg-row .row-end { display: flex; align-items: center; justify-content: flex-end; gap: 10px; }
+  .status.notrun { color: var(--text-3); } .status.notrun .dot { background: #d4d4d4; }
 
   /* ---------- footer / misc ---------- */
   footer { border-top: 1px solid var(--hairline); padding: 26px 0 44px; color: var(--text-3); font-size: 12.5px; }
@@ -182,6 +185,7 @@
   @media (max-width: 880px) {
     details.claim summary { grid-template-columns: 1.2fr 1.6fr .9fr; padding-left: 18px; }
     details.claim-group > summary { grid-template-columns: 1.2fr .8fr 1fr; }
+    .alg-row { grid-template-columns: 1.2fr .8fr 1fr; }
     .stats { grid-template-columns: repeat(2, 1fr); }
     .stat { padding-left: 18px; }
     .detail-grid { grid-template-columns: 1fr; }
@@ -268,8 +272,8 @@
   document.querySelectorAll(".filter").forEach(function (inp) {
     inp.addEventListener("input", function () {
       var q = inp.value.toLowerCase();
-      inp.parentElement.querySelectorAll(".chip").forEach(function (chip) {
-        chip.style.display = !q || chip.dataset.name.indexOf(q) !== -1 ? "" : "none";
+      inp.parentElement.querySelectorAll(".claim-groups > [data-name]").forEach(function (row) {
+        row.style.display = !q || row.dataset.name.indexOf(q) !== -1 ? "" : "none";
       });
     });
   });
