@@ -4487,6 +4487,1380 @@
       },
       "train_command": "libraryts train --algorithm BOSSEnsemble --dataset ucr-trace --model-id bench-classification-boss-trace --param random_state=0 --param alphabet_size=2 --param max_ensemble_size=500 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param threshold=0.92",
       "run_command": "libraryts run --model-id bench-classification-boss-trace --compact"
+    },
+    {
+      "id": "classification-rise-arrowhead",
+      "algorithm": "RandomIntervalSpectralEnsemble",
+      "algorithm_name": "RISE",
+      "dataset": "arrow-head",
+      "dataset_name": "ArrowHead (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.78857
+      },
+      "settings": "UCR default train/test split; Random Interval Spectral Ensemble, 500 trees over random intervals with periodogram + ACF features (sktime RandomIntervalSpectralEnsemble defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Time series classification with HIVE-COTE: the hierarchical vote collective of transformation-based ensembles (Lines, Taylor & Bagnall, ACM TKDD 12(4) 2018) - RISE; tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/RISE_accuracy.csv",
+        "locator": "RISE_accuracy.csv, row ArrowHead, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "sktime's RISE shares the aeon code lineage used for the reference, so near-exact agreement is expected (Chinatown smoke test matched the reference to full precision). Interval selection is seeded (random_state=0, the tsml fold-0 convention); residual deltas come from seed/version drift, covered by the 0.04 tolerance. Reference accuracy for ArrowHead across the 30 resamples ranges [0.72571, 0.87429] (resample 0 = 0.78857).",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm RandomIntervalSpectralEnsemble --dataset arrow-head --model-id bench-classification-rise-arrowhead --param random_state=0 --param acf_lag=100 --param acf_min_values=4 --param max_interval=0 --param min_interval=16 --param n_estimators=500 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-rise-arrowhead --compact"
+    },
+    {
+      "id": "classification-rise-italypowerdemand",
+      "algorithm": "RandomIntervalSpectralEnsemble",
+      "algorithm_name": "RISE",
+      "dataset": "italy-power-demand",
+      "dataset_name": "ItalyPowerDemand (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.95627
+      },
+      "settings": "UCR default train/test split; Random Interval Spectral Ensemble, 500 trees over random intervals with periodogram + ACF features (sktime RandomIntervalSpectralEnsemble defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Time series classification with HIVE-COTE: the hierarchical vote collective of transformation-based ensembles (Lines, Taylor & Bagnall, ACM TKDD 12(4) 2018) - RISE; tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/RISE_accuracy.csv",
+        "locator": "RISE_accuracy.csv, row ItalyPowerDemand, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "sktime's RISE shares the aeon code lineage used for the reference, so near-exact agreement is expected (Chinatown smoke test matched the reference to full precision). Interval selection is seeded (random_state=0, the tsml fold-0 convention); residual deltas come from seed/version drift, covered by the 0.04 tolerance. Reference accuracy for ItalyPowerDemand across the 30 resamples ranges [0.91934, 0.96793] (resample 0 = 0.95627).",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm RandomIntervalSpectralEnsemble --dataset italy-power-demand --model-id bench-classification-rise-italypowerdemand --param random_state=0 --param acf_lag=100 --param acf_min_values=4 --param max_interval=0 --param min_interval=16 --param n_estimators=500 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-rise-italypowerdemand --compact"
+    },
+    {
+      "id": "classification-rise-beef",
+      "algorithm": "RandomIntervalSpectralEnsemble",
+      "algorithm_name": "RISE",
+      "dataset": "ucr-beef",
+      "dataset_name": "Beef (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.86667
+      },
+      "settings": "UCR default train/test split; Random Interval Spectral Ensemble, 500 trees over random intervals with periodogram + ACF features (sktime RandomIntervalSpectralEnsemble defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Time series classification with HIVE-COTE: the hierarchical vote collective of transformation-based ensembles (Lines, Taylor & Bagnall, ACM TKDD 12(4) 2018) - RISE; tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/RISE_accuracy.csv",
+        "locator": "RISE_accuracy.csv, row Beef, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "sktime's RISE shares the aeon code lineage used for the reference, so near-exact agreement is expected (Chinatown smoke test matched the reference to full precision). Interval selection is seeded (random_state=0, the tsml fold-0 convention); residual deltas come from seed/version drift, covered by the 0.04 tolerance. Reference accuracy for Beef across the 30 resamples ranges [0.6, 0.93333] (resample 0 = 0.86667).",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm RandomIntervalSpectralEnsemble --dataset ucr-beef --model-id bench-classification-rise-beef --param random_state=0 --param acf_lag=100 --param acf_min_values=4 --param max_interval=0 --param min_interval=16 --param n_estimators=500 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-rise-beef --compact"
+    },
+    {
+      "id": "classification-rise-car",
+      "algorithm": "RandomIntervalSpectralEnsemble",
+      "algorithm_name": "RISE",
+      "dataset": "ucr-car",
+      "dataset_name": "Car (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.78333
+      },
+      "settings": "UCR default train/test split; Random Interval Spectral Ensemble, 500 trees over random intervals with periodogram + ACF features (sktime RandomIntervalSpectralEnsemble defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Time series classification with HIVE-COTE: the hierarchical vote collective of transformation-based ensembles (Lines, Taylor & Bagnall, ACM TKDD 12(4) 2018) - RISE; tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/RISE_accuracy.csv",
+        "locator": "RISE_accuracy.csv, row Car, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "sktime's RISE shares the aeon code lineage used for the reference, so near-exact agreement is expected (Chinatown smoke test matched the reference to full precision). Interval selection is seeded (random_state=0, the tsml fold-0 convention); residual deltas come from seed/version drift, covered by the 0.04 tolerance. Reference accuracy for Car across the 30 resamples ranges [0.68333, 0.86667] (resample 0 = 0.78333).",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm RandomIntervalSpectralEnsemble --dataset ucr-car --model-id bench-classification-rise-car --param random_state=0 --param acf_lag=100 --param acf_min_values=4 --param max_interval=0 --param min_interval=16 --param n_estimators=500 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-rise-car --compact"
+    },
+    {
+      "id": "classification-rise-cbf",
+      "algorithm": "RandomIntervalSpectralEnsemble",
+      "algorithm_name": "RISE",
+      "dataset": "ucr-cbf",
+      "dataset_name": "CBF (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.95778
+      },
+      "settings": "UCR default train/test split; Random Interval Spectral Ensemble, 500 trees over random intervals with periodogram + ACF features (sktime RandomIntervalSpectralEnsemble defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Time series classification with HIVE-COTE: the hierarchical vote collective of transformation-based ensembles (Lines, Taylor & Bagnall, ACM TKDD 12(4) 2018) - RISE; tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/RISE_accuracy.csv",
+        "locator": "RISE_accuracy.csv, row CBF, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "sktime's RISE shares the aeon code lineage used for the reference, so near-exact agreement is expected (Chinatown smoke test matched the reference to full precision). Interval selection is seeded (random_state=0, the tsml fold-0 convention); residual deltas come from seed/version drift, covered by the 0.04 tolerance. Reference accuracy for CBF across the 30 resamples ranges [0.91222, 0.99667] (resample 0 = 0.95778).",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm RandomIntervalSpectralEnsemble --dataset ucr-cbf --model-id bench-classification-rise-cbf --param random_state=0 --param acf_lag=100 --param acf_min_values=4 --param max_interval=0 --param min_interval=16 --param n_estimators=500 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-rise-cbf --compact"
+    },
+    {
+      "id": "classification-rise-chinatown",
+      "algorithm": "RandomIntervalSpectralEnsemble",
+      "algorithm_name": "RISE",
+      "dataset": "ucr-chinatown",
+      "dataset_name": "Chinatown (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.97085
+      },
+      "settings": "UCR default train/test split; Random Interval Spectral Ensemble, 500 trees over random intervals with periodogram + ACF features (sktime RandomIntervalSpectralEnsemble defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Time series classification with HIVE-COTE: the hierarchical vote collective of transformation-based ensembles (Lines, Taylor & Bagnall, ACM TKDD 12(4) 2018) - RISE; tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/RISE_accuracy.csv",
+        "locator": "RISE_accuracy.csv, row Chinatown, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "sktime's RISE shares the aeon code lineage used for the reference, so near-exact agreement is expected (Chinatown smoke test matched the reference to full precision). Interval selection is seeded (random_state=0, the tsml fold-0 convention); residual deltas come from seed/version drift, covered by the 0.04 tolerance. Reference accuracy for Chinatown across the 30 resamples ranges [0.82799, 0.97085] (resample 0 = 0.97085).",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm RandomIntervalSpectralEnsemble --dataset ucr-chinatown --model-id bench-classification-rise-chinatown --param random_state=0 --param acf_lag=100 --param acf_min_values=4 --param max_interval=0 --param min_interval=16 --param n_estimators=500 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-rise-chinatown --compact"
+    },
+    {
+      "id": "classification-rise-coffee",
+      "algorithm": "RandomIntervalSpectralEnsemble",
+      "algorithm_name": "RISE",
+      "dataset": "ucr-coffee",
+      "dataset_name": "Coffee (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 1.0
+      },
+      "settings": "UCR default train/test split; Random Interval Spectral Ensemble, 500 trees over random intervals with periodogram + ACF features (sktime RandomIntervalSpectralEnsemble defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Time series classification with HIVE-COTE: the hierarchical vote collective of transformation-based ensembles (Lines, Taylor & Bagnall, ACM TKDD 12(4) 2018) - RISE; tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/RISE_accuracy.csv",
+        "locator": "RISE_accuracy.csv, row Coffee, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "sktime's RISE shares the aeon code lineage used for the reference, so near-exact agreement is expected (Chinatown smoke test matched the reference to full precision). Interval selection is seeded (random_state=0, the tsml fold-0 convention); residual deltas come from seed/version drift, covered by the 0.04 tolerance. Reference accuracy for Coffee across the 30 resamples ranges [0.89286, 1.0] (resample 0 = 1.0).",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm RandomIntervalSpectralEnsemble --dataset ucr-coffee --model-id bench-classification-rise-coffee --param random_state=0 --param acf_lag=100 --param acf_min_values=4 --param max_interval=0 --param min_interval=16 --param n_estimators=500 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-rise-coffee --compact"
+    },
+    {
+      "id": "classification-rise-ecg200",
+      "algorithm": "RandomIntervalSpectralEnsemble",
+      "algorithm_name": "RISE",
+      "dataset": "ucr-ecg200",
+      "dataset_name": "ECG200 (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.88
+      },
+      "settings": "UCR default train/test split; Random Interval Spectral Ensemble, 500 trees over random intervals with periodogram + ACF features (sktime RandomIntervalSpectralEnsemble defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Time series classification with HIVE-COTE: the hierarchical vote collective of transformation-based ensembles (Lines, Taylor & Bagnall, ACM TKDD 12(4) 2018) - RISE; tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/RISE_accuracy.csv",
+        "locator": "RISE_accuracy.csv, row ECG200, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "sktime's RISE shares the aeon code lineage used for the reference, so near-exact agreement is expected (Chinatown smoke test matched the reference to full precision). Interval selection is seeded (random_state=0, the tsml fold-0 convention); residual deltas come from seed/version drift, covered by the 0.04 tolerance. Reference accuracy for ECG200 across the 30 resamples ranges [0.79, 0.92] (resample 0 = 0.88).",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm RandomIntervalSpectralEnsemble --dataset ucr-ecg200 --model-id bench-classification-rise-ecg200 --param random_state=0 --param acf_lag=100 --param acf_min_values=4 --param max_interval=0 --param min_interval=16 --param n_estimators=500 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-rise-ecg200 --compact"
+    },
+    {
+      "id": "classification-rise-ecg5000",
+      "algorithm": "RandomIntervalSpectralEnsemble",
+      "algorithm_name": "RISE",
+      "dataset": "ucr-ecg5000",
+      "dataset_name": "ECG5000 (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.93489
+      },
+      "settings": "UCR default train/test split; Random Interval Spectral Ensemble, 500 trees over random intervals with periodogram + ACF features (sktime RandomIntervalSpectralEnsemble defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Time series classification with HIVE-COTE: the hierarchical vote collective of transformation-based ensembles (Lines, Taylor & Bagnall, ACM TKDD 12(4) 2018) - RISE; tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/RISE_accuracy.csv",
+        "locator": "RISE_accuracy.csv, row ECG5000, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "sktime's RISE shares the aeon code lineage used for the reference, so near-exact agreement is expected (Chinatown smoke test matched the reference to full precision). Interval selection is seeded (random_state=0, the tsml fold-0 convention); residual deltas come from seed/version drift, covered by the 0.04 tolerance. Reference accuracy for ECG5000 across the 30 resamples ranges [0.93111, 0.94289] (resample 0 = 0.93489).",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm RandomIntervalSpectralEnsemble --dataset ucr-ecg5000 --model-id bench-classification-rise-ecg5000 --param random_state=0 --param acf_lag=100 --param acf_min_values=4 --param max_interval=0 --param min_interval=16 --param n_estimators=500 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-rise-ecg5000 --compact"
+    },
+    {
+      "id": "classification-rise-fish",
+      "algorithm": "RandomIntervalSpectralEnsemble",
+      "algorithm_name": "RISE",
+      "dataset": "ucr-fish",
+      "dataset_name": "Fish (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.86286
+      },
+      "settings": "UCR default train/test split; Random Interval Spectral Ensemble, 500 trees over random intervals with periodogram + ACF features (sktime RandomIntervalSpectralEnsemble defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Time series classification with HIVE-COTE: the hierarchical vote collective of transformation-based ensembles (Lines, Taylor & Bagnall, ACM TKDD 12(4) 2018) - RISE; tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/RISE_accuracy.csv",
+        "locator": "RISE_accuracy.csv, row Fish, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "sktime's RISE shares the aeon code lineage used for the reference, so near-exact agreement is expected (Chinatown smoke test matched the reference to full precision). Interval selection is seeded (random_state=0, the tsml fold-0 convention); residual deltas come from seed/version drift, covered by the 0.04 tolerance. Reference accuracy for Fish across the 30 resamples ranges [0.83429, 0.93714] (resample 0 = 0.86286).",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm RandomIntervalSpectralEnsemble --dataset ucr-fish --model-id bench-classification-rise-fish --param random_state=0 --param acf_lag=100 --param acf_min_values=4 --param max_interval=0 --param min_interval=16 --param n_estimators=500 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-rise-fish --compact"
+    },
+    {
+      "id": "classification-rise-gunpoint",
+      "algorithm": "RandomIntervalSpectralEnsemble",
+      "algorithm_name": "RISE",
+      "dataset": "ucr-gunpoint",
+      "dataset_name": "GunPoint (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.98
+      },
+      "settings": "UCR default train/test split; Random Interval Spectral Ensemble, 500 trees over random intervals with periodogram + ACF features (sktime RandomIntervalSpectralEnsemble defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Time series classification with HIVE-COTE: the hierarchical vote collective of transformation-based ensembles (Lines, Taylor & Bagnall, ACM TKDD 12(4) 2018) - RISE; tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/RISE_accuracy.csv",
+        "locator": "RISE_accuracy.csv, row GunPoint, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "sktime's RISE shares the aeon code lineage used for the reference, so near-exact agreement is expected (Chinatown smoke test matched the reference to full precision). Interval selection is seeded (random_state=0, the tsml fold-0 convention); residual deltas come from seed/version drift, covered by the 0.04 tolerance. Reference accuracy for GunPoint across the 30 resamples ranges [0.94, 1.0] (resample 0 = 0.98).",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm RandomIntervalSpectralEnsemble --dataset ucr-gunpoint --model-id bench-classification-rise-gunpoint --param random_state=0 --param acf_lag=100 --param acf_min_values=4 --param max_interval=0 --param min_interval=16 --param n_estimators=500 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-rise-gunpoint --compact"
+    },
+    {
+      "id": "classification-rise-meat",
+      "algorithm": "RandomIntervalSpectralEnsemble",
+      "algorithm_name": "RISE",
+      "dataset": "ucr-meat",
+      "dataset_name": "Meat (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.93333
+      },
+      "settings": "UCR default train/test split; Random Interval Spectral Ensemble, 500 trees over random intervals with periodogram + ACF features (sktime RandomIntervalSpectralEnsemble defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Time series classification with HIVE-COTE: the hierarchical vote collective of transformation-based ensembles (Lines, Taylor & Bagnall, ACM TKDD 12(4) 2018) - RISE; tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/RISE_accuracy.csv",
+        "locator": "RISE_accuracy.csv, row Meat, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "sktime's RISE shares the aeon code lineage used for the reference, so near-exact agreement is expected (Chinatown smoke test matched the reference to full precision). Interval selection is seeded (random_state=0, the tsml fold-0 convention); residual deltas come from seed/version drift, covered by the 0.04 tolerance. Reference accuracy for Meat across the 30 resamples ranges [0.93333, 1.0] (resample 0 = 0.93333).",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm RandomIntervalSpectralEnsemble --dataset ucr-meat --model-id bench-classification-rise-meat --param random_state=0 --param acf_lag=100 --param acf_min_values=4 --param max_interval=0 --param min_interval=16 --param n_estimators=500 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-rise-meat --compact"
+    },
+    {
+      "id": "classification-rise-wafer",
+      "algorithm": "RandomIntervalSpectralEnsemble",
+      "algorithm_name": "RISE",
+      "dataset": "ucr-wafer",
+      "dataset_name": "Wafer (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.99578
+      },
+      "settings": "UCR default train/test split; Random Interval Spectral Ensemble, 500 trees over random intervals with periodogram + ACF features (sktime RandomIntervalSpectralEnsemble defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Time series classification with HIVE-COTE: the hierarchical vote collective of transformation-based ensembles (Lines, Taylor & Bagnall, ACM TKDD 12(4) 2018) - RISE; tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/RISE_accuracy.csv",
+        "locator": "RISE_accuracy.csv, row Wafer, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "sktime's RISE shares the aeon code lineage used for the reference, so near-exact agreement is expected (Chinatown smoke test matched the reference to full precision). Interval selection is seeded (random_state=0, the tsml fold-0 convention); residual deltas come from seed/version drift, covered by the 0.04 tolerance. Reference accuracy for Wafer across the 30 resamples ranges [0.99059, 0.99838] (resample 0 = 0.99578).",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm RandomIntervalSpectralEnsemble --dataset ucr-wafer --model-id bench-classification-rise-wafer --param random_state=0 --param acf_lag=100 --param acf_min_values=4 --param max_interval=0 --param min_interval=16 --param n_estimators=500 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-rise-wafer --compact"
+    },
+    {
+      "id": "classification-stsf-arrowhead",
+      "algorithm": "SupervisedTimeSeriesForest",
+      "algorithm_name": "STSF",
+      "dataset": "arrow-head",
+      "dataset_name": "ArrowHead (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.67429
+      },
+      "settings": "UCR default train/test split; Supervised Time Series Forest, 200 trees over supervised (Fisher-score) intervals on multiple series representations (sktime SupervisedTimeSeriesForest defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Fast and accurate time series classification through supervised interval search (Cabello, Naghizade, Qi & Kulik, ICDM 2020) - STSF; tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/STSF_accuracy.csv",
+        "locator": "STSF_accuracy.csv, row ArrowHead, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "Interval search is seeded (random_state=0, the tsml fold-0 convention); residual deltas vs the aeon-generated reference reflect seed/version drift between the sktime and aeon builds, covered by the 0.04 tolerance. Reference accuracy for ArrowHead across the 30 resamples ranges [0.67429, 0.87429] (resample 0 = 0.67429).",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm SupervisedTimeSeriesForest --dataset arrow-head --model-id bench-classification-stsf-arrowhead --param random_state=0 --param n_estimators=200 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-stsf-arrowhead --compact"
+    },
+    {
+      "id": "classification-stsf-italypowerdemand",
+      "algorithm": "SupervisedTimeSeriesForest",
+      "algorithm_name": "STSF",
+      "dataset": "italy-power-demand",
+      "dataset_name": "ItalyPowerDemand (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.97085
+      },
+      "settings": "UCR default train/test split; Supervised Time Series Forest, 200 trees over supervised (Fisher-score) intervals on multiple series representations (sktime SupervisedTimeSeriesForest defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Fast and accurate time series classification through supervised interval search (Cabello, Naghizade, Qi & Kulik, ICDM 2020) - STSF; tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/STSF_accuracy.csv",
+        "locator": "STSF_accuracy.csv, row ItalyPowerDemand, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "Interval search is seeded (random_state=0, the tsml fold-0 convention); residual deltas vs the aeon-generated reference reflect seed/version drift between the sktime and aeon builds, covered by the 0.04 tolerance. Reference accuracy for ItalyPowerDemand across the 30 resamples ranges [0.94461, 0.97279] (resample 0 = 0.97085).",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm SupervisedTimeSeriesForest --dataset italy-power-demand --model-id bench-classification-stsf-italypowerdemand --param random_state=0 --param n_estimators=200 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-stsf-italypowerdemand --compact"
+    },
+    {
+      "id": "classification-stsf-beetlefly",
+      "algorithm": "SupervisedTimeSeriesForest",
+      "algorithm_name": "STSF",
+      "dataset": "ucr-beetlefly",
+      "dataset_name": "BeetleFly (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.95
+      },
+      "settings": "UCR default train/test split; Supervised Time Series Forest, 200 trees over supervised (Fisher-score) intervals on multiple series representations (sktime SupervisedTimeSeriesForest defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Fast and accurate time series classification through supervised interval search (Cabello, Naghizade, Qi & Kulik, ICDM 2020) - STSF; tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/STSF_accuracy.csv",
+        "locator": "STSF_accuracy.csv, row BeetleFly, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "Interval search is seeded (random_state=0, the tsml fold-0 convention); residual deltas vs the aeon-generated reference reflect seed/version drift between the sktime and aeon builds, covered by the 0.04 tolerance. Reference accuracy for BeetleFly across the 30 resamples ranges [0.7, 1.0] (resample 0 = 0.95).",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm SupervisedTimeSeriesForest --dataset ucr-beetlefly --model-id bench-classification-stsf-beetlefly --param random_state=0 --param n_estimators=200 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-stsf-beetlefly --compact"
+    },
+    {
+      "id": "classification-stsf-birdchicken",
+      "algorithm": "SupervisedTimeSeriesForest",
+      "algorithm_name": "STSF",
+      "dataset": "ucr-birdchicken",
+      "dataset_name": "BirdChicken (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.95
+      },
+      "settings": "UCR default train/test split; Supervised Time Series Forest, 200 trees over supervised (Fisher-score) intervals on multiple series representations (sktime SupervisedTimeSeriesForest defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Fast and accurate time series classification through supervised interval search (Cabello, Naghizade, Qi & Kulik, ICDM 2020) - STSF; tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/STSF_accuracy.csv",
+        "locator": "STSF_accuracy.csv, row BirdChicken, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "Interval search is seeded (random_state=0, the tsml fold-0 convention); residual deltas vs the aeon-generated reference reflect seed/version drift between the sktime and aeon builds, covered by the 0.04 tolerance. Reference accuracy for BirdChicken across the 30 resamples ranges [0.9, 1.0] (resample 0 = 0.95).",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm SupervisedTimeSeriesForest --dataset ucr-birdchicken --model-id bench-classification-stsf-birdchicken --param random_state=0 --param n_estimators=200 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-stsf-birdchicken --compact"
+    },
+    {
+      "id": "classification-stsf-cbf",
+      "algorithm": "SupervisedTimeSeriesForest",
+      "algorithm_name": "STSF",
+      "dataset": "ucr-cbf",
+      "dataset_name": "CBF (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.98556
+      },
+      "settings": "UCR default train/test split; Supervised Time Series Forest, 200 trees over supervised (Fisher-score) intervals on multiple series representations (sktime SupervisedTimeSeriesForest defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Fast and accurate time series classification through supervised interval search (Cabello, Naghizade, Qi & Kulik, ICDM 2020) - STSF; tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/STSF_accuracy.csv",
+        "locator": "STSF_accuracy.csv, row CBF, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "Interval search is seeded (random_state=0, the tsml fold-0 convention); residual deltas vs the aeon-generated reference reflect seed/version drift between the sktime and aeon builds, covered by the 0.04 tolerance. Reference accuracy for CBF across the 30 resamples ranges [0.91556, 0.99444] (resample 0 = 0.98556).",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm SupervisedTimeSeriesForest --dataset ucr-cbf --model-id bench-classification-stsf-cbf --param random_state=0 --param n_estimators=200 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-stsf-cbf --compact"
+    },
+    {
+      "id": "classification-stsf-chinatown",
+      "algorithm": "SupervisedTimeSeriesForest",
+      "algorithm_name": "STSF",
+      "dataset": "ucr-chinatown",
+      "dataset_name": "Chinatown (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.97959
+      },
+      "settings": "UCR default train/test split; Supervised Time Series Forest, 200 trees over supervised (Fisher-score) intervals on multiple series representations (sktime SupervisedTimeSeriesForest defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Fast and accurate time series classification through supervised interval search (Cabello, Naghizade, Qi & Kulik, ICDM 2020) - STSF; tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/STSF_accuracy.csv",
+        "locator": "STSF_accuracy.csv, row Chinatown, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "Interval search is seeded (random_state=0, the tsml fold-0 convention); residual deltas vs the aeon-generated reference reflect seed/version drift between the sktime and aeon builds, covered by the 0.04 tolerance. Reference accuracy for Chinatown across the 30 resamples ranges [0.94169, 0.98834] (resample 0 = 0.97959).",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm SupervisedTimeSeriesForest --dataset ucr-chinatown --model-id bench-classification-stsf-chinatown --param random_state=0 --param n_estimators=200 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-stsf-chinatown --compact"
+    },
+    {
+      "id": "classification-stsf-coffee",
+      "algorithm": "SupervisedTimeSeriesForest",
+      "algorithm_name": "STSF",
+      "dataset": "ucr-coffee",
+      "dataset_name": "Coffee (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 1.0
+      },
+      "settings": "UCR default train/test split; Supervised Time Series Forest, 200 trees over supervised (Fisher-score) intervals on multiple series representations (sktime SupervisedTimeSeriesForest defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Fast and accurate time series classification through supervised interval search (Cabello, Naghizade, Qi & Kulik, ICDM 2020) - STSF; tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/STSF_accuracy.csv",
+        "locator": "STSF_accuracy.csv, row Coffee, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "Interval search is seeded (random_state=0, the tsml fold-0 convention); residual deltas vs the aeon-generated reference reflect seed/version drift between the sktime and aeon builds, covered by the 0.04 tolerance. Reference accuracy for Coffee across the 30 resamples ranges [1.0, 1.0] (resample 0 = 1.0).",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm SupervisedTimeSeriesForest --dataset ucr-coffee --model-id bench-classification-stsf-coffee --param random_state=0 --param n_estimators=200 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-stsf-coffee --compact"
+    },
+    {
+      "id": "classification-stsf-ecg200",
+      "algorithm": "SupervisedTimeSeriesForest",
+      "algorithm_name": "STSF",
+      "dataset": "ucr-ecg200",
+      "dataset_name": "ECG200 (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.85
+      },
+      "settings": "UCR default train/test split; Supervised Time Series Forest, 200 trees over supervised (Fisher-score) intervals on multiple series representations (sktime SupervisedTimeSeriesForest defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Fast and accurate time series classification through supervised interval search (Cabello, Naghizade, Qi & Kulik, ICDM 2020) - STSF; tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/STSF_accuracy.csv",
+        "locator": "STSF_accuracy.csv, row ECG200, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "Interval search is seeded (random_state=0, the tsml fold-0 convention); residual deltas vs the aeon-generated reference reflect seed/version drift between the sktime and aeon builds, covered by the 0.04 tolerance. Reference accuracy for ECG200 across the 30 resamples ranges [0.77, 0.89] (resample 0 = 0.85).",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm SupervisedTimeSeriesForest --dataset ucr-ecg200 --model-id bench-classification-stsf-ecg200 --param random_state=0 --param n_estimators=200 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-stsf-ecg200 --compact"
+    },
+    {
+      "id": "classification-stsf-facefour",
+      "algorithm": "SupervisedTimeSeriesForest",
+      "algorithm_name": "STSF",
+      "dataset": "ucr-facefour",
+      "dataset_name": "FaceFour (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 1.0
+      },
+      "settings": "UCR default train/test split; Supervised Time Series Forest, 200 trees over supervised (Fisher-score) intervals on multiple series representations (sktime SupervisedTimeSeriesForest defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Fast and accurate time series classification through supervised interval search (Cabello, Naghizade, Qi & Kulik, ICDM 2020) - STSF; tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/STSF_accuracy.csv",
+        "locator": "STSF_accuracy.csv, row FaceFour, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "Interval search is seeded (random_state=0, the tsml fold-0 convention); residual deltas vs the aeon-generated reference reflect seed/version drift between the sktime and aeon builds, covered by the 0.04 tolerance. Reference accuracy for FaceFour across the 30 resamples ranges [0.85227, 1.0] (resample 0 = 1.0).",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm SupervisedTimeSeriesForest --dataset ucr-facefour --model-id bench-classification-stsf-facefour --param random_state=0 --param n_estimators=200 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-stsf-facefour --compact"
+    },
+    {
+      "id": "classification-stsf-fish",
+      "algorithm": "SupervisedTimeSeriesForest",
+      "algorithm_name": "STSF",
+      "dataset": "ucr-fish",
+      "dataset_name": "Fish (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.90857
+      },
+      "settings": "UCR default train/test split; Supervised Time Series Forest, 200 trees over supervised (Fisher-score) intervals on multiple series representations (sktime SupervisedTimeSeriesForest defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Fast and accurate time series classification through supervised interval search (Cabello, Naghizade, Qi & Kulik, ICDM 2020) - STSF; tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/STSF_accuracy.csv",
+        "locator": "STSF_accuracy.csv, row Fish, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "Interval search is seeded (random_state=0, the tsml fold-0 convention); residual deltas vs the aeon-generated reference reflect seed/version drift between the sktime and aeon builds, covered by the 0.04 tolerance. Reference accuracy for Fish across the 30 resamples ranges [0.86286, 0.94857] (resample 0 = 0.90857).",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm SupervisedTimeSeriesForest --dataset ucr-fish --model-id bench-classification-stsf-fish --param random_state=0 --param n_estimators=200 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-stsf-fish --compact"
+    },
+    {
+      "id": "classification-stsf-gunpoint",
+      "algorithm": "SupervisedTimeSeriesForest",
+      "algorithm_name": "STSF",
+      "dataset": "ucr-gunpoint",
+      "dataset_name": "GunPoint (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.90667
+      },
+      "settings": "UCR default train/test split; Supervised Time Series Forest, 200 trees over supervised (Fisher-score) intervals on multiple series representations (sktime SupervisedTimeSeriesForest defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Fast and accurate time series classification through supervised interval search (Cabello, Naghizade, Qi & Kulik, ICDM 2020) - STSF; tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/STSF_accuracy.csv",
+        "locator": "STSF_accuracy.csv, row GunPoint, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "Interval search is seeded (random_state=0, the tsml fold-0 convention); residual deltas vs the aeon-generated reference reflect seed/version drift between the sktime and aeon builds, covered by the 0.04 tolerance. Reference accuracy for GunPoint across the 30 resamples ranges [0.84, 1.0] (resample 0 = 0.90667).",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm SupervisedTimeSeriesForest --dataset ucr-gunpoint --model-id bench-classification-stsf-gunpoint --param random_state=0 --param n_estimators=200 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-stsf-gunpoint --compact"
+    },
+    {
+      "id": "classification-stsf-trace",
+      "algorithm": "SupervisedTimeSeriesForest",
+      "algorithm_name": "STSF",
+      "dataset": "ucr-trace",
+      "dataset_name": "Trace (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 1.0
+      },
+      "settings": "UCR default train/test split; Supervised Time Series Forest, 200 trees over supervised (Fisher-score) intervals on multiple series representations (sktime SupervisedTimeSeriesForest defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Fast and accurate time series classification through supervised interval search (Cabello, Naghizade, Qi & Kulik, ICDM 2020) - STSF; tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/STSF_accuracy.csv",
+        "locator": "STSF_accuracy.csv, row Trace, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "Interval search is seeded (random_state=0, the tsml fold-0 convention); residual deltas vs the aeon-generated reference reflect seed/version drift between the sktime and aeon builds, covered by the 0.04 tolerance. Reference accuracy for Trace across the 30 resamples ranges [1.0, 1.0] (resample 0 = 1.0).",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm SupervisedTimeSeriesForest --dataset ucr-trace --model-id bench-classification-stsf-trace --param random_state=0 --param n_estimators=200 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-stsf-trace --compact"
+    },
+    {
+      "id": "classification-tde-arrowhead",
+      "algorithm": "TemporalDictionaryEnsemble",
+      "algorithm_name": "TDE",
+      "dataset": "arrow-head",
+      "dataset_name": "ArrowHead (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.86286
+      },
+      "settings": "UCR default train/test split; Temporal Dictionary Ensemble over SFA histograms with information-gain binning, 250 random parameter samples, LOOCV-selected ensemble of up to 50 (sktime TemporalDictionaryEnsemble defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "The Temporal Dictionary Ensemble (TDE) classifier for time series classification (Middlehurst, Large, Cawley & Bagnall, ECML-PKDD 2020); tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/TDE_accuracy.csv",
+        "locator": "TDE_accuracy.csv, row ArrowHead, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "Parameter sampling and ensemble selection are seeded (random_state=0, the tsml fold-0 convention). The recorded command runs the sktime defaults (max_ensemble_size=50, n_parameter_samples=250); the reference was generated with the aeon implementation's own defaults, so small systematic deltas on top of seed noise are possible, covered by the 0.04 tolerance. Reference accuracy for ArrowHead across the 30 resamples ranges [0.85143, 0.96] (resample 0 = 0.86286).",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm TemporalDictionaryEnsemble --dataset arrow-head --model-id bench-classification-tde-arrowhead --param random_state=0 --param dim_threshold=0.85 --param max_dims=20 --param max_ensemble_size=50 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param n_parameter_samples=250 --param randomly_selected_params=50 --param time_limit_in_minutes=0",
+      "run_command": "libraryts run --model-id bench-classification-tde-arrowhead --compact"
+    },
+    {
+      "id": "classification-tde-italypowerdemand",
+      "algorithm": "TemporalDictionaryEnsemble",
+      "algorithm_name": "TDE",
+      "dataset": "italy-power-demand",
+      "dataset_name": "ItalyPowerDemand (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.95044
+      },
+      "settings": "UCR default train/test split; Temporal Dictionary Ensemble over SFA histograms with information-gain binning, 250 random parameter samples, LOOCV-selected ensemble of up to 50 (sktime TemporalDictionaryEnsemble defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "The Temporal Dictionary Ensemble (TDE) classifier for time series classification (Middlehurst, Large, Cawley & Bagnall, ECML-PKDD 2020); tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/TDE_accuracy.csv",
+        "locator": "TDE_accuracy.csv, row ItalyPowerDemand, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "Parameter sampling and ensemble selection are seeded (random_state=0, the tsml fold-0 convention). The recorded command runs the sktime defaults (max_ensemble_size=50, n_parameter_samples=250); the reference was generated with the aeon implementation's own defaults, so small systematic deltas on top of seed noise are possible, covered by the 0.04 tolerance. Reference accuracy for ItalyPowerDemand across the 30 resamples ranges [0.90185, 0.96793] (resample 0 = 0.95044).",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm TemporalDictionaryEnsemble --dataset italy-power-demand --model-id bench-classification-tde-italypowerdemand --param random_state=0 --param dim_threshold=0.85 --param max_dims=20 --param max_ensemble_size=50 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param n_parameter_samples=250 --param randomly_selected_params=50 --param time_limit_in_minutes=0",
+      "run_command": "libraryts run --model-id bench-classification-tde-italypowerdemand --compact"
+    },
+    {
+      "id": "classification-tde-beef",
+      "algorithm": "TemporalDictionaryEnsemble",
+      "algorithm_name": "TDE",
+      "dataset": "ucr-beef",
+      "dataset_name": "Beef (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.9
+      },
+      "settings": "UCR default train/test split; Temporal Dictionary Ensemble over SFA histograms with information-gain binning, 250 random parameter samples, LOOCV-selected ensemble of up to 50 (sktime TemporalDictionaryEnsemble defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "The Temporal Dictionary Ensemble (TDE) classifier for time series classification (Middlehurst, Large, Cawley & Bagnall, ECML-PKDD 2020); tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/TDE_accuracy.csv",
+        "locator": "TDE_accuracy.csv, row Beef, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "Parameter sampling and ensemble selection are seeded (random_state=0, the tsml fold-0 convention). The recorded command runs the sktime defaults (max_ensemble_size=50, n_parameter_samples=250); the reference was generated with the aeon implementation's own defaults, so small systematic deltas on top of seed noise are possible, covered by the 0.04 tolerance. Reference accuracy for Beef across the 30 resamples ranges [0.5, 0.9] (resample 0 = 0.9).",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm TemporalDictionaryEnsemble --dataset ucr-beef --model-id bench-classification-tde-beef --param random_state=0 --param dim_threshold=0.85 --param max_dims=20 --param max_ensemble_size=50 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param n_parameter_samples=250 --param randomly_selected_params=50 --param time_limit_in_minutes=0",
+      "run_command": "libraryts run --model-id bench-classification-tde-beef --compact"
+    },
+    {
+      "id": "classification-tde-car",
+      "algorithm": "TemporalDictionaryEnsemble",
+      "algorithm_name": "TDE",
+      "dataset": "ucr-car",
+      "dataset_name": "Car (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.85
+      },
+      "settings": "UCR default train/test split; Temporal Dictionary Ensemble over SFA histograms with information-gain binning, 250 random parameter samples, LOOCV-selected ensemble of up to 50 (sktime TemporalDictionaryEnsemble defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "The Temporal Dictionary Ensemble (TDE) classifier for time series classification (Middlehurst, Large, Cawley & Bagnall, ECML-PKDD 2020); tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/TDE_accuracy.csv",
+        "locator": "TDE_accuracy.csv, row Car, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "Parameter sampling and ensemble selection are seeded (random_state=0, the tsml fold-0 convention). The recorded command runs the sktime defaults (max_ensemble_size=50, n_parameter_samples=250); the reference was generated with the aeon implementation's own defaults, so small systematic deltas on top of seed noise are possible, covered by the 0.04 tolerance. Reference accuracy for Car across the 30 resamples ranges [0.78333, 0.95] (resample 0 = 0.85).",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm TemporalDictionaryEnsemble --dataset ucr-car --model-id bench-classification-tde-car --param random_state=0 --param dim_threshold=0.85 --param max_dims=20 --param max_ensemble_size=50 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param n_parameter_samples=250 --param randomly_selected_params=50 --param time_limit_in_minutes=0",
+      "run_command": "libraryts run --model-id bench-classification-tde-car --compact"
+    },
+    {
+      "id": "classification-tde-chinatown",
+      "algorithm": "TemporalDictionaryEnsemble",
+      "algorithm_name": "TDE",
+      "dataset": "ucr-chinatown",
+      "dataset_name": "Chinatown (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.9621
+      },
+      "settings": "UCR default train/test split; Temporal Dictionary Ensemble over SFA histograms with information-gain binning, 250 random parameter samples, LOOCV-selected ensemble of up to 50 (sktime TemporalDictionaryEnsemble defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "The Temporal Dictionary Ensemble (TDE) classifier for time series classification (Middlehurst, Large, Cawley & Bagnall, ECML-PKDD 2020); tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/TDE_accuracy.csv",
+        "locator": "TDE_accuracy.csv, row Chinatown, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "Parameter sampling and ensemble selection are seeded (random_state=0, the tsml fold-0 convention). The recorded command runs the sktime defaults (max_ensemble_size=50, n_parameter_samples=250); the reference was generated with the aeon implementation's own defaults, so small systematic deltas on top of seed noise are possible, covered by the 0.04 tolerance. Reference accuracy for Chinatown across the 30 resamples ranges [0.93294, 0.97085] (resample 0 = 0.9621).",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm TemporalDictionaryEnsemble --dataset ucr-chinatown --model-id bench-classification-tde-chinatown --param random_state=0 --param dim_threshold=0.85 --param max_dims=20 --param max_ensemble_size=50 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param n_parameter_samples=250 --param randomly_selected_params=50 --param time_limit_in_minutes=0",
+      "run_command": "libraryts run --model-id bench-classification-tde-chinatown --compact"
+    },
+    {
+      "id": "classification-tde-coffee",
+      "algorithm": "TemporalDictionaryEnsemble",
+      "algorithm_name": "TDE",
+      "dataset": "ucr-coffee",
+      "dataset_name": "Coffee (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 1.0
+      },
+      "settings": "UCR default train/test split; Temporal Dictionary Ensemble over SFA histograms with information-gain binning, 250 random parameter samples, LOOCV-selected ensemble of up to 50 (sktime TemporalDictionaryEnsemble defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "The Temporal Dictionary Ensemble (TDE) classifier for time series classification (Middlehurst, Large, Cawley & Bagnall, ECML-PKDD 2020); tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/TDE_accuracy.csv",
+        "locator": "TDE_accuracy.csv, row Coffee, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "Parameter sampling and ensemble selection are seeded (random_state=0, the tsml fold-0 convention). The recorded command runs the sktime defaults (max_ensemble_size=50, n_parameter_samples=250); the reference was generated with the aeon implementation's own defaults, so small systematic deltas on top of seed noise are possible, covered by the 0.04 tolerance. Reference accuracy for Coffee across the 30 resamples ranges [0.96429, 1.0] (resample 0 = 1.0).",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm TemporalDictionaryEnsemble --dataset ucr-coffee --model-id bench-classification-tde-coffee --param random_state=0 --param dim_threshold=0.85 --param max_dims=20 --param max_ensemble_size=50 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param n_parameter_samples=250 --param randomly_selected_params=50 --param time_limit_in_minutes=0",
+      "run_command": "libraryts run --model-id bench-classification-tde-coffee --compact"
+    },
+    {
+      "id": "classification-tde-earthquakes",
+      "algorithm": "TemporalDictionaryEnsemble",
+      "algorithm_name": "TDE",
+      "dataset": "ucr-earthquakes",
+      "dataset_name": "Earthquakes (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.7482
+      },
+      "settings": "UCR default train/test split; Temporal Dictionary Ensemble over SFA histograms with information-gain binning, 250 random parameter samples, LOOCV-selected ensemble of up to 50 (sktime TemporalDictionaryEnsemble defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "The Temporal Dictionary Ensemble (TDE) classifier for time series classification (Middlehurst, Large, Cawley & Bagnall, ECML-PKDD 2020); tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/TDE_accuracy.csv",
+        "locator": "TDE_accuracy.csv, row Earthquakes, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "Parameter sampling and ensemble selection are seeded (random_state=0, the tsml fold-0 convention). The recorded command runs the sktime defaults (max_ensemble_size=50, n_parameter_samples=250); the reference was generated with the aeon implementation's own defaults, so small systematic deltas on top of seed noise are possible, covered by the 0.04 tolerance. Reference accuracy for Earthquakes across the 30 resamples ranges [0.74101, 0.7482] (resample 0 = 0.7482).",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm TemporalDictionaryEnsemble --dataset ucr-earthquakes --model-id bench-classification-tde-earthquakes --param random_state=0 --param dim_threshold=0.85 --param max_dims=20 --param max_ensemble_size=50 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param n_parameter_samples=250 --param randomly_selected_params=50 --param time_limit_in_minutes=0",
+      "run_command": "libraryts run --model-id bench-classification-tde-earthquakes --compact"
+    },
+    {
+      "id": "classification-tde-ecg200",
+      "algorithm": "TemporalDictionaryEnsemble",
+      "algorithm_name": "TDE",
+      "dataset": "ucr-ecg200",
+      "dataset_name": "ECG200 (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.85
+      },
+      "settings": "UCR default train/test split; Temporal Dictionary Ensemble over SFA histograms with information-gain binning, 250 random parameter samples, LOOCV-selected ensemble of up to 50 (sktime TemporalDictionaryEnsemble defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "The Temporal Dictionary Ensemble (TDE) classifier for time series classification (Middlehurst, Large, Cawley & Bagnall, ECML-PKDD 2020); tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/TDE_accuracy.csv",
+        "locator": "TDE_accuracy.csv, row ECG200, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "Parameter sampling and ensemble selection are seeded (random_state=0, the tsml fold-0 convention). The recorded command runs the sktime defaults (max_ensemble_size=50, n_parameter_samples=250); the reference was generated with the aeon implementation's own defaults, so small systematic deltas on top of seed noise are possible, covered by the 0.04 tolerance. Reference accuracy for ECG200 across the 30 resamples ranges [0.73, 0.9] (resample 0 = 0.85).",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm TemporalDictionaryEnsemble --dataset ucr-ecg200 --model-id bench-classification-tde-ecg200 --param random_state=0 --param dim_threshold=0.85 --param max_dims=20 --param max_ensemble_size=50 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param n_parameter_samples=250 --param randomly_selected_params=50 --param time_limit_in_minutes=0",
+      "run_command": "libraryts run --model-id bench-classification-tde-ecg200 --compact"
+    },
+    {
+      "id": "classification-tde-gunpoint",
+      "algorithm": "TemporalDictionaryEnsemble",
+      "algorithm_name": "TDE",
+      "dataset": "ucr-gunpoint",
+      "dataset_name": "GunPoint (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 1.0
+      },
+      "settings": "UCR default train/test split; Temporal Dictionary Ensemble over SFA histograms with information-gain binning, 250 random parameter samples, LOOCV-selected ensemble of up to 50 (sktime TemporalDictionaryEnsemble defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "The Temporal Dictionary Ensemble (TDE) classifier for time series classification (Middlehurst, Large, Cawley & Bagnall, ECML-PKDD 2020); tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/TDE_accuracy.csv",
+        "locator": "TDE_accuracy.csv, row GunPoint, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "Parameter sampling and ensemble selection are seeded (random_state=0, the tsml fold-0 convention). The recorded command runs the sktime defaults (max_ensemble_size=50, n_parameter_samples=250); the reference was generated with the aeon implementation's own defaults, so small systematic deltas on top of seed noise are possible, covered by the 0.04 tolerance. Reference accuracy for GunPoint across the 30 resamples ranges [1.0, 1.0] (resample 0 = 1.0).",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm TemporalDictionaryEnsemble --dataset ucr-gunpoint --model-id bench-classification-tde-gunpoint --param random_state=0 --param dim_threshold=0.85 --param max_dims=20 --param max_ensemble_size=50 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param n_parameter_samples=250 --param randomly_selected_params=50 --param time_limit_in_minutes=0",
+      "run_command": "libraryts run --model-id bench-classification-tde-gunpoint --compact"
+    },
+    {
+      "id": "classification-tde-oliveoil",
+      "algorithm": "TemporalDictionaryEnsemble",
+      "algorithm_name": "TDE",
+      "dataset": "ucr-oliveoil",
+      "dataset_name": "OliveOil (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.83333
+      },
+      "settings": "UCR default train/test split; Temporal Dictionary Ensemble over SFA histograms with information-gain binning, 250 random parameter samples, LOOCV-selected ensemble of up to 50 (sktime TemporalDictionaryEnsemble defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "The Temporal Dictionary Ensemble (TDE) classifier for time series classification (Middlehurst, Large, Cawley & Bagnall, ECML-PKDD 2020); tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/TDE_accuracy.csv",
+        "locator": "TDE_accuracy.csv, row OliveOil, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "Parameter sampling and ensemble selection are seeded (random_state=0, the tsml fold-0 convention). The recorded command runs the sktime defaults (max_ensemble_size=50, n_parameter_samples=250); the reference was generated with the aeon implementation's own defaults, so small systematic deltas on top of seed noise are possible, covered by the 0.04 tolerance. Reference accuracy for OliveOil across the 30 resamples ranges [0.83333, 0.96667] (resample 0 = 0.83333).",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm TemporalDictionaryEnsemble --dataset ucr-oliveoil --model-id bench-classification-tde-oliveoil --param random_state=0 --param dim_threshold=0.85 --param max_dims=20 --param max_ensemble_size=50 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param n_parameter_samples=250 --param randomly_selected_params=50 --param time_limit_in_minutes=0",
+      "run_command": "libraryts run --model-id bench-classification-tde-oliveoil --compact"
+    },
+    {
+      "id": "classification-tde-syntheticcontrol",
+      "algorithm": "TemporalDictionaryEnsemble",
+      "algorithm_name": "TDE",
+      "dataset": "ucr-syntheticcontrol",
+      "dataset_name": "SyntheticControl (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.99333
+      },
+      "settings": "UCR default train/test split; Temporal Dictionary Ensemble over SFA histograms with information-gain binning, 250 random parameter samples, LOOCV-selected ensemble of up to 50 (sktime TemporalDictionaryEnsemble defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "The Temporal Dictionary Ensemble (TDE) classifier for time series classification (Middlehurst, Large, Cawley & Bagnall, ECML-PKDD 2020); tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/TDE_accuracy.csv",
+        "locator": "TDE_accuracy.csv, row SyntheticControl, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "Parameter sampling and ensemble selection are seeded (random_state=0, the tsml fold-0 convention). The recorded command runs the sktime defaults (max_ensemble_size=50, n_parameter_samples=250); the reference was generated with the aeon implementation's own defaults, so small systematic deltas on top of seed noise are possible, covered by the 0.04 tolerance. Reference accuracy for SyntheticControl across the 30 resamples ranges [0.98, 1.0] (resample 0 = 0.99333).",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm TemporalDictionaryEnsemble --dataset ucr-syntheticcontrol --model-id bench-classification-tde-syntheticcontrol --param random_state=0 --param dim_threshold=0.85 --param max_dims=20 --param max_ensemble_size=50 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param n_parameter_samples=250 --param randomly_selected_params=50 --param time_limit_in_minutes=0",
+      "run_command": "libraryts run --model-id bench-classification-tde-syntheticcontrol --compact"
+    },
+    {
+      "id": "classification-tde-trace",
+      "algorithm": "TemporalDictionaryEnsemble",
+      "algorithm_name": "TDE",
+      "dataset": "ucr-trace",
+      "dataset_name": "Trace (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 1.0
+      },
+      "settings": "UCR default train/test split; Temporal Dictionary Ensemble over SFA histograms with information-gain binning, 250 random parameter samples, LOOCV-selected ensemble of up to 50 (sktime TemporalDictionaryEnsemble defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "The Temporal Dictionary Ensemble (TDE) classifier for time series classification (Middlehurst, Large, Cawley & Bagnall, ECML-PKDD 2020); tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/TDE_accuracy.csv",
+        "locator": "TDE_accuracy.csv, row Trace, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "Parameter sampling and ensemble selection are seeded (random_state=0, the tsml fold-0 convention). The recorded command runs the sktime defaults (max_ensemble_size=50, n_parameter_samples=250); the reference was generated with the aeon implementation's own defaults, so small systematic deltas on top of seed noise are possible, covered by the 0.04 tolerance. Reference accuracy for Trace across the 30 resamples ranges [1.0, 1.0] (resample 0 = 1.0).",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm TemporalDictionaryEnsemble --dataset ucr-trace --model-id bench-classification-tde-trace --param random_state=0 --param dim_threshold=0.85 --param max_dims=20 --param max_ensemble_size=50 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param n_parameter_samples=250 --param randomly_selected_params=50 --param time_limit_in_minutes=0",
+      "run_command": "libraryts run --model-id bench-classification-tde-trace --compact"
+    },
+    {
+      "id": "classification-shapedtw-beef",
+      "algorithm": "ShapeDTW",
+      "algorithm_name": "ShapeDTW",
+      "dataset": "ucr-beef",
+      "dataset_name": "Beef (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.66667
+      },
+      "settings": "UCR default train/test split; 1-NN over the shapeDTW alignment (raw subsequence descriptor, subsequence_length=30, n_splits=10; sktime ShapeDTW defaults); deterministic, no randomness; reference = tsml resample 0",
+      "source": {
+        "title": "shapeDTW: shape dynamic time warping (Zhao & Itti, Pattern Recognition 74, 2018); tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/ShapeDTW_accuracy.csv",
+        "locator": "ShapeDTW_accuracy.csv, row Beef, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (1-NN on a fixed transform): like 1NN-DTW, the delta vs the reference should be ~0; non-zero deltas flag implementation/version drift in the transform or distance (Chinatown smoke test matched the reference to full precision). Reference accuracy for Beef across the 30 resamples ranges [0.3, 0.66667] (resample 0 = 0.66667).",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm ShapeDTW --dataset ucr-beef --model-id bench-classification-shapedtw-beef --param n_neighbors=1 --param n_splits=10 --param subsequence_length=30",
+      "run_command": "libraryts run --model-id bench-classification-shapedtw-beef --compact"
+    },
+    {
+      "id": "classification-shapedtw-cbf",
+      "algorithm": "ShapeDTW",
+      "algorithm_name": "ShapeDTW",
+      "dataset": "ucr-cbf",
+      "dataset_name": "CBF (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.90556
+      },
+      "settings": "UCR default train/test split; 1-NN over the shapeDTW alignment (raw subsequence descriptor, subsequence_length=30, n_splits=10; sktime ShapeDTW defaults); deterministic, no randomness; reference = tsml resample 0",
+      "source": {
+        "title": "shapeDTW: shape dynamic time warping (Zhao & Itti, Pattern Recognition 74, 2018); tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/ShapeDTW_accuracy.csv",
+        "locator": "ShapeDTW_accuracy.csv, row CBF, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (1-NN on a fixed transform): like 1NN-DTW, the delta vs the reference should be ~0; non-zero deltas flag implementation/version drift in the transform or distance (Chinatown smoke test matched the reference to full precision). Reference accuracy for CBF across the 30 resamples ranges [0.85444, 0.97333] (resample 0 = 0.90556).",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm ShapeDTW --dataset ucr-cbf --model-id bench-classification-shapedtw-cbf --param n_neighbors=1 --param n_splits=10 --param subsequence_length=30",
+      "run_command": "libraryts run --model-id bench-classification-shapedtw-cbf --compact"
+    },
+    {
+      "id": "classification-shapedtw-chinatown",
+      "algorithm": "ShapeDTW",
+      "algorithm_name": "ShapeDTW",
+      "dataset": "ucr-chinatown",
+      "dataset_name": "Chinatown (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.9621
+      },
+      "settings": "UCR default train/test split; 1-NN over the shapeDTW alignment (raw subsequence descriptor, subsequence_length=30, n_splits=10; sktime ShapeDTW defaults); deterministic, no randomness; reference = tsml resample 0",
+      "source": {
+        "title": "shapeDTW: shape dynamic time warping (Zhao & Itti, Pattern Recognition 74, 2018); tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/ShapeDTW_accuracy.csv",
+        "locator": "ShapeDTW_accuracy.csv, row Chinatown, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (1-NN on a fixed transform): like 1NN-DTW, the delta vs the reference should be ~0; non-zero deltas flag implementation/version drift in the transform or distance (Chinatown smoke test matched the reference to full precision). Reference accuracy for Chinatown across the 30 resamples ranges [0.81633, 0.97668] (resample 0 = 0.9621).",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm ShapeDTW --dataset ucr-chinatown --model-id bench-classification-shapedtw-chinatown --param n_neighbors=1 --param n_splits=10 --param subsequence_length=30",
+      "run_command": "libraryts run --model-id bench-classification-shapedtw-chinatown --compact"
+    },
+    {
+      "id": "classification-shapedtw-coffee",
+      "algorithm": "ShapeDTW",
+      "algorithm_name": "ShapeDTW",
+      "dataset": "ucr-coffee",
+      "dataset_name": "Coffee (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 1.0
+      },
+      "settings": "UCR default train/test split; 1-NN over the shapeDTW alignment (raw subsequence descriptor, subsequence_length=30, n_splits=10; sktime ShapeDTW defaults); deterministic, no randomness; reference = tsml resample 0",
+      "source": {
+        "title": "shapeDTW: shape dynamic time warping (Zhao & Itti, Pattern Recognition 74, 2018); tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/ShapeDTW_accuracy.csv",
+        "locator": "ShapeDTW_accuracy.csv, row Coffee, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (1-NN on a fixed transform): like 1NN-DTW, the delta vs the reference should be ~0; non-zero deltas flag implementation/version drift in the transform or distance (Chinatown smoke test matched the reference to full precision). Reference accuracy for Coffee across the 30 resamples ranges [0.92857, 1.0] (resample 0 = 1.0).",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm ShapeDTW --dataset ucr-coffee --model-id bench-classification-shapedtw-coffee --param n_neighbors=1 --param n_splits=10 --param subsequence_length=30",
+      "run_command": "libraryts run --model-id bench-classification-shapedtw-coffee --compact"
+    },
+    {
+      "id": "classification-shapedtw-diatomsizereduction",
+      "algorithm": "ShapeDTW",
+      "algorithm_name": "ShapeDTW",
+      "dataset": "ucr-diatomsizereduction",
+      "dataset_name": "DiatomSizeReduction (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.95752
+      },
+      "settings": "UCR default train/test split; 1-NN over the shapeDTW alignment (raw subsequence descriptor, subsequence_length=30, n_splits=10; sktime ShapeDTW defaults); deterministic, no randomness; reference = tsml resample 0",
+      "source": {
+        "title": "shapeDTW: shape dynamic time warping (Zhao & Itti, Pattern Recognition 74, 2018); tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/ShapeDTW_accuracy.csv",
+        "locator": "ShapeDTW_accuracy.csv, row DiatomSizeReduction, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (1-NN on a fixed transform): like 1NN-DTW, the delta vs the reference should be ~0; non-zero deltas flag implementation/version drift in the transform or distance (Chinatown smoke test matched the reference to full precision). Reference accuracy for DiatomSizeReduction across the 30 resamples ranges [0.88562, 0.98366] (resample 0 = 0.95752).",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm ShapeDTW --dataset ucr-diatomsizereduction --model-id bench-classification-shapedtw-diatomsizereduction --param n_neighbors=1 --param n_splits=10 --param subsequence_length=30",
+      "run_command": "libraryts run --model-id bench-classification-shapedtw-diatomsizereduction --compact"
+    },
+    {
+      "id": "classification-shapedtw-ecg200",
+      "algorithm": "ShapeDTW",
+      "algorithm_name": "ShapeDTW",
+      "dataset": "ucr-ecg200",
+      "dataset_name": "ECG200 (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.87
+      },
+      "settings": "UCR default train/test split; 1-NN over the shapeDTW alignment (raw subsequence descriptor, subsequence_length=30, n_splits=10; sktime ShapeDTW defaults); deterministic, no randomness; reference = tsml resample 0",
+      "source": {
+        "title": "shapeDTW: shape dynamic time warping (Zhao & Itti, Pattern Recognition 74, 2018); tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/ShapeDTW_accuracy.csv",
+        "locator": "ShapeDTW_accuracy.csv, row ECG200, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (1-NN on a fixed transform): like 1NN-DTW, the delta vs the reference should be ~0; non-zero deltas flag implementation/version drift in the transform or distance (Chinatown smoke test matched the reference to full precision). Reference accuracy for ECG200 across the 30 resamples ranges [0.78, 0.94] (resample 0 = 0.87).",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm ShapeDTW --dataset ucr-ecg200 --model-id bench-classification-shapedtw-ecg200 --param n_neighbors=1 --param n_splits=10 --param subsequence_length=30",
+      "run_command": "libraryts run --model-id bench-classification-shapedtw-ecg200 --compact"
+    },
+    {
+      "id": "classification-shapedtw-ecgfivedays",
+      "algorithm": "ShapeDTW",
+      "algorithm_name": "ShapeDTW",
+      "dataset": "ucr-ecgfivedays",
+      "dataset_name": "ECGFiveDays (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.91986
+      },
+      "settings": "UCR default train/test split; 1-NN over the shapeDTW alignment (raw subsequence descriptor, subsequence_length=30, n_splits=10; sktime ShapeDTW defaults); deterministic, no randomness; reference = tsml resample 0",
+      "source": {
+        "title": "shapeDTW: shape dynamic time warping (Zhao & Itti, Pattern Recognition 74, 2018); tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/ShapeDTW_accuracy.csv",
+        "locator": "ShapeDTW_accuracy.csv, row ECGFiveDays, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (1-NN on a fixed transform): like 1NN-DTW, the delta vs the reference should be ~0; non-zero deltas flag implementation/version drift in the transform or distance (Chinatown smoke test matched the reference to full precision). Reference accuracy for ECGFiveDays across the 30 resamples ranges [0.83391, 0.964] (resample 0 = 0.91986).",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm ShapeDTW --dataset ucr-ecgfivedays --model-id bench-classification-shapedtw-ecgfivedays --param n_neighbors=1 --param n_splits=10 --param subsequence_length=30",
+      "run_command": "libraryts run --model-id bench-classification-shapedtw-ecgfivedays --compact"
+    },
+    {
+      "id": "classification-shapedtw-facefour",
+      "algorithm": "ShapeDTW",
+      "algorithm_name": "ShapeDTW",
+      "dataset": "ucr-facefour",
+      "dataset_name": "FaceFour (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.86364
+      },
+      "settings": "UCR default train/test split; 1-NN over the shapeDTW alignment (raw subsequence descriptor, subsequence_length=30, n_splits=10; sktime ShapeDTW defaults); deterministic, no randomness; reference = tsml resample 0",
+      "source": {
+        "title": "shapeDTW: shape dynamic time warping (Zhao & Itti, Pattern Recognition 74, 2018); tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/ShapeDTW_accuracy.csv",
+        "locator": "ShapeDTW_accuracy.csv, row FaceFour, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (1-NN on a fixed transform): like 1NN-DTW, the delta vs the reference should be ~0; non-zero deltas flag implementation/version drift in the transform or distance (Chinatown smoke test matched the reference to full precision). Reference accuracy for FaceFour across the 30 resamples ranges [0.73864, 0.92045] (resample 0 = 0.86364).",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm ShapeDTW --dataset ucr-facefour --model-id bench-classification-shapedtw-facefour --param n_neighbors=1 --param n_splits=10 --param subsequence_length=30",
+      "run_command": "libraryts run --model-id bench-classification-shapedtw-facefour --compact"
+    },
+    {
+      "id": "classification-shapedtw-gunpoint",
+      "algorithm": "ShapeDTW",
+      "algorithm_name": "ShapeDTW",
+      "dataset": "ucr-gunpoint",
+      "dataset_name": "GunPoint (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.96
+      },
+      "settings": "UCR default train/test split; 1-NN over the shapeDTW alignment (raw subsequence descriptor, subsequence_length=30, n_splits=10; sktime ShapeDTW defaults); deterministic, no randomness; reference = tsml resample 0",
+      "source": {
+        "title": "shapeDTW: shape dynamic time warping (Zhao & Itti, Pattern Recognition 74, 2018); tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/ShapeDTW_accuracy.csv",
+        "locator": "ShapeDTW_accuracy.csv, row GunPoint, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (1-NN on a fixed transform): like 1NN-DTW, the delta vs the reference should be ~0; non-zero deltas flag implementation/version drift in the transform or distance (Chinatown smoke test matched the reference to full precision). Reference accuracy for GunPoint across the 30 resamples ranges [0.88667, 0.98] (resample 0 = 0.96).",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm ShapeDTW --dataset ucr-gunpoint --model-id bench-classification-shapedtw-gunpoint --param n_neighbors=1 --param n_splits=10 --param subsequence_length=30",
+      "run_command": "libraryts run --model-id bench-classification-shapedtw-gunpoint --compact"
+    },
+    {
+      "id": "classification-shapedtw-meat",
+      "algorithm": "ShapeDTW",
+      "algorithm_name": "ShapeDTW",
+      "dataset": "ucr-meat",
+      "dataset_name": "Meat (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.93333
+      },
+      "settings": "UCR default train/test split; 1-NN over the shapeDTW alignment (raw subsequence descriptor, subsequence_length=30, n_splits=10; sktime ShapeDTW defaults); deterministic, no randomness; reference = tsml resample 0",
+      "source": {
+        "title": "shapeDTW: shape dynamic time warping (Zhao & Itti, Pattern Recognition 74, 2018); tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/ShapeDTW_accuracy.csv",
+        "locator": "ShapeDTW_accuracy.csv, row Meat, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (1-NN on a fixed transform): like 1NN-DTW, the delta vs the reference should be ~0; non-zero deltas flag implementation/version drift in the transform or distance (Chinatown smoke test matched the reference to full precision). Reference accuracy for Meat across the 30 resamples ranges [0.93333, 1.0] (resample 0 = 0.93333).",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm ShapeDTW --dataset ucr-meat --model-id bench-classification-shapedtw-meat --param n_neighbors=1 --param n_splits=10 --param subsequence_length=30",
+      "run_command": "libraryts run --model-id bench-classification-shapedtw-meat --compact"
+    },
+    {
+      "id": "classification-shapedtw-osuleaf",
+      "algorithm": "ShapeDTW",
+      "algorithm_name": "ShapeDTW",
+      "dataset": "ucr-osuleaf",
+      "dataset_name": "OSULeaf (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.56612
+      },
+      "settings": "UCR default train/test split; 1-NN over the shapeDTW alignment (raw subsequence descriptor, subsequence_length=30, n_splits=10; sktime ShapeDTW defaults); deterministic, no randomness; reference = tsml resample 0",
+      "source": {
+        "title": "shapeDTW: shape dynamic time warping (Zhao & Itti, Pattern Recognition 74, 2018); tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/ShapeDTW_accuracy.csv",
+        "locator": "ShapeDTW_accuracy.csv, row OSULeaf, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (1-NN on a fixed transform): like 1NN-DTW, the delta vs the reference should be ~0; non-zero deltas flag implementation/version drift in the transform or distance (Chinatown smoke test matched the reference to full precision). Reference accuracy for OSULeaf across the 30 resamples ranges [0.54545, 0.63636] (resample 0 = 0.56612).",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm ShapeDTW --dataset ucr-osuleaf --model-id bench-classification-shapedtw-osuleaf --param n_neighbors=1 --param n_splits=10 --param subsequence_length=30",
+      "run_command": "libraryts run --model-id bench-classification-shapedtw-osuleaf --compact"
+    },
+    {
+      "id": "classification-shapedtw-trace",
+      "algorithm": "ShapeDTW",
+      "algorithm_name": "ShapeDTW",
+      "dataset": "ucr-trace",
+      "dataset_name": "Trace (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.9
+      },
+      "settings": "UCR default train/test split; 1-NN over the shapeDTW alignment (raw subsequence descriptor, subsequence_length=30, n_splits=10; sktime ShapeDTW defaults); deterministic, no randomness; reference = tsml resample 0",
+      "source": {
+        "title": "shapeDTW: shape dynamic time warping (Zhao & Itti, Pattern Recognition 74, 2018); tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/ShapeDTW_accuracy.csv",
+        "locator": "ShapeDTW_accuracy.csv, row Trace, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (1-NN on a fixed transform): like 1NN-DTW, the delta vs the reference should be ~0; non-zero deltas flag implementation/version drift in the transform or distance (Chinatown smoke test matched the reference to full precision). Reference accuracy for Trace across the 30 resamples ranges [0.87, 0.93] (resample 0 = 0.9).",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm ShapeDTW --dataset ucr-trace --model-id bench-classification-shapedtw-trace --param n_neighbors=1 --param n_splits=10 --param subsequence_length=30",
+      "run_command": "libraryts run --model-id bench-classification-shapedtw-trace --compact"
+    },
+    {
+      "id": "classification-shapedtw-wine",
+      "algorithm": "ShapeDTW",
+      "algorithm_name": "ShapeDTW",
+      "dataset": "ucr-wine",
+      "dataset_name": "Wine (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.59259
+      },
+      "settings": "UCR default train/test split; 1-NN over the shapeDTW alignment (raw subsequence descriptor, subsequence_length=30, n_splits=10; sktime ShapeDTW defaults); deterministic, no randomness; reference = tsml resample 0",
+      "source": {
+        "title": "shapeDTW: shape dynamic time warping (Zhao & Itti, Pattern Recognition 74, 2018); tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/ShapeDTW_accuracy.csv",
+        "locator": "ShapeDTW_accuracy.csv, row Wine, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm (1-NN on a fixed transform): like 1NN-DTW, the delta vs the reference should be ~0; non-zero deltas flag implementation/version drift in the transform or distance (Chinatown smoke test matched the reference to full precision). Reference accuracy for Wine across the 30 resamples ranges [0.59259, 1.0] (resample 0 = 0.59259).",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm ShapeDTW --dataset ucr-wine --model-id bench-classification-shapedtw-wine --param n_neighbors=1 --param n_splits=10 --param subsequence_length=30",
+      "run_command": "libraryts run --model-id bench-classification-shapedtw-wine --compact"
     }
   ]
 }

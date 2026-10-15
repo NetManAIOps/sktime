@@ -1,0 +1,29 @@
+{
+  "id": "classification-rise-meat",
+  "task": "classification",
+  "ran_at": "2026-10-15T12:52:30.275419+00:00",
+  "train_command": "libraryts train --algorithm RandomIntervalSpectralEnsemble --dataset ucr-meat --model-id bench-classification-rise-meat --param random_state=0 --param acf_lag=100 --param acf_min_values=4 --param max_interval=0 --param min_interval=16 --param n_estimators=500 --param n_jobs=1",
+  "run_command": "libraryts run --model-id bench-classification-rise-meat --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 16.68,
+  "values": {
+    "Accuracy": 0.9333333333333333
+  },
+  "per_metric": {
+    "Accuracy": {
+      "gt": 0.93333,
+      "value": 0.9333333333333333,
+      "delta": 3e-06,
+      "delta_rel": 4e-06,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "Accuracy": 0.9333333333333333,
+    "Macro F1": 0.933249791144528
+  },
+  "error": null,
+  "stdout_tail": "ssification\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"Meat\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-classification-rise-meat\", \"name\": \"RandomIntervalSpectralEnsemble (trained: bench-classification-rise-meat)\", \"task\": \"classification\", \"module\": \"sktime.classification.interval_based._rise.RandomIntervalSpectralEnsemble\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-14/playground/models/bench-classification-rise-meat\", \"manifest\": {\"model_id\": \"bench-classification-rise-meat\", \"backend\": \"sktime\", \"task\": \"classification\", \"algorithm_id\": \"registered-classification-RandomIntervalSpectralEnsemble\", \"algorithm_name\": \"RandomIntervalSpectralEnsemble\", \"module\": \"sktime.classification.interval_based._rise.RandomIntervalSpectralEnsemble\", \"params\": {\"random_state\": 0, \"acf_lag\": 100, \"acf_min_values\": 4, \"max_interval\": 0, \"min_interval\": 16, \"n_estimators\": 500, \"n_jobs\": 1}, \"eval_params\": {}, \"created_at\": \"2026-10-15T12:52:23.576053+00:00\", \"spec\": {\"task\": \"classification\", \"dataset_id\": \"ucr-meat\", \"algorithm_id\": \"registered-classification-RandomIntervalSpectralEnsemble\", \"preprocessor_id\": \"none\", \"params\": {\"random_state\": 0, \"acf_lag\": 100, \"acf_min_values\": 4, \"max_interval\": 0, \"min_interval\": 16, \"n_estimators\": 500, \"n_jobs\": 1}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 5623.0, \"log\": [\"Selected dataset: UCR/UEA Meat\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-classification-rise-meat (sktime backend, algorithm: registered-classification-RandomIntervalSpectralEnsemble, created: 2026-10-15T12:52:23.576053+00:00)\", \"Loaded UCR/UEA Meat train=60 test=60\", \"Finished in 5623.0 ms\"]}, \"error\": null}\n"
+}

@@ -1,0 +1,29 @@
+{
+  "id": "classification-shapedtw-trace",
+  "task": "classification",
+  "ran_at": "2026-10-15T13:34:17.189125+00:00",
+  "train_command": "libraryts train --algorithm ShapeDTW --dataset ucr-trace --model-id bench-classification-shapedtw-trace --param n_neighbors=1 --param n_splits=10 --param subsequence_length=30",
+  "run_command": "libraryts run --model-id bench-classification-shapedtw-trace --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 28.51,
+  "values": {
+    "Accuracy": 0.9
+  },
+  "per_metric": {
+    "Accuracy": {
+      "gt": 0.9,
+      "value": 0.9,
+      "delta": 0.0,
+      "delta_rel": 0.0,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "Accuracy": 0.9,
+    "Macro F1": 0.8947673134203289
+  },
+  "error": null,
+  "stdout_tail": "lassification\", \"dataset_id\": \"ucr-trace\", \"algorithm_id\": \"sktime-trained:bench-classification-shapedtw-trace\", \"preprocessor_id\": \"none\", \"params\": {}}, \"task\": \"classification\", \"dataset\": {\"id\": \"ucr-trace\", \"name\": \"UCR/UEA Trace\", \"task\": \"classification\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"Trace\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-classification-shapedtw-trace\", \"name\": \"ShapeDTW (trained: bench-classification-shapedtw-trace)\", \"task\": \"classification\", \"module\": \"sktime.classification.distance_based._shape_dtw.ShapeDTW\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-14/playground/models/bench-classification-shapedtw-trace\", \"manifest\": {\"model_id\": \"bench-classification-shapedtw-trace\", \"backend\": \"sktime\", \"task\": \"classification\", \"algorithm_id\": \"registered-classification-ShapeDTW\", \"algorithm_name\": \"ShapeDTW\", \"module\": \"sktime.classification.distance_based._shape_dtw.ShapeDTW\", \"params\": {\"n_neighbors\": 1, \"n_splits\": 10, \"subsequence_length\": 30}, \"eval_params\": {}, \"created_at\": \"2026-10-15T13:34:01.281675+00:00\", \"spec\": {\"task\": \"classification\", \"dataset_id\": \"ucr-trace\", \"algorithm_id\": \"registered-classification-ShapeDTW\", \"preprocessor_id\": \"none\", \"params\": {\"n_neighbors\": 1, \"n_splits\": 10, \"subsequence_length\": 30}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 15267.4, \"log\": [\"Selected dataset: UCR/UEA Trace\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-classification-shapedtw-trace (sktime backend, algorithm: registered-classification-ShapeDTW, created: 2026-10-15T13:34:01.281675+00:00)\", \"Loaded UCR/UEA Trace train=100 test=100\", \"Finished in 15267.4 ms\"]}, \"error\": null}\n"
+}

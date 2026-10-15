@@ -1,0 +1,29 @@
+{
+  "id": "classification-shapedtw-coffee",
+  "task": "classification",
+  "ran_at": "2026-10-15T13:29:00.030077+00:00",
+  "train_command": "libraryts train --algorithm ShapeDTW --dataset ucr-coffee --model-id bench-classification-shapedtw-coffee --param n_neighbors=1 --param n_splits=10 --param subsequence_length=30",
+  "run_command": "libraryts run --model-id bench-classification-shapedtw-coffee --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 11.86,
+  "values": {
+    "Accuracy": 1.0
+  },
+  "per_metric": {
+    "Accuracy": {
+      "gt": 1.0,
+      "value": 1.0,
+      "delta": 0.0,
+      "delta_rel": 0.0,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "Accuracy": 1.0,
+    "Macro F1": 1.0
+  },
+  "error": null,
+  "stdout_tail": "tion\", \"dataset_id\": \"ucr-coffee\", \"algorithm_id\": \"sktime-trained:bench-classification-shapedtw-coffee\", \"preprocessor_id\": \"none\", \"params\": {}}, \"task\": \"classification\", \"dataset\": {\"id\": \"ucr-coffee\", \"name\": \"UCR/UEA Coffee\", \"task\": \"classification\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"Coffee\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-classification-shapedtw-coffee\", \"name\": \"ShapeDTW (trained: bench-classification-shapedtw-coffee)\", \"task\": \"classification\", \"module\": \"sktime.classification.distance_based._shape_dtw.ShapeDTW\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-14/playground/models/bench-classification-shapedtw-coffee\", \"manifest\": {\"model_id\": \"bench-classification-shapedtw-coffee\", \"backend\": \"sktime\", \"task\": \"classification\", \"algorithm_id\": \"registered-classification-ShapeDTW\", \"algorithm_name\": \"ShapeDTW\", \"module\": \"sktime.classification.distance_based._shape_dtw.ShapeDTW\", \"params\": {\"n_neighbors\": 1, \"n_splits\": 10, \"subsequence_length\": 30}, \"eval_params\": {}, \"created_at\": \"2026-10-15T13:28:53.393232+00:00\", \"spec\": {\"task\": \"classification\", \"dataset_id\": \"ucr-coffee\", \"algorithm_id\": \"registered-classification-ShapeDTW\", \"preprocessor_id\": \"none\", \"params\": {\"n_neighbors\": 1, \"n_splits\": 10, \"subsequence_length\": 30}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 5733.9, \"log\": [\"Selected dataset: UCR/UEA Coffee\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-classification-shapedtw-coffee (sktime backend, algorithm: registered-classification-ShapeDTW, created: 2026-10-15T13:28:53.393232+00:00)\", \"Loaded UCR/UEA Coffee train=28 test=28\", \"Finished in 5733.9 ms\"]}, \"error\": null}\n"
+}
