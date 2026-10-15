@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-15T11:01:18.238446+00:00",
+  "generated_at": "2026-10-15T11:51:35.260761+00:00",
   "catalog_source": "snapshot",
   "tasks": [
     {
@@ -7927,6 +7927,3500 @@
       "raw_metrics": {
         "Accuracy": 0.9837837837837838,
         "Macro F1": 0.9824500379458639
+      }
+    },
+    {
+      "id": "classification-1nndtw-arrowhead",
+      "algorithm": "KNeighborsTimeSeriesClassifier",
+      "algorithm_name": "1NN-DTW",
+      "dataset": "arrow-head",
+      "dataset_name": "ArrowHead (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.70286
+      },
+      "settings": "UCR default train/test split; 1-nearest-neighbour with full-window DTW (sktime KNeighborsTimeSeriesClassifier, distance='dtw'); deterministic, no randomness",
+      "source": {
+        "title": "1NN-DTW elastic-distance baseline, tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/1NN-DTW_accuracy.csv",
+        "locator": "1NN-DTW_accuracy.csv, row ArrowHead, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm: the delta vs the reference should be exactly 0; any non-zero delta flags implementation/version drift in the DTW distance or the data. Reference value is resample 0 (the default UCR train/test split) of the tsml reference results.",
+      "spec_params": {
+        "distance": "dtw",
+        "n_neighbors": 1
+      },
+      "train_command": "libraryts train --algorithm KNeighborsTimeSeriesClassifier --dataset arrow-head --model-id bench-classification-1nndtw-arrowhead --param distance=dtw --param n_neighbors=1 --param leaf_size=30",
+      "run_command": "libraryts run --model-id bench-classification-1nndtw-arrowhead --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.7028571428571428
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.70286,
+          "value": 0.7028571428571428,
+          "delta": -3e-06,
+          "delta_rel": 4e-06,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:16:13.321810+00:00",
+      "duration_s": 8.91,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.7028571428571428,
+        "Macro F1": 0.700157158632868
+      }
+    },
+    {
+      "id": "classification-1nndtw-beef",
+      "algorithm": "KNeighborsTimeSeriesClassifier",
+      "algorithm_name": "1NN-DTW",
+      "dataset": "ucr-beef",
+      "dataset_name": "Beef (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.63333
+      },
+      "settings": "UCR default train/test split; 1-nearest-neighbour with full-window DTW (sktime KNeighborsTimeSeriesClassifier, distance='dtw'); deterministic, no randomness",
+      "source": {
+        "title": "1NN-DTW elastic-distance baseline, tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/1NN-DTW_accuracy.csv",
+        "locator": "1NN-DTW_accuracy.csv, row Beef, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm: the delta vs the reference should be exactly 0; any non-zero delta flags implementation/version drift in the DTW distance or the data. Reference value is resample 0 (the default UCR train/test split) of the tsml reference results.",
+      "spec_params": {
+        "distance": "dtw",
+        "n_neighbors": 1
+      },
+      "train_command": "libraryts train --algorithm KNeighborsTimeSeriesClassifier --dataset ucr-beef --model-id bench-classification-1nndtw-beef --param distance=dtw --param n_neighbors=1 --param leaf_size=30",
+      "run_command": "libraryts run --model-id bench-classification-1nndtw-beef --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.6333333333333333
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.63333,
+          "value": 0.6333333333333333,
+          "delta": 3e-06,
+          "delta_rel": 5e-06,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:16:21.917717+00:00",
+      "duration_s": 8.6,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.6333333333333333,
+        "Macro F1": 0.6294017094017095
+      }
+    },
+    {
+      "id": "classification-1nndtw-beetlefly",
+      "algorithm": "KNeighborsTimeSeriesClassifier",
+      "algorithm_name": "1NN-DTW",
+      "dataset": "ucr-beetlefly",
+      "dataset_name": "BeetleFly (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.7
+      },
+      "settings": "UCR default train/test split; 1-nearest-neighbour with full-window DTW (sktime KNeighborsTimeSeriesClassifier, distance='dtw'); deterministic, no randomness",
+      "source": {
+        "title": "1NN-DTW elastic-distance baseline, tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/1NN-DTW_accuracy.csv",
+        "locator": "1NN-DTW_accuracy.csv, row BeetleFly, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm: the delta vs the reference should be exactly 0; any non-zero delta flags implementation/version drift in the DTW distance or the data. Reference value is resample 0 (the default UCR train/test split) of the tsml reference results.",
+      "spec_params": {
+        "distance": "dtw",
+        "n_neighbors": 1
+      },
+      "train_command": "libraryts train --algorithm KNeighborsTimeSeriesClassifier --dataset ucr-beetlefly --model-id bench-classification-1nndtw-beetlefly --param distance=dtw --param n_neighbors=1 --param leaf_size=30",
+      "run_command": "libraryts run --model-id bench-classification-1nndtw-beetlefly --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.7
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.7,
+          "value": 0.7,
+          "delta": 0.0,
+          "delta_rel": 0.0,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:16:31.020585+00:00",
+      "duration_s": 9.1,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.7,
+        "Macro F1": 0.6703296703296704
+      }
+    },
+    {
+      "id": "classification-1nndtw-birdchicken",
+      "algorithm": "KNeighborsTimeSeriesClassifier",
+      "algorithm_name": "1NN-DTW",
+      "dataset": "ucr-birdchicken",
+      "dataset_name": "BirdChicken (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.75
+      },
+      "settings": "UCR default train/test split; 1-nearest-neighbour with full-window DTW (sktime KNeighborsTimeSeriesClassifier, distance='dtw'); deterministic, no randomness",
+      "source": {
+        "title": "1NN-DTW elastic-distance baseline, tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/1NN-DTW_accuracy.csv",
+        "locator": "1NN-DTW_accuracy.csv, row BirdChicken, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm: the delta vs the reference should be exactly 0; any non-zero delta flags implementation/version drift in the DTW distance or the data. Reference value is resample 0 (the default UCR train/test split) of the tsml reference results.",
+      "spec_params": {
+        "distance": "dtw",
+        "n_neighbors": 1
+      },
+      "train_command": "libraryts train --algorithm KNeighborsTimeSeriesClassifier --dataset ucr-birdchicken --model-id bench-classification-1nndtw-birdchicken --param distance=dtw --param n_neighbors=1 --param leaf_size=30",
+      "run_command": "libraryts run --model-id bench-classification-1nndtw-birdchicken --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.75
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.75,
+          "value": 0.75,
+          "delta": 0.0,
+          "delta_rel": 0.0,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:16:40.182696+00:00",
+      "duration_s": 9.16,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.75,
+        "Macro F1": 0.7442455242966752
+      }
+    },
+    {
+      "id": "classification-1nndtw-car",
+      "algorithm": "KNeighborsTimeSeriesClassifier",
+      "algorithm_name": "1NN-DTW",
+      "dataset": "ucr-car",
+      "dataset_name": "Car (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.73333
+      },
+      "settings": "UCR default train/test split; 1-nearest-neighbour with full-window DTW (sktime KNeighborsTimeSeriesClassifier, distance='dtw'); deterministic, no randomness",
+      "source": {
+        "title": "1NN-DTW elastic-distance baseline, tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/1NN-DTW_accuracy.csv",
+        "locator": "1NN-DTW_accuracy.csv, row Car, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm: the delta vs the reference should be exactly 0; any non-zero delta flags implementation/version drift in the DTW distance or the data. Reference value is resample 0 (the default UCR train/test split) of the tsml reference results.",
+      "spec_params": {
+        "distance": "dtw",
+        "n_neighbors": 1
+      },
+      "train_command": "libraryts train --algorithm KNeighborsTimeSeriesClassifier --dataset ucr-car --model-id bench-classification-1nndtw-car --param distance=dtw --param n_neighbors=1 --param leaf_size=30",
+      "run_command": "libraryts run --model-id bench-classification-1nndtw-car --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.7333333333333333
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.73333,
+          "value": 0.7333333333333333,
+          "delta": 3e-06,
+          "delta_rel": 5e-06,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:16:56.766647+00:00",
+      "duration_s": 16.58,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.7333333333333333,
+        "Macro F1": 0.727910052910053
+      }
+    },
+    {
+      "id": "classification-1nndtw-cbf",
+      "algorithm": "KNeighborsTimeSeriesClassifier",
+      "algorithm_name": "1NN-DTW",
+      "dataset": "ucr-cbf",
+      "dataset_name": "CBF (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.99667
+      },
+      "settings": "UCR default train/test split; 1-nearest-neighbour with full-window DTW (sktime KNeighborsTimeSeriesClassifier, distance='dtw'); deterministic, no randomness",
+      "source": {
+        "title": "1NN-DTW elastic-distance baseline, tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/1NN-DTW_accuracy.csv",
+        "locator": "1NN-DTW_accuracy.csv, row CBF, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm: the delta vs the reference should be exactly 0; any non-zero delta flags implementation/version drift in the DTW distance or the data. Reference value is resample 0 (the default UCR train/test split) of the tsml reference results.",
+      "spec_params": {
+        "distance": "dtw",
+        "n_neighbors": 1
+      },
+      "train_command": "libraryts train --algorithm KNeighborsTimeSeriesClassifier --dataset ucr-cbf --model-id bench-classification-1nndtw-cbf --param distance=dtw --param n_neighbors=1 --param leaf_size=30",
+      "run_command": "libraryts run --model-id bench-classification-1nndtw-cbf --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.9966666666666667
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.99667,
+          "value": 0.9966666666666667,
+          "delta": -3e-06,
+          "delta_rel": 3e-06,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:17:21.472483+00:00",
+      "duration_s": 24.71,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.9966666666666667,
+        "Macro F1": 0.9966664991540614
+      }
+    },
+    {
+      "id": "classification-1nndtw-chinatown",
+      "algorithm": "KNeighborsTimeSeriesClassifier",
+      "algorithm_name": "1NN-DTW",
+      "dataset": "ucr-chinatown",
+      "dataset_name": "Chinatown (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.97376
+      },
+      "settings": "UCR default train/test split; 1-nearest-neighbour with full-window DTW (sktime KNeighborsTimeSeriesClassifier, distance='dtw'); deterministic, no randomness",
+      "source": {
+        "title": "1NN-DTW elastic-distance baseline, tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/1NN-DTW_accuracy.csv",
+        "locator": "1NN-DTW_accuracy.csv, row Chinatown, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm: the delta vs the reference should be exactly 0; any non-zero delta flags implementation/version drift in the DTW distance or the data. Reference value is resample 0 (the default UCR train/test split) of the tsml reference results.",
+      "spec_params": {
+        "distance": "dtw",
+        "n_neighbors": 1
+      },
+      "train_command": "libraryts train --algorithm KNeighborsTimeSeriesClassifier --dataset ucr-chinatown --model-id bench-classification-1nndtw-chinatown --param distance=dtw --param n_neighbors=1 --param leaf_size=30",
+      "run_command": "libraryts run --model-id bench-classification-1nndtw-chinatown --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.9737609329446064
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.97376,
+          "value": 0.9737609329446064,
+          "delta": 1e-06,
+          "delta_rel": 1e-06,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:17:29.252267+00:00",
+      "duration_s": 7.78,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.9737609329446064,
+        "Macro F1": 0.9677581074729751
+      }
+    },
+    {
+      "id": "classification-1nndtw-coffee",
+      "algorithm": "KNeighborsTimeSeriesClassifier",
+      "algorithm_name": "1NN-DTW",
+      "dataset": "ucr-coffee",
+      "dataset_name": "Coffee (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 1.0
+      },
+      "settings": "UCR default train/test split; 1-nearest-neighbour with full-window DTW (sktime KNeighborsTimeSeriesClassifier, distance='dtw'); deterministic, no randomness",
+      "source": {
+        "title": "1NN-DTW elastic-distance baseline, tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/1NN-DTW_accuracy.csv",
+        "locator": "1NN-DTW_accuracy.csv, row Coffee, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm: the delta vs the reference should be exactly 0; any non-zero delta flags implementation/version drift in the DTW distance or the data. Reference value is resample 0 (the default UCR train/test split) of the tsml reference results.",
+      "spec_params": {
+        "distance": "dtw",
+        "n_neighbors": 1
+      },
+      "train_command": "libraryts train --algorithm KNeighborsTimeSeriesClassifier --dataset ucr-coffee --model-id bench-classification-1nndtw-coffee --param distance=dtw --param n_neighbors=1 --param leaf_size=30",
+      "run_command": "libraryts run --model-id bench-classification-1nndtw-coffee --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 1.0
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 1.0,
+          "value": 1.0,
+          "delta": 0.0,
+          "delta_rel": 0.0,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:17:38.074891+00:00",
+      "duration_s": 8.82,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 1.0,
+        "Macro F1": 1.0
+      }
+    },
+    {
+      "id": "classification-1nndtw-cricketx",
+      "algorithm": "KNeighborsTimeSeriesClassifier",
+      "algorithm_name": "1NN-DTW",
+      "dataset": "ucr-cricketx",
+      "dataset_name": "CricketX (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.75385
+      },
+      "settings": "UCR default train/test split; 1-nearest-neighbour with full-window DTW (sktime KNeighborsTimeSeriesClassifier, distance='dtw'); deterministic, no randomness",
+      "source": {
+        "title": "1NN-DTW elastic-distance baseline, tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/1NN-DTW_accuracy.csv",
+        "locator": "1NN-DTW_accuracy.csv, row CricketX, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm: the delta vs the reference should be exactly 0; any non-zero delta flags implementation/version drift in the DTW distance or the data. Reference value is resample 0 (the default UCR train/test split) of the tsml reference results.",
+      "spec_params": {
+        "distance": "dtw",
+        "n_neighbors": 1
+      },
+      "train_command": "libraryts train --algorithm KNeighborsTimeSeriesClassifier --dataset ucr-cricketx --model-id bench-classification-1nndtw-cricketx --param distance=dtw --param n_neighbors=1 --param leaf_size=30",
+      "run_command": "libraryts run --model-id bench-classification-1nndtw-cricketx --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.7538461538461538
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.75385,
+          "value": 0.7538461538461538,
+          "delta": -4e-06,
+          "delta_rel": 5e-06,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:19:20.125555+00:00",
+      "duration_s": 102.05,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.7538461538461538,
+        "Macro F1": 0.7597749955834997
+      }
+    },
+    {
+      "id": "classification-1nndtw-ecg200",
+      "algorithm": "KNeighborsTimeSeriesClassifier",
+      "algorithm_name": "1NN-DTW",
+      "dataset": "ucr-ecg200",
+      "dataset_name": "ECG200 (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.77
+      },
+      "settings": "UCR default train/test split; 1-nearest-neighbour with full-window DTW (sktime KNeighborsTimeSeriesClassifier, distance='dtw'); deterministic, no randomness",
+      "source": {
+        "title": "1NN-DTW elastic-distance baseline, tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/1NN-DTW_accuracy.csv",
+        "locator": "1NN-DTW_accuracy.csv, row ECG200, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm: the delta vs the reference should be exactly 0; any non-zero delta flags implementation/version drift in the DTW distance or the data. Reference value is resample 0 (the default UCR train/test split) of the tsml reference results.",
+      "spec_params": {
+        "distance": "dtw",
+        "n_neighbors": 1
+      },
+      "train_command": "libraryts train --algorithm KNeighborsTimeSeriesClassifier --dataset ucr-ecg200 --model-id bench-classification-1nndtw-ecg200 --param distance=dtw --param n_neighbors=1 --param leaf_size=30",
+      "run_command": "libraryts run --model-id bench-classification-1nndtw-ecg200 --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.77
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.77,
+          "value": 0.77,
+          "delta": 0.0,
+          "delta_rel": 0.0,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:19:28.555827+00:00",
+      "duration_s": 8.43,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.77,
+        "Macro F1": 0.7488808821923791
+      }
+    },
+    {
+      "id": "classification-1nndtw-gunpoint",
+      "algorithm": "KNeighborsTimeSeriesClassifier",
+      "algorithm_name": "1NN-DTW",
+      "dataset": "ucr-gunpoint",
+      "dataset_name": "GunPoint (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.90667
+      },
+      "settings": "UCR default train/test split; 1-nearest-neighbour with full-window DTW (sktime KNeighborsTimeSeriesClassifier, distance='dtw'); deterministic, no randomness",
+      "source": {
+        "title": "1NN-DTW elastic-distance baseline, tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/1NN-DTW_accuracy.csv",
+        "locator": "1NN-DTW_accuracy.csv, row GunPoint, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm: the delta vs the reference should be exactly 0; any non-zero delta flags implementation/version drift in the DTW distance or the data. Reference value is resample 0 (the default UCR train/test split) of the tsml reference results.",
+      "spec_params": {
+        "distance": "dtw",
+        "n_neighbors": 1
+      },
+      "train_command": "libraryts train --algorithm KNeighborsTimeSeriesClassifier --dataset ucr-gunpoint --model-id bench-classification-1nndtw-gunpoint --param distance=dtw --param n_neighbors=1 --param leaf_size=30",
+      "run_command": "libraryts run --model-id bench-classification-1nndtw-gunpoint --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.9066666666666666
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.90667,
+          "value": 0.9066666666666666,
+          "delta": -3e-06,
+          "delta_rel": 4e-06,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:19:36.486980+00:00",
+      "duration_s": 7.93,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.9066666666666666,
+        "Macro F1": 0.9066500711237553
+      }
+    },
+    {
+      "id": "classification-1nndtw-italypowerdemand",
+      "algorithm": "KNeighborsTimeSeriesClassifier",
+      "algorithm_name": "1NN-DTW",
+      "dataset": "italy-power-demand",
+      "dataset_name": "ItalyPowerDemand (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.95044
+      },
+      "settings": "UCR default train/test split; 1-nearest-neighbour with full-window DTW (sktime KNeighborsTimeSeriesClassifier, distance='dtw'); deterministic, no randomness",
+      "source": {
+        "title": "1NN-DTW elastic-distance baseline, tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/1NN-DTW_accuracy.csv",
+        "locator": "1NN-DTW_accuracy.csv, row ItalyPowerDemand, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm: the delta vs the reference should be exactly 0; any non-zero delta flags implementation/version drift in the DTW distance or the data. Reference value is resample 0 (the default UCR train/test split) of the tsml reference results.",
+      "spec_params": {
+        "distance": "dtw",
+        "n_neighbors": 1
+      },
+      "train_command": "libraryts train --algorithm KNeighborsTimeSeriesClassifier --dataset italy-power-demand --model-id bench-classification-1nndtw-italypowerdemand --param distance=dtw --param n_neighbors=1 --param leaf_size=30",
+      "run_command": "libraryts run --model-id bench-classification-1nndtw-italypowerdemand --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.9504373177842566
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.95044,
+          "value": 0.9504373177842566,
+          "delta": -3e-06,
+          "delta_rel": 3e-06,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:19:44.900041+00:00",
+      "duration_s": 8.41,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.9504373177842566,
+        "Macro F1": 0.9504326364993894
+      }
+    },
+    {
+      "id": "classification-1nndtw-meat",
+      "algorithm": "KNeighborsTimeSeriesClassifier",
+      "algorithm_name": "1NN-DTW",
+      "dataset": "ucr-meat",
+      "dataset_name": "Meat (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.93333
+      },
+      "settings": "UCR default train/test split; 1-nearest-neighbour with full-window DTW (sktime KNeighborsTimeSeriesClassifier, distance='dtw'); deterministic, no randomness",
+      "source": {
+        "title": "1NN-DTW elastic-distance baseline, tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/1NN-DTW_accuracy.csv",
+        "locator": "1NN-DTW_accuracy.csv, row Meat, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm: the delta vs the reference should be exactly 0; any non-zero delta flags implementation/version drift in the DTW distance or the data. Reference value is resample 0 (the default UCR train/test split) of the tsml reference results.",
+      "spec_params": {
+        "distance": "dtw",
+        "n_neighbors": 1
+      },
+      "train_command": "libraryts train --algorithm KNeighborsTimeSeriesClassifier --dataset ucr-meat --model-id bench-classification-1nndtw-meat --param distance=dtw --param n_neighbors=1 --param leaf_size=30",
+      "run_command": "libraryts run --model-id bench-classification-1nndtw-meat --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.9333333333333333
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.93333,
+          "value": 0.9333333333333333,
+          "delta": 3e-06,
+          "delta_rel": 4e-06,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:19:59.638912+00:00",
+      "duration_s": 14.74,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.9333333333333333,
+        "Macro F1": 0.934609250398724
+      }
+    },
+    {
+      "id": "classification-1nndtw-swedishleaf",
+      "algorithm": "KNeighborsTimeSeriesClassifier",
+      "algorithm_name": "1NN-DTW",
+      "dataset": "ucr-swedishleaf",
+      "dataset_name": "SwedishLeaf (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.792
+      },
+      "settings": "UCR default train/test split; 1-nearest-neighbour with full-window DTW (sktime KNeighborsTimeSeriesClassifier, distance='dtw'); deterministic, no randomness",
+      "source": {
+        "title": "1NN-DTW elastic-distance baseline, tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/1NN-DTW_accuracy.csv",
+        "locator": "1NN-DTW_accuracy.csv, row SwedishLeaf, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm: the delta vs the reference should be exactly 0; any non-zero delta flags implementation/version drift in the DTW distance or the data. Reference value is resample 0 (the default UCR train/test split) of the tsml reference results.",
+      "spec_params": {
+        "distance": "dtw",
+        "n_neighbors": 1
+      },
+      "train_command": "libraryts train --algorithm KNeighborsTimeSeriesClassifier --dataset ucr-swedishleaf --model-id bench-classification-1nndtw-swedishleaf --param distance=dtw --param n_neighbors=1 --param leaf_size=30",
+      "run_command": "libraryts run --model-id bench-classification-1nndtw-swedishleaf --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.792
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.792,
+          "value": 0.792,
+          "delta": 0.0,
+          "delta_rel": 0.0,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:20:42.819773+00:00",
+      "duration_s": 43.18,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.792,
+        "Macro F1": 0.7868702262641395
+      }
+    },
+    {
+      "id": "classification-1nndtw-trace",
+      "algorithm": "KNeighborsTimeSeriesClassifier",
+      "algorithm_name": "1NN-DTW",
+      "dataset": "ucr-trace",
+      "dataset_name": "Trace (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 1.0
+      },
+      "settings": "UCR default train/test split; 1-nearest-neighbour with full-window DTW (sktime KNeighborsTimeSeriesClassifier, distance='dtw'); deterministic, no randomness",
+      "source": {
+        "title": "1NN-DTW elastic-distance baseline, tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/1NN-DTW_accuracy.csv",
+        "locator": "1NN-DTW_accuracy.csv, row Trace, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.02
+      },
+      "notes": "Deterministic algorithm: the delta vs the reference should be exactly 0; any non-zero delta flags implementation/version drift in the DTW distance or the data. Reference value is resample 0 (the default UCR train/test split) of the tsml reference results.",
+      "spec_params": {
+        "distance": "dtw",
+        "n_neighbors": 1
+      },
+      "train_command": "libraryts train --algorithm KNeighborsTimeSeriesClassifier --dataset ucr-trace --model-id bench-classification-1nndtw-trace --param distance=dtw --param n_neighbors=1 --param leaf_size=30",
+      "run_command": "libraryts run --model-id bench-classification-1nndtw-trace --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 1.0
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 1.0,
+          "value": 1.0,
+          "delta": 0.0,
+          "delta_rel": 0.0,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:21:09.768212+00:00",
+      "duration_s": 26.95,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 1.0,
+        "Macro F1": 1.0
+      }
+    },
+    {
+      "id": "classification-catch22-arrowhead",
+      "algorithm": "Catch22Classifier",
+      "algorithm_name": "Catch22",
+      "dataset": "arrow-head",
+      "dataset_name": "ArrowHead (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.72571
+      },
+      "settings": "UCR default train/test split; 22 canonical features + RandomForest (sktime Catch22Classifier defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "catch22: CAnonical Time-series CHaracteristics classifier (Lubba et al., DMKD 2019), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/Catch22_accuracy.csv",
+        "locator": "Catch22_accuracy.csv, row ArrowHead, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "Feature extraction is deterministic; the RandomForest introduces seed-level randomness (the reference fold 0 also used random_state=0, tsml convention), and the aeon/sktime versions differ slightly. Tolerance covers seed variation.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm Catch22Classifier --dataset arrow-head --model-id bench-classification-catch22-arrowhead --param random_state=0 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-catch22-arrowhead --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.6857142857142857
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.72571,
+          "value": 0.6857142857142857,
+          "delta": -0.039996,
+          "delta_rel": 0.055113,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:21:18.550746+00:00",
+      "duration_s": 8.78,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.6857142857142857,
+        "Macro F1": 0.6834285714285714
+      }
+    },
+    {
+      "id": "classification-catch22-beef",
+      "algorithm": "Catch22Classifier",
+      "algorithm_name": "Catch22",
+      "dataset": "ucr-beef",
+      "dataset_name": "Beef (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.6
+      },
+      "settings": "UCR default train/test split; 22 canonical features + RandomForest (sktime Catch22Classifier defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "catch22: CAnonical Time-series CHaracteristics classifier (Lubba et al., DMKD 2019), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/Catch22_accuracy.csv",
+        "locator": "Catch22_accuracy.csv, row Beef, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.06
+      },
+      "notes": "Feature extraction is deterministic; the RandomForest introduces seed-level randomness (the reference fold 0 also used random_state=0, tsml convention), and the aeon/sktime versions differ slightly. Tolerance covers seed variation. Beef has a small test set, so tolerance is widened to 0.06 (one test case is several pp).",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm Catch22Classifier --dataset ucr-beef --model-id bench-classification-catch22-beef --param random_state=0 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-catch22-beef --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.5666666666666667
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.6,
+          "value": 0.5666666666666667,
+          "delta": -0.033333,
+          "delta_rel": 0.055556,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:21:41.687740+00:00",
+      "duration_s": 23.14,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.5666666666666667,
+        "Macro F1": 0.5630065359477123
+      }
+    },
+    {
+      "id": "classification-catch22-car",
+      "algorithm": "Catch22Classifier",
+      "algorithm_name": "Catch22",
+      "dataset": "ucr-car",
+      "dataset_name": "Car (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.76667
+      },
+      "settings": "UCR default train/test split; 22 canonical features + RandomForest (sktime Catch22Classifier defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "catch22: CAnonical Time-series CHaracteristics classifier (Lubba et al., DMKD 2019), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/Catch22_accuracy.csv",
+        "locator": "Catch22_accuracy.csv, row Car, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "Feature extraction is deterministic; the RandomForest introduces seed-level randomness (the reference fold 0 also used random_state=0, tsml convention), and the aeon/sktime versions differ slightly. Tolerance covers seed variation.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm Catch22Classifier --dataset ucr-car --model-id bench-classification-catch22-car --param random_state=0 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-catch22-car --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.7666666666666667
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.76667,
+          "value": 0.7666666666666667,
+          "delta": -3e-06,
+          "delta_rel": 4e-06,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:21:50.072710+00:00",
+      "duration_s": 8.38,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.7666666666666667,
+        "Macro F1": 0.766896551724138
+      }
+    },
+    {
+      "id": "classification-catch22-chinatown",
+      "algorithm": "Catch22Classifier",
+      "algorithm_name": "Catch22",
+      "dataset": "ucr-chinatown",
+      "dataset_name": "Chinatown (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.91545
+      },
+      "settings": "UCR default train/test split; 22 canonical features + RandomForest (sktime Catch22Classifier defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "catch22: CAnonical Time-series CHaracteristics classifier (Lubba et al., DMKD 2019), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/Catch22_accuracy.csv",
+        "locator": "Catch22_accuracy.csv, row Chinatown, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "Feature extraction is deterministic; the RandomForest introduces seed-level randomness (the reference fold 0 also used random_state=0, tsml convention), and the aeon/sktime versions differ slightly. Tolerance covers seed variation.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm Catch22Classifier --dataset ucr-chinatown --model-id bench-classification-catch22-chinatown --param random_state=0 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-catch22-chinatown --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.9096209912536443
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.91545,
+          "value": 0.9096209912536443,
+          "delta": -0.005829,
+          "delta_rel": 0.006367,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:22:29.433582+00:00",
+      "duration_s": 39.36,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.9096209912536443,
+        "Macro F1": 0.8944604909229869
+      }
+    },
+    {
+      "id": "classification-catch22-coffee",
+      "algorithm": "Catch22Classifier",
+      "algorithm_name": "Catch22",
+      "dataset": "ucr-coffee",
+      "dataset_name": "Coffee (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 1.0
+      },
+      "settings": "UCR default train/test split; 22 canonical features + RandomForest (sktime Catch22Classifier defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "catch22: CAnonical Time-series CHaracteristics classifier (Lubba et al., DMKD 2019), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/Catch22_accuracy.csv",
+        "locator": "Catch22_accuracy.csv, row Coffee, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.06
+      },
+      "notes": "Feature extraction is deterministic; the RandomForest introduces seed-level randomness (the reference fold 0 also used random_state=0, tsml convention), and the aeon/sktime versions differ slightly. Tolerance covers seed variation. Coffee has a small test set, so tolerance is widened to 0.06 (one test case is several pp).",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm Catch22Classifier --dataset ucr-coffee --model-id bench-classification-catch22-coffee --param random_state=0 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-catch22-coffee --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 1.0
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 1.0,
+          "value": 1.0,
+          "delta": 0.0,
+          "delta_rel": 0.0,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:22:37.895784+00:00",
+      "duration_s": 8.46,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 1.0,
+        "Macro F1": 1.0
+      }
+    },
+    {
+      "id": "classification-catch22-computers",
+      "algorithm": "Catch22Classifier",
+      "algorithm_name": "Catch22",
+      "dataset": "ucr-computers",
+      "dataset_name": "Computers (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.716
+      },
+      "settings": "UCR default train/test split; 22 canonical features + RandomForest (sktime Catch22Classifier defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "catch22: CAnonical Time-series CHaracteristics classifier (Lubba et al., DMKD 2019), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/Catch22_accuracy.csv",
+        "locator": "Catch22_accuracy.csv, row Computers, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "Feature extraction is deterministic; the RandomForest introduces seed-level randomness (the reference fold 0 also used random_state=0, tsml convention), and the aeon/sktime versions differ slightly. Tolerance covers seed variation.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm Catch22Classifier --dataset ucr-computers --model-id bench-classification-catch22-computers --param random_state=0 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-catch22-computers --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.732
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.716,
+          "value": 0.732,
+          "delta": 0.016,
+          "delta_rel": 0.022346,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:22:53.040528+00:00",
+      "duration_s": 15.14,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.732,
+        "Macro F1": 0.7314801455618076
+      }
+    },
+    {
+      "id": "classification-catch22-cricketx",
+      "algorithm": "Catch22Classifier",
+      "algorithm_name": "Catch22",
+      "dataset": "ucr-cricketx",
+      "dataset_name": "CricketX (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.58205
+      },
+      "settings": "UCR default train/test split; 22 canonical features + RandomForest (sktime Catch22Classifier defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "catch22: CAnonical Time-series CHaracteristics classifier (Lubba et al., DMKD 2019), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/Catch22_accuracy.csv",
+        "locator": "Catch22_accuracy.csv, row CricketX, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "Feature extraction is deterministic; the RandomForest introduces seed-level randomness (the reference fold 0 also used random_state=0, tsml convention), and the aeon/sktime versions differ slightly. Tolerance covers seed variation.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm Catch22Classifier --dataset ucr-cricketx --model-id bench-classification-catch22-cricketx --param random_state=0 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-catch22-cricketx --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.5897435897435898
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.58205,
+          "value": 0.5897435897435898,
+          "delta": 0.007694,
+          "delta_rel": 0.013218,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:23:09.637226+00:00",
+      "duration_s": 16.6,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.5897435897435898,
+        "Macro F1": 0.576099299991648
+      }
+    },
+    {
+      "id": "classification-catch22-ecg200",
+      "algorithm": "Catch22Classifier",
+      "algorithm_name": "Catch22",
+      "dataset": "ucr-ecg200",
+      "dataset_name": "ECG200 (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.84
+      },
+      "settings": "UCR default train/test split; 22 canonical features + RandomForest (sktime Catch22Classifier defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "catch22: CAnonical Time-series CHaracteristics classifier (Lubba et al., DMKD 2019), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/Catch22_accuracy.csv",
+        "locator": "Catch22_accuracy.csv, row ECG200, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "Feature extraction is deterministic; the RandomForest introduces seed-level randomness (the reference fold 0 also used random_state=0, tsml convention), and the aeon/sktime versions differ slightly. Tolerance covers seed variation.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm Catch22Classifier --dataset ucr-ecg200 --model-id bench-classification-catch22-ecg200 --param random_state=0 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-catch22-ecg200 --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.83
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.84,
+          "value": 0.83,
+          "delta": -0.01,
+          "delta_rel": 0.011905,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:23:20.117840+00:00",
+      "duration_s": 10.48,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.83,
+        "Macro F1": 0.8221571294068417
+      }
+    },
+    {
+      "id": "classification-catch22-facefour",
+      "algorithm": "Catch22Classifier",
+      "algorithm_name": "Catch22",
+      "dataset": "ucr-facefour",
+      "dataset_name": "FaceFour (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.63636
+      },
+      "settings": "UCR default train/test split; 22 canonical features + RandomForest (sktime Catch22Classifier defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "catch22: CAnonical Time-series CHaracteristics classifier (Lubba et al., DMKD 2019), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/Catch22_accuracy.csv",
+        "locator": "Catch22_accuracy.csv, row FaceFour, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "Feature extraction is deterministic; the RandomForest introduces seed-level randomness (the reference fold 0 also used random_state=0, tsml convention), and the aeon/sktime versions differ slightly. Tolerance covers seed variation.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm Catch22Classifier --dataset ucr-facefour --model-id bench-classification-catch22-facefour --param random_state=0 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-catch22-facefour --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.6590909090909091
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.63636,
+          "value": 0.6590909090909091,
+          "delta": 0.022731,
+          "delta_rel": 0.03572,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:23:45.404493+00:00",
+      "duration_s": 25.29,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.6590909090909091,
+        "Macro F1": 0.6426146010186757
+      }
+    },
+    {
+      "id": "classification-catch22-gunpoint",
+      "algorithm": "Catch22Classifier",
+      "algorithm_name": "Catch22",
+      "dataset": "ucr-gunpoint",
+      "dataset_name": "GunPoint (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.96667
+      },
+      "settings": "UCR default train/test split; 22 canonical features + RandomForest (sktime Catch22Classifier defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "catch22: CAnonical Time-series CHaracteristics classifier (Lubba et al., DMKD 2019), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/Catch22_accuracy.csv",
+        "locator": "Catch22_accuracy.csv, row GunPoint, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "Feature extraction is deterministic; the RandomForest introduces seed-level randomness (the reference fold 0 also used random_state=0, tsml convention), and the aeon/sktime versions differ slightly. Tolerance covers seed variation.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm Catch22Classifier --dataset ucr-gunpoint --model-id bench-classification-catch22-gunpoint --param random_state=0 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-catch22-gunpoint --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.9533333333333334
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.96667,
+          "value": 0.9533333333333334,
+          "delta": -0.013337,
+          "delta_rel": 0.013797,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:23:54.455146+00:00",
+      "duration_s": 9.05,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.9533333333333334,
+        "Macro F1": 0.9533146591970121
+      }
+    },
+    {
+      "id": "classification-catch22-italypowerdemand",
+      "algorithm": "Catch22Classifier",
+      "algorithm_name": "Catch22",
+      "dataset": "italy-power-demand",
+      "dataset_name": "ItalyPowerDemand (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.89602
+      },
+      "settings": "UCR default train/test split; 22 canonical features + RandomForest (sktime Catch22Classifier defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "catch22: CAnonical Time-series CHaracteristics classifier (Lubba et al., DMKD 2019), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/Catch22_accuracy.csv",
+        "locator": "Catch22_accuracy.csv, row ItalyPowerDemand, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "Feature extraction is deterministic; the RandomForest introduces seed-level randomness (the reference fold 0 also used random_state=0, tsml convention), and the aeon/sktime versions differ slightly. Tolerance covers seed variation.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm Catch22Classifier --dataset italy-power-demand --model-id bench-classification-catch22-italypowerdemand --param random_state=0 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-catch22-italypowerdemand --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.8969873663751214
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.89602,
+          "value": 0.8969873663751214,
+          "delta": 0.000967,
+          "delta_rel": 0.00108,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:24:11.198145+00:00",
+      "duration_s": 16.74,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.8969873663751214,
+        "Macro F1": 0.8969592424368382
+      }
+    },
+    {
+      "id": "classification-catch22-shapeletsim",
+      "algorithm": "Catch22Classifier",
+      "algorithm_name": "Catch22",
+      "dataset": "ucr-shapeletsim",
+      "dataset_name": "ShapeletSim (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.98889
+      },
+      "settings": "UCR default train/test split; 22 canonical features + RandomForest (sktime Catch22Classifier defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "catch22: CAnonical Time-series CHaracteristics classifier (Lubba et al., DMKD 2019), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/Catch22_accuracy.csv",
+        "locator": "Catch22_accuracy.csv, row ShapeletSim, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "Feature extraction is deterministic; the RandomForest introduces seed-level randomness (the reference fold 0 also used random_state=0, tsml convention), and the aeon/sktime versions differ slightly. Tolerance covers seed variation.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm Catch22Classifier --dataset ucr-shapeletsim --model-id bench-classification-catch22-shapeletsim --param random_state=0 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-catch22-shapeletsim --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 1.0
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.98889,
+          "value": 1.0,
+          "delta": 0.01111,
+          "delta_rel": 0.011235,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:24:23.271814+00:00",
+      "duration_s": 12.07,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 1.0,
+        "Macro F1": 1.0
+      }
+    },
+    {
+      "id": "classification-catch22-sonyaiborobotsurface1",
+      "algorithm": "Catch22Classifier",
+      "algorithm_name": "Catch22",
+      "dataset": "ucr-sonyaiborobotsurface1",
+      "dataset_name": "SonyAIBORobotSurface1 (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.85691
+      },
+      "settings": "UCR default train/test split; 22 canonical features + RandomForest (sktime Catch22Classifier defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "catch22: CAnonical Time-series CHaracteristics classifier (Lubba et al., DMKD 2019), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/Catch22_accuracy.csv",
+        "locator": "Catch22_accuracy.csv, row SonyAIBORobotSurface1, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "Feature extraction is deterministic; the RandomForest introduces seed-level randomness (the reference fold 0 also used random_state=0, tsml convention), and the aeon/sktime versions differ slightly. Tolerance covers seed variation.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm Catch22Classifier --dataset ucr-sonyaiborobotsurface1 --model-id bench-classification-catch22-sonyaiborobotsurface1 --param random_state=0 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-catch22-sonyaiborobotsurface1 --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.8668885191347754
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.85691,
+          "value": 0.8668885191347754,
+          "delta": 0.009979,
+          "delta_rel": 0.011645,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:24:38.353760+00:00",
+      "duration_s": 15.08,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.8668885191347754,
+        "Macro F1": 0.8668586619406291
+      }
+    },
+    {
+      "id": "classification-catch22-wine",
+      "algorithm": "Catch22Classifier",
+      "algorithm_name": "Catch22",
+      "dataset": "ucr-wine",
+      "dataset_name": "Wine (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.38889
+      },
+      "settings": "UCR default train/test split; 22 canonical features + RandomForest (sktime Catch22Classifier defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "catch22: CAnonical Time-series CHaracteristics classifier (Lubba et al., DMKD 2019), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/Catch22_accuracy.csv",
+        "locator": "Catch22_accuracy.csv, row Wine, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.06
+      },
+      "notes": "Feature extraction is deterministic; the RandomForest introduces seed-level randomness (the reference fold 0 also used random_state=0, tsml convention), and the aeon/sktime versions differ slightly. Tolerance covers seed variation. Wine has a small test set, so tolerance is widened to 0.06 (one test case is several pp).",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm Catch22Classifier --dataset ucr-wine --model-id bench-classification-catch22-wine --param random_state=0 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-catch22-wine --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.37037037037037035
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.38889,
+          "value": 0.37037037037037035,
+          "delta": -0.01852,
+          "delta_rel": 0.047622,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:24:50.197687+00:00",
+      "duration_s": 11.84,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.37037037037037035,
+        "Macro F1": 0.36250000000000004
+      }
+    },
+    {
+      "id": "classification-tsf-arrowhead",
+      "algorithm": "TimeSeriesForestClassifier",
+      "algorithm_name": "TSF",
+      "dataset": "arrow-head",
+      "dataset_name": "ArrowHead (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.73143
+      },
+      "settings": "UCR default train/test split; TimeSeriesForest with 200 interval trees (sktime TimeSeriesForestClassifier defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Time Series Forest (Deng et al., Information Sciences 2013), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/TSF_accuracy.csv",
+        "locator": "TSF_accuracy.csv, row ArrowHead, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "Interval selection is random; with random_state=0 sktime matches the tsml reference seed convention (fold 0). Tolerance covers residual seed/version differences between sktime and the aeon build used for the reference results.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm TimeSeriesForestClassifier --dataset arrow-head --model-id bench-classification-tsf-arrowhead --param random_state=0 --param min_interval=3 --param n_estimators=200 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-tsf-arrowhead --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.6971428571428572
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.73143,
+          "value": 0.6971428571428572,
+          "delta": -0.034287,
+          "delta_rel": 0.046877,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:25:16.393378+00:00",
+      "duration_s": 26.2,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.6971428571428572,
+        "Macro F1": 0.6943028503787391
+      }
+    },
+    {
+      "id": "classification-tsf-chinatown",
+      "algorithm": "TimeSeriesForestClassifier",
+      "algorithm_name": "TSF",
+      "dataset": "ucr-chinatown",
+      "dataset_name": "Chinatown (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.97668
+      },
+      "settings": "UCR default train/test split; TimeSeriesForest with 200 interval trees (sktime TimeSeriesForestClassifier defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Time Series Forest (Deng et al., Information Sciences 2013), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/TSF_accuracy.csv",
+        "locator": "TSF_accuracy.csv, row Chinatown, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "Interval selection is random; with random_state=0 sktime matches the tsml reference seed convention (fold 0). Tolerance covers residual seed/version differences between sktime and the aeon build used for the reference results.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm TimeSeriesForestClassifier --dataset ucr-chinatown --model-id bench-classification-tsf-chinatown --param random_state=0 --param min_interval=3 --param n_estimators=200 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-tsf-chinatown --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.9766763848396501
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.97668,
+          "value": 0.9766763848396501,
+          "delta": -4e-06,
+          "delta_rel": 4e-06,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:25:23.420315+00:00",
+      "duration_s": 7.03,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.9766763848396501,
+        "Macro F1": 0.9712513619981561
+      }
+    },
+    {
+      "id": "classification-tsf-coffee",
+      "algorithm": "TimeSeriesForestClassifier",
+      "algorithm_name": "TSF",
+      "dataset": "ucr-coffee",
+      "dataset_name": "Coffee (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 1.0
+      },
+      "settings": "UCR default train/test split; TimeSeriesForest with 200 interval trees (sktime TimeSeriesForestClassifier defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Time Series Forest (Deng et al., Information Sciences 2013), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/TSF_accuracy.csv",
+        "locator": "TSF_accuracy.csv, row Coffee, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.06
+      },
+      "notes": "Interval selection is random; with random_state=0 sktime matches the tsml reference seed convention (fold 0). Tolerance covers residual seed/version differences between sktime and the aeon build used for the reference results. Coffee has a small test set, so tolerance is widened to 0.06 (one test case is several pp).",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm TimeSeriesForestClassifier --dataset ucr-coffee --model-id bench-classification-tsf-coffee --param random_state=0 --param min_interval=3 --param n_estimators=200 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-tsf-coffee --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 1.0
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 1.0,
+          "value": 1.0,
+          "delta": 0.0,
+          "delta_rel": 0.0,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:25:33.144113+00:00",
+      "duration_s": 9.72,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 1.0,
+        "Macro F1": 1.0
+      }
+    },
+    {
+      "id": "classification-tsf-diatomsizereduction",
+      "algorithm": "TimeSeriesForestClassifier",
+      "algorithm_name": "TSF",
+      "dataset": "ucr-diatomsizereduction",
+      "dataset_name": "DiatomSizeReduction (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.89216
+      },
+      "settings": "UCR default train/test split; TimeSeriesForest with 200 interval trees (sktime TimeSeriesForestClassifier defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Time Series Forest (Deng et al., Information Sciences 2013), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/TSF_accuracy.csv",
+        "locator": "TSF_accuracy.csv, row DiatomSizeReduction, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "Interval selection is random; with random_state=0 sktime matches the tsml reference seed convention (fold 0). Tolerance covers residual seed/version differences between sktime and the aeon build used for the reference results.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm TimeSeriesForestClassifier --dataset ucr-diatomsizereduction --model-id bench-classification-tsf-diatomsizereduction --param random_state=0 --param min_interval=3 --param n_estimators=200 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-tsf-diatomsizereduction --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.8856209150326797
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.89216,
+          "value": 0.8856209150326797,
+          "delta": -0.006539,
+          "delta_rel": 0.007329,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:25:43.067895+00:00",
+      "duration_s": 9.92,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.8856209150326797,
+        "Macro F1": 0.8557360722066605
+      }
+    },
+    {
+      "id": "classification-tsf-ecg200",
+      "algorithm": "TimeSeriesForestClassifier",
+      "algorithm_name": "TSF",
+      "dataset": "ucr-ecg200",
+      "dataset_name": "ECG200 (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.87
+      },
+      "settings": "UCR default train/test split; TimeSeriesForest with 200 interval trees (sktime TimeSeriesForestClassifier defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Time Series Forest (Deng et al., Information Sciences 2013), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/TSF_accuracy.csv",
+        "locator": "TSF_accuracy.csv, row ECG200, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "Interval selection is random; with random_state=0 sktime matches the tsml reference seed convention (fold 0). Tolerance covers residual seed/version differences between sktime and the aeon build used for the reference results.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm TimeSeriesForestClassifier --dataset ucr-ecg200 --model-id bench-classification-tsf-ecg200 --param random_state=0 --param min_interval=3 --param n_estimators=200 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-tsf-ecg200 --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.87
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.87,
+          "value": 0.87,
+          "delta": 0.0,
+          "delta_rel": 0.0,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:25:50.169769+00:00",
+      "duration_s": 7.1,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.87,
+        "Macro F1": 0.8561787808385883
+      }
+    },
+    {
+      "id": "classification-tsf-ecgfivedays",
+      "algorithm": "TimeSeriesForestClassifier",
+      "algorithm_name": "TSF",
+      "dataset": "ucr-ecgfivedays",
+      "dataset_name": "ECGFiveDays (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.96864
+      },
+      "settings": "UCR default train/test split; TimeSeriesForest with 200 interval trees (sktime TimeSeriesForestClassifier defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Time Series Forest (Deng et al., Information Sciences 2013), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/TSF_accuracy.csv",
+        "locator": "TSF_accuracy.csv, row ECGFiveDays, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "Interval selection is random; with random_state=0 sktime matches the tsml reference seed convention (fold 0). Tolerance covers residual seed/version differences between sktime and the aeon build used for the reference results.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm TimeSeriesForestClassifier --dataset ucr-ecgfivedays --model-id bench-classification-tsf-ecgfivedays --param random_state=0 --param min_interval=3 --param n_estimators=200 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-tsf-ecgfivedays --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.9686411149825784
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.96864,
+          "value": 0.9686411149825784,
+          "delta": 1e-06,
+          "delta_rel": 1e-06,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:25:59.646689+00:00",
+      "duration_s": 9.48,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.9686411149825784,
+        "Macro F1": 0.9686395920597342
+      }
+    },
+    {
+      "id": "classification-tsf-facefour",
+      "algorithm": "TimeSeriesForestClassifier",
+      "algorithm_name": "TSF",
+      "dataset": "ucr-facefour",
+      "dataset_name": "FaceFour (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.95455
+      },
+      "settings": "UCR default train/test split; TimeSeriesForest with 200 interval trees (sktime TimeSeriesForestClassifier defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Time Series Forest (Deng et al., Information Sciences 2013), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/TSF_accuracy.csv",
+        "locator": "TSF_accuracy.csv, row FaceFour, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "Interval selection is random; with random_state=0 sktime matches the tsml reference seed convention (fold 0). Tolerance covers residual seed/version differences between sktime and the aeon build used for the reference results.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm TimeSeriesForestClassifier --dataset ucr-facefour --model-id bench-classification-tsf-facefour --param random_state=0 --param min_interval=3 --param n_estimators=200 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-tsf-facefour --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.9545454545454546
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.95455,
+          "value": 0.9545454545454546,
+          "delta": -5e-06,
+          "delta_rel": 5e-06,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:26:06.319090+00:00",
+      "duration_s": 6.67,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.9545454545454546,
+        "Macro F1": 0.9602380952380953
+      }
+    },
+    {
+      "id": "classification-tsf-fiftywords",
+      "algorithm": "TimeSeriesForestClassifier",
+      "algorithm_name": "TSF",
+      "dataset": "ucr-fiftywords",
+      "dataset_name": "FiftyWords (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.74066
+      },
+      "settings": "UCR default train/test split; TimeSeriesForest with 200 interval trees (sktime TimeSeriesForestClassifier defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Time Series Forest (Deng et al., Information Sciences 2013), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/TSF_accuracy.csv",
+        "locator": "TSF_accuracy.csv, row FiftyWords, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "Interval selection is random; with random_state=0 sktime matches the tsml reference seed convention (fold 0). Tolerance covers residual seed/version differences between sktime and the aeon build used for the reference results.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm TimeSeriesForestClassifier --dataset ucr-fiftywords --model-id bench-classification-tsf-fiftywords --param random_state=0 --param min_interval=3 --param n_estimators=200 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-tsf-fiftywords --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.7406593406593407
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.74066,
+          "value": 0.7406593406593407,
+          "delta": -1e-06,
+          "delta_rel": 1e-06,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:26:35.420293+00:00",
+      "duration_s": 29.1,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.7406593406593407,
+        "Macro F1": 0.5942002078375883
+      }
+    },
+    {
+      "id": "classification-tsf-gunpoint",
+      "algorithm": "TimeSeriesForestClassifier",
+      "algorithm_name": "TSF",
+      "dataset": "ucr-gunpoint",
+      "dataset_name": "GunPoint (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.96667
+      },
+      "settings": "UCR default train/test split; TimeSeriesForest with 200 interval trees (sktime TimeSeriesForestClassifier defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Time Series Forest (Deng et al., Information Sciences 2013), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/TSF_accuracy.csv",
+        "locator": "TSF_accuracy.csv, row GunPoint, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "Interval selection is random; with random_state=0 sktime matches the tsml reference seed convention (fold 0). Tolerance covers residual seed/version differences between sktime and the aeon build used for the reference results.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm TimeSeriesForestClassifier --dataset ucr-gunpoint --model-id bench-classification-tsf-gunpoint --param random_state=0 --param min_interval=3 --param n_estimators=200 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-tsf-gunpoint --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.9466666666666667
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.96667,
+          "value": 0.9466666666666667,
+          "delta": -0.020003,
+          "delta_rel": 0.020693,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:27:01.453683+00:00",
+      "duration_s": 26.03,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.9466666666666667,
+        "Macro F1": 0.9466571834992887
+      }
+    },
+    {
+      "id": "classification-tsf-ham",
+      "algorithm": "TimeSeriesForestClassifier",
+      "algorithm_name": "TSF",
+      "dataset": "ucr-ham",
+      "dataset_name": "Ham (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.77143
+      },
+      "settings": "UCR default train/test split; TimeSeriesForest with 200 interval trees (sktime TimeSeriesForestClassifier defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Time Series Forest (Deng et al., Information Sciences 2013), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/TSF_accuracy.csv",
+        "locator": "TSF_accuracy.csv, row Ham, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "Interval selection is random; with random_state=0 sktime matches the tsml reference seed convention (fold 0). Tolerance covers residual seed/version differences between sktime and the aeon build used for the reference results.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm TimeSeriesForestClassifier --dataset ucr-ham --model-id bench-classification-tsf-ham --param random_state=0 --param min_interval=3 --param n_estimators=200 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-tsf-ham --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.7523809523809524
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.77143,
+          "value": 0.7523809523809524,
+          "delta": -0.019049,
+          "delta_rel": 0.024693,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:27:12.400369+00:00",
+      "duration_s": 10.95,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.7523809523809524,
+        "Macro F1": 0.7523584905660378
+      }
+    },
+    {
+      "id": "classification-tsf-italypowerdemand",
+      "algorithm": "TimeSeriesForestClassifier",
+      "algorithm_name": "TSF",
+      "dataset": "italy-power-demand",
+      "dataset_name": "ItalyPowerDemand (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.96501
+      },
+      "settings": "UCR default train/test split; TimeSeriesForest with 200 interval trees (sktime TimeSeriesForestClassifier defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Time Series Forest (Deng et al., Information Sciences 2013), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/TSF_accuracy.csv",
+        "locator": "TSF_accuracy.csv, row ItalyPowerDemand, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "Interval selection is random; with random_state=0 sktime matches the tsml reference seed convention (fold 0). Tolerance covers residual seed/version differences between sktime and the aeon build used for the reference results.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm TimeSeriesForestClassifier --dataset italy-power-demand --model-id bench-classification-tsf-italypowerdemand --param random_state=0 --param min_interval=3 --param n_estimators=200 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-tsf-italypowerdemand --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.9659863945578231
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.96501,
+          "value": 0.9659863945578231,
+          "delta": 0.000976,
+          "delta_rel": 0.001012,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:27:34.274011+00:00",
+      "duration_s": 21.87,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.9659863945578231,
+        "Macro F1": 0.9659863945578231
+      }
+    },
+    {
+      "id": "classification-tsf-motestrain",
+      "algorithm": "TimeSeriesForestClassifier",
+      "algorithm_name": "TSF",
+      "dataset": "ucr-motestrain",
+      "dataset_name": "MoteStrain (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.88818
+      },
+      "settings": "UCR default train/test split; TimeSeriesForest with 200 interval trees (sktime TimeSeriesForestClassifier defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Time Series Forest (Deng et al., Information Sciences 2013), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/TSF_accuracy.csv",
+        "locator": "TSF_accuracy.csv, row MoteStrain, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "Interval selection is random; with random_state=0 sktime matches the tsml reference seed convention (fold 0). Tolerance covers residual seed/version differences between sktime and the aeon build used for the reference results.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm TimeSeriesForestClassifier --dataset ucr-motestrain --model-id bench-classification-tsf-motestrain --param random_state=0 --param min_interval=3 --param n_estimators=200 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-tsf-motestrain --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.8849840255591054
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.88818,
+          "value": 0.8849840255591054,
+          "delta": -0.003196,
+          "delta_rel": 0.003598,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:27:44.580934+00:00",
+      "duration_s": 10.31,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.8849840255591054,
+        "Macro F1": 0.8831702057067021
+      }
+    },
+    {
+      "id": "classification-tsf-oliveoil",
+      "algorithm": "TimeSeriesForestClassifier",
+      "algorithm_name": "TSF",
+      "dataset": "ucr-oliveoil",
+      "dataset_name": "OliveOil (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.86667
+      },
+      "settings": "UCR default train/test split; TimeSeriesForest with 200 interval trees (sktime TimeSeriesForestClassifier defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Time Series Forest (Deng et al., Information Sciences 2013), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/TSF_accuracy.csv",
+        "locator": "TSF_accuracy.csv, row OliveOil, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.06
+      },
+      "notes": "Interval selection is random; with random_state=0 sktime matches the tsml reference seed convention (fold 0). Tolerance covers residual seed/version differences between sktime and the aeon build used for the reference results. OliveOil has a small test set, so tolerance is widened to 0.06 (one test case is several pp).",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm TimeSeriesForestClassifier --dataset ucr-oliveoil --model-id bench-classification-tsf-oliveoil --param random_state=0 --param min_interval=3 --param n_estimators=200 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-tsf-oliveoil --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.8333333333333334
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.86667,
+          "value": 0.8333333333333334,
+          "delta": -0.033337,
+          "delta_rel": 0.038465,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:27:53.927903+00:00",
+      "duration_s": 9.35,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.8333333333333334,
+        "Macro F1": 0.7375
+      }
+    },
+    {
+      "id": "classification-tsf-shapeletsim",
+      "algorithm": "TimeSeriesForestClassifier",
+      "algorithm_name": "TSF",
+      "dataset": "ucr-shapeletsim",
+      "dataset_name": "ShapeletSim (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.47778
+      },
+      "settings": "UCR default train/test split; TimeSeriesForest with 200 interval trees (sktime TimeSeriesForestClassifier defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Time Series Forest (Deng et al., Information Sciences 2013), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/TSF_accuracy.csv",
+        "locator": "TSF_accuracy.csv, row ShapeletSim, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "Interval selection is random; with random_state=0 sktime matches the tsml reference seed convention (fold 0). Tolerance covers residual seed/version differences between sktime and the aeon build used for the reference results.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm TimeSeriesForestClassifier --dataset ucr-shapeletsim --model-id bench-classification-tsf-shapeletsim --param random_state=0 --param min_interval=3 --param n_estimators=200 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-classification-tsf-shapeletsim --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.4888888888888889
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.47778,
+          "value": 0.4888888888888889,
+          "delta": 0.011109,
+          "delta_rel": 0.023251,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:28:16.809951+00:00",
+      "duration_s": 22.88,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.4888888888888889,
+        "Macro F1": 0.48787728847105394
+      }
+    },
+    {
+      "id": "classification-weasel-arrowhead",
+      "algorithm": "WEASEL",
+      "algorithm_name": "WEASEL",
+      "dataset": "arrow-head",
+      "dataset_name": "ArrowHead (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.87429
+      },
+      "settings": "UCR default train/test split; WEASEL 1.0 SFA bag-of-patterns + chi2 feature selection + logistic regression (sktime WEASEL defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Fast and Accurate Time Series Classification with WEASEL (Schafer & Leser, CIKM 2017), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/WEASEL-1_accuracy.csv",
+        "locator": "WEASEL-1_accuracy.csv, row ArrowHead, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "sktime's WEASEL implements WEASEL 1.0 (2017 paper), so the WEASEL-1 reference file is used. Mostly deterministic pipeline (SFA + chi2 + logistic regression); occasional one-test-case flips vs the reference come from numeric/version differences in binning and the solver.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm WEASEL --dataset arrow-head --model-id bench-classification-weasel-arrowhead --param random_state=0 --param alphabet_size=2 --param n_jobs=1 --param p_threshold=0.05 --param window_inc=2",
+      "run_command": "libraryts run --model-id bench-classification-weasel-arrowhead --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.8457142857142858
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.87429,
+          "value": 0.8457142857142858,
+          "delta": -0.028576,
+          "delta_rel": 0.032684,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:28:28.106679+00:00",
+      "duration_s": 11.3,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.8457142857142858,
+        "Macro F1": 0.8480547774665421
+      }
+    },
+    {
+      "id": "classification-weasel-chinatown",
+      "algorithm": "WEASEL",
+      "algorithm_name": "WEASEL",
+      "dataset": "ucr-chinatown",
+      "dataset_name": "Chinatown (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.9621
+      },
+      "settings": "UCR default train/test split; WEASEL 1.0 SFA bag-of-patterns + chi2 feature selection + logistic regression (sktime WEASEL defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Fast and Accurate Time Series Classification with WEASEL (Schafer & Leser, CIKM 2017), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/WEASEL-1_accuracy.csv",
+        "locator": "WEASEL-1_accuracy.csv, row Chinatown, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "sktime's WEASEL implements WEASEL 1.0 (2017 paper), so the WEASEL-1 reference file is used. Mostly deterministic pipeline (SFA + chi2 + logistic regression); occasional one-test-case flips vs the reference come from numeric/version differences in binning and the solver.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm WEASEL --dataset ucr-chinatown --model-id bench-classification-weasel-chinatown --param random_state=0 --param alphabet_size=2 --param n_jobs=1 --param p_threshold=0.05 --param window_inc=2",
+      "run_command": "libraryts run --model-id bench-classification-weasel-chinatown --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.9620991253644315
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.9621,
+          "value": 0.9620991253644315,
+          "delta": -1e-06,
+          "delta_rel": 1e-06,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:28:37.834850+00:00",
+      "duration_s": 9.73,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.9620991253644315,
+        "Macro F1": 0.9539896608298164
+      }
+    },
+    {
+      "id": "classification-weasel-coffee",
+      "algorithm": "WEASEL",
+      "algorithm_name": "WEASEL",
+      "dataset": "ucr-coffee",
+      "dataset_name": "Coffee (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 1.0
+      },
+      "settings": "UCR default train/test split; WEASEL 1.0 SFA bag-of-patterns + chi2 feature selection + logistic regression (sktime WEASEL defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Fast and Accurate Time Series Classification with WEASEL (Schafer & Leser, CIKM 2017), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/WEASEL-1_accuracy.csv",
+        "locator": "WEASEL-1_accuracy.csv, row Coffee, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.06
+      },
+      "notes": "sktime's WEASEL implements WEASEL 1.0 (2017 paper), so the WEASEL-1 reference file is used. Mostly deterministic pipeline (SFA + chi2 + logistic regression); occasional one-test-case flips vs the reference come from numeric/version differences in binning and the solver. Coffee has a small test set, so tolerance is widened to 0.06 (one test case is several pp).",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm WEASEL --dataset ucr-coffee --model-id bench-classification-weasel-coffee --param random_state=0 --param alphabet_size=2 --param n_jobs=1 --param p_threshold=0.05 --param window_inc=2",
+      "run_command": "libraryts run --model-id bench-classification-weasel-coffee --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 1.0
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 1.0,
+          "value": 1.0,
+          "delta": 0.0,
+          "delta_rel": 0.0,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:29:04.147857+00:00",
+      "duration_s": 26.31,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 1.0,
+        "Macro F1": 1.0
+      }
+    },
+    {
+      "id": "classification-weasel-ecg200",
+      "algorithm": "WEASEL",
+      "algorithm_name": "WEASEL",
+      "dataset": "ucr-ecg200",
+      "dataset_name": "ECG200 (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.85
+      },
+      "settings": "UCR default train/test split; WEASEL 1.0 SFA bag-of-patterns + chi2 feature selection + logistic regression (sktime WEASEL defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Fast and Accurate Time Series Classification with WEASEL (Schafer & Leser, CIKM 2017), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/WEASEL-1_accuracy.csv",
+        "locator": "WEASEL-1_accuracy.csv, row ECG200, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "sktime's WEASEL implements WEASEL 1.0 (2017 paper), so the WEASEL-1 reference file is used. Mostly deterministic pipeline (SFA + chi2 + logistic regression); occasional one-test-case flips vs the reference come from numeric/version differences in binning and the solver.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm WEASEL --dataset ucr-ecg200 --model-id bench-classification-weasel-ecg200 --param random_state=0 --param alphabet_size=2 --param n_jobs=1 --param p_threshold=0.05 --param window_inc=2",
+      "run_command": "libraryts run --model-id bench-classification-weasel-ecg200 --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.86
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.85,
+          "value": 0.86,
+          "delta": 0.01,
+          "delta_rel": 0.011765,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:29:17.007790+00:00",
+      "duration_s": 12.86,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.86,
+        "Macro F1": 0.8417005879692447
+      }
+    },
+    {
+      "id": "classification-weasel-gunpoint",
+      "algorithm": "WEASEL",
+      "algorithm_name": "WEASEL",
+      "dataset": "ucr-gunpoint",
+      "dataset_name": "GunPoint (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.99333
+      },
+      "settings": "UCR default train/test split; WEASEL 1.0 SFA bag-of-patterns + chi2 feature selection + logistic regression (sktime WEASEL defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Fast and Accurate Time Series Classification with WEASEL (Schafer & Leser, CIKM 2017), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/WEASEL-1_accuracy.csv",
+        "locator": "WEASEL-1_accuracy.csv, row GunPoint, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "sktime's WEASEL implements WEASEL 1.0 (2017 paper), so the WEASEL-1 reference file is used. Mostly deterministic pipeline (SFA + chi2 + logistic regression); occasional one-test-case flips vs the reference come from numeric/version differences in binning and the solver.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm WEASEL --dataset ucr-gunpoint --model-id bench-classification-weasel-gunpoint --param random_state=0 --param alphabet_size=2 --param n_jobs=1 --param p_threshold=0.05 --param window_inc=2",
+      "run_command": "libraryts run --model-id bench-classification-weasel-gunpoint --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.9933333333333333
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.99333,
+          "value": 0.9933333333333333,
+          "delta": 3e-06,
+          "delta_rel": 3e-06,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:29:42.928823+00:00",
+      "duration_s": 25.92,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.9933333333333333,
+        "Macro F1": 0.9933306655995732
+      }
+    },
+    {
+      "id": "classification-weasel-herring",
+      "algorithm": "WEASEL",
+      "algorithm_name": "WEASEL",
+      "dataset": "ucr-herring",
+      "dataset_name": "Herring (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.60938
+      },
+      "settings": "UCR default train/test split; WEASEL 1.0 SFA bag-of-patterns + chi2 feature selection + logistic regression (sktime WEASEL defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Fast and Accurate Time Series Classification with WEASEL (Schafer & Leser, CIKM 2017), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/WEASEL-1_accuracy.csv",
+        "locator": "WEASEL-1_accuracy.csv, row Herring, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.06
+      },
+      "notes": "sktime's WEASEL implements WEASEL 1.0 (2017 paper), so the WEASEL-1 reference file is used. Mostly deterministic pipeline (SFA + chi2 + logistic regression); occasional one-test-case flips vs the reference come from numeric/version differences in binning and the solver. Herring has a small test set, so tolerance is widened to 0.06 (one test case is several pp). Observed on re-run: sktime 0.703 vs reference 0.609 (+9.4pp, deviation). The reference's own 30 resamples span 0.531-0.766 (mean 0.627, std 0.053) with fold 0 a low resample; the sktime value sits inside that range, so this reflects pipeline/version numeric drift on a 64-instance test set rather than a protocol break. Kept visible as a deviation.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm WEASEL --dataset ucr-herring --model-id bench-classification-weasel-herring --param random_state=0 --param alphabet_size=2 --param n_jobs=1 --param p_threshold=0.05 --param window_inc=2",
+      "run_command": "libraryts run --model-id bench-classification-weasel-herring --compact",
+      "task": "classification",
+      "status": "deviation",
+      "values": {
+        "Accuracy": 0.703125
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.60938,
+          "value": 0.703125,
+          "delta": 0.093745,
+          "delta_rel": 0.153837,
+          "status": "deviation"
+        }
+      },
+      "ran_at": "2026-10-15T11:29:55.682882+00:00",
+      "duration_s": 12.75,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.703125,
+        "Macro F1": 0.6805883898082479
+      }
+    },
+    {
+      "id": "classification-weasel-italypowerdemand",
+      "algorithm": "WEASEL",
+      "algorithm_name": "WEASEL",
+      "dataset": "italy-power-demand",
+      "dataset_name": "ItalyPowerDemand (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.94947
+      },
+      "settings": "UCR default train/test split; WEASEL 1.0 SFA bag-of-patterns + chi2 feature selection + logistic regression (sktime WEASEL defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Fast and Accurate Time Series Classification with WEASEL (Schafer & Leser, CIKM 2017), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/WEASEL-1_accuracy.csv",
+        "locator": "WEASEL-1_accuracy.csv, row ItalyPowerDemand, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "sktime's WEASEL implements WEASEL 1.0 (2017 paper), so the WEASEL-1 reference file is used. Mostly deterministic pipeline (SFA + chi2 + logistic regression); occasional one-test-case flips vs the reference come from numeric/version differences in binning and the solver.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm WEASEL --dataset italy-power-demand --model-id bench-classification-weasel-italypowerdemand --param random_state=0 --param alphabet_size=2 --param n_jobs=1 --param p_threshold=0.05 --param window_inc=2",
+      "run_command": "libraryts run --model-id bench-classification-weasel-italypowerdemand --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.9630709426627794
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.94947,
+          "value": 0.9630709426627794,
+          "delta": 0.013601,
+          "delta_rel": 0.014325,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:30:23.736791+00:00",
+      "duration_s": 28.05,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.9630709426627794,
+        "Macro F1": 0.9630650475312467
+      }
+    },
+    {
+      "id": "classification-weasel-lightning2",
+      "algorithm": "WEASEL",
+      "algorithm_name": "WEASEL",
+      "dataset": "ucr-lightning2",
+      "dataset_name": "Lightning2 (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.68852
+      },
+      "settings": "UCR default train/test split; WEASEL 1.0 SFA bag-of-patterns + chi2 feature selection + logistic regression (sktime WEASEL defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Fast and Accurate Time Series Classification with WEASEL (Schafer & Leser, CIKM 2017), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/WEASEL-1_accuracy.csv",
+        "locator": "WEASEL-1_accuracy.csv, row Lightning2, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "sktime's WEASEL implements WEASEL 1.0 (2017 paper), so the WEASEL-1 reference file is used. Mostly deterministic pipeline (SFA + chi2 + logistic regression); occasional one-test-case flips vs the reference come from numeric/version differences in binning and the solver.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm WEASEL --dataset ucr-lightning2 --model-id bench-classification-weasel-lightning2 --param random_state=0 --param alphabet_size=2 --param n_jobs=1 --param p_threshold=0.05 --param window_inc=2",
+      "run_command": "libraryts run --model-id bench-classification-weasel-lightning2 --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.7049180327868853
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.68852,
+          "value": 0.7049180327868853,
+          "delta": 0.016398,
+          "delta_rel": 0.023816,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:30:37.934119+00:00",
+      "duration_s": 14.2,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.7049180327868853,
+        "Macro F1": 0.6859267734553776
+      }
+    },
+    {
+      "id": "classification-weasel-meat",
+      "algorithm": "WEASEL",
+      "algorithm_name": "WEASEL",
+      "dataset": "ucr-meat",
+      "dataset_name": "Meat (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.81667
+      },
+      "settings": "UCR default train/test split; WEASEL 1.0 SFA bag-of-patterns + chi2 feature selection + logistic regression (sktime WEASEL defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Fast and Accurate Time Series Classification with WEASEL (Schafer & Leser, CIKM 2017), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/WEASEL-1_accuracy.csv",
+        "locator": "WEASEL-1_accuracy.csv, row Meat, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "sktime's WEASEL implements WEASEL 1.0 (2017 paper), so the WEASEL-1 reference file is used. Mostly deterministic pipeline (SFA + chi2 + logistic regression); occasional one-test-case flips vs the reference come from numeric/version differences in binning and the solver. Observed on re-run: sktime 0.900 vs reference 0.817 (+8.3pp, deviation). Reference fold 0 is the minimum of its 30 resamples (mean 0.961, range 0.817-1.000, std 0.037); the sktime value is inside that range. Kept visible as a deviation.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm WEASEL --dataset ucr-meat --model-id bench-classification-weasel-meat --param random_state=0 --param alphabet_size=2 --param n_jobs=1 --param p_threshold=0.05 --param window_inc=2",
+      "run_command": "libraryts run --model-id bench-classification-weasel-meat --compact",
+      "task": "classification",
+      "status": "deviation",
+      "values": {
+        "Accuracy": 0.9
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.81667,
+          "value": 0.9,
+          "delta": 0.08333,
+          "delta_rel": 0.102036,
+          "status": "deviation"
+        }
+      },
+      "ran_at": "2026-10-15T11:31:06.260864+00:00",
+      "duration_s": 28.33,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.9,
+        "Macro F1": 0.898796325625594
+      }
+    },
+    {
+      "id": "classification-weasel-osuleaf",
+      "algorithm": "WEASEL",
+      "algorithm_name": "WEASEL",
+      "dataset": "ucr-osuleaf",
+      "dataset_name": "OSULeaf (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.96281
+      },
+      "settings": "UCR default train/test split; WEASEL 1.0 SFA bag-of-patterns + chi2 feature selection + logistic regression (sktime WEASEL defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Fast and Accurate Time Series Classification with WEASEL (Schafer & Leser, CIKM 2017), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/WEASEL-1_accuracy.csv",
+        "locator": "WEASEL-1_accuracy.csv, row OSULeaf, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "sktime's WEASEL implements WEASEL 1.0 (2017 paper), so the WEASEL-1 reference file is used. Mostly deterministic pipeline (SFA + chi2 + logistic regression); occasional one-test-case flips vs the reference come from numeric/version differences in binning and the solver.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm WEASEL --dataset ucr-osuleaf --model-id bench-classification-weasel-osuleaf --param random_state=0 --param alphabet_size=2 --param n_jobs=1 --param p_threshold=0.05 --param window_inc=2",
+      "run_command": "libraryts run --model-id bench-classification-weasel-osuleaf --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.9669421487603306
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.96281,
+          "value": 0.9669421487603306,
+          "delta": 0.004132,
+          "delta_rel": 0.004292,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:31:20.993647+00:00",
+      "duration_s": 14.73,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.9669421487603306,
+        "Macro F1": 0.9544613807924701
+      }
+    },
+    {
+      "id": "classification-weasel-swedishleaf",
+      "algorithm": "WEASEL",
+      "algorithm_name": "WEASEL",
+      "dataset": "ucr-swedishleaf",
+      "dataset_name": "SwedishLeaf (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.968
+      },
+      "settings": "UCR default train/test split; WEASEL 1.0 SFA bag-of-patterns + chi2 feature selection + logistic regression (sktime WEASEL defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Fast and Accurate Time Series Classification with WEASEL (Schafer & Leser, CIKM 2017), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/WEASEL-1_accuracy.csv",
+        "locator": "WEASEL-1_accuracy.csv, row SwedishLeaf, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "sktime's WEASEL implements WEASEL 1.0 (2017 paper), so the WEASEL-1 reference file is used. Mostly deterministic pipeline (SFA + chi2 + logistic regression); occasional one-test-case flips vs the reference come from numeric/version differences in binning and the solver.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm WEASEL --dataset ucr-swedishleaf --model-id bench-classification-weasel-swedishleaf --param random_state=0 --param alphabet_size=2 --param n_jobs=1 --param p_threshold=0.05 --param window_inc=2",
+      "run_command": "libraryts run --model-id bench-classification-weasel-swedishleaf --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.96
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.968,
+          "value": 0.96,
+          "delta": -0.008,
+          "delta_rel": 0.008264,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:32:02.702814+00:00",
+      "duration_s": 41.71,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.96,
+        "Macro F1": 0.9601841508893117
+      }
+    },
+    {
+      "id": "classification-weasel-toesegmentation1",
+      "algorithm": "WEASEL",
+      "algorithm_name": "WEASEL",
+      "dataset": "ucr-toesegmentation1",
+      "dataset_name": "ToeSegmentation1 (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.94737
+      },
+      "settings": "UCR default train/test split; WEASEL 1.0 SFA bag-of-patterns + chi2 feature selection + logistic regression (sktime WEASEL defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Fast and Accurate Time Series Classification with WEASEL (Schafer & Leser, CIKM 2017), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/WEASEL-1_accuracy.csv",
+        "locator": "WEASEL-1_accuracy.csv, row ToeSegmentation1, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "sktime's WEASEL implements WEASEL 1.0 (2017 paper), so the WEASEL-1 reference file is used. Mostly deterministic pipeline (SFA + chi2 + logistic regression); occasional one-test-case flips vs the reference come from numeric/version differences in binning and the solver.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm WEASEL --dataset ucr-toesegmentation1 --model-id bench-classification-weasel-toesegmentation1 --param random_state=0 --param alphabet_size=2 --param n_jobs=1 --param p_threshold=0.05 --param window_inc=2",
+      "run_command": "libraryts run --model-id bench-classification-weasel-toesegmentation1 --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.9605263157894737
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.94737,
+          "value": 0.9605263157894737,
+          "delta": 0.013156,
+          "delta_rel": 0.013887,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:32:16.177694+00:00",
+      "duration_s": 13.47,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.9605263157894737,
+        "Macro F1": 0.960489072879561
+      }
+    },
+    {
+      "id": "classification-weasel-trace",
+      "algorithm": "WEASEL",
+      "algorithm_name": "WEASEL",
+      "dataset": "ucr-trace",
+      "dataset_name": "Trace (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 1.0
+      },
+      "settings": "UCR default train/test split; WEASEL 1.0 SFA bag-of-patterns + chi2 feature selection + logistic regression (sktime WEASEL defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Fast and Accurate Time Series Classification with WEASEL (Schafer & Leser, CIKM 2017), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/WEASEL-1_accuracy.csv",
+        "locator": "WEASEL-1_accuracy.csv, row Trace, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "sktime's WEASEL implements WEASEL 1.0 (2017 paper), so the WEASEL-1 reference file is used. Mostly deterministic pipeline (SFA + chi2 + logistic regression); occasional one-test-case flips vs the reference come from numeric/version differences in binning and the solver.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm WEASEL --dataset ucr-trace --model-id bench-classification-weasel-trace --param random_state=0 --param alphabet_size=2 --param n_jobs=1 --param p_threshold=0.05 --param window_inc=2",
+      "run_command": "libraryts run --model-id bench-classification-weasel-trace --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.99
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 1.0,
+          "value": 0.99,
+          "delta": -0.01,
+          "delta_rel": 0.01,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:32:41.760995+00:00",
+      "duration_s": 25.58,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.99,
+        "Macro F1": 0.9888572783309626
+      }
+    },
+    {
+      "id": "classification-weasel-twoleadecg",
+      "algorithm": "WEASEL",
+      "algorithm_name": "WEASEL",
+      "dataset": "ucr-twoleadecg",
+      "dataset_name": "TwoLeadECG (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.99912
+      },
+      "settings": "UCR default train/test split; WEASEL 1.0 SFA bag-of-patterns + chi2 feature selection + logistic regression (sktime WEASEL defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "Fast and Accurate Time Series Classification with WEASEL (Schafer & Leser, CIKM 2017), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/WEASEL-1_accuracy.csv",
+        "locator": "WEASEL-1_accuracy.csv, row TwoLeadECG, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "sktime's WEASEL implements WEASEL 1.0 (2017 paper), so the WEASEL-1 reference file is used. Mostly deterministic pipeline (SFA + chi2 + logistic regression); occasional one-test-case flips vs the reference come from numeric/version differences in binning and the solver.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm WEASEL --dataset ucr-twoleadecg --model-id bench-classification-weasel-twoleadecg --param random_state=0 --param alphabet_size=2 --param n_jobs=1 --param p_threshold=0.05 --param window_inc=2",
+      "run_command": "libraryts run --model-id bench-classification-weasel-twoleadecg --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.9973661106233538
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.99912,
+          "value": 0.9973661106233538,
+          "delta": -0.001754,
+          "delta_rel": 0.001755,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:32:55.468815+00:00",
+      "duration_s": 13.71,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.9973661106233538,
+        "Macro F1": 0.9973661025023182
+      }
+    },
+    {
+      "id": "classification-boss-arrowhead",
+      "algorithm": "BOSSEnsemble",
+      "algorithm_name": "BOSS",
+      "dataset": "arrow-head",
+      "dataset_name": "ArrowHead (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.83429
+      },
+      "settings": "UCR default train/test split; BOSS ensemble of 1NN-BOSS classifiers over SFA words (sktime BOSSEnsemble defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "The BOSS is concerned with time series classification in the presence of noise (Schafer, DMKD 2015), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/BOSS_accuracy.csv",
+        "locator": "BOSS_accuracy.csv, row ArrowHead, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "BOSS is near-deterministic (LOOCV grid over window sizes); small deltas vs the reference reflect aeon/sktime implementation drift (e.g. observed -1.2pp on Chinatown). Tolerance 0.04 covers this; larger deltas would signal a real protocol break.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm BOSSEnsemble --dataset arrow-head --model-id bench-classification-boss-arrowhead --param random_state=0 --param alphabet_size=2 --param max_ensemble_size=500 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param threshold=0.92",
+      "run_command": "libraryts run --model-id bench-classification-boss-arrowhead --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.8742857142857143
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.83429,
+          "value": 0.8742857142857143,
+          "delta": 0.039996,
+          "delta_rel": 0.04794,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:33:37.681587+00:00",
+      "duration_s": 42.21,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.8742857142857143,
+        "Macro F1": 0.8741345571728211
+      }
+    },
+    {
+      "id": "classification-boss-beef",
+      "algorithm": "BOSSEnsemble",
+      "algorithm_name": "BOSS",
+      "dataset": "ucr-beef",
+      "dataset_name": "Beef (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.76667
+      },
+      "settings": "UCR default train/test split; BOSS ensemble of 1NN-BOSS classifiers over SFA words (sktime BOSSEnsemble defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "The BOSS is concerned with time series classification in the presence of noise (Schafer, DMKD 2015), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/BOSS_accuracy.csv",
+        "locator": "BOSS_accuracy.csv, row Beef, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.06
+      },
+      "notes": "BOSS is near-deterministic (LOOCV grid over window sizes); small deltas vs the reference reflect aeon/sktime implementation drift (e.g. observed -1.2pp on Chinatown). Tolerance 0.04 covers this; larger deltas would signal a real protocol break. Beef has a small test set, so tolerance is widened to 0.06 (one test case is several pp). Observed on re-run: sktime 0.567 vs reference 0.767 (-20pp, deviation). Reference fold 0 is the maximum of its 30 resamples (mean 0.630, range 0.467-0.767, std 0.084) - BOSS is unstable on Beef (30 train instances) and the sktime value is inside the reference's own resample range. Kept visible as a deviation.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm BOSSEnsemble --dataset ucr-beef --model-id bench-classification-boss-beef --param random_state=0 --param alphabet_size=2 --param max_ensemble_size=500 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param threshold=0.92",
+      "run_command": "libraryts run --model-id bench-classification-boss-beef --compact",
+      "task": "classification",
+      "status": "deviation",
+      "values": {
+        "Accuracy": 0.5666666666666667
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.76667,
+          "value": 0.5666666666666667,
+          "delta": -0.200003,
+          "delta_rel": 0.260873,
+          "status": "deviation"
+        }
+      },
+      "ran_at": "2026-10-15T11:34:00.067005+00:00",
+      "duration_s": 22.38,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.5666666666666667,
+        "Macro F1": 0.5695104895104894
+      }
+    },
+    {
+      "id": "classification-boss-birdchicken",
+      "algorithm": "BOSSEnsemble",
+      "algorithm_name": "BOSS",
+      "dataset": "ucr-birdchicken",
+      "dataset_name": "BirdChicken (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 1.0
+      },
+      "settings": "UCR default train/test split; BOSS ensemble of 1NN-BOSS classifiers over SFA words (sktime BOSSEnsemble defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "The BOSS is concerned with time series classification in the presence of noise (Schafer, DMKD 2015), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/BOSS_accuracy.csv",
+        "locator": "BOSS_accuracy.csv, row BirdChicken, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.06
+      },
+      "notes": "BOSS is near-deterministic (LOOCV grid over window sizes); small deltas vs the reference reflect aeon/sktime implementation drift (e.g. observed -1.2pp on Chinatown). Tolerance 0.04 covers this; larger deltas would signal a real protocol break. BirdChicken has a small test set, so tolerance is widened to 0.06 (one test case is several pp). Observed on re-run: sktime 0.900 vs reference 1.000 (-10pp, deviation; 2 of 20 test cases). Reference resamples span 0.850-1.000 (mean 0.980, std 0.039), so the sktime value is inside the reference's own range. Kept visible as a deviation.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm BOSSEnsemble --dataset ucr-birdchicken --model-id bench-classification-boss-birdchicken --param random_state=0 --param alphabet_size=2 --param max_ensemble_size=500 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param threshold=0.92",
+      "run_command": "libraryts run --model-id bench-classification-boss-birdchicken --compact",
+      "task": "classification",
+      "status": "deviation",
+      "values": {
+        "Accuracy": 0.9
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 1.0,
+          "value": 0.9,
+          "delta": -0.1,
+          "delta_rel": 0.1,
+          "status": "deviation"
+        }
+      },
+      "ran_at": "2026-10-15T11:34:19.009697+00:00",
+      "duration_s": 18.94,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.9,
+        "Macro F1": 0.898989898989899
+      }
+    },
+    {
+      "id": "classification-boss-car",
+      "algorithm": "BOSSEnsemble",
+      "algorithm_name": "BOSS",
+      "dataset": "ucr-car",
+      "dataset_name": "Car (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.8
+      },
+      "settings": "UCR default train/test split; BOSS ensemble of 1NN-BOSS classifiers over SFA words (sktime BOSSEnsemble defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "The BOSS is concerned with time series classification in the presence of noise (Schafer, DMKD 2015), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/BOSS_accuracy.csv",
+        "locator": "BOSS_accuracy.csv, row Car, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "BOSS is near-deterministic (LOOCV grid over window sizes); small deltas vs the reference reflect aeon/sktime implementation drift (e.g. observed -1.2pp on Chinatown). Tolerance 0.04 covers this; larger deltas would signal a real protocol break.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm BOSSEnsemble --dataset ucr-car --model-id bench-classification-boss-car --param random_state=0 --param alphabet_size=2 --param max_ensemble_size=500 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param threshold=0.92",
+      "run_command": "libraryts run --model-id bench-classification-boss-car --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.8
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.8,
+          "value": 0.8,
+          "delta": 0.0,
+          "delta_rel": 0.0,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:35:06.796821+00:00",
+      "duration_s": 47.79,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.8,
+        "Macro F1": 0.7904108287172803
+      }
+    },
+    {
+      "id": "classification-boss-cbf",
+      "algorithm": "BOSSEnsemble",
+      "algorithm_name": "BOSS",
+      "dataset": "ucr-cbf",
+      "dataset_name": "CBF (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.99778
+      },
+      "settings": "UCR default train/test split; BOSS ensemble of 1NN-BOSS classifiers over SFA words (sktime BOSSEnsemble defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "The BOSS is concerned with time series classification in the presence of noise (Schafer, DMKD 2015), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/BOSS_accuracy.csv",
+        "locator": "BOSS_accuracy.csv, row CBF, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "BOSS is near-deterministic (LOOCV grid over window sizes); small deltas vs the reference reflect aeon/sktime implementation drift (e.g. observed -1.2pp on Chinatown). Tolerance 0.04 covers this; larger deltas would signal a real protocol break.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm BOSSEnsemble --dataset ucr-cbf --model-id bench-classification-boss-cbf --param random_state=0 --param alphabet_size=2 --param max_ensemble_size=500 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param threshold=0.92",
+      "run_command": "libraryts run --model-id bench-classification-boss-cbf --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 1.0
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.99778,
+          "value": 1.0,
+          "delta": 0.00222,
+          "delta_rel": 0.002225,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:35:45.253699+00:00",
+      "duration_s": 38.46,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 1.0,
+        "Macro F1": 1.0
+      }
+    },
+    {
+      "id": "classification-boss-chinatown",
+      "algorithm": "BOSSEnsemble",
+      "algorithm_name": "BOSS",
+      "dataset": "ucr-chinatown",
+      "dataset_name": "Chinatown (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.89504
+      },
+      "settings": "UCR default train/test split; BOSS ensemble of 1NN-BOSS classifiers over SFA words (sktime BOSSEnsemble defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "The BOSS is concerned with time series classification in the presence of noise (Schafer, DMKD 2015), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/BOSS_accuracy.csv",
+        "locator": "BOSS_accuracy.csv, row Chinatown, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "BOSS is near-deterministic (LOOCV grid over window sizes); small deltas vs the reference reflect aeon/sktime implementation drift (e.g. observed -1.2pp on Chinatown). Tolerance 0.04 covers this; larger deltas would signal a real protocol break.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm BOSSEnsemble --dataset ucr-chinatown --model-id bench-classification-boss-chinatown --param random_state=0 --param alphabet_size=2 --param max_ensemble_size=500 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param threshold=0.92",
+      "run_command": "libraryts run --model-id bench-classification-boss-chinatown --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.8833819241982507
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.89504,
+          "value": 0.8833819241982507,
+          "delta": -0.011658,
+          "delta_rel": 0.013025,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:36:01.617353+00:00",
+      "duration_s": 16.36,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.8833819241982507,
+        "Macro F1": 0.8627450980392157
+      }
+    },
+    {
+      "id": "classification-boss-coffee",
+      "algorithm": "BOSSEnsemble",
+      "algorithm_name": "BOSS",
+      "dataset": "ucr-coffee",
+      "dataset_name": "Coffee (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 1.0
+      },
+      "settings": "UCR default train/test split; BOSS ensemble of 1NN-BOSS classifiers over SFA words (sktime BOSSEnsemble defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "The BOSS is concerned with time series classification in the presence of noise (Schafer, DMKD 2015), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/BOSS_accuracy.csv",
+        "locator": "BOSS_accuracy.csv, row Coffee, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.06
+      },
+      "notes": "BOSS is near-deterministic (LOOCV grid over window sizes); small deltas vs the reference reflect aeon/sktime implementation drift (e.g. observed -1.2pp on Chinatown). Tolerance 0.04 covers this; larger deltas would signal a real protocol break. Coffee has a small test set, so tolerance is widened to 0.06 (one test case is several pp).",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm BOSSEnsemble --dataset ucr-coffee --model-id bench-classification-boss-coffee --param random_state=0 --param alphabet_size=2 --param max_ensemble_size=500 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param threshold=0.92",
+      "run_command": "libraryts run --model-id bench-classification-boss-coffee --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 1.0
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 1.0,
+          "value": 1.0,
+          "delta": 0.0,
+          "delta_rel": 0.0,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:36:19.586534+00:00",
+      "duration_s": 17.97,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 1.0,
+        "Macro F1": 1.0
+      }
+    },
+    {
+      "id": "classification-boss-earthquakes",
+      "algorithm": "BOSSEnsemble",
+      "algorithm_name": "BOSS",
+      "dataset": "ucr-earthquakes",
+      "dataset_name": "Earthquakes (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.7482
+      },
+      "settings": "UCR default train/test split; BOSS ensemble of 1NN-BOSS classifiers over SFA words (sktime BOSSEnsemble defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "The BOSS is concerned with time series classification in the presence of noise (Schafer, DMKD 2015), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/BOSS_accuracy.csv",
+        "locator": "BOSS_accuracy.csv, row Earthquakes, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "BOSS is near-deterministic (LOOCV grid over window sizes); small deltas vs the reference reflect aeon/sktime implementation drift (e.g. observed -1.2pp on Chinatown). Tolerance 0.04 covers this; larger deltas would signal a real protocol break.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm BOSSEnsemble --dataset ucr-earthquakes --model-id bench-classification-boss-earthquakes --param random_state=0 --param alphabet_size=2 --param max_ensemble_size=500 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param threshold=0.92",
+      "run_command": "libraryts run --model-id bench-classification-boss-earthquakes --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.7482014388489209
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.7482,
+          "value": 0.7482014388489209,
+          "delta": 1e-06,
+          "delta_rel": 2e-06,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:43:16.658677+00:00",
+      "duration_s": 417.07,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.7482014388489209,
+        "Macro F1": 0.4279835390946502
+      }
+    },
+    {
+      "id": "classification-boss-ecg200",
+      "algorithm": "BOSSEnsemble",
+      "algorithm_name": "BOSS",
+      "dataset": "ucr-ecg200",
+      "dataset_name": "ECG200 (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.88
+      },
+      "settings": "UCR default train/test split; BOSS ensemble of 1NN-BOSS classifiers over SFA words (sktime BOSSEnsemble defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "The BOSS is concerned with time series classification in the presence of noise (Schafer, DMKD 2015), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/BOSS_accuracy.csv",
+        "locator": "BOSS_accuracy.csv, row ECG200, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "BOSS is near-deterministic (LOOCV grid over window sizes); small deltas vs the reference reflect aeon/sktime implementation drift (e.g. observed -1.2pp on Chinatown). Tolerance 0.04 covers this; larger deltas would signal a real protocol break. Observed on re-run: sktime 0.840 vs reference 0.880 (-4pp, deviation). Reference resamples span 0.810-0.940 (mean 0.880, std 0.032); the sktime value is inside that range and the delta reflects implementation drift between the sktime BOSSEnsemble and the aeon build used for the reference. Kept visible as a deviation.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm BOSSEnsemble --dataset ucr-ecg200 --model-id bench-classification-boss-ecg200 --param random_state=0 --param alphabet_size=2 --param max_ensemble_size=500 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param threshold=0.92",
+      "run_command": "libraryts run --model-id bench-classification-boss-ecg200 --compact",
+      "task": "classification",
+      "status": "deviation",
+      "values": {
+        "Accuracy": 0.84
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.88,
+          "value": 0.84,
+          "delta": -0.04,
+          "delta_rel": 0.045455,
+          "status": "deviation"
+        }
+      },
+      "ran_at": "2026-10-15T11:43:49.199781+00:00",
+      "duration_s": 32.54,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.84,
+        "Macro F1": 0.8190863862505653
+      }
+    },
+    {
+      "id": "classification-boss-facefour",
+      "algorithm": "BOSSEnsemble",
+      "algorithm_name": "BOSS",
+      "dataset": "ucr-facefour",
+      "dataset_name": "FaceFour (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 1.0
+      },
+      "settings": "UCR default train/test split; BOSS ensemble of 1NN-BOSS classifiers over SFA words (sktime BOSSEnsemble defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "The BOSS is concerned with time series classification in the presence of noise (Schafer, DMKD 2015), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/BOSS_accuracy.csv",
+        "locator": "BOSS_accuracy.csv, row FaceFour, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "BOSS is near-deterministic (LOOCV grid over window sizes); small deltas vs the reference reflect aeon/sktime implementation drift (e.g. observed -1.2pp on Chinatown). Tolerance 0.04 covers this; larger deltas would signal a real protocol break.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm BOSSEnsemble --dataset ucr-facefour --model-id bench-classification-boss-facefour --param random_state=0 --param alphabet_size=2 --param max_ensemble_size=500 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param threshold=0.92",
+      "run_command": "libraryts run --model-id bench-classification-boss-facefour --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 1.0
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 1.0,
+          "value": 1.0,
+          "delta": 0.0,
+          "delta_rel": 0.0,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:44:11.702469+00:00",
+      "duration_s": 22.5,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 1.0,
+        "Macro F1": 1.0
+      }
+    },
+    {
+      "id": "classification-boss-gunpoint",
+      "algorithm": "BOSSEnsemble",
+      "algorithm_name": "BOSS",
+      "dataset": "ucr-gunpoint",
+      "dataset_name": "GunPoint (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 1.0
+      },
+      "settings": "UCR default train/test split; BOSS ensemble of 1NN-BOSS classifiers over SFA words (sktime BOSSEnsemble defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "The BOSS is concerned with time series classification in the presence of noise (Schafer, DMKD 2015), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/BOSS_accuracy.csv",
+        "locator": "BOSS_accuracy.csv, row GunPoint, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "BOSS is near-deterministic (LOOCV grid over window sizes); small deltas vs the reference reflect aeon/sktime implementation drift (e.g. observed -1.2pp on Chinatown). Tolerance 0.04 covers this; larger deltas would signal a real protocol break.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm BOSSEnsemble --dataset ucr-gunpoint --model-id bench-classification-boss-gunpoint --param random_state=0 --param alphabet_size=2 --param max_ensemble_size=500 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param threshold=0.92",
+      "run_command": "libraryts run --model-id bench-classification-boss-gunpoint --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.98
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 1.0,
+          "value": 0.98,
+          "delta": -0.02,
+          "delta_rel": 0.02,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:44:32.267112+00:00",
+      "duration_s": 20.56,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.98,
+        "Macro F1": 0.9799777530589544
+      }
+    },
+    {
+      "id": "classification-boss-italypowerdemand",
+      "algorithm": "BOSSEnsemble",
+      "algorithm_name": "BOSS",
+      "dataset": "italy-power-demand",
+      "dataset_name": "ItalyPowerDemand (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.92711
+      },
+      "settings": "UCR default train/test split; BOSS ensemble of 1NN-BOSS classifiers over SFA words (sktime BOSSEnsemble defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "The BOSS is concerned with time series classification in the presence of noise (Schafer, DMKD 2015), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/BOSS_accuracy.csv",
+        "locator": "BOSS_accuracy.csv, row ItalyPowerDemand, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "BOSS is near-deterministic (LOOCV grid over window sizes); small deltas vs the reference reflect aeon/sktime implementation drift (e.g. observed -1.2pp on Chinatown). Tolerance 0.04 covers this; larger deltas would signal a real protocol break.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm BOSSEnsemble --dataset italy-power-demand --model-id bench-classification-boss-italypowerdemand --param random_state=0 --param alphabet_size=2 --param max_ensemble_size=500 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param threshold=0.92",
+      "run_command": "libraryts run --model-id bench-classification-boss-italypowerdemand --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 0.9310009718172984
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 0.92711,
+          "value": 0.9310009718172984,
+          "delta": 0.003891,
+          "delta_rel": 0.004197,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:44:45.480149+00:00",
+      "duration_s": 13.21,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 0.9310009718172984,
+        "Macro F1": 0.9308965505499691
+      }
+    },
+    {
+      "id": "classification-boss-plane",
+      "algorithm": "BOSSEnsemble",
+      "algorithm_name": "BOSS",
+      "dataset": "ucr-plane",
+      "dataset_name": "Plane (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 1.0
+      },
+      "settings": "UCR default train/test split; BOSS ensemble of 1NN-BOSS classifiers over SFA words (sktime BOSSEnsemble defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "The BOSS is concerned with time series classification in the presence of noise (Schafer, DMKD 2015), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/BOSS_accuracy.csv",
+        "locator": "BOSS_accuracy.csv, row Plane, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "BOSS is near-deterministic (LOOCV grid over window sizes); small deltas vs the reference reflect aeon/sktime implementation drift (e.g. observed -1.2pp on Chinatown). Tolerance 0.04 covers this; larger deltas would signal a real protocol break.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm BOSSEnsemble --dataset ucr-plane --model-id bench-classification-boss-plane --param random_state=0 --param alphabet_size=2 --param max_ensemble_size=500 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param threshold=0.92",
+      "run_command": "libraryts run --model-id bench-classification-boss-plane --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 1.0
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 1.0,
+          "value": 1.0,
+          "delta": 0.0,
+          "delta_rel": 0.0,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:45:17.954218+00:00",
+      "duration_s": 32.47,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 1.0,
+        "Macro F1": 1.0
+      }
+    },
+    {
+      "id": "classification-boss-trace",
+      "algorithm": "BOSSEnsemble",
+      "algorithm_name": "BOSS",
+      "dataset": "ucr-trace",
+      "dataset_name": "Trace (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 1.0
+      },
+      "settings": "UCR default train/test split; BOSS ensemble of 1NN-BOSS classifiers over SFA words (sktime BOSSEnsemble defaults, random_state=0); reference = tsml resample 0",
+      "source": {
+        "title": "The BOSS is concerned with time series classification in the presence of noise (Schafer, DMKD 2015), tsml reference results",
+        "venue": "tsml reference classification results (timeseriesclassification.com ReferenceResults, generated with the aeon toolkit; GitHub mirror); cf. Middlehurst, Schafer & Bagnall, Bake off redux, Machine Learning 113 (2024)",
+        "url": "https://raw.githubusercontent.com/time-series-machine-learning/tsml-eval/main/results/classification/Univariate/BOSS_accuracy.csv",
+        "locator": "BOSS_accuracy.csv, row Trace, column resample 0 (default UCR train/test split)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.04
+      },
+      "notes": "BOSS is near-deterministic (LOOCV grid over window sizes); small deltas vs the reference reflect aeon/sktime implementation drift (e.g. observed -1.2pp on Chinatown). Tolerance 0.04 covers this; larger deltas would signal a real protocol break.",
+      "spec_params": {
+        "random_state": 0
+      },
+      "train_command": "libraryts train --algorithm BOSSEnsemble --dataset ucr-trace --model-id bench-classification-boss-trace --param random_state=0 --param alphabet_size=2 --param max_ensemble_size=500 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param threshold=0.92",
+      "run_command": "libraryts run --model-id bench-classification-boss-trace --compact",
+      "task": "classification",
+      "status": "reproduced",
+      "values": {
+        "Accuracy": 1.0
+      },
+      "per_metric": {
+        "Accuracy": {
+          "gt": 1.0,
+          "value": 1.0,
+          "delta": 0.0,
+          "delta_rel": 0.0,
+          "status": "reproduced"
+        }
+      },
+      "ran_at": "2026-10-15T11:46:28.542257+00:00",
+      "duration_s": 70.59,
+      "error": null,
+      "raw_metrics": {
+        "Accuracy": 1.0,
+        "Macro F1": 1.0
       }
     },
     {
@@ -17578,12 +21072,12 @@
     }
   ],
   "summary": {
-    "entries": 275,
-    "reproduced": 222,
-    "deviation": 53,
+    "entries": 346,
+    "reproduced": 288,
+    "deviation": 58,
     "error": 0,
     "pending": 0,
-    "run_total": 275,
-    "reproduced_pct": 80.7
+    "run_total": 346,
+    "reproduced_pct": 83.2
   }
 }
