@@ -215,7 +215,7 @@
        Click a row for the citation, protocol, and commands.</p>
   </section>
 
-  <section class="stats" id="stats"><div class="stat"><div class="num">298</div><div class="lbl">algorithms tracked</div></div><div class="stat"><div class="num">370</div><div class="lbl">groundtruth claims</div></div><div class="stat"><div class="num">312/370</div><div class="lbl">claims reproduced</div></div><div class="stat"><div class="num">84.3%</div><div class="lbl">reproduction rate</div></div></section>
+  <section class="stats" id="stats"><div class="stat"><div class="num">298</div><div class="lbl">algorithms tracked</div></div><div class="stat"><div class="num">372</div><div class="lbl">groundtruth claims</div></div><div class="stat"><div class="num">314/372</div><div class="lbl">claims reproduced</div></div><div class="stat"><div class="num">84.4%</div><div class="lbl">reproduction rate</div></div></section>
 
   <nav class="tabs" id="tabs"><a class="tab" href="#forecasting" data-task="forecasting">Forecasting<span class="cnt">138</span></a><a class="tab" href="#classification" data-task="classification">Classification<span class="cnt">66</span></a><a class="tab" href="#regression" data-task="regression">Regression<span class="cnt">22</span></a><a class="tab" href="#clustering" data-task="clustering">Clustering<span class="cnt">10</span></a><a class="tab" href="#anomaly_detection" data-task="anomaly_detection">Anomaly Detection<span class="cnt">58</span></a><a class="tab" href="#causal" data-task="causal">Causal Discovery<span class="cnt">4</span></a></nav>
 
@@ -13050,7 +13050,7 @@
   </div>
   <div class="panel-sub">22 of 22 algorithms runnable in this environment</div>
 
-  <div class="section-label">Algorithms — 10 with tracked claims · 15 not run yet</div>
+  <div class="section-label">Algorithms — 12 with tracked claims · 13 not run yet</div>
   <input class="filter" type="search" placeholder="Filter algorithms…" />
   <div class="claim-groups">
 <details class="claim-group" data-name="1-nn (dtw) kneighborstimeseriesregressor">
@@ -13273,6 +13273,62 @@
       </div>
 
       <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;MAE&quot;: 0.030850045752452045, &quot;RMSE&quot;: 0.04195863038346577, &quot;R²&quot;: 0.11589151968689193}</div></div>
+    </div>
+  </div>
+</details></div>
+</details>
+<details class="claim-group" data-name="cnn cnnregressor">
+  <summary>
+    <div class="alg">CNN<span class="lib">Data Mining and Knowledge Discovery 38</span></div>
+    <div class="grp-note">1 dataset/config claim</div>
+    <div style="display:flex;align-items:center;justify-content:flex-end;gap:10px">
+      <span class="status reproduced"><span class="dot"></span>1/1 configs reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="group-body">
+<details class="claim">
+  <summary>
+    <div class="ds">Covid3Month (TSER archive)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">RMSE</span> 0.06813→0.09031 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm CNNRegressor --dataset covid-3month --model-id bench-regression-cnn-covid3month --param avg_pool_size=3 --param batch_size=16 --param kernel_size=7 --param n_conv_layers=2 --param n_epochs=2000 --param random_state=0<button class="copy" data-cmd="libraryts train --algorithm CNNRegressor --dataset covid-3month --model-id bench-regression-cnn-covid3month --param avg_pool_size=3 --param batch_size=16 --param kernel_size=7 --param n_conv_layers=2 --param n_epochs=2000 --param random_state=0">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-regression-cnn-covid3month --compact<button class="copy" data-cmd="libraryts run --model-id bench-regression-cnn-covid3month --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/time-series-machine-learning/tsml-eval/blob/main/tsml_eval/publications/y2023/tser_archive_expansion/results/5.B/CNN_rmse.csv" target="_blank" rel="noopener">Unsupervised Feature Based Algorithms for Time Series Extrinsic Regression (Guijo-Rubio, Middlehurst, Arcencio, Furtado Silva, Bagnall) — official results files in the tsml-eval repository</a><br/>
+          Data Mining and Knowledge Discovery 38, 2024 / tsml-eval · CNN_rmse.csv, row Covid3Month, fold 0 (default train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">TSER archive default train/test split (140/61); Time-CNN deep regressor (2 conv layers with average pooling), 2000 epochs, batch size 16 (paper defaults); RMSE on the default split = fold 0 of the official 30-resample results</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±40% relative</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:14:22 UTC · 208s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Paper runs aeon&#x27;s TimeCNNRegressor defaults (n_epochs=2000, batch_size=16, kernel_size=7, avg_pool_size=3, 2 conv layers, sigmoid activations, &#x27;valid&#x27; padding); sktime&#x27;s CNNRegressor shares the architecture and epoch budget but defaults to ReLU hidden activations and &#x27;auto&#x27; padding — an implementation gap that, together with single-seed stochastic training, motivates the 40% relative tolerance used for the other deep regressors. The paper&#x27;s headline tables average 30 resamples; this claim targets fold 0, the default split that libraryts evaluates.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;MAE&quot;: 0.061501201020828525, &quot;RMSE&quot;: 0.09030584589388539, &quot;R²&quot;: -3.0953844727938185}</div></div>
     </div>
   </div>
 </details></div>
@@ -13557,6 +13613,62 @@
   </div>
 </details></div>
 </details>
+<details class="claim-group" data-name="timeseriesforest timeseriesforestregressor">
+  <summary>
+    <div class="alg">TimeSeriesForest<span class="lib">Data Mining and Knowledge Discovery 38</span></div>
+    <div class="grp-note">1 dataset/config claim</div>
+    <div style="display:flex;align-items:center;justify-content:flex-end;gap:10px">
+      <span class="status reproduced"><span class="dot"></span>1/1 configs reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="group-body">
+<details class="claim">
+  <summary>
+    <div class="ds">Covid3Month (TSER archive)<span class="win">default split</span></div>
+    <div class="mline"><span class="m-ok"><span class="m-name">RMSE</span> 0.0398→0.03958 ✓</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span class="status reproduced"><span class="dot"></span>Reproduced</span>
+      <span class="chev">›</span>
+    </div>
+  </summary>
+  <div class="claim-detail">
+    <div class="detail-grid">
+      <div class="full">
+        <div class="kv-label">1 · Train — fit &amp; persist the model (every parameter explicit)</div>
+        <div class="cmd">libraryts train --algorithm TimeSeriesForestRegressor --dataset covid-3month --model-id bench-regression-tsf-covid3month --param n_estimators=500 --param random_state=7 --param min_interval=3 --param n_jobs=1<button class="copy" data-cmd="libraryts train --algorithm TimeSeriesForestRegressor --dataset covid-3month --model-id bench-regression-tsf-covid3month --param n_estimators=500 --param random_state=7 --param min_interval=3 --param n_jobs=1">Copy</button></div>
+        <div class="kv-label" style="margin-top:10px">2 · Run — evaluate the persisted model, no refit</div>
+        <div class="cmd">libraryts run --model-id bench-regression-tsf-covid3month --compact<button class="copy" data-cmd="libraryts run --model-id bench-regression-tsf-covid3month --compact">Copy</button></div>
+      </div>
+      <div>
+        <div class="kv-label">Source (groundtruth)</div>
+        <div class="kv">
+          <a href="https://github.com/time-series-machine-learning/tsml-eval/blob/main/tsml_eval/publications/y2023/tser_archive_expansion/results/5.B/TSF_rmse.csv" target="_blank" rel="noopener">Unsupervised Feature Based Algorithms for Time Series Extrinsic Regression (Guijo-Rubio, Middlehurst, Arcencio, Furtado Silva, Bagnall) — official results files in the tsml-eval repository</a><br/>
+          Data Mining and Knowledge Discovery 38, 2024 / tsml-eval · TSF_rmse.csv, row Covid3Month, fold 0 (default train/test split)
+        </div>
+      </div>
+      <div>
+        <div class="kv-label">Protocol (as reported)</div>
+        <div class="kv">TSER archive default train/test split (140/61); Time Series Forest regressor, 500 trees over random intervals with mean/std/slope summary features (paper configuration); RMSE on the default split = fold 0 of the official 30-resample results</div>
+      </div>
+      <div>
+        <div class="kv-label">Tolerance</div>
+        <div class="kv">±25% relative</div>
+      </div>
+      <div>
+        <div class="kv-label">Last run</div>
+        <div class="kv">2026-10-15 12:10:49 UTC · 7.34s</div>
+      </div>
+      <div class="full">
+        <div class="kv-label">Notes</div>
+        <div class="kv">Paper runs aeon&#x27;s TimeSeriesForestRegressor(n_estimators=500) via a per-channel ensemble wrapper (identity for univariate data); libraryts runs sktime&#x27;s TimeSeriesForestRegressor with the same 500-tree config. The aeon/sktime implementations share the same design (mean/std/slope interval features, min_interval=3), so only the random interval draws differ; tolerance 25% relative was chosen before running for that stochasticity. The paper&#x27;s headline tables average 30 resamples; this claim targets fold 0, the default split that libraryts evaluates.</div>
+      </div>
+
+      <div class="full"><div class="kv-label">All metrics returned</div><div class="raw-metrics">{&quot;MAE&quot;: 0.030415447359263218, &quot;RMSE&quot;: 0.03957746466760344, &quot;R²&quot;: 0.213391039893171}</div></div>
+    </div>
+  </div>
+</details></div>
+</details>
 <details class="claim-group" data-name="resnet resnetregressor">
   <summary>
     <div class="alg">ResNet<span class="lib">Data Mining and Knowledge Discovery 35</span></div>
@@ -13613,11 +13725,6 @@
   </div>
 </details></div>
 </details>
-<div class="alg-row not-run" data-name="cnnregressor registered-regression-cnnregressor" title="registered-regression-CNNRegressor · runnable in this environment">
-  <div class="alg">CNNRegressor<span class="tag">registry</span></div>
-  <div class="grp-note">runnable in this environment</div>
-  <div class="row-end"><span class="status notrun"><span class="dot"></span>not run yet</span></div>
-</div>
 <div class="alg-row not-run" data-name="cntcregressor registered-regression-cntcregressor" title="registered-regression-CNTCRegressor · runnable in this environment">
   <div class="alg">CNTCRegressor<span class="tag">registry</span></div>
   <div class="grp-note">runnable in this environment</div>
@@ -13675,11 +13782,6 @@
 </div>
 <div class="alg-row not-run" data-name="tapnetregressor registered-regression-tapnetregressor" title="registered-regression-TapNetRegressor · runnable in this environment">
   <div class="alg">TapNetRegressor<span class="tag">registry</span></div>
-  <div class="grp-note">runnable in this environment</div>
-  <div class="row-end"><span class="status notrun"><span class="dot"></span>not run yet</span></div>
-</div>
-<div class="alg-row not-run" data-name="timeseriesforestregressor registered-regression-timeseriesforestregressor" title="registered-regression-TimeSeriesForestRegressor · runnable in this environment">
-  <div class="alg">TimeSeriesForestRegressor<span class="tag">registry</span></div>
   <div class="grp-note">runnable in this environment</div>
   <div class="row-end"><span class="status notrun"><span class="dot"></span>not run yet</span></div>
 </div>
@@ -18661,7 +18763,7 @@
 </section></div>
 
   <footer>
-    Built by LibraryTS · state generated 2026-10-15 12:06:59 UTC · groundtruth curated under
+    Built by LibraryTS · state generated 2026-10-15 12:17:01 UTC · groundtruth curated under
     <code>playground/benchmark/groundtruth/</code> ·
     re-run with <code>python playground/benchmark/reproduce.py</code> ·
     refresh with <code>python playground/benchmark/build_state.py</code>
