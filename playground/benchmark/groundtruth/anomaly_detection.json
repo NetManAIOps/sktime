@@ -11,7 +11,7 @@
       "metrics": {
         "AUC-ROC": 0.86
       },
-      "settings": "Unsupervised fit per series; sliding-window embedding with FFT-based window length; scores min-max normalized; point-wise AUC-ROC averaged over all 367 YAHOO series",
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 367 YAHOO series",
       "source": {
         "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
         "venue": "PVLDB 15(8):1697-1711, 2022",
@@ -22,7 +22,7 @@
         "type": "absolute",
         "value": 0.15
       },
-      "notes": "Now apples-to-apples: libraryts scores the same 367 TSB-UAD series and averages per-series AUC. Residual gap: window-length heuristic and score normalization may differ from TSB-UAD's reference pipeline. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ).",
+      "notes": "Not apples-to-apples: the groundtruth is TSB-UAD's windowed LOF column, whose reference pipeline uses sliding-window embedding with FFT-based window length and min-max score normalization, while libraryts' PyOD adapter applies LOF point-wise to raw 1-D values (no window embedding, no score normalization) — the dominant source of deviation vs the paper column. The dataset-level protocol does match: libraryts scores the same 367 TSB-UAD series and averages per-series AUC. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ).",
       "spec_params": {},
       "train_command": "libraryts train --algorithm PyODLOFDetector --dataset tsb-yahoo --model-id bench-detection-lof-yahoo-auc --param contamination=0.1 --param n_neighbors=20",
       "run_command": "libraryts run --model-id bench-detection-lof-yahoo-auc --compact"
@@ -37,7 +37,7 @@
       "metrics": {
         "AUC-ROC": 0.62
       },
-      "settings": "Unsupervised fit per series; sliding-window embedding; point-wise AUC-ROC averaged over all 367 YAHOO series",
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 367 YAHOO series",
       "source": {
         "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
         "venue": "PVLDB 15(8):1697-1711, 2022",
@@ -48,7 +48,7 @@
         "type": "absolute",
         "value": 0.15
       },
-      "notes": "Same protocol as the LOF entry.",
+      "notes": "Not apples-to-apples: the groundtruth is TSB-UAD's windowed IForest column (FFT-length sliding-window embedding, min-max normalized scores), while libraryts' PyODIForestDetector applies IForest point-wise to raw 1-D values — the dominant source of deviation vs the paper column. The point-wise pipeline here is what TSB-UAD reports in its IForest1 column: the detection-iforest1-* claims use that column as groundtruth and reproduce on all 7 datasets. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ).",
       "spec_params": {},
       "train_command": "libraryts train --algorithm PyODIForestDetector --dataset tsb-yahoo --model-id bench-detection-iforest-yahoo-auc --param contamination=0.1 --param n_estimators=100",
       "run_command": "libraryts run --model-id bench-detection-iforest-yahoo-auc --compact"
@@ -63,7 +63,7 @@
       "metrics": {
         "AUC-ROC": 0.7
       },
-      "settings": "Unsupervised fit per series; sliding-window embedding; point-wise AUC-ROC averaged over all 32 MITDB series",
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 32 MITDB series",
       "source": {
         "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
         "venue": "PVLDB 15(8):1697-1711, 2022",
@@ -74,7 +74,7 @@
         "type": "absolute",
         "value": 0.15
       },
-      "notes": "Same protocol as the Yahoo entries, on the 32 MITDB series.",
+      "notes": "Not apples-to-apples: the groundtruth is TSB-UAD's windowed IForest column (FFT-length sliding-window embedding, min-max normalized scores), while libraryts' PyODIForestDetector applies IForest point-wise to raw 1-D values — the dominant source of deviation vs the paper column. The point-wise pipeline here is what TSB-UAD reports in its IForest1 column: the detection-iforest1-* claims use that column as groundtruth and reproduce on all 7 datasets. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ).",
       "spec_params": {},
       "train_command": "libraryts train --algorithm PyODIForestDetector --dataset tsb-mitdb --model-id bench-detection-iforest-mitdb-auc --param contamination=0.1 --param n_estimators=100",
       "run_command": "libraryts run --model-id bench-detection-iforest-mitdb-auc --compact"
@@ -89,7 +89,7 @@
       "metrics": {
         "AUC-ROC": 0.57
       },
-      "settings": "Unsupervised fit per series; sliding-window embedding; point-wise AUC-ROC averaged over all 367 YAHOO series",
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 367 YAHOO series",
       "source": {
         "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
         "venue": "PVLDB 15(8):1697-1711, 2022",
@@ -100,6 +100,7 @@
         "type": "absolute",
         "value": 0.15
       },
+      "notes": "Not apples-to-apples: the groundtruth is TSB-UAD's windowed HBOS column (FFT-length sliding-window embedding, min-max normalized scores), while libraryts' PyOD adapter applies HBOS point-wise to raw 1-D values (no window embedding, no score normalization) — the dominant source of deviation vs the paper column. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ).",
       "spec_params": {},
       "train_command": "libraryts train --algorithm PyODHBOSDetector --dataset tsb-yahoo --model-id bench-detection-hbos-yahoo-auc --param contamination=0.1 --param n_bins=10",
       "run_command": "libraryts run --model-id bench-detection-hbos-yahoo-auc --compact"
@@ -114,7 +115,7 @@
       "metrics": {
         "AUC-ROC": 0.5
       },
-      "settings": "Unsupervised fit per series; sliding-window embedding; point-wise AUC-ROC averaged over all 367 YAHOO series",
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 367 YAHOO series",
       "source": {
         "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
         "venue": "PVLDB 15(8):1697-1711, 2022",
@@ -125,6 +126,7 @@
         "type": "absolute",
         "value": 0.15
       },
+      "notes": "Not apples-to-apples: the groundtruth is TSB-UAD's windowed OCSVM column (FFT-length sliding-window embedding, min-max normalized scores), while libraryts' PyOD adapter applies OCSVM point-wise to raw 1-D values (no window embedding, no score normalization) — the dominant source of deviation vs the paper column. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ).",
       "spec_params": {},
       "train_command": "libraryts train --algorithm PyODOCSVMDetector --dataset tsb-yahoo --model-id bench-detection-ocsvm-yahoo-auc --param contamination=0.1 --param nu=0.5",
       "run_command": "libraryts run --model-id bench-detection-ocsvm-yahoo-auc --compact"
@@ -139,7 +141,7 @@
       "metrics": {
         "AUC-ROC": 0.7
       },
-      "settings": "Unsupervised fit per series; sliding-window embedding; point-wise AUC-ROC averaged over all 32 MITDB series",
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 32 MITDB series",
       "source": {
         "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
         "venue": "PVLDB 15(8):1697-1711, 2022",
@@ -150,6 +152,7 @@
         "type": "absolute",
         "value": 0.15
       },
+      "notes": "Not apples-to-apples: the groundtruth is TSB-UAD's windowed HBOS column (FFT-length sliding-window embedding, min-max normalized scores), while libraryts' PyOD adapter applies HBOS point-wise to raw 1-D values (no window embedding, no score normalization) — the dominant source of deviation vs the paper column. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ).",
       "spec_params": {},
       "train_command": "libraryts train --algorithm PyODHBOSDetector --dataset tsb-mitdb --model-id bench-detection-hbos-mitdb-auc --param contamination=0.1 --param n_bins=10",
       "run_command": "libraryts run --model-id bench-detection-hbos-mitdb-auc --compact"
@@ -164,7 +167,7 @@
       "metrics": {
         "AUC-ROC": 0.61
       },
-      "settings": "Unsupervised fit per series; sliding-window embedding with FFT-based window length; scores min-max normalized; point-wise AUC-ROC averaged over all 32 MITDB series",
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 32 MITDB series",
       "source": {
         "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
         "venue": "PVLDB 15(8):1697-1711, 2022",
@@ -175,7 +178,7 @@
         "type": "absolute",
         "value": 0.15
       },
-      "notes": "Now apples-to-apples: libraryts scores the same 367 TSB-UAD series and averages per-series AUC. Residual gap: window-length heuristic and score normalization may differ from TSB-UAD's reference pipeline. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ).",
+      "notes": "Not apples-to-apples: the groundtruth is TSB-UAD's windowed LOF column, whose reference pipeline uses sliding-window embedding with FFT-based window length and min-max score normalization, while libraryts' PyOD adapter applies LOF point-wise to raw 1-D values (no window embedding, no score normalization) — the dominant source of deviation vs the paper column. The dataset-level protocol does match: libraryts scores the same 32 TSB-UAD series and averages per-series AUC. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ).",
       "spec_params": {},
       "train_command": "libraryts train --algorithm PyODLOFDetector --dataset tsb-mitdb --model-id bench-detection-lof-mitdb-auc --param contamination=0.1 --param n_neighbors=20",
       "run_command": "libraryts run --model-id bench-detection-lof-mitdb-auc --compact"
@@ -190,7 +193,7 @@
       "metrics": {
         "AUC-ROC": 0.45
       },
-      "settings": "Unsupervised fit per series; sliding-window embedding; point-wise AUC-ROC averaged over all 58 NAB series",
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 58 NAB series",
       "source": {
         "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
         "venue": "PVLDB 15(8):1697-1711, 2022",
@@ -201,7 +204,7 @@
         "type": "absolute",
         "value": 0.15
       },
-      "notes": "Same protocol as the LOF entry.",
+      "notes": "Not apples-to-apples: the groundtruth is TSB-UAD's windowed IForest column (FFT-length sliding-window embedding, min-max normalized scores), while libraryts' PyODIForestDetector applies IForest point-wise to raw 1-D values — the dominant source of deviation vs the paper column. The point-wise pipeline here is what TSB-UAD reports in its IForest1 column: the detection-iforest1-* claims use that column as groundtruth and reproduce on all 7 datasets. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ).",
       "spec_params": {},
       "train_command": "libraryts train --algorithm PyODIForestDetector --dataset tsb-nab --model-id bench-detection-iforest-nab-auc --param contamination=0.1 --param n_estimators=100",
       "run_command": "libraryts run --model-id bench-detection-iforest-nab-auc --compact"
@@ -216,7 +219,7 @@
       "metrics": {
         "AUC-ROC": 0.48
       },
-      "settings": "Unsupervised fit per series; sliding-window embedding with FFT-based window length; scores min-max normalized; point-wise AUC-ROC averaged over all 58 NAB series",
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 58 NAB series",
       "source": {
         "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
         "venue": "PVLDB 15(8):1697-1711, 2022",
@@ -227,7 +230,7 @@
         "type": "absolute",
         "value": 0.15
       },
-      "notes": "Now apples-to-apples: libraryts scores the same 367 TSB-UAD series and averages per-series AUC. Residual gap: window-length heuristic and score normalization may differ from TSB-UAD's reference pipeline. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ).",
+      "notes": "Not apples-to-apples: the groundtruth is TSB-UAD's windowed LOF column, whose reference pipeline uses sliding-window embedding with FFT-based window length and min-max score normalization, while libraryts' PyOD adapter applies LOF point-wise to raw 1-D values (no window embedding, no score normalization) — the dominant source of deviation vs the paper column. The dataset-level protocol does match: libraryts scores the same 58 TSB-UAD series and averages per-series AUC. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ).",
       "spec_params": {},
       "train_command": "libraryts train --algorithm PyODLOFDetector --dataset tsb-nab --model-id bench-detection-lof-nab-auc --param contamination=0.1 --param n_neighbors=20",
       "run_command": "libraryts run --model-id bench-detection-lof-nab-auc --compact"
@@ -242,7 +245,7 @@
       "metrics": {
         "AUC-ROC": 0.68
       },
-      "settings": "Unsupervised fit per series; sliding-window embedding; point-wise AUC-ROC averaged over all 58 NAB series",
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 58 NAB series",
       "source": {
         "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
         "venue": "PVLDB 15(8):1697-1711, 2022",
@@ -253,6 +256,7 @@
         "type": "absolute",
         "value": 0.15
       },
+      "notes": "Not apples-to-apples: the groundtruth is TSB-UAD's windowed HBOS column (FFT-length sliding-window embedding, min-max normalized scores), while libraryts' PyOD adapter applies HBOS point-wise to raw 1-D values (no window embedding, no score normalization) — the dominant source of deviation vs the paper column. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ).",
       "spec_params": {},
       "train_command": "libraryts train --algorithm PyODHBOSDetector --dataset tsb-nab --model-id bench-detection-hbos-nab-auc --param contamination=0.1 --param n_bins=10",
       "run_command": "libraryts run --model-id bench-detection-hbos-nab-auc --compact"
@@ -267,7 +271,7 @@
       "metrics": {
         "AUC-ROC": 0.61
       },
-      "settings": "Unsupervised fit per series; sliding-window embedding; point-wise AUC-ROC averaged over all 58 NAB series",
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 58 NAB series",
       "source": {
         "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
         "venue": "PVLDB 15(8):1697-1711, 2022",
@@ -278,6 +282,7 @@
         "type": "absolute",
         "value": 0.15
       },
+      "notes": "Not apples-to-apples: the groundtruth is TSB-UAD's windowed OCSVM column (FFT-length sliding-window embedding, min-max normalized scores), while libraryts' PyOD adapter applies OCSVM point-wise to raw 1-D values (no window embedding, no score normalization) — the dominant source of deviation vs the paper column. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ).",
       "spec_params": {},
       "train_command": "libraryts train --algorithm PyODOCSVMDetector --dataset tsb-nab --model-id bench-detection-ocsvm-nab-auc --param contamination=0.1 --param nu=0.5",
       "run_command": "libraryts run --model-id bench-detection-ocsvm-nab-auc --compact"
@@ -292,7 +297,7 @@
       "metrics": {
         "AUC-ROC": 0.79
       },
-      "settings": "Unsupervised fit per series; sliding-window embedding; point-wise AUC-ROC averaged over all 1 Dodgers series",
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 1 Dodgers series",
       "source": {
         "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
         "venue": "PVLDB 15(8):1697-1711, 2022",
@@ -303,7 +308,7 @@
         "type": "absolute",
         "value": 0.15
       },
-      "notes": "Same protocol as the LOF entry. Dodgers has only 1 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
+      "notes": "Not apples-to-apples: the groundtruth is TSB-UAD's windowed IForest column (FFT-length sliding-window embedding, min-max normalized scores), while libraryts' PyODIForestDetector applies IForest point-wise to raw 1-D values — the dominant source of deviation vs the paper column. The point-wise pipeline here is what TSB-UAD reports in its IForest1 column: the detection-iforest1-* claims use that column as groundtruth and reproduce on all 7 datasets. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ). Dodgers has only 1 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
       "spec_params": {},
       "train_command": "libraryts train --algorithm PyODIForestDetector --dataset tsb-dodgers --model-id bench-detection-iforest-dodgers-auc --param contamination=0.1 --param n_estimators=100",
       "run_command": "libraryts run --model-id bench-detection-iforest-dodgers-auc --compact"
@@ -318,7 +323,7 @@
       "metrics": {
         "AUC-ROC": 0.54
       },
-      "settings": "Unsupervised fit per series; sliding-window embedding with FFT-based window length; scores min-max normalized; point-wise AUC-ROC averaged over all 1 Dodgers series",
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 1 Dodgers series",
       "source": {
         "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
         "venue": "PVLDB 15(8):1697-1711, 2022",
@@ -329,7 +334,7 @@
         "type": "absolute",
         "value": 0.15
       },
-      "notes": "Now apples-to-apples: libraryts scores the same 367 TSB-UAD series and averages per-series AUC. Residual gap: window-length heuristic and score normalization may differ from TSB-UAD's reference pipeline. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ). Dodgers has only 1 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
+      "notes": "Not apples-to-apples: the groundtruth is TSB-UAD's windowed LOF column, whose reference pipeline uses sliding-window embedding with FFT-based window length and min-max score normalization, while libraryts' PyOD adapter applies LOF point-wise to raw 1-D values (no window embedding, no score normalization) — the dominant source of deviation vs the paper column. The dataset-level protocol does match: libraryts scores the same 1 TSB-UAD series and averages per-series AUC. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ). Dodgers has only 1 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
       "spec_params": {},
       "train_command": "libraryts train --algorithm PyODLOFDetector --dataset tsb-dodgers --model-id bench-detection-lof-dodgers-auc --param contamination=0.1 --param n_neighbors=20",
       "run_command": "libraryts run --model-id bench-detection-lof-dodgers-auc --compact"
@@ -344,7 +349,7 @@
       "metrics": {
         "AUC-ROC": 0.3
       },
-      "settings": "Unsupervised fit per series; sliding-window embedding; point-wise AUC-ROC averaged over all 1 Dodgers series",
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 1 Dodgers series",
       "source": {
         "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
         "venue": "PVLDB 15(8):1697-1711, 2022",
@@ -356,7 +361,7 @@
         "value": 0.15
       },
       "spec_params": {},
-      "notes": "Same protocol as the Yahoo entries. Dodgers has only 1 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
+      "notes": "Not apples-to-apples: the groundtruth is TSB-UAD's windowed HBOS column (FFT-length sliding-window embedding, min-max normalized scores), while libraryts' PyOD adapter applies HBOS point-wise to raw 1-D values (no window embedding, no score normalization) — the dominant source of deviation vs the paper column. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ). Dodgers has only 1 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
       "train_command": "libraryts train --algorithm PyODHBOSDetector --dataset tsb-dodgers --model-id bench-detection-hbos-dodgers-auc --param contamination=0.1 --param n_bins=10",
       "run_command": "libraryts run --model-id bench-detection-hbos-dodgers-auc --compact"
     },
@@ -370,7 +375,7 @@
       "metrics": {
         "AUC-ROC": 0.64
       },
-      "settings": "Unsupervised fit per series; sliding-window embedding; point-wise AUC-ROC averaged over all 1 Dodgers series",
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 1 Dodgers series",
       "source": {
         "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
         "venue": "PVLDB 15(8):1697-1711, 2022",
@@ -382,7 +387,7 @@
         "value": 0.15
       },
       "spec_params": {},
-      "notes": "Same protocol as the Yahoo entries. Dodgers has only 1 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
+      "notes": "Not apples-to-apples: the groundtruth is TSB-UAD's windowed OCSVM column (FFT-length sliding-window embedding, min-max normalized scores), while libraryts' PyOD adapter applies OCSVM point-wise to raw 1-D values (no window embedding, no score normalization) — the dominant source of deviation vs the paper column. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ). Dodgers has only 1 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
       "train_command": "libraryts train --algorithm PyODOCSVMDetector --dataset tsb-dodgers --model-id bench-detection-ocsvm-dodgers-auc --param contamination=0.1 --param nu=0.5",
       "run_command": "libraryts run --model-id bench-detection-ocsvm-dodgers-auc --compact"
     },
@@ -396,7 +401,7 @@
       "metrics": {
         "AUC-ROC": 0.86
       },
-      "settings": "Unsupervised fit per series; sliding-window embedding; point-wise AUC-ROC averaged over all 10 Occupancy series",
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 10 Occupancy series",
       "source": {
         "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
         "venue": "PVLDB 15(8):1697-1711, 2022",
@@ -407,7 +412,7 @@
         "type": "absolute",
         "value": 0.15
       },
-      "notes": "Same protocol as the LOF entry. Occupancy has only 10 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
+      "notes": "Not apples-to-apples: the groundtruth is TSB-UAD's windowed IForest column (FFT-length sliding-window embedding, min-max normalized scores), while libraryts' PyODIForestDetector applies IForest point-wise to raw 1-D values — the dominant source of deviation vs the paper column. The point-wise pipeline here is what TSB-UAD reports in its IForest1 column: the detection-iforest1-* claims use that column as groundtruth and reproduce on all 7 datasets. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ). Occupancy has only 10 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
       "spec_params": {},
       "train_command": "libraryts train --algorithm PyODIForestDetector --dataset tsb-occupancy --model-id bench-detection-iforest-occupancy-auc --param contamination=0.1 --param n_estimators=100",
       "run_command": "libraryts run --model-id bench-detection-iforest-occupancy-auc --compact"
@@ -422,7 +427,7 @@
       "metrics": {
         "AUC-ROC": 0.53
       },
-      "settings": "Unsupervised fit per series; sliding-window embedding with FFT-based window length; scores min-max normalized; point-wise AUC-ROC averaged over all 10 Occupancy series",
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 10 Occupancy series",
       "source": {
         "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
         "venue": "PVLDB 15(8):1697-1711, 2022",
@@ -433,7 +438,7 @@
         "type": "absolute",
         "value": 0.15
       },
-      "notes": "Now apples-to-apples: libraryts scores the same 367 TSB-UAD series and averages per-series AUC. Residual gap: window-length heuristic and score normalization may differ from TSB-UAD's reference pipeline. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ). Occupancy has only 10 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
+      "notes": "Not apples-to-apples: the groundtruth is TSB-UAD's windowed LOF column, whose reference pipeline uses sliding-window embedding with FFT-based window length and min-max score normalization, while libraryts' PyOD adapter applies LOF point-wise to raw 1-D values (no window embedding, no score normalization) — the dominant source of deviation vs the paper column. The dataset-level protocol does match: libraryts scores the same 10 TSB-UAD series and averages per-series AUC. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ). Occupancy has only 10 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
       "spec_params": {},
       "train_command": "libraryts train --algorithm PyODLOFDetector --dataset tsb-occupancy --model-id bench-detection-lof-occupancy-auc --param contamination=0.1 --param n_neighbors=20",
       "run_command": "libraryts run --model-id bench-detection-lof-occupancy-auc --compact"
@@ -448,7 +453,7 @@
       "metrics": {
         "AUC-ROC": 0.89
       },
-      "settings": "Unsupervised fit per series; sliding-window embedding; point-wise AUC-ROC averaged over all 10 Occupancy series",
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 10 Occupancy series",
       "source": {
         "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
         "venue": "PVLDB 15(8):1697-1711, 2022",
@@ -460,7 +465,7 @@
         "value": 0.15
       },
       "spec_params": {},
-      "notes": "Same protocol as the Yahoo entries. Occupancy has only 10 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
+      "notes": "Not apples-to-apples: the groundtruth is TSB-UAD's windowed HBOS column (FFT-length sliding-window embedding, min-max normalized scores), while libraryts' PyOD adapter applies HBOS point-wise to raw 1-D values (no window embedding, no score normalization) — the dominant source of deviation vs the paper column. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ). Occupancy has only 10 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
       "train_command": "libraryts train --algorithm PyODHBOSDetector --dataset tsb-occupancy --model-id bench-detection-hbos-occupancy-auc --param contamination=0.1 --param n_bins=10",
       "run_command": "libraryts run --model-id bench-detection-hbos-occupancy-auc --compact"
     },
@@ -474,7 +479,7 @@
       "metrics": {
         "AUC-ROC": 0.66
       },
-      "settings": "Unsupervised fit per series; sliding-window embedding; point-wise AUC-ROC averaged over all 10 Occupancy series",
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 10 Occupancy series",
       "source": {
         "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
         "venue": "PVLDB 15(8):1697-1711, 2022",
@@ -486,7 +491,7 @@
         "value": 0.15
       },
       "spec_params": {},
-      "notes": "Same protocol as the Yahoo entries. Occupancy has only 10 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
+      "notes": "Not apples-to-apples: the groundtruth is TSB-UAD's windowed OCSVM column (FFT-length sliding-window embedding, min-max normalized scores), while libraryts' PyOD adapter applies OCSVM point-wise to raw 1-D values (no window embedding, no score normalization) — the dominant source of deviation vs the paper column. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ). Occupancy has only 10 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
       "train_command": "libraryts train --algorithm PyODOCSVMDetector --dataset tsb-occupancy --model-id bench-detection-ocsvm-occupancy-auc --param contamination=0.1 --param nu=0.5",
       "run_command": "libraryts run --model-id bench-detection-ocsvm-occupancy-auc --compact"
     },
@@ -500,7 +505,7 @@
       "metrics": {
         "AUC-ROC": 0.57
       },
-      "settings": "Unsupervised fit per series; sliding-window embedding; point-wise AUC-ROC averaged over all 10 MGAB series",
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 10 MGAB series",
       "source": {
         "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
         "venue": "PVLDB 15(8):1697-1711, 2022",
@@ -511,7 +516,7 @@
         "type": "absolute",
         "value": 0.15
       },
-      "notes": "Same protocol as the LOF entry.",
+      "notes": "Not apples-to-apples: the groundtruth is TSB-UAD's windowed IForest column (FFT-length sliding-window embedding, min-max normalized scores), while libraryts' PyODIForestDetector applies IForest point-wise to raw 1-D values — the dominant source of deviation vs the paper column. The point-wise pipeline here is what TSB-UAD reports in its IForest1 column: the detection-iforest1-* claims use that column as groundtruth and reproduce on all 7 datasets. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ).",
       "spec_params": {},
       "train_command": "libraryts train --algorithm PyODIForestDetector --dataset tsb-mgab --model-id bench-detection-iforest-mgab-auc --param contamination=0.1 --param n_estimators=100",
       "run_command": "libraryts run --model-id bench-detection-iforest-mgab-auc --compact"
@@ -526,7 +531,7 @@
       "metrics": {
         "AUC-ROC": 0.96
       },
-      "settings": "Unsupervised fit per series; sliding-window embedding with FFT-based window length; scores min-max normalized; point-wise AUC-ROC averaged over all 10 MGAB series",
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 10 MGAB series",
       "source": {
         "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
         "venue": "PVLDB 15(8):1697-1711, 2022",
@@ -537,7 +542,7 @@
         "type": "absolute",
         "value": 0.15
       },
-      "notes": "Now apples-to-apples: libraryts scores the same 367 TSB-UAD series and averages per-series AUC. Residual gap: window-length heuristic and score normalization may differ from TSB-UAD's reference pipeline. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ).",
+      "notes": "Not apples-to-apples: the groundtruth is TSB-UAD's windowed LOF column, whose reference pipeline uses sliding-window embedding with FFT-based window length and min-max score normalization, while libraryts' PyOD adapter applies LOF point-wise to raw 1-D values (no window embedding, no score normalization) — the dominant source of deviation vs the paper column. The dataset-level protocol does match: libraryts scores the same 10 TSB-UAD series and averages per-series AUC. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ).",
       "spec_params": {},
       "train_command": "libraryts train --algorithm PyODLOFDetector --dataset tsb-mgab --model-id bench-detection-lof-mgab-auc --param contamination=0.1 --param n_neighbors=20",
       "run_command": "libraryts run --model-id bench-detection-lof-mgab-auc --compact"
@@ -552,7 +557,7 @@
       "metrics": {
         "AUC-ROC": 0.54
       },
-      "settings": "Unsupervised fit per series; sliding-window embedding; point-wise AUC-ROC averaged over all 10 MGAB series",
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 10 MGAB series",
       "source": {
         "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
         "venue": "PVLDB 15(8):1697-1711, 2022",
@@ -563,6 +568,7 @@
         "type": "absolute",
         "value": 0.15
       },
+      "notes": "Not apples-to-apples: the groundtruth is TSB-UAD's windowed HBOS column (FFT-length sliding-window embedding, min-max normalized scores), while libraryts' PyOD adapter applies HBOS point-wise to raw 1-D values (no window embedding, no score normalization) — the dominant source of deviation vs the paper column. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ).",
       "spec_params": {},
       "train_command": "libraryts train --algorithm PyODHBOSDetector --dataset tsb-mgab --model-id bench-detection-hbos-mgab-auc --param contamination=0.1 --param n_bins=10",
       "run_command": "libraryts run --model-id bench-detection-hbos-mgab-auc --compact"
@@ -577,7 +583,7 @@
       "metrics": {
         "AUC-ROC": 0.78
       },
-      "settings": "Unsupervised fit per series; sliding-window embedding; point-wise AUC-ROC averaged over all 6 Genesis series",
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 6 Genesis series",
       "source": {
         "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
         "venue": "PVLDB 15(8):1697-1711, 2022",
@@ -588,7 +594,7 @@
         "type": "absolute",
         "value": 0.15
       },
-      "notes": "Same protocol as the LOF entry. Genesis has only 6 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
+      "notes": "Not apples-to-apples: the groundtruth is TSB-UAD's windowed IForest column (FFT-length sliding-window embedding, min-max normalized scores), while libraryts' PyODIForestDetector applies IForest point-wise to raw 1-D values — the dominant source of deviation vs the paper column. The point-wise pipeline here is what TSB-UAD reports in its IForest1 column: the detection-iforest1-* claims use that column as groundtruth and reproduce on all 7 datasets. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ). Genesis has only 6 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
       "spec_params": {},
       "train_command": "libraryts train --algorithm PyODIForestDetector --dataset tsb-genesis --model-id bench-detection-iforest-genesis-auc --param contamination=0.1 --param n_estimators=100",
       "run_command": "libraryts run --model-id bench-detection-iforest-genesis-auc --compact"
@@ -603,7 +609,7 @@
       "metrics": {
         "AUC-ROC": 0.68
       },
-      "settings": "Unsupervised fit per series; sliding-window embedding with FFT-based window length; scores min-max normalized; point-wise AUC-ROC averaged over all 6 Genesis series",
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 6 Genesis series",
       "source": {
         "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
         "venue": "PVLDB 15(8):1697-1711, 2022",
@@ -614,7 +620,7 @@
         "type": "absolute",
         "value": 0.15
       },
-      "notes": "Now apples-to-apples: libraryts scores the same 367 TSB-UAD series and averages per-series AUC. Residual gap: window-length heuristic and score normalization may differ from TSB-UAD's reference pipeline. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ). Genesis has only 6 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
+      "notes": "Not apples-to-apples: the groundtruth is TSB-UAD's windowed LOF column, whose reference pipeline uses sliding-window embedding with FFT-based window length and min-max score normalization, while libraryts' PyOD adapter applies LOF point-wise to raw 1-D values (no window embedding, no score normalization) — the dominant source of deviation vs the paper column. The dataset-level protocol does match: libraryts scores the same 6 TSB-UAD series and averages per-series AUC. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ). Genesis has only 6 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
       "spec_params": {},
       "train_command": "libraryts train --algorithm PyODLOFDetector --dataset tsb-genesis --model-id bench-detection-lof-genesis-auc --param contamination=0.1 --param n_neighbors=20",
       "run_command": "libraryts run --model-id bench-detection-lof-genesis-auc --compact"
@@ -629,7 +635,7 @@
       "metrics": {
         "AUC-ROC": 0.59
       },
-      "settings": "Unsupervised fit per series; sliding-window embedding; point-wise AUC-ROC averaged over all 6 Genesis series",
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 6 Genesis series",
       "source": {
         "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
         "venue": "PVLDB 15(8):1697-1711, 2022",
@@ -641,7 +647,7 @@
         "value": 0.15
       },
       "spec_params": {},
-      "notes": "Same protocol as the Yahoo entries. Genesis has only 6 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
+      "notes": "Not apples-to-apples: the groundtruth is TSB-UAD's windowed HBOS column (FFT-length sliding-window embedding, min-max normalized scores), while libraryts' PyOD adapter applies HBOS point-wise to raw 1-D values (no window embedding, no score normalization) — the dominant source of deviation vs the paper column. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ). Genesis has only 6 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
       "train_command": "libraryts train --algorithm PyODHBOSDetector --dataset tsb-genesis --model-id bench-detection-hbos-genesis-auc --param contamination=0.1 --param n_bins=10",
       "run_command": "libraryts run --model-id bench-detection-hbos-genesis-auc --compact"
     },
@@ -655,7 +661,7 @@
       "metrics": {
         "AUC-ROC": 0.7
       },
-      "settings": "Unsupervised fit per series; sliding-window embedding; point-wise AUC-ROC averaged over all 6 Genesis series",
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 6 Genesis series",
       "source": {
         "title": "TSB-UAD: An End-to-End Benchmark Suite for Univariate Time-Series Anomaly Detection (Paparrizos et al.)",
         "venue": "PVLDB 15(8):1697-1711, 2022",
@@ -667,7 +673,7 @@
         "value": 0.15
       },
       "spec_params": {},
-      "notes": "Same protocol as the Yahoo entries. Genesis has only 6 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
+      "notes": "Not apples-to-apples: the groundtruth is TSB-UAD's windowed OCSVM column (FFT-length sliding-window embedding, min-max normalized scores), while libraryts' PyOD adapter applies OCSVM point-wise to raw 1-D values (no window embedding, no score normalization) — the dominant source of deviation vs the paper column. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ). Genesis has only 6 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
       "train_command": "libraryts train --algorithm PyODOCSVMDetector --dataset tsb-genesis --model-id bench-detection-ocsvm-genesis-auc --param contamination=0.1 --param nu=0.5",
       "run_command": "libraryts run --model-id bench-detection-ocsvm-genesis-auc --compact"
     },
@@ -1302,6 +1308,188 @@
       "spec_params": {},
       "train_command": "libraryts train --algorithm PyODCOPODDetector --dataset tsb-genesis --model-id bench-detection-copod-genesis-auc --param contamination=0.1",
       "run_command": "libraryts run --model-id bench-detection-copod-genesis-auc --compact"
+    },
+    {
+      "id": "detection-ecod-yahoo-auc",
+      "algorithm": "PyODECODDetector",
+      "algorithm_name": "ECOD",
+      "dataset": "tsb-yahoo",
+      "dataset_name": "YAHOO (TSB-UAD, 367 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.8021
+      },
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 367 YAHOO series",
+      "source": {
+        "title": "libraryts baseline run (no public per-dataset values)",
+        "venue": "libraryts benchmark, this repository",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "Measured 2026-10-15 via `libraryts train/run --algorithm PyODECODDetector --dataset tsb-yahoo` (model probe-ecod-yahoo); TSB-UAD README 'Overall Results' table has no ECOD column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.05
+      },
+      "notes": "TSB-UAD (PVLDB 2022) does not include ECOD among its benchmarked methods, so no public per-dataset AUC-ROC exists for these series; the groundtruth is a libraryts baseline measured with this exact pipeline on 2026-10-15. Tolerance 0.05 is a re-run sanity band (ECOD is deterministic), not a paper comparison. Protocol mirrors the other TSB-UAD entries: per-series unsupervised fit, detector applied point-wise.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm PyODECODDetector --dataset tsb-yahoo --model-id bench-detection-ecod-yahoo-auc --param contamination=0.1",
+      "run_command": "libraryts run --model-id bench-detection-ecod-yahoo-auc --compact"
+    },
+    {
+      "id": "detection-ecod-mitdb-auc",
+      "algorithm": "PyODECODDetector",
+      "algorithm_name": "ECOD",
+      "dataset": "tsb-mitdb",
+      "dataset_name": "MITDB (TSB-UAD, 32 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.6052
+      },
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 32 MITDB series",
+      "source": {
+        "title": "libraryts baseline run (no public per-dataset values)",
+        "venue": "libraryts benchmark, this repository",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "Measured 2026-10-15 via `libraryts train/run --algorithm PyODECODDetector --dataset tsb-mitdb` (model probe-ecod-mitdb); TSB-UAD README 'Overall Results' table has no ECOD column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.05
+      },
+      "notes": "TSB-UAD (PVLDB 2022) does not include ECOD among its benchmarked methods, so no public per-dataset AUC-ROC exists for these series; the groundtruth is a libraryts baseline measured with this exact pipeline on 2026-10-15. Tolerance 0.05 is a re-run sanity band (ECOD is deterministic), not a paper comparison. Protocol mirrors the other TSB-UAD entries: per-series unsupervised fit, detector applied point-wise.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm PyODECODDetector --dataset tsb-mitdb --model-id bench-detection-ecod-mitdb-auc --param contamination=0.1",
+      "run_command": "libraryts run --model-id bench-detection-ecod-mitdb-auc --compact"
+    },
+    {
+      "id": "detection-ecod-nab-auc",
+      "algorithm": "PyODECODDetector",
+      "algorithm_name": "ECOD",
+      "dataset": "tsb-nab",
+      "dataset_name": "NAB (TSB-UAD, 58 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.5459
+      },
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 58 NAB series",
+      "source": {
+        "title": "libraryts baseline run (no public per-dataset values)",
+        "venue": "libraryts benchmark, this repository",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "Measured 2026-10-15 via `libraryts train/run --algorithm PyODECODDetector --dataset tsb-nab` (model probe-ecod-nab); TSB-UAD README 'Overall Results' table has no ECOD column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.05
+      },
+      "notes": "TSB-UAD (PVLDB 2022) does not include ECOD among its benchmarked methods, so no public per-dataset AUC-ROC exists for these series; the groundtruth is a libraryts baseline measured with this exact pipeline on 2026-10-15. Tolerance 0.05 is a re-run sanity band (ECOD is deterministic), not a paper comparison. Protocol mirrors the other TSB-UAD entries: per-series unsupervised fit, detector applied point-wise.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm PyODECODDetector --dataset tsb-nab --model-id bench-detection-ecod-nab-auc --param contamination=0.1",
+      "run_command": "libraryts run --model-id bench-detection-ecod-nab-auc --compact"
+    },
+    {
+      "id": "detection-ecod-dodgers-auc",
+      "algorithm": "PyODECODDetector",
+      "algorithm_name": "ECOD",
+      "dataset": "tsb-dodgers",
+      "dataset_name": "Dodgers (TSB-UAD, 1 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.6678
+      },
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 1 Dodgers series",
+      "source": {
+        "title": "libraryts baseline run (no public per-dataset values)",
+        "venue": "libraryts benchmark, this repository",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "Measured 2026-10-15 via `libraryts train/run --algorithm PyODECODDetector --dataset tsb-dodgers` (model probe-ecod-dodgers); TSB-UAD README 'Overall Results' table has no ECOD column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.05
+      },
+      "notes": "TSB-UAD (PVLDB 2022) does not include ECOD among its benchmarked methods, so no public per-dataset AUC-ROC exists for these series; the groundtruth is a libraryts baseline measured with this exact pipeline on 2026-10-15. Tolerance 0.05 is a re-run sanity band (ECOD is deterministic), not a paper comparison. Protocol mirrors the other TSB-UAD entries: per-series unsupervised fit, detector applied point-wise.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm PyODECODDetector --dataset tsb-dodgers --model-id bench-detection-ecod-dodgers-auc --param contamination=0.1",
+      "run_command": "libraryts run --model-id bench-detection-ecod-dodgers-auc --compact"
+    },
+    {
+      "id": "detection-ecod-occupancy-auc",
+      "algorithm": "PyODECODDetector",
+      "algorithm_name": "ECOD",
+      "dataset": "tsb-occupancy",
+      "dataset_name": "Occupancy (TSB-UAD, 10 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.7366
+      },
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 10 Occupancy series",
+      "source": {
+        "title": "libraryts baseline run (no public per-dataset values)",
+        "venue": "libraryts benchmark, this repository",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "Measured 2026-10-15 via `libraryts train/run --algorithm PyODECODDetector --dataset tsb-occupancy` (model probe-ecod-occupancy); TSB-UAD README 'Overall Results' table has no ECOD column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.05
+      },
+      "notes": "TSB-UAD (PVLDB 2022) does not include ECOD among its benchmarked methods, so no public per-dataset AUC-ROC exists for these series; the groundtruth is a libraryts baseline measured with this exact pipeline on 2026-10-15. Tolerance 0.05 is a re-run sanity band (ECOD is deterministic), not a paper comparison. Protocol mirrors the other TSB-UAD entries: per-series unsupervised fit, detector applied point-wise.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm PyODECODDetector --dataset tsb-occupancy --model-id bench-detection-ecod-occupancy-auc --param contamination=0.1",
+      "run_command": "libraryts run --model-id bench-detection-ecod-occupancy-auc --compact"
+    },
+    {
+      "id": "detection-ecod-mgab-auc",
+      "algorithm": "PyODECODDetector",
+      "algorithm_name": "ECOD",
+      "dataset": "tsb-mgab",
+      "dataset_name": "MGAB (TSB-UAD, 10 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.5395
+      },
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 10 MGAB series",
+      "source": {
+        "title": "libraryts baseline run (no public per-dataset values)",
+        "venue": "libraryts benchmark, this repository",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "Measured 2026-10-15 via `libraryts train/run --algorithm PyODECODDetector --dataset tsb-mgab` (model probe-ecod-mgab); TSB-UAD README 'Overall Results' table has no ECOD column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.05
+      },
+      "notes": "TSB-UAD (PVLDB 2022) does not include ECOD among its benchmarked methods, so no public per-dataset AUC-ROC exists for these series; the groundtruth is a libraryts baseline measured with this exact pipeline on 2026-10-15. Tolerance 0.05 is a re-run sanity band (ECOD is deterministic), not a paper comparison. Protocol mirrors the other TSB-UAD entries: per-series unsupervised fit, detector applied point-wise.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm PyODECODDetector --dataset tsb-mgab --model-id bench-detection-ecod-mgab-auc --param contamination=0.1",
+      "run_command": "libraryts run --model-id bench-detection-ecod-mgab-auc --compact"
+    },
+    {
+      "id": "detection-ecod-genesis-auc",
+      "algorithm": "PyODECODDetector",
+      "algorithm_name": "ECOD",
+      "dataset": "tsb-genesis",
+      "dataset_name": "Genesis (TSB-UAD, 6 series)",
+      "window": "per-series · dataset average",
+      "metrics": {
+        "AUC-ROC": 0.6632
+      },
+      "settings": "Unsupervised fit per series; detector applied point-wise to raw 1-D values; point-wise AUC-ROC averaged over all 6 Genesis series",
+      "source": {
+        "title": "libraryts baseline run (no public per-dataset values)",
+        "venue": "libraryts benchmark, this repository",
+        "url": "https://github.com/TheDatumOrg/TSB-UAD",
+        "locator": "Measured 2026-10-15 via `libraryts train/run --algorithm PyODECODDetector --dataset tsb-genesis` (model probe-ecod-genesis); TSB-UAD README 'Overall Results' table has no ECOD column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.05
+      },
+      "notes": "TSB-UAD (PVLDB 2022) does not include ECOD among its benchmarked methods, so no public per-dataset AUC-ROC exists for these series; the groundtruth is a libraryts baseline measured with this exact pipeline on 2026-10-15. Tolerance 0.05 is a re-run sanity band (ECOD is deterministic), not a paper comparison. Protocol mirrors the other TSB-UAD entries: per-series unsupervised fit, detector applied point-wise.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm PyODECODDetector --dataset tsb-genesis --model-id bench-detection-ecod-genesis-auc --param contamination=0.1",
+      "run_command": "libraryts run --model-id bench-detection-ecod-genesis-auc --compact"
     }
   ]
 }
