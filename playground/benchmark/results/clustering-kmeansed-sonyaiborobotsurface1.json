@@ -1,0 +1,31 @@
+{
+  "id": "clustering-kmeansed-sonyaiborobotsurface1",
+  "task": "clustering",
+  "ran_at": "2026-10-15T11:19:48.800092+00:00",
+  "train_command": "libraryts train --algorithm TimeSeriesKMeansTslearn --dataset sonyaiborobotsurface1-cl --model-id bench-clustering-kmeansed-sonyaiborobotsurface1 --param n_clusters=2 --param fit_on=all --param random_state=42 --param metric=euclidean --param init=k-means++ --param n_init=10 --param max_iter=300 --param max_iter_barycenter=100 --param tol=1e-06 --param verbose=0",
+  "run_command": "libraryts run --model-id bench-clustering-kmeansed-sonyaiborobotsurface1 --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 10.83,
+  "values": {
+    "ARI": 0.7417957690553828
+  },
+  "per_metric": {
+    "ARI": {
+      "gt": 0.336046,
+      "value": 0.7417957690553828,
+      "delta": 0.40575,
+      "delta_rel": 1.207423,
+      "status": "deviation"
+    }
+  },
+  "status": "deviation",
+  "metrics": {
+    "ARI": 0.7417957690553828,
+    "NMI": 0.6829391010931427,
+    "Clusters": 2,
+    "Largest Cluster": 311
+  },
+  "error": null,
+  "stdout_tail": "lustering-kmeansed-sonyaiborobotsurface1\", \"name\": \"TimeSeriesKMeansTslearn (trained: bench-clustering-kmeansed-sonyaiborobotsurface1)\", \"task\": \"clustering\", \"module\": \"sktime.clustering.k_means._k_means_tslearn.TimeSeriesKMeansTslearn\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-10/playground/models/bench-clustering-kmeansed-sonyaiborobotsurface1\", \"manifest\": {\"model_id\": \"bench-clustering-kmeansed-sonyaiborobotsurface1\", \"backend\": \"sktime\", \"task\": \"clustering\", \"algorithm_id\": \"registered-clustering-TimeSeriesKMeansTslearn\", \"algorithm_name\": \"TimeSeriesKMeansTslearn\", \"module\": \"sktime.clustering.k_means._k_means_tslearn.TimeSeriesKMeansTslearn\", \"params\": {\"n_clusters\": 2, \"random_state\": 42, \"metric\": \"euclidean\", \"init\": \"k-means++\", \"n_init\": 10, \"max_iter\": 300, \"max_iter_barycenter\": 100, \"tol\": 1e-06, \"verbose\": 0}, \"eval_params\": {\"fit_on\": \"all\"}, \"created_at\": \"2026-10-15T11:19:43.249728+00:00\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"sonyaiborobotsurface1-cl\", \"algorithm_id\": \"registered-clustering-TimeSeriesKMeansTslearn\", \"preprocessor_id\": \"none\", \"params\": {\"n_clusters\": 2, \"fit_on\": \"all\", \"random_state\": 42, \"metric\": \"euclidean\", \"init\": \"k-means++\", \"n_init\": 10, \"max_iter\": 300, \"max_iter_barycenter\": 100, \"tol\": 1e-06, \"verbose\": 0}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 3250.8, \"log\": [\"Selected dataset: SonyAIBORobotSurface1 (labels for ARI)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-clustering-kmeansed-sonyaiborobotsurface1 (sktime backend, algorithm: registered-clustering-TimeSeriesKMeansTslearn, created: 2026-10-15T11:19:43.249728+00:00)\", \"Loaded UCR/UEA SonyAIBORobotSurface1 train=20 test=601\", \"Finished in 3250.8 ms\"]}, \"error\": null}\n"
+}

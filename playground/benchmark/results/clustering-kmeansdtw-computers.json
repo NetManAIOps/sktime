@@ -1,0 +1,31 @@
+{
+  "id": "clustering-kmeansdtw-computers",
+  "task": "clustering",
+  "ran_at": "2026-10-15T12:27:35.303915+00:00",
+  "train_command": "libraryts train --algorithm TimeSeriesKMeansTslearn --dataset computers-cl --model-id bench-clustering-kmeansdtw-computers --param n_clusters=2 --param fit_on=all --param random_state=42 --param metric=dtw --param max_iter=15 --param max_iter_barycenter=30 --param n_init=1 --param tol=1e-06 --param verbose=0",
+  "run_command": "libraryts run --model-id bench-clustering-kmeansdtw-computers --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 214.29,
+  "values": {
+    "ARI": 0.09312224221840931
+  },
+  "per_metric": {
+    "ARI": {
+      "gt": 0.001142,
+      "value": 0.09312224221840931,
+      "delta": 0.09198,
+      "delta_rel": 80.543119,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "ARI": 0.09312224221840931,
+    "NMI": 0.07398046478593566,
+    "Clusters": 2,
+    "Largest Cluster": 301
+  },
+  "error": null,
+  "stdout_tail": "oader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"Computers\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-clustering-kmeansdtw-computers\", \"name\": \"TimeSeriesKMeansTslearn (trained: bench-clustering-kmeansdtw-computers)\", \"task\": \"clustering\", \"module\": \"sktime.clustering.k_means._k_means_tslearn.TimeSeriesKMeansTslearn\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-10/playground/models/bench-clustering-kmeansdtw-computers\", \"manifest\": {\"model_id\": \"bench-clustering-kmeansdtw-computers\", \"backend\": \"sktime\", \"task\": \"clustering\", \"algorithm_id\": \"registered-clustering-TimeSeriesKMeansTslearn\", \"algorithm_name\": \"TimeSeriesKMeansTslearn\", \"module\": \"sktime.clustering.k_means._k_means_tslearn.TimeSeriesKMeansTslearn\", \"params\": {\"n_clusters\": 2, \"random_state\": 42, \"metric\": \"dtw\", \"max_iter\": 15, \"max_iter_barycenter\": 30, \"n_init\": 1, \"tol\": 1e-06, \"verbose\": 0}, \"eval_params\": {\"fit_on\": \"all\"}, \"created_at\": \"2026-10-15T12:27:29.951623+00:00\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"computers-cl\", \"algorithm_id\": \"registered-clustering-TimeSeriesKMeansTslearn\", \"preprocessor_id\": \"none\", \"params\": {\"n_clusters\": 2, \"fit_on\": \"all\", \"random_state\": 42, \"metric\": \"dtw\", \"max_iter\": 15, \"max_iter_barycenter\": 30, \"n_init\": 1, \"tol\": 1e-06, \"verbose\": 0}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 3055.7, \"log\": [\"Selected dataset: Computers (labels for ARI)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-clustering-kmeansdtw-computers (sktime backend, algorithm: registered-clustering-TimeSeriesKMeansTslearn, created: 2026-10-15T12:27:29.951623+00:00)\", \"Loaded UCR/UEA Computers train=250 test=250\", \"Finished in 3055.7 ms\"]}, \"error\": null}\n"
+}

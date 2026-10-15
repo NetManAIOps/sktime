@@ -1,0 +1,31 @@
+{
+  "id": "clustering-kmedoids-swedishleaf",
+  "task": "clustering",
+  "ran_at": "2026-10-15T11:27:12.514809+00:00",
+  "train_command": "libraryts train --algorithm TimeSeriesKMedoids --dataset swedishleaf-cl --model-id bench-clustering-kmedoids-swedishleaf --param n_clusters=15 --param fit_on=all --param random_state=42 --param metric=euclidean --param max_iter=300 --param n_init=10 --param tol=1e-06",
+  "run_command": "libraryts run --model-id bench-clustering-kmedoids-swedishleaf --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 14.91,
+  "values": {
+    "ARI": 0.32595619394149516
+  },
+  "per_metric": {
+    "ARI": {
+      "gt": 0.281547,
+      "value": 0.32595619394149516,
+      "delta": 0.044409,
+      "delta_rel": 0.157733,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "ARI": 0.32595619394149516,
+    "NMI": 0.5366803008572689,
+    "Clusters": 15,
+    "Largest Cluster": 142
+  },
+  "error": null,
+  "stdout_tail": "set\": {\"id\": \"swedishleaf-cl\", \"name\": \"SwedishLeaf (labels for ARI)\", \"task\": \"clustering\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"SwedishLeaf\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-clustering-kmedoids-swedishleaf\", \"name\": \"TimeSeriesKMedoids (trained: bench-clustering-kmedoids-swedishleaf)\", \"task\": \"clustering\", \"module\": \"sktime.clustering.k_medoids.TimeSeriesKMedoids\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-10/playground/models/bench-clustering-kmedoids-swedishleaf\", \"manifest\": {\"model_id\": \"bench-clustering-kmedoids-swedishleaf\", \"backend\": \"sktime\", \"task\": \"clustering\", \"algorithm_id\": \"registered-clustering-TimeSeriesKMedoids\", \"algorithm_name\": \"TimeSeriesKMedoids\", \"module\": \"sktime.clustering.k_medoids.TimeSeriesKMedoids\", \"params\": {\"n_clusters\": 15, \"random_state\": 42, \"metric\": \"euclidean\", \"max_iter\": 300, \"n_init\": 10, \"tol\": 1e-06}, \"eval_params\": {\"fit_on\": \"all\"}, \"created_at\": \"2026-10-15T11:27:08.543221+00:00\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"swedishleaf-cl\", \"algorithm_id\": \"registered-clustering-TimeSeriesKMedoids\", \"preprocessor_id\": \"none\", \"params\": {\"n_clusters\": 15, \"fit_on\": \"all\", \"random_state\": 42, \"metric\": \"euclidean\", \"max_iter\": 300, \"n_init\": 10, \"tol\": 1e-06}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 2796.8, \"log\": [\"Selected dataset: SwedishLeaf (labels for ARI)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-clustering-kmedoids-swedishleaf (sktime backend, algorithm: registered-clustering-TimeSeriesKMedoids, created: 2026-10-15T11:27:08.543221+00:00)\", \"Loaded UCR/UEA SwedishLeaf train=500 test=625\", \"Finished in 2796.8 ms\"]}, \"error\": null}\n"
+}

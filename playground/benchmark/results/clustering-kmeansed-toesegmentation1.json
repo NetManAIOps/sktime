@@ -1,0 +1,31 @@
+{
+  "id": "clustering-kmeansed-toesegmentation1",
+  "task": "clustering",
+  "ran_at": "2026-10-15T11:27:58.411942+00:00",
+  "train_command": "libraryts train --algorithm TimeSeriesKMeansTslearn --dataset toesegmentation1-cl --model-id bench-clustering-kmeansed-toesegmentation1 --param n_clusters=2 --param fit_on=all --param random_state=42 --param metric=euclidean --param init=k-means++ --param n_init=10 --param max_iter=300 --param max_iter_barycenter=100 --param tol=1e-06 --param verbose=0",
+  "run_command": "libraryts run --model-id bench-clustering-kmeansed-toesegmentation1 --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 10.87,
+  "values": {
+    "ARI": -0.0037514440601616986
+  },
+  "per_metric": {
+    "ARI": {
+      "gt": -0.003124,
+      "value": -0.0037514440601616986,
+      "delta": -0.000627,
+      "delta_rel": 0.200846,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "ARI": -0.0037514440601616986,
+    "NMI": 3.231511212184253e-07,
+    "Clusters": 2,
+    "Largest Cluster": 136
+  },
+  "error": null,
+  "stdout_tail": "gorithm\": {\"id\": \"sktime-trained:bench-clustering-kmeansed-toesegmentation1\", \"name\": \"TimeSeriesKMeansTslearn (trained: bench-clustering-kmeansed-toesegmentation1)\", \"task\": \"clustering\", \"module\": \"sktime.clustering.k_means._k_means_tslearn.TimeSeriesKMeansTslearn\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-10/playground/models/bench-clustering-kmeansed-toesegmentation1\", \"manifest\": {\"model_id\": \"bench-clustering-kmeansed-toesegmentation1\", \"backend\": \"sktime\", \"task\": \"clustering\", \"algorithm_id\": \"registered-clustering-TimeSeriesKMeansTslearn\", \"algorithm_name\": \"TimeSeriesKMeansTslearn\", \"module\": \"sktime.clustering.k_means._k_means_tslearn.TimeSeriesKMeansTslearn\", \"params\": {\"n_clusters\": 2, \"random_state\": 42, \"metric\": \"euclidean\", \"init\": \"k-means++\", \"n_init\": 10, \"max_iter\": 300, \"max_iter_barycenter\": 100, \"tol\": 1e-06, \"verbose\": 0}, \"eval_params\": {\"fit_on\": \"all\"}, \"created_at\": \"2026-10-15T11:27:52.197545+00:00\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"toesegmentation1-cl\", \"algorithm_id\": \"registered-clustering-TimeSeriesKMeansTslearn\", \"preprocessor_id\": \"none\", \"params\": {\"n_clusters\": 2, \"fit_on\": \"all\", \"random_state\": 42, \"metric\": \"euclidean\", \"init\": \"k-means++\", \"n_init\": 10, \"max_iter\": 300, \"max_iter_barycenter\": 100, \"tol\": 1e-06, \"verbose\": 0}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 4235.9, \"log\": [\"Selected dataset: ToeSegmentation1 (labels for ARI)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-clustering-kmeansed-toesegmentation1 (sktime backend, algorithm: registered-clustering-TimeSeriesKMeansTslearn, created: 2026-10-15T11:27:52.197545+00:00)\", \"Loaded UCR/UEA ToeSegmentation1 train=40 test=228\", \"Finished in 4235.9 ms\"]}, \"error\": null}\n"
+}

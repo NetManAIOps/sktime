@@ -1,0 +1,31 @@
+{
+  "id": "clustering-kmedoids-syntheticcontrol",
+  "task": "clustering",
+  "ran_at": "2026-10-15T11:18:27.867940+00:00",
+  "train_command": "libraryts train --algorithm TimeSeriesKMedoids --dataset syntheticcontrol-cl --model-id bench-clustering-kmedoids-syntheticcontrol --param n_clusters=6 --param fit_on=all --param random_state=42 --param metric=euclidean --param max_iter=300 --param n_init=10 --param tol=1e-06",
+  "run_command": "libraryts run --model-id bench-clustering-kmedoids-syntheticcontrol --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 7.49,
+  "values": {
+    "ARI": 0.4238367845100052
+  },
+  "per_metric": {
+    "ARI": {
+      "gt": 0.344553,
+      "value": 0.4238367845100052,
+      "delta": 0.079284,
+      "delta_rel": 0.230106,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "ARI": 0.4238367845100052,
+    "NMI": 0.5790005481110395,
+    "Clusters": 6,
+    "Largest Cluster": 222
+  },
+  "error": null,
+  "stdout_tail": "cControl (labels for ARI)\", \"task\": \"clustering\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"SyntheticControl\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-clustering-kmedoids-syntheticcontrol\", \"name\": \"TimeSeriesKMedoids (trained: bench-clustering-kmedoids-syntheticcontrol)\", \"task\": \"clustering\", \"module\": \"sktime.clustering.k_medoids.TimeSeriesKMedoids\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-10/playground/models/bench-clustering-kmedoids-syntheticcontrol\", \"manifest\": {\"model_id\": \"bench-clustering-kmedoids-syntheticcontrol\", \"backend\": \"sktime\", \"task\": \"clustering\", \"algorithm_id\": \"registered-clustering-TimeSeriesKMedoids\", \"algorithm_name\": \"TimeSeriesKMedoids\", \"module\": \"sktime.clustering.k_medoids.TimeSeriesKMedoids\", \"params\": {\"n_clusters\": 6, \"random_state\": 42, \"metric\": \"euclidean\", \"max_iter\": 300, \"n_init\": 10, \"tol\": 1e-06}, \"eval_params\": {\"fit_on\": \"all\"}, \"created_at\": \"2026-10-15T11:18:25.192927+00:00\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"syntheticcontrol-cl\", \"algorithm_id\": \"registered-clustering-TimeSeriesKMedoids\", \"preprocessor_id\": \"none\", \"params\": {\"n_clusters\": 6, \"fit_on\": \"all\", \"random_state\": 42, \"metric\": \"euclidean\", \"max_iter\": 300, \"n_init\": 10, \"tol\": 1e-06}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 1802.5, \"log\": [\"Selected dataset: SyntheticControl (labels for ARI)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-clustering-kmedoids-syntheticcontrol (sktime backend, algorithm: registered-clustering-TimeSeriesKMedoids, created: 2026-10-15T11:18:25.192927+00:00)\", \"Loaded UCR/UEA SyntheticControl train=300 test=300\", \"Finished in 1802.5 ms\"]}, \"error\": null}\n"
+}
