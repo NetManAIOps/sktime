@@ -283,6 +283,61 @@
       },
       "train_command": "libraryts train --algorithm TimeSeriesSVRTslearn --dataset covid-3month --model-id bench-regression-svr-covid3month --param kernel=rbf --param C=1 --param cache_size=200 --param coef0=0 --param degree=3 --param epsilon=0.1 --param max_iter=-1 --param tol=0.001 --param verbose=0",
       "run_command": "libraryts run --model-id bench-regression-svr-covid3month --compact"
+    },
+    {
+      "id": "regression-tsf-covid3month",
+      "algorithm": "TimeSeriesForestRegressor",
+      "algorithm_name": "TimeSeriesForest",
+      "dataset": "covid-3month",
+      "dataset_name": "Covid3Month (TSER archive)",
+      "window": "default split",
+      "metrics": {
+        "RMSE": 0.03979657
+      },
+      "settings": "TSER archive default train/test split (140/61); Time Series Forest regressor, 500 trees over random intervals with mean/std/slope summary features (paper configuration); RMSE on the default split = fold 0 of the official 30-resample results",
+      "source": {
+        "title": "Unsupervised Feature Based Algorithms for Time Series Extrinsic Regression (Guijo-Rubio, Middlehurst, Arcencio, Furtado Silva, Bagnall) — official results files in the tsml-eval repository",
+        "venue": "Data Mining and Knowledge Discovery 38, 2024 / tsml-eval",
+        "url": "https://github.com/time-series-machine-learning/tsml-eval/blob/main/tsml_eval/publications/y2023/tser_archive_expansion/results/5.B/TSF_rmse.csv",
+        "locator": "TSF_rmse.csv, row Covid3Month, fold 0 (default train/test split)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.25
+      },
+      "notes": "Paper runs aeon's TimeSeriesForestRegressor(n_estimators=500) via a per-channel ensemble wrapper (identity for univariate data); libraryts runs sktime's TimeSeriesForestRegressor with the same 500-tree config. The aeon/sktime implementations share the same design (mean/std/slope interval features, min_interval=3), so only the random interval draws differ; tolerance 25% relative was chosen before running for that stochasticity. The paper's headline tables average 30 resamples; this claim targets fold 0, the default split that libraryts evaluates.",
+      "spec_params": {
+        "n_estimators": 500,
+        "random_state": 7
+      },
+      "train_command": "libraryts train --algorithm TimeSeriesForestRegressor --dataset covid-3month --model-id bench-regression-tsf-covid3month --param n_estimators=500 --param random_state=7 --param min_interval=3 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-regression-tsf-covid3month --compact"
+    },
+    {
+      "id": "regression-cnn-covid3month",
+      "algorithm": "CNNRegressor",
+      "algorithm_name": "CNN",
+      "dataset": "covid-3month",
+      "dataset_name": "Covid3Month (TSER archive)",
+      "window": "default split",
+      "metrics": {
+        "RMSE": 0.06813031
+      },
+      "settings": "TSER archive default train/test split (140/61); Time-CNN deep regressor (2 conv layers with average pooling), 2000 epochs, batch size 16 (paper defaults); RMSE on the default split = fold 0 of the official 30-resample results",
+      "source": {
+        "title": "Unsupervised Feature Based Algorithms for Time Series Extrinsic Regression (Guijo-Rubio, Middlehurst, Arcencio, Furtado Silva, Bagnall) — official results files in the tsml-eval repository",
+        "venue": "Data Mining and Knowledge Discovery 38, 2024 / tsml-eval",
+        "url": "https://github.com/time-series-machine-learning/tsml-eval/blob/main/tsml_eval/publications/y2023/tser_archive_expansion/results/5.B/CNN_rmse.csv",
+        "locator": "CNN_rmse.csv, row Covid3Month, fold 0 (default train/test split)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.4
+      },
+      "notes": "Paper runs aeon's TimeCNNRegressor defaults (n_epochs=2000, batch_size=16, kernel_size=7, avg_pool_size=3, 2 conv layers, sigmoid activations, 'valid' padding); sktime's CNNRegressor shares the architecture and epoch budget but defaults to ReLU hidden activations and 'auto' padding — an implementation gap that, together with single-seed stochastic training, motivates the 40% relative tolerance used for the other deep regressors. The paper's headline tables average 30 resamples; this claim targets fold 0, the default split that libraryts evaluates.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm CNNRegressor --dataset covid-3month --model-id bench-regression-cnn-covid3month --param avg_pool_size=3 --param batch_size=16 --param kernel_size=7 --param n_conv_layers=2 --param n_epochs=2000 --param random_state=0",
+      "run_command": "libraryts run --model-id bench-regression-cnn-covid3month --compact"
     }
   ]
 }
