@@ -4,7 +4,7 @@
 Thin wrappers binding one family each from the vendored DevAD model zoo
 (``sktime.libs.devad``) as an sktime detector, so the families are
 constructible without arguments and show up in registry discovery (and hence
-in the Playground/labts catalog).
+in the Playground/libraryts catalog).
 
 DevAD models share a ``fit(x_train)`` / ``detect(x_test)`` API returning
 per-point anomaly scores with a ``start_pos`` offset (windowed models cannot

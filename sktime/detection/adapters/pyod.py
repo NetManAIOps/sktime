@@ -3,7 +3,7 @@
 
 Thin wrappers around ``PyODDetector`` that bind a specific pyod model with
 sensible defaults, so the detectors are constructible without arguments and
-show up in registry discovery (and hence in the Playground/labts catalog).
+show up in registry discovery (and hence in the Playground/libraryts catalog).
 """
 
 __all__ = [

@@ -31,5 +31,5 @@ Contents:
 Entry points inside sktime:
 
 - `sktime/detection/adapters/devad.py` — registry-discoverable detectors.
-- `playground/trainer.py` — labts `train` / `detect` commands on top of
+- `playground/trainer.py` — libraryts `train` / `detect` commands on top of
   `services/model_service.py`.
