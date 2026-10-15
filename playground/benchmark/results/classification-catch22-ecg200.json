@@ -1,0 +1,29 @@
+{
+  "id": "classification-catch22-ecg200",
+  "task": "classification",
+  "ran_at": "2026-10-15T11:23:20.117840+00:00",
+  "train_command": "libraryts train --algorithm Catch22Classifier --dataset ucr-ecg200 --model-id bench-classification-catch22-ecg200 --param random_state=0 --param n_jobs=1",
+  "run_command": "libraryts run --model-id bench-classification-catch22-ecg200 --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 10.48,
+  "values": {
+    "Accuracy": 0.83
+  },
+  "per_metric": {
+    "Accuracy": {
+      "gt": 0.84,
+      "value": 0.83,
+      "delta": -0.01,
+      "delta_rel": 0.011905,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "Accuracy": 0.83,
+    "Macro F1": 0.8221571294068417
+  },
+  "error": null,
+  "stdout_tail": "\": \"ucr-ecg200\", \"algorithm_id\": \"sktime-trained:bench-classification-catch22-ecg200\", \"preprocessor_id\": \"none\", \"params\": {}}, \"task\": \"classification\", \"dataset\": {\"id\": \"ucr-ecg200\", \"name\": \"UCR/UEA ECG200\", \"task\": \"classification\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"ECG200\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-classification-catch22-ecg200\", \"name\": \"Catch22Classifier (trained: bench-classification-catch22-ecg200)\", \"task\": \"classification\", \"module\": \"sktime.classification.feature_based._catch22_classifier.Catch22Classifier\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-9/playground/models/bench-classification-catch22-ecg200\", \"manifest\": {\"model_id\": \"bench-classification-catch22-ecg200\", \"backend\": \"sktime\", \"task\": \"classification\", \"algorithm_id\": \"registered-classification-Catch22Classifier\", \"algorithm_name\": \"Catch22Classifier\", \"module\": \"sktime.classification.feature_based._catch22_classifier.Catch22Classifier\", \"params\": {\"random_state\": 0, \"n_jobs\": 1}, \"eval_params\": {}, \"created_at\": \"2026-10-15T11:23:13.813216+00:00\", \"spec\": {\"task\": \"classification\", \"dataset_id\": \"ucr-ecg200\", \"algorithm_id\": \"registered-classification-Catch22Classifier\", \"preprocessor_id\": \"none\", \"params\": {\"random_state\": 0, \"n_jobs\": 1}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 4620.4, \"log\": [\"Selected dataset: UCR/UEA ECG200\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-classification-catch22-ecg200 (sktime backend, algorithm: registered-classification-Catch22Classifier, created: 2026-10-15T11:23:13.813216+00:00)\", \"Loaded UCR/UEA ECG200 train=100 test=100\", \"Finished in 4620.4 ms\"]}, \"error\": null}\n"
+}

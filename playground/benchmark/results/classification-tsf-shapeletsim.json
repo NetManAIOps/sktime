@@ -1,0 +1,29 @@
+{
+  "id": "classification-tsf-shapeletsim",
+  "task": "classification",
+  "ran_at": "2026-10-15T11:28:16.809951+00:00",
+  "train_command": "libraryts train --algorithm TimeSeriesForestClassifier --dataset ucr-shapeletsim --model-id bench-classification-tsf-shapeletsim --param random_state=0 --param min_interval=3 --param n_estimators=200 --param n_jobs=1",
+  "run_command": "libraryts run --model-id bench-classification-tsf-shapeletsim --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 22.88,
+  "values": {
+    "Accuracy": 0.4888888888888889
+  },
+  "per_metric": {
+    "Accuracy": {
+      "gt": 0.47778,
+      "value": 0.4888888888888889,
+      "delta": 0.011109,
+      "delta_rel": 0.023251,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "Accuracy": 0.4888888888888889,
+    "Macro F1": 0.48787728847105394
+  },
+  "error": null,
+  "stdout_tail": "ion\", \"dataset\": {\"id\": \"ucr-shapeletsim\", \"name\": \"UCR/UEA ShapeletSim\", \"task\": \"classification\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"ShapeletSim\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-classification-tsf-shapeletsim\", \"name\": \"TimeSeriesForestClassifier (trained: bench-classification-tsf-shapeletsim)\", \"task\": \"classification\", \"module\": \"sktime.classification.interval_based._tsf.TimeSeriesForestClassifier\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-9/playground/models/bench-classification-tsf-shapeletsim\", \"manifest\": {\"model_id\": \"bench-classification-tsf-shapeletsim\", \"backend\": \"sktime\", \"task\": \"classification\", \"algorithm_id\": \"registered-classification-TimeSeriesForestClassifier\", \"algorithm_name\": \"TimeSeriesForestClassifier\", \"module\": \"sktime.classification.interval_based._tsf.TimeSeriesForestClassifier\", \"params\": {\"random_state\": 0, \"min_interval\": 3, \"n_estimators\": 200, \"n_jobs\": 1}, \"eval_params\": {}, \"created_at\": \"2026-10-15T11:28:09.451833+00:00\", \"spec\": {\"task\": \"classification\", \"dataset_id\": \"ucr-shapeletsim\", \"algorithm_id\": \"registered-classification-TimeSeriesForestClassifier\", \"preprocessor_id\": \"none\", \"params\": {\"random_state\": 0, \"min_interval\": 3, \"n_estimators\": 200, \"n_jobs\": 1}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 3673.7, \"log\": [\"Selected dataset: UCR/UEA ShapeletSim\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-classification-tsf-shapeletsim (sktime backend, algorithm: registered-classification-TimeSeriesForestClassifier, created: 2026-10-15T11:28:09.451833+00:00)\", \"Loaded UCR/UEA ShapeletSim train=20 test=180\", \"Finished in 3673.7 ms\"]}, \"error\": null}\n"
+}

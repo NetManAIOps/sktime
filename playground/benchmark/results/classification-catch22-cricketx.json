@@ -1,0 +1,29 @@
+{
+  "id": "classification-catch22-cricketx",
+  "task": "classification",
+  "ran_at": "2026-10-15T11:23:09.637226+00:00",
+  "train_command": "libraryts train --algorithm Catch22Classifier --dataset ucr-cricketx --model-id bench-classification-catch22-cricketx --param random_state=0 --param n_jobs=1",
+  "run_command": "libraryts run --model-id bench-classification-catch22-cricketx --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 16.6,
+  "values": {
+    "Accuracy": 0.5897435897435898
+  },
+  "per_metric": {
+    "Accuracy": {
+      "gt": 0.58205,
+      "value": 0.5897435897435898,
+      "delta": 0.007694,
+      "delta_rel": 0.013218,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "Accuracy": 0.5897435897435898,
+    "Macro F1": 0.576099299991648
+  },
+  "error": null,
+  "stdout_tail": "thm_id\": \"sktime-trained:bench-classification-catch22-cricketx\", \"preprocessor_id\": \"none\", \"params\": {}}, \"task\": \"classification\", \"dataset\": {\"id\": \"ucr-cricketx\", \"name\": \"UCR/UEA CricketX\", \"task\": \"classification\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"CricketX\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-classification-catch22-cricketx\", \"name\": \"Catch22Classifier (trained: bench-classification-catch22-cricketx)\", \"task\": \"classification\", \"module\": \"sktime.classification.feature_based._catch22_classifier.Catch22Classifier\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-9/playground/models/bench-classification-catch22-cricketx\", \"manifest\": {\"model_id\": \"bench-classification-catch22-cricketx\", \"backend\": \"sktime\", \"task\": \"classification\", \"algorithm_id\": \"registered-classification-Catch22Classifier\", \"algorithm_name\": \"Catch22Classifier\", \"module\": \"sktime.classification.feature_based._catch22_classifier.Catch22Classifier\", \"params\": {\"random_state\": 0, \"n_jobs\": 1}, \"eval_params\": {}, \"created_at\": \"2026-10-15T11:22:59.833966+00:00\", \"spec\": {\"task\": \"classification\", \"dataset_id\": \"ucr-cricketx\", \"algorithm_id\": \"registered-classification-Catch22Classifier\", \"preprocessor_id\": \"none\", \"params\": {\"random_state\": 0, \"n_jobs\": 1}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 8327.1, \"log\": [\"Selected dataset: UCR/UEA CricketX\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-classification-catch22-cricketx (sktime backend, algorithm: registered-classification-Catch22Classifier, created: 2026-10-15T11:22:59.833966+00:00)\", \"Loaded UCR/UEA CricketX train=390 test=390\", \"Finished in 8327.1 ms\"]}, \"error\": null}\n"
+}

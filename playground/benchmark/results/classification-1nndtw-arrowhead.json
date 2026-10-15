@@ -1,0 +1,29 @@
+{
+  "id": "classification-1nndtw-arrowhead",
+  "task": "classification",
+  "ran_at": "2026-10-15T11:16:13.321810+00:00",
+  "train_command": "libraryts train --algorithm KNeighborsTimeSeriesClassifier --dataset arrow-head --model-id bench-classification-1nndtw-arrowhead --param distance=dtw --param n_neighbors=1 --param leaf_size=30",
+  "run_command": "libraryts run --model-id bench-classification-1nndtw-arrowhead --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 8.91,
+  "values": {
+    "Accuracy": 0.7028571428571428
+  },
+  "per_metric": {
+    "Accuracy": {
+      "gt": 0.70286,
+      "value": 0.7028571428571428,
+      "delta": -3e-06,
+      "delta_rel": 4e-06,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "Accuracy": 0.7028571428571428,
+    "Macro F1": 0.700157158632868
+  },
+  "error": null,
+  "stdout_tail": "rocessor_id\": \"none\", \"params\": {}}, \"task\": \"classification\", \"dataset\": {\"id\": \"arrow-head\", \"name\": \"ArrowHead\", \"task\": \"classification\", \"source\": \"local\", \"loader\": \"sktime.datasets.load_arrow_head\", \"enabled\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-classification-1nndtw-arrowhead\", \"name\": \"KNeighborsTimeSeriesClassifier (trained: bench-classification-1nndtw-arrowhead)\", \"task\": \"classification\", \"module\": \"sktime.classification.distance_based._time_series_neighbors.KNeighborsTimeSeriesClassifier\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-9/playground/models/bench-classification-1nndtw-arrowhead\", \"manifest\": {\"model_id\": \"bench-classification-1nndtw-arrowhead\", \"backend\": \"sktime\", \"task\": \"classification\", \"algorithm_id\": \"registered-classification-KNeighborsTimeSeriesClassifier\", \"algorithm_name\": \"KNeighborsTimeSeriesClassifier\", \"module\": \"sktime.classification.distance_based._time_series_neighbors.KNeighborsTimeSeriesClassifier\", \"params\": {\"distance\": \"dtw\", \"n_neighbors\": 1, \"leaf_size\": 30}, \"eval_params\": {}, \"created_at\": \"2026-10-15T11:16:06.986575+00:00\", \"spec\": {\"task\": \"classification\", \"dataset_id\": \"arrow-head\", \"algorithm_id\": \"registered-classification-KNeighborsTimeSeriesClassifier\", \"preprocessor_id\": \"none\", \"params\": {\"distance\": \"dtw\", \"n_neighbors\": 1, \"leaf_size\": 30}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 5196.3, \"log\": [\"Selected dataset: ArrowHead\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-classification-1nndtw-arrowhead (sktime backend, algorithm: registered-classification-KNeighborsTimeSeriesClassifier, created: 2026-10-15T11:16:06.986575+00:00)\", \"Loaded ArrowHead train=36 test=175\", \"Finished in 5196.3 ms\"]}, \"error\": null}\n"
+}

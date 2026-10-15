@@ -1,0 +1,29 @@
+{
+  "id": "classification-tsf-ecgfivedays",
+  "task": "classification",
+  "ran_at": "2026-10-15T11:25:59.646689+00:00",
+  "train_command": "libraryts train --algorithm TimeSeriesForestClassifier --dataset ucr-ecgfivedays --model-id bench-classification-tsf-ecgfivedays --param random_state=0 --param min_interval=3 --param n_estimators=200 --param n_jobs=1",
+  "run_command": "libraryts run --model-id bench-classification-tsf-ecgfivedays --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 9.48,
+  "values": {
+    "Accuracy": 0.9686411149825784
+  },
+  "per_metric": {
+    "Accuracy": {
+      "gt": 0.96864,
+      "value": 0.9686411149825784,
+      "delta": 1e-06,
+      "delta_rel": 1e-06,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "Accuracy": 0.9686411149825784,
+    "Macro F1": 0.9686395920597342
+  },
+  "error": null,
+  "stdout_tail": "ion\", \"dataset\": {\"id\": \"ucr-ecgfivedays\", \"name\": \"UCR/UEA ECGFiveDays\", \"task\": \"classification\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"ECGFiveDays\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-classification-tsf-ecgfivedays\", \"name\": \"TimeSeriesForestClassifier (trained: bench-classification-tsf-ecgfivedays)\", \"task\": \"classification\", \"module\": \"sktime.classification.interval_based._tsf.TimeSeriesForestClassifier\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-9/playground/models/bench-classification-tsf-ecgfivedays\", \"manifest\": {\"model_id\": \"bench-classification-tsf-ecgfivedays\", \"backend\": \"sktime\", \"task\": \"classification\", \"algorithm_id\": \"registered-classification-TimeSeriesForestClassifier\", \"algorithm_name\": \"TimeSeriesForestClassifier\", \"module\": \"sktime.classification.interval_based._tsf.TimeSeriesForestClassifier\", \"params\": {\"random_state\": 0, \"min_interval\": 3, \"n_estimators\": 200, \"n_jobs\": 1}, \"eval_params\": {}, \"created_at\": \"2026-10-15T11:25:55.421083+00:00\", \"spec\": {\"task\": \"classification\", \"dataset_id\": \"ucr-ecgfivedays\", \"algorithm_id\": \"registered-classification-TimeSeriesForestClassifier\", \"preprocessor_id\": \"none\", \"params\": {\"random_state\": 0, \"min_interval\": 3, \"n_estimators\": 200, \"n_jobs\": 1}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 3378.7, \"log\": [\"Selected dataset: UCR/UEA ECGFiveDays\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-classification-tsf-ecgfivedays (sktime backend, algorithm: registered-classification-TimeSeriesForestClassifier, created: 2026-10-15T11:25:55.421083+00:00)\", \"Loaded UCR/UEA ECGFiveDays train=23 test=861\", \"Finished in 3378.7 ms\"]}, \"error\": null}\n"
+}
