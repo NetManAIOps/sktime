@@ -1,8 +1,8 @@
 """Fork of registered-anomaly_detection-PyODECODDetector (`sktime.detection.adapters.pyod.PyODECODDetector`).
 
 Edit this file freely, then:
-    labts.py check playground/experiments/my_ecod.py
-    labts.py run --algorithm user-my_ecod --task anomaly_detection ...
+    libraryts.py check playground/experiments/my_ecod.py
+    libraryts.py run --algorithm user-my_ecod --task anomaly_detection ...
 
 The original implementation lives in `sktime.detection.adapters.pyod.PyODECODDetector`; this subclass starts as an
 exact copy of its behavior. Override methods, change defaults in PARAMS, or

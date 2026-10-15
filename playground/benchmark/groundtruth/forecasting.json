@@ -23,7 +23,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 96,
@@ -34,8 +34,8 @@
         "test_start_fraction": 0.661,
         "test_end_fraction": 0.827
       },
-      "train_command": "python playground/labts.py train --algorithm DLinearForecaster --dataset hf-etth1 --model-id bench-forecasting-dlinear-etth1-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-etth1-96 --compact"
+      "train_command": "libraryts train --algorithm DLinearForecaster --dataset hf-etth1 --model-id bench-forecasting-dlinear-etth1-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-dlinear-etth1-96 --compact"
     },
     {
       "id": "forecasting-dlinear-etth1-192",
@@ -59,7 +59,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 192,
@@ -70,8 +70,8 @@
         "test_start_fraction": 0.661,
         "test_end_fraction": 0.827
       },
-      "train_command": "python playground/labts.py train --algorithm DLinearForecaster --dataset hf-etth1 --model-id bench-forecasting-dlinear-etth1-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-etth1-192 --compact"
+      "train_command": "libraryts train --algorithm DLinearForecaster --dataset hf-etth1 --model-id bench-forecasting-dlinear-etth1-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-dlinear-etth1-192 --compact"
     },
     {
       "id": "forecasting-dlinear-etth1-336",
@@ -95,7 +95,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 336,
@@ -106,8 +106,8 @@
         "test_start_fraction": 0.661,
         "test_end_fraction": 0.827
       },
-      "train_command": "python playground/labts.py train --algorithm DLinearForecaster --dataset hf-etth1 --model-id bench-forecasting-dlinear-etth1-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-etth1-336 --compact"
+      "train_command": "libraryts train --algorithm DLinearForecaster --dataset hf-etth1 --model-id bench-forecasting-dlinear-etth1-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-dlinear-etth1-336 --compact"
     },
     {
       "id": "forecasting-dlinear-etth1-720",
@@ -131,7 +131,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 720,
@@ -142,8 +142,8 @@
         "test_start_fraction": 0.661,
         "test_end_fraction": 0.827
       },
-      "train_command": "python playground/labts.py train --algorithm DLinearForecaster --dataset hf-etth1 --model-id bench-forecasting-dlinear-etth1-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-etth1-720 --compact"
+      "train_command": "libraryts train --algorithm DLinearForecaster --dataset hf-etth1 --model-id bench-forecasting-dlinear-etth1-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-dlinear-etth1-720 --compact"
     },
     {
       "id": "forecasting-dlinear-weather-96",
@@ -167,7 +167,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 96,
@@ -177,8 +177,8 @@
         "train_fraction": 0.7,
         "test_fraction": 0.2
       },
-      "train_command": "python playground/labts.py train --algorithm DLinearForecaster --dataset hf-weather --model-id bench-forecasting-dlinear-weather-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-weather-96 --compact"
+      "train_command": "libraryts train --algorithm DLinearForecaster --dataset hf-weather --model-id bench-forecasting-dlinear-weather-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-dlinear-weather-96 --compact"
     },
     {
       "id": "forecasting-dlinear-weather-192",
@@ -202,7 +202,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 192,
@@ -212,8 +212,8 @@
         "train_fraction": 0.7,
         "test_fraction": 0.2
       },
-      "train_command": "python playground/labts.py train --algorithm DLinearForecaster --dataset hf-weather --model-id bench-forecasting-dlinear-weather-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-weather-192 --compact"
+      "train_command": "libraryts train --algorithm DLinearForecaster --dataset hf-weather --model-id bench-forecasting-dlinear-weather-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-dlinear-weather-192 --compact"
     },
     {
       "id": "forecasting-dlinear-weather-336",
@@ -237,7 +237,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 336,
@@ -247,8 +247,8 @@
         "train_fraction": 0.7,
         "test_fraction": 0.2
       },
-      "train_command": "python playground/labts.py train --algorithm DLinearForecaster --dataset hf-weather --model-id bench-forecasting-dlinear-weather-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-weather-336 --compact"
+      "train_command": "libraryts train --algorithm DLinearForecaster --dataset hf-weather --model-id bench-forecasting-dlinear-weather-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-dlinear-weather-336 --compact"
     },
     {
       "id": "forecasting-dlinear-weather-720",
@@ -272,7 +272,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 720,
@@ -282,8 +282,8 @@
         "train_fraction": 0.7,
         "test_fraction": 0.2
       },
-      "train_command": "python playground/labts.py train --algorithm DLinearForecaster --dataset hf-weather --model-id bench-forecasting-dlinear-weather-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-weather-720 --compact"
+      "train_command": "libraryts train --algorithm DLinearForecaster --dataset hf-weather --model-id bench-forecasting-dlinear-weather-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-dlinear-weather-720 --compact"
     },
     {
       "id": "forecasting-autoformer-etth1-96",
@@ -324,8 +324,8 @@
         "lr": 0.0001,
         "lr_decay": 0.5
       },
-      "train_command": "python playground/labts.py train --algorithm AutoformerForecaster --dataset hf-etth1 --model-id bench-forecasting-autoformer-etth1-96 --param seq_len=96 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param d_model=512 --param d_ff=2048 --param label_len=48 --param dropout=0.05 --param lr=0.0001 --param lr_decay=0.5 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_layers=1 --param e_layers=2 --param factor=3 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-autoformer-etth1-96 --compact"
+      "train_command": "libraryts train --algorithm AutoformerForecaster --dataset hf-etth1 --model-id bench-forecasting-autoformer-etth1-96 --param seq_len=96 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param d_model=512 --param d_ff=2048 --param label_len=48 --param dropout=0.05 --param lr=0.0001 --param lr_decay=0.5 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_layers=1 --param e_layers=2 --param factor=3 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-autoformer-etth1-96 --compact"
     },
     {
       "id": "forecasting-autoformer-etth1-192",
@@ -366,8 +366,8 @@
         "lr": 0.0001,
         "lr_decay": 0.5
       },
-      "train_command": "python playground/labts.py train --algorithm AutoformerForecaster --dataset hf-etth1 --model-id bench-forecasting-autoformer-etth1-192 --param seq_len=96 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param d_model=512 --param d_ff=2048 --param label_len=48 --param dropout=0.05 --param lr=0.0001 --param lr_decay=0.5 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_layers=1 --param e_layers=2 --param factor=3 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-autoformer-etth1-192 --compact"
+      "train_command": "libraryts train --algorithm AutoformerForecaster --dataset hf-etth1 --model-id bench-forecasting-autoformer-etth1-192 --param seq_len=96 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param d_model=512 --param d_ff=2048 --param label_len=48 --param dropout=0.05 --param lr=0.0001 --param lr_decay=0.5 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_layers=1 --param e_layers=2 --param factor=3 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-autoformer-etth1-192 --compact"
     },
     {
       "id": "forecasting-autoformer-etth1-336",
@@ -408,8 +408,8 @@
         "lr": 0.0001,
         "lr_decay": 0.5
       },
-      "train_command": "python playground/labts.py train --algorithm AutoformerForecaster --dataset hf-etth1 --model-id bench-forecasting-autoformer-etth1-336 --param seq_len=96 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param d_model=512 --param d_ff=2048 --param label_len=48 --param dropout=0.05 --param lr=0.0001 --param lr_decay=0.5 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_layers=1 --param e_layers=2 --param factor=3 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-autoformer-etth1-336 --compact"
+      "train_command": "libraryts train --algorithm AutoformerForecaster --dataset hf-etth1 --model-id bench-forecasting-autoformer-etth1-336 --param seq_len=96 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param d_model=512 --param d_ff=2048 --param label_len=48 --param dropout=0.05 --param lr=0.0001 --param lr_decay=0.5 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_layers=1 --param e_layers=2 --param factor=3 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-autoformer-etth1-336 --compact"
     },
     {
       "id": "forecasting-autoformer-etth1-720",
@@ -450,8 +450,8 @@
         "lr": 0.0001,
         "lr_decay": 0.5
       },
-      "train_command": "python playground/labts.py train --algorithm AutoformerForecaster --dataset hf-etth1 --model-id bench-forecasting-autoformer-etth1-720 --param seq_len=96 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param d_model=512 --param d_ff=2048 --param label_len=48 --param dropout=0.05 --param lr=0.0001 --param lr_decay=0.5 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_layers=1 --param e_layers=2 --param factor=3 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-autoformer-etth1-720 --compact"
+      "train_command": "libraryts train --algorithm AutoformerForecaster --dataset hf-etth1 --model-id bench-forecasting-autoformer-etth1-720 --param seq_len=96 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param d_model=512 --param d_ff=2048 --param label_len=48 --param dropout=0.05 --param lr=0.0001 --param lr_decay=0.5 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_layers=1 --param e_layers=2 --param factor=3 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-autoformer-etth1-720 --compact"
     },
     {
       "id": "forecasting-nlinear-etth1-96",
@@ -475,7 +475,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 96,
@@ -486,8 +486,8 @@
         "test_start_fraction": 0.661,
         "test_end_fraction": 0.827
       },
-      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-etth1 --model-id bench-forecasting-nlinear-etth1-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-etth1-96 --compact"
+      "train_command": "libraryts train --algorithm NLinearForecaster --dataset hf-etth1 --model-id bench-forecasting-nlinear-etth1-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-nlinear-etth1-96 --compact"
     },
     {
       "id": "forecasting-nlinear-etth1-192",
@@ -511,7 +511,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 192,
@@ -522,8 +522,8 @@
         "test_start_fraction": 0.661,
         "test_end_fraction": 0.827
       },
-      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-etth1 --model-id bench-forecasting-nlinear-etth1-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-etth1-192 --compact"
+      "train_command": "libraryts train --algorithm NLinearForecaster --dataset hf-etth1 --model-id bench-forecasting-nlinear-etth1-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-nlinear-etth1-192 --compact"
     },
     {
       "id": "forecasting-nlinear-etth1-336",
@@ -547,7 +547,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 336,
@@ -558,8 +558,8 @@
         "test_start_fraction": 0.661,
         "test_end_fraction": 0.827
       },
-      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-etth1 --model-id bench-forecasting-nlinear-etth1-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-etth1-336 --compact"
+      "train_command": "libraryts train --algorithm NLinearForecaster --dataset hf-etth1 --model-id bench-forecasting-nlinear-etth1-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-nlinear-etth1-336 --compact"
     },
     {
       "id": "forecasting-nlinear-etth1-720",
@@ -583,7 +583,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 720,
@@ -594,8 +594,8 @@
         "test_start_fraction": 0.661,
         "test_end_fraction": 0.827
       },
-      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-etth1 --model-id bench-forecasting-nlinear-etth1-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-etth1-720 --compact"
+      "train_command": "libraryts train --algorithm NLinearForecaster --dataset hf-etth1 --model-id bench-forecasting-nlinear-etth1-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-nlinear-etth1-720 --compact"
     },
     {
       "id": "forecasting-linear-etth1-96",
@@ -619,7 +619,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 96,
@@ -630,8 +630,8 @@
         "test_start_fraction": 0.661,
         "test_end_fraction": 0.827
       },
-      "train_command": "python playground/labts.py train --algorithm LinearForecaster --dataset hf-etth1 --model-id bench-forecasting-linear-etth1-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-linear-etth1-96 --compact"
+      "train_command": "libraryts train --algorithm LinearForecaster --dataset hf-etth1 --model-id bench-forecasting-linear-etth1-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-linear-etth1-96 --compact"
     },
     {
       "id": "forecasting-linear-etth1-720",
@@ -655,7 +655,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Our run lands BELOW the paper value (better): vanilla Linear is known to degrade at horizon 720 while our rolling protocol with train-statistics z-score stays stable.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Our run lands BELOW the paper value (better): vanilla Linear is known to degrade at horizon 720 while our rolling protocol with train-statistics z-score stays stable.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 720,
@@ -666,8 +666,8 @@
         "test_start_fraction": 0.661,
         "test_end_fraction": 0.827
       },
-      "train_command": "python playground/labts.py train --algorithm LinearForecaster --dataset hf-etth1 --model-id bench-forecasting-linear-etth1-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-linear-etth1-720 --compact"
+      "train_command": "libraryts train --algorithm LinearForecaster --dataset hf-etth1 --model-id bench-forecasting-linear-etth1-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-linear-etth1-720 --compact"
     },
     {
       "id": "forecasting-nlinear-weather-96",
@@ -691,7 +691,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 96,
@@ -701,8 +701,8 @@
         "train_fraction": 0.7,
         "test_fraction": 0.2
       },
-      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-weather --model-id bench-forecasting-nlinear-weather-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-weather-96 --compact"
+      "train_command": "libraryts train --algorithm NLinearForecaster --dataset hf-weather --model-id bench-forecasting-nlinear-weather-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-nlinear-weather-96 --compact"
     },
     {
       "id": "forecasting-dlinear-etth2-96",
@@ -726,7 +726,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: libraryts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while libraryts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 96,
@@ -737,8 +737,8 @@
         "test_start_fraction": 0.661,
         "test_end_fraction": 0.827
       },
-      "train_command": "python playground/labts.py train --algorithm DLinearForecaster --dataset hf-etth2 --model-id bench-forecasting-dlinear-etth2-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-etth2-96 --compact"
+      "train_command": "libraryts train --algorithm DLinearForecaster --dataset hf-etth2 --model-id bench-forecasting-dlinear-etth2-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-dlinear-etth2-96 --compact"
     },
     {
       "id": "forecasting-nlinear-etth2-96",
@@ -762,7 +762,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: libraryts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while libraryts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 96,
@@ -773,8 +773,8 @@
         "test_start_fraction": 0.661,
         "test_end_fraction": 0.827
       },
-      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-etth2 --model-id bench-forecasting-nlinear-etth2-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-etth2-96 --compact"
+      "train_command": "libraryts train --algorithm NLinearForecaster --dataset hf-etth2 --model-id bench-forecasting-nlinear-etth2-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-nlinear-etth2-96 --compact"
     },
     {
       "id": "forecasting-linear-etth2-96",
@@ -798,7 +798,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: libraryts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while libraryts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 96,
@@ -809,8 +809,8 @@
         "test_start_fraction": 0.661,
         "test_end_fraction": 0.827
       },
-      "train_command": "python playground/labts.py train --algorithm LinearForecaster --dataset hf-etth2 --model-id bench-forecasting-linear-etth2-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-linear-etth2-96 --compact"
+      "train_command": "libraryts train --algorithm LinearForecaster --dataset hf-etth2 --model-id bench-forecasting-linear-etth2-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-linear-etth2-96 --compact"
     },
     {
       "id": "forecasting-dlinear-etth2-192",
@@ -834,7 +834,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: libraryts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while libraryts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 192,
@@ -845,8 +845,8 @@
         "test_start_fraction": 0.661,
         "test_end_fraction": 0.827
       },
-      "train_command": "python playground/labts.py train --algorithm DLinearForecaster --dataset hf-etth2 --model-id bench-forecasting-dlinear-etth2-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-etth2-192 --compact"
+      "train_command": "libraryts train --algorithm DLinearForecaster --dataset hf-etth2 --model-id bench-forecasting-dlinear-etth2-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-dlinear-etth2-192 --compact"
     },
     {
       "id": "forecasting-nlinear-etth2-192",
@@ -870,7 +870,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: libraryts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while libraryts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 192,
@@ -881,8 +881,8 @@
         "test_start_fraction": 0.661,
         "test_end_fraction": 0.827
       },
-      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-etth2 --model-id bench-forecasting-nlinear-etth2-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-etth2-192 --compact"
+      "train_command": "libraryts train --algorithm NLinearForecaster --dataset hf-etth2 --model-id bench-forecasting-nlinear-etth2-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-nlinear-etth2-192 --compact"
     },
     {
       "id": "forecasting-linear-etth2-192",
@@ -906,7 +906,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: libraryts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while libraryts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 192,
@@ -917,8 +917,8 @@
         "test_start_fraction": 0.661,
         "test_end_fraction": 0.827
       },
-      "train_command": "python playground/labts.py train --algorithm LinearForecaster --dataset hf-etth2 --model-id bench-forecasting-linear-etth2-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-linear-etth2-192 --compact"
+      "train_command": "libraryts train --algorithm LinearForecaster --dataset hf-etth2 --model-id bench-forecasting-linear-etth2-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-linear-etth2-192 --compact"
     },
     {
       "id": "forecasting-dlinear-etth2-336",
@@ -942,7 +942,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: libraryts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while libraryts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 336,
@@ -953,8 +953,8 @@
         "test_start_fraction": 0.661,
         "test_end_fraction": 0.827
       },
-      "train_command": "python playground/labts.py train --algorithm DLinearForecaster --dataset hf-etth2 --model-id bench-forecasting-dlinear-etth2-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-etth2-336 --compact"
+      "train_command": "libraryts train --algorithm DLinearForecaster --dataset hf-etth2 --model-id bench-forecasting-dlinear-etth2-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-dlinear-etth2-336 --compact"
     },
     {
       "id": "forecasting-nlinear-etth2-336",
@@ -978,7 +978,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: libraryts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while libraryts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 336,
@@ -989,8 +989,8 @@
         "test_start_fraction": 0.661,
         "test_end_fraction": 0.827
       },
-      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-etth2 --model-id bench-forecasting-nlinear-etth2-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-etth2-336 --compact"
+      "train_command": "libraryts train --algorithm NLinearForecaster --dataset hf-etth2 --model-id bench-forecasting-nlinear-etth2-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-nlinear-etth2-336 --compact"
     },
     {
       "id": "forecasting-linear-etth2-336",
@@ -1014,7 +1014,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: libraryts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while libraryts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 336,
@@ -1025,8 +1025,8 @@
         "test_start_fraction": 0.661,
         "test_end_fraction": 0.827
       },
-      "train_command": "python playground/labts.py train --algorithm LinearForecaster --dataset hf-etth2 --model-id bench-forecasting-linear-etth2-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-linear-etth2-336 --compact"
+      "train_command": "libraryts train --algorithm LinearForecaster --dataset hf-etth2 --model-id bench-forecasting-linear-etth2-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-linear-etth2-336 --compact"
     },
     {
       "id": "forecasting-dlinear-etth2-720",
@@ -1050,7 +1050,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: libraryts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while libraryts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 720,
@@ -1061,8 +1061,8 @@
         "test_start_fraction": 0.661,
         "test_end_fraction": 0.827
       },
-      "train_command": "python playground/labts.py train --algorithm DLinearForecaster --dataset hf-etth2 --model-id bench-forecasting-dlinear-etth2-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-etth2-720 --compact"
+      "train_command": "libraryts train --algorithm DLinearForecaster --dataset hf-etth2 --model-id bench-forecasting-dlinear-etth2-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-dlinear-etth2-720 --compact"
     },
     {
       "id": "forecasting-nlinear-etth2-720",
@@ -1086,7 +1086,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: libraryts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while libraryts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 720,
@@ -1097,8 +1097,8 @@
         "test_start_fraction": 0.661,
         "test_end_fraction": 0.827
       },
-      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-etth2 --model-id bench-forecasting-nlinear-etth2-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-etth2-720 --compact"
+      "train_command": "libraryts train --algorithm NLinearForecaster --dataset hf-etth2 --model-id bench-forecasting-nlinear-etth2-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-nlinear-etth2-720 --compact"
     },
     {
       "id": "forecasting-linear-etth2-720",
@@ -1122,7 +1122,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: libraryts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while libraryts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 720,
@@ -1133,8 +1133,8 @@
         "test_start_fraction": 0.661,
         "test_end_fraction": 0.827
       },
-      "train_command": "python playground/labts.py train --algorithm LinearForecaster --dataset hf-etth2 --model-id bench-forecasting-linear-etth2-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-linear-etth2-720 --compact"
+      "train_command": "libraryts train --algorithm LinearForecaster --dataset hf-etth2 --model-id bench-forecasting-linear-etth2-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-linear-etth2-720 --compact"
     },
     {
       "id": "forecasting-dlinear-ettm1-96",
@@ -1158,7 +1158,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 96,
@@ -1169,8 +1169,8 @@
         "test_start_fraction": 0.661,
         "test_end_fraction": 0.827
       },
-      "train_command": "python playground/labts.py train --algorithm DLinearForecaster --dataset hf-ettm1 --model-id bench-forecasting-dlinear-ettm1-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-ettm1-96 --compact"
+      "train_command": "libraryts train --algorithm DLinearForecaster --dataset hf-ettm1 --model-id bench-forecasting-dlinear-ettm1-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-dlinear-ettm1-96 --compact"
     },
     {
       "id": "forecasting-nlinear-ettm1-96",
@@ -1194,7 +1194,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 96,
@@ -1205,8 +1205,8 @@
         "test_start_fraction": 0.661,
         "test_end_fraction": 0.827
       },
-      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-ettm1 --model-id bench-forecasting-nlinear-ettm1-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-ettm1-96 --compact"
+      "train_command": "libraryts train --algorithm NLinearForecaster --dataset hf-ettm1 --model-id bench-forecasting-nlinear-ettm1-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-nlinear-ettm1-96 --compact"
     },
     {
       "id": "forecasting-dlinear-ettm1-192",
@@ -1230,7 +1230,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 192,
@@ -1241,8 +1241,8 @@
         "test_start_fraction": 0.661,
         "test_end_fraction": 0.827
       },
-      "train_command": "python playground/labts.py train --algorithm DLinearForecaster --dataset hf-ettm1 --model-id bench-forecasting-dlinear-ettm1-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-ettm1-192 --compact"
+      "train_command": "libraryts train --algorithm DLinearForecaster --dataset hf-ettm1 --model-id bench-forecasting-dlinear-ettm1-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-dlinear-ettm1-192 --compact"
     },
     {
       "id": "forecasting-nlinear-ettm1-192",
@@ -1266,7 +1266,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 192,
@@ -1277,8 +1277,8 @@
         "test_start_fraction": 0.661,
         "test_end_fraction": 0.827
       },
-      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-ettm1 --model-id bench-forecasting-nlinear-ettm1-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-ettm1-192 --compact"
+      "train_command": "libraryts train --algorithm NLinearForecaster --dataset hf-ettm1 --model-id bench-forecasting-nlinear-ettm1-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-nlinear-ettm1-192 --compact"
     },
     {
       "id": "forecasting-dlinear-ettm1-336",
@@ -1302,7 +1302,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 336,
@@ -1313,8 +1313,8 @@
         "test_start_fraction": 0.661,
         "test_end_fraction": 0.827
       },
-      "train_command": "python playground/labts.py train --algorithm DLinearForecaster --dataset hf-ettm1 --model-id bench-forecasting-dlinear-ettm1-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-ettm1-336 --compact"
+      "train_command": "libraryts train --algorithm DLinearForecaster --dataset hf-ettm1 --model-id bench-forecasting-dlinear-ettm1-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-dlinear-ettm1-336 --compact"
     },
     {
       "id": "forecasting-nlinear-ettm1-336",
@@ -1338,7 +1338,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 336,
@@ -1349,8 +1349,8 @@
         "test_start_fraction": 0.661,
         "test_end_fraction": 0.827
       },
-      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-ettm1 --model-id bench-forecasting-nlinear-ettm1-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-ettm1-336 --compact"
+      "train_command": "libraryts train --algorithm NLinearForecaster --dataset hf-ettm1 --model-id bench-forecasting-nlinear-ettm1-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-nlinear-ettm1-336 --compact"
     },
     {
       "id": "forecasting-dlinear-ettm1-720",
@@ -1374,7 +1374,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 720,
@@ -1385,8 +1385,8 @@
         "test_start_fraction": 0.661,
         "test_end_fraction": 0.827
       },
-      "train_command": "python playground/labts.py train --algorithm DLinearForecaster --dataset hf-ettm1 --model-id bench-forecasting-dlinear-ettm1-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-ettm1-720 --compact"
+      "train_command": "libraryts train --algorithm DLinearForecaster --dataset hf-ettm1 --model-id bench-forecasting-dlinear-ettm1-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-dlinear-ettm1-720 --compact"
     },
     {
       "id": "forecasting-nlinear-ettm1-720",
@@ -1410,7 +1410,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 720,
@@ -1421,8 +1421,8 @@
         "test_start_fraction": 0.661,
         "test_end_fraction": 0.827
       },
-      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-ettm1 --model-id bench-forecasting-nlinear-ettm1-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-ettm1-720 --compact"
+      "train_command": "libraryts train --algorithm NLinearForecaster --dataset hf-ettm1 --model-id bench-forecasting-nlinear-ettm1-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-nlinear-ettm1-720 --compact"
     },
     {
       "id": "forecasting-dlinear-ettm2-96",
@@ -1446,7 +1446,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: libraryts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while libraryts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 96,
@@ -1457,8 +1457,8 @@
         "test_start_fraction": 0.661,
         "test_end_fraction": 0.827
       },
-      "train_command": "python playground/labts.py train --algorithm DLinearForecaster --dataset hf-ettm2 --model-id bench-forecasting-dlinear-ettm2-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-ettm2-96 --compact"
+      "train_command": "libraryts train --algorithm DLinearForecaster --dataset hf-ettm2 --model-id bench-forecasting-dlinear-ettm2-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-dlinear-ettm2-96 --compact"
     },
     {
       "id": "forecasting-nlinear-ettm2-96",
@@ -1482,7 +1482,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: libraryts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while libraryts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 96,
@@ -1493,8 +1493,8 @@
         "test_start_fraction": 0.661,
         "test_end_fraction": 0.827
       },
-      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-ettm2 --model-id bench-forecasting-nlinear-ettm2-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-ettm2-96 --compact"
+      "train_command": "libraryts train --algorithm NLinearForecaster --dataset hf-ettm2 --model-id bench-forecasting-nlinear-ettm2-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-nlinear-ettm2-96 --compact"
     },
     {
       "id": "forecasting-dlinear-ettm2-192",
@@ -1518,7 +1518,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: libraryts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while libraryts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 192,
@@ -1529,8 +1529,8 @@
         "test_start_fraction": 0.661,
         "test_end_fraction": 0.827
       },
-      "train_command": "python playground/labts.py train --algorithm DLinearForecaster --dataset hf-ettm2 --model-id bench-forecasting-dlinear-ettm2-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-ettm2-192 --compact"
+      "train_command": "libraryts train --algorithm DLinearForecaster --dataset hf-ettm2 --model-id bench-forecasting-dlinear-ettm2-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-dlinear-ettm2-192 --compact"
     },
     {
       "id": "forecasting-nlinear-ettm2-192",
@@ -1554,7 +1554,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: libraryts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while libraryts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 192,
@@ -1565,8 +1565,8 @@
         "test_start_fraction": 0.661,
         "test_end_fraction": 0.827
       },
-      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-ettm2 --model-id bench-forecasting-nlinear-ettm2-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-ettm2-192 --compact"
+      "train_command": "libraryts train --algorithm NLinearForecaster --dataset hf-ettm2 --model-id bench-forecasting-nlinear-ettm2-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-nlinear-ettm2-192 --compact"
     },
     {
       "id": "forecasting-dlinear-ettm2-336",
@@ -1590,7 +1590,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: libraryts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while libraryts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 336,
@@ -1601,8 +1601,8 @@
         "test_start_fraction": 0.661,
         "test_end_fraction": 0.827
       },
-      "train_command": "python playground/labts.py train --algorithm DLinearForecaster --dataset hf-ettm2 --model-id bench-forecasting-dlinear-ettm2-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-ettm2-336 --compact"
+      "train_command": "libraryts train --algorithm DLinearForecaster --dataset hf-ettm2 --model-id bench-forecasting-dlinear-ettm2-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-dlinear-ettm2-336 --compact"
     },
     {
       "id": "forecasting-nlinear-ettm2-336",
@@ -1626,7 +1626,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: libraryts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while libraryts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 336,
@@ -1637,8 +1637,8 @@
         "test_start_fraction": 0.661,
         "test_end_fraction": 0.827
       },
-      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-ettm2 --model-id bench-forecasting-nlinear-ettm2-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-ettm2-336 --compact"
+      "train_command": "libraryts train --algorithm NLinearForecaster --dataset hf-ettm2 --model-id bench-forecasting-nlinear-ettm2-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-nlinear-ettm2-336 --compact"
     },
     {
       "id": "forecasting-dlinear-ettm2-720",
@@ -1662,7 +1662,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: libraryts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while libraryts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 720,
@@ -1673,8 +1673,8 @@
         "test_start_fraction": 0.661,
         "test_end_fraction": 0.827
       },
-      "train_command": "python playground/labts.py train --algorithm DLinearForecaster --dataset hf-ettm2 --model-id bench-forecasting-dlinear-ettm2-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-ettm2-720 --compact"
+      "train_command": "libraryts train --algorithm DLinearForecaster --dataset hf-ettm2 --model-id bench-forecasting-dlinear-ettm2-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-dlinear-ettm2-720 --compact"
     },
     {
       "id": "forecasting-nlinear-ettm2-720",
@@ -1698,7 +1698,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Observed: libraryts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while libraryts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 720,
@@ -1709,8 +1709,8 @@
         "test_start_fraction": 0.661,
         "test_end_fraction": 0.827
       },
-      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-ettm2 --model-id bench-forecasting-nlinear-ettm2-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-ettm2-720 --compact"
+      "train_command": "libraryts train --algorithm NLinearForecaster --dataset hf-ettm2 --model-id bench-forecasting-nlinear-ettm2-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-nlinear-ettm2-720 --compact"
     },
     {
       "id": "forecasting-dlinear-exchange-96",
@@ -1734,7 +1734,7 @@
         "type": "relative",
         "value": 0.15
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Exchange is tiny (7,588 rows, 8 variates) and high-variance across seeds, hence the looser 15% tolerance (chosen before running). Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Exchange is tiny (7,588 rows, 8 variates) and high-variance across seeds, hence the looser 15% tolerance (chosen before running). Observed: libraryts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while libraryts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 96,
@@ -1744,8 +1744,8 @@
         "train_fraction": 0.7,
         "test_fraction": 0.2
       },
-      "train_command": "python playground/labts.py train --algorithm DLinearForecaster --dataset hf-exchange --model-id bench-forecasting-dlinear-exchange-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-exchange-96 --compact"
+      "train_command": "libraryts train --algorithm DLinearForecaster --dataset hf-exchange --model-id bench-forecasting-dlinear-exchange-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-dlinear-exchange-96 --compact"
     },
     {
       "id": "forecasting-nlinear-exchange-96",
@@ -1769,7 +1769,7 @@
         "type": "relative",
         "value": 0.15
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Exchange is tiny (7,588 rows, 8 variates) and high-variance across seeds, hence the looser 15% tolerance (chosen before running). Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Exchange is tiny (7,588 rows, 8 variates) and high-variance across seeds, hence the looser 15% tolerance (chosen before running). Observed: libraryts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while libraryts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 96,
@@ -1779,8 +1779,8 @@
         "train_fraction": 0.7,
         "test_fraction": 0.2
       },
-      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-exchange --model-id bench-forecasting-nlinear-exchange-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-exchange-96 --compact"
+      "train_command": "libraryts train --algorithm NLinearForecaster --dataset hf-exchange --model-id bench-forecasting-nlinear-exchange-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-nlinear-exchange-96 --compact"
     },
     {
       "id": "forecasting-linear-exchange-96",
@@ -1804,7 +1804,7 @@
         "type": "relative",
         "value": 0.15
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Exchange is tiny (7,588 rows, 8 variates) and high-variance across seeds, hence the looser 15% tolerance (chosen before running). Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Exchange is tiny (7,588 rows, 8 variates) and high-variance across seeds, hence the looser 15% tolerance (chosen before running). Observed: libraryts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while libraryts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 96,
@@ -1814,8 +1814,8 @@
         "train_fraction": 0.7,
         "test_fraction": 0.2
       },
-      "train_command": "python playground/labts.py train --algorithm LinearForecaster --dataset hf-exchange --model-id bench-forecasting-linear-exchange-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-linear-exchange-96 --compact"
+      "train_command": "libraryts train --algorithm LinearForecaster --dataset hf-exchange --model-id bench-forecasting-linear-exchange-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-linear-exchange-96 --compact"
     },
     {
       "id": "forecasting-dlinear-exchange-192",
@@ -1839,7 +1839,7 @@
         "type": "relative",
         "value": 0.15
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Exchange is tiny (7,588 rows, 8 variates) and high-variance across seeds, hence the looser 15% tolerance (chosen before running). Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Exchange is tiny (7,588 rows, 8 variates) and high-variance across seeds, hence the looser 15% tolerance (chosen before running). Observed: libraryts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while libraryts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 192,
@@ -1849,8 +1849,8 @@
         "train_fraction": 0.7,
         "test_fraction": 0.2
       },
-      "train_command": "python playground/labts.py train --algorithm DLinearForecaster --dataset hf-exchange --model-id bench-forecasting-dlinear-exchange-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-exchange-192 --compact"
+      "train_command": "libraryts train --algorithm DLinearForecaster --dataset hf-exchange --model-id bench-forecasting-dlinear-exchange-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-dlinear-exchange-192 --compact"
     },
     {
       "id": "forecasting-nlinear-exchange-192",
@@ -1874,7 +1874,7 @@
         "type": "relative",
         "value": 0.15
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Exchange is tiny (7,588 rows, 8 variates) and high-variance across seeds, hence the looser 15% tolerance (chosen before running). Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Exchange is tiny (7,588 rows, 8 variates) and high-variance across seeds, hence the looser 15% tolerance (chosen before running). Observed: libraryts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while libraryts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 192,
@@ -1884,8 +1884,8 @@
         "train_fraction": 0.7,
         "test_fraction": 0.2
       },
-      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-exchange --model-id bench-forecasting-nlinear-exchange-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-exchange-192 --compact"
+      "train_command": "libraryts train --algorithm NLinearForecaster --dataset hf-exchange --model-id bench-forecasting-nlinear-exchange-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-nlinear-exchange-192 --compact"
     },
     {
       "id": "forecasting-linear-exchange-192",
@@ -1909,7 +1909,7 @@
         "type": "relative",
         "value": 0.15
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Exchange is tiny (7,588 rows, 8 variates) and high-variance across seeds, hence the looser 15% tolerance (chosen before running). Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Exchange is tiny (7,588 rows, 8 variates) and high-variance across seeds, hence the looser 15% tolerance (chosen before running). Observed: libraryts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while libraryts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 192,
@@ -1919,8 +1919,8 @@
         "train_fraction": 0.7,
         "test_fraction": 0.2
       },
-      "train_command": "python playground/labts.py train --algorithm LinearForecaster --dataset hf-exchange --model-id bench-forecasting-linear-exchange-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-linear-exchange-192 --compact"
+      "train_command": "libraryts train --algorithm LinearForecaster --dataset hf-exchange --model-id bench-forecasting-linear-exchange-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-linear-exchange-192 --compact"
     },
     {
       "id": "forecasting-dlinear-exchange-336",
@@ -1944,7 +1944,7 @@
         "type": "relative",
         "value": 0.15
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Exchange is tiny (7,588 rows, 8 variates) and high-variance across seeds, hence the looser 15% tolerance (chosen before running). Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Exchange is tiny (7,588 rows, 8 variates) and high-variance across seeds, hence the looser 15% tolerance (chosen before running). Observed: libraryts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while libraryts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 336,
@@ -1954,8 +1954,8 @@
         "train_fraction": 0.7,
         "test_fraction": 0.2
       },
-      "train_command": "python playground/labts.py train --algorithm DLinearForecaster --dataset hf-exchange --model-id bench-forecasting-dlinear-exchange-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-exchange-336 --compact"
+      "train_command": "libraryts train --algorithm DLinearForecaster --dataset hf-exchange --model-id bench-forecasting-dlinear-exchange-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-dlinear-exchange-336 --compact"
     },
     {
       "id": "forecasting-nlinear-exchange-336",
@@ -1979,7 +1979,7 @@
         "type": "relative",
         "value": 0.15
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Exchange is tiny (7,588 rows, 8 variates) and high-variance across seeds, hence the looser 15% tolerance (chosen before running). Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Exchange is tiny (7,588 rows, 8 variates) and high-variance across seeds, hence the looser 15% tolerance (chosen before running). Observed: libraryts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while libraryts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 336,
@@ -1989,8 +1989,8 @@
         "train_fraction": 0.7,
         "test_fraction": 0.2
       },
-      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-exchange --model-id bench-forecasting-nlinear-exchange-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-exchange-336 --compact"
+      "train_command": "libraryts train --algorithm NLinearForecaster --dataset hf-exchange --model-id bench-forecasting-nlinear-exchange-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-nlinear-exchange-336 --compact"
     },
     {
       "id": "forecasting-linear-exchange-336",
@@ -2014,7 +2014,7 @@
         "type": "relative",
         "value": 0.15
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Exchange is tiny (7,588 rows, 8 variates) and high-variance across seeds, hence the looser 15% tolerance (chosen before running). Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Exchange is tiny (7,588 rows, 8 variates) and high-variance across seeds, hence the looser 15% tolerance (chosen before running). Observed: libraryts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while libraryts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 336,
@@ -2024,8 +2024,8 @@
         "train_fraction": 0.7,
         "test_fraction": 0.2
       },
-      "train_command": "python playground/labts.py train --algorithm LinearForecaster --dataset hf-exchange --model-id bench-forecasting-linear-exchange-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-linear-exchange-336 --compact"
+      "train_command": "libraryts train --algorithm LinearForecaster --dataset hf-exchange --model-id bench-forecasting-linear-exchange-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-linear-exchange-336 --compact"
     },
     {
       "id": "forecasting-dlinear-exchange-720",
@@ -2049,7 +2049,7 @@
         "type": "relative",
         "value": 0.15
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Exchange is tiny (7,588 rows, 8 variates) and high-variance across seeds, hence the looser 15% tolerance (chosen before running). Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Exchange is tiny (7,588 rows, 8 variates) and high-variance across seeds, hence the looser 15% tolerance (chosen before running). Observed: libraryts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while libraryts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 720,
@@ -2059,8 +2059,8 @@
         "train_fraction": 0.7,
         "test_fraction": 0.2
       },
-      "train_command": "python playground/labts.py train --algorithm DLinearForecaster --dataset hf-exchange --model-id bench-forecasting-dlinear-exchange-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-exchange-720 --compact"
+      "train_command": "libraryts train --algorithm DLinearForecaster --dataset hf-exchange --model-id bench-forecasting-dlinear-exchange-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-dlinear-exchange-720 --compact"
     },
     {
       "id": "forecasting-nlinear-exchange-720",
@@ -2084,7 +2084,7 @@
         "type": "relative",
         "value": 0.15
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Exchange is tiny (7,588 rows, 8 variates) and high-variance across seeds, hence the looser 15% tolerance (chosen before running). Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Exchange is tiny (7,588 rows, 8 variates) and high-variance across seeds, hence the looser 15% tolerance (chosen before running). Observed: libraryts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while libraryts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 720,
@@ -2094,8 +2094,8 @@
         "train_fraction": 0.7,
         "test_fraction": 0.2
       },
-      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-exchange --model-id bench-forecasting-nlinear-exchange-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-exchange-720 --compact"
+      "train_command": "libraryts train --algorithm NLinearForecaster --dataset hf-exchange --model-id bench-forecasting-nlinear-exchange-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-nlinear-exchange-720 --compact"
     },
     {
       "id": "forecasting-linear-exchange-720",
@@ -2119,7 +2119,7 @@
         "type": "relative",
         "value": 0.15
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Exchange is tiny (7,588 rows, 8 variates) and high-variance across seeds, hence the looser 15% tolerance (chosen before running). Observed: labts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while labts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. Exchange is tiny (7,588 rows, 8 variates) and high-variance across seeds, hence the looser 15% tolerance (chosen before running). Observed: libraryts lands above the paper on this dataset family (strong trend/regime shift; errors grow with horizon). Likely causes (hypothesis, not verified): the paper selects checkpoints by validation loss with early stopping while libraryts trains a fixed 10 epochs, and sensitivity to the train-statistics normalization.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 720,
@@ -2129,8 +2129,8 @@
         "train_fraction": 0.7,
         "test_fraction": 0.2
       },
-      "train_command": "python playground/labts.py train --algorithm LinearForecaster --dataset hf-exchange --model-id bench-forecasting-linear-exchange-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-linear-exchange-720 --compact"
+      "train_command": "libraryts train --algorithm LinearForecaster --dataset hf-exchange --model-id bench-forecasting-linear-exchange-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-linear-exchange-720 --compact"
     },
     {
       "id": "forecasting-nlinear-weather-192",
@@ -2154,7 +2154,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 192,
@@ -2164,8 +2164,8 @@
         "train_fraction": 0.7,
         "test_fraction": 0.2
       },
-      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-weather --model-id bench-forecasting-nlinear-weather-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-weather-192 --compact"
+      "train_command": "libraryts train --algorithm NLinearForecaster --dataset hf-weather --model-id bench-forecasting-nlinear-weather-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-nlinear-weather-192 --compact"
     },
     {
       "id": "forecasting-nlinear-weather-336",
@@ -2189,7 +2189,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 336,
@@ -2199,8 +2199,8 @@
         "train_fraction": 0.7,
         "test_fraction": 0.2
       },
-      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-weather --model-id bench-forecasting-nlinear-weather-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-weather-336 --compact"
+      "train_command": "libraryts train --algorithm NLinearForecaster --dataset hf-weather --model-id bench-forecasting-nlinear-weather-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-nlinear-weather-336 --compact"
     },
     {
       "id": "forecasting-nlinear-weather-720",
@@ -2224,7 +2224,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 720,
@@ -2234,8 +2234,8 @@
         "train_fraction": 0.7,
         "test_fraction": 0.2
       },
-      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-weather --model-id bench-forecasting-nlinear-weather-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-weather-720 --compact"
+      "train_command": "libraryts train --algorithm NLinearForecaster --dataset hf-weather --model-id bench-forecasting-nlinear-weather-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-nlinear-weather-720 --compact"
     },
     {
       "id": "forecasting-dlinear-electricity-96",
@@ -2259,7 +2259,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 96,
@@ -2269,8 +2269,8 @@
         "train_fraction": 0.7,
         "test_fraction": 0.2
       },
-      "train_command": "python playground/labts.py train --algorithm DLinearForecaster --dataset hf-electricity --model-id bench-forecasting-dlinear-electricity-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-electricity-96 --compact"
+      "train_command": "libraryts train --algorithm DLinearForecaster --dataset hf-electricity --model-id bench-forecasting-dlinear-electricity-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-dlinear-electricity-96 --compact"
     },
     {
       "id": "forecasting-nlinear-electricity-96",
@@ -2294,7 +2294,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 96,
@@ -2304,8 +2304,8 @@
         "train_fraction": 0.7,
         "test_fraction": 0.2
       },
-      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-electricity --model-id bench-forecasting-nlinear-electricity-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-electricity-96 --compact"
+      "train_command": "libraryts train --algorithm NLinearForecaster --dataset hf-electricity --model-id bench-forecasting-nlinear-electricity-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-nlinear-electricity-96 --compact"
     },
     {
       "id": "forecasting-dlinear-electricity-192",
@@ -2329,7 +2329,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 192,
@@ -2339,8 +2339,8 @@
         "train_fraction": 0.7,
         "test_fraction": 0.2
       },
-      "train_command": "python playground/labts.py train --algorithm DLinearForecaster --dataset hf-electricity --model-id bench-forecasting-dlinear-electricity-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-electricity-192 --compact"
+      "train_command": "libraryts train --algorithm DLinearForecaster --dataset hf-electricity --model-id bench-forecasting-dlinear-electricity-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-dlinear-electricity-192 --compact"
     },
     {
       "id": "forecasting-nlinear-electricity-192",
@@ -2364,7 +2364,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 192,
@@ -2374,8 +2374,8 @@
         "train_fraction": 0.7,
         "test_fraction": 0.2
       },
-      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-electricity --model-id bench-forecasting-nlinear-electricity-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-electricity-192 --compact"
+      "train_command": "libraryts train --algorithm NLinearForecaster --dataset hf-electricity --model-id bench-forecasting-nlinear-electricity-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-nlinear-electricity-192 --compact"
     },
     {
       "id": "forecasting-dlinear-electricity-336",
@@ -2399,7 +2399,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 336,
@@ -2409,8 +2409,8 @@
         "train_fraction": 0.7,
         "test_fraction": 0.2
       },
-      "train_command": "python playground/labts.py train --algorithm DLinearForecaster --dataset hf-electricity --model-id bench-forecasting-dlinear-electricity-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-dlinear-electricity-336 --compact"
+      "train_command": "libraryts train --algorithm DLinearForecaster --dataset hf-electricity --model-id bench-forecasting-dlinear-electricity-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-dlinear-electricity-336 --compact"
     },
     {
       "id": "forecasting-nlinear-electricity-336",
@@ -2434,7 +2434,7 @@
         "type": "relative",
         "value": 0.1
       },
-      "notes": "Protocol matched via labts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
       "spec_params": {
         "seq_len": 336,
         "pred_len": 336,
@@ -2444,8 +2444,8 @@
         "train_fraction": 0.7,
         "test_fraction": 0.2
       },
-      "train_command": "python playground/labts.py train --algorithm NLinearForecaster --dataset hf-electricity --model-id bench-forecasting-nlinear-electricity-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
-      "run_command": "python playground/labts.py run --model-id bench-forecasting-nlinear-electricity-336 --compact"
+      "train_command": "libraryts train --algorithm NLinearForecaster --dataset hf-electricity --model-id bench-forecasting-nlinear-electricity-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-nlinear-electricity-336 --compact"
     }
   ]
 }

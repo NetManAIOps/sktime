@@ -96,7 +96,7 @@ def read_manifest(model_dir: str | Path) -> dict:
     """Read and parse ``manifest.json`` of a persisted model."""
     path = Path(model_dir) / MANIFEST_NAME
     if not path.is_file():
-        raise PlaygroundError(f"No manifest at {path} (see `labts.py ls models`).")
+        raise PlaygroundError(f"No manifest at {path} (see `libraryts.py ls models`).")
     return json.loads(path.read_text(encoding="utf-8"))
 
 
@@ -126,7 +126,7 @@ def save_sktime_model(
             f"Estimator of type {type(estimator).__name__} does not implement the "
             "sktime save/load contract (no `save` method) and cannot be persisted. "
             "User plugins need to inherit from a sktime base class to work with "
-            "`labts train`."
+            "`libraryts train`."
         )
     model_dir = Path(models_root) / model_id
     if model_dir.exists():

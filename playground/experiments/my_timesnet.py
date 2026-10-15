@@ -1,8 +1,8 @@
 """Fork of registered-forecasting-TimesNetForecaster (`sktime.forecasting.tslib.TimesNetForecaster`).
 
 Edit this file freely, then:
-    labts.py check playground/experiments/my_timesnet.py
-    labts.py run --algorithm user-my_timesnet --task forecasting ...
+    libraryts.py check playground/experiments/my_timesnet.py
+    libraryts.py run --algorithm user-my_timesnet --task forecasting ...
 
 The original implementation lives in `sktime.forecasting.tslib.TimesNetForecaster`; this subclass starts as an
 exact copy of its behavior. Override methods, change defaults in PARAMS, or

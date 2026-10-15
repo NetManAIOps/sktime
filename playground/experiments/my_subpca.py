@@ -1,8 +1,8 @@
 """Fork of registered-anomaly_detection-DevADSubPCADetector (`sktime.detection.adapters.devad.DevADSubPCADetector`).
 
 Edit this file freely, then:
-    labts.py check playground/experiments/my_subpca.py
-    labts.py run --algorithm user-my_subpca --task anomaly_detection ...
+    libraryts.py check playground/experiments/my_subpca.py
+    libraryts.py run --algorithm user-my_subpca --task anomaly_detection ...
 
 The original implementation lives in `sktime.detection.adapters.devad.DevADSubPCADetector`; this subclass starts as an
 exact copy of its behavior. Override methods, change defaults in PARAMS, or

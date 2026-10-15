@@ -1,30 +1,30 @@
 ---
-name: labts-api
-description: LabTS API — CLI version of the TSBox Sandbox Playground (NetManAIOps/sktime Time Series Sandbox) for autoresearch harnesses and automated pipelines. Use when an external harness/agent needs to discover available tasks/algorithms/datasets, run time-series experiments (forecasting, classification, regression, clustering, anomaly detection, causal discovery), re-score runs with registry metrics, estimate series parameters, compute distance matrices, or export reproduction scripts and reports programmatically — one CLI command per call, stable JSON envelope, no HTTP server.
+name: libraryts-api
+description: LibraryTS API — CLI version of the TSBox Sandbox Playground (NetManAIOps/sktime Time Series Sandbox) for autoresearch harnesses and automated pipelines. Use when an external harness/agent needs to discover available tasks/algorithms/datasets, run time-series experiments (forecasting, classification, regression, clustering, anomaly detection, causal discovery), re-score runs with registry metrics, estimate series parameters, compute distance matrices, or export reproduction scripts and reports programmatically — one CLI command per call, stable JSON envelope, no HTTP server.
 ---
 
-# LabTS API — Playground CLI
+# LibraryTS API — Playground CLI
 
-`playground/labts.py` is the **headless CLI equivalent of the Playground web
+`playground/libraryts.py` is the **headless CLI equivalent of the Playground web
 UI**. Every web capability has a CLI counterpart, backed by the same
 catalog/runner code with identical results:
 
 | Playground web endpoint     | CLI command                                                   |
 |-----------------------------|---------------------------------------------------------------|
-| `GET /api/catalog`          | `labts.py catalog [--compact]`                                |
-| (discovery shortcut)        | `labts.py ls tasks\|algorithms\|datasets\|preprocessors\|metrics\|models\|analyzers\|distances [--task X] [--all]` |
-| `POST /api/run`             | `labts.py run --spec '<json>' [--compact] [--out run.json]`   |
-|                             | `labts.py run --task forecasting --dataset airline --algorithm naive-seasonal-last --param horizon=6` |
-| `GET /api/export/script`    | `labts.py script (--spec '<json>' \| --from run.json)`        |
-| `GET /api/export/report`    | `labts.py report (--spec '<json>' \| --from run.json)`        |
-| (fork algorithm)            | `labts.py fork <algorithm_id> [--name X]`                     |
-| (validate plugin)           | `labts.py check <plugin.py>`                                  |
-| (train + persist model)     | `labts.py train --algorithm <algorithm-id> [--dataset D] [--model-id X] [--param k=v] [--val-fraction 0.2]` |
-| (run a saved model)         | `labts.py run --model-id X [--dataset D] [--param k=v] [--metric mase] [--out run.json]` |
-| (re-score a run)            | `labts.py evaluate (--from run.json \| --spec '<json>') --metric M [--metric M2]` |
-| (parameter estimation)      | `labts.py analyze --algorithm seasonality-acf --dataset airline [--param k=v]` |
-| (pairwise distances)        | `labts.py dist --dataset unit-test --metric dtw [--metric scipy:cosine] [--max-instances 50]` |
-| (predict/detect aliases)    | `labts.py predict --model-id X` / `labts.py detect --model-id X` (= `run --model-id`) |
+| `GET /api/catalog`          | `libraryts.py catalog [--compact]`                                |
+| (discovery shortcut)        | `libraryts.py ls tasks\|algorithms\|datasets\|preprocessors\|metrics\|models\|analyzers\|distances [--task X] [--all]` |
+| `POST /api/run`             | `libraryts.py run --spec '<json>' [--compact] [--out run.json]`   |
+|                             | `libraryts.py run --task forecasting --dataset airline --algorithm naive-seasonal-last --param horizon=6` |
+| `GET /api/export/script`    | `libraryts.py script (--spec '<json>' \| --from run.json)`        |
+| `GET /api/export/report`    | `libraryts.py report (--spec '<json>' \| --from run.json)`        |
+| (fork algorithm)            | `libraryts.py fork <algorithm_id> [--name X]`                     |
+| (validate plugin)           | `libraryts.py check <plugin.py>`                                  |
+| (train + persist model)     | `libraryts.py train --algorithm <algorithm-id> [--dataset D] [--model-id X] [--param k=v] [--val-fraction 0.2]` |
+| (run a saved model)         | `libraryts.py run --model-id X [--dataset D] [--param k=v] [--metric mase] [--out run.json]` |
+| (re-score a run)            | `libraryts.py evaluate (--from run.json \| --spec '<json>') --metric M [--metric M2]` |
+| (parameter estimation)      | `libraryts.py analyze --algorithm seasonality-acf --dataset airline [--param k=v]` |
+| (pairwise distances)        | `libraryts.py dist --dataset unit-test --metric dtw [--metric scipy:cosine] [--max-instances 50]` |
+| (predict/detect aliases)    | `libraryts.py predict --model-id X` / `libraryts.py detect --model-id X` (= `run --model-id`) |
 
 `fork` materializes any enabled catalog algorithm as an editable single-file
 plugin in `playground/experiments/` (subclass scaffold with provenance
@@ -47,14 +47,14 @@ One process per call, no HTTP server, `run_id` session state not needed.
 Run from the repository root with the repo venv:
 
 ```bash
-.venv/bin/python playground/labts.py <command>
+.venv/bin/libraryts <command>
 ```
 
 (any Python 3.10+ with sktime + soft deps works; `.venv` is the reference
 environment, see `playground/requirements.txt`)
 
-Registry discovery (~50 s) is cached on disk under `~/.cache/labts/`
-(`$XDG_CACHE_HOME`/`LABTS_CACHE_DIR` override, `LABTS_NO_CACHE=1` disables),
+Registry discovery (~50 s) is cached on disk under `~/.cache/libraryts/`
+(`$XDG_CACHE_HOME`/`LIBRARYTS_CACHE_DIR` override, `LIBRARYTS_NO_CACHE=1` disables),
 keyed by Python, installed packages, `catalog.py`, and the sktime source tree,
 so only the first call after a change pays it. `ls tasks|metrics|analyzers|distances`
 never run discovery.
@@ -65,7 +65,7 @@ never run discovery.
 
 ```json
 {
-  "api": "labts",
+  "api": "libraryts",
   "api_version": "1.0",
   "kind": "catalog" | "result" | "train" | "fork" | "check" | "evaluate" | "analyze" | "dist",
   "status": "ok" | "blocked" | "error",
@@ -119,10 +119,10 @@ Full form (default) keys: `tasks`, `algorithms`, `preprocessors`, `datasets`,
   `scores | labels | values | predictions` tells you which run payload the
   metric needs (score-based anomaly metrics need the continuous `scores`
   saved by every anomaly run).
-- `analyzers`: param_est algorithms for `labts analyze`
+- `analyzers`: param_est algorithms for `libraryts analyze`
   (SeasonalityACF, SeasonalityPeriodogram, StationarityADF, StationarityKPSS,
   ARLagOrderSelector).
-- `distances`: distance ids for `labts dist` — 15 `sktime.distances`
+- `distances`: distance ids for `libraryts dist` — 15 `sktime.distances`
   canonical names plus `scipy:<name>` variants via `ScipyDist`.
 - `meta`: `generated_at`, `sktime_version`, `eval_params`,
   `defaults` (per-task default `dataset_id`/`algorithm_id`), `notes`.
@@ -136,12 +136,12 @@ Static mirror for browsing without paying discovery cost:
 
 ## `ls` — quick discovery
 
-`labts.py ls <section>` prints one catalog section as
+`libraryts.py ls <section>` prints one catalog section as
 `{"section", "count", "rows"}` inside the usual catalog envelope — cheaper to
 eyeball than the full catalog:
 
 - sections: `tasks`, `algorithms`, `datasets`, `preprocessors`, `metrics`,
-  `models` (persisted `labts train` outputs), `analyzers`, `distances`
+  `models` (persisted `libraryts train` outputs), `analyzers`, `distances`
 - `--task X`: keep entries usable for task X (matches `task` or
   `compatible_tasks`)
 - `--all`: include disabled algorithms/preprocessors (default: enabled only)
@@ -163,7 +163,7 @@ eyeball than the full catalog:
 Equivalent flag form (no JSON needed):
 
 ```bash
-labts.py run --task forecasting --dataset airline --algorithm naive-seasonal-last \
+libraryts.py run --task forecasting --dataset airline --algorithm naive-seasonal-last \
     --param horizon=6 --param seasonal_period=12 [--metric mase] \
     [--preprocessor registered-preprocessor-LogTransformer [--preprocessor ...]] \
     [--pre-param 1:key=value]
@@ -260,7 +260,7 @@ whose run pipeline embeds ad-hoc detrending — it is rejected with a hint.
 
 ```bash
 # train once, any task (fit on the training split; eval params are persisted)
-labts.py train --algorithm registered-forecasting-DLinearForecaster \
+libraryts.py train --algorithm registered-forecasting-DLinearForecaster \
     --dataset hf-etth1 --model-id dlinear-v1 \
     --param seq_len=336 --param pred_len=96 --param horizon=96 \
     --param eval_mode=rolling --param train_fraction=0.496 \
@@ -268,13 +268,13 @@ labts.py train --algorithm registered-forecasting-DLinearForecaster \
     --param num_epochs=10
 
 # run many — no refit, same envelope as run; --compact/--out/--metric supported
-labts.py run --model-id dlinear-v1 --compact
-labts.py report --from det.json
+libraryts.py run --model-id dlinear-v1 --compact
+libraryts.py report --from det.json
 
 # DevAD example (unchanged): train once, detect many
-labts.py train --algorithm registered-anomaly_detection-DevADFITSDetector \
+libraryts.py train --algorithm registered-anomaly_detection-DevADFITSDetector \
     --dataset yahoo --model-id fits-v1 --param epochs=3 --val-fraction 0.2
-labts.py run --model-id fits-v1 --dataset yahoo --param threshold_quantile=0.99 --out det.json
+libraryts.py run --model-id fits-v1 --dataset yahoo --param threshold_quantile=0.99 --out det.json
 ```
 
 - `--model-id` defaults to `<algorithm>-<dataset>` (DevAD: `<family>-<dataset>`);
@@ -308,10 +308,10 @@ labts.py run --model-id fits-v1 --dataset yahoo --param threshold_quantile=0.99 
 ```bash
 # from a saved result — no re-fit; anomaly runs are re-scored from the saved
 # continuous `scores` field (plus the `evaluation` labels/predictions payload)
-labts.py evaluate --from run.json --metric pa_f1 --metric vus_roc
+libraryts.py evaluate --from run.json --metric pa_f1 --metric vus_roc
 
 # from a spec — re-runs the experiment with the requested metrics
-labts.py evaluate --spec '{"task": "forecasting", "dataset_id": "airline"}' --metric mase
+libraryts.py evaluate --spec '{"task": "forecasting", "dataset_id": "airline"}' --metric mase
 ```
 
 - `--from` works for anomaly_detection (via `scores`), forecasting (forecast
@@ -329,9 +329,9 @@ labts.py evaluate --spec '{"task": "forecasting", "dataset_id": "airline"}' --me
 ## `analyze` — parameter estimation (no evaluation stage)
 
 ```bash
-labts.py analyze --algorithm seasonality-acf --dataset airline
-labts.py analyze --algorithm stationarity-kpss --dataset yahoo
-labts.py analyze --algorithm ar-lag-order --dataset airline --param maxlag=8
+libraryts.py analyze --algorithm seasonality-acf --dataset airline
+libraryts.py analyze --algorithm stationarity-kpss --dataset yahoo
+libraryts.py analyze --algorithm ar-lag-order --dataset airline --param maxlag=8
 ```
 
 Fits a `sktime.param_est` estimator on a catalog series (forecasting or
@@ -342,8 +342,8 @@ anomaly_detection dataset) and prints the fitted estimates as JSON
 ## `dist` — pairwise distance matrices
 
 ```bash
-labts.py dist --dataset unit-test --metric dtw --metric scipy:cosine --max-instances 40
-labts.py dist --dataset arrow-head --metric wdtw --param window=0.1
+libraryts.py dist --dataset unit-test --metric dtw --metric scipy:cosine --max-instances 40
+libraryts.py dist --dataset arrow-head --metric wdtw --param window=0.1
 ```
 
 Computes the pairwise distance matrix over the dataset's **train** instances
@@ -360,10 +360,10 @@ Computes the pairwise distance matrix over the dataset's **train** instances
 ## `run --model-id` (aliases `predict` / `detect`) — persisted-model evaluation
 
 ```bash
-labts.py run --model-id <id> [--dataset D] [--param k=v] [--metric mase] [--out run.json]
+libraryts.py run --model-id <id> [--dataset D] [--param k=v] [--metric mase] [--out run.json]
 # equivalent legacy forms:
-labts.py predict --model-id <id> [--dataset D] [--param k=v]
-labts.py detect --model-id <id> [--dataset D] [--param threshold_quantile=0.99]
+libraryts.py predict --model-id <id> [--dataset D] [--param k=v]
+libraryts.py detect --model-id <id> [--dataset D] [--param threshold_quantile=0.99]
 ```
 
 All of them call `trainer.predict_estimator(model_id, dataset_id, params)`:
@@ -379,13 +379,13 @@ sktime models reload from `model.zip` (multi-series bundles from
 
 ```bash
 # 1. What can I do? (small)
-python playground/labts.py catalog --compact | python -m json.tool
+libraryts catalog --compact | python -m json.tool
 
 # 2. Default forecasting baseline (fast: curated algorithms skip discovery)
-python playground/labts.py run --compact --spec '{}'
+libraryts run --compact --spec '{}'
 
 # 3. Registered estimator, eval + constructor params mixed
-python playground/labts.py run --compact --spec '{
+libraryts run --compact --spec '{
   "task": "forecasting",
   "dataset_id": "airline",
   "algorithm_id": "registered-forecasting-PolynomialTrendForecaster",
@@ -393,7 +393,7 @@ python playground/labts.py run --compact --spec '{
 }'
 
 # 4. Anomaly detection with tuned eval threshold
-python playground/labts.py run --compact --spec '{
+libraryts run --compact --spec '{
   "task": "anomaly_detection",
   "dataset_id": "yahoo",
   "algorithm_id": "threshold-detector",
@@ -401,28 +401,28 @@ python playground/labts.py run --compact --spec '{
 }'
 
 # 5. Pipeline: run once, export script + report (web "export" buttons)
-python playground/labts.py run --spec @spec.json --out run.json --compact
-python playground/labts.py script --from run.json > experiment.py
-python playground/labts.py report --from run.json > experiment.md
+libraryts run --spec @spec.json --out run.json --compact
+libraryts script --from run.json > experiment.py
+libraryts report --from run.json > experiment.md
 
 # 6. Causal discovery on a bnlearn benchmark (graph metrics vs true DAG)
-python playground/labts.py run --compact --task causal --dataset causal-sachs \
+libraryts run --compact --task causal --dataset causal-sachs \
     --algorithm causal-notears --param max_samples=1500
 
 # 7. Anomaly run + re-score with DevAD metrics (no re-fit)
-python playground/labts.py run --task anomaly_detection --dataset yahoo \
+libraryts run --task anomaly_detection --dataset yahoo \
     --algorithm registered-anomaly_detection-DevADSubPCADetector \
     --param win_len=8 --metric pa_f1 --metric vus_roc --out det.json --compact
-python playground/labts.py evaluate --from det.json --metric affiliation_f1
+libraryts evaluate --from det.json --metric affiliation_f1
 
 # 8. Chained preprocessors with per-step params
-python playground/labts.py run --task forecasting --dataset airline --param horizon=6 \
+libraryts run --task forecasting --dataset airline --param horizon=6 \
     --preprocessor registered-preprocessor-LogTransformer \
     --preprocessor registered-preprocessor-Detrender --pre-param 2:degree=1 --compact
 
 # 9. Parameter estimation + distances
-python playground/labts.py analyze --algorithm seasonality-periodogram --dataset airline
-python playground/labts.py dist --dataset gunpoint --metric dtw --max-instances 30
+libraryts analyze --algorithm seasonality-periodogram --dataset airline
+libraryts dist --dataset gunpoint --metric dtw --max-instances 30
 ```
 
 ## Performance and cost notes (verified 2026-07)

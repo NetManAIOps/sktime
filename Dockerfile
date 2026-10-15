@@ -5,14 +5,14 @@
 #
 # Build:   sudo docker build -t tsbox-playground:latest .
 # Web UI:  sudo docker run --rm -p 8765:8765 tsbox-playground:latest
-# LabTS CLI (override the command):
+# LibraryTS CLI (override the command):
 #   sudo docker run --rm tsbox-playground:latest \
-#     python playground/labts.py catalog --compact
+#     libraryts catalog --compact
 #   sudo docker run --rm tsbox-playground:latest \
-#     python playground/labts.py run --spec '{"task":"forecasting"}' --compact
+#     libraryts run --spec '{"task":"forecasting"}' --compact
 #
 # Remote build (Agent Office / agi build service):
-#   agi build submit . --dest <registry>/labts:<tag> -o json
+#   agi build submit . --dest <registry>/libraryts:<tag> -o json
 #
 # Mirrors default to pypi.org: measured from the agi build service it is
 # ~700x faster than mirrors.aliyun.com (340 MB/s vs 0.5 MB/s). For CN-only

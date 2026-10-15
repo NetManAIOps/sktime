@@ -1,2 +1,2 @@
-"""Local TSBox Sandbox Playground runtime."""
+"""Local LibraryTS Playground runtime."""
 

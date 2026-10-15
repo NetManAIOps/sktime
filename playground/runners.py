@@ -1,4 +1,4 @@
-"""Experiment runners for the TSBox Sandbox Playground."""
+"""Experiment runners for the LibraryTS Playground."""
 
 from __future__ import annotations
 
@@ -968,7 +968,7 @@ def _build_estimator(algorithm: dict, est_params: dict):
             f"{missing}. Pass them in spec.params; sub-estimators use the nested "
             'form {"<param>": [{"name": "x", "estimator": {"algorithm_id": '
             '"registered-<task>-<Class>", "params": {...}}}]} '
-            "(see `labts.py ls algorithms --all` for entries marked "
+            "(see `libraryts.py ls algorithms --all` for entries marked "
             "required_params/accepts_estimators)."
         )
     return klass(**coerced)
@@ -1661,7 +1661,7 @@ def evaluate_saved_run(data: dict, metric_ids: list[str]) -> dict:
     series points for forecasting, and the (full) series points for
     regression/classification/clustering. Runs saved without those payloads
     (e.g. captured from `--compact` stdout) are rejected with a pointer to
-    `labts evaluate --spec`, which re-runs the experiment instead.
+    `libraryts evaluate --spec`, which re-runs the experiment instead.
     """
     task = data.get("task")
     try:
@@ -1688,7 +1688,7 @@ def _saved_run_context(data: dict, task: str) -> dict:
     def _missing(what: str):
         raise PlaygroundError(
             f"Saved run has no {what}; it was probably captured from `--compact` "
-            "stdout. Re-save with `run --out`, or use `labts evaluate --spec` "
+            "stdout. Re-save with `run --out`, or use `libraryts evaluate --spec` "
             "to re-run the experiment with metrics."
         )
 
@@ -1734,8 +1734,8 @@ def _saved_run_context(data: dict, task: str) -> dict:
             "predictions": [p[pred_key] for p in points],
         }
     raise PlaygroundError(
-        f"`labts evaluate --from` is not supported for task `{task}`; "
-        "use `labts evaluate --spec` to re-run with metrics."
+        f"`libraryts evaluate --from` is not supported for task `{task}`; "
+        "use `libraryts evaluate --spec` to re-run with metrics."
     )
 
 
@@ -1807,7 +1807,7 @@ def generate_report(result: dict) -> str:
     # Assembled line by line: dedent on an f-string breaks as soon as an
     # interpolated value spans several lines (e.g. more than one metric).
     lines = [
-        "# TSBox Sandbox Experiment Report",
+        "# LibraryTS Experiment Report",
         "",
         f"- Task: {result['task']}",
         f"- Dataset: {result['dataset']['name']}",

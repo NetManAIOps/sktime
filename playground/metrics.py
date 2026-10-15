@@ -1,12 +1,12 @@
-"""Unified metric registry for the TSBox Playground and the LabTS API.
+"""Unified metric registry for the LibraryTS Playground and the LibraryTS API.
 
 One registry drives three consumers:
 
-- ``catalog.build_catalog()`` / ``labts ls metrics`` — discovery metadata.
+- ``catalog.build_catalog()`` / ``libraryts ls metrics`` — discovery metadata.
 - ``run --metric <id>`` (repeatable) — extra metrics computed on top of the
   per-task default set (the default set is unchanged when no ``--metric`` is
   passed, keeping every existing result byte-compatible).
-- ``labts evaluate --from run.json --metric <id>`` — re-scores a saved run
+- ``libraryts evaluate --from run.json --metric <id>`` — re-scores a saved run
   without re-fitting, using the persisted evaluation payload (anomaly runs
   store continuous ``scores``; forecasting runs store actuals/predictions).
 
@@ -411,7 +411,7 @@ def resolve_metrics(metric_ids: list[str] | None, task: str) -> list[dict]:
             valid = sorted({e["id"] for e in METRIC_REGISTRY if e["task"] == task})
             raise MetricError(
                 f"Unknown metric `{metric_id}` for task `{task}`. "
-                f"Valid ids: {', '.join(valid)} (see `labts ls metrics --task {task}`)."
+                f"Valid ids: {', '.join(valid)} (see `libraryts ls metrics --task {task}`)."
             )
         resolved.append(entry)
     return resolved

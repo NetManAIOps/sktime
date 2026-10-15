@@ -2,20 +2,20 @@
 
 Two lifecycle forms share one API:
 
-* ``labts run`` (no model id) is stateless: fit and predict happen in one
+* ``libraryts run`` (no model id) is stateless: fit and predict happen in one
   call and the fitted model is discarded.
-* ``labts train`` + ``labts run --model-id`` split the lifecycle for EVERY
+* ``libraryts train`` + ``libraryts run --model-id`` split the lifecycle for EVERY
   catalog algorithm/task (``predict``/``detect`` are aliases of the model
   path). The train-once/run-many workflow persists fitted models under
   ``playground/models/<model_id>/`` and reloads them later::
 
-    labts train --algorithm registered-forecasting-SARIMAX --dataset airline \
+    libraryts train --algorithm registered-forecasting-SARIMAX --dataset airline \
         --model-id sarimax-v1 --param horizon=12
-    labts run   --model-id sarimax-v1 --dataset airline
+    libraryts run   --model-id sarimax-v1 --dataset airline
 
-    labts train --algorithm registered-anomaly_detection-DevADFITSDetector \
+    libraryts train --algorithm registered-anomaly_detection-DevADFITSDetector \
         --dataset yahoo --model-id fits-v1 --param epochs=3
-    labts run   --model-id fits-v1 --dataset yahoo --param threshold_quantile=0.99
+    libraryts run   --model-id fits-v1 --dataset yahoo --param threshold_quantile=0.99
 
 Backend selection rule (`train(spec)`): an algorithm whose catalog module
 starts with ``sktime.detection.adapters.devad.`` is trained through the
@@ -25,7 +25,7 @@ fitted as a plain sktime estimator and persisted through the sktime
 save/load backend in `persistence` (``model.zip`` + ``manifest.json``; the
 manifest schema — task/algorithm_id/params/backend/created_at/spec plus
 artifacts — is documented in ``playground/persistence.py``). Curated
-catalog algorithms map to the same estimators as their `labts run`
+catalog algorithms map to the same estimators as their `libraryts run`
 counterparts, except the curated anomaly detector whose `run` pipeline
 embeds ad-hoc detrending that is not part of the estimator and is
 therefore rejected with a hint to use a registered detector instead.
@@ -41,7 +41,7 @@ the one-shot multi-series runner).
 
 `predict_estimator(model_id, dataset_id, params)` reloads a persisted
 model and evaluates it on the dataset's holdout split, returning the same
-result envelope as `labts run`, so `labts report --from` works on it
+result envelope as `libraryts run`, so `libraryts report --from` works on it
 unchanged. For DevAD models it delegates to `detect_devad`; for sktime
 models the holdout split is reproduced from the manifest's eval params,
 overridable via `params` (e.g. ``{"horizon": 24}``). The fitted
@@ -145,7 +145,7 @@ def train(spec: dict) -> dict:
     algorithm_id = spec.get("algorithm_id")
     if not algorithm_id:
         raise PlaygroundError(
-            "`train` requires algorithm_id (see `labts.py ls algorithms`)."
+            "`train` requires algorithm_id (see `libraryts.py ls algorithms`)."
         )
     declared_task = spec.get("task")
     algorithm = None
@@ -205,7 +205,7 @@ def run_trained_model(
 ) -> dict:
     """Evaluate a persisted model, optionally adding registry metrics.
 
-    Shared by `labts run --model-id` and the web ``/api/run`` model path.
+    Shared by `libraryts run --model-id` and the web ``/api/run`` model path.
     """
     from runners import _apply_requested_metrics, _saved_run_context
 
@@ -236,8 +236,8 @@ def predict_estimator(
 ) -> dict:
     """Reload a persisted model and evaluate it on a dataset's holdout split.
 
-    Generic predict backend for `labts predict`; returns the same result
-    envelope as `labts run`. DevAD models delegate to `detect_devad`
+    Generic predict backend for `libraryts predict`; returns the same result
+    envelope as `libraryts run`. DevAD models delegate to `detect_devad`
     (anomaly alias), sktime models are reloaded from ``model.zip`` and
     scored against a holdout reproduced from the manifest's eval params
     (`params` overrides them, e.g. ``{"horizon": 24}``).
@@ -245,7 +245,7 @@ def predict_estimator(
     started = time.perf_counter()
     if not model_id:
         raise PlaygroundError(
-            "`predict` requires model_id (see `labts.py ls models`)."
+            "`predict` requires model_id (see `libraryts.py ls models`)."
         )
     persistence.validate_model_id(model_id)
     model_dir = MODELS_ROOT / model_id
@@ -253,7 +253,7 @@ def predict_estimator(
     if not manifest_path.is_file():
         raise PlaygroundError(
             f"No trained model `{model_id}` under {MODELS_ROOT} "
-            "(see `labts.py ls models`)."
+            "(see `libraryts.py ls models`)."
         )
     manifest = persistence.read_manifest(model_dir)
     if persistence.detect_backend(manifest) == "devad":
@@ -302,7 +302,7 @@ def _train_sktime(spec: dict, algorithm: dict) -> dict:
             f"Algorithm `{algorithm['id']}` does not implement the sktime "
             "save/load contract (no `save` method) and cannot be persisted. "
             "User plugins need to inherit from a sktime base class to work "
-            "with `labts train`."
+            "with `libraryts train`."
         )
     prep_est = _build_train_preprocessor(preprocessor, spec)
 
@@ -379,8 +379,8 @@ def _train_sktime(spec: dict, algorithm: dict) -> dict:
         "duration_ms": elapsed_ms,
         "log": log,
         "next_steps": [
-            f"labts.py run --model-id {model_id} --dataset {dataset['id']}",
-            "labts.py ls models",
+            f"libraryts.py run --model-id {model_id} --dataset {dataset['id']}",
+            "libraryts.py ls models",
         ],
     }
 
@@ -756,7 +756,7 @@ def _fit_sktime_estimator(
             )
         if str(eval_params.get("fit_on") or "") == "all":
             # Unsupervised clustering papers evaluate on the fused train+test
-            # set — mirror the `labts run` protocol exactly.
+            # set — mirror the `libraryts run` protocol exactly.
             from runners import _concat_panels
 
             X_all = _concat_panels(X_train, X_test)
@@ -819,7 +819,7 @@ def _fit_sktime_estimator(
 def _build_train_estimator(algorithm: dict, est_params: dict):
     """Instantiate the train-time estimator for a catalog algorithm.
 
-    Mirrors the construction semantics of `labts run`: curated algorithms
+    Mirrors the construction semantics of `libraryts run`: curated algorithms
     map to the same estimators as their curated runners; registered and
     user algorithms are constructed from their catalog module with params
     coerced to the advertised defaults' types.
@@ -859,7 +859,7 @@ def _build_module_estimator(algorithm: dict, est_params: dict):
 def _build_curated_estimator(algorithm: dict, est_params: dict):
     """Construct the estimator behind a curated catalog algorithm.
 
-    Uses the same classes and defaults as the curated `labts run` runners.
+    Uses the same classes and defaults as the curated `libraryts run` runners.
     The curated anomaly detector is rejected: its `run` pipeline detrends
     and standardizes the series outside the estimator, so a persisted
     estimator alone could not reproduce it.
@@ -908,9 +908,9 @@ def _build_curated_estimator(algorithm: dict, est_params: dict):
         return _build_module_estimator(algorithm, est_params)
     raise PlaygroundError(
         f"Curated algorithm `{algorithm_id}` has no persistent train pipeline: "
-        "its `labts run` path embeds ad-hoc preprocessing that is not part of "
+        "its `libraryts run` path embeds ad-hoc preprocessing that is not part of "
         "the estimator. Use a registered-* detector instead "
-        "(see `labts.py ls algorithms --task anomaly_detection`)."
+        "(see `libraryts.py ls algorithms --task anomaly_detection`)."
     )
 
 
@@ -1369,8 +1369,8 @@ def _clean_number(value):
 def _resolve_devad_algorithm(algorithm_id: str | None):
     if not algorithm_id:
         raise PlaygroundError(
-            "`labts train` requires --algorithm with a DevAD adapter id "
-            "(see `labts.py ls algorithms --task anomaly_detection`)."
+            "`libraryts train` requires --algorithm with a DevAD adapter id "
+            "(see `libraryts.py ls algorithms --task anomaly_detection`)."
         )
     algorithm = get_enabled_algorithm(algorithm_id)
     if algorithm is None or not algorithm.get("enabled"):
@@ -1378,9 +1378,9 @@ def _resolve_devad_algorithm(algorithm_id: str | None):
     module = algorithm.get("module") or ""
     if not module.startswith(_ADAPTER_MODULE):
         raise PlaygroundError(
-            "`labts train` supports DevAD adapters only "
+            "`libraryts train` supports DevAD adapters only "
             f"(module {_ADAPTER_MODULE}*); got `{module}`. Non-trainable "
-            "detectors do not need a train step — use `labts run` directly."
+            "detectors do not need a train step — use `libraryts run` directly."
         )
     return algorithm, import_estimator_class(module)
 
@@ -1392,7 +1392,7 @@ def _resolve_anomaly_dataset(dataset_id: str | None):
     if dataset.get("task") != "anomaly_detection":
         raise PlaygroundError(
             f"Dataset `{dataset['id']}` is a {dataset.get('task')} dataset; "
-            "train/detect need an anomaly_detection dataset (see `labts.py ls datasets`)."
+            "train/detect need an anomaly_detection dataset (see `libraryts.py ls datasets`)."
         )
     return dataset
 
@@ -1451,7 +1451,7 @@ def train_devad(spec: dict) -> dict:
     try:
         from sktime.libs.devad.services.model_service import train_model
 
-        with tempfile.TemporaryDirectory(prefix="labts-train-") as tmp:
+        with tempfile.TemporaryDirectory(prefix="libraryts-train-") as tmp:
             tmp = Path(tmp)
             train_path = tmp / "train.npy"
             np.save(train_path, values)
@@ -1496,8 +1496,8 @@ def train_devad(spec: dict) -> dict:
         "duration_ms": elapsed_ms,
         "log": log,
         "next_steps": [
-            f"labts.py detect --model-id {model_id} --dataset {dataset['id']}",
-            "labts.py ls models",
+            f"libraryts.py detect --model-id {model_id} --dataset {dataset['id']}",
+            "libraryts.py ls models",
         ],
     }
 
@@ -1532,7 +1532,7 @@ def detect_devad(spec: dict) -> dict:
     model_id = spec.get("model_id")
     if not model_id:
         raise PlaygroundError(
-            "`labts detect` requires --model-id (see `labts.py ls models`)."
+            "`libraryts detect` requires --model-id (see `libraryts.py ls models`)."
         )
     persistence.validate_model_id(model_id)
     model_dir = MODELS_ROOT / model_id
@@ -1540,14 +1540,14 @@ def detect_devad(spec: dict) -> dict:
     if not manifest_path.is_file():
         raise PlaygroundError(
             f"No trained model `{model_id}` under {MODELS_ROOT} "
-            "(see `labts.py ls models`)."
+            "(see `libraryts.py ls models`)."
         )
     backend = persistence.detect_backend(persistence.read_manifest(model_dir))
     if backend != persistence.DEVAD_BACKEND:
         raise PlaygroundError(
             f"Model `{model_id}` uses the {backend} backend; detect-time "
             "preprocessing applies to DevAD models only. Use "
-            f"`labts.py run --model-id {model_id}` (the manifest already "
+            f"`libraryts.py run --model-id {model_id}` (the manifest already "
             "fixes its preprocessing)."
         )
     dataset = _resolve_anomaly_dataset(spec.get("dataset_id"))

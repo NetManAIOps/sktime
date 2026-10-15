@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Local HTTP server for the TSBox Sandbox Playground."""
+"""Local HTTP server for the LibraryTS Playground."""
 
 from __future__ import annotations
 
@@ -24,7 +24,7 @@ if str(REPO_ROOT) not in sys.path:
 
 
 class PlaygroundHandler(BaseHTTPRequestHandler):
-    server_version = "TSBoxSandboxPlayground/1.0"
+    server_version = "LibraryTSPlayground/1.0"
 
     def do_GET(self):
         parsed = urlparse(self.path)
@@ -89,7 +89,7 @@ class PlaygroundHandler(BaseHTTPRequestHandler):
 
                 result = train_model(spec)
             elif spec.get("model_id"):
-                # same code path as `labts run --model-id`
+                # same code path as `libraryts run --model-id`
                 from trainer import run_trained_model
 
                 result = run_trained_model(
@@ -193,7 +193,7 @@ def main():
 
     threading.Thread(target=_refresh_snapshot, daemon=True).start()
 
-    print(f"TSBox Sandbox Playground running at {url}")
+    print(f"LibraryTS Playground running at {url}")
     print("Press Ctrl+C to stop.")
     try:
         httpd.serve_forever()

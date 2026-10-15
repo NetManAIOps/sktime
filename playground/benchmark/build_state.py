@@ -3,7 +3,7 @@
 
 Merges three sources into one JSON document served at ``/api/benchmark``:
 
-1. the live labts catalog (every algorithm per task, with availability),
+1. the live libraryts catalog (every algorithm per task, with availability),
 2. the curated paper-reported groundtruth (``groundtruth/*.json``),
 3. the reproduction records (``results/*.json``, written by ``reproduce.py``).
 

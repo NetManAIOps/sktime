@@ -24,8 +24,8 @@
       },
       "notes": "sktime RocketClassifier matches the paper protocol (10,000 kernels + RidgeClassifierCV). Kernels are random, so single-run accuracy varies within the paper's reported std (~0.001).",
       "spec_params": {},
-      "train_command": "python playground/labts.py train --algorithm RocketClassifier --dataset italy-power-demand --model-id bench-classification-rocket-italypowerdemand --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
-      "run_command": "python playground/labts.py run --model-id bench-classification-rocket-italypowerdemand --compact"
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset italy-power-demand --model-id bench-classification-rocket-italypowerdemand --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-rocket-italypowerdemand --compact"
     },
     {
       "id": "classification-rocket-arrowhead",
@@ -50,8 +50,8 @@
       },
       "notes": "Non-saturated dataset; paper std over 10 runs is ~0.0094, so +/-0.03 tolerance covers kernel randomness.",
       "spec_params": {},
-      "train_command": "python playground/labts.py train --algorithm RocketClassifier --dataset arrow-head --model-id bench-classification-rocket-arrowhead --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
-      "run_command": "python playground/labts.py run --model-id bench-classification-rocket-arrowhead --compact"
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset arrow-head --model-id bench-classification-rocket-arrowhead --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-rocket-arrowhead --compact"
     },
     {
       "id": "classification-rocket-coffee",
@@ -76,8 +76,8 @@
       },
       "notes": "Paper std over 10 runs is 0.0000; tolerance = max(0.03, 3*std) to cover kernel randomness.",
       "spec_params": {},
-      "train_command": "python playground/labts.py train --algorithm RocketClassifier --dataset ucr-coffee --model-id bench-classification-rocket-coffee --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
-      "run_command": "python playground/labts.py run --model-id bench-classification-rocket-coffee --compact"
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-coffee --model-id bench-classification-rocket-coffee --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-rocket-coffee --compact"
     },
     {
       "id": "classification-rocket-ecg200",
@@ -102,8 +102,8 @@
       },
       "notes": "Paper std over 10 runs is 0.0052; tolerance = max(0.03, 3*std) to cover kernel randomness.",
       "spec_params": {},
-      "train_command": "python playground/labts.py train --algorithm RocketClassifier --dataset ucr-ecg200 --model-id bench-classification-rocket-ecg200 --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
-      "run_command": "python playground/labts.py run --model-id bench-classification-rocket-ecg200 --compact"
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-ecg200 --model-id bench-classification-rocket-ecg200 --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-rocket-ecg200 --compact"
     },
     {
       "id": "classification-rocket-beef",
@@ -128,8 +128,8 @@
       },
       "notes": "Paper std over 10 runs is 0.0157; tolerance = max(0.03, 3*std) to cover kernel randomness.",
       "spec_params": {},
-      "train_command": "python playground/labts.py train --algorithm RocketClassifier --dataset ucr-beef --model-id bench-classification-rocket-beef --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
-      "run_command": "python playground/labts.py run --model-id bench-classification-rocket-beef --compact"
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-beef --model-id bench-classification-rocket-beef --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-rocket-beef --compact"
     },
     {
       "id": "classification-rocket-cbf",
@@ -154,8 +154,8 @@
       },
       "notes": "Paper std over 10 runs is 0.0000; tolerance = max(0.03, 3*std) to cover kernel randomness.",
       "spec_params": {},
-      "train_command": "python playground/labts.py train --algorithm RocketClassifier --dataset ucr-cbf --model-id bench-classification-rocket-cbf --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
-      "run_command": "python playground/labts.py run --model-id bench-classification-rocket-cbf --compact"
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-cbf --model-id bench-classification-rocket-cbf --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-rocket-cbf --compact"
     },
     {
       "id": "classification-rocket-facefour",
@@ -180,8 +180,8 @@
       },
       "notes": "Paper std over 10 runs is 0.0000; tolerance = max(0.03, 3*std) to cover kernel randomness.",
       "spec_params": {},
-      "train_command": "python playground/labts.py train --algorithm RocketClassifier --dataset ucr-facefour --model-id bench-classification-rocket-facefour --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
-      "run_command": "python playground/labts.py run --model-id bench-classification-rocket-facefour --compact"
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-facefour --model-id bench-classification-rocket-facefour --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-rocket-facefour --compact"
     },
     {
       "id": "classification-rocket-plane",
@@ -206,8 +206,8 @@
       },
       "notes": "Paper std over 10 runs is 0.0000; tolerance = max(0.03, 3*std) to cover kernel randomness.",
       "spec_params": {},
-      "train_command": "python playground/labts.py train --algorithm RocketClassifier --dataset ucr-plane --model-id bench-classification-rocket-plane --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
-      "run_command": "python playground/labts.py run --model-id bench-classification-rocket-plane --compact"
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-plane --model-id bench-classification-rocket-plane --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-rocket-plane --compact"
     },
     {
       "id": "classification-rocket-trace",
@@ -232,8 +232,8 @@
       },
       "notes": "Paper std over 10 runs is 0.0000; tolerance = max(0.03, 3*std) to cover kernel randomness.",
       "spec_params": {},
-      "train_command": "python playground/labts.py train --algorithm RocketClassifier --dataset ucr-trace --model-id bench-classification-rocket-trace --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
-      "run_command": "python playground/labts.py run --model-id bench-classification-rocket-trace --compact"
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-trace --model-id bench-classification-rocket-trace --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-rocket-trace --compact"
     },
     {
       "id": "classification-rocket-twoleadecg",
@@ -258,8 +258,8 @@
       },
       "notes": "Paper std over 10 runs is 0.0000; tolerance = max(0.03, 3*std) to cover kernel randomness.",
       "spec_params": {},
-      "train_command": "python playground/labts.py train --algorithm RocketClassifier --dataset ucr-twoleadecg --model-id bench-classification-rocket-twoleadecg --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
-      "run_command": "python playground/labts.py run --model-id bench-classification-rocket-twoleadecg --compact"
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-twoleadecg --model-id bench-classification-rocket-twoleadecg --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-rocket-twoleadecg --compact"
     },
     {
       "id": "classification-rocket-sonyaiborobotsurface1",
@@ -284,8 +284,8 @@
       },
       "notes": "Paper std over 10 runs is 0.0035; tolerance = max(0.03, 3*std) to cover kernel randomness.",
       "spec_params": {},
-      "train_command": "python playground/labts.py train --algorithm RocketClassifier --dataset ucr-sonyaiborobotsurface1 --model-id bench-classification-rocket-sonyaiborobotsurface1 --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
-      "run_command": "python playground/labts.py run --model-id bench-classification-rocket-sonyaiborobotsurface1 --compact"
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-sonyaiborobotsurface1 --model-id bench-classification-rocket-sonyaiborobotsurface1 --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-rocket-sonyaiborobotsurface1 --compact"
     },
     {
       "id": "classification-rocket-motestrain",
@@ -310,8 +310,8 @@
       },
       "notes": "Paper std over 10 runs is 0.0030; tolerance = max(0.03, 3*std) to cover kernel randomness.",
       "spec_params": {},
-      "train_command": "python playground/labts.py train --algorithm RocketClassifier --dataset ucr-motestrain --model-id bench-classification-rocket-motestrain --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
-      "run_command": "python playground/labts.py run --model-id bench-classification-rocket-motestrain --compact"
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-motestrain --model-id bench-classification-rocket-motestrain --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-rocket-motestrain --compact"
     },
     {
       "id": "classification-rocket-wine",
@@ -336,8 +336,8 @@
       },
       "notes": "Paper std over 10 runs is 0.0343; tolerance = max(0.03, 3*std) to cover kernel randomness.",
       "spec_params": {},
-      "train_command": "python playground/labts.py train --algorithm RocketClassifier --dataset ucr-wine --model-id bench-classification-rocket-wine --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
-      "run_command": "python playground/labts.py run --model-id bench-classification-rocket-wine --compact"
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-wine --model-id bench-classification-rocket-wine --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-rocket-wine --compact"
     },
     {
       "id": "classification-rocket-syntheticcontrol",
@@ -362,8 +362,8 @@
       },
       "notes": "Paper std over 10 runs is 0.0011; tolerance = max(0.03, 3*std) to cover kernel randomness.",
       "spec_params": {},
-      "train_command": "python playground/labts.py train --algorithm RocketClassifier --dataset ucr-syntheticcontrol --model-id bench-classification-rocket-syntheticcontrol --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
-      "run_command": "python playground/labts.py run --model-id bench-classification-rocket-syntheticcontrol --compact"
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-syntheticcontrol --model-id bench-classification-rocket-syntheticcontrol --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-rocket-syntheticcontrol --compact"
     },
     {
       "id": "classification-rocket-lightning7",
@@ -388,8 +388,8 @@
       },
       "notes": "Paper std over 10 runs is 0.0078; tolerance = max(0.03, 3*std) to cover kernel randomness.",
       "spec_params": {},
-      "train_command": "python playground/labts.py train --algorithm RocketClassifier --dataset ucr-lightning7 --model-id bench-classification-rocket-lightning7 --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
-      "run_command": "python playground/labts.py run --model-id bench-classification-rocket-lightning7 --compact"
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-lightning7 --model-id bench-classification-rocket-lightning7 --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-rocket-lightning7 --compact"
     },
     {
       "id": "classification-rocket-chinatown",
@@ -414,8 +414,8 @@
       },
       "notes": "Paper std over 10 runs is 0.0000; tolerance = max(0.03, 3*std) to cover kernel randomness.",
       "spec_params": {},
-      "train_command": "python playground/labts.py train --algorithm RocketClassifier --dataset ucr-chinatown --model-id bench-classification-rocket-chinatown --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
-      "run_command": "python playground/labts.py run --model-id bench-classification-rocket-chinatown --compact"
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-chinatown --model-id bench-classification-rocket-chinatown --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-rocket-chinatown --compact"
     },
     {
       "id": "classification-minirocket-arrowhead",
@@ -438,12 +438,12 @@
         "type": "absolute",
         "value": 0.03
       },
-      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.03 (absolute, chosen before running) covers resample noise and the small test set. labts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
+      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.03 (absolute, chosen before running) covers resample noise and the small test set. libraryts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
       "spec_params": {
         "rocket_transform": "minirocket"
       },
-      "train_command": "python playground/labts.py train --algorithm RocketClassifier --dataset arrow-head --model-id bench-classification-minirocket-arrowhead --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
-      "run_command": "python playground/labts.py run --model-id bench-classification-minirocket-arrowhead --compact"
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset arrow-head --model-id bench-classification-minirocket-arrowhead --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-minirocket-arrowhead --compact"
     },
     {
       "id": "classification-minirocket-italypowerdemand",
@@ -466,12 +466,12 @@
         "type": "absolute",
         "value": 0.03
       },
-      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.03 (absolute, chosen before running) covers resample noise and the small test set. labts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
+      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.03 (absolute, chosen before running) covers resample noise and the small test set. libraryts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
       "spec_params": {
         "rocket_transform": "minirocket"
       },
-      "train_command": "python playground/labts.py train --algorithm RocketClassifier --dataset italy-power-demand --model-id bench-classification-minirocket-italypowerdemand --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
-      "run_command": "python playground/labts.py run --model-id bench-classification-minirocket-italypowerdemand --compact"
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset italy-power-demand --model-id bench-classification-minirocket-italypowerdemand --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-minirocket-italypowerdemand --compact"
     },
     {
       "id": "classification-minirocket-coffee",
@@ -494,12 +494,12 @@
         "type": "absolute",
         "value": 0.05
       },
-      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.05 (absolute, chosen before running) covers resample noise and the small test set. labts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
+      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.05 (absolute, chosen before running) covers resample noise and the small test set. libraryts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
       "spec_params": {
         "rocket_transform": "minirocket"
       },
-      "train_command": "python playground/labts.py train --algorithm RocketClassifier --dataset ucr-coffee --model-id bench-classification-minirocket-coffee --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
-      "run_command": "python playground/labts.py run --model-id bench-classification-minirocket-coffee --compact"
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-coffee --model-id bench-classification-minirocket-coffee --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-minirocket-coffee --compact"
     },
     {
       "id": "classification-minirocket-ecg200",
@@ -522,12 +522,12 @@
         "type": "absolute",
         "value": 0.05
       },
-      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.05 (absolute, chosen before running) covers resample noise and the small test set. labts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
+      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.05 (absolute, chosen before running) covers resample noise and the small test set. libraryts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
       "spec_params": {
         "rocket_transform": "minirocket"
       },
-      "train_command": "python playground/labts.py train --algorithm RocketClassifier --dataset ucr-ecg200 --model-id bench-classification-minirocket-ecg200 --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
-      "run_command": "python playground/labts.py run --model-id bench-classification-minirocket-ecg200 --compact"
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-ecg200 --model-id bench-classification-minirocket-ecg200 --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-minirocket-ecg200 --compact"
     },
     {
       "id": "classification-minirocket-beef",
@@ -550,12 +550,12 @@
         "type": "absolute",
         "value": 0.05
       },
-      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.05 (absolute, chosen before running) covers resample noise and the small test set. labts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
+      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.05 (absolute, chosen before running) covers resample noise and the small test set. libraryts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
       "spec_params": {
         "rocket_transform": "minirocket"
       },
-      "train_command": "python playground/labts.py train --algorithm RocketClassifier --dataset ucr-beef --model-id bench-classification-minirocket-beef --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
-      "run_command": "python playground/labts.py run --model-id bench-classification-minirocket-beef --compact"
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-beef --model-id bench-classification-minirocket-beef --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-minirocket-beef --compact"
     },
     {
       "id": "classification-minirocket-cbf",
@@ -578,12 +578,12 @@
         "type": "absolute",
         "value": 0.03
       },
-      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.03 (absolute, chosen before running) covers resample noise and the small test set. labts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
+      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.03 (absolute, chosen before running) covers resample noise and the small test set. libraryts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
       "spec_params": {
         "rocket_transform": "minirocket"
       },
-      "train_command": "python playground/labts.py train --algorithm RocketClassifier --dataset ucr-cbf --model-id bench-classification-minirocket-cbf --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
-      "run_command": "python playground/labts.py run --model-id bench-classification-minirocket-cbf --compact"
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-cbf --model-id bench-classification-minirocket-cbf --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-minirocket-cbf --compact"
     },
     {
       "id": "classification-minirocket-facefour",
@@ -606,12 +606,12 @@
         "type": "absolute",
         "value": 0.05
       },
-      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.05 (absolute, chosen before running) covers resample noise and the small test set. labts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
+      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.05 (absolute, chosen before running) covers resample noise and the small test set. libraryts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
       "spec_params": {
         "rocket_transform": "minirocket"
       },
-      "train_command": "python playground/labts.py train --algorithm RocketClassifier --dataset ucr-facefour --model-id bench-classification-minirocket-facefour --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
-      "run_command": "python playground/labts.py run --model-id bench-classification-minirocket-facefour --compact"
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-facefour --model-id bench-classification-minirocket-facefour --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-minirocket-facefour --compact"
     },
     {
       "id": "classification-minirocket-plane",
@@ -634,12 +634,12 @@
         "type": "absolute",
         "value": 0.05
       },
-      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.05 (absolute, chosen before running) covers resample noise and the small test set. labts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
+      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.05 (absolute, chosen before running) covers resample noise and the small test set. libraryts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
       "spec_params": {
         "rocket_transform": "minirocket"
       },
-      "train_command": "python playground/labts.py train --algorithm RocketClassifier --dataset ucr-plane --model-id bench-classification-minirocket-plane --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
-      "run_command": "python playground/labts.py run --model-id bench-classification-minirocket-plane --compact"
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-plane --model-id bench-classification-minirocket-plane --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-minirocket-plane --compact"
     },
     {
       "id": "classification-minirocket-trace",
@@ -662,12 +662,12 @@
         "type": "absolute",
         "value": 0.05
       },
-      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.05 (absolute, chosen before running) covers resample noise and the small test set. labts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
+      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.05 (absolute, chosen before running) covers resample noise and the small test set. libraryts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
       "spec_params": {
         "rocket_transform": "minirocket"
       },
-      "train_command": "python playground/labts.py train --algorithm RocketClassifier --dataset ucr-trace --model-id bench-classification-minirocket-trace --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
-      "run_command": "python playground/labts.py run --model-id bench-classification-minirocket-trace --compact"
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-trace --model-id bench-classification-minirocket-trace --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-minirocket-trace --compact"
     },
     {
       "id": "classification-minirocket-twoleadecg",
@@ -690,12 +690,12 @@
         "type": "absolute",
         "value": 0.03
       },
-      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.03 (absolute, chosen before running) covers resample noise and the small test set. labts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
+      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.03 (absolute, chosen before running) covers resample noise and the small test set. libraryts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
       "spec_params": {
         "rocket_transform": "minirocket"
       },
-      "train_command": "python playground/labts.py train --algorithm RocketClassifier --dataset ucr-twoleadecg --model-id bench-classification-minirocket-twoleadecg --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
-      "run_command": "python playground/labts.py run --model-id bench-classification-minirocket-twoleadecg --compact"
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-twoleadecg --model-id bench-classification-minirocket-twoleadecg --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-minirocket-twoleadecg --compact"
     },
     {
       "id": "classification-minirocket-sonyaiborobotsurface1",
@@ -718,12 +718,12 @@
         "type": "absolute",
         "value": 0.03
       },
-      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.03 (absolute, chosen before running) covers resample noise and the small test set. labts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
+      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.03 (absolute, chosen before running) covers resample noise and the small test set. libraryts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
       "spec_params": {
         "rocket_transform": "minirocket"
       },
-      "train_command": "python playground/labts.py train --algorithm RocketClassifier --dataset ucr-sonyaiborobotsurface1 --model-id bench-classification-minirocket-sonyaiborobotsurface1 --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
-      "run_command": "python playground/labts.py run --model-id bench-classification-minirocket-sonyaiborobotsurface1 --compact"
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-sonyaiborobotsurface1 --model-id bench-classification-minirocket-sonyaiborobotsurface1 --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-minirocket-sonyaiborobotsurface1 --compact"
     },
     {
       "id": "classification-minirocket-motestrain",
@@ -746,12 +746,12 @@
         "type": "absolute",
         "value": 0.03
       },
-      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.03 (absolute, chosen before running) covers resample noise and the small test set. labts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
+      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.03 (absolute, chosen before running) covers resample noise and the small test set. libraryts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
       "spec_params": {
         "rocket_transform": "minirocket"
       },
-      "train_command": "python playground/labts.py train --algorithm RocketClassifier --dataset ucr-motestrain --model-id bench-classification-minirocket-motestrain --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
-      "run_command": "python playground/labts.py run --model-id bench-classification-minirocket-motestrain --compact"
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-motestrain --model-id bench-classification-minirocket-motestrain --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-minirocket-motestrain --compact"
     },
     {
       "id": "classification-minirocket-wine",
@@ -774,12 +774,12 @@
         "type": "absolute",
         "value": 0.05
       },
-      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.05 (absolute, chosen before running) covers resample noise and the small test set. labts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
+      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.05 (absolute, chosen before running) covers resample noise and the small test set. libraryts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
       "spec_params": {
         "rocket_transform": "minirocket"
       },
-      "train_command": "python playground/labts.py train --algorithm RocketClassifier --dataset ucr-wine --model-id bench-classification-minirocket-wine --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
-      "run_command": "python playground/labts.py run --model-id bench-classification-minirocket-wine --compact"
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-wine --model-id bench-classification-minirocket-wine --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-minirocket-wine --compact"
     },
     {
       "id": "classification-minirocket-syntheticcontrol",
@@ -802,12 +802,12 @@
         "type": "absolute",
         "value": 0.03
       },
-      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.03 (absolute, chosen before running) covers resample noise and the small test set. labts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
+      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.03 (absolute, chosen before running) covers resample noise and the small test set. libraryts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
       "spec_params": {
         "rocket_transform": "minirocket"
       },
-      "train_command": "python playground/labts.py train --algorithm RocketClassifier --dataset ucr-syntheticcontrol --model-id bench-classification-minirocket-syntheticcontrol --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
-      "run_command": "python playground/labts.py run --model-id bench-classification-minirocket-syntheticcontrol --compact"
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-syntheticcontrol --model-id bench-classification-minirocket-syntheticcontrol --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-minirocket-syntheticcontrol --compact"
     },
     {
       "id": "classification-minirocket-lightning7",
@@ -830,12 +830,12 @@
         "type": "absolute",
         "value": 0.05
       },
-      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.05 (absolute, chosen before running) covers resample noise and the small test set. labts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
+      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.05 (absolute, chosen before running) covers resample noise and the small test set. libraryts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
       "spec_params": {
         "rocket_transform": "minirocket"
       },
-      "train_command": "python playground/labts.py train --algorithm RocketClassifier --dataset ucr-lightning7 --model-id bench-classification-minirocket-lightning7 --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
-      "run_command": "python playground/labts.py run --model-id bench-classification-minirocket-lightning7 --compact"
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-lightning7 --model-id bench-classification-minirocket-lightning7 --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-minirocket-lightning7 --compact"
     },
     {
       "id": "classification-minirocket-chinatown",
@@ -858,12 +858,12 @@
         "type": "absolute",
         "value": 0.03
       },
-      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.03 (absolute, chosen before running) covers resample noise and the small test set. labts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
+      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.03 (absolute, chosen before running) covers resample noise and the small test set. libraryts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
       "spec_params": {
         "rocket_transform": "minirocket"
       },
-      "train_command": "python playground/labts.py train --algorithm RocketClassifier --dataset ucr-chinatown --model-id bench-classification-minirocket-chinatown --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
-      "run_command": "python playground/labts.py run --model-id bench-classification-minirocket-chinatown --compact"
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-chinatown --model-id bench-classification-minirocket-chinatown --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-minirocket-chinatown --compact"
     }
   ]
 }

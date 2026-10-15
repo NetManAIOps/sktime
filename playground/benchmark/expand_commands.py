@@ -2,13 +2,13 @@
 """Regenerate the groundtruth train/run command pairs with explicit params.
 
 Every groundtruth entry records the exact commands that reproduce its claim.
-The pair is the labts train-once/run-many lifecycle:
+The pair is the libraryts train-once/run-many lifecycle:
 
-    train_command = labts train --algorithm A --dataset D --model-id bench-<id>
+    train_command = libraryts train --algorithm A --dataset D --model-id bench-<id>
                     + EVERY effective parameter as an explicit --param flag
                     (the entry's own protocol params first, then the catalog
                     default constructor/eval params, so nothing is implicit)
-    run_command   = labts run --model-id bench-<id> --compact
+    run_command   = libraryts run --model-id bench-<id> --compact
                     (evaluate the persisted model, no refit; the judged
                     metrics are all in the default result payload, so no
                     --metric flags are needed)
@@ -116,11 +116,11 @@ def expand_entry(entry: dict, task: str, catalog_defaults: dict) -> dict:
     params = " ".join(f"--param {k}={fmt_value(v)}" for k, v in ordered.items())
     entry["spec_params"] = explicit
     entry["train_command"] = (
-        f"python playground/labts.py train --algorithm {entry['algorithm']} "
+        f"libraryts train --algorithm {entry['algorithm']} "
         f"--dataset {entry['dataset']} --model-id {model_id} {params}"
     )
     entry["run_command"] = (
-        f"python playground/labts.py run --model-id {model_id} --compact"
+        f"libraryts run --model-id {model_id} --compact"
     )
     entry.pop("command", None)
     return entry

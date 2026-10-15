@@ -127,7 +127,7 @@ Run examples from the repository root:
 python3 .agent/skills/time-series-sandbox/user_cases/01_forecasting_naive_airline.py
 ```
 
-## TSBox Playground
+## LibraryTS Playground
 
 The repo ships a runnable web Playground as a top-level module at
 `playground/` (it was moved out of this skill; it is NOT under `.agent/`).
@@ -190,15 +190,15 @@ registry entry looks wrong, rerun the command above rather than trusting it.
 - `playground/metrics.py`: unified metric registry (sktime forecasting /
   detection metrics, sklearn task metrics, DevAD score-based anomaly
   metrics) with `id/name/task/requires/direction/default` metadata; drives
-  `labts ls metrics`, `run --metric`, and `labts evaluate`.
+  `libraryts ls metrics`, `run --metric`, and `libraryts evaluate`.
 - `playground/domain_runners.py`: causal-discovery runner (graph metrics:
   SHD + edge precision/recall/F1 against the true DAG) and the pairwise
-  distance-matrix backend for `labts dist`.
-- `playground/analyzer.py`: `sktime.param_est` backend for `labts analyze`
+  distance-matrix backend for `libraryts dist`.
+- `playground/analyzer.py`: `sktime.param_est` backend for `libraryts analyze`
   (seasonality, stationarity, AR lag order).
 - `playground/hf_data.py`: Hugging Face loader for online forecasting series.
 - `playground/test_playground.py`: unittest suite.
-- `playground/labts.py`: LabTS API — headless CLI version of this Playground
+- `playground/libraryts.py`: LibraryTS API — headless CLI version of this Playground
   for autoresearch harnesses and automated pipelines. Full parity with the web
   endpoints: `catalog` ↔ `/api/catalog`, `run` ↔ `/api/run`,
   `script` ↔ `/api/export/script`, `report` ↔ `/api/export/report`, with a
@@ -208,10 +208,10 @@ registry entry looks wrong, rerun the command above rather than trusting it.
   `run --model-id` (reload + score the holdout, no refit; `predict`/`detect`
   are aliases), plus `ls models`, `evaluate` (re-score saved runs with
   registry metrics), `analyze` (param_est), and `dist` (pairwise distances).
-  See the `labts-api` skill.
+  See the `libraryts-api` skill.
 - `playground/trainer.py`: generic train/persist/predict backends (sktime
   save/load via `persistence.py`; DevAD zoo via `sktime/libs/devad`) used by
-  `labts.py train` / `run --model-id`. Covers rolling-origin forecasting,
+  `libraryts.py train` / `run --model-id`. Covers rolling-origin forecasting,
   clustering `fit_on=all`, causal discovery, and per-series model bundles
   for multi-series anomaly datasets.
 
@@ -248,7 +248,7 @@ recursively by `runners._build_estimator` with task-type validation).
 - Metrics come from the unified registry in `playground/metrics.py`:
   defaults are unchanged per task; `run --metric <id>` adds registry entries
   (e.g. DevAD `pa_f1`/`vus_roc` on top of the point P/R/F1), and
-  `labts evaluate --from run.json` re-scores a saved run without re-fitting
+  `libraryts evaluate --from run.json` re-scores a saved run without re-fitting
   (anomaly via the saved continuous `scores`).
 
 Soft dependencies are not required to start the Playground, but they unlock most
@@ -275,7 +275,7 @@ local import fixes) and adapted as sktime forecasters in
 
 They subclass `BaseDeepNetworkPyTorch` (soft dependency `torch`, CPU build in
 `playground/requirements.txt`), are default-constructible, and therefore show
-up in the Playground/labts catalog automatically as
+up in the Playground/libraryts catalog automatically as
 `registered-forecasting-<ClassName>` with their numeric hyperparameters
 (`seq_len`, `d_model`, `e_layers`, `num_epochs`, ...) exposed. Without torch
 they appear as disabled with a "Missing dependency" reason — nothing breaks.
@@ -294,7 +294,7 @@ Adapter notes:
 
 Nine pyod models are wrapped in `sktime/detection/adapters/pyod.py` as
 default-constructible detectors, so registry discovery (and hence the
-Playground/labts catalog) picks them up as
+Playground/libraryts catalog) picks them up as
 `registered-anomaly_detection-<ClassName>`:
 
 - `PyODECODDetector`, `PyODCOPODDetector` (parameter-free), `PyODLOFDetector`,
@@ -338,19 +338,19 @@ Two entry points consume the zoo:
   point ilocs; `win_len`/`epochs`/`batch_size` are first-class constructor
   params, every other HP goes through the `params` dict (a JSON string is
   accepted, e.g. `--param params='{"h_dim": 64}'`).
-- `playground/trainer.py` — backs `labts.py train` / `labts.py detect` /
-  `labts.py ls models` on top of DevAD's `services.model_service`: training
+- `playground/trainer.py` — backs `libraryts.py train` / `libraryts.py detect` /
+  `libraryts.py ls models` on top of DevAD's `services.model_service`: training
   persists `model.pt` + `manifest.json` + `training.log` under
   `playground/models/<model_id>/` (gitignored), detection reloads the model
   and returns the standard run envelope. This is the train-once/detect-many
-  counterpart of the stateless `labts run`.
+  counterpart of the stateless `libraryts run`.
 
 The zoo's native typer CLI also works:
 `python -m sktime.libs.devad.cli.app model list|info|train|detect|evaluate`
 (data in/out as `.npy` files; requires `typer`, pinned in
 `playground/requirements.txt`; `rich` renders the training reporter).
 
-### Experiment plugins (`playground/experiments/`) + `labts fork`
+### Experiment plugins (`playground/experiments/`) + `libraryts fork`
 
 For autoresearch coding agents: algorithms can live as **single-file plugins**
 in `playground/experiments/*.py` instead of inside the `sktime` package. See
@@ -362,8 +362,8 @@ fit/predict signatures per task; sktime estimators are also valid plugins).
   into the catalog as `user-<filename>` (re-scanned on every catalog call, so
   edits show up immediately). A broken plugin only disables itself with a
   `disabled_reason` — it never crashes catalog discovery.
-- `labts.py fork <algorithm_id> [--name X]` writes a subclass scaffold of any
-  enabled catalog algorithm into `experiments/`; `labts.py check <file>`
+- `libraryts.py fork <algorithm_id> [--name X]` writes a subclass scaffold of any
+  enabled catalog algorithm into `experiments/`; `libraryts.py check <file>`
   validates the contract and runs a tiny smoke experiment.
 - Plugin `PARAMS` are the declared defaults: the runners apply them under the
   run's params (excluding per-task eval params), and the UI renders them as

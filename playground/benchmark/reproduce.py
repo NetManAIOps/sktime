@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Re-run the benchmark's groundtruth claims via the labts CLI.
+"""Re-run the benchmark's groundtruth claims via the libraryts CLI.
 
 Reads ``groundtruth/*.json``, executes each entry's recorded command pair
 (``train_command`` then ``run_command`` — the train-once/run-many lifecycle
-with every parameter explicit), extracts the claimed metric from the labts
+with every parameter explicit), extracts the claimed metric from the libraryts
 result envelope, and writes ``results/<entry-id>.json``:
 
     {
@@ -53,7 +53,7 @@ def load_entries() -> list[dict]:
 
 
 def _parse_envelope(stdout: str) -> dict | None:
-    """The labts envelope is printed as one JSON line (warnings may precede)."""
+    """The libraryts envelope is printed as one JSON line (warnings may precede)."""
     for line in reversed(stdout.splitlines()):
         line = line.strip()
         if line.startswith("{") and line.endswith("}"):
@@ -84,7 +84,11 @@ def compare(value: float, gt_value: float, tolerance: dict) -> tuple[float, floa
 
 
 def _execute(command: str, timeout_s: int) -> subprocess.CompletedProcess:
-    argv = [sys.executable] + shlex.split(command)[1:]  # replace leading "python"
+    tokens = shlex.split(command)
+    if tokens[0] == "libraryts":  # recorded form: `libraryts train ...`
+        argv = [sys.executable, str(REPO_ROOT / "playground" / "libraryts.py")] + tokens[1:]
+    else:  # legacy form: `python playground/libraryts.py ...`
+        argv = [sys.executable] + tokens[1:]
     return subprocess.run(
         argv,
         cwd=REPO_ROOT,
@@ -137,7 +141,7 @@ def run_entry(entry: dict, timeout_s: int) -> dict:
         record["error"] = "no JSON envelope found on stdout"
         return record
     if envelope.get("status") != "ok":
-        record["error"] = f"labts status={envelope.get('status')}: {envelope.get('error')}"
+        record["error"] = f"libraryts status={envelope.get('status')}: {envelope.get('error')}"
         return record
     metrics = (envelope.get("data") or {}).get("metrics") or {}
     record["metrics"] = metrics

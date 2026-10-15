@@ -1,4 +1,4 @@
-"""Catalog and compatibility matrix for the local Sandbox Playground."""
+"""Catalog and compatibility matrix for the local LibraryTS Playground."""
 
 from __future__ import annotations
 
@@ -88,20 +88,20 @@ _CLASS_CACHE: dict[str, type] = {}
 
 # Registry discovery (constructing every estimator, probing every transformer)
 # costs ~50 s per process, so its results are also cached on disk, keyed by a
-# fingerprint of everything they depend on. LABTS_NO_CACHE=1 disables it;
-# LABTS_CACHE_DIR overrides the location.
+# fingerprint of everything they depend on. LIBRARYTS_NO_CACHE=1 disables it;
+# LIBRARYTS_CACHE_DIR overrides the location.
 _DISK_CACHE_SCHEMA = 1
 _FINGERPRINT: str | None = None
 
 
 def _disk_cache_dir() -> Path | None:
-    if os.environ.get("LABTS_NO_CACHE"):
+    if os.environ.get("LIBRARYTS_NO_CACHE"):
         return None
-    override = os.environ.get("LABTS_CACHE_DIR")
+    override = os.environ.get("LIBRARYTS_CACHE_DIR")
     if override:
         return Path(override)
     base = os.environ.get("XDG_CACHE_HOME") or Path.home() / ".cache"
-    return Path(base) / "labts"
+    return Path(base) / "libraryts"
 
 
 def _discovery_fingerprint() -> str:
@@ -1372,7 +1372,7 @@ def build_catalog(include_registered: bool = True) -> dict:
 
 
 def _analyzers_section() -> list[dict]:
-    """Param-estimation algorithms backing `labts analyze` (lazy import)."""
+    """Param-estimation algorithms backing `libraryts analyze` (lazy import)."""
     try:
         from analyzer import ANALYZERS
 
@@ -1382,7 +1382,7 @@ def _analyzers_section() -> list[dict]:
 
 
 def _distances_section() -> list[dict]:
-    """Distance metrics backing `labts dist` (lazy import)."""
+    """Distance metrics backing `libraryts dist` (lazy import)."""
     try:
         from domain_runners import DISTANCES
 

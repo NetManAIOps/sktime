@@ -1,4 +1,4 @@
-"""Lightweight tests for the local TSBox Sandbox Playground."""
+"""Lightweight tests for the local LibraryTS Playground."""
 
 from __future__ import annotations
 
@@ -190,7 +190,7 @@ class RunnerTests(unittest.TestCase):
         self.assertGreater(result["metrics"]["Detected"], 1)
 
     def test_devad_train_detect_cycle(self):
-        # labts train/detect: persist an iforest model, reload it, and get a
+        # libraryts train/detect: persist an iforest model, reload it, and get a
         # run-compatible envelope back. Uses a throwaway models root.
         import tempfile
 
@@ -601,7 +601,7 @@ class PreprocessorChainTests(unittest.TestCase):
             )
 
     def test_cli_step_param_parsing(self):
-        from labts import UsageError, _parse_step_kv_pairs
+        from libraryts import UsageError, _parse_step_kv_pairs
 
         steps = _parse_step_kv_pairs(["1:degree=2", "2:method=box-cox"], 2, "--pre-param")
         self.assertEqual(steps, [{"degree": 2}, {"method": "box-cox"}])
@@ -618,15 +618,15 @@ class CliCoercionAndExportTests(unittest.TestCase):
         import contextlib
         import io
 
-        import labts
+        import libraryts
 
         buffer = io.StringIO()
         with contextlib.redirect_stdout(buffer):
-            code = labts.main(argv)
+            code = libraryts.main(argv)
         return code, json.loads(buffer.getvalue())
 
     def test_cli_value_literals(self):
-        from labts import _parse_kv_pairs
+        from libraryts import _parse_kv_pairs
 
         params = _parse_kv_pairs(
             ["a=False", "b=true", "c=None", "d=null", "e=3", "f=0.5", "g=cpu"], "--param"
@@ -652,16 +652,16 @@ class CliCoercionAndExportTests(unittest.TestCase):
         )
         self.assertGreater(len(result["metrics"]), 1)
         lines = result["report"].splitlines()
-        self.assertEqual(lines[0], "# TSBox Sandbox Experiment Report")
+        self.assertEqual(lines[0], "# LibraryTS Experiment Report")
         self.assertIn("## Metrics", lines)
         self.assertEqual([line for line in lines if line.startswith(" ")], [])
 
     def test_ls_light_sections_skip_catalog_build(self):
         from unittest import mock
 
-        import labts
+        import libraryts
 
-        with mock.patch.object(labts, "build_catalog", side_effect=AssertionError("built")):
+        with mock.patch.object(libraryts, "build_catalog", side_effect=AssertionError("built")):
             for section in ("tasks", "metrics", "analyzers", "distances"):
                 code, envelope = self._cli(["ls", section])
                 self.assertEqual(code, 0, section)
@@ -676,14 +676,14 @@ class CliCoercionAndExportTests(unittest.TestCase):
 
         rows = [{"id": "registered-forecasting-X", "params": {"sp": 1}}]
         with tempfile.TemporaryDirectory() as tmp:
-            with mock.patch.dict(os.environ, {"LABTS_CACHE_DIR": tmp}):
-                os.environ.pop("LABTS_NO_CACHE", None)
+            with mock.patch.dict(os.environ, {"LIBRARYTS_CACHE_DIR": tmp}):
+                os.environ.pop("LIBRARYTS_NO_CACHE", None)
                 self.assertIsNone(catalog._read_disk_cache("unit"))
                 catalog._write_disk_cache("unit", rows)
                 self.assertEqual(catalog._read_disk_cache("unit"), rows)
                 with mock.patch.object(catalog, "_FINGERPRINT", "other"):
                     self.assertIsNone(catalog._read_disk_cache("unit"))
-            with mock.patch.dict(os.environ, {"LABTS_CACHE_DIR": tmp, "LABTS_NO_CACHE": "1"}):
+            with mock.patch.dict(os.environ, {"LIBRARYTS_CACHE_DIR": tmp, "LIBRARYTS_NO_CACHE": "1"}):
                 self.assertIsNone(catalog._read_disk_cache("unit"))
 
     def test_dist_rejects_small_max_instances(self):
@@ -898,11 +898,11 @@ class AnalyzeDistPredictTests(unittest.TestCase):
         import io as _io
         from contextlib import redirect_stdout as _redirect
 
-        import labts
+        import libraryts
 
         buffer = _io.StringIO()
         with _redirect(buffer):
-            code = labts.main(["predict", "--model-id", "definitely-not-a-model"])
+            code = libraryts.main(["predict", "--model-id", "definitely-not-a-model"])
         self.assertEqual(code, 3)
         envelope = json.loads(buffer.getvalue())
         self.assertEqual(envelope["status"], "blocked")

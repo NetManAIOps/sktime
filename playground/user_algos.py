@@ -138,8 +138,8 @@ def get_user_algorithm(algorithm_id: str) -> dict | None:
 _FORK_TEMPLATE = '''"""Fork of {algorithm_id} (`{module}`).
 
 Edit this file freely, then:
-    labts.py check playground/experiments/{stem}.py
-    labts.py run --algorithm user-{stem} --task {task} ...
+    libraryts.py check playground/experiments/{stem}.py
+    libraryts.py run --algorithm user-{stem} --task {task} ...
 
 The original implementation lives in `{module}`; this subclass starts as an
 exact copy of its behavior. Override methods, change defaults in PARAMS, or

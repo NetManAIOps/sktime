@@ -1,11 +1,11 @@
-# labts benchmark — reproducibility leaderboard
+# libraryts benchmark — reproducibility leaderboard
 
-A verification platform for the labts catalog: paper-reported results are
-curated as **groundtruth**, re-run through the **labts CLI**, and compared on a
+A verification platform for the libraryts catalog: paper-reported results are
+curated as **groundtruth**, re-run through the **libraryts CLI**, and compared on a
 minimal web leaderboard.
 
 ```
-groundtruth/*.json   curated claims: paper value + citation + exact labts train/run commands + tolerance
+groundtruth/*.json   curated claims: paper value + citation + exact libraryts train/run commands + tolerance
 results/*.json       reproduction records, written by reproduce.py (one per claim)
 state.json           merged view served at /api/benchmark (generated)
 expand_commands.py   regenerates the train/run command pairs (all params explicit)
@@ -46,7 +46,7 @@ python playground/benchmark/build_state.py             # refresh state.json
 `reproduce.py` executes each claim's `train_command` then `run_command` with
 the current interpreter (`python` in the recorded commands is a placeholder —
 use an env with the soft dependencies installed, e.g. `.venv-full`), parses
-the labts JSON envelope, compares every claimed metric against the groundtruth,
+the libraryts JSON envelope, compares every claimed metric against the groundtruth,
 and marks the claim `reproduced` / `deviation` / `error`. Trained models are
 persisted as `playground/models/bench-<claim-id>/` (gitignored, overwritten
 on re-runs).
@@ -58,15 +58,15 @@ Append an entry to the matching `groundtruth/<task>.json`:
 ```json
 {
   "id": "unique-slug",
-  "algorithm": "registered-forecasting-DLinearForecaster",   // labts catalog id
+  "algorithm": "registered-forecasting-DLinearForecaster",   // libraryts catalog id
   "algorithm_name": "DLinear",                               // display name (rows group by it)
-  "dataset": "hf-etth1",                                     // labts dataset id
+  "dataset": "hf-etth1",                                     // libraryts dataset id
   "dataset_name": "ETTh1",                                   // display name
   "window": "horizon 96 · lookback 336",                     // config label (optional)
   "metrics": {"MSE": 0.375, "MAE": 0.399},                   // paper-reported values per metric
   "settings": "protocol as reported in the paper",
   "source": {"title": "...", "venue": "...", "url": "...", "locator": "Table 2, row X"},
-  "command": "python playground/labts.py run --task ... --compact",
+  "command": "libraryts run --task ... --compact",
   "tolerance": {"type": "relative", "value": 0.15},
   "notes": "protocol gaps, granularity caveats, why deviation is expected"
 }
@@ -94,7 +94,7 @@ Rules of thumb:
   results CSV/page, official README). Put the exact locator in `source.locator`.
 - Keep the recorded commands runnable end-to-end; the judged metrics must be
   in the default result payload (no `--metric` flags needed on `run_command`).
-- If the paper's protocol differs structurally from labts' evaluation (rolling
+- If the paper's protocol differs structurally from libraryts' evaluation (rolling
   vs. single-origin, dataset-average vs. single series, different
   implementation), say so in `notes` and choose a tolerance that reflects it —
   a `deviation` badge with an honest note is a valid, useful outcome.
@@ -106,7 +106,7 @@ clustering 20/15, regression 10/9, causal 7/5. Deviations are kept visible on pu
 `notes` carries the details. Main patterns:
 
 - Forecasting: DLinear/Linear on ETTh2, ETTm2 and Exchange land above the paper (trend/shift-heavy
-  datasets; the paper uses validation-based early stopping, labts a fixed 10 epochs). ETTh1, ETTm1,
+  datasets; the paper uses validation-based early stopping, libraryts a fixed 10 epochs). ETTh1, ETTm1,
   Weather and Electricity (96/192/336) reproduce. Autoformer ETTh1 deviates as before.
 - Electricity at horizon 720 was dropped: the training process is killed (out of memory) on this machine.
 - Anomaly detection: TSB-UAD claims for IForest/LOF/HBOS/OCSVM on Yahoo, MITDB, NAB, Dodgers,
@@ -131,9 +131,9 @@ The Sachs continuous dataset (`causal-sachs-cont`, vendored under
 exists to make the causal claims exactly reproducible: same n=7466 data and
 same 20-edge consensus DAG as the NOTEARS paper.
 
-Protocol support added to labts for paper-grade reproduction:
+Protocol support added to libraryts for paper-grade reproduction:
 
-- **Unified train/run lifecycle** (`labts train` + `labts run --model-id`):
+- **Unified train/run lifecycle** (`libraryts train` + `libraryts run --model-id`):
   every claim's commands use the train-once/run-many pair — `train` fits and
   persists `playground/models/bench-<id>/` (algorithm params + eval split +
   fitted preprocessor in `manifest.json`), `run --model-id` reloads and scores

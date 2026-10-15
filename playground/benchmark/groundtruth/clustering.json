@@ -23,14 +23,14 @@
         "type": "absolute",
         "value": 0.15
       },
-      "notes": "Paper value is the mean of 10 Matlab runs; labts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing.",
+      "notes": "Paper value is the mean of 10 Matlab runs; libraryts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing.",
       "spec_params": {
         "n_clusters": 3,
         "fit_on": "all",
         "random_state": 42
       },
-      "train_command": "python playground/labts.py train --algorithm TimeSeriesKShapes --dataset arrow-head-cl --model-id bench-clustering-kshape-arrowhead --param n_clusters=3 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
-      "run_command": "python playground/labts.py run --model-id bench-clustering-kshape-arrowhead --compact"
+      "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset arrow-head-cl --model-id bench-clustering-kshape-arrowhead --param n_clusters=3 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "run_command": "libraryts run --model-id bench-clustering-kshape-arrowhead --compact"
     },
     {
       "id": "clustering-kshape-gunpoint",
@@ -60,8 +60,8 @@
         "fit_on": "all",
         "random_state": 42
       },
-      "train_command": "python playground/labts.py train --algorithm TimeSeriesKShapes --dataset gunpoint-cl --model-id bench-clustering-kshape-gunpoint --param n_clusters=2 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
-      "run_command": "python playground/labts.py run --model-id bench-clustering-kshape-gunpoint --compact"
+      "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset gunpoint-cl --model-id bench-clustering-kshape-gunpoint --param n_clusters=2 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "run_command": "libraryts run --model-id bench-clustering-kshape-gunpoint --compact"
     },
     {
       "id": "clustering-kshape-coffee",
@@ -85,14 +85,14 @@
         "type": "absolute",
         "value": 0.15
       },
-      "notes": "Paper value is the mean of 10 Matlab runs; labts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing. Tiny dataset (<=111 series): ARI/NMI swing strongly with the random init.",
+      "notes": "Paper value is the mean of 10 Matlab runs; libraryts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing. Tiny dataset (<=111 series): ARI/NMI swing strongly with the random init.",
       "spec_params": {
         "n_clusters": 2,
         "fit_on": "all",
         "random_state": 42
       },
-      "train_command": "python playground/labts.py train --algorithm TimeSeriesKShapes --dataset coffee-cl --model-id bench-clustering-kshape-coffee --param n_clusters=2 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
-      "run_command": "python playground/labts.py run --model-id bench-clustering-kshape-coffee --compact"
+      "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset coffee-cl --model-id bench-clustering-kshape-coffee --param n_clusters=2 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "run_command": "libraryts run --model-id bench-clustering-kshape-coffee --compact"
     },
     {
       "id": "clustering-kshape-bme",
@@ -116,14 +116,14 @@
         "type": "absolute",
         "value": 0.15
       },
-      "notes": "Paper value is the mean of 10 Matlab runs; labts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing.",
+      "notes": "Paper value is the mean of 10 Matlab runs; libraryts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing.",
       "spec_params": {
         "n_clusters": 3,
         "fit_on": "all",
         "random_state": 42
       },
-      "train_command": "python playground/labts.py train --algorithm TimeSeriesKShapes --dataset bme-cl --model-id bench-clustering-kshape-bme --param n_clusters=3 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
-      "run_command": "python playground/labts.py run --model-id bench-clustering-kshape-bme --compact"
+      "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset bme-cl --model-id bench-clustering-kshape-bme --param n_clusters=3 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "run_command": "libraryts run --model-id bench-clustering-kshape-bme --compact"
     },
     {
       "id": "clustering-kshape-cbf",
@@ -147,14 +147,14 @@
         "type": "absolute",
         "value": 0.15
       },
-      "notes": "Paper value is the mean of 10 Matlab runs; labts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing.",
+      "notes": "Paper value is the mean of 10 Matlab runs; libraryts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing.",
       "spec_params": {
         "n_clusters": 3,
         "fit_on": "all",
         "random_state": 42
       },
-      "train_command": "python playground/labts.py train --algorithm TimeSeriesKShapes --dataset cbf-cl --model-id bench-clustering-kshape-cbf --param n_clusters=3 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
-      "run_command": "python playground/labts.py run --model-id bench-clustering-kshape-cbf --compact"
+      "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset cbf-cl --model-id bench-clustering-kshape-cbf --param n_clusters=3 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "run_command": "libraryts run --model-id bench-clustering-kshape-cbf --compact"
     },
     {
       "id": "clustering-kshape-beef",
@@ -178,14 +178,14 @@
         "type": "absolute",
         "value": 0.15
       },
-      "notes": "Paper value is the mean of 10 Matlab runs; labts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing. Tiny dataset (<=111 series): ARI/NMI swing strongly with the random init.",
+      "notes": "Paper value is the mean of 10 Matlab runs; libraryts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing. Tiny dataset (<=111 series): ARI/NMI swing strongly with the random init.",
       "spec_params": {
         "n_clusters": 5,
         "fit_on": "all",
         "random_state": 42
       },
-      "train_command": "python playground/labts.py train --algorithm TimeSeriesKShapes --dataset beef-cl --model-id bench-clustering-kshape-beef --param n_clusters=5 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
-      "run_command": "python playground/labts.py run --model-id bench-clustering-kshape-beef --compact"
+      "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset beef-cl --model-id bench-clustering-kshape-beef --param n_clusters=5 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "run_command": "libraryts run --model-id bench-clustering-kshape-beef --compact"
     },
     {
       "id": "clustering-kshape-beetlefly",
@@ -209,14 +209,14 @@
         "type": "absolute",
         "value": 0.15
       },
-      "notes": "Paper value is the mean of 10 Matlab runs; labts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing. Tiny dataset (<=111 series): ARI/NMI swing strongly with the random init.",
+      "notes": "Paper value is the mean of 10 Matlab runs; libraryts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing. Tiny dataset (<=111 series): ARI/NMI swing strongly with the random init.",
       "spec_params": {
         "n_clusters": 2,
         "fit_on": "all",
         "random_state": 42
       },
-      "train_command": "python playground/labts.py train --algorithm TimeSeriesKShapes --dataset beetlefly-cl --model-id bench-clustering-kshape-beetlefly --param n_clusters=2 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
-      "run_command": "python playground/labts.py run --model-id bench-clustering-kshape-beetlefly --compact"
+      "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset beetlefly-cl --model-id bench-clustering-kshape-beetlefly --param n_clusters=2 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "run_command": "libraryts run --model-id bench-clustering-kshape-beetlefly --compact"
     },
     {
       "id": "clustering-kshape-birdchicken",
@@ -240,14 +240,14 @@
         "type": "absolute",
         "value": 0.15
       },
-      "notes": "Paper value is the mean of 10 Matlab runs; labts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing. Tiny dataset (<=111 series): ARI/NMI swing strongly with the random init.",
+      "notes": "Paper value is the mean of 10 Matlab runs; libraryts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing. Tiny dataset (<=111 series): ARI/NMI swing strongly with the random init.",
       "spec_params": {
         "n_clusters": 2,
         "fit_on": "all",
         "random_state": 42
       },
-      "train_command": "python playground/labts.py train --algorithm TimeSeriesKShapes --dataset birdchicken-cl --model-id bench-clustering-kshape-birdchicken --param n_clusters=2 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
-      "run_command": "python playground/labts.py run --model-id bench-clustering-kshape-birdchicken --compact"
+      "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset birdchicken-cl --model-id bench-clustering-kshape-birdchicken --param n_clusters=2 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "run_command": "libraryts run --model-id bench-clustering-kshape-birdchicken --compact"
     },
     {
       "id": "clustering-kshape-chinatown",
@@ -271,14 +271,14 @@
         "type": "absolute",
         "value": 0.15
       },
-      "notes": "Paper value is the mean of 10 Matlab runs; labts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing.",
+      "notes": "Paper value is the mean of 10 Matlab runs; libraryts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing.",
       "spec_params": {
         "n_clusters": 2,
         "fit_on": "all",
         "random_state": 42
       },
-      "train_command": "python playground/labts.py train --algorithm TimeSeriesKShapes --dataset chinatown-cl --model-id bench-clustering-kshape-chinatown --param n_clusters=2 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
-      "run_command": "python playground/labts.py run --model-id bench-clustering-kshape-chinatown --compact"
+      "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset chinatown-cl --model-id bench-clustering-kshape-chinatown --param n_clusters=2 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "run_command": "libraryts run --model-id bench-clustering-kshape-chinatown --compact"
     },
     {
       "id": "clustering-kshape-ecg200",
@@ -302,14 +302,14 @@
         "type": "absolute",
         "value": 0.15
       },
-      "notes": "Paper value is the mean of 10 Matlab runs; labts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing.",
+      "notes": "Paper value is the mean of 10 Matlab runs; libraryts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing.",
       "spec_params": {
         "n_clusters": 2,
         "fit_on": "all",
         "random_state": 42
       },
-      "train_command": "python playground/labts.py train --algorithm TimeSeriesKShapes --dataset ecg200-cl --model-id bench-clustering-kshape-ecg200 --param n_clusters=2 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
-      "run_command": "python playground/labts.py run --model-id bench-clustering-kshape-ecg200 --compact"
+      "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset ecg200-cl --model-id bench-clustering-kshape-ecg200 --param n_clusters=2 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "run_command": "libraryts run --model-id bench-clustering-kshape-ecg200 --compact"
     },
     {
       "id": "clustering-kshape-italypowerdemand",
@@ -333,14 +333,14 @@
         "type": "absolute",
         "value": 0.15
       },
-      "notes": "Paper value is the mean of 10 Matlab runs; labts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing.",
+      "notes": "Paper value is the mean of 10 Matlab runs; libraryts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing.",
       "spec_params": {
         "n_clusters": 2,
         "fit_on": "all",
         "random_state": 42
       },
-      "train_command": "python playground/labts.py train --algorithm TimeSeriesKShapes --dataset italypowerdemand-cl --model-id bench-clustering-kshape-italypowerdemand --param n_clusters=2 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
-      "run_command": "python playground/labts.py run --model-id bench-clustering-kshape-italypowerdemand --compact"
+      "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset italypowerdemand-cl --model-id bench-clustering-kshape-italypowerdemand --param n_clusters=2 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "run_command": "libraryts run --model-id bench-clustering-kshape-italypowerdemand --compact"
     },
     {
       "id": "clustering-kshape-plane",
@@ -364,14 +364,14 @@
         "type": "absolute",
         "value": 0.15
       },
-      "notes": "Paper value is the mean of 10 Matlab runs; labts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing.",
+      "notes": "Paper value is the mean of 10 Matlab runs; libraryts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing.",
       "spec_params": {
         "n_clusters": 7,
         "fit_on": "all",
         "random_state": 42
       },
-      "train_command": "python playground/labts.py train --algorithm TimeSeriesKShapes --dataset plane-cl --model-id bench-clustering-kshape-plane --param n_clusters=7 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
-      "run_command": "python playground/labts.py run --model-id bench-clustering-kshape-plane --compact"
+      "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset plane-cl --model-id bench-clustering-kshape-plane --param n_clusters=7 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "run_command": "libraryts run --model-id bench-clustering-kshape-plane --compact"
     },
     {
       "id": "clustering-kshape-trace",
@@ -395,14 +395,14 @@
         "type": "absolute",
         "value": 0.15
       },
-      "notes": "Paper value is the mean of 10 Matlab runs; labts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing.",
+      "notes": "Paper value is the mean of 10 Matlab runs; libraryts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing.",
       "spec_params": {
         "n_clusters": 4,
         "fit_on": "all",
         "random_state": 42
       },
-      "train_command": "python playground/labts.py train --algorithm TimeSeriesKShapes --dataset trace-cl --model-id bench-clustering-kshape-trace --param n_clusters=4 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
-      "run_command": "python playground/labts.py run --model-id bench-clustering-kshape-trace --compact"
+      "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset trace-cl --model-id bench-clustering-kshape-trace --param n_clusters=4 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "run_command": "libraryts run --model-id bench-clustering-kshape-trace --compact"
     },
     {
       "id": "clustering-kshape-twoleadecg",
@@ -426,14 +426,14 @@
         "type": "absolute",
         "value": 0.15
       },
-      "notes": "Paper value is the mean of 10 Matlab runs; labts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing.",
+      "notes": "Paper value is the mean of 10 Matlab runs; libraryts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing.",
       "spec_params": {
         "n_clusters": 2,
         "fit_on": "all",
         "random_state": 42
       },
-      "train_command": "python playground/labts.py train --algorithm TimeSeriesKShapes --dataset twoleadecg-cl --model-id bench-clustering-kshape-twoleadecg --param n_clusters=2 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
-      "run_command": "python playground/labts.py run --model-id bench-clustering-kshape-twoleadecg --compact"
+      "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset twoleadecg-cl --model-id bench-clustering-kshape-twoleadecg --param n_clusters=2 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "run_command": "libraryts run --model-id bench-clustering-kshape-twoleadecg --compact"
     },
     {
       "id": "clustering-kshape-syntheticcontrol",
@@ -457,14 +457,14 @@
         "type": "absolute",
         "value": 0.15
       },
-      "notes": "Paper value is the mean of 10 Matlab runs; labts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing.",
+      "notes": "Paper value is the mean of 10 Matlab runs; libraryts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing.",
       "spec_params": {
         "n_clusters": 6,
         "fit_on": "all",
         "random_state": 42
       },
-      "train_command": "python playground/labts.py train --algorithm TimeSeriesKShapes --dataset syntheticcontrol-cl --model-id bench-clustering-kshape-syntheticcontrol --param n_clusters=6 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
-      "run_command": "python playground/labts.py run --model-id bench-clustering-kshape-syntheticcontrol --compact"
+      "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset syntheticcontrol-cl --model-id bench-clustering-kshape-syntheticcontrol --param n_clusters=6 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "run_command": "libraryts run --model-id bench-clustering-kshape-syntheticcontrol --compact"
     },
     {
       "id": "clustering-kshape-facefour",
@@ -488,14 +488,14 @@
         "type": "absolute",
         "value": 0.15
       },
-      "notes": "Paper value is the mean of 10 Matlab runs; labts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing.",
+      "notes": "Paper value is the mean of 10 Matlab runs; libraryts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing.",
       "spec_params": {
         "n_clusters": 4,
         "fit_on": "all",
         "random_state": 42
       },
-      "train_command": "python playground/labts.py train --algorithm TimeSeriesKShapes --dataset facefour-cl --model-id bench-clustering-kshape-facefour --param n_clusters=4 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
-      "run_command": "python playground/labts.py run --model-id bench-clustering-kshape-facefour --compact"
+      "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset facefour-cl --model-id bench-clustering-kshape-facefour --param n_clusters=4 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "run_command": "libraryts run --model-id bench-clustering-kshape-facefour --compact"
     },
     {
       "id": "clustering-kshape-motestrain",
@@ -519,14 +519,14 @@
         "type": "absolute",
         "value": 0.15
       },
-      "notes": "Paper value is the mean of 10 Matlab runs; labts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing.",
+      "notes": "Paper value is the mean of 10 Matlab runs; libraryts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing.",
       "spec_params": {
         "n_clusters": 2,
         "fit_on": "all",
         "random_state": 42
       },
-      "train_command": "python playground/labts.py train --algorithm TimeSeriesKShapes --dataset motestrain-cl --model-id bench-clustering-kshape-motestrain --param n_clusters=2 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
-      "run_command": "python playground/labts.py run --model-id bench-clustering-kshape-motestrain --compact"
+      "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset motestrain-cl --model-id bench-clustering-kshape-motestrain --param n_clusters=2 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "run_command": "libraryts run --model-id bench-clustering-kshape-motestrain --compact"
     },
     {
       "id": "clustering-kshape-wine",
@@ -550,14 +550,14 @@
         "type": "absolute",
         "value": 0.15
       },
-      "notes": "Paper value is the mean of 10 Matlab runs; labts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing. Tiny dataset (<=111 series): ARI/NMI swing strongly with the random init.",
+      "notes": "Paper value is the mean of 10 Matlab runs; libraryts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing. Tiny dataset (<=111 series): ARI/NMI swing strongly with the random init.",
       "spec_params": {
         "n_clusters": 2,
         "fit_on": "all",
         "random_state": 42
       },
-      "train_command": "python playground/labts.py train --algorithm TimeSeriesKShapes --dataset wine-cl --model-id bench-clustering-kshape-wine --param n_clusters=2 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
-      "run_command": "python playground/labts.py run --model-id bench-clustering-kshape-wine --compact"
+      "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset wine-cl --model-id bench-clustering-kshape-wine --param n_clusters=2 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "run_command": "libraryts run --model-id bench-clustering-kshape-wine --compact"
     },
     {
       "id": "clustering-kshape-sonyaiborobotsurface1",
@@ -581,14 +581,14 @@
         "type": "absolute",
         "value": 0.15
       },
-      "notes": "Paper value is the mean of 10 Matlab runs; labts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing.",
+      "notes": "Paper value is the mean of 10 Matlab runs; libraryts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing.",
       "spec_params": {
         "n_clusters": 2,
         "fit_on": "all",
         "random_state": 42
       },
-      "train_command": "python playground/labts.py train --algorithm TimeSeriesKShapes --dataset sonyaiborobotsurface1-cl --model-id bench-clustering-kshape-sonyaiborobotsurface1 --param n_clusters=2 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
-      "run_command": "python playground/labts.py run --model-id bench-clustering-kshape-sonyaiborobotsurface1 --compact"
+      "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset sonyaiborobotsurface1-cl --model-id bench-clustering-kshape-sonyaiborobotsurface1 --param n_clusters=2 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "run_command": "libraryts run --model-id bench-clustering-kshape-sonyaiborobotsurface1 --compact"
     },
     {
       "id": "clustering-kshape-lightning7",
@@ -612,14 +612,14 @@
         "type": "absolute",
         "value": 0.15
       },
-      "notes": "Paper value is the mean of 10 Matlab runs; labts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing.",
+      "notes": "Paper value is the mean of 10 Matlab runs; libraryts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing.",
       "spec_params": {
         "n_clusters": 7,
         "fit_on": "all",
         "random_state": 42
       },
-      "train_command": "python playground/labts.py train --algorithm TimeSeriesKShapes --dataset lightning7-cl --model-id bench-clustering-kshape-lightning7 --param n_clusters=7 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
-      "run_command": "python playground/labts.py run --model-id bench-clustering-kshape-lightning7 --compact"
+      "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset lightning7-cl --model-id bench-clustering-kshape-lightning7 --param n_clusters=7 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "run_command": "libraryts run --model-id bench-clustering-kshape-lightning7 --compact"
     }
   ]
 }

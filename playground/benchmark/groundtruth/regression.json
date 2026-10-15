@@ -24,8 +24,8 @@
       },
       "notes": "Rocket was the best-ranked algorithm in the TSER paper. sktime RocketRegressor follows the same protocol (fixed archive split, ridge on ROCKET features).",
       "spec_params": {},
-      "train_command": "python playground/labts.py train --algorithm RocketRegressor --dataset covid-3month --model-id bench-regression-rocket-covid3month --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
-      "run_command": "python playground/labts.py run --model-id bench-regression-rocket-covid3month --compact"
+      "train_command": "libraryts train --algorithm RocketRegressor --dataset covid-3month --model-id bench-regression-rocket-covid3month --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-regression-rocket-covid3month --compact"
     },
     {
       "id": "regression-rf-covid3month",
@@ -48,10 +48,10 @@
         "type": "relative",
         "value": 0.35
       },
-      "notes": "Protocol mismatch on purpose: the paper flattens the raw series into sklearn defaults, while the labts pipeline fits RF(25 trees) on summary features. Kept as a demonstration that the leaderboard flags representation gaps, not only implementation bugs.",
+      "notes": "Protocol mismatch on purpose: the paper flattens the raw series into sklearn defaults, while the libraryts pipeline fits RF(25 trees) on summary features. Kept as a demonstration that the leaderboard flags representation gaps, not only implementation bugs.",
       "spec_params": {},
-      "train_command": "python playground/labts.py train --algorithm summary-random-forest-regressor --dataset covid-3month --model-id bench-regression-rf-covid3month --param n_estimators=25 --param random_state=7",
-      "run_command": "python playground/labts.py run --model-id bench-regression-rf-covid3month --compact"
+      "train_command": "libraryts train --algorithm summary-random-forest-regressor --dataset covid-3month --model-id bench-regression-rf-covid3month --param n_estimators=25 --param random_state=7",
+      "run_command": "libraryts run --model-id bench-regression-rf-covid3month --compact"
     },
     {
       "id": "regression-knn1-ed-covid3month",
@@ -74,13 +74,13 @@
         "type": "relative",
         "value": 0.2
       },
-      "notes": "Paper hyperparameters were tuned per algorithm by the TSER authors; labts runs the sktime implementation with the paper epoch budget and otherwise defaults, so a deviation reflects implementation/tuning gaps. Tolerance (20% relative) was chosen before running, wider for stochastic/untuned methods.",
+      "notes": "Paper hyperparameters were tuned per algorithm by the TSER authors; libraryts runs the sktime implementation with the paper epoch budget and otherwise defaults, so a deviation reflects implementation/tuning gaps. Tolerance (20% relative) was chosen before running, wider for stochastic/untuned methods.",
       "spec_params": {
         "n_neighbors": 1,
         "distance": "euclidean"
       },
-      "train_command": "python playground/labts.py train --algorithm KNeighborsTimeSeriesRegressor --dataset covid-3month --model-id bench-regression-knn1-ed-covid3month --param n_neighbors=1 --param distance=euclidean --param leaf_size=30",
-      "run_command": "python playground/labts.py run --model-id bench-regression-knn1-ed-covid3month --compact"
+      "train_command": "libraryts train --algorithm KNeighborsTimeSeriesRegressor --dataset covid-3month --model-id bench-regression-knn1-ed-covid3month --param n_neighbors=1 --param distance=euclidean --param leaf_size=30",
+      "run_command": "libraryts run --model-id bench-regression-knn1-ed-covid3month --compact"
     },
     {
       "id": "regression-knn5-ed-covid3month",
@@ -103,13 +103,13 @@
         "type": "relative",
         "value": 0.2
       },
-      "notes": "Paper hyperparameters were tuned per algorithm by the TSER authors; labts runs the sktime implementation with the paper epoch budget and otherwise defaults, so a deviation reflects implementation/tuning gaps. Tolerance (20% relative) was chosen before running, wider for stochastic/untuned methods.",
+      "notes": "Paper hyperparameters were tuned per algorithm by the TSER authors; libraryts runs the sktime implementation with the paper epoch budget and otherwise defaults, so a deviation reflects implementation/tuning gaps. Tolerance (20% relative) was chosen before running, wider for stochastic/untuned methods.",
       "spec_params": {
         "n_neighbors": 5,
         "distance": "euclidean"
       },
-      "train_command": "python playground/labts.py train --algorithm KNeighborsTimeSeriesRegressor --dataset covid-3month --model-id bench-regression-knn5-ed-covid3month --param n_neighbors=5 --param distance=euclidean --param leaf_size=30",
-      "run_command": "python playground/labts.py run --model-id bench-regression-knn5-ed-covid3month --compact"
+      "train_command": "libraryts train --algorithm KNeighborsTimeSeriesRegressor --dataset covid-3month --model-id bench-regression-knn5-ed-covid3month --param n_neighbors=5 --param distance=euclidean --param leaf_size=30",
+      "run_command": "libraryts run --model-id bench-regression-knn5-ed-covid3month --compact"
     },
     {
       "id": "regression-knn1-dtw-covid3month",
@@ -132,13 +132,13 @@
         "type": "relative",
         "value": 0.2
       },
-      "notes": "Paper hyperparameters were tuned per algorithm by the TSER authors; labts runs the sktime implementation with the paper epoch budget and otherwise defaults, so a deviation reflects implementation/tuning gaps. Tolerance (20% relative) was chosen before running, wider for stochastic/untuned methods.",
+      "notes": "Paper hyperparameters were tuned per algorithm by the TSER authors; libraryts runs the sktime implementation with the paper epoch budget and otherwise defaults, so a deviation reflects implementation/tuning gaps. Tolerance (20% relative) was chosen before running, wider for stochastic/untuned methods.",
       "spec_params": {
         "n_neighbors": 1,
         "distance": "dtw"
       },
-      "train_command": "python playground/labts.py train --algorithm KNeighborsTimeSeriesRegressor --dataset covid-3month --model-id bench-regression-knn1-dtw-covid3month --param n_neighbors=1 --param distance=dtw --param leaf_size=30",
-      "run_command": "python playground/labts.py run --model-id bench-regression-knn1-dtw-covid3month --compact"
+      "train_command": "libraryts train --algorithm KNeighborsTimeSeriesRegressor --dataset covid-3month --model-id bench-regression-knn1-dtw-covid3month --param n_neighbors=1 --param distance=dtw --param leaf_size=30",
+      "run_command": "libraryts run --model-id bench-regression-knn1-dtw-covid3month --compact"
     },
     {
       "id": "regression-knn5-dtw-covid3month",
@@ -161,13 +161,13 @@
         "type": "relative",
         "value": 0.2
       },
-      "notes": "Paper hyperparameters were tuned per algorithm by the TSER authors; labts runs the sktime implementation with the paper epoch budget and otherwise defaults, so a deviation reflects implementation/tuning gaps. Tolerance (20% relative) was chosen before running, wider for stochastic/untuned methods.",
+      "notes": "Paper hyperparameters were tuned per algorithm by the TSER authors; libraryts runs the sktime implementation with the paper epoch budget and otherwise defaults, so a deviation reflects implementation/tuning gaps. Tolerance (20% relative) was chosen before running, wider for stochastic/untuned methods.",
       "spec_params": {
         "n_neighbors": 5,
         "distance": "dtw"
       },
-      "train_command": "python playground/labts.py train --algorithm KNeighborsTimeSeriesRegressor --dataset covid-3month --model-id bench-regression-knn5-dtw-covid3month --param n_neighbors=5 --param distance=dtw --param leaf_size=30",
-      "run_command": "python playground/labts.py run --model-id bench-regression-knn5-dtw-covid3month --compact"
+      "train_command": "libraryts train --algorithm KNeighborsTimeSeriesRegressor --dataset covid-3month --model-id bench-regression-knn5-dtw-covid3month --param n_neighbors=5 --param distance=dtw --param leaf_size=30",
+      "run_command": "libraryts run --model-id bench-regression-knn5-dtw-covid3month --compact"
     },
     {
       "id": "regression-fcn-covid3month",
@@ -190,13 +190,13 @@
         "type": "relative",
         "value": 0.4
       },
-      "notes": "Paper hyperparameters were tuned per algorithm by the TSER authors; labts runs the sktime implementation with the paper epoch budget and otherwise defaults, so a deviation reflects implementation/tuning gaps. Tolerance (40% relative) was chosen before running, wider for stochastic/untuned methods.",
+      "notes": "Paper hyperparameters were tuned per algorithm by the TSER authors; libraryts runs the sktime implementation with the paper epoch budget and otherwise defaults, so a deviation reflects implementation/tuning gaps. Tolerance (40% relative) was chosen before running, wider for stochastic/untuned methods.",
       "spec_params": {
         "n_epochs": 2000,
         "batch_size": 16
       },
-      "train_command": "python playground/labts.py train --algorithm FCNRegressor --dataset covid-3month --model-id bench-regression-fcn-covid3month --param n_epochs=2000 --param batch_size=16",
-      "run_command": "python playground/labts.py run --model-id bench-regression-fcn-covid3month --compact"
+      "train_command": "libraryts train --algorithm FCNRegressor --dataset covid-3month --model-id bench-regression-fcn-covid3month --param n_epochs=2000 --param batch_size=16",
+      "run_command": "libraryts run --model-id bench-regression-fcn-covid3month --compact"
     },
     {
       "id": "regression-resnet-covid3month",
@@ -219,13 +219,13 @@
         "type": "relative",
         "value": 0.4
       },
-      "notes": "Paper hyperparameters were tuned per algorithm by the TSER authors; labts runs the sktime implementation with the paper epoch budget and otherwise defaults, so a deviation reflects implementation/tuning gaps. Tolerance (40% relative) was chosen before running, wider for stochastic/untuned methods.",
+      "notes": "Paper hyperparameters were tuned per algorithm by the TSER authors; libraryts runs the sktime implementation with the paper epoch budget and otherwise defaults, so a deviation reflects implementation/tuning gaps. Tolerance (40% relative) was chosen before running, wider for stochastic/untuned methods.",
       "spec_params": {
         "n_epochs": 1500,
         "batch_size": 16
       },
-      "train_command": "python playground/labts.py train --algorithm ResNetRegressor --dataset covid-3month --model-id bench-regression-resnet-covid3month --param n_epochs=1500 --param batch_size=16",
-      "run_command": "python playground/labts.py run --model-id bench-regression-resnet-covid3month --compact"
+      "train_command": "libraryts train --algorithm ResNetRegressor --dataset covid-3month --model-id bench-regression-resnet-covid3month --param n_epochs=1500 --param batch_size=16",
+      "run_command": "libraryts run --model-id bench-regression-resnet-covid3month --compact"
     },
     {
       "id": "regression-inception-covid3month",
@@ -248,13 +248,13 @@
         "type": "relative",
         "value": 0.4
       },
-      "notes": "Paper hyperparameters were tuned per algorithm by the TSER authors; labts runs the sktime implementation with the paper epoch budget and otherwise defaults, so a deviation reflects implementation/tuning gaps. Tolerance (40% relative) was chosen before running, wider for stochastic/untuned methods.",
+      "notes": "Paper hyperparameters were tuned per algorithm by the TSER authors; libraryts runs the sktime implementation with the paper epoch budget and otherwise defaults, so a deviation reflects implementation/tuning gaps. Tolerance (40% relative) was chosen before running, wider for stochastic/untuned methods.",
       "spec_params": {
         "n_epochs": 1500,
         "batch_size": 64
       },
-      "train_command": "python playground/labts.py train --algorithm InceptionTimeRegressor --dataset covid-3month --model-id bench-regression-inception-covid3month --param n_epochs=1500 --param batch_size=64 --param bottleneck_size=32 --param depth=6 --param kernel_size=40 --param n_filters=32",
-      "run_command": "python playground/labts.py run --model-id bench-regression-inception-covid3month --compact"
+      "train_command": "libraryts train --algorithm InceptionTimeRegressor --dataset covid-3month --model-id bench-regression-inception-covid3month --param n_epochs=1500 --param batch_size=64 --param bottleneck_size=32 --param depth=6 --param kernel_size=40 --param n_filters=32",
+      "run_command": "libraryts run --model-id bench-regression-inception-covid3month --compact"
     },
     {
       "id": "regression-svr-covid3month",
@@ -277,12 +277,12 @@
         "type": "relative",
         "value": 0.5
       },
-      "notes": "Paper hyperparameters were tuned per algorithm by the TSER authors; labts runs the sktime implementation with the paper epoch budget and otherwise defaults, so a deviation reflects implementation/tuning gaps. Tolerance (50% relative) was chosen before running, wider for stochastic/untuned methods. The default gak kernel fails on Covid3Month (auto gamma ~0), so the claim uses the RBF kernel, closest to the paper's SVR.",
+      "notes": "Paper hyperparameters were tuned per algorithm by the TSER authors; libraryts runs the sktime implementation with the paper epoch budget and otherwise defaults, so a deviation reflects implementation/tuning gaps. Tolerance (50% relative) was chosen before running, wider for stochastic/untuned methods. The default gak kernel fails on Covid3Month (auto gamma ~0), so the claim uses the RBF kernel, closest to the paper's SVR.",
       "spec_params": {
         "kernel": "rbf"
       },
-      "train_command": "python playground/labts.py train --algorithm TimeSeriesSVRTslearn --dataset covid-3month --model-id bench-regression-svr-covid3month --param kernel=rbf --param C=1 --param cache_size=200 --param coef0=0 --param degree=3 --param epsilon=0.1 --param max_iter=-1 --param tol=0.001 --param verbose=0",
-      "run_command": "python playground/labts.py run --model-id bench-regression-svr-covid3month --compact"
+      "train_command": "libraryts train --algorithm TimeSeriesSVRTslearn --dataset covid-3month --model-id bench-regression-svr-covid3month --param kernel=rbf --param C=1 --param cache_size=200 --param coef0=0 --param degree=3 --param epsilon=0.1 --param max_iter=-1 --param tol=0.001 --param verbose=0",
+      "run_command": "libraryts run --model-id bench-regression-svr-covid3month --compact"
     }
   ]
 }

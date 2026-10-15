@@ -1,10 +1,10 @@
-"""Domain runners for the newer LabTS tasks: causal discovery and distances.
+"""Domain runners for the newer LibraryTS tasks: causal discovery and distances.
 
-- ``run_causal`` backs ``labts run --task causal``: fits a sktime causal
+- ``run_causal`` backs ``libraryts run --task causal``: fits a sktime causal
   discoverer (NOTEARS / PC / GES / PCMCI) on a bnlearn benchmark dataset with
   a ground-truth DAG and scores the discovered graph (SHD + edge
   precision/recall/F1).
-- ``compute_distance_matrix`` backs ``labts dist``: pairwise distance matrices
+- ``compute_distance_matrix`` backs ``libraryts dist``: pairwise distance matrices
   over panel datasets via ``sktime.distances`` and
   ``sktime.dists_kernels.ScipyDist``.
 """

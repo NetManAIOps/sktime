@@ -1,6 +1,6 @@
 """Roundtrip tests for the generic train/predict persistence backend.
 
-Covers `trainer.train` / `trainer.predict_estimator` (and the `labts run
+Covers `trainer.train` / `trainer.predict_estimator` (and the `libraryts run
 --model-id` CLI on top of them): sktime save/load roundtrips for
 forecasting/classification, rolling-origin forecasting, clustering
 `fit_on=all`, causal discovery, per-series multi-series anomaly bundles
@@ -558,17 +558,17 @@ class CatalogTypedParamTests(unittest.TestCase):
 
 
 class CliRunModelIdTests(TrainerTestCase):
-    """`labts run --model-id` end-to-end through the CLI entry point."""
+    """`libraryts run --model-id` end-to-end through the CLI entry point."""
 
     def _cli(self, argv):
         import contextlib
         import io
 
-        import labts
+        import libraryts
 
         buffer = io.StringIO()
         with contextlib.redirect_stdout(buffer):
-            code = labts.main(argv)
+            code = libraryts.main(argv)
         return code, json.loads(buffer.getvalue())
 
     def test_run_model_id_matches_one_shot(self):
@@ -643,11 +643,11 @@ class CliRunModelIdTests(TrainerTestCase):
         import contextlib
         import io
 
-        import labts
+        import libraryts
 
         buffer = io.StringIO()
         with contextlib.redirect_stdout(buffer):
-            code = labts.main(["run", "--model-id", "t-cli-keras", "--compact"])
+            code = libraryts.main(["run", "--model-id", "t-cli-keras", "--compact"])
         # keras progress bars share stdout; the envelope is the last line
         envelope = json.loads(buffer.getvalue().strip().splitlines()[-1])
         self.assertEqual(code, 0)

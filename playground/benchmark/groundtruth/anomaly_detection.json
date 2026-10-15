@@ -22,10 +22,10 @@
         "type": "absolute",
         "value": 0.15
       },
-      "notes": "Now apples-to-apples: labts scores the same 367 TSB-UAD series and averages per-series AUC. Residual gap: window-length heuristic and score normalization may differ from TSB-UAD's reference pipeline. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ).",
+      "notes": "Now apples-to-apples: libraryts scores the same 367 TSB-UAD series and averages per-series AUC. Residual gap: window-length heuristic and score normalization may differ from TSB-UAD's reference pipeline. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ).",
       "spec_params": {},
-      "train_command": "python playground/labts.py train --algorithm PyODLOFDetector --dataset tsb-yahoo --model-id bench-detection-lof-yahoo-auc --param contamination=0.1 --param n_neighbors=20",
-      "run_command": "python playground/labts.py run --model-id bench-detection-lof-yahoo-auc --compact"
+      "train_command": "libraryts train --algorithm PyODLOFDetector --dataset tsb-yahoo --model-id bench-detection-lof-yahoo-auc --param contamination=0.1 --param n_neighbors=20",
+      "run_command": "libraryts run --model-id bench-detection-lof-yahoo-auc --compact"
     },
     {
       "id": "detection-iforest-yahoo-auc",
@@ -50,8 +50,8 @@
       },
       "notes": "Same protocol as the LOF entry.",
       "spec_params": {},
-      "train_command": "python playground/labts.py train --algorithm PyODIForestDetector --dataset tsb-yahoo --model-id bench-detection-iforest-yahoo-auc --param contamination=0.1 --param n_estimators=100",
-      "run_command": "python playground/labts.py run --model-id bench-detection-iforest-yahoo-auc --compact"
+      "train_command": "libraryts train --algorithm PyODIForestDetector --dataset tsb-yahoo --model-id bench-detection-iforest-yahoo-auc --param contamination=0.1 --param n_estimators=100",
+      "run_command": "libraryts run --model-id bench-detection-iforest-yahoo-auc --compact"
     },
     {
       "id": "detection-iforest-mitdb-auc",
@@ -76,8 +76,8 @@
       },
       "notes": "Same protocol as the Yahoo entries, on the 32 MITDB series.",
       "spec_params": {},
-      "train_command": "python playground/labts.py train --algorithm PyODIForestDetector --dataset tsb-mitdb --model-id bench-detection-iforest-mitdb-auc --param contamination=0.1 --param n_estimators=100",
-      "run_command": "python playground/labts.py run --model-id bench-detection-iforest-mitdb-auc --compact"
+      "train_command": "libraryts train --algorithm PyODIForestDetector --dataset tsb-mitdb --model-id bench-detection-iforest-mitdb-auc --param contamination=0.1 --param n_estimators=100",
+      "run_command": "libraryts run --model-id bench-detection-iforest-mitdb-auc --compact"
     },
     {
       "id": "detection-hbos-yahoo-auc",
@@ -101,8 +101,8 @@
         "value": 0.15
       },
       "spec_params": {},
-      "train_command": "python playground/labts.py train --algorithm PyODHBOSDetector --dataset tsb-yahoo --model-id bench-detection-hbos-yahoo-auc --param contamination=0.1 --param n_bins=10",
-      "run_command": "python playground/labts.py run --model-id bench-detection-hbos-yahoo-auc --compact"
+      "train_command": "libraryts train --algorithm PyODHBOSDetector --dataset tsb-yahoo --model-id bench-detection-hbos-yahoo-auc --param contamination=0.1 --param n_bins=10",
+      "run_command": "libraryts run --model-id bench-detection-hbos-yahoo-auc --compact"
     },
     {
       "id": "detection-ocsvm-yahoo-auc",
@@ -126,8 +126,8 @@
         "value": 0.15
       },
       "spec_params": {},
-      "train_command": "python playground/labts.py train --algorithm PyODOCSVMDetector --dataset tsb-yahoo --model-id bench-detection-ocsvm-yahoo-auc --param contamination=0.1 --param nu=0.5",
-      "run_command": "python playground/labts.py run --model-id bench-detection-ocsvm-yahoo-auc --compact"
+      "train_command": "libraryts train --algorithm PyODOCSVMDetector --dataset tsb-yahoo --model-id bench-detection-ocsvm-yahoo-auc --param contamination=0.1 --param nu=0.5",
+      "run_command": "libraryts run --model-id bench-detection-ocsvm-yahoo-auc --compact"
     },
     {
       "id": "detection-hbos-mitdb-auc",
@@ -151,8 +151,8 @@
         "value": 0.15
       },
       "spec_params": {},
-      "train_command": "python playground/labts.py train --algorithm PyODHBOSDetector --dataset tsb-mitdb --model-id bench-detection-hbos-mitdb-auc --param contamination=0.1 --param n_bins=10",
-      "run_command": "python playground/labts.py run --model-id bench-detection-hbos-mitdb-auc --compact"
+      "train_command": "libraryts train --algorithm PyODHBOSDetector --dataset tsb-mitdb --model-id bench-detection-hbos-mitdb-auc --param contamination=0.1 --param n_bins=10",
+      "run_command": "libraryts run --model-id bench-detection-hbos-mitdb-auc --compact"
     },
     {
       "id": "detection-lof-mitdb-auc",
@@ -175,10 +175,10 @@
         "type": "absolute",
         "value": 0.15
       },
-      "notes": "Now apples-to-apples: labts scores the same 367 TSB-UAD series and averages per-series AUC. Residual gap: window-length heuristic and score normalization may differ from TSB-UAD's reference pipeline. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ).",
+      "notes": "Now apples-to-apples: libraryts scores the same 367 TSB-UAD series and averages per-series AUC. Residual gap: window-length heuristic and score normalization may differ from TSB-UAD's reference pipeline. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ).",
       "spec_params": {},
-      "train_command": "python playground/labts.py train --algorithm PyODLOFDetector --dataset tsb-mitdb --model-id bench-detection-lof-mitdb-auc --param contamination=0.1 --param n_neighbors=20",
-      "run_command": "python playground/labts.py run --model-id bench-detection-lof-mitdb-auc --compact"
+      "train_command": "libraryts train --algorithm PyODLOFDetector --dataset tsb-mitdb --model-id bench-detection-lof-mitdb-auc --param contamination=0.1 --param n_neighbors=20",
+      "run_command": "libraryts run --model-id bench-detection-lof-mitdb-auc --compact"
     },
     {
       "id": "detection-iforest-nab-auc",
@@ -203,8 +203,8 @@
       },
       "notes": "Same protocol as the LOF entry.",
       "spec_params": {},
-      "train_command": "python playground/labts.py train --algorithm PyODIForestDetector --dataset tsb-nab --model-id bench-detection-iforest-nab-auc --param contamination=0.1 --param n_estimators=100",
-      "run_command": "python playground/labts.py run --model-id bench-detection-iforest-nab-auc --compact"
+      "train_command": "libraryts train --algorithm PyODIForestDetector --dataset tsb-nab --model-id bench-detection-iforest-nab-auc --param contamination=0.1 --param n_estimators=100",
+      "run_command": "libraryts run --model-id bench-detection-iforest-nab-auc --compact"
     },
     {
       "id": "detection-lof-nab-auc",
@@ -227,10 +227,10 @@
         "type": "absolute",
         "value": 0.15
       },
-      "notes": "Now apples-to-apples: labts scores the same 367 TSB-UAD series and averages per-series AUC. Residual gap: window-length heuristic and score normalization may differ from TSB-UAD's reference pipeline. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ).",
+      "notes": "Now apples-to-apples: libraryts scores the same 367 TSB-UAD series and averages per-series AUC. Residual gap: window-length heuristic and score normalization may differ from TSB-UAD's reference pipeline. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ).",
       "spec_params": {},
-      "train_command": "python playground/labts.py train --algorithm PyODLOFDetector --dataset tsb-nab --model-id bench-detection-lof-nab-auc --param contamination=0.1 --param n_neighbors=20",
-      "run_command": "python playground/labts.py run --model-id bench-detection-lof-nab-auc --compact"
+      "train_command": "libraryts train --algorithm PyODLOFDetector --dataset tsb-nab --model-id bench-detection-lof-nab-auc --param contamination=0.1 --param n_neighbors=20",
+      "run_command": "libraryts run --model-id bench-detection-lof-nab-auc --compact"
     },
     {
       "id": "detection-hbos-nab-auc",
@@ -254,8 +254,8 @@
         "value": 0.15
       },
       "spec_params": {},
-      "train_command": "python playground/labts.py train --algorithm PyODHBOSDetector --dataset tsb-nab --model-id bench-detection-hbos-nab-auc --param contamination=0.1 --param n_bins=10",
-      "run_command": "python playground/labts.py run --model-id bench-detection-hbos-nab-auc --compact"
+      "train_command": "libraryts train --algorithm PyODHBOSDetector --dataset tsb-nab --model-id bench-detection-hbos-nab-auc --param contamination=0.1 --param n_bins=10",
+      "run_command": "libraryts run --model-id bench-detection-hbos-nab-auc --compact"
     },
     {
       "id": "detection-ocsvm-nab-auc",
@@ -279,8 +279,8 @@
         "value": 0.15
       },
       "spec_params": {},
-      "train_command": "python playground/labts.py train --algorithm PyODOCSVMDetector --dataset tsb-nab --model-id bench-detection-ocsvm-nab-auc --param contamination=0.1 --param nu=0.5",
-      "run_command": "python playground/labts.py run --model-id bench-detection-ocsvm-nab-auc --compact"
+      "train_command": "libraryts train --algorithm PyODOCSVMDetector --dataset tsb-nab --model-id bench-detection-ocsvm-nab-auc --param contamination=0.1 --param nu=0.5",
+      "run_command": "libraryts run --model-id bench-detection-ocsvm-nab-auc --compact"
     },
     {
       "id": "detection-iforest-dodgers-auc",
@@ -305,8 +305,8 @@
       },
       "notes": "Same protocol as the LOF entry. Dodgers has only 1 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
       "spec_params": {},
-      "train_command": "python playground/labts.py train --algorithm PyODIForestDetector --dataset tsb-dodgers --model-id bench-detection-iforest-dodgers-auc --param contamination=0.1 --param n_estimators=100",
-      "run_command": "python playground/labts.py run --model-id bench-detection-iforest-dodgers-auc --compact"
+      "train_command": "libraryts train --algorithm PyODIForestDetector --dataset tsb-dodgers --model-id bench-detection-iforest-dodgers-auc --param contamination=0.1 --param n_estimators=100",
+      "run_command": "libraryts run --model-id bench-detection-iforest-dodgers-auc --compact"
     },
     {
       "id": "detection-lof-dodgers-auc",
@@ -329,10 +329,10 @@
         "type": "absolute",
         "value": 0.15
       },
-      "notes": "Now apples-to-apples: labts scores the same 367 TSB-UAD series and averages per-series AUC. Residual gap: window-length heuristic and score normalization may differ from TSB-UAD's reference pipeline. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ). Dodgers has only 1 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
+      "notes": "Now apples-to-apples: libraryts scores the same 367 TSB-UAD series and averages per-series AUC. Residual gap: window-length heuristic and score normalization may differ from TSB-UAD's reference pipeline. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ). Dodgers has only 1 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
       "spec_params": {},
-      "train_command": "python playground/labts.py train --algorithm PyODLOFDetector --dataset tsb-dodgers --model-id bench-detection-lof-dodgers-auc --param contamination=0.1 --param n_neighbors=20",
-      "run_command": "python playground/labts.py run --model-id bench-detection-lof-dodgers-auc --compact"
+      "train_command": "libraryts train --algorithm PyODLOFDetector --dataset tsb-dodgers --model-id bench-detection-lof-dodgers-auc --param contamination=0.1 --param n_neighbors=20",
+      "run_command": "libraryts run --model-id bench-detection-lof-dodgers-auc --compact"
     },
     {
       "id": "detection-hbos-dodgers-auc",
@@ -357,8 +357,8 @@
       },
       "spec_params": {},
       "notes": "Same protocol as the Yahoo entries. Dodgers has only 1 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
-      "train_command": "python playground/labts.py train --algorithm PyODHBOSDetector --dataset tsb-dodgers --model-id bench-detection-hbos-dodgers-auc --param contamination=0.1 --param n_bins=10",
-      "run_command": "python playground/labts.py run --model-id bench-detection-hbos-dodgers-auc --compact"
+      "train_command": "libraryts train --algorithm PyODHBOSDetector --dataset tsb-dodgers --model-id bench-detection-hbos-dodgers-auc --param contamination=0.1 --param n_bins=10",
+      "run_command": "libraryts run --model-id bench-detection-hbos-dodgers-auc --compact"
     },
     {
       "id": "detection-ocsvm-dodgers-auc",
@@ -383,8 +383,8 @@
       },
       "spec_params": {},
       "notes": "Same protocol as the Yahoo entries. Dodgers has only 1 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
-      "train_command": "python playground/labts.py train --algorithm PyODOCSVMDetector --dataset tsb-dodgers --model-id bench-detection-ocsvm-dodgers-auc --param contamination=0.1 --param nu=0.5",
-      "run_command": "python playground/labts.py run --model-id bench-detection-ocsvm-dodgers-auc --compact"
+      "train_command": "libraryts train --algorithm PyODOCSVMDetector --dataset tsb-dodgers --model-id bench-detection-ocsvm-dodgers-auc --param contamination=0.1 --param nu=0.5",
+      "run_command": "libraryts run --model-id bench-detection-ocsvm-dodgers-auc --compact"
     },
     {
       "id": "detection-iforest-occupancy-auc",
@@ -409,8 +409,8 @@
       },
       "notes": "Same protocol as the LOF entry. Occupancy has only 10 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
       "spec_params": {},
-      "train_command": "python playground/labts.py train --algorithm PyODIForestDetector --dataset tsb-occupancy --model-id bench-detection-iforest-occupancy-auc --param contamination=0.1 --param n_estimators=100",
-      "run_command": "python playground/labts.py run --model-id bench-detection-iforest-occupancy-auc --compact"
+      "train_command": "libraryts train --algorithm PyODIForestDetector --dataset tsb-occupancy --model-id bench-detection-iforest-occupancy-auc --param contamination=0.1 --param n_estimators=100",
+      "run_command": "libraryts run --model-id bench-detection-iforest-occupancy-auc --compact"
     },
     {
       "id": "detection-lof-occupancy-auc",
@@ -433,10 +433,10 @@
         "type": "absolute",
         "value": 0.15
       },
-      "notes": "Now apples-to-apples: labts scores the same 367 TSB-UAD series and averages per-series AUC. Residual gap: window-length heuristic and score normalization may differ from TSB-UAD's reference pipeline. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ). Occupancy has only 10 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
+      "notes": "Now apples-to-apples: libraryts scores the same 367 TSB-UAD series and averages per-series AUC. Residual gap: window-length heuristic and score normalization may differ from TSB-UAD's reference pipeline. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ). Occupancy has only 10 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
       "spec_params": {},
-      "train_command": "python playground/labts.py train --algorithm PyODLOFDetector --dataset tsb-occupancy --model-id bench-detection-lof-occupancy-auc --param contamination=0.1 --param n_neighbors=20",
-      "run_command": "python playground/labts.py run --model-id bench-detection-lof-occupancy-auc --compact"
+      "train_command": "libraryts train --algorithm PyODLOFDetector --dataset tsb-occupancy --model-id bench-detection-lof-occupancy-auc --param contamination=0.1 --param n_neighbors=20",
+      "run_command": "libraryts run --model-id bench-detection-lof-occupancy-auc --compact"
     },
     {
       "id": "detection-hbos-occupancy-auc",
@@ -461,8 +461,8 @@
       },
       "spec_params": {},
       "notes": "Same protocol as the Yahoo entries. Occupancy has only 10 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
-      "train_command": "python playground/labts.py train --algorithm PyODHBOSDetector --dataset tsb-occupancy --model-id bench-detection-hbos-occupancy-auc --param contamination=0.1 --param n_bins=10",
-      "run_command": "python playground/labts.py run --model-id bench-detection-hbos-occupancy-auc --compact"
+      "train_command": "libraryts train --algorithm PyODHBOSDetector --dataset tsb-occupancy --model-id bench-detection-hbos-occupancy-auc --param contamination=0.1 --param n_bins=10",
+      "run_command": "libraryts run --model-id bench-detection-hbos-occupancy-auc --compact"
     },
     {
       "id": "detection-ocsvm-occupancy-auc",
@@ -487,8 +487,8 @@
       },
       "spec_params": {},
       "notes": "Same protocol as the Yahoo entries. Occupancy has only 10 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
-      "train_command": "python playground/labts.py train --algorithm PyODOCSVMDetector --dataset tsb-occupancy --model-id bench-detection-ocsvm-occupancy-auc --param contamination=0.1 --param nu=0.5",
-      "run_command": "python playground/labts.py run --model-id bench-detection-ocsvm-occupancy-auc --compact"
+      "train_command": "libraryts train --algorithm PyODOCSVMDetector --dataset tsb-occupancy --model-id bench-detection-ocsvm-occupancy-auc --param contamination=0.1 --param nu=0.5",
+      "run_command": "libraryts run --model-id bench-detection-ocsvm-occupancy-auc --compact"
     },
     {
       "id": "detection-iforest-mgab-auc",
@@ -513,8 +513,8 @@
       },
       "notes": "Same protocol as the LOF entry.",
       "spec_params": {},
-      "train_command": "python playground/labts.py train --algorithm PyODIForestDetector --dataset tsb-mgab --model-id bench-detection-iforest-mgab-auc --param contamination=0.1 --param n_estimators=100",
-      "run_command": "python playground/labts.py run --model-id bench-detection-iforest-mgab-auc --compact"
+      "train_command": "libraryts train --algorithm PyODIForestDetector --dataset tsb-mgab --model-id bench-detection-iforest-mgab-auc --param contamination=0.1 --param n_estimators=100",
+      "run_command": "libraryts run --model-id bench-detection-iforest-mgab-auc --compact"
     },
     {
       "id": "detection-lof-mgab-auc",
@@ -537,10 +537,10 @@
         "type": "absolute",
         "value": 0.15
       },
-      "notes": "Now apples-to-apples: labts scores the same 367 TSB-UAD series and averages per-series AUC. Residual gap: window-length heuristic and score normalization may differ from TSB-UAD's reference pipeline. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ).",
+      "notes": "Now apples-to-apples: libraryts scores the same 367 TSB-UAD series and averages per-series AUC. Residual gap: window-length heuristic and score normalization may differ from TSB-UAD's reference pipeline. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ).",
       "spec_params": {},
-      "train_command": "python playground/labts.py train --algorithm PyODLOFDetector --dataset tsb-mgab --model-id bench-detection-lof-mgab-auc --param contamination=0.1 --param n_neighbors=20",
-      "run_command": "python playground/labts.py run --model-id bench-detection-lof-mgab-auc --compact"
+      "train_command": "libraryts train --algorithm PyODLOFDetector --dataset tsb-mgab --model-id bench-detection-lof-mgab-auc --param contamination=0.1 --param n_neighbors=20",
+      "run_command": "libraryts run --model-id bench-detection-lof-mgab-auc --compact"
     },
     {
       "id": "detection-hbos-mgab-auc",
@@ -564,8 +564,8 @@
         "value": 0.15
       },
       "spec_params": {},
-      "train_command": "python playground/labts.py train --algorithm PyODHBOSDetector --dataset tsb-mgab --model-id bench-detection-hbos-mgab-auc --param contamination=0.1 --param n_bins=10",
-      "run_command": "python playground/labts.py run --model-id bench-detection-hbos-mgab-auc --compact"
+      "train_command": "libraryts train --algorithm PyODHBOSDetector --dataset tsb-mgab --model-id bench-detection-hbos-mgab-auc --param contamination=0.1 --param n_bins=10",
+      "run_command": "libraryts run --model-id bench-detection-hbos-mgab-auc --compact"
     },
     {
       "id": "detection-iforest-genesis-auc",
@@ -590,8 +590,8 @@
       },
       "notes": "Same protocol as the LOF entry. Genesis has only 6 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
       "spec_params": {},
-      "train_command": "python playground/labts.py train --algorithm PyODIForestDetector --dataset tsb-genesis --model-id bench-detection-iforest-genesis-auc --param contamination=0.1 --param n_estimators=100",
-      "run_command": "python playground/labts.py run --model-id bench-detection-iforest-genesis-auc --compact"
+      "train_command": "libraryts train --algorithm PyODIForestDetector --dataset tsb-genesis --model-id bench-detection-iforest-genesis-auc --param contamination=0.1 --param n_estimators=100",
+      "run_command": "libraryts run --model-id bench-detection-iforest-genesis-auc --compact"
     },
     {
       "id": "detection-lof-genesis-auc",
@@ -614,10 +614,10 @@
         "type": "absolute",
         "value": 0.15
       },
-      "notes": "Now apples-to-apples: labts scores the same 367 TSB-UAD series and averages per-series AUC. Residual gap: window-length heuristic and score normalization may differ from TSB-UAD's reference pipeline. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ). Genesis has only 6 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
+      "notes": "Now apples-to-apples: libraryts scores the same 367 TSB-UAD series and averages per-series AUC. Residual gap: window-length heuristic and score normalization may differ from TSB-UAD's reference pipeline. F1 not compared (TSB-UAD uses a mu+3-sigma threshold on normalized scores; detector thresholds here differ). Genesis has only 6 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
       "spec_params": {},
-      "train_command": "python playground/labts.py train --algorithm PyODLOFDetector --dataset tsb-genesis --model-id bench-detection-lof-genesis-auc --param contamination=0.1 --param n_neighbors=20",
-      "run_command": "python playground/labts.py run --model-id bench-detection-lof-genesis-auc --compact"
+      "train_command": "libraryts train --algorithm PyODLOFDetector --dataset tsb-genesis --model-id bench-detection-lof-genesis-auc --param contamination=0.1 --param n_neighbors=20",
+      "run_command": "libraryts run --model-id bench-detection-lof-genesis-auc --compact"
     },
     {
       "id": "detection-hbos-genesis-auc",
@@ -642,8 +642,8 @@
       },
       "spec_params": {},
       "notes": "Same protocol as the Yahoo entries. Genesis has only 6 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
-      "train_command": "python playground/labts.py train --algorithm PyODHBOSDetector --dataset tsb-genesis --model-id bench-detection-hbos-genesis-auc --param contamination=0.1 --param n_bins=10",
-      "run_command": "python playground/labts.py run --model-id bench-detection-hbos-genesis-auc --compact"
+      "train_command": "libraryts train --algorithm PyODHBOSDetector --dataset tsb-genesis --model-id bench-detection-hbos-genesis-auc --param contamination=0.1 --param n_bins=10",
+      "run_command": "libraryts run --model-id bench-detection-hbos-genesis-auc --compact"
     },
     {
       "id": "detection-ocsvm-genesis-auc",
@@ -668,8 +668,8 @@
       },
       "spec_params": {},
       "notes": "Same protocol as the Yahoo entries. Genesis has only 6 series, so the dataset average is noisy; same pipeline as the other TSB-UAD entries.",
-      "train_command": "python playground/labts.py train --algorithm PyODOCSVMDetector --dataset tsb-genesis --model-id bench-detection-ocsvm-genesis-auc --param contamination=0.1 --param nu=0.5",
-      "run_command": "python playground/labts.py run --model-id bench-detection-ocsvm-genesis-auc --compact"
+      "train_command": "libraryts train --algorithm PyODOCSVMDetector --dataset tsb-genesis --model-id bench-detection-ocsvm-genesis-auc --param contamination=0.1 --param nu=0.5",
+      "run_command": "libraryts run --model-id bench-detection-ocsvm-genesis-auc --compact"
     }
   ]
 }

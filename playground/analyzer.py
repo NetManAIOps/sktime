@@ -1,4 +1,4 @@
-"""Parameter-estimation backend for `labts analyze`.
+"""Parameter-estimation backend for `libraryts analyze`.
 
 Fits a sktime ``param_est`` estimator (seasonality, stationarity, lag order)
 on a catalog series and returns the estimated parameters as JSON. Unlike
@@ -81,7 +81,7 @@ def _load_series(dataset: dict, log: list[str]):
         return pd.Series(_load_forecasting_series(dataset, log)).dropna()
     raise PlaygroundError(
         f"Dataset `{dataset['id']}` is a {dataset.get('task')} dataset; "
-        "`labts analyze` needs a series dataset (forecasting or anomaly_detection)."
+        "`libraryts analyze` needs a series dataset (forecasting or anomaly_detection)."
     )
 
 
