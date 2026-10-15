@@ -1,0 +1,31 @@
+{
+  "id": "clustering-agglomerative-computers",
+  "task": "clustering",
+  "ran_at": "2026-10-15T12:57:21.094617+00:00",
+  "train_command": "libraryts train --algorithm user-agglomerative --dataset computers-cl --model-id bench-clustering-agglomerative-computers --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean",
+  "run_command": "libraryts run --model-id bench-clustering-agglomerative-computers --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 6.79,
+  "values": {
+    "ARI": -0.0017185619338981426
+  },
+  "per_metric": {
+    "ARI": {
+      "gt": -0.001719,
+      "value": -0.0017185619338981426,
+      "delta": 0.0,
+      "delta_rel": 0.000255,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "ARI": -0.0017185619338981426,
+    "NMI": 0.00018886874554149927,
+    "Clusters": 2,
+    "Largest Cluster": 282
+  },
+  "error": null,
+  "stdout_tail": "\": \"sktime-trained:bench-clustering-agglomerative-computers\", \"preprocessor_id\": \"none\", \"params\": {}}, \"task\": \"clustering\", \"dataset\": {\"id\": \"computers-cl\", \"name\": \"Computers (labels for ARI)\", \"task\": \"clustering\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"Computers\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-clustering-agglomerative-computers\", \"name\": \"Agglomerative (Euclidean, ward linkage) (trained: bench-clustering-agglomerative-computers)\", \"task\": \"clustering\", \"module\": \"user_algos.AgglomerativePanelClusterer\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-16/playground/models/bench-clustering-agglomerative-computers\", \"manifest\": {\"model_id\": \"bench-clustering-agglomerative-computers\", \"backend\": \"sktime\", \"task\": \"clustering\", \"algorithm_id\": \"user-agglomerative\", \"algorithm_name\": \"Agglomerative (Euclidean, ward linkage)\", \"module\": \"user_algos.AgglomerativePanelClusterer\", \"params\": {\"n_clusters\": 2, \"linkage\": \"ward\", \"metric\": \"euclidean\"}, \"eval_params\": {\"fit_on\": \"all\"}, \"created_at\": \"2026-10-15T12:57:18.536851+00:00\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"computers-cl\", \"algorithm_id\": \"user-agglomerative\", \"preprocessor_id\": \"none\", \"params\": {\"n_clusters\": 2, \"fit_on\": \"all\", \"linkage\": \"ward\", \"metric\": \"euclidean\"}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 1704.7, \"log\": [\"Selected dataset: Computers (labels for ARI)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-clustering-agglomerative-computers (sktime backend, algorithm: user-agglomerative, created: 2026-10-15T12:57:18.536851+00:00)\", \"Loaded UCR/UEA Computers train=250 test=250\", \"Finished in 1704.7 ms\"]}, \"error\": null}\n"
+}

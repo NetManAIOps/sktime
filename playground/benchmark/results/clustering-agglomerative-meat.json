@@ -1,0 +1,31 @@
+{
+  "id": "clustering-agglomerative-meat",
+  "task": "clustering",
+  "ran_at": "2026-10-15T12:56:23.112101+00:00",
+  "train_command": "libraryts train --algorithm user-agglomerative --dataset meat-cl --model-id bench-clustering-agglomerative-meat --param n_clusters=3 --param fit_on=all --param linkage=ward --param metric=euclidean",
+  "run_command": "libraryts run --model-id bench-clustering-agglomerative-meat --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 4.43,
+  "values": {
+    "ARI": 0.44350580781414994
+  },
+  "per_metric": {
+    "ARI": {
+      "gt": 0.443506,
+      "value": 0.44350580781414994,
+      "delta": -0.0,
+      "delta_rel": 0.0,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "ARI": 0.44350580781414994,
+    "NMI": 0.649682027811217,
+    "Clusters": 3,
+    "Largest Cluster": 80
+  },
+  "error": null,
+  "stdout_tail": " {\"task\": \"clustering\", \"dataset_id\": \"meat-cl\", \"algorithm_id\": \"sktime-trained:bench-clustering-agglomerative-meat\", \"preprocessor_id\": \"none\", \"params\": {}}, \"task\": \"clustering\", \"dataset\": {\"id\": \"meat-cl\", \"name\": \"Meat (labels for ARI)\", \"task\": \"clustering\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"Meat\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-clustering-agglomerative-meat\", \"name\": \"Agglomerative (Euclidean, ward linkage) (trained: bench-clustering-agglomerative-meat)\", \"task\": \"clustering\", \"module\": \"user_algos.AgglomerativePanelClusterer\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-16/playground/models/bench-clustering-agglomerative-meat\", \"manifest\": {\"model_id\": \"bench-clustering-agglomerative-meat\", \"backend\": \"sktime\", \"task\": \"clustering\", \"algorithm_id\": \"user-agglomerative\", \"algorithm_name\": \"Agglomerative (Euclidean, ward linkage)\", \"module\": \"user_algos.AgglomerativePanelClusterer\", \"params\": {\"n_clusters\": 3, \"linkage\": \"ward\", \"metric\": \"euclidean\"}, \"eval_params\": {\"fit_on\": \"all\"}, \"created_at\": \"2026-10-15T12:56:20.862288+00:00\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"meat-cl\", \"algorithm_id\": \"user-agglomerative\", \"preprocessor_id\": \"none\", \"params\": {\"n_clusters\": 3, \"fit_on\": \"all\", \"linkage\": \"ward\", \"metric\": \"euclidean\"}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 1537.2, \"log\": [\"Selected dataset: Meat (labels for ARI)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-clustering-agglomerative-meat (sktime backend, algorithm: user-agglomerative, created: 2026-10-15T12:56:20.862288+00:00)\", \"Loaded UCR/UEA Meat train=60 test=60\", \"Finished in 1537.2 ms\"]}, \"error\": null}\n"
+}

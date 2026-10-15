@@ -1,0 +1,31 @@
+{
+  "id": "clustering-agglomerative-shapeletsim",
+  "task": "clustering",
+  "ran_at": "2026-10-15T12:56:57.446779+00:00",
+  "train_command": "libraryts train --algorithm user-agglomerative --dataset shapeletsim-cl --model-id bench-clustering-agglomerative-shapeletsim --param n_clusters=2 --param fit_on=all --param linkage=ward --param metric=euclidean",
+  "run_command": "libraryts run --model-id bench-clustering-agglomerative-shapeletsim --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 4.55,
+  "values": {
+    "ARI": -0.004999747487500632
+  },
+  "per_metric": {
+    "ARI": {
+      "gt": -0.005,
+      "value": -0.004999747487500632,
+      "delta": 0.0,
+      "delta_rel": 5.1e-05,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "ARI": -0.004999747487500632,
+    "NMI": 0.0,
+    "Clusters": 2,
+    "Largest Cluster": 110
+  },
+  "error": null,
+  "stdout_tail": "h-clustering-agglomerative-shapeletsim\", \"preprocessor_id\": \"none\", \"params\": {}}, \"task\": \"clustering\", \"dataset\": {\"id\": \"shapeletsim-cl\", \"name\": \"ShapeletSim (labels for ARI)\", \"task\": \"clustering\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"ShapeletSim\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-clustering-agglomerative-shapeletsim\", \"name\": \"Agglomerative (Euclidean, ward linkage) (trained: bench-clustering-agglomerative-shapeletsim)\", \"task\": \"clustering\", \"module\": \"user_algos.AgglomerativePanelClusterer\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-16/playground/models/bench-clustering-agglomerative-shapeletsim\", \"manifest\": {\"model_id\": \"bench-clustering-agglomerative-shapeletsim\", \"backend\": \"sktime\", \"task\": \"clustering\", \"algorithm_id\": \"user-agglomerative\", \"algorithm_name\": \"Agglomerative (Euclidean, ward linkage)\", \"module\": \"user_algos.AgglomerativePanelClusterer\", \"params\": {\"n_clusters\": 2, \"linkage\": \"ward\", \"metric\": \"euclidean\"}, \"eval_params\": {\"fit_on\": \"all\"}, \"created_at\": \"2026-10-15T12:56:55.274248+00:00\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"shapeletsim-cl\", \"algorithm_id\": \"user-agglomerative\", \"preprocessor_id\": \"none\", \"params\": {\"n_clusters\": 2, \"fit_on\": \"all\", \"linkage\": \"ward\", \"metric\": \"euclidean\"}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 1516.2, \"log\": [\"Selected dataset: ShapeletSim (labels for ARI)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-clustering-agglomerative-shapeletsim (sktime backend, algorithm: user-agglomerative, created: 2026-10-15T12:56:55.274248+00:00)\", \"Loaded UCR/UEA ShapeletSim train=20 test=180\", \"Finished in 1516.2 ms\"]}, \"error\": null}\n"
+}

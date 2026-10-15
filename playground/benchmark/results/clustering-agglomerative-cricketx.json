@@ -1,0 +1,31 @@
+{
+  "id": "clustering-agglomerative-cricketx",
+  "task": "clustering",
+  "ran_at": "2026-10-15T12:55:32.354330+00:00",
+  "train_command": "libraryts train --algorithm user-agglomerative --dataset cricketx-cl --model-id bench-clustering-agglomerative-cricketx --param n_clusters=12 --param fit_on=all --param linkage=ward --param metric=euclidean",
+  "run_command": "libraryts run --model-id bench-clustering-agglomerative-cricketx --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 8.21,
+  "values": {
+    "ARI": 0.11416897202103442
+  },
+  "per_metric": {
+    "ARI": {
+      "gt": 0.114169,
+      "value": 0.11416897202103442,
+      "delta": -0.0,
+      "delta_rel": 0.0,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "ARI": 0.11416897202103442,
+    "NMI": 0.2775817234273391,
+    "Clusters": 12,
+    "Largest Cluster": 133
+  },
+  "error": null,
+  "stdout_tail": "gorithm_id\": \"sktime-trained:bench-clustering-agglomerative-cricketx\", \"preprocessor_id\": \"none\", \"params\": {}}, \"task\": \"clustering\", \"dataset\": {\"id\": \"cricketx-cl\", \"name\": \"CricketX (labels for ARI)\", \"task\": \"clustering\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"CricketX\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-clustering-agglomerative-cricketx\", \"name\": \"Agglomerative (Euclidean, ward linkage) (trained: bench-clustering-agglomerative-cricketx)\", \"task\": \"clustering\", \"module\": \"user_algos.AgglomerativePanelClusterer\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-16/playground/models/bench-clustering-agglomerative-cricketx\", \"manifest\": {\"model_id\": \"bench-clustering-agglomerative-cricketx\", \"backend\": \"sktime\", \"task\": \"clustering\", \"algorithm_id\": \"user-agglomerative\", \"algorithm_name\": \"Agglomerative (Euclidean, ward linkage)\", \"module\": \"user_algos.AgglomerativePanelClusterer\", \"params\": {\"n_clusters\": 12, \"linkage\": \"ward\", \"metric\": \"euclidean\"}, \"eval_params\": {\"fit_on\": \"all\"}, \"created_at\": \"2026-10-15T12:55:28.501584+00:00\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"cricketx-cl\", \"algorithm_id\": \"user-agglomerative\", \"preprocessor_id\": \"none\", \"params\": {\"n_clusters\": 12, \"fit_on\": \"all\", \"linkage\": \"ward\", \"metric\": \"euclidean\"}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 2069.8, \"log\": [\"Selected dataset: CricketX (labels for ARI)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-clustering-agglomerative-cricketx (sktime backend, algorithm: user-agglomerative, created: 2026-10-15T12:55:28.501584+00:00)\", \"Loaded UCR/UEA CricketX train=390 test=390\", \"Finished in 2069.8 ms\"]}, \"error\": null}\n"
+}

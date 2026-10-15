@@ -1,0 +1,31 @@
+{
+  "id": "clustering-agglomerative-plane",
+  "task": "clustering",
+  "ran_at": "2026-10-15T12:54:15.967125+00:00",
+  "train_command": "libraryts train --algorithm user-agglomerative --dataset plane-cl --model-id bench-clustering-agglomerative-plane --param n_clusters=7 --param fit_on=all --param linkage=ward --param metric=euclidean",
+  "run_command": "libraryts run --model-id bench-clustering-agglomerative-plane --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 5.72,
+  "values": {
+    "ARI": 0.804349491793066
+  },
+  "per_metric": {
+    "ARI": {
+      "gt": 0.804349,
+      "value": 0.804349491793066,
+      "delta": 0.0,
+      "delta_rel": 1e-06,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "ARI": 0.804349491793066,
+    "NMI": 0.8982343648181306,
+    "Clusters": 7,
+    "Largest Cluster": 56
+  },
+  "error": null,
+  "stdout_tail": "tering\", \"dataset_id\": \"plane-cl\", \"algorithm_id\": \"sktime-trained:bench-clustering-agglomerative-plane\", \"preprocessor_id\": \"none\", \"params\": {}}, \"task\": \"clustering\", \"dataset\": {\"id\": \"plane-cl\", \"name\": \"Plane (labels for ARI)\", \"task\": \"clustering\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"Plane\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-clustering-agglomerative-plane\", \"name\": \"Agglomerative (Euclidean, ward linkage) (trained: bench-clustering-agglomerative-plane)\", \"task\": \"clustering\", \"module\": \"user_algos.AgglomerativePanelClusterer\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-16/playground/models/bench-clustering-agglomerative-plane\", \"manifest\": {\"model_id\": \"bench-clustering-agglomerative-plane\", \"backend\": \"sktime\", \"task\": \"clustering\", \"algorithm_id\": \"user-agglomerative\", \"algorithm_name\": \"Agglomerative (Euclidean, ward linkage)\", \"module\": \"user_algos.AgglomerativePanelClusterer\", \"params\": {\"n_clusters\": 7, \"linkage\": \"ward\", \"metric\": \"euclidean\"}, \"eval_params\": {\"fit_on\": \"all\"}, \"created_at\": \"2026-10-15T12:54:12.362116+00:00\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"plane-cl\", \"algorithm_id\": \"user-agglomerative\", \"preprocessor_id\": \"none\", \"params\": {\"n_clusters\": 7, \"fit_on\": \"all\", \"linkage\": \"ward\", \"metric\": \"euclidean\"}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 2697.6, \"log\": [\"Selected dataset: Plane (labels for ARI)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-clustering-agglomerative-plane (sktime backend, algorithm: user-agglomerative, created: 2026-10-15T12:54:12.362116+00:00)\", \"Loaded UCR/UEA Plane train=105 test=105\", \"Finished in 2697.6 ms\"]}, \"error\": null}\n"
+}

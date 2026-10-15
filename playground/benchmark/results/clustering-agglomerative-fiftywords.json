@@ -1,0 +1,31 @@
+{
+  "id": "clustering-agglomerative-fiftywords",
+  "task": "clustering",
+  "ran_at": "2026-10-15T12:56:00.317190+00:00",
+  "train_command": "libraryts train --algorithm user-agglomerative --dataset fiftywords-cl --model-id bench-clustering-agglomerative-fiftywords --param n_clusters=50 --param fit_on=all --param linkage=ward --param metric=euclidean",
+  "run_command": "libraryts run --model-id bench-clustering-agglomerative-fiftywords --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 7.58,
+  "values": {
+    "ARI": 0.3115306369871424
+  },
+  "per_metric": {
+    "ARI": {
+      "gt": 0.311531,
+      "value": 0.3115306369871424,
+      "delta": -0.0,
+      "delta_rel": 1e-06,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "ARI": 0.3115306369871424,
+    "NMI": 0.6638655678071947,
+    "Clusters": 50,
+    "Largest Cluster": 37
+  },
+  "error": null,
+  "stdout_tail": "ined:bench-clustering-agglomerative-fiftywords\", \"preprocessor_id\": \"none\", \"params\": {}}, \"task\": \"clustering\", \"dataset\": {\"id\": \"fiftywords-cl\", \"name\": \"FiftyWords (labels for ARI)\", \"task\": \"clustering\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"FiftyWords\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-clustering-agglomerative-fiftywords\", \"name\": \"Agglomerative (Euclidean, ward linkage) (trained: bench-clustering-agglomerative-fiftywords)\", \"task\": \"clustering\", \"module\": \"user_algos.AgglomerativePanelClusterer\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-16/playground/models/bench-clustering-agglomerative-fiftywords\", \"manifest\": {\"model_id\": \"bench-clustering-agglomerative-fiftywords\", \"backend\": \"sktime\", \"task\": \"clustering\", \"algorithm_id\": \"user-agglomerative\", \"algorithm_name\": \"Agglomerative (Euclidean, ward linkage)\", \"module\": \"user_algos.AgglomerativePanelClusterer\", \"params\": {\"n_clusters\": 50, \"linkage\": \"ward\", \"metric\": \"euclidean\"}, \"eval_params\": {\"fit_on\": \"all\"}, \"created_at\": \"2026-10-15T12:55:57.453750+00:00\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"fiftywords-cl\", \"algorithm_id\": \"user-agglomerative\", \"preprocessor_id\": \"none\", \"params\": {\"n_clusters\": 50, \"fit_on\": \"all\", \"linkage\": \"ward\", \"metric\": \"euclidean\"}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 1743.7, \"log\": [\"Selected dataset: FiftyWords (labels for ARI)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-clustering-agglomerative-fiftywords (sktime backend, algorithm: user-agglomerative, created: 2026-10-15T12:55:57.453750+00:00)\", \"Loaded UCR/UEA FiftyWords train=450 test=455\", \"Finished in 1743.7 ms\"]}, \"error\": null}\n"
+}
