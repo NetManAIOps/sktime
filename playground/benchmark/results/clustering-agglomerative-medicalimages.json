@@ -1,0 +1,31 @@
+{
+  "id": "clustering-agglomerative-medicalimages",
+  "task": "clustering",
+  "ran_at": "2026-10-15T12:56:28.850697+00:00",
+  "train_command": "libraryts train --algorithm user-agglomerative --dataset medicalimages-cl --model-id bench-clustering-agglomerative-medicalimages --param n_clusters=10 --param fit_on=all --param linkage=ward --param metric=euclidean",
+  "run_command": "libraryts run --model-id bench-clustering-agglomerative-medicalimages --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 5.74,
+  "values": {
+    "ARI": 0.04243041843769729
+  },
+  "per_metric": {
+    "ARI": {
+      "gt": 0.04243,
+      "value": 0.04243041843769729,
+      "delta": 0.0,
+      "delta_rel": 1e-05,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "ARI": 0.04243041843769729,
+    "NMI": 0.2599440470492483,
+    "Clusters": 10,
+    "Largest Cluster": 231
+  },
+  "error": null,
+  "stdout_tail": "medicalimages\", \"preprocessor_id\": \"none\", \"params\": {}}, \"task\": \"clustering\", \"dataset\": {\"id\": \"medicalimages-cl\", \"name\": \"MedicalImages (labels for ARI)\", \"task\": \"clustering\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"MedicalImages\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-clustering-agglomerative-medicalimages\", \"name\": \"Agglomerative (Euclidean, ward linkage) (trained: bench-clustering-agglomerative-medicalimages)\", \"task\": \"clustering\", \"module\": \"user_algos.AgglomerativePanelClusterer\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-16/playground/models/bench-clustering-agglomerative-medicalimages\", \"manifest\": {\"model_id\": \"bench-clustering-agglomerative-medicalimages\", \"backend\": \"sktime\", \"task\": \"clustering\", \"algorithm_id\": \"user-agglomerative\", \"algorithm_name\": \"Agglomerative (Euclidean, ward linkage)\", \"module\": \"user_algos.AgglomerativePanelClusterer\", \"params\": {\"n_clusters\": 10, \"linkage\": \"ward\", \"metric\": \"euclidean\"}, \"eval_params\": {\"fit_on\": \"all\"}, \"created_at\": \"2026-10-15T12:56:25.911348+00:00\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"medicalimages-cl\", \"algorithm_id\": \"user-agglomerative\", \"preprocessor_id\": \"none\", \"params\": {\"n_clusters\": 10, \"fit_on\": \"all\", \"linkage\": \"ward\", \"metric\": \"euclidean\"}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 1791.7, \"log\": [\"Selected dataset: MedicalImages (labels for ARI)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-clustering-agglomerative-medicalimages (sktime backend, algorithm: user-agglomerative, created: 2026-10-15T12:56:25.911348+00:00)\", \"Loaded UCR/UEA MedicalImages train=381 test=760\", \"Finished in 1791.7 ms\"]}, \"error\": null}\n"
+}

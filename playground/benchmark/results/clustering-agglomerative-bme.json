@@ -1,0 +1,31 @@
+{
+  "id": "clustering-agglomerative-bme",
+  "task": "clustering",
+  "ran_at": "2026-10-15T12:53:40.129233+00:00",
+  "train_command": "libraryts train --algorithm user-agglomerative --dataset bme-cl --model-id bench-clustering-agglomerative-bme --param n_clusters=3 --param fit_on=all --param linkage=ward --param metric=euclidean",
+  "run_command": "libraryts run --model-id bench-clustering-agglomerative-bme --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 4.71,
+  "values": {
+    "ARI": 0.18371993827702576
+  },
+  "per_metric": {
+    "ARI": {
+      "gt": 0.18372,
+      "value": 0.18371993827702576,
+      "delta": -0.0,
+      "delta_rel": 0.0,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "ARI": 0.18371993827702576,
+    "NMI": 0.2468804522381719,
+    "Clusters": 3,
+    "Largest Cluster": 64
+  },
+  "error": null,
+  "stdout_tail": "df\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"bme-cl\", \"algorithm_id\": \"sktime-trained:bench-clustering-agglomerative-bme\", \"preprocessor_id\": \"none\", \"params\": {}}, \"task\": \"clustering\", \"dataset\": {\"id\": \"bme-cl\", \"name\": \"BME (labels for ARI)\", \"task\": \"clustering\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"BME\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-clustering-agglomerative-bme\", \"name\": \"Agglomerative (Euclidean, ward linkage) (trained: bench-clustering-agglomerative-bme)\", \"task\": \"clustering\", \"module\": \"user_algos.AgglomerativePanelClusterer\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-16/playground/models/bench-clustering-agglomerative-bme\", \"manifest\": {\"model_id\": \"bench-clustering-agglomerative-bme\", \"backend\": \"sktime\", \"task\": \"clustering\", \"algorithm_id\": \"user-agglomerative\", \"algorithm_name\": \"Agglomerative (Euclidean, ward linkage)\", \"module\": \"user_algos.AgglomerativePanelClusterer\", \"params\": {\"n_clusters\": 3, \"linkage\": \"ward\", \"metric\": \"euclidean\"}, \"eval_params\": {\"fit_on\": \"all\"}, \"created_at\": \"2026-10-15T12:53:37.679899+00:00\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"bme-cl\", \"algorithm_id\": \"user-agglomerative\", \"preprocessor_id\": \"none\", \"params\": {\"n_clusters\": 3, \"fit_on\": \"all\", \"linkage\": \"ward\", \"metric\": \"euclidean\"}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 1516.7, \"log\": [\"Selected dataset: BME (labels for ARI)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-clustering-agglomerative-bme (sktime backend, algorithm: user-agglomerative, created: 2026-10-15T12:53:37.679899+00:00)\", \"Loaded UCR/UEA BME train=30 test=150\", \"Finished in 1516.7 ms\"]}, \"error\": null}\n"
+}

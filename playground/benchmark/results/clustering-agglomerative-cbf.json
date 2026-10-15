@@ -1,0 +1,31 @@
+{
+  "id": "clustering-agglomerative-cbf",
+  "task": "clustering",
+  "ran_at": "2026-10-15T12:53:45.777755+00:00",
+  "train_command": "libraryts train --algorithm user-agglomerative --dataset cbf-cl --model-id bench-clustering-agglomerative-cbf --param n_clusters=3 --param fit_on=all --param linkage=ward --param metric=euclidean",
+  "run_command": "libraryts run --model-id bench-clustering-agglomerative-cbf --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 5.65,
+  "values": {
+    "ARI": 0.4408214818908665
+  },
+  "per_metric": {
+    "ARI": {
+      "gt": 0.440821,
+      "value": 0.4408214818908665,
+      "delta": 0.0,
+      "delta_rel": 1e-06,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "ARI": 0.4408214818908665,
+    "NMI": 0.485877282401096,
+    "Clusters": 3,
+    "Largest Cluster": 352
+  },
+  "error": null,
+  "stdout_tail": "d6\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"cbf-cl\", \"algorithm_id\": \"sktime-trained:bench-clustering-agglomerative-cbf\", \"preprocessor_id\": \"none\", \"params\": {}}, \"task\": \"clustering\", \"dataset\": {\"id\": \"cbf-cl\", \"name\": \"CBF (labels for ARI)\", \"task\": \"clustering\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"CBF\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-clustering-agglomerative-cbf\", \"name\": \"Agglomerative (Euclidean, ward linkage) (trained: bench-clustering-agglomerative-cbf)\", \"task\": \"clustering\", \"module\": \"user_algos.AgglomerativePanelClusterer\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-16/playground/models/bench-clustering-agglomerative-cbf\", \"manifest\": {\"model_id\": \"bench-clustering-agglomerative-cbf\", \"backend\": \"sktime\", \"task\": \"clustering\", \"algorithm_id\": \"user-agglomerative\", \"algorithm_name\": \"Agglomerative (Euclidean, ward linkage)\", \"module\": \"user_algos.AgglomerativePanelClusterer\", \"params\": {\"n_clusters\": 3, \"linkage\": \"ward\", \"metric\": \"euclidean\"}, \"eval_params\": {\"fit_on\": \"all\"}, \"created_at\": \"2026-10-15T12:53:43.210892+00:00\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"cbf-cl\", \"algorithm_id\": \"user-agglomerative\", \"preprocessor_id\": \"none\", \"params\": {\"n_clusters\": 3, \"fit_on\": \"all\", \"linkage\": \"ward\", \"metric\": \"euclidean\"}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 1724.7, \"log\": [\"Selected dataset: CBF (labels for ARI)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-clustering-agglomerative-cbf (sktime backend, algorithm: user-agglomerative, created: 2026-10-15T12:53:43.210892+00:00)\", \"Loaded UCR/UEA CBF train=30 test=900\", \"Finished in 1724.7 ms\"]}, \"error\": null}\n"
+}
