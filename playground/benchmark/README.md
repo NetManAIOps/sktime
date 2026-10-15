@@ -102,10 +102,10 @@ Rules of thumb:
   implementation), say so in `notes` and choose a tolerance that reflects it —
   a `deviation` badge with an honest note is a valid, useful outcome.
 
-## Current coverage (372 claims, 314 reproduced)
+## Current coverage (502 claims, 428 reproduced)
 
 Per task (claims / reproduced / distinct algorithms): forecasting 97/70/4, classification 163/148/7,
-clustering 43/36/1, anomaly_detection 50/44/8, regression 12/11/12 (one dataset), causal 7/5/3
+clustering 166/143/4, anomaly_detection 57/51/9, regression 12/11/12 (one dataset), causal 7/5/3
 (one dataset). Deviations are kept visible on purpose; each entry's `notes` carries the details.
 
 - Forecasting: NLinear/DLinear/Linear on ETTh1/h2, ETTm1/m2, Exchange, Weather, Electricity and ILI.
