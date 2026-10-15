@@ -1,4 +1,4 @@
-# TSBox Sandbox Playground image.
+# LibraryTS Playground image.
 #
 # Builds the full Playground environment (sktime editable install + the frozen
 # soft-dependency set from playground/requirements.txt) and serves the web UI.

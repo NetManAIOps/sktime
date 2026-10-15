@@ -45,12 +45,12 @@ jobs:
           <!doctype html>
           <html lang="en"><head><meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1">
-          <title>sktime · libraryts</title>
+          <title>sktime · LibraryTS</title>
           <style>body{font-family:-apple-system,"Helvetica Neue",Arial,sans-serif;max-width:720px;margin:120px auto;padding:0 24px;color:#1d1d1f}
           a{color:#0066cc;text-decoration:none}a:hover{text-decoration:underline}
           .card{border:1px solid #e5e5ea;border-radius:14px;padding:20px 24px;margin-top:28px}
           .sub{color:#6e6e73;font-size:14px}</style></head>
-          <body><h1>sktime · libraryts</h1>
+          <body><h1>sktime · LibraryTS</h1>
           <p class="sub">Time Series Sandbox — pages on this site:</p>
           <div class="card"><a href="./benchmark/"><b>Benchmark leaderboard →</b></a>
           <p class="sub">Paper numbers, re-run: groundtruth claims with exact libraryts train + run commands.</p></div>

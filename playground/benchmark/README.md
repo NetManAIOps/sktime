@@ -99,22 +99,22 @@ Rules of thumb:
   implementation), say so in `notes` and choose a tolerance that reflects it —
   a `deviation` badge with an honest note is a valid, useful outcome.
 
-## Current coverage (163 claims, 125 reproduced)
+## Current coverage (275 claims, 222 reproduced)
 
-Per task (claims / reproduced): forecasting 68/48, classification 32/28, anomaly_detection 26/20,
-clustering 20/15, regression 10/9, causal 7/5. Deviations are kept visible on purpose; each entry's
-`notes` carries the details. Main patterns:
+Per task (claims / reproduced / distinct algorithms): forecasting 97/70/4, classification 92/82/2,
+clustering 43/36/1, anomaly_detection 26/20/4, regression 10/9/10 (one dataset), causal 7/5/3
+(one dataset). Deviations are kept visible on purpose; each entry's `notes` carries the details.
 
-- Forecasting: DLinear/Linear on ETTh2, ETTm2 and Exchange land above the paper (trend/shift-heavy
-  datasets; the paper uses validation-based early stopping, libraryts a fixed 10 epochs). ETTh1, ETTm1,
-  Weather and Electricity (96/192/336) reproduce. Autoformer ETTh1 deviates as before.
-- Electricity at horizon 720 was dropped: the training process is killed (out of memory) on this machine.
-- Anomaly detection: TSB-UAD claims for IForest/LOF/HBOS/OCSVM on Yahoo, MITDB, NAB, Dodgers,
-  Occupancy, MGAB, Genesis. OCSVM on MITDB/MGAB was left out (RBF OCSVM on 100k-650k-point series
-  exceeds the 30 min budget).
-- Classification: ROCKET and MiniRocket on 15 UCR datasets; clustering: k-Shape on 18 more UCR datasets
-  (tiny datasets swing with the random init); regression: KNN, SVR(rbf), FCN, ResNet, InceptionTime on
-  Covid3Month (TSER archive only ships this one dataset locally).
+- Forecasting: NLinear/DLinear/Linear on ETTh1/h2, ETTm1/m2, Exchange, Weather, Electricity and ILI.
+  DLinear/Linear on ETTh2, ETTm2 and Exchange land above the paper (trend/shift-heavy datasets; the
+  paper uses validation-based early stopping, libraryts a fixed 10 epochs). Autoformer ETTh1 deviates.
+  Electricity at horizon 720 was dropped: the training process is killed (out of memory).
+- Classification / clustering: ROCKET and MiniRocket on 46 UCR datasets, k-Shape on 43 (tiny datasets
+  swing with the random init; classifiers' official per-dataset result files other than ROCKET/MiniRocket
+  were not reachable, so Arsenal / HIVE-COTE etc. are not benchmarked).
+- Anomaly detection: IForest/LOF/HBOS/OCSVM on TSB-UAD Yahoo, MITDB, NAB, Dodgers, Occupancy, MGAB,
+  Genesis. OCSVM on MITDB/MGAB was left out (exceeds the 30 min budget on 100k-650k-point series).
+- Regression / causal: only Covid3Month (TSER) and Sachs have locally available data with published numbers.
 
 | task | claims | source |
 | --- | --- | --- |

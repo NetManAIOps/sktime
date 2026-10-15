@@ -620,6 +620,719 @@
       },
       "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset lightning7-cl --model-id bench-clustering-kshape-lightning7 --param n_clusters=7 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
       "run_command": "libraryts run --model-id bench-clustering-kshape-lightning7 --compact"
+    },
+    {
+      "id": "clustering-kshape-adiac",
+      "algorithm": "TimeSeriesKShapes",
+      "algorithm_name": "k-Shape",
+      "dataset": "adiac-cl",
+      "dataset_name": "Adiac (UCR)",
+      "window": "fused train+test · k=37",
+      "metrics": {
+        "ARI": 0.24511,
+        "NMI": 0.58855
+      },
+      "settings": "k=37 (= number of classes); full dataset clustered (train+test fused); mean over 10 runs of the authors' Matlab implementation",
+      "source": {
+        "title": "k-Shape: Efficient and Accurate Clustering of Time Series (Paparrizos & Gravano) — official Matlab repository",
+        "venue": "ACM SIGMOD 2015 / ACM TODS 2017",
+        "url": "https://github.com/TheDatumOrg/kshape-matlab",
+        "locator": "README 'Results on the 128 univariate datasets', row Adiac (ARI 0.245107, NMI 0.5885544)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "Paper value is the mean of 10 Matlab runs; libraryts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing.",
+      "spec_params": {
+        "n_clusters": 37,
+        "fit_on": "all",
+        "random_state": 42
+      },
+      "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset adiac-cl --model-id bench-clustering-kshape-adiac --param n_clusters=37 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "run_command": "libraryts run --model-id bench-clustering-kshape-adiac --compact"
+    },
+    {
+      "id": "clustering-kshape-car",
+      "algorithm": "TimeSeriesKShapes",
+      "algorithm_name": "k-Shape",
+      "dataset": "car-cl",
+      "dataset_name": "Car (UCR)",
+      "window": "fused train+test · k=4",
+      "metrics": {
+        "ARI": 0.13584,
+        "NMI": 0.21614
+      },
+      "settings": "k=4 (= number of classes); full dataset clustered (train+test fused); mean over 10 runs of the authors' Matlab implementation",
+      "source": {
+        "title": "k-Shape: Efficient and Accurate Clustering of Time Series (Paparrizos & Gravano) — official Matlab repository",
+        "venue": "ACM SIGMOD 2015 / ACM TODS 2017",
+        "url": "https://github.com/TheDatumOrg/kshape-matlab",
+        "locator": "README 'Results on the 128 univariate datasets', row Car (ARI 0.135845, NMI 0.2161395)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "Paper value is the mean of 10 Matlab runs; libraryts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing. Tiny dataset (<=111 series): ARI/NMI swing strongly with the random init.",
+      "spec_params": {
+        "n_clusters": 4,
+        "fit_on": "all",
+        "random_state": 42
+      },
+      "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset car-cl --model-id bench-clustering-kshape-car --param n_clusters=4 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "run_command": "libraryts run --model-id bench-clustering-kshape-car --compact"
+    },
+    {
+      "id": "clustering-kshape-cricketx",
+      "algorithm": "TimeSeriesKShapes",
+      "algorithm_name": "k-Shape",
+      "dataset": "cricketx-cl",
+      "dataset_name": "CricketX (UCR)",
+      "window": "fused train+test · k=12",
+      "metrics": {
+        "ARI": 0.1777,
+        "NMI": 0.35847
+      },
+      "settings": "k=12 (= number of classes); full dataset clustered (train+test fused); mean over 10 runs of the authors' Matlab implementation",
+      "source": {
+        "title": "k-Shape: Efficient and Accurate Clustering of Time Series (Paparrizos & Gravano) — official Matlab repository",
+        "venue": "ACM SIGMOD 2015 / ACM TODS 2017",
+        "url": "https://github.com/TheDatumOrg/kshape-matlab",
+        "locator": "README 'Results on the 128 univariate datasets', row CricketX (ARI 0.1777, NMI 0.358468)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "Paper value is the mean of 10 Matlab runs; libraryts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing.",
+      "spec_params": {
+        "n_clusters": 12,
+        "fit_on": "all",
+        "random_state": 42
+      },
+      "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset cricketx-cl --model-id bench-clustering-kshape-cricketx --param n_clusters=12 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "run_command": "libraryts run --model-id bench-clustering-kshape-cricketx --compact"
+    },
+    {
+      "id": "clustering-kshape-diatomsizereduction",
+      "algorithm": "TimeSeriesKShapes",
+      "algorithm_name": "k-Shape",
+      "dataset": "diatomsizereduction-cl",
+      "dataset_name": "DiatomSizeReduction (UCR)",
+      "window": "fused train+test · k=4",
+      "metrics": {
+        "ARI": 0.80004,
+        "NMI": 0.82079
+      },
+      "settings": "k=4 (= number of classes); full dataset clustered (train+test fused); mean over 10 runs of the authors' Matlab implementation",
+      "source": {
+        "title": "k-Shape: Efficient and Accurate Clustering of Time Series (Paparrizos & Gravano) — official Matlab repository",
+        "venue": "ACM SIGMOD 2015 / ACM TODS 2017",
+        "url": "https://github.com/TheDatumOrg/kshape-matlab",
+        "locator": "README 'Results on the 128 univariate datasets', row DiatomSizeReduction (ARI 0.8000443, NMI 0.82079)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "Paper value is the mean of 10 Matlab runs; libraryts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing.",
+      "spec_params": {
+        "n_clusters": 4,
+        "fit_on": "all",
+        "random_state": 42
+      },
+      "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset diatomsizereduction-cl --model-id bench-clustering-kshape-diatomsizereduction --param n_clusters=4 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "run_command": "libraryts run --model-id bench-clustering-kshape-diatomsizereduction --compact"
+    },
+    {
+      "id": "clustering-kshape-earthquakes",
+      "algorithm": "TimeSeriesKShapes",
+      "algorithm_name": "k-Shape",
+      "dataset": "earthquakes-cl",
+      "dataset_name": "Earthquakes (UCR)",
+      "window": "fused train+test · k=2",
+      "metrics": {
+        "ARI": 0.00244,
+        "NMI": 0.00366
+      },
+      "settings": "k=2 (= number of classes); full dataset clustered (train+test fused); mean over 10 runs of the authors' Matlab implementation",
+      "source": {
+        "title": "k-Shape: Efficient and Accurate Clustering of Time Series (Paparrizos & Gravano) — official Matlab repository",
+        "venue": "ACM SIGMOD 2015 / ACM TODS 2017",
+        "url": "https://github.com/TheDatumOrg/kshape-matlab",
+        "locator": "README 'Results on the 128 univariate datasets', row Earthquakes (ARI 0.002441935, NMI 0.00365934)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "Paper value is the mean of 10 Matlab runs; libraryts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing. Tiny dataset (<=111 series): ARI/NMI swing strongly with the random init.",
+      "spec_params": {
+        "n_clusters": 2,
+        "fit_on": "all",
+        "random_state": 42
+      },
+      "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset earthquakes-cl --model-id bench-clustering-kshape-earthquakes --param n_clusters=2 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "run_command": "libraryts run --model-id bench-clustering-kshape-earthquakes --compact"
+    },
+    {
+      "id": "clustering-kshape-ecgfivedays",
+      "algorithm": "TimeSeriesKShapes",
+      "algorithm_name": "k-Shape",
+      "dataset": "ecgfivedays-cl",
+      "dataset_name": "ECGFiveDays (UCR)",
+      "window": "fused train+test · k=2",
+      "metrics": {
+        "ARI": 0.69024,
+        "NMI": 0.65036
+      },
+      "settings": "k=2 (= number of classes); full dataset clustered (train+test fused); mean over 10 runs of the authors' Matlab implementation",
+      "source": {
+        "title": "k-Shape: Efficient and Accurate Clustering of Time Series (Paparrizos & Gravano) — official Matlab repository",
+        "venue": "ACM SIGMOD 2015 / ACM TODS 2017",
+        "url": "https://github.com/TheDatumOrg/kshape-matlab",
+        "locator": "README 'Results on the 128 univariate datasets', row ECGFiveDays (ARI 0.69024, NMI 0.6503586)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "Paper value is the mean of 10 Matlab runs; libraryts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing.",
+      "spec_params": {
+        "n_clusters": 2,
+        "fit_on": "all",
+        "random_state": 42
+      },
+      "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset ecgfivedays-cl --model-id bench-clustering-kshape-ecgfivedays --param n_clusters=2 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "run_command": "libraryts run --model-id bench-clustering-kshape-ecgfivedays --compact"
+    },
+    {
+      "id": "clustering-kshape-fiftywords",
+      "algorithm": "TimeSeriesKShapes",
+      "algorithm_name": "k-Shape",
+      "dataset": "fiftywords-cl",
+      "dataset_name": "FiftyWords (UCR)",
+      "window": "fused train+test · k=50",
+      "metrics": {
+        "ARI": 0.35381,
+        "NMI": 0.64682
+      },
+      "settings": "k=50 (= number of classes); full dataset clustered (train+test fused); mean over 10 runs of the authors' Matlab implementation",
+      "source": {
+        "title": "k-Shape: Efficient and Accurate Clustering of Time Series (Paparrizos & Gravano) — official Matlab repository",
+        "venue": "ACM SIGMOD 2015 / ACM TODS 2017",
+        "url": "https://github.com/TheDatumOrg/kshape-matlab",
+        "locator": "README 'Results on the 128 univariate datasets', row FiftyWords (ARI 0.353808, NMI 0.646822)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "Paper value is the mean of 10 Matlab runs; libraryts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing.",
+      "spec_params": {
+        "n_clusters": 50,
+        "fit_on": "all",
+        "random_state": 42
+      },
+      "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset fiftywords-cl --model-id bench-clustering-kshape-fiftywords --param n_clusters=50 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "run_command": "libraryts run --model-id bench-clustering-kshape-fiftywords --compact"
+    },
+    {
+      "id": "clustering-kshape-fish",
+      "algorithm": "TimeSeriesKShapes",
+      "algorithm_name": "k-Shape",
+      "dataset": "fish-cl",
+      "dataset_name": "Fish (UCR)",
+      "window": "fused train+test · k=7",
+      "metrics": {
+        "ARI": 0.18856,
+        "NMI": 0.31931
+      },
+      "settings": "k=7 (= number of classes); full dataset clustered (train+test fused); mean over 10 runs of the authors' Matlab implementation",
+      "source": {
+        "title": "k-Shape: Efficient and Accurate Clustering of Time Series (Paparrizos & Gravano) — official Matlab repository",
+        "venue": "ACM SIGMOD 2015 / ACM TODS 2017",
+        "url": "https://github.com/TheDatumOrg/kshape-matlab",
+        "locator": "README 'Results on the 128 univariate datasets', row Fish (ARI 0.1885622, NMI 0.31931)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "Paper value is the mean of 10 Matlab runs; libraryts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing.",
+      "spec_params": {
+        "n_clusters": 7,
+        "fit_on": "all",
+        "random_state": 42
+      },
+      "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset fish-cl --model-id bench-clustering-kshape-fish --param n_clusters=7 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "run_command": "libraryts run --model-id bench-clustering-kshape-fish --compact"
+    },
+    {
+      "id": "clustering-kshape-ham",
+      "algorithm": "TimeSeriesKShapes",
+      "algorithm_name": "k-Shape",
+      "dataset": "ham-cl",
+      "dataset_name": "Ham (UCR)",
+      "window": "fused train+test · k=2",
+      "metrics": {
+        "ARI": 0.05036,
+        "NMI": 0.03937
+      },
+      "settings": "k=2 (= number of classes); full dataset clustered (train+test fused); mean over 10 runs of the authors' Matlab implementation",
+      "source": {
+        "title": "k-Shape: Efficient and Accurate Clustering of Time Series (Paparrizos & Gravano) — official Matlab repository",
+        "venue": "ACM SIGMOD 2015 / ACM TODS 2017",
+        "url": "https://github.com/TheDatumOrg/kshape-matlab",
+        "locator": "README 'Results on the 128 univariate datasets', row Ham (ARI 0.050364, NMI 0.0393745)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "Paper value is the mean of 10 Matlab runs; libraryts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing. Tiny dataset (<=111 series): ARI/NMI swing strongly with the random init.",
+      "spec_params": {
+        "n_clusters": 2,
+        "fit_on": "all",
+        "random_state": 42
+      },
+      "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset ham-cl --model-id bench-clustering-kshape-ham --param n_clusters=2 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "run_command": "libraryts run --model-id bench-clustering-kshape-ham --compact"
+    },
+    {
+      "id": "clustering-kshape-herring",
+      "algorithm": "TimeSeriesKShapes",
+      "algorithm_name": "k-Shape",
+      "dataset": "herring-cl",
+      "dataset_name": "Herring (UCR)",
+      "window": "fused train+test · k=2",
+      "metrics": {
+        "ARI": 0.00384,
+        "NMI": 0.00795
+      },
+      "settings": "k=2 (= number of classes); full dataset clustered (train+test fused); mean over 10 runs of the authors' Matlab implementation",
+      "source": {
+        "title": "k-Shape: Efficient and Accurate Clustering of Time Series (Paparrizos & Gravano) — official Matlab repository",
+        "venue": "ACM SIGMOD 2015 / ACM TODS 2017",
+        "url": "https://github.com/TheDatumOrg/kshape-matlab",
+        "locator": "README 'Results on the 128 univariate datasets', row Herring (ARI 0.0038426, NMI 0.0079538)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "Paper value is the mean of 10 Matlab runs; libraryts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing. Tiny dataset (<=111 series): ARI/NMI swing strongly with the random init.",
+      "spec_params": {
+        "n_clusters": 2,
+        "fit_on": "all",
+        "random_state": 42
+      },
+      "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset herring-cl --model-id bench-clustering-kshape-herring --param n_clusters=2 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "run_command": "libraryts run --model-id bench-clustering-kshape-herring --compact"
+    },
+    {
+      "id": "clustering-kshape-lightning2",
+      "algorithm": "TimeSeriesKShapes",
+      "algorithm_name": "k-Shape",
+      "dataset": "lightning2-cl",
+      "dataset_name": "Lightning2 (UCR)",
+      "window": "fused train+test · k=2",
+      "metrics": {
+        "ARI": 0.05781,
+        "NMI": 0.09198
+      },
+      "settings": "k=2 (= number of classes); full dataset clustered (train+test fused); mean over 10 runs of the authors' Matlab implementation",
+      "source": {
+        "title": "k-Shape: Efficient and Accurate Clustering of Time Series (Paparrizos & Gravano) — official Matlab repository",
+        "venue": "ACM SIGMOD 2015 / ACM TODS 2017",
+        "url": "https://github.com/TheDatumOrg/kshape-matlab",
+        "locator": "README 'Results on the 128 univariate datasets', row Lightning2 (ARI 0.057807, NMI 0.091983)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "Paper value is the mean of 10 Matlab runs; libraryts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing.",
+      "spec_params": {
+        "n_clusters": 2,
+        "fit_on": "all",
+        "random_state": 42
+      },
+      "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset lightning2-cl --model-id bench-clustering-kshape-lightning2 --param n_clusters=2 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "run_command": "libraryts run --model-id bench-clustering-kshape-lightning2 --compact"
+    },
+    {
+      "id": "clustering-kshape-meat",
+      "algorithm": "TimeSeriesKShapes",
+      "algorithm_name": "k-Shape",
+      "dataset": "meat-cl",
+      "dataset_name": "Meat (UCR)",
+      "window": "fused train+test · k=3",
+      "metrics": {
+        "ARI": 0.59877,
+        "NMI": 0.6619
+      },
+      "settings": "k=3 (= number of classes); full dataset clustered (train+test fused); mean over 10 runs of the authors' Matlab implementation",
+      "source": {
+        "title": "k-Shape: Efficient and Accurate Clustering of Time Series (Paparrizos & Gravano) — official Matlab repository",
+        "venue": "ACM SIGMOD 2015 / ACM TODS 2017",
+        "url": "https://github.com/TheDatumOrg/kshape-matlab",
+        "locator": "README 'Results on the 128 univariate datasets', row Meat (ARI 0.598769, NMI 0.6618977)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "Paper value is the mean of 10 Matlab runs; libraryts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing. Tiny dataset (<=111 series): ARI/NMI swing strongly with the random init.",
+      "spec_params": {
+        "n_clusters": 3,
+        "fit_on": "all",
+        "random_state": 42
+      },
+      "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset meat-cl --model-id bench-clustering-kshape-meat --param n_clusters=3 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "run_command": "libraryts run --model-id bench-clustering-kshape-meat --compact"
+    },
+    {
+      "id": "clustering-kshape-medicalimages",
+      "algorithm": "TimeSeriesKShapes",
+      "algorithm_name": "k-Shape",
+      "dataset": "medicalimages-cl",
+      "dataset_name": "MedicalImages (UCR)",
+      "window": "fused train+test · k=10",
+      "metrics": {
+        "ARI": 0.07287,
+        "NMI": 0.22733
+      },
+      "settings": "k=10 (= number of classes); full dataset clustered (train+test fused); mean over 10 runs of the authors' Matlab implementation",
+      "source": {
+        "title": "k-Shape: Efficient and Accurate Clustering of Time Series (Paparrizos & Gravano) — official Matlab repository",
+        "venue": "ACM SIGMOD 2015 / ACM TODS 2017",
+        "url": "https://github.com/TheDatumOrg/kshape-matlab",
+        "locator": "README 'Results on the 128 univariate datasets', row MedicalImages (ARI 0.0728651, NMI 0.2273344)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "Paper value is the mean of 10 Matlab runs; libraryts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing.",
+      "spec_params": {
+        "n_clusters": 10,
+        "fit_on": "all",
+        "random_state": 42
+      },
+      "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset medicalimages-cl --model-id bench-clustering-kshape-medicalimages --param n_clusters=10 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "run_command": "libraryts run --model-id bench-clustering-kshape-medicalimages --compact"
+    },
+    {
+      "id": "clustering-kshape-middlephalanxoutlinecorrect",
+      "algorithm": "TimeSeriesKShapes",
+      "algorithm_name": "k-Shape",
+      "dataset": "middlephalanxoutlinecorrect-cl",
+      "dataset_name": "MiddlePhalanxOutlineCorrect (UCR)",
+      "window": "fused train+test · k=2",
+      "metrics": {
+        "ARI": -0.00374,
+        "NMI": 0.00089
+      },
+      "settings": "k=2 (= number of classes); full dataset clustered (train+test fused); mean over 10 runs of the authors' Matlab implementation",
+      "source": {
+        "title": "k-Shape: Efficient and Accurate Clustering of Time Series (Paparrizos & Gravano) — official Matlab repository",
+        "venue": "ACM SIGMOD 2015 / ACM TODS 2017",
+        "url": "https://github.com/TheDatumOrg/kshape-matlab",
+        "locator": "README 'Results on the 128 univariate datasets', row MiddlePhalanxOutlineCorrect (ARI -0.00373634, NMI 0.0008948)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "Paper value is the mean of 10 Matlab runs; libraryts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing.",
+      "spec_params": {
+        "n_clusters": 2,
+        "fit_on": "all",
+        "random_state": 42
+      },
+      "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset middlephalanxoutlinecorrect-cl --model-id bench-clustering-kshape-middlephalanxoutlinecorrect --param n_clusters=2 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "run_command": "libraryts run --model-id bench-clustering-kshape-middlephalanxoutlinecorrect --compact"
+    },
+    {
+      "id": "clustering-kshape-oliveoil",
+      "algorithm": "TimeSeriesKShapes",
+      "algorithm_name": "k-Shape",
+      "dataset": "oliveoil-cl",
+      "dataset_name": "OliveOil (UCR)",
+      "window": "fused train+test · k=4",
+      "metrics": {
+        "ARI": 0.64161,
+        "NMI": 0.64827
+      },
+      "settings": "k=4 (= number of classes); full dataset clustered (train+test fused); mean over 10 runs of the authors' Matlab implementation",
+      "source": {
+        "title": "k-Shape: Efficient and Accurate Clustering of Time Series (Paparrizos & Gravano) — official Matlab repository",
+        "venue": "ACM SIGMOD 2015 / ACM TODS 2017",
+        "url": "https://github.com/TheDatumOrg/kshape-matlab",
+        "locator": "README 'Results on the 128 univariate datasets', row OliveOil (ARI 0.641611, NMI 0.6482696)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "Paper value is the mean of 10 Matlab runs; libraryts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing. Tiny dataset (<=111 series): ARI/NMI swing strongly with the random init.",
+      "spec_params": {
+        "n_clusters": 4,
+        "fit_on": "all",
+        "random_state": 42
+      },
+      "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset oliveoil-cl --model-id bench-clustering-kshape-oliveoil --param n_clusters=4 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "run_command": "libraryts run --model-id bench-clustering-kshape-oliveoil --compact"
+    },
+    {
+      "id": "clustering-kshape-osuleaf",
+      "algorithm": "TimeSeriesKShapes",
+      "algorithm_name": "k-Shape",
+      "dataset": "osuleaf-cl",
+      "dataset_name": "OSULeaf (UCR)",
+      "window": "fused train+test · k=6",
+      "metrics": {
+        "ARI": 0.26267,
+        "NMI": 0.36322
+      },
+      "settings": "k=6 (= number of classes); full dataset clustered (train+test fused); mean over 10 runs of the authors' Matlab implementation",
+      "source": {
+        "title": "k-Shape: Efficient and Accurate Clustering of Time Series (Paparrizos & Gravano) — official Matlab repository",
+        "venue": "ACM SIGMOD 2015 / ACM TODS 2017",
+        "url": "https://github.com/TheDatumOrg/kshape-matlab",
+        "locator": "README 'Results on the 128 univariate datasets', row OSULeaf (ARI 0.26266825, NMI 0.36322052)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "Paper value is the mean of 10 Matlab runs; libraryts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing.",
+      "spec_params": {
+        "n_clusters": 6,
+        "fit_on": "all",
+        "random_state": 42
+      },
+      "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset osuleaf-cl --model-id bench-clustering-kshape-osuleaf --param n_clusters=6 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "run_command": "libraryts run --model-id bench-clustering-kshape-osuleaf --compact"
+    },
+    {
+      "id": "clustering-kshape-proximalphalanxoutlinecorrect",
+      "algorithm": "TimeSeriesKShapes",
+      "algorithm_name": "k-Shape",
+      "dataset": "proximalphalanxoutlinecorrect-cl",
+      "dataset_name": "ProximalPhalanxOutlineCorrect (UCR)",
+      "window": "fused train+test · k=2",
+      "metrics": {
+        "ARI": 0.0669,
+        "NMI": 0.08612
+      },
+      "settings": "k=2 (= number of classes); full dataset clustered (train+test fused); mean over 10 runs of the authors' Matlab implementation",
+      "source": {
+        "title": "k-Shape: Efficient and Accurate Clustering of Time Series (Paparrizos & Gravano) — official Matlab repository",
+        "venue": "ACM SIGMOD 2015 / ACM TODS 2017",
+        "url": "https://github.com/TheDatumOrg/kshape-matlab",
+        "locator": "README 'Results on the 128 univariate datasets', row ProximalPhalanxOutlineCorrect (ARI 0.0669039, NMI 0.0861243)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "Paper value is the mean of 10 Matlab runs; libraryts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing.",
+      "spec_params": {
+        "n_clusters": 2,
+        "fit_on": "all",
+        "random_state": 42
+      },
+      "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset proximalphalanxoutlinecorrect-cl --model-id bench-clustering-kshape-proximalphalanxoutlinecorrect --param n_clusters=2 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "run_command": "libraryts run --model-id bench-clustering-kshape-proximalphalanxoutlinecorrect --compact"
+    },
+    {
+      "id": "clustering-kshape-shapeletsim",
+      "algorithm": "TimeSeriesKShapes",
+      "algorithm_name": "k-Shape",
+      "dataset": "shapeletsim-cl",
+      "dataset_name": "ShapeletSim (UCR)",
+      "window": "fused train+test · k=2",
+      "metrics": {
+        "ARI": 0.47573,
+        "NMI": 0.44791
+      },
+      "settings": "k=2 (= number of classes); full dataset clustered (train+test fused); mean over 10 runs of the authors' Matlab implementation",
+      "source": {
+        "title": "k-Shape: Efficient and Accurate Clustering of Time Series (Paparrizos & Gravano) — official Matlab repository",
+        "venue": "ACM SIGMOD 2015 / ACM TODS 2017",
+        "url": "https://github.com/TheDatumOrg/kshape-matlab",
+        "locator": "README 'Results on the 128 univariate datasets', row ShapeletSim (ARI 0.4757332, NMI 0.447908)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "Paper value is the mean of 10 Matlab runs; libraryts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing.",
+      "spec_params": {
+        "n_clusters": 2,
+        "fit_on": "all",
+        "random_state": 42
+      },
+      "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset shapeletsim-cl --model-id bench-clustering-kshape-shapeletsim --param n_clusters=2 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "run_command": "libraryts run --model-id bench-clustering-kshape-shapeletsim --compact"
+    },
+    {
+      "id": "clustering-kshape-swedishleaf",
+      "algorithm": "TimeSeriesKShapes",
+      "algorithm_name": "k-Shape",
+      "dataset": "swedishleaf-cl",
+      "dataset_name": "SwedishLeaf (UCR)",
+      "window": "fused train+test · k=15",
+      "metrics": {
+        "ARI": 0.32161,
+        "NMI": 0.55868
+      },
+      "settings": "k=15 (= number of classes); full dataset clustered (train+test fused); mean over 10 runs of the authors' Matlab implementation",
+      "source": {
+        "title": "k-Shape: Efficient and Accurate Clustering of Time Series (Paparrizos & Gravano) — official Matlab repository",
+        "venue": "ACM SIGMOD 2015 / ACM TODS 2017",
+        "url": "https://github.com/TheDatumOrg/kshape-matlab",
+        "locator": "README 'Results on the 128 univariate datasets', row SwedishLeaf (ARI 0.32160817, NMI 0.5586813)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "Paper value is the mean of 10 Matlab runs; libraryts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing.",
+      "spec_params": {
+        "n_clusters": 15,
+        "fit_on": "all",
+        "random_state": 42
+      },
+      "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset swedishleaf-cl --model-id bench-clustering-kshape-swedishleaf --param n_clusters=15 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "run_command": "libraryts run --model-id bench-clustering-kshape-swedishleaf --compact"
+    },
+    {
+      "id": "clustering-kshape-symbols",
+      "algorithm": "TimeSeriesKShapes",
+      "algorithm_name": "k-Shape",
+      "dataset": "symbols-cl",
+      "dataset_name": "Symbols (UCR)",
+      "window": "fused train+test · k=6",
+      "metrics": {
+        "ARI": 0.65001,
+        "NMI": 0.77754
+      },
+      "settings": "k=6 (= number of classes); full dataset clustered (train+test fused); mean over 10 runs of the authors' Matlab implementation",
+      "source": {
+        "title": "k-Shape: Efficient and Accurate Clustering of Time Series (Paparrizos & Gravano) — official Matlab repository",
+        "venue": "ACM SIGMOD 2015 / ACM TODS 2017",
+        "url": "https://github.com/TheDatumOrg/kshape-matlab",
+        "locator": "README 'Results on the 128 univariate datasets', row Symbols (ARI 0.650005, NMI 0.777543)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "Paper value is the mean of 10 Matlab runs; libraryts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing.",
+      "spec_params": {
+        "n_clusters": 6,
+        "fit_on": "all",
+        "random_state": 42
+      },
+      "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset symbols-cl --model-id bench-clustering-kshape-symbols --param n_clusters=6 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "run_command": "libraryts run --model-id bench-clustering-kshape-symbols --compact"
+    },
+    {
+      "id": "clustering-kshape-toesegmentation1",
+      "algorithm": "TimeSeriesKShapes",
+      "algorithm_name": "k-Shape",
+      "dataset": "toesegmentation1-cl",
+      "dataset_name": "ToeSegmentation1 (UCR)",
+      "window": "fused train+test · k=2",
+      "metrics": {
+        "ARI": 0.00407,
+        "NMI": 0.00508
+      },
+      "settings": "k=2 (= number of classes); full dataset clustered (train+test fused); mean over 10 runs of the authors' Matlab implementation",
+      "source": {
+        "title": "k-Shape: Efficient and Accurate Clustering of Time Series (Paparrizos & Gravano) — official Matlab repository",
+        "venue": "ACM SIGMOD 2015 / ACM TODS 2017",
+        "url": "https://github.com/TheDatumOrg/kshape-matlab",
+        "locator": "README 'Results on the 128 univariate datasets', row ToeSegmentation1 (ARI 0.00407319, NMI 0.0050804)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "Paper value is the mean of 10 Matlab runs; libraryts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing.",
+      "spec_params": {
+        "n_clusters": 2,
+        "fit_on": "all",
+        "random_state": 42
+      },
+      "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset toesegmentation1-cl --model-id bench-clustering-kshape-toesegmentation1 --param n_clusters=2 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "run_command": "libraryts run --model-id bench-clustering-kshape-toesegmentation1 --compact"
+    },
+    {
+      "id": "clustering-kshape-computers",
+      "algorithm": "TimeSeriesKShapes",
+      "algorithm_name": "k-Shape",
+      "dataset": "computers-cl",
+      "dataset_name": "Computers (UCR)",
+      "window": "fused train+test · k=2",
+      "metrics": {
+        "ARI": 0.0596,
+        "NMI": 0.05737
+      },
+      "settings": "k=2 (= number of classes); full dataset clustered (train+test fused); mean over 10 runs of the authors' Matlab implementation",
+      "source": {
+        "title": "k-Shape: Efficient and Accurate Clustering of Time Series (Paparrizos & Gravano) — official Matlab repository",
+        "venue": "ACM SIGMOD 2015 / ACM TODS 2017",
+        "url": "https://github.com/TheDatumOrg/kshape-matlab",
+        "locator": "README 'Results on the 128 univariate datasets', row Computers (ARI 0.05959965, NMI 0.0573684)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "Paper value is the mean of 10 Matlab runs; libraryts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing.",
+      "spec_params": {
+        "n_clusters": 2,
+        "fit_on": "all",
+        "random_state": 42
+      },
+      "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset computers-cl --model-id bench-clustering-kshape-computers --param n_clusters=2 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "run_command": "libraryts run --model-id bench-clustering-kshape-computers --compact"
+    },
+    {
+      "id": "clustering-kshape-strawberry",
+      "algorithm": "TimeSeriesKShapes",
+      "algorithm_name": "k-Shape",
+      "dataset": "strawberry-cl",
+      "dataset_name": "Strawberry (UCR)",
+      "window": "fused train+test · k=2",
+      "metrics": {
+        "ARI": -0.0194,
+        "NMI": 0.12339
+      },
+      "settings": "k=2 (= number of classes); full dataset clustered (train+test fused); mean over 10 runs of the authors' Matlab implementation",
+      "source": {
+        "title": "k-Shape: Efficient and Accurate Clustering of Time Series (Paparrizos & Gravano) — official Matlab repository",
+        "venue": "ACM SIGMOD 2015 / ACM TODS 2017",
+        "url": "https://github.com/TheDatumOrg/kshape-matlab",
+        "locator": "README 'Results on the 128 univariate datasets', row Strawberry (ARI -0.019398, NMI 0.12339)"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.15
+      },
+      "notes": "Paper value is the mean of 10 Matlab runs; libraryts runs tslearn's KShape once with a fixed seed on the fused set (fit_on=all, matching the paper's no-held-out protocol). Random init makes single-run ARI swing.",
+      "spec_params": {
+        "n_clusters": 2,
+        "fit_on": "all",
+        "random_state": 42
+      },
+      "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset strawberry-cl --model-id bench-clustering-kshape-strawberry --param n_clusters=2 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+      "run_command": "libraryts run --model-id bench-clustering-kshape-strawberry --compact"
     }
   ]
 }

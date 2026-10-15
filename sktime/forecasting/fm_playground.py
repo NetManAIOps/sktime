@@ -1,8 +1,8 @@
 # copyright: sktime developers, BSD-3-Clause License (see LICENSE file)
 """Playground adapters for zero-shot foundation-model forecasters.
 
-Thin, default-constructible wrappers around foundation models so the TSBox
-Sandbox Playground (``playground/``) can discover and run them through its
+Thin, default-constructible wrappers around foundation models so the LibraryTS
+Playground (``playground/``) can discover and run them through its
 ``fit(y) -> predict(fh)`` runner contract:
 
 - ``ChronosPlaygroundForecaster`` defaults ``ChronosForecaster`` to

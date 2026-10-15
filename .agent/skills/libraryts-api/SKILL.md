@@ -1,6 +1,6 @@
 ---
 name: libraryts-api
-description: LibraryTS API — CLI version of the TSBox Sandbox Playground (NetManAIOps/sktime Time Series Sandbox) for autoresearch harnesses and automated pipelines. Use when an external harness/agent needs to discover available tasks/algorithms/datasets, run time-series experiments (forecasting, classification, regression, clustering, anomaly detection, causal discovery), re-score runs with registry metrics, estimate series parameters, compute distance matrices, or export reproduction scripts and reports programmatically — one CLI command per call, stable JSON envelope, no HTTP server.
+description: LibraryTS API — CLI version of the LibraryTS Playground (NetManAIOps/sktime Time Series Sandbox) for autoresearch harnesses and automated pipelines. Use when an external harness/agent needs to discover available tasks/algorithms/datasets, run time-series experiments (forecasting, classification, regression, clustering, anomaly detection, causal discovery), re-score runs with registry metrics, estimate series parameters, compute distance matrices, or export reproduction scripts and reports programmatically — one CLI command per call, stable JSON envelope, no HTTP server.
 ---
 
 # LibraryTS API — Playground CLI

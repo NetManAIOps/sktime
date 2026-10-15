@@ -2446,6 +2446,1031 @@
       },
       "train_command": "libraryts train --algorithm NLinearForecaster --dataset hf-electricity --model-id bench-forecasting-nlinear-electricity-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
       "run_command": "libraryts run --model-id bench-forecasting-nlinear-electricity-336 --compact"
+    },
+    {
+      "id": "forecasting-linear-etth1-192",
+      "algorithm": "LinearForecaster",
+      "algorithm_name": "Linear",
+      "dataset": "hf-etth1",
+      "dataset_name": "ETTh1",
+      "window": "horizon 192 · lookback 336",
+      "metrics": {
+        "MSE": 0.418,
+        "MAE": 0.429
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTh1/192, Linear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 192,
+        "horizon": 192,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827
+      },
+      "train_command": "libraryts train --algorithm LinearForecaster --dataset hf-etth1 --model-id bench-forecasting-linear-etth1-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-linear-etth1-192 --compact"
+    },
+    {
+      "id": "forecasting-linear-etth1-336",
+      "algorithm": "LinearForecaster",
+      "algorithm_name": "Linear",
+      "dataset": "hf-etth1",
+      "dataset_name": "ETTh1",
+      "window": "horizon 336 · lookback 336",
+      "metrics": {
+        "MSE": 0.479,
+        "MAE": 0.476
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTh1/336, Linear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 336,
+        "horizon": 336,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827
+      },
+      "train_command": "libraryts train --algorithm LinearForecaster --dataset hf-etth1 --model-id bench-forecasting-linear-etth1-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-linear-etth1-336 --compact"
+    },
+    {
+      "id": "forecasting-linear-ettm1-96",
+      "algorithm": "LinearForecaster",
+      "algorithm_name": "Linear",
+      "dataset": "hf-ettm1",
+      "dataset_name": "ETTm1",
+      "window": "horizon 96 · lookback 336",
+      "metrics": {
+        "MSE": 0.308,
+        "MAE": 0.352
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTm1/96, Linear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 96,
+        "horizon": 96,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827
+      },
+      "train_command": "libraryts train --algorithm LinearForecaster --dataset hf-ettm1 --model-id bench-forecasting-linear-ettm1-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-linear-ettm1-96 --compact"
+    },
+    {
+      "id": "forecasting-linear-ettm1-192",
+      "algorithm": "LinearForecaster",
+      "algorithm_name": "Linear",
+      "dataset": "hf-ettm1",
+      "dataset_name": "ETTm1",
+      "window": "horizon 192 · lookback 336",
+      "metrics": {
+        "MSE": 0.34,
+        "MAE": 0.369
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTm1/192, Linear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 192,
+        "horizon": 192,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827
+      },
+      "train_command": "libraryts train --algorithm LinearForecaster --dataset hf-ettm1 --model-id bench-forecasting-linear-ettm1-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-linear-ettm1-192 --compact"
+    },
+    {
+      "id": "forecasting-linear-ettm1-336",
+      "algorithm": "LinearForecaster",
+      "algorithm_name": "Linear",
+      "dataset": "hf-ettm1",
+      "dataset_name": "ETTm1",
+      "window": "horizon 336 · lookback 336",
+      "metrics": {
+        "MSE": 0.376,
+        "MAE": 0.393
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTm1/336, Linear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 336,
+        "horizon": 336,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827
+      },
+      "train_command": "libraryts train --algorithm LinearForecaster --dataset hf-ettm1 --model-id bench-forecasting-linear-ettm1-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-linear-ettm1-336 --compact"
+    },
+    {
+      "id": "forecasting-linear-ettm1-720",
+      "algorithm": "LinearForecaster",
+      "algorithm_name": "Linear",
+      "dataset": "hf-ettm1",
+      "dataset_name": "ETTm1",
+      "window": "horizon 720 · lookback 336",
+      "metrics": {
+        "MSE": 0.44,
+        "MAE": 0.435
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTm1/720, Linear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 720,
+        "horizon": 720,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827
+      },
+      "train_command": "libraryts train --algorithm LinearForecaster --dataset hf-ettm1 --model-id bench-forecasting-linear-ettm1-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-linear-ettm1-720 --compact"
+    },
+    {
+      "id": "forecasting-linear-ettm2-96",
+      "algorithm": "LinearForecaster",
+      "algorithm_name": "Linear",
+      "dataset": "hf-ettm2",
+      "dataset_name": "ETTm2",
+      "window": "horizon 96 · lookback 336",
+      "metrics": {
+        "MSE": 0.168,
+        "MAE": 0.262
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTm2/96, Linear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 96,
+        "horizon": 96,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827
+      },
+      "train_command": "libraryts train --algorithm LinearForecaster --dataset hf-ettm2 --model-id bench-forecasting-linear-ettm2-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-linear-ettm2-96 --compact"
+    },
+    {
+      "id": "forecasting-linear-ettm2-192",
+      "algorithm": "LinearForecaster",
+      "algorithm_name": "Linear",
+      "dataset": "hf-ettm2",
+      "dataset_name": "ETTm2",
+      "window": "horizon 192 · lookback 336",
+      "metrics": {
+        "MSE": 0.232,
+        "MAE": 0.308
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTm2/192, Linear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 192,
+        "horizon": 192,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827
+      },
+      "train_command": "libraryts train --algorithm LinearForecaster --dataset hf-ettm2 --model-id bench-forecasting-linear-ettm2-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-linear-ettm2-192 --compact"
+    },
+    {
+      "id": "forecasting-linear-ettm2-336",
+      "algorithm": "LinearForecaster",
+      "algorithm_name": "Linear",
+      "dataset": "hf-ettm2",
+      "dataset_name": "ETTm2",
+      "window": "horizon 336 · lookback 336",
+      "metrics": {
+        "MSE": 0.32,
+        "MAE": 0.373
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTm2/336, Linear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 336,
+        "horizon": 336,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827
+      },
+      "train_command": "libraryts train --algorithm LinearForecaster --dataset hf-ettm2 --model-id bench-forecasting-linear-ettm2-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-linear-ettm2-336 --compact"
+    },
+    {
+      "id": "forecasting-linear-ettm2-720",
+      "algorithm": "LinearForecaster",
+      "algorithm_name": "Linear",
+      "dataset": "hf-ettm2",
+      "dataset_name": "ETTm2",
+      "window": "horizon 720 · lookback 336",
+      "metrics": {
+        "MSE": 0.413,
+        "MAE": 0.435
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ETTm2/720, Linear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 720,
+        "horizon": 720,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.496,
+        "test_start_fraction": 0.661,
+        "test_end_fraction": 0.827
+      },
+      "train_command": "libraryts train --algorithm LinearForecaster --dataset hf-ettm2 --model-id bench-forecasting-linear-ettm2-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-linear-ettm2-720 --compact"
+    },
+    {
+      "id": "forecasting-linear-weather-96",
+      "algorithm": "LinearForecaster",
+      "algorithm_name": "Linear",
+      "dataset": "hf-weather",
+      "dataset_name": "Weather",
+      "window": "horizon 96 · lookback 336",
+      "metrics": {
+        "MSE": 0.176,
+        "MAE": 0.236
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row Weather/96, Linear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 96,
+        "horizon": 96,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.7,
+        "test_fraction": 0.2
+      },
+      "train_command": "libraryts train --algorithm LinearForecaster --dataset hf-weather --model-id bench-forecasting-linear-weather-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-linear-weather-96 --compact"
+    },
+    {
+      "id": "forecasting-linear-weather-192",
+      "algorithm": "LinearForecaster",
+      "algorithm_name": "Linear",
+      "dataset": "hf-weather",
+      "dataset_name": "Weather",
+      "window": "horizon 192 · lookback 336",
+      "metrics": {
+        "MSE": 0.218,
+        "MAE": 0.276
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row Weather/192, Linear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 192,
+        "horizon": 192,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.7,
+        "test_fraction": 0.2
+      },
+      "train_command": "libraryts train --algorithm LinearForecaster --dataset hf-weather --model-id bench-forecasting-linear-weather-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-linear-weather-192 --compact"
+    },
+    {
+      "id": "forecasting-linear-weather-336",
+      "algorithm": "LinearForecaster",
+      "algorithm_name": "Linear",
+      "dataset": "hf-weather",
+      "dataset_name": "Weather",
+      "window": "horizon 336 · lookback 336",
+      "metrics": {
+        "MSE": 0.262,
+        "MAE": 0.312
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row Weather/336, Linear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 336,
+        "horizon": 336,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.7,
+        "test_fraction": 0.2
+      },
+      "train_command": "libraryts train --algorithm LinearForecaster --dataset hf-weather --model-id bench-forecasting-linear-weather-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-linear-weather-336 --compact"
+    },
+    {
+      "id": "forecasting-linear-weather-720",
+      "algorithm": "LinearForecaster",
+      "algorithm_name": "Linear",
+      "dataset": "hf-weather",
+      "dataset_name": "Weather",
+      "window": "horizon 720 · lookback 336",
+      "metrics": {
+        "MSE": 0.326,
+        "MAE": 0.365
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row Weather/720, Linear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 720,
+        "horizon": 720,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.7,
+        "test_fraction": 0.2
+      },
+      "train_command": "libraryts train --algorithm LinearForecaster --dataset hf-weather --model-id bench-forecasting-linear-weather-720 --param seq_len=336 --param pred_len=720 --param horizon=720 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-linear-weather-720 --compact"
+    },
+    {
+      "id": "forecasting-linear-electricity-96",
+      "algorithm": "LinearForecaster",
+      "algorithm_name": "Linear",
+      "dataset": "hf-electricity",
+      "dataset_name": "Electricity",
+      "window": "horizon 96 · lookback 336",
+      "metrics": {
+        "MSE": 0.14,
+        "MAE": 0.237
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row Electricity/96, Linear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 96,
+        "horizon": 96,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.7,
+        "test_fraction": 0.2
+      },
+      "train_command": "libraryts train --algorithm LinearForecaster --dataset hf-electricity --model-id bench-forecasting-linear-electricity-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-linear-electricity-96 --compact"
+    },
+    {
+      "id": "forecasting-linear-electricity-192",
+      "algorithm": "LinearForecaster",
+      "algorithm_name": "Linear",
+      "dataset": "hf-electricity",
+      "dataset_name": "Electricity",
+      "window": "horizon 192 · lookback 336",
+      "metrics": {
+        "MSE": 0.153,
+        "MAE": 0.25
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row Electricity/192, Linear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 192,
+        "horizon": 192,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.7,
+        "test_fraction": 0.2
+      },
+      "train_command": "libraryts train --algorithm LinearForecaster --dataset hf-electricity --model-id bench-forecasting-linear-electricity-192 --param seq_len=336 --param pred_len=192 --param horizon=192 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-linear-electricity-192 --compact"
+    },
+    {
+      "id": "forecasting-linear-electricity-336",
+      "algorithm": "LinearForecaster",
+      "algorithm_name": "Linear",
+      "dataset": "hf-electricity",
+      "dataset_name": "Electricity",
+      "window": "horizon 336 · lookback 336",
+      "metrics": {
+        "MSE": 0.169,
+        "MAE": 0.268
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row Electricity/336, Linear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.1
+      },
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only.",
+      "spec_params": {
+        "seq_len": 336,
+        "pred_len": 336,
+        "horizon": 336,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.7,
+        "test_fraction": 0.2
+      },
+      "train_command": "libraryts train --algorithm LinearForecaster --dataset hf-electricity --model-id bench-forecasting-linear-electricity-336 --param seq_len=336 --param pred_len=336 --param horizon=336 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-linear-electricity-336 --compact"
+    },
+    {
+      "id": "forecasting-dlinear-ili-24",
+      "algorithm": "DLinearForecaster",
+      "algorithm_name": "DLinear",
+      "dataset": "hf-ili",
+      "dataset_name": "ILI",
+      "window": "horizon 24 · lookback 104",
+      "metrics": {
+        "MSE": 2.215,
+        "MAE": 1.081
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ILI/24, DLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.15
+      },
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. ILI is tiny (966 weekly rows, 7 variates); lookback 104 as in the paper. The 15% tolerance was chosen before running.",
+      "spec_params": {
+        "seq_len": 104,
+        "pred_len": 24,
+        "horizon": 24,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.7,
+        "test_fraction": 0.2
+      },
+      "train_command": "libraryts train --algorithm DLinearForecaster --dataset hf-ili --model-id bench-forecasting-dlinear-ili-24 --param seq_len=104 --param pred_len=24 --param horizon=24 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-dlinear-ili-24 --compact"
+    },
+    {
+      "id": "forecasting-nlinear-ili-24",
+      "algorithm": "NLinearForecaster",
+      "algorithm_name": "NLinear",
+      "dataset": "hf-ili",
+      "dataset_name": "ILI",
+      "window": "horizon 24 · lookback 104",
+      "metrics": {
+        "MSE": 1.683,
+        "MAE": 0.858
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ILI/24, NLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.15
+      },
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. ILI is tiny (966 weekly rows, 7 variates); lookback 104 as in the paper. The 15% tolerance was chosen before running.",
+      "spec_params": {
+        "seq_len": 104,
+        "pred_len": 24,
+        "horizon": 24,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.7,
+        "test_fraction": 0.2
+      },
+      "train_command": "libraryts train --algorithm NLinearForecaster --dataset hf-ili --model-id bench-forecasting-nlinear-ili-24 --param seq_len=104 --param pred_len=24 --param horizon=24 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-nlinear-ili-24 --compact"
+    },
+    {
+      "id": "forecasting-linear-ili-24",
+      "algorithm": "LinearForecaster",
+      "algorithm_name": "Linear",
+      "dataset": "hf-ili",
+      "dataset_name": "ILI",
+      "window": "horizon 24 · lookback 104",
+      "metrics": {
+        "MSE": 1.947,
+        "MAE": 0.985
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ILI/24, Linear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.15
+      },
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. ILI is tiny (966 weekly rows, 7 variates); lookback 104 as in the paper. The 15% tolerance was chosen before running.",
+      "spec_params": {
+        "seq_len": 104,
+        "pred_len": 24,
+        "horizon": 24,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.7,
+        "test_fraction": 0.2
+      },
+      "train_command": "libraryts train --algorithm LinearForecaster --dataset hf-ili --model-id bench-forecasting-linear-ili-24 --param seq_len=104 --param pred_len=24 --param horizon=24 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-linear-ili-24 --compact"
+    },
+    {
+      "id": "forecasting-dlinear-ili-36",
+      "algorithm": "DLinearForecaster",
+      "algorithm_name": "DLinear",
+      "dataset": "hf-ili",
+      "dataset_name": "ILI",
+      "window": "horizon 36 · lookback 104",
+      "metrics": {
+        "MSE": 1.963,
+        "MAE": 0.963
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ILI/36, DLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.15
+      },
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. ILI is tiny (966 weekly rows, 7 variates); lookback 104 as in the paper. The 15% tolerance was chosen before running.",
+      "spec_params": {
+        "seq_len": 104,
+        "pred_len": 36,
+        "horizon": 36,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.7,
+        "test_fraction": 0.2
+      },
+      "train_command": "libraryts train --algorithm DLinearForecaster --dataset hf-ili --model-id bench-forecasting-dlinear-ili-36 --param seq_len=104 --param pred_len=36 --param horizon=36 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-dlinear-ili-36 --compact"
+    },
+    {
+      "id": "forecasting-nlinear-ili-36",
+      "algorithm": "NLinearForecaster",
+      "algorithm_name": "NLinear",
+      "dataset": "hf-ili",
+      "dataset_name": "ILI",
+      "window": "horizon 36 · lookback 104",
+      "metrics": {
+        "MSE": 1.703,
+        "MAE": 0.859
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ILI/36, NLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.15
+      },
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. ILI is tiny (966 weekly rows, 7 variates); lookback 104 as in the paper. The 15% tolerance was chosen before running.",
+      "spec_params": {
+        "seq_len": 104,
+        "pred_len": 36,
+        "horizon": 36,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.7,
+        "test_fraction": 0.2
+      },
+      "train_command": "libraryts train --algorithm NLinearForecaster --dataset hf-ili --model-id bench-forecasting-nlinear-ili-36 --param seq_len=104 --param pred_len=36 --param horizon=36 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-nlinear-ili-36 --compact"
+    },
+    {
+      "id": "forecasting-linear-ili-36",
+      "algorithm": "LinearForecaster",
+      "algorithm_name": "Linear",
+      "dataset": "hf-ili",
+      "dataset_name": "ILI",
+      "window": "horizon 36 · lookback 104",
+      "metrics": {
+        "MSE": 2.182,
+        "MAE": 1.036
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ILI/36, Linear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.15
+      },
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. ILI is tiny (966 weekly rows, 7 variates); lookback 104 as in the paper. The 15% tolerance was chosen before running.",
+      "spec_params": {
+        "seq_len": 104,
+        "pred_len": 36,
+        "horizon": 36,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.7,
+        "test_fraction": 0.2
+      },
+      "train_command": "libraryts train --algorithm LinearForecaster --dataset hf-ili --model-id bench-forecasting-linear-ili-36 --param seq_len=104 --param pred_len=36 --param horizon=36 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-linear-ili-36 --compact"
+    },
+    {
+      "id": "forecasting-dlinear-ili-48",
+      "algorithm": "DLinearForecaster",
+      "algorithm_name": "DLinear",
+      "dataset": "hf-ili",
+      "dataset_name": "ILI",
+      "window": "horizon 48 · lookback 104",
+      "metrics": {
+        "MSE": 2.13,
+        "MAE": 1.024
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ILI/48, DLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.15
+      },
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. ILI is tiny (966 weekly rows, 7 variates); lookback 104 as in the paper. The 15% tolerance was chosen before running.",
+      "spec_params": {
+        "seq_len": 104,
+        "pred_len": 48,
+        "horizon": 48,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.7,
+        "test_fraction": 0.2
+      },
+      "train_command": "libraryts train --algorithm DLinearForecaster --dataset hf-ili --model-id bench-forecasting-dlinear-ili-48 --param seq_len=104 --param pred_len=48 --param horizon=48 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-dlinear-ili-48 --compact"
+    },
+    {
+      "id": "forecasting-nlinear-ili-48",
+      "algorithm": "NLinearForecaster",
+      "algorithm_name": "NLinear",
+      "dataset": "hf-ili",
+      "dataset_name": "ILI",
+      "window": "horizon 48 · lookback 104",
+      "metrics": {
+        "MSE": 1.719,
+        "MAE": 0.884
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ILI/48, NLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.15
+      },
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. ILI is tiny (966 weekly rows, 7 variates); lookback 104 as in the paper. The 15% tolerance was chosen before running.",
+      "spec_params": {
+        "seq_len": 104,
+        "pred_len": 48,
+        "horizon": 48,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.7,
+        "test_fraction": 0.2
+      },
+      "train_command": "libraryts train --algorithm NLinearForecaster --dataset hf-ili --model-id bench-forecasting-nlinear-ili-48 --param seq_len=104 --param pred_len=48 --param horizon=48 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-nlinear-ili-48 --compact"
+    },
+    {
+      "id": "forecasting-linear-ili-48",
+      "algorithm": "LinearForecaster",
+      "algorithm_name": "Linear",
+      "dataset": "hf-ili",
+      "dataset_name": "ILI",
+      "window": "horizon 48 · lookback 104",
+      "metrics": {
+        "MSE": 2.256,
+        "MAE": 1.06
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ILI/48, Linear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.15
+      },
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. ILI is tiny (966 weekly rows, 7 variates); lookback 104 as in the paper. The 15% tolerance was chosen before running.",
+      "spec_params": {
+        "seq_len": 104,
+        "pred_len": 48,
+        "horizon": 48,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.7,
+        "test_fraction": 0.2
+      },
+      "train_command": "libraryts train --algorithm LinearForecaster --dataset hf-ili --model-id bench-forecasting-linear-ili-48 --param seq_len=104 --param pred_len=48 --param horizon=48 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-linear-ili-48 --compact"
+    },
+    {
+      "id": "forecasting-dlinear-ili-60",
+      "algorithm": "DLinearForecaster",
+      "algorithm_name": "DLinear",
+      "dataset": "hf-ili",
+      "dataset_name": "ILI",
+      "window": "horizon 60 · lookback 104",
+      "metrics": {
+        "MSE": 2.368,
+        "MAE": 1.096
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ILI/60, DLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.15
+      },
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. ILI is tiny (966 weekly rows, 7 variates); lookback 104 as in the paper. The 15% tolerance was chosen before running.",
+      "spec_params": {
+        "seq_len": 104,
+        "pred_len": 60,
+        "horizon": 60,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.7,
+        "test_fraction": 0.2
+      },
+      "train_command": "libraryts train --algorithm DLinearForecaster --dataset hf-ili --model-id bench-forecasting-dlinear-ili-60 --param seq_len=104 --param pred_len=60 --param horizon=60 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-dlinear-ili-60 --compact"
+    },
+    {
+      "id": "forecasting-nlinear-ili-60",
+      "algorithm": "NLinearForecaster",
+      "algorithm_name": "NLinear",
+      "dataset": "hf-ili",
+      "dataset_name": "ILI",
+      "window": "horizon 60 · lookback 104",
+      "metrics": {
+        "MSE": 1.819,
+        "MAE": 0.917
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ILI/60, NLinear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.15
+      },
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. ILI is tiny (966 weekly rows, 7 variates); lookback 104 as in the paper. The 15% tolerance was chosen before running.",
+      "spec_params": {
+        "seq_len": 104,
+        "pred_len": 60,
+        "horizon": 60,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.7,
+        "test_fraction": 0.2
+      },
+      "train_command": "libraryts train --algorithm NLinearForecaster --dataset hf-ili --model-id bench-forecasting-nlinear-ili-60 --param seq_len=104 --param pred_len=60 --param horizon=60 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-nlinear-ili-60 --compact"
+    },
+    {
+      "id": "forecasting-linear-ili-60",
+      "algorithm": "LinearForecaster",
+      "algorithm_name": "Linear",
+      "dataset": "hf-ili",
+      "dataset_name": "ILI",
+      "window": "horizon 60 · lookback 104",
+      "metrics": {
+        "MSE": 2.39,
+        "MAE": 1.104
+      },
+      "settings": "LTSF-Linear protocol (rolling origin, no refit); look-back L=336; z-score normalized with train statistics; MSE/MAE averaged over windows and channels",
+      "source": {
+        "title": "Are Transformers Effective for Time Series Forecasting? (Zeng et al.)",
+        "venue": "AAAI 2023",
+        "url": "https://arxiv.org/html/2205.13504v3",
+        "locator": "Table 2, row ILI/60, Linear* (authors' own run)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.15
+      },
+      "notes": "Protocol matched via libraryts rolling eval (train once, slide over the paper's exact test region: ETT uses rows 11520-14400, dropping the volatile tail; Weather uses 70/10/20). Residual gap: implementation/seed details only. ILI is tiny (966 weekly rows, 7 variates); lookback 104 as in the paper. The 15% tolerance was chosen before running.",
+      "spec_params": {
+        "seq_len": 104,
+        "pred_len": 60,
+        "horizon": 60,
+        "num_epochs": 10,
+        "eval_mode": "rolling",
+        "train_fraction": 0.7,
+        "test_fraction": 0.2
+      },
+      "train_command": "libraryts train --algorithm LinearForecaster --dataset hf-ili --model-id bench-forecasting-linear-ili-60 --param seq_len=104 --param pred_len=60 --param horizon=60 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+      "run_command": "libraryts run --model-id bench-forecasting-linear-ili-60 --compact"
     }
   ]
 }

@@ -864,6 +864,1626 @@
       },
       "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-chinatown --model-id bench-classification-minirocket-chinatown --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
       "run_command": "libraryts run --model-id bench-classification-minirocket-chinatown --compact"
+    },
+    {
+      "id": "classification-rocket-adiac",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "ROCKET",
+      "dataset": "ucr-adiac",
+      "dataset_name": "Adiac (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.78338
+      },
+      "settings": "UCR default train/test split; 10,000 random kernels; RidgeClassifierCV; mean over 10 runs (std 0.0062)",
+      "source": {
+        "title": "ROCKET: Exceptionally Fast and Accurate Time Series Classification Using Random Convolutional Kernels (Dempster, Petitjean, Webb)",
+        "venue": "Data Mining and Knowledge Discovery 34(5), 2020",
+        "url": "https://raw.githubusercontent.com/angus924/rocket/master/results/results_ucr.csv",
+        "locator": "official results_ucr.csv, row Adiac, accuracy_mean column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "Paper std over 10 runs is 0.0062; tolerance = max(0.03, 3*std) to cover kernel randomness.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-adiac --model-id bench-classification-rocket-adiac --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-rocket-adiac --compact"
+    },
+    {
+      "id": "classification-minirocket-adiac",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "MiniRocket",
+      "dataset": "ucr-adiac",
+      "dataset_name": "Adiac (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.80171
+      },
+      "settings": "UCR default train/test split; MiniRocket, 10,000 features, RidgeClassifierCV; mean accuracy over resamples",
+      "source": {
+        "title": "MiniRocket: A Very Fast (Almost) Deterministic Transform for Time Series Classification (Dempster, Schmidt, Webb)",
+        "venue": "KDD 2021",
+        "url": "https://raw.githubusercontent.com/angus924/minirocket/main/results/results_ucr109_mean.csv",
+        "locator": "official results_ucr109_mean.csv, row Adiac, accuracy column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.03 (absolute, chosen before running) covers resample noise and the small test set. libraryts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
+      "spec_params": {
+        "rocket_transform": "minirocket"
+      },
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-adiac --model-id bench-classification-minirocket-adiac --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-minirocket-adiac --compact"
+    },
+    {
+      "id": "classification-rocket-car",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "ROCKET",
+      "dataset": "ucr-car",
+      "dataset_name": "Car (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.84667
+      },
+      "settings": "UCR default train/test split; 10,000 random kernels; RidgeClassifierCV; mean over 10 runs (std 0.0597)",
+      "source": {
+        "title": "ROCKET: Exceptionally Fast and Accurate Time Series Classification Using Random Convolutional Kernels (Dempster, Petitjean, Webb)",
+        "venue": "Data Mining and Knowledge Discovery 34(5), 2020",
+        "url": "https://raw.githubusercontent.com/angus924/rocket/master/results/results_ucr.csv",
+        "locator": "official results_ucr.csv, row Car, accuracy_mean column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.179
+      },
+      "notes": "Paper std over 10 runs is 0.0597; tolerance = max(0.03, 3*std) to cover kernel randomness.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-car --model-id bench-classification-rocket-car --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-rocket-car --compact"
+    },
+    {
+      "id": "classification-minirocket-car",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "MiniRocket",
+      "dataset": "ucr-car",
+      "dataset_name": "Car (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.92111
+      },
+      "settings": "UCR default train/test split; MiniRocket, 10,000 features, RidgeClassifierCV; mean accuracy over resamples",
+      "source": {
+        "title": "MiniRocket: A Very Fast (Almost) Deterministic Transform for Time Series Classification (Dempster, Schmidt, Webb)",
+        "venue": "KDD 2021",
+        "url": "https://raw.githubusercontent.com/angus924/minirocket/main/results/results_ucr109_mean.csv",
+        "locator": "official results_ucr109_mean.csv, row Car, accuracy column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.05
+      },
+      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.05 (absolute, chosen before running) covers resample noise and the small test set. libraryts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
+      "spec_params": {
+        "rocket_transform": "minirocket"
+      },
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-car --model-id bench-classification-minirocket-car --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-minirocket-car --compact"
+    },
+    {
+      "id": "classification-rocket-cricketx",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "ROCKET",
+      "dataset": "ucr-cricketx",
+      "dataset_name": "CricketX (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.81949
+      },
+      "settings": "UCR default train/test split; 10,000 random kernels; RidgeClassifierCV; mean over 10 runs (std 0.0037)",
+      "source": {
+        "title": "ROCKET: Exceptionally Fast and Accurate Time Series Classification Using Random Convolutional Kernels (Dempster, Petitjean, Webb)",
+        "venue": "Data Mining and Knowledge Discovery 34(5), 2020",
+        "url": "https://raw.githubusercontent.com/angus924/rocket/master/results/results_ucr.csv",
+        "locator": "official results_ucr.csv, row CricketX, accuracy_mean column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "Paper std over 10 runs is 0.0037; tolerance = max(0.03, 3*std) to cover kernel randomness.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-cricketx --model-id bench-classification-rocket-cricketx --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-rocket-cricketx --compact"
+    },
+    {
+      "id": "classification-minirocket-cricketx",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "MiniRocket",
+      "dataset": "ucr-cricketx",
+      "dataset_name": "CricketX (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.82513
+      },
+      "settings": "UCR default train/test split; MiniRocket, 10,000 features, RidgeClassifierCV; mean accuracy over resamples",
+      "source": {
+        "title": "MiniRocket: A Very Fast (Almost) Deterministic Transform for Time Series Classification (Dempster, Schmidt, Webb)",
+        "venue": "KDD 2021",
+        "url": "https://raw.githubusercontent.com/angus924/minirocket/main/results/results_ucr109_mean.csv",
+        "locator": "official results_ucr109_mean.csv, row CricketX, accuracy column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.03 (absolute, chosen before running) covers resample noise and the small test set. libraryts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
+      "spec_params": {
+        "rocket_transform": "minirocket"
+      },
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-cricketx --model-id bench-classification-minirocket-cricketx --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-minirocket-cricketx --compact"
+    },
+    {
+      "id": "classification-rocket-diatomsizereduction",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "ROCKET",
+      "dataset": "ucr-diatomsizereduction",
+      "dataset_name": "DiatomSizeReduction (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.96993
+      },
+      "settings": "UCR default train/test split; 10,000 random kernels; RidgeClassifierCV; mean over 10 runs (std 0.0078)",
+      "source": {
+        "title": "ROCKET: Exceptionally Fast and Accurate Time Series Classification Using Random Convolutional Kernels (Dempster, Petitjean, Webb)",
+        "venue": "Data Mining and Knowledge Discovery 34(5), 2020",
+        "url": "https://raw.githubusercontent.com/angus924/rocket/master/results/results_ucr.csv",
+        "locator": "official results_ucr.csv, row DiatomSizeReduction, accuracy_mean column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "Paper std over 10 runs is 0.0078; tolerance = max(0.03, 3*std) to cover kernel randomness.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-diatomsizereduction --model-id bench-classification-rocket-diatomsizereduction --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-rocket-diatomsizereduction --compact"
+    },
+    {
+      "id": "classification-minirocket-diatomsizereduction",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "MiniRocket",
+      "dataset": "ucr-diatomsizereduction",
+      "dataset_name": "DiatomSizeReduction (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.94281
+      },
+      "settings": "UCR default train/test split; MiniRocket, 10,000 features, RidgeClassifierCV; mean accuracy over resamples",
+      "source": {
+        "title": "MiniRocket: A Very Fast (Almost) Deterministic Transform for Time Series Classification (Dempster, Schmidt, Webb)",
+        "venue": "KDD 2021",
+        "url": "https://raw.githubusercontent.com/angus924/minirocket/main/results/results_ucr109_mean.csv",
+        "locator": "official results_ucr109_mean.csv, row DiatomSizeReduction, accuracy column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.03 (absolute, chosen before running) covers resample noise and the small test set. libraryts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
+      "spec_params": {
+        "rocket_transform": "minirocket"
+      },
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-diatomsizereduction --model-id bench-classification-minirocket-diatomsizereduction --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-minirocket-diatomsizereduction --compact"
+    },
+    {
+      "id": "classification-rocket-distalphalanxoutlinecorrect",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "ROCKET",
+      "dataset": "ucr-distalphalanxoutlinecorrect",
+      "dataset_name": "DistalPhalanxOutlineCorrect (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.76957
+      },
+      "settings": "UCR default train/test split; 10,000 random kernels; RidgeClassifierCV; mean over 10 runs (std 0.0087)",
+      "source": {
+        "title": "ROCKET: Exceptionally Fast and Accurate Time Series Classification Using Random Convolutional Kernels (Dempster, Petitjean, Webb)",
+        "venue": "Data Mining and Knowledge Discovery 34(5), 2020",
+        "url": "https://raw.githubusercontent.com/angus924/rocket/master/results/results_ucr.csv",
+        "locator": "official results_ucr.csv, row DistalPhalanxOutlineCorrect, accuracy_mean column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "Paper std over 10 runs is 0.0087; tolerance = max(0.03, 3*std) to cover kernel randomness.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-distalphalanxoutlinecorrect --model-id bench-classification-rocket-distalphalanxoutlinecorrect --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-rocket-distalphalanxoutlinecorrect --compact"
+    },
+    {
+      "id": "classification-minirocket-distalphalanxoutlinecorrect",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "MiniRocket",
+      "dataset": "ucr-distalphalanxoutlinecorrect",
+      "dataset_name": "DistalPhalanxOutlineCorrect (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.82138
+      },
+      "settings": "UCR default train/test split; MiniRocket, 10,000 features, RidgeClassifierCV; mean accuracy over resamples",
+      "source": {
+        "title": "MiniRocket: A Very Fast (Almost) Deterministic Transform for Time Series Classification (Dempster, Schmidt, Webb)",
+        "venue": "KDD 2021",
+        "url": "https://raw.githubusercontent.com/angus924/minirocket/main/results/results_ucr109_mean.csv",
+        "locator": "official results_ucr109_mean.csv, row DistalPhalanxOutlineCorrect, accuracy column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.03 (absolute, chosen before running) covers resample noise and the small test set. libraryts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
+      "spec_params": {
+        "rocket_transform": "minirocket"
+      },
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-distalphalanxoutlinecorrect --model-id bench-classification-minirocket-distalphalanxoutlinecorrect --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-minirocket-distalphalanxoutlinecorrect --compact"
+    },
+    {
+      "id": "classification-rocket-earthquakes",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "ROCKET",
+      "dataset": "ucr-earthquakes",
+      "dataset_name": "Earthquakes (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.7482
+      },
+      "settings": "UCR default train/test split; 10,000 random kernels; RidgeClassifierCV; mean over 10 runs (std 0.0000)",
+      "source": {
+        "title": "ROCKET: Exceptionally Fast and Accurate Time Series Classification Using Random Convolutional Kernels (Dempster, Petitjean, Webb)",
+        "venue": "Data Mining and Knowledge Discovery 34(5), 2020",
+        "url": "https://raw.githubusercontent.com/angus924/rocket/master/results/results_ucr.csv",
+        "locator": "official results_ucr.csv, row Earthquakes, accuracy_mean column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "Paper std over 10 runs is 0.0000; tolerance = max(0.03, 3*std) to cover kernel randomness.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-earthquakes --model-id bench-classification-rocket-earthquakes --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-rocket-earthquakes --compact"
+    },
+    {
+      "id": "classification-minirocket-earthquakes",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "MiniRocket",
+      "dataset": "ucr-earthquakes",
+      "dataset_name": "Earthquakes (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.74868
+      },
+      "settings": "UCR default train/test split; MiniRocket, 10,000 features, RidgeClassifierCV; mean accuracy over resamples",
+      "source": {
+        "title": "MiniRocket: A Very Fast (Almost) Deterministic Transform for Time Series Classification (Dempster, Schmidt, Webb)",
+        "venue": "KDD 2021",
+        "url": "https://raw.githubusercontent.com/angus924/minirocket/main/results/results_ucr109_mean.csv",
+        "locator": "official results_ucr109_mean.csv, row Earthquakes, accuracy column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.05
+      },
+      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.05 (absolute, chosen before running) covers resample noise and the small test set. libraryts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
+      "spec_params": {
+        "rocket_transform": "minirocket"
+      },
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-earthquakes --model-id bench-classification-minirocket-earthquakes --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-minirocket-earthquakes --compact"
+    },
+    {
+      "id": "classification-rocket-ecgfivedays",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "ROCKET",
+      "dataset": "ucr-ecgfivedays",
+      "dataset_name": "ECGFiveDays (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 1.0
+      },
+      "settings": "UCR default train/test split; 10,000 random kernels; RidgeClassifierCV; mean over 10 runs (std 0.0000)",
+      "source": {
+        "title": "ROCKET: Exceptionally Fast and Accurate Time Series Classification Using Random Convolutional Kernels (Dempster, Petitjean, Webb)",
+        "venue": "Data Mining and Knowledge Discovery 34(5), 2020",
+        "url": "https://raw.githubusercontent.com/angus924/rocket/master/results/results_ucr.csv",
+        "locator": "official results_ucr.csv, row ECGFiveDays, accuracy_mean column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "Paper std over 10 runs is 0.0000; tolerance = max(0.03, 3*std) to cover kernel randomness.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-ecgfivedays --model-id bench-classification-rocket-ecgfivedays --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-rocket-ecgfivedays --compact"
+    },
+    {
+      "id": "classification-minirocket-ecgfivedays",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "MiniRocket",
+      "dataset": "ucr-ecgfivedays",
+      "dataset_name": "ECGFiveDays (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.99048
+      },
+      "settings": "UCR default train/test split; MiniRocket, 10,000 features, RidgeClassifierCV; mean accuracy over resamples",
+      "source": {
+        "title": "MiniRocket: A Very Fast (Almost) Deterministic Transform for Time Series Classification (Dempster, Schmidt, Webb)",
+        "venue": "KDD 2021",
+        "url": "https://raw.githubusercontent.com/angus924/minirocket/main/results/results_ucr109_mean.csv",
+        "locator": "official results_ucr109_mean.csv, row ECGFiveDays, accuracy column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.03 (absolute, chosen before running) covers resample noise and the small test set. libraryts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
+      "spec_params": {
+        "rocket_transform": "minirocket"
+      },
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-ecgfivedays --model-id bench-classification-minirocket-ecgfivedays --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-minirocket-ecgfivedays --compact"
+    },
+    {
+      "id": "classification-rocket-faceall",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "ROCKET",
+      "dataset": "ucr-faceall",
+      "dataset_name": "FaceAll (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.94651
+      },
+      "settings": "UCR default train/test split; 10,000 random kernels; RidgeClassifierCV; mean over 10 runs (std 0.0020)",
+      "source": {
+        "title": "ROCKET: Exceptionally Fast and Accurate Time Series Classification Using Random Convolutional Kernels (Dempster, Petitjean, Webb)",
+        "venue": "Data Mining and Knowledge Discovery 34(5), 2020",
+        "url": "https://raw.githubusercontent.com/angus924/rocket/master/results/results_ucr.csv",
+        "locator": "official results_ucr.csv, row FaceAll, accuracy_mean column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "Paper std over 10 runs is 0.0020; tolerance = max(0.03, 3*std) to cover kernel randomness.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-faceall --model-id bench-classification-rocket-faceall --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-rocket-faceall --compact"
+    },
+    {
+      "id": "classification-minirocket-faceall",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "MiniRocket",
+      "dataset": "ucr-faceall",
+      "dataset_name": "FaceAll (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.98345
+      },
+      "settings": "UCR default train/test split; MiniRocket, 10,000 features, RidgeClassifierCV; mean accuracy over resamples",
+      "source": {
+        "title": "MiniRocket: A Very Fast (Almost) Deterministic Transform for Time Series Classification (Dempster, Schmidt, Webb)",
+        "venue": "KDD 2021",
+        "url": "https://raw.githubusercontent.com/angus924/minirocket/main/results/results_ucr109_mean.csv",
+        "locator": "official results_ucr109_mean.csv, row FaceAll, accuracy column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.03 (absolute, chosen before running) covers resample noise and the small test set. libraryts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
+      "spec_params": {
+        "rocket_transform": "minirocket"
+      },
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-faceall --model-id bench-classification-minirocket-faceall --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-minirocket-faceall --compact"
+    },
+    {
+      "id": "classification-rocket-fiftywords",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "ROCKET",
+      "dataset": "ucr-fiftywords",
+      "dataset_name": "FiftyWords (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.83033
+      },
+      "settings": "UCR default train/test split; 10,000 random kernels; RidgeClassifierCV; mean over 10 runs (std 0.0057)",
+      "source": {
+        "title": "ROCKET: Exceptionally Fast and Accurate Time Series Classification Using Random Convolutional Kernels (Dempster, Petitjean, Webb)",
+        "venue": "Data Mining and Knowledge Discovery 34(5), 2020",
+        "url": "https://raw.githubusercontent.com/angus924/rocket/master/results/results_ucr.csv",
+        "locator": "official results_ucr.csv, row FiftyWords, accuracy_mean column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "Paper std over 10 runs is 0.0057; tolerance = max(0.03, 3*std) to cover kernel randomness.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-fiftywords --model-id bench-classification-rocket-fiftywords --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-rocket-fiftywords --compact"
+    },
+    {
+      "id": "classification-minirocket-fiftywords",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "MiniRocket",
+      "dataset": "ucr-fiftywords",
+      "dataset_name": "FiftyWords (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.82901
+      },
+      "settings": "UCR default train/test split; MiniRocket, 10,000 features, RidgeClassifierCV; mean accuracy over resamples",
+      "source": {
+        "title": "MiniRocket: A Very Fast (Almost) Deterministic Transform for Time Series Classification (Dempster, Schmidt, Webb)",
+        "venue": "KDD 2021",
+        "url": "https://raw.githubusercontent.com/angus924/minirocket/main/results/results_ucr109_mean.csv",
+        "locator": "official results_ucr109_mean.csv, row FiftyWords, accuracy column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.03 (absolute, chosen before running) covers resample noise and the small test set. libraryts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
+      "spec_params": {
+        "rocket_transform": "minirocket"
+      },
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-fiftywords --model-id bench-classification-minirocket-fiftywords --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-minirocket-fiftywords --compact"
+    },
+    {
+      "id": "classification-rocket-fish",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "ROCKET",
+      "dataset": "ucr-fish",
+      "dataset_name": "Fish (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.97943
+      },
+      "settings": "UCR default train/test split; 10,000 random kernels; RidgeClassifierCV; mean over 10 runs (std 0.0048)",
+      "source": {
+        "title": "ROCKET: Exceptionally Fast and Accurate Time Series Classification Using Random Convolutional Kernels (Dempster, Petitjean, Webb)",
+        "venue": "Data Mining and Knowledge Discovery 34(5), 2020",
+        "url": "https://raw.githubusercontent.com/angus924/rocket/master/results/results_ucr.csv",
+        "locator": "official results_ucr.csv, row Fish, accuracy_mean column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "Paper std over 10 runs is 0.0048; tolerance = max(0.03, 3*std) to cover kernel randomness.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-fish --model-id bench-classification-rocket-fish --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-rocket-fish --compact"
+    },
+    {
+      "id": "classification-minirocket-fish",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "MiniRocket",
+      "dataset": "ucr-fish",
+      "dataset_name": "Fish (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.97505
+      },
+      "settings": "UCR default train/test split; MiniRocket, 10,000 features, RidgeClassifierCV; mean accuracy over resamples",
+      "source": {
+        "title": "MiniRocket: A Very Fast (Almost) Deterministic Transform for Time Series Classification (Dempster, Schmidt, Webb)",
+        "venue": "KDD 2021",
+        "url": "https://raw.githubusercontent.com/angus924/minirocket/main/results/results_ucr109_mean.csv",
+        "locator": "official results_ucr109_mean.csv, row Fish, accuracy column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.03 (absolute, chosen before running) covers resample noise and the small test set. libraryts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
+      "spec_params": {
+        "rocket_transform": "minirocket"
+      },
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-fish --model-id bench-classification-minirocket-fish --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-minirocket-fish --compact"
+    },
+    {
+      "id": "classification-rocket-gunpoint",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "ROCKET",
+      "dataset": "ucr-gunpoint",
+      "dataset_name": "GunPoint (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 1.0
+      },
+      "settings": "UCR default train/test split; 10,000 random kernels; RidgeClassifierCV; mean over 10 runs (std 0.0000)",
+      "source": {
+        "title": "ROCKET: Exceptionally Fast and Accurate Time Series Classification Using Random Convolutional Kernels (Dempster, Petitjean, Webb)",
+        "venue": "Data Mining and Knowledge Discovery 34(5), 2020",
+        "url": "https://raw.githubusercontent.com/angus924/rocket/master/results/results_ucr.csv",
+        "locator": "official results_ucr.csv, row GunPoint, accuracy_mean column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "Paper std over 10 runs is 0.0000; tolerance = max(0.03, 3*std) to cover kernel randomness.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-gunpoint --model-id bench-classification-rocket-gunpoint --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-rocket-gunpoint --compact"
+    },
+    {
+      "id": "classification-minirocket-gunpoint",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "MiniRocket",
+      "dataset": "ucr-gunpoint",
+      "dataset_name": "GunPoint (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.99244
+      },
+      "settings": "UCR default train/test split; MiniRocket, 10,000 features, RidgeClassifierCV; mean accuracy over resamples",
+      "source": {
+        "title": "MiniRocket: A Very Fast (Almost) Deterministic Transform for Time Series Classification (Dempster, Schmidt, Webb)",
+        "venue": "KDD 2021",
+        "url": "https://raw.githubusercontent.com/angus924/minirocket/main/results/results_ucr109_mean.csv",
+        "locator": "official results_ucr109_mean.csv, row GunPoint, accuracy column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.03 (absolute, chosen before running) covers resample noise and the small test set. libraryts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
+      "spec_params": {
+        "rocket_transform": "minirocket"
+      },
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-gunpoint --model-id bench-classification-minirocket-gunpoint --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-minirocket-gunpoint --compact"
+    },
+    {
+      "id": "classification-rocket-ham",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "ROCKET",
+      "dataset": "ucr-ham",
+      "dataset_name": "Ham (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.72571
+      },
+      "settings": "UCR default train/test split; 10,000 random kernels; RidgeClassifierCV; mean over 10 runs (std 0.0205)",
+      "source": {
+        "title": "ROCKET: Exceptionally Fast and Accurate Time Series Classification Using Random Convolutional Kernels (Dempster, Petitjean, Webb)",
+        "venue": "Data Mining and Knowledge Discovery 34(5), 2020",
+        "url": "https://raw.githubusercontent.com/angus924/rocket/master/results/results_ucr.csv",
+        "locator": "official results_ucr.csv, row Ham, accuracy_mean column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.061
+      },
+      "notes": "Paper std over 10 runs is 0.0205; tolerance = max(0.03, 3*std) to cover kernel randomness.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-ham --model-id bench-classification-rocket-ham --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-rocket-ham --compact"
+    },
+    {
+      "id": "classification-minirocket-ham",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "MiniRocket",
+      "dataset": "ucr-ham",
+      "dataset_name": "Ham (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.84476
+      },
+      "settings": "UCR default train/test split; MiniRocket, 10,000 features, RidgeClassifierCV; mean accuracy over resamples",
+      "source": {
+        "title": "MiniRocket: A Very Fast (Almost) Deterministic Transform for Time Series Classification (Dempster, Schmidt, Webb)",
+        "venue": "KDD 2021",
+        "url": "https://raw.githubusercontent.com/angus924/minirocket/main/results/results_ucr109_mean.csv",
+        "locator": "official results_ucr109_mean.csv, row Ham, accuracy column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.05
+      },
+      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.05 (absolute, chosen before running) covers resample noise and the small test set. libraryts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
+      "spec_params": {
+        "rocket_transform": "minirocket"
+      },
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-ham --model-id bench-classification-minirocket-ham --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-minirocket-ham --compact"
+    },
+    {
+      "id": "classification-rocket-herring",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "ROCKET",
+      "dataset": "ucr-herring",
+      "dataset_name": "Herring (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.69219
+      },
+      "settings": "UCR default train/test split; 10,000 random kernels; RidgeClassifierCV; mean over 10 runs (std 0.0129)",
+      "source": {
+        "title": "ROCKET: Exceptionally Fast and Accurate Time Series Classification Using Random Convolutional Kernels (Dempster, Petitjean, Webb)",
+        "venue": "Data Mining and Knowledge Discovery 34(5), 2020",
+        "url": "https://raw.githubusercontent.com/angus924/rocket/master/results/results_ucr.csv",
+        "locator": "official results_ucr.csv, row Herring, accuracy_mean column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.039
+      },
+      "notes": "Paper std over 10 runs is 0.0129; tolerance = max(0.03, 3*std) to cover kernel randomness.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-herring --model-id bench-classification-rocket-herring --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-rocket-herring --compact"
+    },
+    {
+      "id": "classification-minirocket-herring",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "MiniRocket",
+      "dataset": "ucr-herring",
+      "dataset_name": "Herring (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.60938
+      },
+      "settings": "UCR default train/test split; MiniRocket, 10,000 features, RidgeClassifierCV; mean accuracy over resamples",
+      "source": {
+        "title": "MiniRocket: A Very Fast (Almost) Deterministic Transform for Time Series Classification (Dempster, Schmidt, Webb)",
+        "venue": "KDD 2021",
+        "url": "https://raw.githubusercontent.com/angus924/minirocket/main/results/results_ucr109_mean.csv",
+        "locator": "official results_ucr109_mean.csv, row Herring, accuracy column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.05
+      },
+      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.05 (absolute, chosen before running) covers resample noise and the small test set. libraryts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
+      "spec_params": {
+        "rocket_transform": "minirocket"
+      },
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-herring --model-id bench-classification-minirocket-herring --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-minirocket-herring --compact"
+    },
+    {
+      "id": "classification-rocket-lightning2",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "ROCKET",
+      "dataset": "ucr-lightning2",
+      "dataset_name": "Lightning2 (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.75902
+      },
+      "settings": "UCR default train/test split; 10,000 random kernels; RidgeClassifierCV; mean over 10 runs (std 0.0079)",
+      "source": {
+        "title": "ROCKET: Exceptionally Fast and Accurate Time Series Classification Using Random Convolutional Kernels (Dempster, Petitjean, Webb)",
+        "venue": "Data Mining and Knowledge Discovery 34(5), 2020",
+        "url": "https://raw.githubusercontent.com/angus924/rocket/master/results/results_ucr.csv",
+        "locator": "official results_ucr.csv, row Lightning2, accuracy_mean column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "Paper std over 10 runs is 0.0079; tolerance = max(0.03, 3*std) to cover kernel randomness.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-lightning2 --model-id bench-classification-rocket-lightning2 --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-rocket-lightning2 --compact"
+    },
+    {
+      "id": "classification-minirocket-lightning2",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "MiniRocket",
+      "dataset": "ucr-lightning2",
+      "dataset_name": "Lightning2 (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.75191
+      },
+      "settings": "UCR default train/test split; MiniRocket, 10,000 features, RidgeClassifierCV; mean accuracy over resamples",
+      "source": {
+        "title": "MiniRocket: A Very Fast (Almost) Deterministic Transform for Time Series Classification (Dempster, Schmidt, Webb)",
+        "venue": "KDD 2021",
+        "url": "https://raw.githubusercontent.com/angus924/minirocket/main/results/results_ucr109_mean.csv",
+        "locator": "official results_ucr109_mean.csv, row Lightning2, accuracy column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.03 (absolute, chosen before running) covers resample noise and the small test set. libraryts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
+      "spec_params": {
+        "rocket_transform": "minirocket"
+      },
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-lightning2 --model-id bench-classification-minirocket-lightning2 --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-minirocket-lightning2 --compact"
+    },
+    {
+      "id": "classification-rocket-meat",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "ROCKET",
+      "dataset": "ucr-meat",
+      "dataset_name": "Meat (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.94833
+      },
+      "settings": "UCR default train/test split; 10,000 random kernels; RidgeClassifierCV; mean over 10 runs (std 0.0053)",
+      "source": {
+        "title": "ROCKET: Exceptionally Fast and Accurate Time Series Classification Using Random Convolutional Kernels (Dempster, Petitjean, Webb)",
+        "venue": "Data Mining and Knowledge Discovery 34(5), 2020",
+        "url": "https://raw.githubusercontent.com/angus924/rocket/master/results/results_ucr.csv",
+        "locator": "official results_ucr.csv, row Meat, accuracy_mean column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "Paper std over 10 runs is 0.0053; tolerance = max(0.03, 3*std) to cover kernel randomness.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-meat --model-id bench-classification-rocket-meat --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-rocket-meat --compact"
+    },
+    {
+      "id": "classification-minirocket-meat",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "MiniRocket",
+      "dataset": "ucr-meat",
+      "dataset_name": "Meat (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.99333
+      },
+      "settings": "UCR default train/test split; MiniRocket, 10,000 features, RidgeClassifierCV; mean accuracy over resamples",
+      "source": {
+        "title": "MiniRocket: A Very Fast (Almost) Deterministic Transform for Time Series Classification (Dempster, Schmidt, Webb)",
+        "venue": "KDD 2021",
+        "url": "https://raw.githubusercontent.com/angus924/minirocket/main/results/results_ucr109_mean.csv",
+        "locator": "official results_ucr109_mean.csv, row Meat, accuracy column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.05
+      },
+      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.05 (absolute, chosen before running) covers resample noise and the small test set. libraryts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
+      "spec_params": {
+        "rocket_transform": "minirocket"
+      },
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-meat --model-id bench-classification-minirocket-meat --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-minirocket-meat --compact"
+    },
+    {
+      "id": "classification-rocket-medicalimages",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "ROCKET",
+      "dataset": "ucr-medicalimages",
+      "dataset_name": "MedicalImages (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.79947
+      },
+      "settings": "UCR default train/test split; 10,000 random kernels; RidgeClassifierCV; mean over 10 runs (std 0.0027)",
+      "source": {
+        "title": "ROCKET: Exceptionally Fast and Accurate Time Series Classification Using Random Convolutional Kernels (Dempster, Petitjean, Webb)",
+        "venue": "Data Mining and Knowledge Discovery 34(5), 2020",
+        "url": "https://raw.githubusercontent.com/angus924/rocket/master/results/results_ucr.csv",
+        "locator": "official results_ucr.csv, row MedicalImages, accuracy_mean column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "Paper std over 10 runs is 0.0027; tolerance = max(0.03, 3*std) to cover kernel randomness.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-medicalimages --model-id bench-classification-rocket-medicalimages --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-rocket-medicalimages --compact"
+    },
+    {
+      "id": "classification-minirocket-medicalimages",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "MiniRocket",
+      "dataset": "ucr-medicalimages",
+      "dataset_name": "MedicalImages (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.80439
+      },
+      "settings": "UCR default train/test split; MiniRocket, 10,000 features, RidgeClassifierCV; mean accuracy over resamples",
+      "source": {
+        "title": "MiniRocket: A Very Fast (Almost) Deterministic Transform for Time Series Classification (Dempster, Schmidt, Webb)",
+        "venue": "KDD 2021",
+        "url": "https://raw.githubusercontent.com/angus924/minirocket/main/results/results_ucr109_mean.csv",
+        "locator": "official results_ucr109_mean.csv, row MedicalImages, accuracy column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.03 (absolute, chosen before running) covers resample noise and the small test set. libraryts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
+      "spec_params": {
+        "rocket_transform": "minirocket"
+      },
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-medicalimages --model-id bench-classification-minirocket-medicalimages --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-minirocket-medicalimages --compact"
+    },
+    {
+      "id": "classification-rocket-middlephalanxoutlinecorrect",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "ROCKET",
+      "dataset": "ucr-middlephalanxoutlinecorrect",
+      "dataset_name": "MiddlePhalanxOutlineCorrect (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.83849
+      },
+      "settings": "UCR default train/test split; 10,000 random kernels; RidgeClassifierCV; mean over 10 runs (std 0.0092)",
+      "source": {
+        "title": "ROCKET: Exceptionally Fast and Accurate Time Series Classification Using Random Convolutional Kernels (Dempster, Petitjean, Webb)",
+        "venue": "Data Mining and Knowledge Discovery 34(5), 2020",
+        "url": "https://raw.githubusercontent.com/angus924/rocket/master/results/results_ucr.csv",
+        "locator": "official results_ucr.csv, row MiddlePhalanxOutlineCorrect, accuracy_mean column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "Paper std over 10 runs is 0.0092; tolerance = max(0.03, 3*std) to cover kernel randomness.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-middlephalanxoutlinecorrect --model-id bench-classification-rocket-middlephalanxoutlinecorrect --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-rocket-middlephalanxoutlinecorrect --compact"
+    },
+    {
+      "id": "classification-minirocket-middlephalanxoutlinecorrect",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "MiniRocket",
+      "dataset": "ucr-middlephalanxoutlinecorrect",
+      "dataset_name": "MiddlePhalanxOutlineCorrect (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.84273
+      },
+      "settings": "UCR default train/test split; MiniRocket, 10,000 features, RidgeClassifierCV; mean accuracy over resamples",
+      "source": {
+        "title": "MiniRocket: A Very Fast (Almost) Deterministic Transform for Time Series Classification (Dempster, Schmidt, Webb)",
+        "venue": "KDD 2021",
+        "url": "https://raw.githubusercontent.com/angus924/minirocket/main/results/results_ucr109_mean.csv",
+        "locator": "official results_ucr109_mean.csv, row MiddlePhalanxOutlineCorrect, accuracy column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.03 (absolute, chosen before running) covers resample noise and the small test set. libraryts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
+      "spec_params": {
+        "rocket_transform": "minirocket"
+      },
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-middlephalanxoutlinecorrect --model-id bench-classification-minirocket-middlephalanxoutlinecorrect --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-minirocket-middlephalanxoutlinecorrect --compact"
+    },
+    {
+      "id": "classification-rocket-oliveoil",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "ROCKET",
+      "dataset": "ucr-oliveoil",
+      "dataset_name": "OliveOil (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.91667
+      },
+      "settings": "UCR default train/test split; 10,000 random kernels; RidgeClassifierCV; mean over 10 runs (std 0.0176)",
+      "source": {
+        "title": "ROCKET: Exceptionally Fast and Accurate Time Series Classification Using Random Convolutional Kernels (Dempster, Petitjean, Webb)",
+        "venue": "Data Mining and Knowledge Discovery 34(5), 2020",
+        "url": "https://raw.githubusercontent.com/angus924/rocket/master/results/results_ucr.csv",
+        "locator": "official results_ucr.csv, row OliveOil, accuracy_mean column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.053
+      },
+      "notes": "Paper std over 10 runs is 0.0176; tolerance = max(0.03, 3*std) to cover kernel randomness.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-oliveoil --model-id bench-classification-rocket-oliveoil --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-rocket-oliveoil --compact"
+    },
+    {
+      "id": "classification-minirocket-oliveoil",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "MiniRocket",
+      "dataset": "ucr-oliveoil",
+      "dataset_name": "OliveOil (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.91444
+      },
+      "settings": "UCR default train/test split; MiniRocket, 10,000 features, RidgeClassifierCV; mean accuracy over resamples",
+      "source": {
+        "title": "MiniRocket: A Very Fast (Almost) Deterministic Transform for Time Series Classification (Dempster, Schmidt, Webb)",
+        "venue": "KDD 2021",
+        "url": "https://raw.githubusercontent.com/angus924/minirocket/main/results/results_ucr109_mean.csv",
+        "locator": "official results_ucr109_mean.csv, row OliveOil, accuracy column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.05
+      },
+      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.05 (absolute, chosen before running) covers resample noise and the small test set. libraryts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
+      "spec_params": {
+        "rocket_transform": "minirocket"
+      },
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-oliveoil --model-id bench-classification-minirocket-oliveoil --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-minirocket-oliveoil --compact"
+    },
+    {
+      "id": "classification-rocket-osuleaf",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "ROCKET",
+      "dataset": "ucr-osuleaf",
+      "dataset_name": "OSULeaf (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.94091
+      },
+      "settings": "UCR default train/test split; 10,000 random kernels; RidgeClassifierCV; mean over 10 runs (std 0.0034)",
+      "source": {
+        "title": "ROCKET: Exceptionally Fast and Accurate Time Series Classification Using Random Convolutional Kernels (Dempster, Petitjean, Webb)",
+        "venue": "Data Mining and Knowledge Discovery 34(5), 2020",
+        "url": "https://raw.githubusercontent.com/angus924/rocket/master/results/results_ucr.csv",
+        "locator": "official results_ucr.csv, row OSULeaf, accuracy_mean column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "Paper std over 10 runs is 0.0034; tolerance = max(0.03, 3*std) to cover kernel randomness.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-osuleaf --model-id bench-classification-rocket-osuleaf --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-rocket-osuleaf --compact"
+    },
+    {
+      "id": "classification-minirocket-osuleaf",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "MiniRocket",
+      "dataset": "ucr-osuleaf",
+      "dataset_name": "OSULeaf (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.95758
+      },
+      "settings": "UCR default train/test split; MiniRocket, 10,000 features, RidgeClassifierCV; mean accuracy over resamples",
+      "source": {
+        "title": "MiniRocket: A Very Fast (Almost) Deterministic Transform for Time Series Classification (Dempster, Schmidt, Webb)",
+        "venue": "KDD 2021",
+        "url": "https://raw.githubusercontent.com/angus924/minirocket/main/results/results_ucr109_mean.csv",
+        "locator": "official results_ucr109_mean.csv, row OSULeaf, accuracy column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.03 (absolute, chosen before running) covers resample noise and the small test set. libraryts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
+      "spec_params": {
+        "rocket_transform": "minirocket"
+      },
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-osuleaf --model-id bench-classification-minirocket-osuleaf --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-minirocket-osuleaf --compact"
+    },
+    {
+      "id": "classification-rocket-proximalphalanxoutlinecorrect",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "ROCKET",
+      "dataset": "ucr-proximalphalanxoutlinecorrect",
+      "dataset_name": "ProximalPhalanxOutlineCorrect (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.89897
+      },
+      "settings": "UCR default train/test split; 10,000 random kernels; RidgeClassifierCV; mean over 10 runs (std 0.0040)",
+      "source": {
+        "title": "ROCKET: Exceptionally Fast and Accurate Time Series Classification Using Random Convolutional Kernels (Dempster, Petitjean, Webb)",
+        "venue": "Data Mining and Knowledge Discovery 34(5), 2020",
+        "url": "https://raw.githubusercontent.com/angus924/rocket/master/results/results_ucr.csv",
+        "locator": "official results_ucr.csv, row ProximalPhalanxOutlineCorrect, accuracy_mean column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "Paper std over 10 runs is 0.0040; tolerance = max(0.03, 3*std) to cover kernel randomness.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-proximalphalanxoutlinecorrect --model-id bench-classification-rocket-proximalphalanxoutlinecorrect --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-rocket-proximalphalanxoutlinecorrect --compact"
+    },
+    {
+      "id": "classification-minirocket-proximalphalanxoutlinecorrect",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "MiniRocket",
+      "dataset": "ucr-proximalphalanxoutlinecorrect",
+      "dataset_name": "ProximalPhalanxOutlineCorrect (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.89416
+      },
+      "settings": "UCR default train/test split; MiniRocket, 10,000 features, RidgeClassifierCV; mean accuracy over resamples",
+      "source": {
+        "title": "MiniRocket: A Very Fast (Almost) Deterministic Transform for Time Series Classification (Dempster, Schmidt, Webb)",
+        "venue": "KDD 2021",
+        "url": "https://raw.githubusercontent.com/angus924/minirocket/main/results/results_ucr109_mean.csv",
+        "locator": "official results_ucr109_mean.csv, row ProximalPhalanxOutlineCorrect, accuracy column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.03 (absolute, chosen before running) covers resample noise and the small test set. libraryts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
+      "spec_params": {
+        "rocket_transform": "minirocket"
+      },
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-proximalphalanxoutlinecorrect --model-id bench-classification-minirocket-proximalphalanxoutlinecorrect --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-minirocket-proximalphalanxoutlinecorrect --compact"
+    },
+    {
+      "id": "classification-rocket-shapeletsim",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "ROCKET",
+      "dataset": "ucr-shapeletsim",
+      "dataset_name": "ShapeletSim (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 1.0
+      },
+      "settings": "UCR default train/test split; 10,000 random kernels; RidgeClassifierCV; mean over 10 runs (std 0.0000)",
+      "source": {
+        "title": "ROCKET: Exceptionally Fast and Accurate Time Series Classification Using Random Convolutional Kernels (Dempster, Petitjean, Webb)",
+        "venue": "Data Mining and Knowledge Discovery 34(5), 2020",
+        "url": "https://raw.githubusercontent.com/angus924/rocket/master/results/results_ucr.csv",
+        "locator": "official results_ucr.csv, row ShapeletSim, accuracy_mean column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "Paper std over 10 runs is 0.0000; tolerance = max(0.03, 3*std) to cover kernel randomness.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-shapeletsim --model-id bench-classification-rocket-shapeletsim --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-rocket-shapeletsim --compact"
+    },
+    {
+      "id": "classification-minirocket-shapeletsim",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "MiniRocket",
+      "dataset": "ucr-shapeletsim",
+      "dataset_name": "ShapeletSim (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.99963
+      },
+      "settings": "UCR default train/test split; MiniRocket, 10,000 features, RidgeClassifierCV; mean accuracy over resamples",
+      "source": {
+        "title": "MiniRocket: A Very Fast (Almost) Deterministic Transform for Time Series Classification (Dempster, Schmidt, Webb)",
+        "venue": "KDD 2021",
+        "url": "https://raw.githubusercontent.com/angus924/minirocket/main/results/results_ucr109_mean.csv",
+        "locator": "official results_ucr109_mean.csv, row ShapeletSim, accuracy column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.03 (absolute, chosen before running) covers resample noise and the small test set. libraryts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
+      "spec_params": {
+        "rocket_transform": "minirocket"
+      },
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-shapeletsim --model-id bench-classification-minirocket-shapeletsim --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-minirocket-shapeletsim --compact"
+    },
+    {
+      "id": "classification-rocket-swedishleaf",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "ROCKET",
+      "dataset": "ucr-swedishleaf",
+      "dataset_name": "SwedishLeaf (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.964
+      },
+      "settings": "UCR default train/test split; 10,000 random kernels; RidgeClassifierCV; mean over 10 runs (std 0.0022)",
+      "source": {
+        "title": "ROCKET: Exceptionally Fast and Accurate Time Series Classification Using Random Convolutional Kernels (Dempster, Petitjean, Webb)",
+        "venue": "Data Mining and Knowledge Discovery 34(5), 2020",
+        "url": "https://raw.githubusercontent.com/angus924/rocket/master/results/results_ucr.csv",
+        "locator": "official results_ucr.csv, row SwedishLeaf, accuracy_mean column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "Paper std over 10 runs is 0.0022; tolerance = max(0.03, 3*std) to cover kernel randomness.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-swedishleaf --model-id bench-classification-rocket-swedishleaf --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-rocket-swedishleaf --compact"
+    },
+    {
+      "id": "classification-minirocket-swedishleaf",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "MiniRocket",
+      "dataset": "ucr-swedishleaf",
+      "dataset_name": "SwedishLeaf (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.96293
+      },
+      "settings": "UCR default train/test split; MiniRocket, 10,000 features, RidgeClassifierCV; mean accuracy over resamples",
+      "source": {
+        "title": "MiniRocket: A Very Fast (Almost) Deterministic Transform for Time Series Classification (Dempster, Schmidt, Webb)",
+        "venue": "KDD 2021",
+        "url": "https://raw.githubusercontent.com/angus924/minirocket/main/results/results_ucr109_mean.csv",
+        "locator": "official results_ucr109_mean.csv, row SwedishLeaf, accuracy column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.03 (absolute, chosen before running) covers resample noise and the small test set. libraryts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
+      "spec_params": {
+        "rocket_transform": "minirocket"
+      },
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-swedishleaf --model-id bench-classification-minirocket-swedishleaf --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-minirocket-swedishleaf --compact"
+    },
+    {
+      "id": "classification-rocket-symbols",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "ROCKET",
+      "dataset": "ucr-symbols",
+      "dataset_name": "Symbols (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.97427
+      },
+      "settings": "UCR default train/test split; 10,000 random kernels; RidgeClassifierCV; mean over 10 runs (std 0.0011)",
+      "source": {
+        "title": "ROCKET: Exceptionally Fast and Accurate Time Series Classification Using Random Convolutional Kernels (Dempster, Petitjean, Webb)",
+        "venue": "Data Mining and Knowledge Discovery 34(5), 2020",
+        "url": "https://raw.githubusercontent.com/angus924/rocket/master/results/results_ucr.csv",
+        "locator": "official results_ucr.csv, row Symbols, accuracy_mean column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "Paper std over 10 runs is 0.0011; tolerance = max(0.03, 3*std) to cover kernel randomness.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-symbols --model-id bench-classification-rocket-symbols --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-rocket-symbols --compact"
+    },
+    {
+      "id": "classification-minirocket-symbols",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "MiniRocket",
+      "dataset": "ucr-symbols",
+      "dataset_name": "Symbols (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.96683
+      },
+      "settings": "UCR default train/test split; MiniRocket, 10,000 features, RidgeClassifierCV; mean accuracy over resamples",
+      "source": {
+        "title": "MiniRocket: A Very Fast (Almost) Deterministic Transform for Time Series Classification (Dempster, Schmidt, Webb)",
+        "venue": "KDD 2021",
+        "url": "https://raw.githubusercontent.com/angus924/minirocket/main/results/results_ucr109_mean.csv",
+        "locator": "official results_ucr109_mean.csv, row Symbols, accuracy column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.03 (absolute, chosen before running) covers resample noise and the small test set. libraryts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
+      "spec_params": {
+        "rocket_transform": "minirocket"
+      },
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-symbols --model-id bench-classification-minirocket-symbols --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-minirocket-symbols --compact"
+    },
+    {
+      "id": "classification-rocket-toesegmentation1",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "ROCKET",
+      "dataset": "ucr-toesegmentation1",
+      "dataset_name": "ToeSegmentation1 (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.96842
+      },
+      "settings": "UCR default train/test split; 10,000 random kernels; RidgeClassifierCV; mean over 10 runs (std 0.0035)",
+      "source": {
+        "title": "ROCKET: Exceptionally Fast and Accurate Time Series Classification Using Random Convolutional Kernels (Dempster, Petitjean, Webb)",
+        "venue": "Data Mining and Knowledge Discovery 34(5), 2020",
+        "url": "https://raw.githubusercontent.com/angus924/rocket/master/results/results_ucr.csv",
+        "locator": "official results_ucr.csv, row ToeSegmentation1, accuracy_mean column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "Paper std over 10 runs is 0.0035; tolerance = max(0.03, 3*std) to cover kernel randomness.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-toesegmentation1 --model-id bench-classification-rocket-toesegmentation1 --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-rocket-toesegmentation1 --compact"
+    },
+    {
+      "id": "classification-minirocket-toesegmentation1",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "MiniRocket",
+      "dataset": "ucr-toesegmentation1",
+      "dataset_name": "ToeSegmentation1 (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.94108
+      },
+      "settings": "UCR default train/test split; MiniRocket, 10,000 features, RidgeClassifierCV; mean accuracy over resamples",
+      "source": {
+        "title": "MiniRocket: A Very Fast (Almost) Deterministic Transform for Time Series Classification (Dempster, Schmidt, Webb)",
+        "venue": "KDD 2021",
+        "url": "https://raw.githubusercontent.com/angus924/minirocket/main/results/results_ucr109_mean.csv",
+        "locator": "official results_ucr109_mean.csv, row ToeSegmentation1, accuracy column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.03 (absolute, chosen before running) covers resample noise and the small test set. libraryts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
+      "spec_params": {
+        "rocket_transform": "minirocket"
+      },
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-toesegmentation1 --model-id bench-classification-minirocket-toesegmentation1 --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-minirocket-toesegmentation1 --compact"
+    },
+    {
+      "id": "classification-rocket-wafer",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "ROCKET",
+      "dataset": "ucr-wafer",
+      "dataset_name": "Wafer (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.99823
+      },
+      "settings": "UCR default train/test split; 10,000 random kernels; RidgeClassifierCV; mean over 10 runs (std 0.0004)",
+      "source": {
+        "title": "ROCKET: Exceptionally Fast and Accurate Time Series Classification Using Random Convolutional Kernels (Dempster, Petitjean, Webb)",
+        "venue": "Data Mining and Knowledge Discovery 34(5), 2020",
+        "url": "https://raw.githubusercontent.com/angus924/rocket/master/results/results_ucr.csv",
+        "locator": "official results_ucr.csv, row Wafer, accuracy_mean column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "Paper std over 10 runs is 0.0004; tolerance = max(0.03, 3*std) to cover kernel randomness.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-wafer --model-id bench-classification-rocket-wafer --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-rocket-wafer --compact"
+    },
+    {
+      "id": "classification-minirocket-wafer",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "MiniRocket",
+      "dataset": "ucr-wafer",
+      "dataset_name": "Wafer (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.99898
+      },
+      "settings": "UCR default train/test split; MiniRocket, 10,000 features, RidgeClassifierCV; mean accuracy over resamples",
+      "source": {
+        "title": "MiniRocket: A Very Fast (Almost) Deterministic Transform for Time Series Classification (Dempster, Schmidt, Webb)",
+        "venue": "KDD 2021",
+        "url": "https://raw.githubusercontent.com/angus924/minirocket/main/results/results_ucr109_mean.csv",
+        "locator": "official results_ucr109_mean.csv, row Wafer, accuracy column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.03 (absolute, chosen before running) covers resample noise and the small test set. libraryts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
+      "spec_params": {
+        "rocket_transform": "minirocket"
+      },
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-wafer --model-id bench-classification-minirocket-wafer --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-minirocket-wafer --compact"
+    },
+    {
+      "id": "classification-rocket-beetlefly",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "ROCKET",
+      "dataset": "ucr-beetlefly",
+      "dataset_name": "BeetleFly (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.9
+      },
+      "settings": "UCR default train/test split; 10,000 random kernels; RidgeClassifierCV; mean over 10 runs (std 0.0000)",
+      "source": {
+        "title": "ROCKET: Exceptionally Fast and Accurate Time Series Classification Using Random Convolutional Kernels (Dempster, Petitjean, Webb)",
+        "venue": "Data Mining and Knowledge Discovery 34(5), 2020",
+        "url": "https://raw.githubusercontent.com/angus924/rocket/master/results/results_ucr.csv",
+        "locator": "official results_ucr.csv, row BeetleFly, accuracy_mean column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "Paper std over 10 runs is 0.0000; tolerance = max(0.03, 3*std) to cover kernel randomness.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-beetlefly --model-id bench-classification-rocket-beetlefly --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-rocket-beetlefly --compact"
+    },
+    {
+      "id": "classification-minirocket-beetlefly",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "MiniRocket",
+      "dataset": "ucr-beetlefly",
+      "dataset_name": "BeetleFly (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.90667
+      },
+      "settings": "UCR default train/test split; MiniRocket, 10,000 features, RidgeClassifierCV; mean accuracy over resamples",
+      "source": {
+        "title": "MiniRocket: A Very Fast (Almost) Deterministic Transform for Time Series Classification (Dempster, Schmidt, Webb)",
+        "venue": "KDD 2021",
+        "url": "https://raw.githubusercontent.com/angus924/minirocket/main/results/results_ucr109_mean.csv",
+        "locator": "official results_ucr109_mean.csv, row BeetleFly, accuracy column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.05
+      },
+      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.05 (absolute, chosen before running) covers resample noise and the small test set. libraryts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
+      "spec_params": {
+        "rocket_transform": "minirocket"
+      },
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-beetlefly --model-id bench-classification-minirocket-beetlefly --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-minirocket-beetlefly --compact"
+    },
+    {
+      "id": "classification-rocket-birdchicken",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "ROCKET",
+      "dataset": "ucr-birdchicken",
+      "dataset_name": "BirdChicken (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.9
+      },
+      "settings": "UCR default train/test split; 10,000 random kernels; RidgeClassifierCV; mean over 10 runs (std 0.0000)",
+      "source": {
+        "title": "ROCKET: Exceptionally Fast and Accurate Time Series Classification Using Random Convolutional Kernels (Dempster, Petitjean, Webb)",
+        "venue": "Data Mining and Knowledge Discovery 34(5), 2020",
+        "url": "https://raw.githubusercontent.com/angus924/rocket/master/results/results_ucr.csv",
+        "locator": "official results_ucr.csv, row BirdChicken, accuracy_mean column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "Paper std over 10 runs is 0.0000; tolerance = max(0.03, 3*std) to cover kernel randomness.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-birdchicken --model-id bench-classification-rocket-birdchicken --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-rocket-birdchicken --compact"
+    },
+    {
+      "id": "classification-minirocket-birdchicken",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "MiniRocket",
+      "dataset": "ucr-birdchicken",
+      "dataset_name": "BirdChicken (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.90833
+      },
+      "settings": "UCR default train/test split; MiniRocket, 10,000 features, RidgeClassifierCV; mean accuracy over resamples",
+      "source": {
+        "title": "MiniRocket: A Very Fast (Almost) Deterministic Transform for Time Series Classification (Dempster, Schmidt, Webb)",
+        "venue": "KDD 2021",
+        "url": "https://raw.githubusercontent.com/angus924/minirocket/main/results/results_ucr109_mean.csv",
+        "locator": "official results_ucr109_mean.csv, row BirdChicken, accuracy column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.05
+      },
+      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.05 (absolute, chosen before running) covers resample noise and the small test set. libraryts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
+      "spec_params": {
+        "rocket_transform": "minirocket"
+      },
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-birdchicken --model-id bench-classification-minirocket-birdchicken --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-minirocket-birdchicken --compact"
+    },
+    {
+      "id": "classification-rocket-computers",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "ROCKET",
+      "dataset": "ucr-computers",
+      "dataset_name": "Computers (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.7612
+      },
+      "settings": "UCR default train/test split; 10,000 random kernels; RidgeClassifierCV; mean over 10 runs (std 0.0060)",
+      "source": {
+        "title": "ROCKET: Exceptionally Fast and Accurate Time Series Classification Using Random Convolutional Kernels (Dempster, Petitjean, Webb)",
+        "venue": "Data Mining and Knowledge Discovery 34(5), 2020",
+        "url": "https://raw.githubusercontent.com/angus924/rocket/master/results/results_ucr.csv",
+        "locator": "official results_ucr.csv, row Computers, accuracy_mean column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "Paper std over 10 runs is 0.0060; tolerance = max(0.03, 3*std) to cover kernel randomness.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-computers --model-id bench-classification-rocket-computers --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-rocket-computers --compact"
+    },
+    {
+      "id": "classification-minirocket-computers",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "MiniRocket",
+      "dataset": "ucr-computers",
+      "dataset_name": "Computers (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.79387
+      },
+      "settings": "UCR default train/test split; MiniRocket, 10,000 features, RidgeClassifierCV; mean accuracy over resamples",
+      "source": {
+        "title": "MiniRocket: A Very Fast (Almost) Deterministic Transform for Time Series Classification (Dempster, Schmidt, Webb)",
+        "venue": "KDD 2021",
+        "url": "https://raw.githubusercontent.com/angus924/minirocket/main/results/results_ucr109_mean.csv",
+        "locator": "official results_ucr109_mean.csv, row Computers, accuracy column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.03 (absolute, chosen before running) covers resample noise and the small test set. libraryts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
+      "spec_params": {
+        "rocket_transform": "minirocket"
+      },
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-computers --model-id bench-classification-minirocket-computers --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-minirocket-computers --compact"
+    },
+    {
+      "id": "classification-rocket-ecg5000",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "ROCKET",
+      "dataset": "ucr-ecg5000",
+      "dataset_name": "ECG5000 (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.94716
+      },
+      "settings": "UCR default train/test split; 10,000 random kernels; RidgeClassifierCV; mean over 10 runs (std 0.0005)",
+      "source": {
+        "title": "ROCKET: Exceptionally Fast and Accurate Time Series Classification Using Random Convolutional Kernels (Dempster, Petitjean, Webb)",
+        "venue": "Data Mining and Knowledge Discovery 34(5), 2020",
+        "url": "https://raw.githubusercontent.com/angus924/rocket/master/results/results_ucr.csv",
+        "locator": "official results_ucr.csv, row ECG5000, accuracy_mean column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "Paper std over 10 runs is 0.0005; tolerance = max(0.03, 3*std) to cover kernel randomness.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-ecg5000 --model-id bench-classification-rocket-ecg5000 --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-rocket-ecg5000 --compact"
+    },
+    {
+      "id": "classification-minirocket-ecg5000",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "MiniRocket",
+      "dataset": "ucr-ecg5000",
+      "dataset_name": "ECG5000 (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.94613
+      },
+      "settings": "UCR default train/test split; MiniRocket, 10,000 features, RidgeClassifierCV; mean accuracy over resamples",
+      "source": {
+        "title": "MiniRocket: A Very Fast (Almost) Deterministic Transform for Time Series Classification (Dempster, Schmidt, Webb)",
+        "venue": "KDD 2021",
+        "url": "https://raw.githubusercontent.com/angus924/minirocket/main/results/results_ucr109_mean.csv",
+        "locator": "official results_ucr109_mean.csv, row ECG5000, accuracy column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.03 (absolute, chosen before running) covers resample noise and the small test set. libraryts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
+      "spec_params": {
+        "rocket_transform": "minirocket"
+      },
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-ecg5000 --model-id bench-classification-minirocket-ecg5000 --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-minirocket-ecg5000 --compact"
+    },
+    {
+      "id": "classification-rocket-strawberry",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "ROCKET",
+      "dataset": "ucr-strawberry",
+      "dataset_name": "Strawberry (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.98135
+      },
+      "settings": "UCR default train/test split; 10,000 random kernels; RidgeClassifierCV; mean over 10 runs (std 0.0009)",
+      "source": {
+        "title": "ROCKET: Exceptionally Fast and Accurate Time Series Classification Using Random Convolutional Kernels (Dempster, Petitjean, Webb)",
+        "venue": "Data Mining and Knowledge Discovery 34(5), 2020",
+        "url": "https://raw.githubusercontent.com/angus924/rocket/master/results/results_ucr.csv",
+        "locator": "official results_ucr.csv, row Strawberry, accuracy_mean column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "Paper std over 10 runs is 0.0009; tolerance = max(0.03, 3*std) to cover kernel randomness.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-strawberry --model-id bench-classification-rocket-strawberry --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-rocket-strawberry --compact"
+    },
+    {
+      "id": "classification-minirocket-strawberry",
+      "algorithm": "RocketClassifier",
+      "algorithm_name": "MiniRocket",
+      "dataset": "ucr-strawberry",
+      "dataset_name": "Strawberry (UCR)",
+      "window": "default split",
+      "metrics": {
+        "Accuracy": 0.97982
+      },
+      "settings": "UCR default train/test split; MiniRocket, 10,000 features, RidgeClassifierCV; mean accuracy over resamples",
+      "source": {
+        "title": "MiniRocket: A Very Fast (Almost) Deterministic Transform for Time Series Classification (Dempster, Schmidt, Webb)",
+        "venue": "KDD 2021",
+        "url": "https://raw.githubusercontent.com/angus924/minirocket/main/results/results_ucr109_mean.csv",
+        "locator": "official results_ucr109_mean.csv, row Strawberry, accuracy column"
+      },
+      "tolerance": {
+        "type": "absolute",
+        "value": 0.03
+      },
+      "notes": "MiniRocket is almost deterministic but its bias sampling is random; tolerance 0.03 (absolute, chosen before running) covers resample noise and the small test set. libraryts uses sktime RocketClassifier(rocket_transform=\"minirocket\").",
+      "spec_params": {
+        "rocket_transform": "minirocket"
+      },
+      "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-strawberry --model-id bench-classification-minirocket-strawberry --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-classification-minirocket-strawberry --compact"
     }
   ]
 }

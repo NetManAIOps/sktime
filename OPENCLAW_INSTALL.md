@@ -55,7 +55,7 @@ bash .agent/skills/time-series-sandbox/setup.sh /path/to/sktime
 - Notebook examples are discoverable under `examples/` and `lectures/`.
 - Colab links can be constructed with base:
   - `https://colab.research.google.com/github/NetManAIOps/sktime/blob/main`
-- TSBox Sandbox Playground starts locally:
+- LibraryTS Playground starts locally:
   - `python3 playground/server.py`
 - Playground tests pass:
   - `python3 playground/test_playground.py`
