@@ -27,6 +27,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import shlex
 import sys
 from pathlib import Path
@@ -77,7 +78,7 @@ def coerce(value: str):
 
 
 def fmt_value(value) -> str:
-    if isinstance(value, float) and value == int(value) and abs(value) < 1e15:
+    if isinstance(value, float) and math.isfinite(value) and value == int(value) and abs(value) < 1e15:
         return str(int(value))
     return str(value)
 
@@ -97,6 +98,10 @@ def expand_entry(entry: dict, task: str, catalog_defaults: dict) -> dict:
         if value is None or isinstance(value, bool):
             continue
         if isinstance(value, (list, tuple, dict)):
+            continue
+        if isinstance(value, float) and not math.isfinite(value):
+            # non-finite catalog defaults (e.g. TDE's inf) can't be rendered
+            # as CLI values; omitting the flag keeps the same default anyway.
             continue
         merged.setdefault(key, value)
     for key, value in TASK_EVAL_DEFAULTS.get(task, {}).items():
