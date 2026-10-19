@@ -1,0 +1,29 @@
+{
+  "id": "classification-rocket-twoleadecg",
+  "task": "classification",
+  "ran_at": "2026-10-14T16:24:12.213552+00:00",
+  "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-twoleadecg --model-id bench-classification-rocket-twoleadecg --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+  "run_command": "libraryts run --model-id bench-classification-rocket-twoleadecg --compact",
+  "python": "/home/xiezhe/sktime/.venv/bin/python",
+  "returncode": 0,
+  "duration_s": 40.19,
+  "values": {
+    "Accuracy": 0.9991220368744512
+  },
+  "per_metric": {
+    "Accuracy": {
+      "gt": 0.99912,
+      "value": 0.9991220368744512,
+      "delta": 2e-06,
+      "delta_rel": 2e-06,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "Accuracy": 0.9991220368744512,
+    "Macro F1": 0.9991220368744512
+  },
+  "error": null,
+  "stdout_tail": "\": \"classification\", \"dataset\": {\"id\": \"ucr-twoleadecg\", \"name\": \"UCR/UEA TwoLeadECG\", \"task\": \"classification\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"TwoLeadECG\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-classification-rocket-twoleadecg\", \"name\": \"RocketClassifier (trained: bench-classification-rocket-twoleadecg)\", \"task\": \"classification\", \"module\": \"sktime.classification.kernel_based._rocket_classifier.RocketClassifier\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/playground/models/bench-classification-rocket-twoleadecg\", \"manifest\": {\"model_id\": \"bench-classification-rocket-twoleadecg\", \"backend\": \"sktime\", \"task\": \"classification\", \"algorithm_id\": \"registered-classification-RocketClassifier\", \"algorithm_name\": \"RocketClassifier\", \"module\": \"sktime.classification.kernel_based._rocket_classifier.RocketClassifier\", \"params\": {\"max_dilations_per_kernel\": 32, \"n_features_per_kernel\": 4, \"n_jobs\": 1, \"num_kernels\": 10000}, \"eval_params\": {}, \"created_at\": \"2026-10-14T16:23:56.863379+00:00\", \"spec\": {\"task\": \"classification\", \"dataset_id\": \"ucr-twoleadecg\", \"algorithm_id\": \"registered-classification-RocketClassifier\", \"preprocessor_id\": \"none\", \"params\": {\"max_dilations_per_kernel\": 32, \"n_features_per_kernel\": 4, \"n_jobs\": 1, \"num_kernels\": 10000}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 13332.7, \"log\": [\"Selected dataset: UCR/UEA TwoLeadECG\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-classification-rocket-twoleadecg (sktime backend, algorithm: registered-classification-RocketClassifier, created: 2026-10-14T16:23:56.863379+00:00)\", \"Loaded UCR/UEA TwoLeadECG train=23 test=1139\", \"Finished in 13332.7 ms\"]}, \"error\": null}\n"
+}

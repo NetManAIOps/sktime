@@ -1,0 +1,32 @@
+{
+  "id": "detection-copod-nab-auc",
+  "task": "anomaly_detection",
+  "ran_at": "2026-10-15T11:57:13.423834+00:00",
+  "train_command": "libraryts train --algorithm PyODCOPODDetector --dataset tsb-nab --model-id bench-detection-copod-nab-auc --param contamination=0.1",
+  "run_command": "libraryts run --model-id bench-detection-copod-nab-auc --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 10.17,
+  "values": {
+    "AUC-ROC": 0.5555298446547993
+  },
+  "per_metric": {
+    "AUC-ROC": {
+      "gt": 0.5555,
+      "value": 0.5555298446547993,
+      "delta": 3e-05,
+      "delta_rel": 5.4e-05,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "AUC-ROC": 0.5555298446547993,
+    "Precision": 0.16352679124487898,
+    "Recall": 0.15831255773430128,
+    "F1": 0.15915186369265794,
+    "Series": 58
+  },
+  "error": null,
+  "stdout_tail": "_data_art0_1.out\", \"artifact\": \"series/0038/model.zip\"}, {\"name\": \"NAB_data_art0_2.out\", \"artifact\": \"series/0039/model.zip\"}, {\"name\": \"NAB_data_art0_3.out\", \"artifact\": \"series/0040/model.zip\"}, {\"name\": \"NAB_data_art0_4.out\", \"artifact\": \"series/0041/model.zip\"}, {\"name\": \"NAB_data_art1_0.out\", \"artifact\": \"series/0042/model.zip\"}, {\"name\": \"NAB_data_art1_1.out\", \"artifact\": \"series/0043/model.zip\"}, {\"name\": \"NAB_data_art1_2.out\", \"artifact\": \"series/0044/model.zip\"}, {\"name\": \"NAB_data_art1_3.out\", \"artifact\": \"series/0045/model.zip\"}, {\"name\": \"NAB_data_art1_4.out\", \"artifact\": \"series/0046/model.zip\"}, {\"name\": \"NAB_data_art1_5.out\", \"artifact\": \"series/0047/model.zip\"}, {\"name\": \"NAB_data_tweets_1.out\", \"artifact\": \"series/0048/model.zip\"}, {\"name\": \"NAB_data_tweets_10.out\", \"artifact\": \"series/0049/model.zip\"}, {\"name\": \"NAB_data_tweets_2.out\", \"artifact\": \"series/0050/model.zip\"}, {\"name\": \"NAB_data_tweets_3.out\", \"artifact\": \"series/0051/model.zip\"}, {\"name\": \"NAB_data_tweets_4.out\", \"artifact\": \"series/0052/model.zip\"}, {\"name\": \"NAB_data_tweets_5.out\", \"artifact\": \"series/0053/model.zip\"}, {\"name\": \"NAB_data_tweets_6.out\", \"artifact\": \"series/0054/model.zip\"}, {\"name\": \"NAB_data_tweets_7.out\", \"artifact\": \"series/0055/model.zip\"}, {\"name\": \"NAB_data_tweets_8.out\", \"artifact\": \"series/0056/model.zip\"}, {\"name\": \"NAB_data_tweets_9.out\", \"artifact\": \"series/0057/model.zip\"}], \"artifacts\": {\"model\": null, \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 4088.4, \"log\": [\"Selected dataset: TSB-UAD NAB (58 series)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-detection-copod-nab-auc (sktime backend, algorithm: registered-anomaly_detection-PyODCOPODDetector, created: 2026-10-15T11:57:07.753196+00:00)\", \"Scored 50/58 series\", \"Multi-series eval: 58 series, AUC-ROC=0.5555\", \"Finished in 4088.4 ms\"]}, \"error\": null}\n"
+}

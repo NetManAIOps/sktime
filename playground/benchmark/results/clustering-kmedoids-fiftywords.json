@@ -1,0 +1,31 @@
+{
+  "id": "clustering-kmedoids-fiftywords",
+  "task": "clustering",
+  "ran_at": "2026-10-15T11:22:59.469807+00:00",
+  "train_command": "libraryts train --algorithm TimeSeriesKMedoids --dataset fiftywords-cl --model-id bench-clustering-kmedoids-fiftywords --param n_clusters=50 --param fit_on=all --param random_state=42 --param metric=euclidean --param max_iter=300 --param n_init=10 --param tol=1e-06",
+  "run_command": "libraryts run --model-id bench-clustering-kmedoids-fiftywords --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 13.83,
+  "values": {
+    "ARI": 0.2295385311349815
+  },
+  "per_metric": {
+    "ARI": {
+      "gt": 0.238356,
+      "value": 0.2295385311349815,
+      "delta": -0.008817,
+      "delta_rel": 0.036993,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "ARI": 0.2295385311349815,
+    "NMI": 0.586437314695665,
+    "Clusters": 50,
+    "Largest Cluster": 34
+  },
+  "error": null,
+  "stdout_tail": "ing\", \"dataset\": {\"id\": \"fiftywords-cl\", \"name\": \"FiftyWords (labels for ARI)\", \"task\": \"clustering\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"FiftyWords\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-clustering-kmedoids-fiftywords\", \"name\": \"TimeSeriesKMedoids (trained: bench-clustering-kmedoids-fiftywords)\", \"task\": \"clustering\", \"module\": \"sktime.clustering.k_medoids.TimeSeriesKMedoids\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-10/playground/models/bench-clustering-kmedoids-fiftywords\", \"manifest\": {\"model_id\": \"bench-clustering-kmedoids-fiftywords\", \"backend\": \"sktime\", \"task\": \"clustering\", \"algorithm_id\": \"registered-clustering-TimeSeriesKMedoids\", \"algorithm_name\": \"TimeSeriesKMedoids\", \"module\": \"sktime.clustering.k_medoids.TimeSeriesKMedoids\", \"params\": {\"n_clusters\": 50, \"random_state\": 42, \"metric\": \"euclidean\", \"max_iter\": 300, \"n_init\": 10, \"tol\": 1e-06}, \"eval_params\": {\"fit_on\": \"all\"}, \"created_at\": \"2026-10-15T11:22:55.467151+00:00\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"fiftywords-cl\", \"algorithm_id\": \"registered-clustering-TimeSeriesKMedoids\", \"preprocessor_id\": \"none\", \"params\": {\"n_clusters\": 50, \"fit_on\": \"all\", \"random_state\": 42, \"metric\": \"euclidean\", \"max_iter\": 300, \"n_init\": 10, \"tol\": 1e-06}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 2841.3, \"log\": [\"Selected dataset: FiftyWords (labels for ARI)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-clustering-kmedoids-fiftywords (sktime backend, algorithm: registered-clustering-TimeSeriesKMedoids, created: 2026-10-15T11:22:55.467151+00:00)\", \"Loaded UCR/UEA FiftyWords train=450 test=455\", \"Finished in 2841.3 ms\"]}, \"error\": null}\n"
+}

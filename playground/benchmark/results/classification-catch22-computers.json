@@ -1,0 +1,29 @@
+{
+  "id": "classification-catch22-computers",
+  "task": "classification",
+  "ran_at": "2026-10-15T11:22:53.040528+00:00",
+  "train_command": "libraryts train --algorithm Catch22Classifier --dataset ucr-computers --model-id bench-classification-catch22-computers --param random_state=0 --param n_jobs=1",
+  "run_command": "libraryts run --model-id bench-classification-catch22-computers --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 15.14,
+  "values": {
+    "Accuracy": 0.732
+  },
+  "per_metric": {
+    "Accuracy": {
+      "gt": 0.716,
+      "value": 0.732,
+      "delta": 0.016,
+      "delta_rel": 0.022346,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "Accuracy": 0.732,
+    "Macro F1": 0.7314801455618076
+  },
+  "error": null,
+  "stdout_tail": "time-trained:bench-classification-catch22-computers\", \"preprocessor_id\": \"none\", \"params\": {}}, \"task\": \"classification\", \"dataset\": {\"id\": \"ucr-computers\", \"name\": \"UCR/UEA Computers\", \"task\": \"classification\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"Computers\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-classification-catch22-computers\", \"name\": \"Catch22Classifier (trained: bench-classification-catch22-computers)\", \"task\": \"classification\", \"module\": \"sktime.classification.feature_based._catch22_classifier.Catch22Classifier\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-9/playground/models/bench-classification-catch22-computers\", \"manifest\": {\"model_id\": \"bench-classification-catch22-computers\", \"backend\": \"sktime\", \"task\": \"classification\", \"algorithm_id\": \"registered-classification-Catch22Classifier\", \"algorithm_name\": \"Catch22Classifier\", \"module\": \"sktime.classification.feature_based._catch22_classifier.Catch22Classifier\", \"params\": {\"random_state\": 0, \"n_jobs\": 1}, \"eval_params\": {}, \"created_at\": \"2026-10-15T11:22:45.305023+00:00\", \"spec\": {\"task\": \"classification\", \"dataset_id\": \"ucr-computers\", \"algorithm_id\": \"registered-classification-Catch22Classifier\", \"preprocessor_id\": \"none\", \"params\": {\"random_state\": 0, \"n_jobs\": 1}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 6360.7, \"log\": [\"Selected dataset: UCR/UEA Computers\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-classification-catch22-computers (sktime backend, algorithm: registered-classification-Catch22Classifier, created: 2026-10-15T11:22:45.305023+00:00)\", \"Loaded UCR/UEA Computers train=250 test=250\", \"Finished in 6360.7 ms\"]}, \"error\": null}\n"
+}

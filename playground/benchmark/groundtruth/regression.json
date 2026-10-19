@@ -1,0 +1,343 @@
+{
+  "task": "regression",
+  "entries": [
+    {
+      "id": "regression-rocket-covid3month",
+      "algorithm": "RocketRegressor",
+      "algorithm_name": "Rocket",
+      "dataset": "covid-3month",
+      "dataset_name": "Covid3Month (TSER archive)",
+      "window": "default split",
+      "metrics": {
+        "RMSE": 0.0438782
+      },
+      "settings": "TSER archive default train/test split (140/61); ROCKET transform with ridge-regression-style regressor; average RMSE over 5 runs",
+      "source": {
+        "title": "Time Series Extrinsic Regression (Tan, Bergmeir, Petitjean, Webb) — official TSER results page",
+        "venue": "Data Mining and Knowledge Discovery 35, 2021 / tseregression.org",
+        "url": "http://tseregression.org/",
+        "locator": "Results table, row Covid3Month, column Rocket"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.2
+      },
+      "notes": "Rocket was the best-ranked algorithm in the TSER paper. sktime RocketRegressor follows the same protocol (fixed archive split, ridge on ROCKET features).",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm RocketRegressor --dataset covid-3month --model-id bench-regression-rocket-covid3month --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+      "run_command": "libraryts run --model-id bench-regression-rocket-covid3month --compact"
+    },
+    {
+      "id": "regression-rf-covid3month",
+      "algorithm": "summary-random-forest-regressor",
+      "algorithm_name": "RandomForest",
+      "dataset": "covid-3month",
+      "dataset_name": "Covid3Month (TSER archive)",
+      "window": "default split",
+      "metrics": {
+        "RMSE": 0.0424
+      },
+      "settings": "TSER archive default train/test split (140/61); scikit-learn RandomForest with default parameters on the flattened raw series; average RMSE over 5 runs",
+      "source": {
+        "title": "Time Series Extrinsic Regression (Tan, Bergmeir, Petitjean, Webb) — official TSER results page",
+        "venue": "Data Mining and Knowledge Discovery 35, 2021 / tseregression.org",
+        "url": "http://tseregression.org/",
+        "locator": "Results table, row Covid3Month, column RandomForest"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.35
+      },
+      "notes": "Protocol mismatch on purpose: the paper flattens the raw series into sklearn defaults, while the libraryts pipeline fits RF(25 trees) on summary features. Kept as a demonstration that the leaderboard flags representation gaps, not only implementation bugs.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm summary-random-forest-regressor --dataset covid-3month --model-id bench-regression-rf-covid3month --param n_estimators=25 --param random_state=7",
+      "run_command": "libraryts run --model-id bench-regression-rf-covid3month --compact"
+    },
+    {
+      "id": "regression-knn1-ed-covid3month",
+      "algorithm": "KNeighborsTimeSeriesRegressor",
+      "algorithm_name": "1-NN (ED)",
+      "dataset": "covid-3month",
+      "dataset_name": "Covid3Month (TSER archive)",
+      "window": "default split",
+      "metrics": {
+        "RMSE": 0.05306
+      },
+      "settings": "TSER archive default train/test split (140/61); 1-NN regressor with Euclidean distance; average RMSE over 5 runs",
+      "source": {
+        "title": "Time Series Extrinsic Regression (Tan, Bergmeir, Petitjean, Webb) — official TSER results page",
+        "venue": "Data Mining and Knowledge Discovery 35, 2021 / tseregression.org",
+        "url": "http://tseregression.org/",
+        "locator": "Results table, row Covid3Month, column 1-NN-ED"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.2
+      },
+      "notes": "Paper hyperparameters were tuned per algorithm by the TSER authors; libraryts runs the sktime implementation with the paper epoch budget and otherwise defaults, so a deviation reflects implementation/tuning gaps. Tolerance (20% relative) was chosen before running, wider for stochastic/untuned methods.",
+      "spec_params": {
+        "n_neighbors": 1,
+        "distance": "euclidean"
+      },
+      "train_command": "libraryts train --algorithm KNeighborsTimeSeriesRegressor --dataset covid-3month --model-id bench-regression-knn1-ed-covid3month --param n_neighbors=1 --param distance=euclidean --param leaf_size=30",
+      "run_command": "libraryts run --model-id bench-regression-knn1-ed-covid3month --compact"
+    },
+    {
+      "id": "regression-knn5-ed-covid3month",
+      "algorithm": "KNeighborsTimeSeriesRegressor",
+      "algorithm_name": "5-NN (ED)",
+      "dataset": "covid-3month",
+      "dataset_name": "Covid3Month (TSER archive)",
+      "window": "default split",
+      "metrics": {
+        "RMSE": 0.041815
+      },
+      "settings": "TSER archive default train/test split (140/61); 5-NN regressor with Euclidean distance; average RMSE over 5 runs",
+      "source": {
+        "title": "Time Series Extrinsic Regression (Tan, Bergmeir, Petitjean, Webb) — official TSER results page",
+        "venue": "Data Mining and Knowledge Discovery 35, 2021 / tseregression.org",
+        "url": "http://tseregression.org/",
+        "locator": "Results table, row Covid3Month, column 5-NN-ED"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.2
+      },
+      "notes": "Paper hyperparameters were tuned per algorithm by the TSER authors; libraryts runs the sktime implementation with the paper epoch budget and otherwise defaults, so a deviation reflects implementation/tuning gaps. Tolerance (20% relative) was chosen before running, wider for stochastic/untuned methods.",
+      "spec_params": {
+        "n_neighbors": 5,
+        "distance": "euclidean"
+      },
+      "train_command": "libraryts train --algorithm KNeighborsTimeSeriesRegressor --dataset covid-3month --model-id bench-regression-knn5-ed-covid3month --param n_neighbors=5 --param distance=euclidean --param leaf_size=30",
+      "run_command": "libraryts run --model-id bench-regression-knn5-ed-covid3month --compact"
+    },
+    {
+      "id": "regression-knn1-dtw-covid3month",
+      "algorithm": "KNeighborsTimeSeriesRegressor",
+      "algorithm_name": "1-NN (DTW)",
+      "dataset": "covid-3month",
+      "dataset_name": "Covid3Month (TSER archive)",
+      "window": "default split",
+      "metrics": {
+        "RMSE": 0.052735
+      },
+      "settings": "TSER archive default train/test split (140/61); 1-NN regressor with dependent multivariate DTW; average RMSE over 5 runs",
+      "source": {
+        "title": "Time Series Extrinsic Regression (Tan, Bergmeir, Petitjean, Webb) — official TSER results page",
+        "venue": "Data Mining and Knowledge Discovery 35, 2021 / tseregression.org",
+        "url": "http://tseregression.org/",
+        "locator": "Results table, row Covid3Month, column 1-NN-DTWD"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.2
+      },
+      "notes": "Paper hyperparameters were tuned per algorithm by the TSER authors; libraryts runs the sktime implementation with the paper epoch budget and otherwise defaults, so a deviation reflects implementation/tuning gaps. Tolerance (20% relative) was chosen before running, wider for stochastic/untuned methods.",
+      "spec_params": {
+        "n_neighbors": 1,
+        "distance": "dtw"
+      },
+      "train_command": "libraryts train --algorithm KNeighborsTimeSeriesRegressor --dataset covid-3month --model-id bench-regression-knn1-dtw-covid3month --param n_neighbors=1 --param distance=dtw --param leaf_size=30",
+      "run_command": "libraryts run --model-id bench-regression-knn1-dtw-covid3month --compact"
+    },
+    {
+      "id": "regression-knn5-dtw-covid3month",
+      "algorithm": "KNeighborsTimeSeriesRegressor",
+      "algorithm_name": "5-NN (DTW)",
+      "dataset": "covid-3month",
+      "dataset_name": "Covid3Month (TSER archive)",
+      "window": "default split",
+      "metrics": {
+        "RMSE": 0.042943
+      },
+      "settings": "TSER archive default train/test split (140/61); 5-NN regressor with dependent multivariate DTW; average RMSE over 5 runs",
+      "source": {
+        "title": "Time Series Extrinsic Regression (Tan, Bergmeir, Petitjean, Webb) — official TSER results page",
+        "venue": "Data Mining and Knowledge Discovery 35, 2021 / tseregression.org",
+        "url": "http://tseregression.org/",
+        "locator": "Results table, row Covid3Month, column 5-NN-DTWD"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.2
+      },
+      "notes": "Paper hyperparameters were tuned per algorithm by the TSER authors; libraryts runs the sktime implementation with the paper epoch budget and otherwise defaults, so a deviation reflects implementation/tuning gaps. Tolerance (20% relative) was chosen before running, wider for stochastic/untuned methods.",
+      "spec_params": {
+        "n_neighbors": 5,
+        "distance": "dtw"
+      },
+      "train_command": "libraryts train --algorithm KNeighborsTimeSeriesRegressor --dataset covid-3month --model-id bench-regression-knn5-dtw-covid3month --param n_neighbors=5 --param distance=dtw --param leaf_size=30",
+      "run_command": "libraryts run --model-id bench-regression-knn5-dtw-covid3month --compact"
+    },
+    {
+      "id": "regression-fcn-covid3month",
+      "algorithm": "FCNRegressor",
+      "algorithm_name": "FCN",
+      "dataset": "covid-3month",
+      "dataset_name": "Covid3Month (TSER archive)",
+      "window": "default split",
+      "metrics": {
+        "RMSE": 0.07434
+      },
+      "settings": "TSER archive default train/test split (140/61); FCN deep regressor, 2000 epochs; average RMSE over 5 runs",
+      "source": {
+        "title": "Time Series Extrinsic Regression (Tan, Bergmeir, Petitjean, Webb) — official TSER results page",
+        "venue": "Data Mining and Knowledge Discovery 35, 2021 / tseregression.org",
+        "url": "http://tseregression.org/",
+        "locator": "Results table, row Covid3Month, column FCN"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.4
+      },
+      "notes": "Paper hyperparameters were tuned per algorithm by the TSER authors; libraryts runs the sktime implementation with the paper epoch budget and otherwise defaults, so a deviation reflects implementation/tuning gaps. Tolerance (40% relative) was chosen before running, wider for stochastic/untuned methods.",
+      "spec_params": {
+        "n_epochs": 2000,
+        "batch_size": 16
+      },
+      "train_command": "libraryts train --algorithm FCNRegressor --dataset covid-3month --model-id bench-regression-fcn-covid3month --param n_epochs=2000 --param batch_size=16",
+      "run_command": "libraryts run --model-id bench-regression-fcn-covid3month --compact"
+    },
+    {
+      "id": "regression-resnet-covid3month",
+      "algorithm": "ResNetRegressor",
+      "algorithm_name": "ResNet",
+      "dataset": "covid-3month",
+      "dataset_name": "Covid3Month (TSER archive)",
+      "window": "default split",
+      "metrics": {
+        "RMSE": 0.095338
+      },
+      "settings": "TSER archive default train/test split (140/61); ResNet deep regressor, 1500 epochs; average RMSE over 5 runs",
+      "source": {
+        "title": "Time Series Extrinsic Regression (Tan, Bergmeir, Petitjean, Webb) — official TSER results page",
+        "venue": "Data Mining and Knowledge Discovery 35, 2021 / tseregression.org",
+        "url": "http://tseregression.org/",
+        "locator": "Results table, row Covid3Month, column ResNet"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.4
+      },
+      "notes": "Paper hyperparameters were tuned per algorithm by the TSER authors; libraryts runs the sktime implementation with the paper epoch budget and otherwise defaults, so a deviation reflects implementation/tuning gaps. Tolerance (40% relative) was chosen before running, wider for stochastic/untuned methods.",
+      "spec_params": {
+        "n_epochs": 1500,
+        "batch_size": 16
+      },
+      "train_command": "libraryts train --algorithm ResNetRegressor --dataset covid-3month --model-id bench-regression-resnet-covid3month --param n_epochs=1500 --param batch_size=16",
+      "run_command": "libraryts run --model-id bench-regression-resnet-covid3month --compact"
+    },
+    {
+      "id": "regression-inception-covid3month",
+      "algorithm": "InceptionTimeRegressor",
+      "algorithm_name": "InceptionTime",
+      "dataset": "covid-3month",
+      "dataset_name": "Covid3Month (TSER archive)",
+      "window": "default split",
+      "metrics": {
+        "RMSE": 0.053769
+      },
+      "settings": "TSER archive default train/test split (140/61); InceptionTime-style deep regressor, 1500 epochs; average RMSE over 5 runs",
+      "source": {
+        "title": "Time Series Extrinsic Regression (Tan, Bergmeir, Petitjean, Webb) — official TSER results page",
+        "venue": "Data Mining and Knowledge Discovery 35, 2021 / tseregression.org",
+        "url": "http://tseregression.org/",
+        "locator": "Results table, row Covid3Month, column InceptionNetwork"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.4
+      },
+      "notes": "Paper hyperparameters were tuned per algorithm by the TSER authors; libraryts runs the sktime implementation with the paper epoch budget and otherwise defaults, so a deviation reflects implementation/tuning gaps. Tolerance (40% relative) was chosen before running, wider for stochastic/untuned methods.",
+      "spec_params": {
+        "n_epochs": 1500,
+        "batch_size": 64
+      },
+      "train_command": "libraryts train --algorithm InceptionTimeRegressor --dataset covid-3month --model-id bench-regression-inception-covid3month --param n_epochs=1500 --param batch_size=64 --param bottleneck_size=32 --param depth=6 --param kernel_size=40 --param n_filters=32",
+      "run_command": "libraryts run --model-id bench-regression-inception-covid3month --compact"
+    },
+    {
+      "id": "regression-svr-covid3month",
+      "algorithm": "TimeSeriesSVRTslearn",
+      "algorithm_name": "SVR",
+      "dataset": "covid-3month",
+      "dataset_name": "Covid3Month (TSER archive)",
+      "window": "default split",
+      "metrics": {
+        "RMSE": 0.06584
+      },
+      "settings": "TSER archive default train/test split (140/61); tslearn time-series SVR; average RMSE over 5 runs",
+      "source": {
+        "title": "Time Series Extrinsic Regression (Tan, Bergmeir, Petitjean, Webb) — official TSER results page",
+        "venue": "Data Mining and Knowledge Discovery 35, 2021 / tseregression.org",
+        "url": "http://tseregression.org/",
+        "locator": "Results table, row Covid3Month, column SVR"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.5
+      },
+      "notes": "Paper hyperparameters were tuned per algorithm by the TSER authors; libraryts runs the sktime implementation with the paper epoch budget and otherwise defaults, so a deviation reflects implementation/tuning gaps. Tolerance (50% relative) was chosen before running, wider for stochastic/untuned methods. The default gak kernel fails on Covid3Month (auto gamma ~0), so the claim uses the RBF kernel, closest to the paper's SVR.",
+      "spec_params": {
+        "kernel": "rbf"
+      },
+      "train_command": "libraryts train --algorithm TimeSeriesSVRTslearn --dataset covid-3month --model-id bench-regression-svr-covid3month --param kernel=rbf --param C=1 --param cache_size=200 --param coef0=0 --param degree=3 --param epsilon=0.1 --param max_iter=-1 --param tol=0.001 --param verbose=0",
+      "run_command": "libraryts run --model-id bench-regression-svr-covid3month --compact"
+    },
+    {
+      "id": "regression-tsf-covid3month",
+      "algorithm": "TimeSeriesForestRegressor",
+      "algorithm_name": "TimeSeriesForest",
+      "dataset": "covid-3month",
+      "dataset_name": "Covid3Month (TSER archive)",
+      "window": "default split",
+      "metrics": {
+        "RMSE": 0.03979657
+      },
+      "settings": "TSER archive default train/test split (140/61); Time Series Forest regressor, 500 trees over random intervals with mean/std/slope summary features (paper configuration); RMSE on the default split = fold 0 of the official 30-resample results",
+      "source": {
+        "title": "Unsupervised Feature Based Algorithms for Time Series Extrinsic Regression (Guijo-Rubio, Middlehurst, Arcencio, Furtado Silva, Bagnall) — official results files in the tsml-eval repository",
+        "venue": "Data Mining and Knowledge Discovery 38, 2024 / tsml-eval",
+        "url": "https://github.com/time-series-machine-learning/tsml-eval/blob/main/tsml_eval/publications/y2023/tser_archive_expansion/results/5.B/TSF_rmse.csv",
+        "locator": "TSF_rmse.csv, row Covid3Month, fold 0 (default train/test split)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.25
+      },
+      "notes": "Paper runs aeon's TimeSeriesForestRegressor(n_estimators=500) via a per-channel ensemble wrapper (identity for univariate data); libraryts runs sktime's TimeSeriesForestRegressor with the same 500-tree config. The aeon/sktime implementations share the same design (mean/std/slope interval features, min_interval=3), so only the random interval draws differ; tolerance 25% relative was chosen before running for that stochasticity. The paper's headline tables average 30 resamples; this claim targets fold 0, the default split that libraryts evaluates.",
+      "spec_params": {
+        "n_estimators": 500,
+        "random_state": 7
+      },
+      "train_command": "libraryts train --algorithm TimeSeriesForestRegressor --dataset covid-3month --model-id bench-regression-tsf-covid3month --param n_estimators=500 --param random_state=7 --param min_interval=3 --param n_jobs=1",
+      "run_command": "libraryts run --model-id bench-regression-tsf-covid3month --compact"
+    },
+    {
+      "id": "regression-cnn-covid3month",
+      "algorithm": "CNNRegressor",
+      "algorithm_name": "CNN",
+      "dataset": "covid-3month",
+      "dataset_name": "Covid3Month (TSER archive)",
+      "window": "default split",
+      "metrics": {
+        "RMSE": 0.06813031
+      },
+      "settings": "TSER archive default train/test split (140/61); Time-CNN deep regressor (2 conv layers with average pooling), 2000 epochs, batch size 16 (paper defaults); RMSE on the default split = fold 0 of the official 30-resample results",
+      "source": {
+        "title": "Unsupervised Feature Based Algorithms for Time Series Extrinsic Regression (Guijo-Rubio, Middlehurst, Arcencio, Furtado Silva, Bagnall) — official results files in the tsml-eval repository",
+        "venue": "Data Mining and Knowledge Discovery 38, 2024 / tsml-eval",
+        "url": "https://github.com/time-series-machine-learning/tsml-eval/blob/main/tsml_eval/publications/y2023/tser_archive_expansion/results/5.B/CNN_rmse.csv",
+        "locator": "CNN_rmse.csv, row Covid3Month, fold 0 (default train/test split)"
+      },
+      "tolerance": {
+        "type": "relative",
+        "value": 0.4
+      },
+      "notes": "Paper runs aeon's TimeCNNRegressor defaults (n_epochs=2000, batch_size=16, kernel_size=7, avg_pool_size=3, 2 conv layers, sigmoid activations, 'valid' padding); sktime's CNNRegressor shares the architecture and epoch budget but defaults to ReLU hidden activations and 'auto' padding — an implementation gap that, together with single-seed stochastic training, motivates the 40% relative tolerance used for the other deep regressors. The paper's headline tables average 30 resamples; this claim targets fold 0, the default split that libraryts evaluates.",
+      "spec_params": {},
+      "train_command": "libraryts train --algorithm CNNRegressor --dataset covid-3month --model-id bench-regression-cnn-covid3month --param avg_pool_size=3 --param batch_size=16 --param kernel_size=7 --param n_conv_layers=2 --param n_epochs=2000 --param random_state=0",
+      "run_command": "libraryts run --model-id bench-regression-cnn-covid3month --compact"
+    }
+  ]
+}

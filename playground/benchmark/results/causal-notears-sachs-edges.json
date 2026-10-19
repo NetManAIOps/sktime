@@ -1,0 +1,33 @@
+{
+  "id": "causal-notears-sachs-edges",
+  "task": "causal",
+  "ran_at": "2026-10-14T16:34:25.372791+00:00",
+  "train_command": "libraryts train --algorithm causal-notears --dataset causal-sachs-cont --model-id bench-causal-notears-sachs-edges --param max_samples=7466 --param lambda1=0.01 --param seed=7 --param w_threshold=0.3",
+  "run_command": "libraryts run --model-id bench-causal-notears-sachs-edges --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 324.0,
+  "values": {
+    "Edges": 24.0
+  },
+  "per_metric": {
+    "Edges": {
+      "gt": 16,
+      "value": 24.0,
+      "delta": 8.0,
+      "delta_rel": 0.5,
+      "status": "deviation"
+    }
+  },
+  "status": "deviation",
+  "metrics": {
+    "SHD": 23,
+    "Edge Precision": 0.3333333333333333,
+    "Edge Recall": 0.4,
+    "Edge F1": 0.3636363636363636,
+    "Edges": 24,
+    "True Edges": 20
+  },
+  "error": null,
+  "stdout_tail": "=23, edge F1=0.364.\", \"run_id\": \"20327ae42290\", \"spec\": {\"task\": \"causal\", \"dataset_id\": \"causal-sachs-cont\", \"algorithm_id\": \"sktime-trained:bench-causal-notears-sachs-edges\", \"preprocessor_id\": \"none\", \"params\": {}}, \"task\": \"causal\", \"dataset\": {\"id\": \"causal-sachs-cont\", \"name\": \"Sachs continuous (7466×11, 20-edge DAG)\", \"task\": \"causal\", \"source\": \"local\", \"loader\": \"domain_runners.load_sachs_continuous\", \"true_graph\": true, \"enabled\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-causal-notears-sachs-edges\", \"name\": \"NOTEARS (trained: bench-causal-notears-sachs-edges)\", \"task\": \"causal\", \"module\": \"sktime.causal_discovery.notears.NOTEARS\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/playground/models/bench-causal-notears-sachs-edges\", \"manifest\": {\"model_id\": \"bench-causal-notears-sachs-edges\", \"backend\": \"sktime\", \"task\": \"causal\", \"algorithm_id\": \"causal-notears\", \"algorithm_name\": \"NOTEARS\", \"module\": \"sktime.causal_discovery.notears.NOTEARS\", \"params\": {\"lambda1\": 0.01, \"w_threshold\": 0.3}, \"eval_params\": {\"max_samples\": 7466, \"seed\": 7}, \"created_at\": \"2026-10-14T16:34:22.347087+00:00\", \"spec\": {\"task\": \"causal\", \"dataset_id\": \"causal-sachs-cont\", \"algorithm_id\": \"causal-notears\", \"preprocessor_id\": \"none\", \"params\": {\"max_samples\": 7466, \"lambda1\": 0.01, \"seed\": 7, \"w_threshold\": 0.3}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 2326.1, \"log\": [\"Selected dataset: Sachs continuous (7466×11, 20-edge DAG)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-causal-notears-sachs-edges (sktime backend, algorithm: causal-notears, created: 2026-10-14T16:34:22.347087+00:00)\", \"Loaded Sachs continuous (7466×11, 20-edge DAG) samples=7466 variables=11 true_edges=20\", \"Finished in 2326.1 ms\"]}, \"error\": null}\n"
+}

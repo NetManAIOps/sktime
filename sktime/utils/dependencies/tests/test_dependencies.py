@@ -77,3 +77,50 @@ def test_check_soft_dependencies():
                 ALWAYS_INSTALLED2,
             ]
         )
+
+
+@pytest.mark.skipif(
+    not run_test_for_class(_check_soft_dependencies),
+    reason="run test incrementally (if requested)",
+)
+def test_check_soft_dependencies_pep503_normalization(monkeypatch):
+    """Test that package name comparison is normalized according to PEP 503.
+
+    Regression test for the bug where distributions whose metadata name uses
+    underscores, e.g., ``huggingface_hub``, were not found when checked with
+    the hyphenated spelling, e.g., ``huggingface-hub``.
+    """
+    from sktime.utils.dependencies import _dependencies
+    from sktime.utils.dependencies._dependencies import (
+        _get_installed_packages,
+        _normalize_pkg_name,
+    )
+
+    # _normalize_pkg_name implements PEP 503 normalization
+    assert _normalize_pkg_name("huggingface_hub") == "huggingface-hub"
+    assert _normalize_pkg_name("HuggingFace-Hub") == "huggingface-hub"
+    assert _normalize_pkg_name("scikit.learn") == "scikit-learn"
+
+    # keys of the installed packages dict are PEP 503 normalized
+    pkgs = _get_installed_packages()
+    assert all(name == _normalize_pkg_name(name) for name in pkgs)
+
+    # a distribution registered with underscores in its metadata name, e.g.,
+    # huggingface_hub, must be found under the hyphenated spelling and vice versa
+    def _mock_installed_packages():
+        return {"huggingface-hub": "0.36.2"}
+
+    monkeypatch.setattr(
+        _dependencies, "_get_installed_packages", _mock_installed_packages
+    )
+    assert _check_soft_dependencies("huggingface-hub", severity="none")
+    assert _check_soft_dependencies("huggingface_hub", severity="none")
+    assert _check_soft_dependencies("HuggingFace_Hub>=0.20", severity="none")
+    assert not _check_soft_dependencies("huggingface-hub>1.0", severity="none")
+    monkeypatch.undo()
+
+    # spellings of the same installed hard dependency must agree, scikit-learn
+    # is a hard dependency of sktime and therefore always present
+    assert _check_soft_dependencies("scikit-learn", severity="none")
+    assert _check_soft_dependencies("scikit_learn", severity="none")
+    assert _check_soft_dependencies("Scikit-Learn", severity="none")

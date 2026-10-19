@@ -1,0 +1,29 @@
+{
+  "id": "classification-rocket-symbols",
+  "task": "classification",
+  "ran_at": "2026-10-15T06:39:43.467240+00:00",
+  "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-symbols --model-id bench-classification-rocket-symbols --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+  "run_command": "libraryts run --model-id bench-classification-rocket-symbols --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 49.05,
+  "values": {
+    "Accuracy": 0.9728643216080402
+  },
+  "per_metric": {
+    "Accuracy": {
+      "gt": 0.97427,
+      "value": 0.9728643216080402,
+      "delta": -0.001406,
+      "delta_rel": 0.001443,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "Accuracy": 0.9728643216080402,
+    "Macro F1": 0.9730327797683005
+  },
+  "error": null,
+  "stdout_tail": "_id\": \"none\", \"params\": {}}, \"task\": \"classification\", \"dataset\": {\"id\": \"ucr-symbols\", \"name\": \"UCR/UEA Symbols\", \"task\": \"classification\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"Symbols\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-classification-rocket-symbols\", \"name\": \"RocketClassifier (trained: bench-classification-rocket-symbols)\", \"task\": \"classification\", \"module\": \"sktime.classification.kernel_based._rocket_classifier.RocketClassifier\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/playground/models/bench-classification-rocket-symbols\", \"manifest\": {\"model_id\": \"bench-classification-rocket-symbols\", \"backend\": \"sktime\", \"task\": \"classification\", \"algorithm_id\": \"registered-classification-RocketClassifier\", \"algorithm_name\": \"RocketClassifier\", \"module\": \"sktime.classification.kernel_based._rocket_classifier.RocketClassifier\", \"params\": {\"max_dilations_per_kernel\": 32, \"n_features_per_kernel\": 4, \"n_jobs\": 1, \"num_kernels\": 10000}, \"eval_params\": {}, \"created_at\": \"2026-10-15T06:39:09.251812+00:00\", \"spec\": {\"task\": \"classification\", \"dataset_id\": \"ucr-symbols\", \"algorithm_id\": \"registered-classification-RocketClassifier\", \"preprocessor_id\": \"none\", \"params\": {\"max_dilations_per_kernel\": 32, \"n_features_per_kernel\": 4, \"n_jobs\": 1, \"num_kernels\": 10000}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 33501.5, \"log\": [\"Selected dataset: UCR/UEA Symbols\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-classification-rocket-symbols (sktime backend, algorithm: registered-classification-RocketClassifier, created: 2026-10-15T06:39:09.251812+00:00)\", \"Loaded UCR/UEA Symbols train=25 test=995\", \"Finished in 33501.5 ms\"]}, \"error\": null}\n"
+}

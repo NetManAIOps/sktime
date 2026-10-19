@@ -1,0 +1,38 @@
+{
+  "id": "forecasting-expsmoothing-etth1-96",
+  "task": "forecasting",
+  "ran_at": "2026-10-15T13:16:59.246835+00:00",
+  "train_command": "libraryts train --algorithm ExponentialSmoothing --dataset hf-etth1 --model-id bench-forecasting-expsmoothing-etth1-96 --param horizon=96 --param trend=add --param seasonal=add --param sp=24 --param context_window=36",
+  "run_command": "libraryts run --model-id bench-forecasting-expsmoothing-etth1-96 --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 15.65,
+  "values": {
+    "MSE": 1.1143114178118487,
+    "MAE": 0.9026569407775872
+  },
+  "per_metric": {
+    "MSE": {
+      "gt": 1.1143,
+      "value": 1.1143114178118487,
+      "delta": 1.1e-05,
+      "delta_rel": 1e-05,
+      "status": "reproduced"
+    },
+    "MAE": {
+      "gt": 0.9027,
+      "value": 0.9026569407775872,
+      "delta": -4.3e-05,
+      "delta_rel": 4.8e-05,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "MAE": 0.9026569407775872,
+    "MSE": 1.1143114178118487,
+    "MAPE": 1.1862181165330175
+  },
+  "error": null,
+  "stdout_tail": "k\": \"forecasting\", \"dataset\": {\"id\": \"hf-etth1\", \"name\": \"THU-ANM ETTh1\", \"task\": \"forecasting\", \"source\": \"huggingface\", \"hf_dataset\": \"Skyoung13/THU-ANM-DATASET\", \"hf_config\": \"ETTh1\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-forecasting-expsmoothing-etth1-96\", \"name\": \"ExponentialSmoothing (trained: bench-forecasting-expsmoothing-etth1-96)\", \"task\": \"forecasting\", \"module\": \"sktime.forecasting.exp_smoothing.ExponentialSmoothing\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-8/playground/models/bench-forecasting-expsmoothing-etth1-96\", \"manifest\": {\"model_id\": \"bench-forecasting-expsmoothing-etth1-96\", \"backend\": \"sktime\", \"task\": \"forecasting\", \"algorithm_id\": \"registered-forecasting-ExponentialSmoothing\", \"algorithm_name\": \"ExponentialSmoothing\", \"module\": \"sktime.forecasting.exp_smoothing.ExponentialSmoothing\", \"params\": {\"trend\": \"add\", \"seasonal\": \"add\", \"sp\": 24}, \"eval_params\": {\"horizon\": 96, \"context_window\": 36}, \"created_at\": \"2026-10-15T13:16:55.403663+00:00\", \"spec\": {\"task\": \"forecasting\", \"dataset_id\": \"hf-etth1\", \"algorithm_id\": \"registered-forecasting-ExponentialSmoothing\", \"preprocessor_id\": \"none\", \"params\": {\"horizon\": 96, \"trend\": \"add\", \"seasonal\": \"add\", \"sp\": 24, \"context_window\": 36}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 3014.4, \"log\": [\"Selected dataset: THU-ANM ETTh1\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-forecasting-expsmoothing-etth1-96 (sktime backend, algorithm: registered-forecasting-ExponentialSmoothing, created: 2026-10-15T13:16:55.403663+00:00)\", \"Loaded Hugging Face config ETTh1 (17420 rows)\", \"Normalized time index to RangeIndex for reproducible forecasting\", \"Finished in 3014.4 ms\"]}, \"error\": null}\n"
+}

@@ -1,8 +1,8 @@
 """Fork of registered-anomaly_detection-ECOD (`sktime.detection.ecod.ECOD`).
 
 Edit this file freely, then:
-    labts.py check playground/experiments/my_ecod.py
-    labts.py run --algorithm user-my_ecod --task anomaly_detection ...
+    libraryts.py check playground/experiments/my_ecod.py
+    libraryts.py run --algorithm user-my_ecod --task anomaly_detection ...
 
 The original implementation lives in `sktime.detection.ecod.ECOD`; this subclass starts as an
 exact copy of its behavior. Override methods, change defaults in PARAMS, or

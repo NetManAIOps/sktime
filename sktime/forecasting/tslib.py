@@ -123,6 +123,8 @@ class BaseTSLibForecaster(BaseDeepNetworkPyTorch):
         num_epochs=3,
         batch_size=32,
         lr=1e-3,
+        lr_decay=1.0,
+        device="auto",
         criterion=None,
         criterion_kwargs=None,
         optimizer=None,
@@ -145,6 +147,8 @@ class BaseTSLibForecaster(BaseDeepNetworkPyTorch):
         self.top_k = top_k
         self.num_kernels = num_kernels
         self.channel_independence = channel_independence
+        self.lr_decay = lr_decay
+        self.device = device
 
         super().__init__(
             num_epochs=num_epochs,
@@ -200,9 +204,14 @@ class BaseTSLibForecaster(BaseDeepNetworkPyTorch):
     # data
     # ------------------------------------------------------------------
     def _time_marks(self, index):
-        """Time features for a pandas index, or None when not datetime-like."""
+        """Time features for a pandas index; zero-filled when not datetime-like.
+
+        Never returns None: the DataLoader's default_collate cannot batch None,
+        so non-datetime indexes (e.g. RangeIndex) get zero marks instead.
+        """
         if not isinstance(index, (pd.DatetimeIndex, pd.PeriodIndex)):
-            return None
+            width = _FREQ_MARK_DIM.get(self.freq, 4)
+            return np.zeros((len(index), width), dtype=np.float32)
         try:
             from sktime.libs.tslib.utils.timefeatures import time_features
 
@@ -241,6 +250,12 @@ class BaseTSLibForecaster(BaseDeepNetworkPyTorch):
     # ------------------------------------------------------------------
     # fit / predict
     # ------------------------------------------------------------------
+    def _resolve_device(self) -> str:
+        """Runtime torch device; "auto" picks CUDA when available."""
+        if str(self.device) == "auto":
+            return "cuda" if torch.cuda.is_available() else "cpu"
+        return str(self.device)
+
     def _fit(self, y, fh, X=None):
         """Fit the TSLib model; fh may be None (pred_len fallback)."""
         fh_max = 0
@@ -250,17 +265,31 @@ class BaseTSLibForecaster(BaseDeepNetworkPyTorch):
         self._n_channels = y.shape[1]
         self._y_len = len(y)
         self.network = self._build_network(fh_max)
+        self._device = self._resolve_device()
+        self.network.to(self._device)
         self._criterion = self._instantiate_criterion()
         self._optimizer = self._instantiate_optimizer()
 
         dataloader = self.build_pytorch_train_dataloader(y)
         self.network.train()
+        base_lr = self.lr
         for epoch in range(self.num_epochs):
+            if float(self.lr_decay) != 1.0:
+                # paper schedule (Autoformer lradj=type1): lr * decay ** epoch
+                for group in self._optimizer.param_groups:
+                    group["lr"] = base_lr * (float(self.lr_decay) ** epoch)
             self._run_epoch(epoch, dataloader)
         return self
 
     def _run_epoch(self, epoch, dataloader):
         for x_enc, x_mark, x_dec, x_mark_dec, y_true in dataloader:
+            x_enc = x_enc.to(self._device)
+            x_dec = x_dec.to(self._device)
+            y_true = y_true.to(self._device)
+            if x_mark is not None:
+                x_mark = x_mark.to(self._device)
+            if x_mark_dec is not None:
+                x_mark_dec = x_mark_dec.to(self._device)
             y_pred = self.network(x_enc, x_mark, x_dec, x_mark_dec)
             loss = self._criterion(y_pred, y_true)
             self._optimizer.zero_grad()
@@ -293,19 +322,100 @@ class BaseTSLibForecaster(BaseDeepNetworkPyTorch):
         )
         x_enc, x_mark, x_dec, x_mark_dec, _ = dataset[0]
 
+        self._device = self._resolve_device()
+        self.network.to(self._device)
         self.network.eval()
         with torch.no_grad():
             out = self.network(
-                x_enc.unsqueeze(0),
-                x_mark.unsqueeze(0) if x_mark is not None else None,
-                x_dec.unsqueeze(0),
-                x_mark_dec.unsqueeze(0) if x_mark_dec is not None else None,
+                x_enc.unsqueeze(0).to(self._device),
+                x_mark.unsqueeze(0).to(self._device) if x_mark is not None else None,
+                x_dec.unsqueeze(0).to(self._device),
+                x_mark_dec.unsqueeze(0).to(self._device)
+                if x_mark_dec is not None
+                else None,
             )
-        y_pred = out[0, :, :].numpy() * self._std + self._mean
+        y_pred = out[0, :, :].cpu().numpy() * self._std + self._mean
         y_pred = y_pred[fh_values - 1]
         return pd.DataFrame(
             y_pred, columns=self._y.columns, index=fh.to_absolute_index(self.cutoff)
         )
+
+    def predict_windows(self, y, starts, horizon, batch_size=256):
+        """Refit-free rolling-window predictions (LTSF paper protocol).
+
+        For each origin ``s`` in ``starts``, encodes the context window
+        ``y[s-seq_len:s]`` and predicts the next ``horizon`` steps. The model
+        is NOT refit between windows — predictions use the statistics learned
+        in ``fit`` — matching the standard long-term-forecasting evaluation
+        protocol (train once, slide over the test set).
+
+        Parameters
+        ----------
+        y : pd.DataFrame of shape (n_timepoints, n_channels)
+            Full series (train + test), same frequency as the fit data.
+        starts : list of int
+            Origin positions; context is y[s-seq_len:s], target y[s:s+horizon].
+        horizon : int
+            Steps to predict per window (must be <= pred_len).
+        batch_size : int, optional
+            Windows are forwarded through the network in batches.
+
+        Returns
+        -------
+        np.ndarray of shape (len(starts), horizon, n_channels)
+            Predictions in original (denormalized) units.
+        """
+        if horizon > self.network.pred_len:
+            raise ValueError(
+                f"horizon {horizon} exceeds pred_len {self.network.pred_len}"
+            )
+        values = y.to_numpy(dtype=np.float32)
+        scaled = (values - self._mean) / self._std
+        marks = self._time_marks(y.index)
+        if marks is None:
+            raise ValueError("predict_windows requires a datetime-like index")
+
+        import torch
+
+        seq_len, label_len = self.seq_len, self.label_len
+        self._device = self._resolve_device()
+        self.network.to(self._device)
+        self.network.eval()
+        outputs = []
+        with torch.no_grad():
+            for i in range(0, len(starts), batch_size):
+                batch = starts[i : i + batch_size]
+                x_enc = torch.stack(
+                    [torch.from_numpy(scaled[s - seq_len : s]).float() for s in batch]
+                ).to(self._device)
+                x_mark = torch.stack(
+                    [torch.from_numpy(marks[s - seq_len : s]).float() for s in batch]
+                ).to(self._device)
+                x_dec = torch.zeros(len(batch), label_len + horizon, scaled.shape[1])
+                for j, s in enumerate(batch):
+                    x_dec[j, :label_len] = torch.from_numpy(
+                        scaled[s - label_len : s]
+                    ).float()
+                # future marks are unknown; reuse the last known mark row
+                last = marks[-1:]
+                x_mark_dec = torch.stack(
+                    [
+                        torch.from_numpy(
+                            np.concatenate(
+                                [
+                                    marks[s - label_len : s],
+                                    np.repeat(last, horizon, axis=0),
+                                ]
+                            )
+                        ).float()
+                        for s in batch
+                    ]
+                ).to(self._device)
+                x_dec = x_dec.to(self._device)
+                out = self.network(x_enc, x_mark, x_dec, x_mark_dec)
+                outputs.append(out[:, :horizon, :].cpu().numpy())
+        pred = np.concatenate(outputs, axis=0) * self._std + self._mean
+        return pred
 
 
 class _TSLibWindowDataset(Dataset):
@@ -334,31 +444,46 @@ class _TSLibWindowDataset(Dataset):
             i = max(len(self.values) - self.seq_len, 0)
         s_end = i + self.seq_len
         r_begin = s_end - self.label_len
-        r_end = r_begin + self.label_len + self.pred_len
+        r_end = s_end + self.pred_len
+        # Early windows with i + seq_len < label_len need left padding; raw
+        # negative numpy slices would wrap around and yield empty/garbled rows.
+        pad = max(-r_begin, 0)
+        r_begin = max(r_begin, 0)
 
         x_enc = torch.from_numpy(self.values[i:s_end]).float()
         x_mark = self._mark(slice(i, s_end))
 
         x_dec = torch.zeros(self.label_len + self.pred_len, self.values.shape[1])
-        x_dec[: self.label_len] = torch.from_numpy(self.values[r_begin:s_end]).float()
+        hist = torch.from_numpy(self.values[r_begin:s_end]).float()
+        x_dec[pad : pad + len(hist)] = hist
 
         if self.predict_mode:
             # future marks are unknown; reuse the last known mark row
             if self.marks is not None:
                 last = self.marks[-1:]
-                reps = self.label_len + self.pred_len
-                hist = self.marks[r_begin:s_end]
+                hist_marks = self.marks[r_begin:s_end]
+                if pad:
+                    hist_marks = np.concatenate(
+                        [
+                            np.zeros((pad, self.marks.shape[1]), dtype=self.marks.dtype),
+                            hist_marks,
+                        ]
+                    )
                 x_mark_dec = torch.from_numpy(
-                    np.concatenate([hist, np.repeat(last, r_end - s_end, axis=0)])
+                    np.concatenate(
+                        [hist_marks, np.repeat(last, self.pred_len, axis=0)]
+                    )
                 ).float()
             else:
                 x_mark_dec = None
             y_true = torch.zeros(self.pred_len, self.values.shape[1])
         else:
             x_mark_dec = self._mark(slice(r_begin, r_end))
-            y_true = torch.from_numpy(
-                self.values[s_end : s_end + self.pred_len]
-            ).float()
+            if x_mark_dec is not None and pad:
+                x_mark_dec = torch.cat(
+                    [torch.zeros(pad, x_mark_dec.shape[1]), x_mark_dec]
+                )
+            y_true = torch.from_numpy(self.values[s_end:r_end]).float()
 
         return x_enc, x_mark, x_dec, x_mark_dec, y_true
 
@@ -375,6 +500,34 @@ class DLinearForecaster(BaseTSLibForecaster):
     """
 
     _model_name = "DLinear"
+
+
+class NLinearForecaster(BaseTSLibForecaster):
+    """NLinear (last-value normalized linear) forecaster from TSLib.
+
+    Vendored from THUML Time-Series-Library (models/NLinear.py) [1]_.
+
+    References
+    ----------
+    .. [1] Zeng A, Chen M, Zhang L, Xu Q. 2023. Are transformers effective for
+       time series forecasting? AAAI 2023.
+    """
+
+    _model_name = "NLinear"
+
+
+class LinearForecaster(BaseTSLibForecaster):
+    """Vanilla one-layer linear forecaster from TSLib.
+
+    Vendored from THUML Time-Series-Library (models/Linear.py) [1]_.
+
+    References
+    ----------
+    .. [1] Zeng A, Chen M, Zhang L, Xu Q. 2023. Are transformers effective for
+       time series forecasting? AAAI 2023.
+    """
+
+    _model_name = "Linear"
 
 
 class TimesNetForecaster(BaseTSLibForecaster):

@@ -1,0 +1,38 @@
+{
+  "id": "forecasting-expsmoothing-exchange-96",
+  "task": "forecasting",
+  "ran_at": "2026-10-15T13:18:30.001043+00:00",
+  "train_command": "libraryts train --algorithm ExponentialSmoothing --dataset hf-exchange --model-id bench-forecasting-expsmoothing-exchange-96 --param horizon=96 --param trend=add --param context_window=36",
+  "run_command": "libraryts run --model-id bench-forecasting-expsmoothing-exchange-96 --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 6.56,
+  "values": {
+    "MSE": 0.042209046089621595,
+    "MAE": 0.1531068337230839
+  },
+  "per_metric": {
+    "MSE": {
+      "gt": 0.0422,
+      "value": 0.042209046089621595,
+      "delta": 9e-06,
+      "delta_rel": 0.000214,
+      "status": "reproduced"
+    },
+    "MAE": {
+      "gt": 0.1531,
+      "value": 0.1531068337230839,
+      "delta": 7e-06,
+      "delta_rel": 4.5e-05,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "MAE": 0.1531068337230839,
+    "MSE": 0.042209046089621595,
+    "MAPE": 4.564253913220392
+  },
+  "error": null,
+  "stdout_tail": "none\", \"params\": {}}, \"task\": \"forecasting\", \"dataset\": {\"id\": \"hf-exchange\", \"name\": \"THU-ANM Exchange\", \"task\": \"forecasting\", \"source\": \"huggingface\", \"hf_dataset\": \"Skyoung13/THU-ANM-DATASET\", \"hf_config\": \"Exchange\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-forecasting-expsmoothing-exchange-96\", \"name\": \"ExponentialSmoothing (trained: bench-forecasting-expsmoothing-exchange-96)\", \"task\": \"forecasting\", \"module\": \"sktime.forecasting.exp_smoothing.ExponentialSmoothing\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-8/playground/models/bench-forecasting-expsmoothing-exchange-96\", \"manifest\": {\"model_id\": \"bench-forecasting-expsmoothing-exchange-96\", \"backend\": \"sktime\", \"task\": \"forecasting\", \"algorithm_id\": \"registered-forecasting-ExponentialSmoothing\", \"algorithm_name\": \"ExponentialSmoothing\", \"module\": \"sktime.forecasting.exp_smoothing.ExponentialSmoothing\", \"params\": {\"trend\": \"add\"}, \"eval_params\": {\"horizon\": 96, \"context_window\": 36}, \"created_at\": \"2026-10-15T13:18:26.338285+00:00\", \"spec\": {\"task\": \"forecasting\", \"dataset_id\": \"hf-exchange\", \"algorithm_id\": \"registered-forecasting-ExponentialSmoothing\", \"preprocessor_id\": \"none\", \"params\": {\"horizon\": 96, \"trend\": \"add\", \"context_window\": 36}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 2858.6, \"log\": [\"Selected dataset: THU-ANM Exchange\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-forecasting-expsmoothing-exchange-96 (sktime backend, algorithm: registered-forecasting-ExponentialSmoothing, created: 2026-10-15T13:18:26.338285+00:00)\", \"Loaded Hugging Face config Exchange (7588 rows)\", \"Normalized time index to RangeIndex for reproducible forecasting\", \"Finished in 2858.6 ms\"]}, \"error\": null}\n"
+}

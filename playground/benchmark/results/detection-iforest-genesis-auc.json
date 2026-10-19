@@ -1,0 +1,32 @@
+{
+  "id": "detection-iforest-genesis-auc",
+  "task": "anomaly_detection",
+  "ran_at": "2026-10-14T17:55:07.255908+00:00",
+  "train_command": "libraryts train --algorithm PyODIForestDetector --dataset tsb-genesis --model-id bench-detection-iforest-genesis-auc --param contamination=0.1 --param n_estimators=100",
+  "run_command": "libraryts run --model-id bench-detection-iforest-genesis-auc --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 9.64,
+  "values": {
+    "AUC-ROC": 0.6643060193774479
+  },
+  "per_metric": {
+    "AUC-ROC": {
+      "gt": 0.78,
+      "value": 0.6643060193774479,
+      "delta": -0.115694,
+      "delta_rel": 0.148326,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "AUC-ROC": 0.6643060193774479,
+    "Precision": 0.010127430958081616,
+    "Recall": 0.32666666666666666,
+    "F1": 0.01964578024736021,
+    "Series": 6
+  },
+  "error": null,
+  "stdout_tail": ": \"anomaly_detection\", \"module\": \"sktime.detection.adapters.pyod.PyODIForestDetector\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/playground/models/bench-detection-iforest-genesis-auc\", \"manifest\": {\"model_id\": \"bench-detection-iforest-genesis-auc\", \"backend\": \"sktime\", \"task\": \"anomaly_detection\", \"algorithm_id\": \"registered-anomaly_detection-PyODIForestDetector\", \"algorithm_name\": \"PyODIForestDetector\", \"module\": \"sktime.detection.adapters.pyod.PyODIForestDetector\", \"params\": {\"contamination\": 0.1, \"n_estimators\": 100}, \"eval_params\": {}, \"created_at\": \"2026-10-14T17:55:02.571674+00:00\", \"spec\": {\"task\": \"anomaly_detection\", \"dataset_id\": \"tsb-genesis\", \"algorithm_id\": \"registered-anomaly_detection-PyODIForestDetector\", \"preprocessor_id\": \"none\", \"params\": {\"contamination\": 0.1, \"n_estimators\": 100}, \"preprocessor_params\": {}}, \"multiseries\": true, \"series\": [{\"name\": \"genesis-anomalies.test.csv@1.out\", \"artifact\": \"series/0000/model.zip\"}, {\"name\": \"genesis-anomalies.test.csv@13.out\", \"artifact\": \"series/0001/model.zip\"}, {\"name\": \"genesis-anomalies.test.csv@17.out\", \"artifact\": \"series/0002/model.zip\"}, {\"name\": \"genesis-anomalies.test.csv@3.out\", \"artifact\": \"series/0003/model.zip\"}, {\"name\": \"genesis-anomalies.test.csv@5.out\", \"artifact\": \"series/0004/model.zip\"}, {\"name\": \"genesis-anomalies.test.csv@6.out\", \"artifact\": \"series/0005/model.zip\"}], \"artifacts\": {\"model\": null, \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 3730.1, \"log\": [\"Selected dataset: TSB-UAD Genesis (6 series)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-detection-iforest-genesis-auc (sktime backend, algorithm: registered-anomaly_detection-PyODIForestDetector, created: 2026-10-14T17:55:02.571674+00:00)\", \"Multi-series eval: 6 series, AUC-ROC=0.6643\", \"Finished in 3730.1 ms\"]}, \"error\": null}\n"
+}

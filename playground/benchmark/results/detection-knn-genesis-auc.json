@@ -1,0 +1,32 @@
+{
+  "id": "detection-knn-genesis-auc",
+  "task": "anomaly_detection",
+  "ran_at": "2026-10-15T11:52:10.427864+00:00",
+  "train_command": "libraryts train --algorithm PyODKNNDetector --dataset tsb-genesis --model-id bench-detection-knn-genesis-auc --param contamination=0.1 --param n_neighbors=5",
+  "run_command": "libraryts run --model-id bench-detection-knn-genesis-auc --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 15.84,
+  "values": {
+    "AUC-ROC": 0.573716244073387
+  },
+  "per_metric": {
+    "AUC-ROC": {
+      "gt": 0.5737,
+      "value": 0.573716244073387,
+      "delta": 1.6e-05,
+      "delta_rel": 2.8e-05,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "AUC-ROC": 0.573716244073387,
+    "Precision": 0.011152448716387335,
+    "Recall": 0.08666666666666667,
+    "F1": 0.01871366775387788,
+    "Series": 6
+  },
+  "error": null,
+  "stdout_tail": "nesis-auc)\", \"task\": \"anomaly_detection\", \"module\": \"sktime.detection.adapters.pyod.PyODKNNDetector\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-11/playground/models/bench-detection-knn-genesis-auc\", \"manifest\": {\"model_id\": \"bench-detection-knn-genesis-auc\", \"backend\": \"sktime\", \"task\": \"anomaly_detection\", \"algorithm_id\": \"registered-anomaly_detection-PyODKNNDetector\", \"algorithm_name\": \"PyODKNNDetector\", \"module\": \"sktime.detection.adapters.pyod.PyODKNNDetector\", \"params\": {\"contamination\": 0.1, \"n_neighbors\": 5}, \"eval_params\": {}, \"created_at\": \"2026-10-15T11:52:02.118713+00:00\", \"spec\": {\"task\": \"anomaly_detection\", \"dataset_id\": \"tsb-genesis\", \"algorithm_id\": \"registered-anomaly_detection-PyODKNNDetector\", \"preprocessor_id\": \"none\", \"params\": {\"contamination\": 0.1, \"n_neighbors\": 5}, \"preprocessor_params\": {}}, \"multiseries\": true, \"series\": [{\"name\": \"genesis-anomalies.test.csv@1.out\", \"artifact\": \"series/0000/model.zip\"}, {\"name\": \"genesis-anomalies.test.csv@13.out\", \"artifact\": \"series/0001/model.zip\"}, {\"name\": \"genesis-anomalies.test.csv@17.out\", \"artifact\": \"series/0002/model.zip\"}, {\"name\": \"genesis-anomalies.test.csv@3.out\", \"artifact\": \"series/0003/model.zip\"}, {\"name\": \"genesis-anomalies.test.csv@5.out\", \"artifact\": \"series/0004/model.zip\"}, {\"name\": \"genesis-anomalies.test.csv@6.out\", \"artifact\": \"series/0005/model.zip\"}], \"artifacts\": {\"model\": null, \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 7092.1, \"log\": [\"Selected dataset: TSB-UAD Genesis (6 series)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-detection-knn-genesis-auc (sktime backend, algorithm: registered-anomaly_detection-PyODKNNDetector, created: 2026-10-15T11:52:02.118713+00:00)\", \"Multi-series eval: 6 series, AUC-ROC=0.5737\", \"Finished in 7092.1 ms\"]}, \"error\": null}\n"
+}

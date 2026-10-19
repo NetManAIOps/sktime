@@ -1,0 +1,29 @@
+{
+  "id": "classification-stsf-arrowhead",
+  "task": "classification",
+  "ran_at": "2026-10-15T13:01:17.806303+00:00",
+  "train_command": "libraryts train --algorithm SupervisedTimeSeriesForest --dataset arrow-head --model-id bench-classification-stsf-arrowhead --param random_state=0 --param n_estimators=200 --param n_jobs=1",
+  "run_command": "libraryts run --model-id bench-classification-stsf-arrowhead --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 51.53,
+  "values": {
+    "Accuracy": 0.6571428571428571
+  },
+  "per_metric": {
+    "Accuracy": {
+      "gt": 0.67429,
+      "value": 0.6571428571428571,
+      "delta": -0.017147,
+      "delta_rel": 0.02543,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "Accuracy": 0.6571428571428571,
+    "Macro F1": 0.6590738423028786
+  },
+  "error": null,
+  "stdout_tail": "lgorithm_id\": \"sktime-trained:bench-classification-stsf-arrowhead\", \"preprocessor_id\": \"none\", \"params\": {}}, \"task\": \"classification\", \"dataset\": {\"id\": \"arrow-head\", \"name\": \"ArrowHead\", \"task\": \"classification\", \"source\": \"local\", \"loader\": \"sktime.datasets.load_arrow_head\", \"enabled\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-classification-stsf-arrowhead\", \"name\": \"SupervisedTimeSeriesForest (trained: bench-classification-stsf-arrowhead)\", \"task\": \"classification\", \"module\": \"sktime.classification.interval_based._stsf.SupervisedTimeSeriesForest\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-14/playground/models/bench-classification-stsf-arrowhead\", \"manifest\": {\"model_id\": \"bench-classification-stsf-arrowhead\", \"backend\": \"sktime\", \"task\": \"classification\", \"algorithm_id\": \"registered-classification-SupervisedTimeSeriesForest\", \"algorithm_name\": \"SupervisedTimeSeriesForest\", \"module\": \"sktime.classification.interval_based._stsf.SupervisedTimeSeriesForest\", \"params\": {\"random_state\": 0, \"n_estimators\": 200, \"n_jobs\": 1}, \"eval_params\": {}, \"created_at\": \"2026-10-15T13:01:06.086483+00:00\", \"spec\": {\"task\": \"classification\", \"dataset_id\": \"arrow-head\", \"algorithm_id\": \"registered-classification-SupervisedTimeSeriesForest\", \"preprocessor_id\": \"none\", \"params\": {\"random_state\": 0, \"n_estimators\": 200, \"n_jobs\": 1}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 8260.5, \"log\": [\"Selected dataset: ArrowHead\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-classification-stsf-arrowhead (sktime backend, algorithm: registered-classification-SupervisedTimeSeriesForest, created: 2026-10-15T13:01:06.086483+00:00)\", \"Loaded ArrowHead train=36 test=175\", \"Finished in 8260.5 ms\"]}, \"error\": null}\n"
+}

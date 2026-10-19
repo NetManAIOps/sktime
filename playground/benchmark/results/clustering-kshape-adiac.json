@@ -1,0 +1,39 @@
+{
+  "id": "clustering-kshape-adiac",
+  "task": "clustering",
+  "ran_at": "2026-10-15T06:50:28.536421+00:00",
+  "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset adiac-cl --model-id bench-clustering-kshape-adiac --param n_clusters=37 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+  "run_command": "libraryts run --model-id bench-clustering-kshape-adiac --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 192.67,
+  "values": {
+    "ARI": 0.22480009240635945,
+    "NMI": 0.566058044559255
+  },
+  "per_metric": {
+    "ARI": {
+      "gt": 0.24511,
+      "value": 0.22480009240635945,
+      "delta": -0.02031,
+      "delta_rel": 0.08286,
+      "status": "reproduced"
+    },
+    "NMI": {
+      "gt": 0.58855,
+      "value": 0.566058044559255,
+      "delta": -0.022492,
+      "delta_rel": 0.038216,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "ARI": 0.22480009240635945,
+    "NMI": 0.566058044559255,
+    "Clusters": 37,
+    "Largest Cluster": 59
+  },
+  "error": null,
+  "stdout_tail": "t_id\": \"adiac-cl\", \"algorithm_id\": \"sktime-trained:bench-clustering-kshape-adiac\", \"preprocessor_id\": \"none\", \"params\": {}}, \"task\": \"clustering\", \"dataset\": {\"id\": \"adiac-cl\", \"name\": \"Adiac (labels for ARI)\", \"task\": \"clustering\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"Adiac\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-clustering-kshape-adiac\", \"name\": \"TimeSeriesKShapes (trained: bench-clustering-kshape-adiac)\", \"task\": \"clustering\", \"module\": \"sktime.clustering.k_shapes.TimeSeriesKShapes\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/playground/models/bench-clustering-kshape-adiac\", \"manifest\": {\"model_id\": \"bench-clustering-kshape-adiac\", \"backend\": \"sktime\", \"task\": \"clustering\", \"algorithm_id\": \"registered-clustering-TimeSeriesKShapes\", \"algorithm_name\": \"TimeSeriesKShapes\", \"module\": \"sktime.clustering.k_shapes.TimeSeriesKShapes\", \"params\": {\"n_clusters\": 37, \"random_state\": 42, \"max_iter\": 300, \"n_init\": 10, \"tol\": 0.0001}, \"eval_params\": {\"fit_on\": \"all\"}, \"created_at\": \"2026-10-15T06:50:23.919103+00:00\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"adiac-cl\", \"algorithm_id\": \"registered-clustering-TimeSeriesKShapes\", \"preprocessor_id\": \"none\", \"params\": {\"n_clusters\": 37, \"fit_on\": \"all\", \"random_state\": 42, \"max_iter\": 300, \"n_init\": 10, \"tol\": 0.0001}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 2861.4, \"log\": [\"Selected dataset: Adiac (labels for ARI)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-clustering-kshape-adiac (sktime backend, algorithm: registered-clustering-TimeSeriesKShapes, created: 2026-10-15T06:50:23.919103+00:00)\", \"Loaded UCR/UEA Adiac train=390 test=391\", \"Finished in 2861.4 ms\"]}, \"error\": null}\n"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "detection-hbos-occupancy-auc",
+  "task": "anomaly_detection",
+  "ran_at": "2026-10-14T17:52:47.407369+00:00",
+  "train_command": "libraryts train --algorithm PyODHBOSDetector --dataset tsb-occupancy --model-id bench-detection-hbos-occupancy-auc --param contamination=0.1 --param n_bins=10",
+  "run_command": "libraryts run --model-id bench-detection-hbos-occupancy-auc --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 18.37,
+  "values": {
+    "AUC-ROC": 0.8585740537675344
+  },
+  "per_metric": {
+    "AUC-ROC": {
+      "gt": 0.89,
+      "value": 0.8585740537675344,
+      "delta": -0.031426,
+      "delta_rel": 0.03531,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "AUC-ROC": 0.8585740537675344,
+    "Precision": 0.6407587353594966,
+    "Recall": 0.17795462674308155,
+    "F1": 0.2683014683632293,
+    "Series": 10
+  },
+  "error": null,
+  "stdout_tail": "c\", \"backend\": \"sktime\", \"task\": \"anomaly_detection\", \"algorithm_id\": \"registered-anomaly_detection-PyODHBOSDetector\", \"algorithm_name\": \"PyODHBOSDetector\", \"module\": \"sktime.detection.adapters.pyod.PyODHBOSDetector\", \"params\": {\"contamination\": 0.1, \"n_bins\": 10}, \"eval_params\": {}, \"created_at\": \"2026-10-14T17:52:38.811027+00:00\", \"spec\": {\"task\": \"anomaly_detection\", \"dataset_id\": \"tsb-occupancy\", \"algorithm_id\": \"registered-anomaly_detection-PyODHBOSDetector\", \"preprocessor_id\": \"none\", \"params\": {\"contamination\": 0.1, \"n_bins\": 10}, \"preprocessor_params\": {}}, \"multiseries\": true, \"series\": [{\"name\": \"room-occupancy-0.test.csv@1.out\", \"artifact\": \"series/0000/model.zip\"}, {\"name\": \"room-occupancy-0.test.csv@2.out\", \"artifact\": \"series/0001/model.zip\"}, {\"name\": \"room-occupancy-0.test.csv@3.out\", \"artifact\": \"series/0002/model.zip\"}, {\"name\": \"room-occupancy-0.test.csv@4.out\", \"artifact\": \"series/0003/model.zip\"}, {\"name\": \"room-occupancy-0.test.csv@5.out\", \"artifact\": \"series/0004/model.zip\"}, {\"name\": \"room-occupancy-1.test.csv@3.out\", \"artifact\": \"series/0005/model.zip\"}, {\"name\": \"room-occupancy-1.test.csv@4.out\", \"artifact\": \"series/0006/model.zip\"}, {\"name\": \"room-occupancy.train.csv@3.out\", \"artifact\": \"series/0007/model.zip\"}, {\"name\": \"room-occupancy.train.csv@4.out\", \"artifact\": \"series/0008/model.zip\"}, {\"name\": \"room-occupancy.train.csv@5.out\", \"artifact\": \"series/0009/model.zip\"}], \"artifacts\": {\"model\": null, \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 6184.3, \"log\": [\"Selected dataset: TSB-UAD Occupancy (10 series)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-detection-hbos-occupancy-auc (sktime backend, algorithm: registered-anomaly_detection-PyODHBOSDetector, created: 2026-10-14T17:52:38.811027+00:00)\", \"Multi-series eval: 10 series, AUC-ROC=0.8586\", \"Finished in 6184.3 ms\"]}, \"error\": null}\n"
+}

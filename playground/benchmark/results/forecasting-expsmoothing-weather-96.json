@@ -1,0 +1,38 @@
+{
+  "id": "forecasting-expsmoothing-weather-96",
+  "task": "forecasting",
+  "ran_at": "2026-10-15T13:20:05.487755+00:00",
+  "train_command": "libraryts train --algorithm ExponentialSmoothing --dataset hf-weather --model-id bench-forecasting-expsmoothing-weather-96 --param horizon=96 --param trend=add --param seasonal=add --param sp=144 --param context_window=36",
+  "run_command": "libraryts run --model-id bench-forecasting-expsmoothing-weather-96 --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 45.64,
+  "values": {
+    "MSE": 0.03186738049795994,
+    "MAE": 0.14073839494898716
+  },
+  "per_metric": {
+    "MSE": {
+      "gt": 0.0319,
+      "value": 0.03186738049795994,
+      "delta": -3.3e-05,
+      "delta_rel": 0.001023,
+      "status": "reproduced"
+    },
+    "MAE": {
+      "gt": 0.1407,
+      "value": 0.14073839494898716,
+      "delta": 3.8e-05,
+      "delta_rel": 0.000273,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "MAE": 0.14073839494898716,
+    "MSE": 0.03186738049795994,
+    "MAPE": 0.023567938552209792
+  },
+  "error": null,
+  "stdout_tail": "set\": {\"id\": \"hf-weather\", \"name\": \"THU-ANM Weather\", \"task\": \"forecasting\", \"source\": \"huggingface\", \"hf_dataset\": \"Skyoung13/THU-ANM-DATASET\", \"hf_config\": \"Weather\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-forecasting-expsmoothing-weather-96\", \"name\": \"ExponentialSmoothing (trained: bench-forecasting-expsmoothing-weather-96)\", \"task\": \"forecasting\", \"module\": \"sktime.forecasting.exp_smoothing.ExponentialSmoothing\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-8/playground/models/bench-forecasting-expsmoothing-weather-96\", \"manifest\": {\"model_id\": \"bench-forecasting-expsmoothing-weather-96\", \"backend\": \"sktime\", \"task\": \"forecasting\", \"algorithm_id\": \"registered-forecasting-ExponentialSmoothing\", \"algorithm_name\": \"ExponentialSmoothing\", \"module\": \"sktime.forecasting.exp_smoothing.ExponentialSmoothing\", \"params\": {\"trend\": \"add\", \"seasonal\": \"add\", \"sp\": 144}, \"eval_params\": {\"horizon\": 96, \"context_window\": 36}, \"created_at\": \"2026-10-15T13:20:00.915807+00:00\", \"spec\": {\"task\": \"forecasting\", \"dataset_id\": \"hf-weather\", \"algorithm_id\": \"registered-forecasting-ExponentialSmoothing\", \"preprocessor_id\": \"none\", \"params\": {\"horizon\": 96, \"trend\": \"add\", \"seasonal\": \"add\", \"sp\": 144, \"context_window\": 36}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 3519.9, \"log\": [\"Selected dataset: THU-ANM Weather\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-forecasting-expsmoothing-weather-96 (sktime backend, algorithm: registered-forecasting-ExponentialSmoothing, created: 2026-10-15T13:20:00.915807+00:00)\", \"Loaded Hugging Face config Weather (52696 rows)\", \"Normalized time index to RangeIndex for reproducible forecasting\", \"Finished in 3519.9 ms\"]}, \"error\": null}\n"
+}

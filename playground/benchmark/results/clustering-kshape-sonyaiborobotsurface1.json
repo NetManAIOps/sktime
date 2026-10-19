@@ -1,0 +1,39 @@
+{
+  "id": "clustering-kshape-sonyaiborobotsurface1",
+  "task": "clustering",
+  "ran_at": "2026-10-14T17:48:30.491343+00:00",
+  "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset sonyaiborobotsurface1-cl --model-id bench-clustering-kshape-sonyaiborobotsurface1 --param n_clusters=2 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+  "run_command": "libraryts run --model-id bench-clustering-kshape-sonyaiborobotsurface1 --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 53.2,
+  "values": {
+    "ARI": 0.25807933809924183,
+    "NMI": 0.3536965546160184
+  },
+  "per_metric": {
+    "ARI": {
+      "gt": 0.35057,
+      "value": 0.25807933809924183,
+      "delta": -0.092491,
+      "delta_rel": 0.263829,
+      "status": "reproduced"
+    },
+    "NMI": {
+      "gt": 0.35183,
+      "value": 0.3536965546160184,
+      "delta": 0.001867,
+      "delta_rel": 0.005305,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "ARI": 0.25807933809924183,
+    "NMI": 0.3536965546160184,
+    "Clusters": 2,
+    "Largest Cluster": 422
+  },
+  "error": null,
+  "stdout_tail": "orobotsurface1-cl\", \"name\": \"SonyAIBORobotSurface1 (labels for ARI)\", \"task\": \"clustering\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"SonyAIBORobotSurface1\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-clustering-kshape-sonyaiborobotsurface1\", \"name\": \"TimeSeriesKShapes (trained: bench-clustering-kshape-sonyaiborobotsurface1)\", \"task\": \"clustering\", \"module\": \"sktime.clustering.k_shapes.TimeSeriesKShapes\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/playground/models/bench-clustering-kshape-sonyaiborobotsurface1\", \"manifest\": {\"model_id\": \"bench-clustering-kshape-sonyaiborobotsurface1\", \"backend\": \"sktime\", \"task\": \"clustering\", \"algorithm_id\": \"registered-clustering-TimeSeriesKShapes\", \"algorithm_name\": \"TimeSeriesKShapes\", \"module\": \"sktime.clustering.k_shapes.TimeSeriesKShapes\", \"params\": {\"n_clusters\": 2, \"random_state\": 42, \"max_iter\": 300, \"n_init\": 10, \"tol\": 0.0001}, \"eval_params\": {\"fit_on\": \"all\"}, \"created_at\": \"2026-10-14T17:48:24.893707+00:00\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"sonyaiborobotsurface1-cl\", \"algorithm_id\": \"registered-clustering-TimeSeriesKShapes\", \"preprocessor_id\": \"none\", \"params\": {\"n_clusters\": 2, \"fit_on\": \"all\", \"random_state\": 42, \"max_iter\": 300, \"n_init\": 10, \"tol\": 0.0001}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 3603.1, \"log\": [\"Selected dataset: SonyAIBORobotSurface1 (labels for ARI)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-clustering-kshape-sonyaiborobotsurface1 (sktime backend, algorithm: registered-clustering-TimeSeriesKShapes, created: 2026-10-14T17:48:24.893707+00:00)\", \"Loaded UCR/UEA SonyAIBORobotSurface1 train=20 test=601\", \"Finished in 3603.1 ms\"]}, \"error\": null}\n"
+}

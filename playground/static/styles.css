@@ -457,3 +457,83 @@ pre {
     height: 280px;
   }
 }
+
+.fold {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 8px 10px;
+  margin-top: 10px;
+}
+
+.fold summary {
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent-dark);
+}
+
+.fold > label,
+.fold > button {
+  margin-top: 8px;
+}
+
+#algoSearch {
+  margin-bottom: 6px;
+}
+
+#metricsSelect {
+  width: 100%;
+}
+
+.param-grid input[type="text"] {
+  width: 100%;
+}
+
+.chain {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.chain-step {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-size: 13px;
+}
+
+.chain-step header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+}
+
+.chain-step button {
+  padding: 0 8px;
+  min-height: 0;
+}
+
+button.secondary {
+  background: transparent;
+  color: var(--accent-dark);
+  border: 1px solid var(--accent);
+}
+
+.kv-table td,
+.kv-table th {
+  text-align: left;
+  padding: 4px 8px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+  font-size: 13px;
+}
+
+.matrix td {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  padding: 2px 6px;
+  font-size: 12px;
+}

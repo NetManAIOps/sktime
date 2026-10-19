@@ -1,0 +1,29 @@
+{
+  "id": "classification-catch22-wine",
+  "task": "classification",
+  "ran_at": "2026-10-15T11:24:50.197687+00:00",
+  "train_command": "libraryts train --algorithm Catch22Classifier --dataset ucr-wine --model-id bench-classification-catch22-wine --param random_state=0 --param n_jobs=1",
+  "run_command": "libraryts run --model-id bench-classification-catch22-wine --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 11.84,
+  "values": {
+    "Accuracy": 0.37037037037037035
+  },
+  "per_metric": {
+    "Accuracy": {
+      "gt": 0.38889,
+      "value": 0.37037037037037035,
+      "delta": -0.01852,
+      "delta_rel": 0.047622,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "Accuracy": 0.37037037037037035,
+    "Macro F1": 0.36250000000000004
+  },
+  "error": null,
+  "stdout_tail": "classification\", \"dataset_id\": \"ucr-wine\", \"algorithm_id\": \"sktime-trained:bench-classification-catch22-wine\", \"preprocessor_id\": \"none\", \"params\": {}}, \"task\": \"classification\", \"dataset\": {\"id\": \"ucr-wine\", \"name\": \"UCR/UEA Wine\", \"task\": \"classification\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"Wine\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-classification-catch22-wine\", \"name\": \"Catch22Classifier (trained: bench-classification-catch22-wine)\", \"task\": \"classification\", \"module\": \"sktime.classification.feature_based._catch22_classifier.Catch22Classifier\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-9/playground/models/bench-classification-catch22-wine\", \"manifest\": {\"model_id\": \"bench-classification-catch22-wine\", \"backend\": \"sktime\", \"task\": \"classification\", \"algorithm_id\": \"registered-classification-Catch22Classifier\", \"algorithm_name\": \"Catch22Classifier\", \"module\": \"sktime.classification.feature_based._catch22_classifier.Catch22Classifier\", \"params\": {\"random_state\": 0, \"n_jobs\": 1}, \"eval_params\": {}, \"created_at\": \"2026-10-15T11:24:45.258493+00:00\", \"spec\": {\"task\": \"classification\", \"dataset_id\": \"ucr-wine\", \"algorithm_id\": \"registered-classification-Catch22Classifier\", \"preprocessor_id\": \"none\", \"params\": {\"random_state\": 0, \"n_jobs\": 1}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 3509.9, \"log\": [\"Selected dataset: UCR/UEA Wine\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-classification-catch22-wine (sktime backend, algorithm: registered-classification-Catch22Classifier, created: 2026-10-15T11:24:45.258493+00:00)\", \"Loaded UCR/UEA Wine train=57 test=54\", \"Finished in 3509.9 ms\"]}, \"error\": null}\n"
+}

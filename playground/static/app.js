@@ -1,5 +1,7 @@
 const state = {
   catalog: null,
+  chain: [],
+  models: [],
   result: null,
   view: { start: 0, length: 0 },
   viewKey: null,
@@ -16,6 +18,8 @@ async function init() {
   const response = await fetch("/api/catalog");
   state.catalog = await response.json();
   renderCatalog();
+  renderTools();
+  await refreshModels();
   window.scrollTo(0, 0);
   setTimeout(() => window.scrollTo(0, 0), 0);
   bindEvents();
@@ -25,17 +29,35 @@ async function init() {
 function bindEvents() {
   ["taskSelect", "sourceSelect", "datasetSelect", "preprocessorSelect", "algorithmSelect"].forEach((id) => {
     el(id).addEventListener("change", () => {
+      if (id === "taskSelect") el("algoSearch").value = "";
       if (id === "taskSelect" || id === "sourceSelect" || id === "algorithmSelect") {
         refreshOptions();
       }
       if (id === "taskSelect") {
+        state.chain = [];
+        renderChain();
         renderPreprocessorOptions();
+        renderModelOptions();
       }
       renderParams();
       renderPipeline();
     });
   });
   el("runButton").addEventListener("click", runExperiment);
+  el("trainButton").addEventListener("click", trainModel);
+  el("addStepButton").addEventListener("click", addChainStep);
+  el("evaluateButton").addEventListener("click", evaluateLastRun);
+  el("analyzeButton").addEventListener("click", analyzeDataset);
+  el("distButton").addEventListener("click", computeDistances);
+  el("analyzerSelect").addEventListener("change", renderAnalyzerParams);
+  el("chain").addEventListener("input", onChainInput);
+  el("chain").addEventListener("click", onChainClick);
+  el("runModelButton").addEventListener("click", runSavedModel);
+  el("algoSearch").addEventListener("input", () => {
+    refreshOptions();
+    renderParams();
+    renderPipeline();
+  });
   el("detectorSubtypeSelect").addEventListener("change", () => {
     refreshOptions();
     renderParams();
@@ -126,6 +148,10 @@ function refreshOptions() {
       visibleAlgorithms = algorithms.filter((algorithm) => (algorithm.subtype || "other") === subtype);
     }
   }
+  const query = (el("algoSearch")?.value || "").trim().toLowerCase();
+  if (query) {
+    visibleAlgorithms = visibleAlgorithms.filter((algorithm) => algorithm.name.toLowerCase().includes(query));
+  }
   const enabledAlgorithms = visibleAlgorithms.filter((algorithm) => algorithm.enabled);
   el("algorithmSelect").innerHTML = [
     ...enabledAlgorithms.map((algorithm) => `<option value="${algorithm.id}">${algorithm.name}</option>`),
@@ -157,25 +183,107 @@ function refreshOptions() {
 
 function renderParams() {
   const algorithm = currentAlgorithm();
-  const preprocessor = currentPreprocessor();
   const algorithmParams = algorithm?.params || {};
-  const preprocessorParams = preprocessor?.params || {};
-  const preprocessorInputs = Object.entries(preprocessorParams).map(([key, value]) => {
-    const label = `pre: ${key.replaceAll("_", " ")}`;
-    return `<label>${label}<input data-preprocessor-param="${key}" type="number" step="any" value="${value}"></label>`;
-  });
   const algorithmInputs = Object.entries(algorithmParams).map(([key, value]) => {
     const label = key.replaceAll("_", " ");
-    return `<label>${label}<input data-param="${key}" type="number" step="any" value="${value}"></label>`;
+    return `<label>${label}<input data-param="${key}" data-default="${value}" type="number" step="any" value="${value}"></label>`;
   });
-  el("params").innerHTML = [...preprocessorInputs, ...algorithmInputs].join("");
+  const extraInputs = Object.entries(algorithm?.extra_params || {}).map(([key, spec]) => {
+    const label = key.replaceAll("_", " ");
+    const shown = spec.default === null || spec.default === undefined ? "" : spec.default;
+    if (spec.type === "bool") {
+      return `<label>${label}<select data-extra="${key}" data-type="bool" data-default="${spec.default}">`
+        + `<option value="true"${spec.default ? " selected" : ""}>true</option>`
+        + `<option value="false"${spec.default ? "" : " selected"}>false</option></select></label>`;
+    }
+    const placeholder = spec.type === "optional" ? "unset (None)" : "";
+    return `<label>${label}<input data-extra="${key}" data-type="${spec.type}" data-default="${escapeHtml(shown)}" type="text" value="${escapeHtml(shown)}" placeholder="${placeholder}"></label>`;
+  });
+  el("params").innerHTML = [...algorithmInputs, ...extraInputs].join("");
+  renderEvalParams(algorithm);
+  renderMetricOptions();
+}
+
+function renderEvalParams(algorithm) {
+  const task = el("taskSelect").value;
+  const known = new Set(Object.keys(algorithm?.params || {}));
+  const specs = ((state.catalog.eval_param_specs || {})[task] || []).filter((spec) => !known.has(spec.name));
+  el("evalDetails").hidden = specs.length === 0;
+  el("evalParams").innerHTML = specs
+    .map((spec) => {
+      const label = spec.name.replaceAll("_", " ");
+      const title = escapeHtml(spec.help || "");
+      if (spec.type === "choice") {
+        const options = spec.choices
+          .map((choice) => `<option value="${choice}"${choice === spec.default ? " selected" : ""}>${choice}</option>`)
+          .join("");
+        return `<label title="${title}">${label}<select data-eval="${spec.name}" data-default="${spec.default}">${options}</select></label>`;
+      }
+      const shown = spec.default === null || spec.default === undefined ? "" : spec.default;
+      return `<label title="${title}">${label}<input data-eval="${spec.name}" data-default="${shown}" type="number" step="any" value="${shown}" placeholder="unset"></label>`;
+    })
+    .join("");
+}
+
+function renderMetricOptions() {
+  const task = el("taskSelect").value;
+  const previous = new Set([...el("metricsSelect").selectedOptions].map((option) => option.value));
+  el("metricsSelect").innerHTML = (state.catalog.metrics || [])
+    .filter((metric) => metric.task === task)
+    .map((metric) => `<option value="${metric.id}"${previous.has(metric.id) ? " selected" : ""}>${metric.name}${metric.default ? " (default)" : ""}</option>`)
+    .join("");
+}
+
+function parseLoose(text) {
+  const value = text.trim();
+  if (value === "") return undefined;
+  if (/^(none|null)$/i.test(value)) return null;
+  if (/^true$/i.test(value)) return true;
+  if (/^false$/i.test(value)) return false;
+  if (!Number.isNaN(Number(value))) return Number(value);
+  return value;
+}
+
+function collectEvalParams() {
+  const out = {};
+  document.querySelectorAll("[data-eval]").forEach((input) => {
+    if (input.value === "" || input.value === input.dataset.default) return;
+    out[input.dataset.eval] = input.tagName === "SELECT" ? input.value : Number(input.value);
+  });
+  return out;
+}
+
+function collectParams() {
+  const params = {};
+  document.querySelectorAll("[data-param]").forEach((input) => {
+    params[input.dataset.param] = Number(input.value);
+  });
+  document.querySelectorAll("[data-extra]").forEach((input) => {
+    if (input.value === input.dataset.default) return;
+    if (input.dataset.type === "bool") {
+      params[input.dataset.extra] = input.value === "true";
+    } else {
+      const parsed = parseLoose(input.value);
+      if (parsed !== undefined) params[input.dataset.extra] = parsed;
+    }
+  });
+  return { ...params, ...collectEvalParams() };
+}
+
+function selectedMetrics() {
+  return [...el("metricsSelect").selectedOptions].map((option) => option.value);
 }
 
 function renderPipeline(result = null) {
   const task = result?.task || el("taskSelect").value;
   const dataset = result?.dataset || currentDataset();
   const algorithm = result?.algorithm || currentAlgorithm();
-  const selectedPreprocessor = result?.preprocessor || currentPreprocessor();
+  const chainNames = result?.preprocessors?.length
+    ? result.preprocessors.map((step) => step.name || step.id)
+    : state.chain.map((step) => chainEntry(step.id)?.name || step.id);
+  const selectedPreprocessor = chainNames.length
+    ? { id: "chain", name: chainNames.join(" → "), module: `${chainNames.length} step(s)` }
+    : null;
   const preprocessor = preprocessorFor(task, algorithm, dataset, selectedPreprocessor);
   const steps = [
     {
@@ -264,26 +372,28 @@ function evaluationDetail(result) {
 }
 
 async function runExperiment() {
-  const params = {};
-  document.querySelectorAll("[data-param]").forEach((input) => {
-    params[input.dataset.param] = Number(input.value);
-  });
-  const preprocessorParams = {};
-  document.querySelectorAll("[data-preprocessor-param]").forEach((input) => {
-    preprocessorParams[input.dataset.preprocessorParam] = Number(input.value);
-  });
+  const params = collectParams();
   const spec = {
     task: el("taskSelect").value,
     dataset_id: el("datasetSelect").value,
     algorithm_id: el("algorithmSelect").value,
-    preprocessor_id: el("preprocessorSelect").value,
     params,
-    preprocessor_params: preprocessorParams,
   };
-  showProgress("Running");
-  el("runButton").disabled = true;
+  if (state.chain.length) spec.preprocessors = state.chain.map((step) => ({ id: step.id, params: step.params }));
+  const metrics = selectedMetrics();
+  if (metrics.length) spec.metrics = metrics;
+  const result = await submitRun("/api/run", spec, "Running", "runButton");
+  if (result) {
+    renderResult(result);
+    setStatus("Complete");
+  }
+}
+
+async function submitRun(url, spec, label, buttonId) {
+  showProgress(label);
+  el(buttonId).disabled = true;
   try {
-    const response = await fetch("/api/run", {
+    const response = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(spec),
@@ -294,20 +404,86 @@ async function runExperiment() {
       renderError(result.error || "Unknown error");
       renderPipeline(result);
       setStatus("Blocked");
-    } else {
-      renderResult(result);
-      setStatus("Complete");
+      return null;
     }
+    return result;
   } catch (error) {
     renderError(String(error));
     setStatus("Error");
+    return null;
   } finally {
     hideProgress();
-    el("runButton").disabled = false;
+    el(buttonId).disabled = false;
+  }
+}
+
+async function trainModel() {
+  const modelId = el("modelIdInput").value.trim();
+  if (state.chain.length > 1) {
+    renderError("Training supports a single preprocessor; remove extra chain steps (a chain works for plain runs).");
+    return;
+  }
+  const spec = {
+    task: el("taskSelect").value,
+    dataset_id: el("datasetSelect").value,
+    algorithm_id: el("algorithmSelect").value,
+    params: collectParams(),
+  };
+  if (state.chain.length === 1) {
+    spec.preprocessor_id = state.chain[0].id;
+    spec.preprocessor_params = state.chain[0].params;
+  }
+  if (modelId) spec.model_id = modelId;
+  const result = await submitRun("/api/train", spec, "Training", "trainButton");
+  if (!result) return;
+  await refreshModels(result.model_id);
+  el("modelHint").textContent = `Saved model ${result.model_id}. Pick it above and press "Run saved model".`;
+  el("logBlock").textContent = JSON.stringify(result, null, 2);
+  showTab("log");
+  setStatus("Trained");
+}
+
+async function runSavedModel() {
+  const modelId = el("modelSelect").value;
+  if (!modelId) {
+    el("modelHint").textContent = "No saved model selected; train one first.";
+    return;
+  }
+  const spec = { model_id: modelId, dataset_id: el("datasetSelect").value, params: collectEvalParams() };
+  const metrics = selectedMetrics();
+  if (metrics.length) spec.metrics = metrics;
+  const result = await submitRun("/api/run", spec, "Running saved model", "runModelButton");
+  if (result) {
+    renderResult(result);
+    setStatus("Complete");
+  }
+}
+
+async function refreshModels(select = null) {
+  try {
+    const response = await fetch("/api/models");
+    const payload = await response.json();
+    state.models = payload.models || [];
+  } catch (error) {
+    state.models = [];
+  }
+  renderModelOptions(select);
+}
+
+function renderModelOptions(select = null) {
+  const task = el("taskSelect").value;
+  const previous = select || el("modelSelect").value;
+  el("modelSelect").innerHTML = (state.models || [])
+    .filter((model) => !model.task || model.task === task)
+    .map((model) => `<option value="${escapeHtml(model.model_id)}">${escapeHtml(model.model_id)} · ${escapeHtml(model.task || "?")} · ${escapeHtml(model.algorithm_id || model.family || "")}</option>`)
+    .join("");
+  if (previous && [...el("modelSelect").options].some((option) => option.value === previous)) {
+    el("modelSelect").value = previous;
   }
 }
 
 function renderResult(result) {
+  state.lastRunId = result.run_id || null;
   el("runMeta").textContent = `${result.dataset.name} / ${result.algorithm.name} / ${result.duration_ms} ms`;
   renderMetrics(result.metrics);
   renderTable(result.tables);
@@ -676,6 +852,149 @@ function currentAlgorithm() {
 
 function currentDataset() {
   return state.catalog.datasets.find((dataset) => dataset.id === el("datasetSelect").value);
+}
+
+function chainEntry(id) {
+  return (state.catalog.preprocessors || []).find((item) => item.id === id);
+}
+
+function addChainStep() {
+  const id = el("preprocessorSelect").value;
+  if (!id || id === "none") return;
+  const entry = chainEntry(id);
+  state.chain.push({ id, params: { ...(entry?.params || {}) } });
+  renderChain();
+  renderPipeline();
+}
+
+function renderChain() {
+  el("chain").innerHTML = state.chain
+    .map((step, index) => {
+      const entry = chainEntry(step.id);
+      const inputs = Object.entries(step.params)
+        .map(([key, value]) => `<label>${escapeHtml(key.replaceAll("_", " "))}<input data-step="${index}" data-key="${escapeHtml(key)}" type="number" step="any" value="${value}"></label>`)
+        .join("");
+      return `<div class="chain-step"><header><span>${index + 1}. ${escapeHtml(entry?.name || step.id)}</span>`
+        + `<button type="button" class="secondary" data-remove="${index}" title="remove step">×</button></header>`
+        + `<div class="param-grid">${inputs}</div></div>`;
+    })
+    .join("");
+}
+
+function onChainInput(event) {
+  const input = event.target;
+  if (input.dataset.step === undefined) return;
+  state.chain[Number(input.dataset.step)].params[input.dataset.key] = Number(input.value);
+}
+
+function onChainClick(event) {
+  const button = event.target.closest("[data-remove]");
+  if (!button) return;
+  state.chain.splice(Number(button.dataset.remove), 1);
+  renderChain();
+  renderPipeline();
+}
+
+function renderTools() {
+  el("analyzerSelect").innerHTML = (state.catalog.analyzers || [])
+    .filter((item) => item.enabled !== false)
+    .map((item) => `<option value="${item.id}">${escapeHtml(item.name)}</option>`)
+    .join("");
+  renderAnalyzerParams();
+  el("distanceSelect").innerHTML = (state.catalog.distances || [])
+    .filter((item) => item.enabled !== false)
+    .map((item) => `<option value="${item.id}">${escapeHtml(item.name || item.id)}</option>`)
+    .join("");
+}
+
+function renderAnalyzerParams() {
+  const analyzer = (state.catalog.analyzers || []).find((item) => item.id === el("analyzerSelect").value);
+  el("analyzerParams").innerHTML = Object.entries(analyzer?.params || {})
+    .map(([key, value]) => `<label>${escapeHtml(key.replaceAll("_", " "))}<input data-analyzer-param="${escapeHtml(key)}" type="number" step="any" value="${value}"></label>`)
+    .join("");
+}
+
+function showToolResult(title, summary, tableHtml, raw) {
+  state.result = null;
+  el("runMeta").textContent = title;
+  el("metrics").innerHTML = summary;
+  el("tableWrap").innerHTML = tableHtml;
+  el("logBlock").textContent = JSON.stringify(raw, null, 2);
+  showTab("log");
+}
+
+function metricCards(metrics) {
+  return Object.entries(metrics || {})
+    .map(([name, value]) => `<div class="metric"><span>${escapeHtml(name)}</span><strong>${escapeHtml(formatValue(value))}</strong></div>`)
+    .join("");
+}
+
+function kvTable(rows) {
+  return `<table class="kv-table"><tbody>${rows
+    .map(([key, value]) => `<tr><th>${escapeHtml(key)}</th><td>${escapeHtml(compactValue(value))}</td></tr>`)
+    .join("")}</tbody></table>`;
+}
+
+function compactValue(value) {
+  if (Array.isArray(value)) {
+    const shown = value.slice(0, 12).map((item) => (typeof item === "number" ? formatValue(item) : JSON.stringify(item)));
+    return `[${shown.join(", ")}${value.length > 12 ? `, … (${value.length} values)` : ""}]`;
+  }
+  if (typeof value === "number") return formatValue(value);
+  if (value && typeof value === "object") return JSON.stringify(value);
+  return String(value);
+}
+
+async function evaluateLastRun() {
+  const runId = state.lastRunId;
+  const metrics = selectedMetrics();
+  if (!runId) {
+    renderError("Run an experiment first; Evaluate re-scores that run.");
+    return;
+  }
+  const result = await submitRun("/api/evaluate", { run_id: runId, metrics }, "Evaluating", "evaluateButton");
+  if (!result) return;
+  showToolResult(`Evaluate · ${result.task || ""}`, metricCards(result.metrics), `<p>${escapeHtml(result.source || "saved run")}</p>`, result);
+  setStatus("Complete");
+}
+
+async function analyzeDataset() {
+  const params = {};
+  document.querySelectorAll("[data-analyzer-param]").forEach((input) => {
+    params[input.dataset.analyzerParam] = Number(input.value);
+  });
+  const spec = { analyzer_id: el("analyzerSelect").value, dataset_id: el("datasetSelect").value, params };
+  const result = await submitRun("/api/analyze", spec, "Analyzing", "analyzeButton");
+  if (!result) return;
+  const estimates = result.estimates || {};
+  const scalars = Object.entries(estimates).filter(([, value]) => !Array.isArray(value) && typeof value !== "object");
+  showToolResult(
+    `Analyze · ${result.analyzer?.name} on ${result.dataset?.name}`,
+    metricCards(Object.fromEntries(scalars)),
+    kvTable(Object.entries(estimates)),
+    result
+  );
+  setStatus("Complete");
+}
+
+async function computeDistances() {
+  const metrics = [...el("distanceSelect").selectedOptions].map((option) => option.value);
+  const spec = { dataset_id: el("datasetSelect").value, metrics, max_instances: Number(el("distMaxInstances").value) || 10 };
+  const result = await submitRun("/api/dist", spec, "Computing distances", "distButton");
+  if (!result) return;
+  const summary = (result.results || [])
+    .map((row) => `<div class="metric"><span>${escapeHtml(row.metric)} (mean)</span><strong>${escapeHtml(formatValue(row.mean))}</strong></div>`)
+    .join("");
+  const tables = (result.results || [])
+    .map((row) => {
+      const body = (row.matrix || [])
+        .map((line, i) => `<tr><th>${escapeHtml(row.instance_ids?.[i] ?? i)}</th>${line.map((value) => `<td>${escapeHtml(formatValue(value))}</td>`).join("")}</tr>`)
+        .join("");
+      return `<h4>${escapeHtml(row.metric)} · ${row.shape?.join("×")}</h4><div style="overflow:auto"><table class="kv-table matrix"><tbody>${body}</tbody></table></div>`;
+    })
+    .join("");
+  showToolResult(`Distances · ${result.dataset_name}`, summary, tables, result);
+  setStatus("Complete");
 }
 
 function currentPreprocessor() {

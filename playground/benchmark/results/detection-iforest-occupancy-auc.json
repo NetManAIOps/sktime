@@ -1,0 +1,32 @@
+{
+  "id": "detection-iforest-occupancy-auc",
+  "task": "anomaly_detection",
+  "ran_at": "2026-10-14T17:52:14.356299+00:00",
+  "train_command": "libraryts train --algorithm PyODIForestDetector --dataset tsb-occupancy --model-id bench-detection-iforest-occupancy-auc --param contamination=0.1 --param n_estimators=100",
+  "run_command": "libraryts run --model-id bench-detection-iforest-occupancy-auc --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 10.36,
+  "values": {
+    "AUC-ROC": 0.7706193413022712
+  },
+  "per_metric": {
+    "AUC-ROC": {
+      "gt": 0.86,
+      "value": 0.7706193413022712,
+      "delta": -0.089381,
+      "delta_rel": 0.103931,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "AUC-ROC": 0.7706193413022712,
+    "Precision": 0.6338705416372389,
+    "Recall": 0.2180686346685165,
+    "F1": 0.3199356851562117,
+    "Series": 10
+  },
+  "error": null,
+  "stdout_tail": " \"anomaly_detection\", \"algorithm_id\": \"registered-anomaly_detection-PyODIForestDetector\", \"algorithm_name\": \"PyODIForestDetector\", \"module\": \"sktime.detection.adapters.pyod.PyODIForestDetector\", \"params\": {\"contamination\": 0.1, \"n_estimators\": 100}, \"eval_params\": {}, \"created_at\": \"2026-10-14T17:52:09.690565+00:00\", \"spec\": {\"task\": \"anomaly_detection\", \"dataset_id\": \"tsb-occupancy\", \"algorithm_id\": \"registered-anomaly_detection-PyODIForestDetector\", \"preprocessor_id\": \"none\", \"params\": {\"contamination\": 0.1, \"n_estimators\": 100}, \"preprocessor_params\": {}}, \"multiseries\": true, \"series\": [{\"name\": \"room-occupancy-0.test.csv@1.out\", \"artifact\": \"series/0000/model.zip\"}, {\"name\": \"room-occupancy-0.test.csv@2.out\", \"artifact\": \"series/0001/model.zip\"}, {\"name\": \"room-occupancy-0.test.csv@3.out\", \"artifact\": \"series/0002/model.zip\"}, {\"name\": \"room-occupancy-0.test.csv@4.out\", \"artifact\": \"series/0003/model.zip\"}, {\"name\": \"room-occupancy-0.test.csv@5.out\", \"artifact\": \"series/0004/model.zip\"}, {\"name\": \"room-occupancy-1.test.csv@3.out\", \"artifact\": \"series/0005/model.zip\"}, {\"name\": \"room-occupancy-1.test.csv@4.out\", \"artifact\": \"series/0006/model.zip\"}, {\"name\": \"room-occupancy.train.csv@3.out\", \"artifact\": \"series/0007/model.zip\"}, {\"name\": \"room-occupancy.train.csv@4.out\", \"artifact\": \"series/0008/model.zip\"}, {\"name\": \"room-occupancy.train.csv@5.out\", \"artifact\": \"series/0009/model.zip\"}], \"artifacts\": {\"model\": null, \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 3755.2, \"log\": [\"Selected dataset: TSB-UAD Occupancy (10 series)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-detection-iforest-occupancy-auc (sktime backend, algorithm: registered-anomaly_detection-PyODIForestDetector, created: 2026-10-14T17:52:09.690565+00:00)\", \"Multi-series eval: 10 series, AUC-ROC=0.7706\", \"Finished in 3755.2 ms\"]}, \"error\": null}\n"
+}

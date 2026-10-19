@@ -1,0 +1,29 @@
+{
+  "id": "classification-minirocket-wafer",
+  "task": "classification",
+  "ran_at": "2026-10-15T06:42:37.945024+00:00",
+  "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-wafer --model-id bench-classification-minirocket-wafer --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+  "run_command": "libraryts run --model-id bench-classification-minirocket-wafer --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 18.63,
+  "values": {
+    "Accuracy": 0.9993510707332901
+  },
+  "per_metric": {
+    "Accuracy": {
+      "gt": 0.99898,
+      "value": 0.9993510707332901,
+      "delta": 0.000371,
+      "delta_rel": 0.000371,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "Accuracy": 0.9993510707332901,
+    "Macro F1": 0.9983143893558227
+  },
+  "error": null,
+  "stdout_tail": "\"id\": \"ucr-wafer\", \"name\": \"UCR/UEA Wafer\", \"task\": \"classification\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"Wafer\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-classification-minirocket-wafer\", \"name\": \"RocketClassifier (trained: bench-classification-minirocket-wafer)\", \"task\": \"classification\", \"module\": \"sktime.classification.kernel_based._rocket_classifier.RocketClassifier\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/playground/models/bench-classification-minirocket-wafer\", \"manifest\": {\"model_id\": \"bench-classification-minirocket-wafer\", \"backend\": \"sktime\", \"task\": \"classification\", \"algorithm_id\": \"registered-classification-RocketClassifier\", \"algorithm_name\": \"RocketClassifier\", \"module\": \"sktime.classification.kernel_based._rocket_classifier.RocketClassifier\", \"params\": {\"rocket_transform\": \"minirocket\", \"max_dilations_per_kernel\": 32, \"n_features_per_kernel\": 4, \"n_jobs\": 1, \"num_kernels\": 10000}, \"eval_params\": {}, \"created_at\": \"2026-10-15T06:42:27.739946+00:00\", \"spec\": {\"task\": \"classification\", \"dataset_id\": \"ucr-wafer\", \"algorithm_id\": \"registered-classification-RocketClassifier\", \"preprocessor_id\": \"none\", \"params\": {\"rocket_transform\": \"minirocket\", \"max_dilations_per_kernel\": 32, \"n_features_per_kernel\": 4, \"n_jobs\": 1, \"num_kernels\": 10000}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 9442.2, \"log\": [\"Selected dataset: UCR/UEA Wafer\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-classification-minirocket-wafer (sktime backend, algorithm: registered-classification-RocketClassifier, created: 2026-10-15T06:42:27.739946+00:00)\", \"Loaded UCR/UEA Wafer train=1000 test=6164\", \"Finished in 9442.2 ms\"]}, \"error\": null}\n"
+}

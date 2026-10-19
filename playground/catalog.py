@@ -1,13 +1,17 @@
-"""Catalog and compatibility matrix for the LibraryTS Playground GUI and LabTS CLI."""
+"""Catalog and compatibility matrix for the local LibraryTS Playground."""
 
 from __future__ import annotations
 
 import datetime
+import hashlib
 import importlib
 import importlib.util
 import json
 import math
 import numbers
+import os
+import sys
+import time
 import urllib.request
 import warnings
 from pathlib import Path
@@ -27,11 +31,48 @@ REPO_ROOT = _repo_root()
 # configure the experiment (holdout size, anomaly threshold/window). Anything
 # not listed here is forwarded to the selected estimator's constructor.
 EVAL_PARAMS = {
-    "forecasting": {"horizon", "context_window"},
+    "forecasting": {
+        "horizon",
+        "context_window",
+        "eval_mode",
+        "test_fraction",
+        "train_fraction",
+        "test_start_fraction",
+        "test_end_fraction",
+    },
     "classification": set(),
     "regression": set(),
-    "clustering": set(),
+    "clustering": {"fit_on"},
     "anomaly_detection": {"threshold", "window"},
+    "causal": {"max_samples", "seed"},
+}
+
+# Typed descriptions of EVAL_PARAMS for UIs (the web form renders these).
+EVAL_PARAM_SPECS = {
+    "forecasting": [
+        {"name": "horizon", "type": "int", "default": 12, "help": "forecast steps scored on the holdout"},
+        {"name": "context_window", "type": "int", "default": 36, "help": "history length shown / used for windows"},
+        {"name": "eval_mode", "type": "choice", "choices": ["single", "rolling"], "default": "single",
+         "help": "rolling = slide a (context, horizon) window over the test region without refitting"},
+        {"name": "train_fraction", "type": "float", "default": None, "help": "fraction of rows used for training"},
+        {"name": "test_fraction", "type": "float", "default": None, "help": "fraction of rows used for testing (default 0.2)"},
+        {"name": "test_start_fraction", "type": "float", "default": None, "help": "start of the test region (fraction of rows)"},
+        {"name": "test_end_fraction", "type": "float", "default": None, "help": "end of the test region (fraction of rows)"},
+    ],
+    "clustering": [
+        {"name": "fit_on", "type": "choice", "choices": ["train", "all"], "default": "train",
+         "help": "all = cluster train+test fused (paper protocol)"},
+    ],
+    "anomaly_detection": [
+        {"name": "threshold", "type": "float", "default": None, "help": "z-score threshold (threshold-detector)"},
+        {"name": "window", "type": "int", "default": None, "help": "rolling window (threshold-detector)"},
+    ],
+    "causal": [
+        {"name": "max_samples", "type": "int", "default": 2000, "help": "subsample size (use the full n for paper runs)"},
+        {"name": "seed", "type": "int", "default": 7, "help": "subsampling seed"},
+    ],
+    "classification": [],
+    "regression": [],
 }
 
 _ESTIMATOR_TYPES = {
@@ -46,6 +87,96 @@ _DISCOVERED_CACHE: list[dict] | None = None
 _PREPROCESSOR_CACHE: list[dict] | None = None
 _CLASS_CACHE: dict[str, type] = {}
 
+# Registry discovery (constructing every estimator, probing every transformer)
+# costs ~50 s per process, so its results are also cached on disk, keyed by a
+# fingerprint of everything they depend on. LIBRARYTS_NO_CACHE=1 disables it;
+# LIBRARYTS_CACHE_DIR overrides the location.
+_DISK_CACHE_SCHEMA = 1
+_FINGERPRINT: str | None = None
+
+
+def _disk_cache_dir() -> Path | None:
+    if os.environ.get("LIBRARYTS_NO_CACHE"):
+        return None
+    override = os.environ.get("LIBRARYTS_CACHE_DIR")
+    if override:
+        return Path(override)
+    base = os.environ.get("XDG_CACHE_HOME") or Path.home() / ".cache"
+    return Path(base) / "libraryts"
+
+
+def _discovery_fingerprint() -> str:
+    """Hash of what discovery depends on: Python, installed distributions,
+    this file, and the sktime source tree (editable installs keep the same
+    version while estimators change)."""
+    global _FINGERPRINT
+    if _FINGERPRINT is not None:
+        return _FINGERPRINT
+    import sysconfig
+
+    digest = hashlib.sha256()
+    digest.update(f"{_DISK_CACHE_SCHEMA}|{sys.version}|{sys.prefix}".encode())
+    # Installed distributions = the *.dist-info / *.egg-info directory names
+    # (they embed name and version). Listing them is ~1000x cheaper than
+    # importlib.metadata.distributions(), which parses every METADATA file.
+    names: set[str] = set()
+    for key in ("purelib", "platlib"):
+        root = sysconfig.get_paths().get(key)
+        if root and os.path.isdir(root):
+            with os.scandir(root) as entries:
+                names.update(
+                    entry.name
+                    for entry in entries
+                    if entry.name.endswith((".dist-info", ".egg-info"))
+                )
+    digest.update("\n".join(sorted(names)).encode())
+    digest.update(Path(__file__).read_bytes())
+    spec = importlib.util.find_spec("sktime")
+    for root in (spec.submodule_search_locations or []) if spec else []:
+        count, latest = 0, 0
+        for dirpath, dirnames, filenames in os.walk(root):
+            dirnames[:] = [d for d in dirnames if d != "__pycache__"]
+            for filename in filenames:
+                if filename.endswith(".py"):
+                    count += 1
+                    latest = max(latest, os.stat(os.path.join(dirpath, filename)).st_mtime_ns)
+        digest.update(f"{root}|{count}|{latest}".encode())
+    _FINGERPRINT = digest.hexdigest()[:16]
+    return _FINGERPRINT
+
+
+def _disk_cache_path(name: str) -> Path | None:
+    cache_dir = _disk_cache_dir()
+    if cache_dir is None:
+        return None
+    return cache_dir / f"{name}-{_discovery_fingerprint()}.json"
+
+
+def _read_disk_cache(name: str) -> list[dict] | None:
+    try:
+        path = _disk_cache_path(name)
+        if path is None or not path.is_file():
+            return None
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return None
+    return data if isinstance(data, list) else None
+
+
+def _write_disk_cache(name: str, rows: list[dict]) -> None:
+    try:
+        path = _disk_cache_path(name)
+        if path is None:
+            return
+        path.parent.mkdir(parents=True, exist_ok=True)
+        for stale in path.parent.glob(f"{name}-*.json"):
+            stale.unlink(missing_ok=True)
+        tmp = path.with_suffix(f".tmp{os.getpid()}")
+        tmp.write_text(json.dumps(rows), encoding="utf-8")
+        tmp.replace(path)
+    except Exception:
+        pass  # caching is best-effort; discovery results are still returned
+
 
 def split_params(task: str, params: dict) -> tuple[dict, dict]:
     """Split a flat param dict into (eval_params, estimator_params)."""
@@ -53,6 +184,25 @@ def split_params(task: str, params: dict) -> tuple[dict, dict]:
     eval_params = {k: v for k, v in params.items() if k in eval_keys}
     est_params = {k: v for k, v in params.items() if k not in eval_keys}
     return eval_params, est_params
+
+
+def curated_param_error(algorithm: dict, params: dict) -> str | None:
+    """Message for params a curated algorithm would silently ignore, else None.
+
+    Curated runners only read their advertised params plus the task's eval
+    params; anything else (e.g. ``strategy`` for NaiveForecaster) used to be
+    dropped without notice.
+    """
+    if not algorithm.get("curated"):
+        return None
+    allowed = set(algorithm.get("params") or {}) | EVAL_PARAMS.get(algorithm.get("task"), set())
+    unknown = sorted(k for k in (params or {}) if k not in allowed)
+    if not unknown:
+        return None
+    return (
+        f"{algorithm.get('class_name') or algorithm['name']} (curated) does not support "
+        f"param(s) {unknown}; supported: {sorted(allowed)}."
+    )
 
 
 def import_estimator_class(module_path: str) -> type:
@@ -95,6 +245,7 @@ HF_CONFIGS_FALLBACK = ["ETTm1", "ETTh1", "Exchange", "ILI", "NASDAQ", "Weather"]
 # Backward-compatible alias for older imports.
 HF_CONFIGS = HF_CONFIGS_FALLBACK
 _HF_METADATA_CACHE: dict | None = None
+_HF_CACHE_TTL_S = 7 * 24 * 3600
 
 
 def hf_dataset_configs() -> list[str]:
@@ -152,6 +303,12 @@ TASKS = [
         "label": "Anomaly Detection",
         "description": "Detect point anomalies and compare with known labels.",
     },
+    {
+        "id": "causal",
+        "label": "Causal Discovery",
+        "description": "Discover a causal graph from tabular/time-series data and "
+        "score it against a ground-truth graph (SHD, edge precision/recall/F1).",
+    },
 ]
 
 ENABLED_ALGORITHMS = [
@@ -202,6 +359,81 @@ ENABLED_ALGORITHMS = [
         "params": {"threshold": 2.0, "window": 24},
     },
 ]
+
+_CAUSAL_ALGORITHMS = [
+    {
+        "id": "causal-notears",
+        "name": "NOTEARS",
+        "task": "causal",
+        "module": "sktime.causal_discovery.notears.NOTEARS",
+        "enabled": True,
+        "template": "NOTEARS(lambda1=lambda1, w_threshold=w_threshold)",
+        "params": {"lambda1": 0.01, "w_threshold": 0.3, "max_samples": 2000},
+    },
+    {
+        "id": "causal-pc",
+        "name": "PC",
+        "task": "causal",
+        "module": "sktime.causal_discovery.pc.PC",
+        "enabled": True,
+        "python_dependencies": ["causal-learn"],
+        "template": "PC(alpha=alpha)",
+        "params": {"alpha": 0.05, "max_samples": 2000},
+    },
+    {
+        "id": "causal-ges",
+        "name": "GES",
+        "task": "causal",
+        "module": "sktime.causal_discovery.ges.GES",
+        "enabled": True,
+        "python_dependencies": ["causal-learn"],
+        "template": "GES(score_func=score_func)",
+        "params": {"max_samples": 2000},
+    },
+    {
+        "id": "causal-pcmci",
+        "name": "PCMCI",
+        "task": "causal",
+        "module": "sktime.causal_discovery.pcmci.PCMCI",
+        "enabled": True,
+        "python_dependencies": ["tigramite"],
+        "template": "PCMCI(max_lag=max_lag, alpha_level=alpha_level)",
+        "params": {"max_lag": 1, "alpha_level": 0.05, "max_samples": 2000},
+    },
+]
+
+_DEP_IMPORT_ALIASES = {
+    "scikit-learn": "sklearn",
+    "scikit-base": "skbase",
+    "scikit-optimize": "skopt",
+    "scikit-posthocs": "scikit_posthocs",
+    "hydra-core": "hydra",
+    "pytorch-forecasting": "pytorch_forecasting",
+    "dtw-python": "dtw",
+    "pyyaml": "yaml",
+    "python-dateutil": "dateutil",
+    "causal-learn": "causallearn",
+    "pykan": "kan",
+}
+
+for _entry in _CAUSAL_ALGORITHMS:
+    _deps = _entry.get("python_dependencies") or []
+    _missing = next(
+        (
+            dep
+            for dep in _deps
+            if importlib.util.find_spec(
+                _DEP_IMPORT_ALIASES.get(dep, dep.replace("-", "_"))
+            )
+            is None
+        ),
+        None,
+    )
+    if _missing is not None:
+        _entry["enabled"] = False
+        _entry["disabled_reason"] = f"Missing dependency `{_missing}`"
+
+ENABLED_ALGORITHMS.extend(_CAUSAL_ALGORITHMS)
 
 for _entry in ENABLED_ALGORITHMS:
     _entry.setdefault("curated", True)
@@ -337,17 +569,130 @@ DATASETS = [
         "path": "sktime/datasets/data/mitdb/mitdb.csv",
         "enabled": True,
     },
+    {
+        "id": "tsb-yahoo",
+        "name": "TSB-UAD YAHOO (367 series)",
+        "task": "anomaly_detection",
+        "source": "tsb_uad",
+        "series_dir": "TSB-UAD-Public/YAHOO",
+        "enabled": True,
+    },
+    {
+        "id": "tsb-mitdb",
+        "name": "TSB-UAD MITDB (32 series)",
+        "task": "anomaly_detection",
+        "source": "tsb_uad",
+        "series_dir": "TSB-UAD-Public/MITDB",
+        "enabled": True,
+    },
+    {
+        "id": "tsb-nab",
+        "name": "TSB-UAD NAB (58 series)",
+        "task": "anomaly_detection",
+        "source": "tsb_uad",
+        "series_dir": "TSB-UAD-Public/NAB",
+        "enabled": True,
+    },
+    {
+        "id": "tsb-dodgers",
+        "name": "TSB-UAD Dodgers (1 series)",
+        "task": "anomaly_detection",
+        "source": "tsb_uad",
+        "series_dir": "TSB-UAD-Public/Dodgers",
+        "enabled": True,
+    },
+    {
+        "id": "tsb-occupancy",
+        "name": "TSB-UAD Occupancy (10 series)",
+        "task": "anomaly_detection",
+        "source": "tsb_uad",
+        "series_dir": "TSB-UAD-Public/Occupancy",
+        "enabled": True,
+    },
+    {
+        "id": "tsb-mgab",
+        "name": "TSB-UAD MGAB (10 series)",
+        "task": "anomaly_detection",
+        "source": "tsb_uad",
+        "series_dir": "TSB-UAD-Public/MGAB",
+        "enabled": True,
+    },
+    {
+        "id": "tsb-genesis",
+        "name": "TSB-UAD Genesis (6 series)",
+        "task": "anomaly_detection",
+        "source": "tsb_uad",
+        "series_dir": "TSB-UAD-Public/Genesis",
+        "enabled": True,
+    },
+    {
+        "id": "causal-sachs",
+        "name": "Sachs (bnlearn, true DAG)",
+        "task": "causal",
+        "source": "local",
+        "loader": "sktime.datasets.load_sachs",
+        "true_graph": True,
+        "enabled": True,
+        "default": True,
+    },
+    {
+        "id": "causal-sachs-cont",
+        "name": "Sachs continuous (7466×11, 20-edge DAG)",
+        "task": "causal",
+        "source": "local",
+        "loader": "domain_runners.load_sachs_continuous",
+        "true_graph": True,
+        "enabled": True,
+    },
+    {
+        "id": "causal-alarm",
+        "name": "ALARM (bnlearn, true DAG)",
+        "task": "causal",
+        "source": "local",
+        "loader": "sktime.datasets.load_alarm",
+        "true_graph": True,
+        "enabled": True,
+    },
+    {
+        "id": "causal-asia",
+        "name": "Asia (bnlearn, true DAG)",
+        "task": "causal",
+        "source": "local",
+        "loader": "sktime.datasets.load_asia",
+        "true_graph": True,
+        "enabled": True,
+    },
 ]
+
+
+# UCR/UEA datasets exposed for clustering (full dataset, labels for ARI/NMI).
+_UCR_CLUSTERING_NAMES = ["Adiac", "BME", "Beef", "BeetleFly", "BirdChicken", "CBF", "Car", "Chinatown", "Coffee", "Computers", "CricketX", "DiatomSizeReduction", "ECG200", "ECGFiveDays", "Earthquakes", "FaceFour", "FiftyWords", "Fish", "Ham", "Herring", "ItalyPowerDemand", "Lightning2", "Lightning7", "Meat", "MedicalImages", "MiddlePhalanxOutlineCorrect", "MoteStrain", "OSULeaf", "OliveOil", "Plane", "ProximalPhalanxOutlineCorrect", "ShapeletSim", "SonyAIBORobotSurface1", "Strawberry", "SwedishLeaf", "Symbols", "SyntheticControl", "ToeSegmentation1", "Trace", "TwoLeadECG", "Wine"]
+DATASETS.extend(
+    {
+        "id": f"{name.lower()}-cl",
+        "name": f"{name} (labels for ARI)",
+        "task": "clustering",
+        "source": "ucr_uea",
+        "loader": "sktime.datasets.load_UCR_UEA_dataset",
+        "ucr_name": name,
+        "enabled": True,
+        "online": True,
+    }
+    for name in _UCR_CLUSTERING_NAMES
+)
 
 
 def ucr_classification_datasets() -> list[dict]:
     """Discover UCR/UEA classification datasets from sktime's archive list."""
-    try:
-        from sktime.datasets import UCRUEADataset
+    names = _read_disk_cache("ucr-names")
+    if names is None:
+        try:
+            from sktime.datasets import UCRUEADataset
 
-        names = sorted(UCRUEADataset.list_all())
-    except Exception:
-        return []
+            names = sorted(UCRUEADataset.list_all())
+        except Exception:
+            return []
+        _write_disk_cache("ucr-names", names)
     return [
         {
             "id": f"ucr-{name.lower()}",
@@ -387,19 +732,6 @@ def _install_hint(package: str) -> str:
     if package in {"huggingface-hub", "pyarrow"}:
         return "python3 -m pip install huggingface-hub pyarrow"
     return "python3 -m pip install -e ."
-
-
-_DEP_IMPORT_ALIASES = {
-    "scikit-learn": "sklearn",
-    "scikit-base": "skbase",
-    "scikit-optimize": "skopt",
-    "scikit-posthocs": "scikit_posthocs",
-    "hydra-core": "hydra",
-    "pytorch-forecasting": "pytorch_forecasting",
-    "dtw-python": "dtw",
-    "pyyaml": "yaml",
-    "python-dateutil": "dateutil",
-}
 
 
 def _dep_distribution_name(spec: str) -> str:
@@ -456,9 +788,8 @@ def _detector_subtype(name: str, module: str) -> str:
         k in text
         for k in (
             "threshold", "outlier", "anomal", "stray", "lof", "iforest",
-            "isolation", "pyod", "knn", "mcd", "cblof", "cof", "abod", "sod",
-            "subsequence", "matrixprofile", "stumpy", "sigma",
-            "ecod", "copod", "hbos", "ocsvm",
+            "isolation", "pyod", "devad", "knn", "mcd", "cblof", "cof", "abod",
+            "sod", "subsequence", "matrixprofile", "stumpy", "sigma", "ecod", "copod", "hbos", "ocsvm",
         )
     ):
         return "point_anomaly"
@@ -475,6 +806,99 @@ def _detector_subtype(name: str, module: str) -> str:
     return "other"
 
 
+def _is_missing_args_error(err: str) -> bool:
+    """True when construction failed only due to missing required arguments."""
+    return "required positional argument" in err
+
+
+_ESTIMATOR_PARAM_HINTS = (
+    "forecaster",
+    "forecasters",
+    "classifier",
+    "classifiers",
+    "regressor",
+    "regressors",
+    "clusterer",
+    "clusterers",
+    "detector",
+    "detectors",
+    "transformer",
+    "transformers",
+    "estimator",
+    "estimators",
+    "steps",
+    "base_estimator",
+)
+
+
+def _looks_like_estimator_param(name: str) -> bool:
+    n = name.lower()
+    return any(
+        n == hint or n.endswith("_" + hint) or n.endswith(hint + "s")
+        for hint in _ESTIMATOR_PARAM_HINTS
+    )
+
+
+def _constructor_param_info(klass) -> tuple[list[str], dict, list[str]]:
+    """Inspect ``__init__``: (required params, numeric defaults, estimator params).
+
+    Estimator-typed params (by name heuristic) are the ones a nested spec can
+    fill with ``{"estimator": {...}}`` — see runners._build_estimator.
+    """
+    import inspect
+
+    try:
+        sig = inspect.signature(klass.__init__)
+    except (TypeError, ValueError):
+        return [], {}, []
+    required: list[str] = []
+    numeric: dict = {}
+    est_names: list[str] = []
+    for pname, param in sig.parameters.items():
+        if pname == "self" or param.kind in (param.VAR_KEYWORD, param.VAR_POSITIONAL):
+            continue
+        if _looks_like_estimator_param(pname):
+            est_names.append(pname)
+        if param.default is inspect.Parameter.empty:
+            required.append(pname)
+        elif isinstance(param.default, (int, float)) and not isinstance(param.default, bool):
+            numeric[pname] = param.default
+    return required, numeric, est_names
+
+
+def _extra_param_specs(klass) -> dict:
+    """Non-numeric scalar constructor defaults (bool/str/None) for typed UIs.
+
+    ``params`` only carries numeric defaults; these are the knobs it hides,
+    e.g. ``kernel='rbf'``, ``rocket_transform='minirocket'``, ``distance``.
+    Estimator-typed params are excluded (they need nested specs).
+    """
+    import inspect
+
+    try:
+        sig = inspect.signature(klass.__init__)
+    except (TypeError, ValueError):
+        return {}
+    extra: dict = {}
+    for pname, param in sig.parameters.items():
+        if pname == "self" or pname.startswith("_"):
+            continue
+        if param.kind in (param.VAR_KEYWORD, param.VAR_POSITIONAL):
+            continue
+        if _looks_like_estimator_param(pname):
+            continue
+        default = param.default
+        if default is inspect.Parameter.empty:
+            continue
+        if isinstance(default, bool):
+            extra[pname] = {"type": "bool", "default": default}
+        elif isinstance(default, str):
+            extra[pname] = {"type": "str", "default": default}
+        elif default is None:
+            extra[pname] = {"type": "optional", "default": None}
+    return extra
+
+
 def discover_registered_algorithms() -> list[dict]:
     """Discover sktime estimators and enable the default-constructible ones.
 
@@ -486,6 +910,10 @@ def discover_registered_algorithms() -> list[dict]:
     global _DISCOVERED_CACHE
     if _DISCOVERED_CACHE is not None:
         return _DISCOVERED_CACHE
+    cached = _read_disk_cache("algorithms")
+    if cached is not None:
+        _DISCOVERED_CACHE = cached
+        return cached
 
     try:
         from sktime.registry import all_estimators
@@ -541,7 +969,24 @@ def discover_registered_algorithms() -> list[dict]:
             if task == "anomaly_detection":
                 base["subtype"] = _detector_subtype(name, module_path)
             if err is not None:
-                base.update(enabled=False, disabled_reason=err, params={})
+                required, sig_numeric, est_names = _constructor_param_info(klass)
+                missing = _missing_python_dependency(deps)
+                if required and _is_missing_args_error(err) and missing is None:
+                    # Meta-estimator/compositor: constructible once the required
+                    # (typically sub-estimator) params are passed through nested
+                    # spec params. Enable it and advertise what it needs.
+                    if task == "forecasting":
+                        sig_numeric = {"horizon": 12, "context_window": 36, **sig_numeric}
+                    base.update(
+                        enabled=True,
+                        params=sig_numeric,
+                        required_params=required,
+                        requires_constructor_params=True,
+                    )
+                    if est_names:
+                        base["accepts_estimators"] = est_names
+                else:
+                    base.update(enabled=False, disabled_reason=err, params={})
                 discovered.append(base)
                 continue
             missing = _missing_python_dependency(deps)
@@ -557,9 +1002,15 @@ def discover_registered_algorithms() -> list[dict]:
             if task == "forecasting":
                 params = {"horizon": 12, "context_window": 36, **params}
             base.update(enabled=True, params=params)
+            base["extra_params"] = _extra_param_specs(klass)
+            _required, _numeric, est_names = _constructor_param_info(klass)
+            if est_names:
+                base["accepts_estimators"] = est_names
             discovered.append(base)
 
     _DISCOVERED_CACHE = discovered
+    if not any(row["id"].endswith("-registry-error") for row in discovered):
+        _write_disk_cache("algorithms", discovered)
     return discovered
 
 
@@ -633,6 +1084,10 @@ def discover_registered_preprocessors() -> list[dict]:
     global _PREPROCESSOR_CACHE
     if _PREPROCESSOR_CACHE is not None:
         return _PREPROCESSOR_CACHE
+    cached = _read_disk_cache("preprocessors")
+    if cached is not None:
+        _PREPROCESSOR_CACHE = cached
+        return cached
 
     try:
         from sktime.registry import all_estimators
@@ -700,6 +1155,7 @@ def discover_registered_preprocessors() -> list[dict]:
         )
 
     _PREPROCESSOR_CACHE = discovered
+    _write_disk_cache("preprocessors", discovered)
     return discovered
 
 
@@ -709,24 +1165,50 @@ def hf_metadata() -> dict:
     if _HF_METADATA_CACHE is not None:
         return _HF_METADATA_CACHE
 
+    # The config list changes rarely: reuse an on-disk copy for a week so a
+    # cold start does not wait on the network (a stale copy still beats the
+    # offline fallback when the refresh fails).
+    cache_dir = _disk_cache_dir()
+    cache_file = cache_dir / "hf-metadata.json" if cache_dir else None
+    stale = None
+    if cache_file is not None and cache_file.is_file():
+        try:
+            stale = json.loads(cache_file.read_text(encoding="utf-8"))
+            if time.time() - cache_file.stat().st_mtime < _HF_CACHE_TTL_S and stale.get("configs"):
+                _HF_METADATA_CACHE = stale
+                return stale
+        except (OSError, ValueError):
+            stale = None
+
     url = f"https://datasets-server.huggingface.co/splits?dataset={HF_DATASET_ID}"
     try:
-        with urllib.request.urlopen(url, timeout=8) as response:
+        with urllib.request.urlopen(url, timeout=3) as response:
             payload = json.loads(response.read().decode("utf-8"))
         configs = sorted({row["config"] for row in payload.get("splits", []) if row.get("config")})
         _HF_METADATA_CACHE = {"available": True, "dataset": HF_DATASET_ID, "configs": configs}
+        if cache_file is not None and configs:
+            try:
+                cache_file.parent.mkdir(parents=True, exist_ok=True)
+                cache_file.write_text(json.dumps(_HF_METADATA_CACHE), encoding="utf-8")
+            except OSError:
+                pass
     except Exception as exc:
-        _HF_METADATA_CACHE = {
-            "available": False,
-            "dataset": HF_DATASET_ID,
-            "error": f"{type(exc).__name__}: {exc}",
-            "configs": list(HF_CONFIGS_FALLBACK),
-        }
+        if stale and stale.get("configs"):
+            _HF_METADATA_CACHE = {**stale, "available": True, "stale": True}
+        else:
+            _HF_METADATA_CACHE = {
+                "available": False,
+                "dataset": HF_DATASET_ID,
+                "error": f"{type(exc).__name__}: {exc}",
+                "configs": list(HF_CONFIGS_FALLBACK),
+            }
     return _HF_METADATA_CACHE
 
 
 def build_catalog(include_registered: bool = True) -> dict:
     """Return the Playground catalog consumed by the front end."""
+    from metrics import all_metrics
+
     algorithms = list(ENABLED_ALGORITHMS)
     if include_registered:
         algorithms.extend(discover_registered_algorithms())
@@ -757,25 +1239,42 @@ def build_catalog(include_registered: bool = True) -> dict:
         "algorithms": algorithms,
         "preprocessors": preprocessors,
         "datasets": datasets,
-        "metrics": [
-            {"id": "mae", "name": "MAE", "task": "forecasting"},
-            {"id": "mse", "name": "MSE", "task": "forecasting"},
-            {"id": "mape", "name": "MAPE", "task": "forecasting"},
-            {"id": "accuracy", "name": "Accuracy", "task": "classification"},
-            {"id": "macro_f1", "name": "Macro F1", "task": "classification"},
-            {"id": "mae", "name": "MAE", "task": "regression"},
-            {"id": "rmse", "name": "RMSE", "task": "regression"},
-            {"id": "r2", "name": "R²", "task": "regression"},
-            {"id": "ari", "name": "Adjusted Rand Index", "task": "clustering"},
-            {"id": "nmi", "name": "Normalized Mutual Info", "task": "clustering"},
-            {"id": "precision", "name": "Precision", "task": "anomaly_detection"},
-            {"id": "recall", "name": "Recall", "task": "anomaly_detection"},
-            {"id": "f1", "name": "F1", "task": "anomaly_detection"},
-        ],
+        "metrics": all_metrics(),
+        "eval_param_specs": EVAL_PARAM_SPECS,
+        "analyzers": _analyzers_section(),
+        "distances": _distances_section(),
         "compatibility": compatibility,
         "dependencies": dependency_status(),
         "hf": hf_metadata(),
     }
+
+
+def _analyzers_section() -> list[dict]:
+    """Param-estimation algorithms backing `libraryts analyze` (lazy import)."""
+    try:
+        from analyzer import ANALYZERS
+
+        return [dict(entry) for entry in ANALYZERS]
+    except Exception as exc:
+        return [{"id": "analyzers-unavailable", "enabled": False, "disabled_reason": str(exc)}]
+
+
+def _distances_section() -> list[dict]:
+    """Distance metrics backing `libraryts dist` (lazy import)."""
+    try:
+        from domain_runners import DISTANCES
+
+        return [dict(entry) for entry in DISTANCES]
+    except Exception as exc:
+        return [{"id": "distances-unavailable", "enabled": False, "disabled_reason": str(exc)}]
+
+
+def _all_enabled_algorithms() -> list[dict]:
+    items = list(ENABLED_ALGORITHMS)
+    items.extend(
+        item for item in discover_registered_algorithms() if item.get("enabled")
+    )
+    return items
 
 
 def get_enabled_algorithm(algorithm_id: str) -> dict | None:
@@ -787,7 +1286,44 @@ def get_enabled_algorithm(algorithm_id: str) -> dict | None:
             return item
     from user_algos import get_user_algorithm
 
-    return get_user_algorithm(algorithm_id)
+    user = get_user_algorithm(algorithm_id)
+    if user is not None:
+        return user
+    return _resolve_short_name(algorithm_id)
+
+
+def _resolve_short_name(query: str) -> dict | None:
+    """Resolve a short algorithm reference to a catalog entry.
+
+    Accepts a class name (``DLinearForecaster``), a catalog display name
+    (``DLinear``), or a task-qualified form (``forecasting/DLinearForecaster``).
+    Class names are unique across tasks in the registry, so the unqualified
+    form is unambiguous in practice; ambiguous or unknown queries return None.
+    A bare user-fork stem (``my_ecod`` for ``user-my_ecod``) also resolves.
+    """
+    task_filter, sep, short = query.partition("/")
+    if not sep:
+        task_filter, short = "", task_filter
+    items = [
+        item
+        for item in _all_enabled_algorithms()
+        if not task_filter or item.get("task") == task_filter
+    ]
+    for key in ("class_name", "name"):
+        exact = [item for item in items if item.get(key) == short]
+        if len(exact) == 1:
+            return exact[0]
+        lowered = short.lower()
+        folded = [item for item in items if str(item.get(key, "")).lower() == lowered]
+        if len(folded) == 1:
+            return folded[0]
+        if exact or folded:
+            return None  # ambiguous
+    if not task_filter:
+        from user_algos import get_user_algorithm
+
+        return get_user_algorithm(f"user-{short}")
+    return None
 
 
 def get_enabled_preprocessor(preprocessor_id: str | None) -> dict | None:
@@ -803,6 +1339,19 @@ def get_enabled_preprocessor(preprocessor_id: str | None) -> dict | None:
 
 
 def get_dataset(dataset_id: str) -> dict | None:
+    # Static datasets first: no network or archive discovery for the common case.
+    for item in DATASETS:
+        if item["id"] == dataset_id:
+            return item
+    if dataset_id.startswith("hf-"):
+        pool = hf_datasets()
+    elif dataset_id.startswith("ucr-"):
+        pool = ucr_classification_datasets()
+    else:
+        pool = []
+    found = next((item for item in pool if item["id"] == dataset_id), None)
+    if found is not None:
+        return found
     return next((item for item in all_datasets() if item["id"] == dataset_id), None)
 
 

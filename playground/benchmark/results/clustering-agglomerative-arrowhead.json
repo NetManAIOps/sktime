@@ -1,0 +1,31 @@
+{
+  "id": "clustering-agglomerative-arrowhead",
+  "task": "clustering",
+  "ran_at": "2026-10-15T12:53:25.188822+00:00",
+  "train_command": "libraryts train --algorithm user-agglomerative --dataset arrow-head-cl --model-id bench-clustering-agglomerative-arrowhead --param n_clusters=3 --param fit_on=all --param linkage=ward --param metric=euclidean",
+  "run_command": "libraryts run --model-id bench-clustering-agglomerative-arrowhead --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 4.54,
+  "values": {
+    "ARI": 0.07334100753428387
+  },
+  "per_metric": {
+    "ARI": {
+      "gt": 0.073341,
+      "value": 0.07334100753428387,
+      "delta": 0.0,
+      "delta_rel": 0.0,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "ARI": 0.07334100753428387,
+    "NMI": 0.21946089071334607,
+    "Clusters": 3,
+    "Largest Cluster": 168
+  },
+  "error": null,
+  "stdout_tail": "et_id\": \"arrow-head-cl\", \"algorithm_id\": \"sktime-trained:bench-clustering-agglomerative-arrowhead\", \"preprocessor_id\": \"none\", \"params\": {}}, \"task\": \"clustering\", \"dataset\": {\"id\": \"arrow-head-cl\", \"name\": \"ArrowHead (labels for ARI)\", \"task\": \"clustering\", \"source\": \"local\", \"loader\": \"sktime.datasets.load_arrow_head\", \"enabled\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-clustering-agglomerative-arrowhead\", \"name\": \"Agglomerative (Euclidean, ward linkage) (trained: bench-clustering-agglomerative-arrowhead)\", \"task\": \"clustering\", \"module\": \"user_algos.AgglomerativePanelClusterer\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-16/playground/models/bench-clustering-agglomerative-arrowhead\", \"manifest\": {\"model_id\": \"bench-clustering-agglomerative-arrowhead\", \"backend\": \"sktime\", \"task\": \"clustering\", \"algorithm_id\": \"user-agglomerative\", \"algorithm_name\": \"Agglomerative (Euclidean, ward linkage)\", \"module\": \"user_algos.AgglomerativePanelClusterer\", \"params\": {\"n_clusters\": 3, \"linkage\": \"ward\", \"metric\": \"euclidean\"}, \"eval_params\": {\"fit_on\": \"all\"}, \"created_at\": \"2026-10-15T12:53:23.096142+00:00\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"arrow-head-cl\", \"algorithm_id\": \"user-agglomerative\", \"preprocessor_id\": \"none\", \"params\": {\"n_clusters\": 3, \"fit_on\": \"all\", \"linkage\": \"ward\", \"metric\": \"euclidean\"}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 1464.7, \"log\": [\"Selected dataset: ArrowHead (labels for ARI)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-clustering-agglomerative-arrowhead (sktime backend, algorithm: user-agglomerative, created: 2026-10-15T12:53:23.096142+00:00)\", \"Loaded ArrowHead (labels for ARI) train=36 test=175\", \"Finished in 1464.7 ms\"]}, \"error\": null}\n"
+}

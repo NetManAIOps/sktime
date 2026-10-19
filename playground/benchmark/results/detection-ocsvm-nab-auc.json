@@ -1,0 +1,32 @@
+{
+  "id": "detection-ocsvm-nab-auc",
+  "task": "anomaly_detection",
+  "ran_at": "2026-10-14T17:48:24.970496+00:00",
+  "train_command": "libraryts train --algorithm PyODOCSVMDetector --dataset tsb-nab --model-id bench-detection-ocsvm-nab-auc --param contamination=0.1 --param nu=0.5",
+  "run_command": "libraryts run --model-id bench-detection-ocsvm-nab-auc --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 261.11,
+  "values": {
+    "AUC-ROC": 0.5528525484036328
+  },
+  "per_metric": {
+    "AUC-ROC": {
+      "gt": 0.61,
+      "value": 0.5528525484036328,
+      "delta": -0.057147,
+      "delta_rel": 0.093684,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "AUC-ROC": 0.5528525484036328,
+    "Precision": 0.1561402174901255,
+    "Recall": 0.1523659982972816,
+    "F1": 0.15297737691864957,
+    "Series": 58
+  },
+  "error": null,
+  "stdout_tail": "ata_art0_1.out\", \"artifact\": \"series/0038/model.zip\"}, {\"name\": \"NAB_data_art0_2.out\", \"artifact\": \"series/0039/model.zip\"}, {\"name\": \"NAB_data_art0_3.out\", \"artifact\": \"series/0040/model.zip\"}, {\"name\": \"NAB_data_art0_4.out\", \"artifact\": \"series/0041/model.zip\"}, {\"name\": \"NAB_data_art1_0.out\", \"artifact\": \"series/0042/model.zip\"}, {\"name\": \"NAB_data_art1_1.out\", \"artifact\": \"series/0043/model.zip\"}, {\"name\": \"NAB_data_art1_2.out\", \"artifact\": \"series/0044/model.zip\"}, {\"name\": \"NAB_data_art1_3.out\", \"artifact\": \"series/0045/model.zip\"}, {\"name\": \"NAB_data_art1_4.out\", \"artifact\": \"series/0046/model.zip\"}, {\"name\": \"NAB_data_art1_5.out\", \"artifact\": \"series/0047/model.zip\"}, {\"name\": \"NAB_data_tweets_1.out\", \"artifact\": \"series/0048/model.zip\"}, {\"name\": \"NAB_data_tweets_10.out\", \"artifact\": \"series/0049/model.zip\"}, {\"name\": \"NAB_data_tweets_2.out\", \"artifact\": \"series/0050/model.zip\"}, {\"name\": \"NAB_data_tweets_3.out\", \"artifact\": \"series/0051/model.zip\"}, {\"name\": \"NAB_data_tweets_4.out\", \"artifact\": \"series/0052/model.zip\"}, {\"name\": \"NAB_data_tweets_5.out\", \"artifact\": \"series/0053/model.zip\"}, {\"name\": \"NAB_data_tweets_6.out\", \"artifact\": \"series/0054/model.zip\"}, {\"name\": \"NAB_data_tweets_7.out\", \"artifact\": \"series/0055/model.zip\"}, {\"name\": \"NAB_data_tweets_8.out\", \"artifact\": \"series/0056/model.zip\"}, {\"name\": \"NAB_data_tweets_9.out\", \"artifact\": \"series/0057/model.zip\"}], \"artifacts\": {\"model\": null, \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 81783.5, \"log\": [\"Selected dataset: TSB-UAD NAB (58 series)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-detection-ocsvm-nab-auc (sktime backend, algorithm: registered-anomaly_detection-PyODOCSVMDetector, created: 2026-10-14T17:47:02.206538+00:00)\", \"Scored 50/58 series\", \"Multi-series eval: 58 series, AUC-ROC=0.5529\", \"Finished in 81783.5 ms\"]}, \"error\": null}\n"
+}

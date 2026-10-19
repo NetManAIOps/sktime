@@ -1,0 +1,31 @@
+{
+  "id": "clustering-kmedoids-shapeletsim",
+  "task": "clustering",
+  "ran_at": "2026-10-15T11:26:44.097814+00:00",
+  "train_command": "libraryts train --algorithm TimeSeriesKMedoids --dataset shapeletsim-cl --model-id bench-clustering-kmedoids-shapeletsim --param n_clusters=2 --param fit_on=all --param random_state=42 --param metric=euclidean --param max_iter=300 --param n_init=10 --param tol=1e-06",
+  "run_command": "libraryts run --model-id bench-clustering-kmedoids-shapeletsim --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 6.32,
+  "values": {
+    "ARI": -0.004949492449751288
+  },
+  "per_metric": {
+    "ARI": {
+      "gt": 0.009749,
+      "value": -0.004949492449751288,
+      "delta": -0.014698,
+      "delta_rel": 1.507692,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "ARI": -0.004949492449751288,
+    "NMI": 7.214577140847848e-05,
+    "Clusters": 2,
+    "Largest Cluster": 101
+  },
+  "error": null,
+  "stdout_tail": "ataset\": {\"id\": \"shapeletsim-cl\", \"name\": \"ShapeletSim (labels for ARI)\", \"task\": \"clustering\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"ShapeletSim\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-clustering-kmedoids-shapeletsim\", \"name\": \"TimeSeriesKMedoids (trained: bench-clustering-kmedoids-shapeletsim)\", \"task\": \"clustering\", \"module\": \"sktime.clustering.k_medoids.TimeSeriesKMedoids\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-10/playground/models/bench-clustering-kmedoids-shapeletsim\", \"manifest\": {\"model_id\": \"bench-clustering-kmedoids-shapeletsim\", \"backend\": \"sktime\", \"task\": \"clustering\", \"algorithm_id\": \"registered-clustering-TimeSeriesKMedoids\", \"algorithm_name\": \"TimeSeriesKMedoids\", \"module\": \"sktime.clustering.k_medoids.TimeSeriesKMedoids\", \"params\": {\"n_clusters\": 2, \"random_state\": 42, \"metric\": \"euclidean\", \"max_iter\": 300, \"n_init\": 10, \"tol\": 1e-06}, \"eval_params\": {\"fit_on\": \"all\"}, \"created_at\": \"2026-10-15T11:26:40.821602+00:00\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"shapeletsim-cl\", \"algorithm_id\": \"registered-clustering-TimeSeriesKMedoids\", \"preprocessor_id\": \"none\", \"params\": {\"n_clusters\": 2, \"fit_on\": \"all\", \"random_state\": 42, \"metric\": \"euclidean\", \"max_iter\": 300, \"n_init\": 10, \"tol\": 1e-06}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 2365.4, \"log\": [\"Selected dataset: ShapeletSim (labels for ARI)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-clustering-kmedoids-shapeletsim (sktime backend, algorithm: registered-clustering-TimeSeriesKMedoids, created: 2026-10-15T11:26:40.821602+00:00)\", \"Loaded UCR/UEA ShapeletSim train=20 test=180\", \"Finished in 2365.4 ms\"]}, \"error\": null}\n"
+}

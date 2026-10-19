@@ -1,0 +1,39 @@
+{
+  "id": "clustering-kshape-shapeletsim",
+  "task": "clustering",
+  "ran_at": "2026-10-15T07:21:54.337888+00:00",
+  "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset shapeletsim-cl --model-id bench-clustering-kshape-shapeletsim --param n_clusters=2 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+  "run_command": "libraryts run --model-id bench-clustering-kshape-shapeletsim --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 43.77,
+  "values": {
+    "ARI": 0.5161592581523275,
+    "NMI": 0.5301510681963317
+  },
+  "per_metric": {
+    "ARI": {
+      "gt": 0.47573,
+      "value": 0.5161592581523275,
+      "delta": 0.040429,
+      "delta_rel": 0.084984,
+      "status": "reproduced"
+    },
+    "NMI": {
+      "gt": 0.44791,
+      "value": 0.5301510681963317,
+      "delta": 0.082241,
+      "delta_rel": 0.183611,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "ARI": 0.5161592581523275,
+    "NMI": 0.5301510681963317,
+    "Clusters": 2,
+    "Largest Cluster": 128
+  },
+  "error": null,
+  "stdout_tail": "shape-shapeletsim\", \"preprocessor_id\": \"none\", \"params\": {}}, \"task\": \"clustering\", \"dataset\": {\"id\": \"shapeletsim-cl\", \"name\": \"ShapeletSim (labels for ARI)\", \"task\": \"clustering\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"ShapeletSim\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-clustering-kshape-shapeletsim\", \"name\": \"TimeSeriesKShapes (trained: bench-clustering-kshape-shapeletsim)\", \"task\": \"clustering\", \"module\": \"sktime.clustering.k_shapes.TimeSeriesKShapes\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/playground/models/bench-clustering-kshape-shapeletsim\", \"manifest\": {\"model_id\": \"bench-clustering-kshape-shapeletsim\", \"backend\": \"sktime\", \"task\": \"clustering\", \"algorithm_id\": \"registered-clustering-TimeSeriesKShapes\", \"algorithm_name\": \"TimeSeriesKShapes\", \"module\": \"sktime.clustering.k_shapes.TimeSeriesKShapes\", \"params\": {\"n_clusters\": 2, \"random_state\": 42, \"max_iter\": 300, \"n_init\": 10, \"tol\": 0.0001}, \"eval_params\": {\"fit_on\": \"all\"}, \"created_at\": \"2026-10-15T07:21:49.866386+00:00\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"shapeletsim-cl\", \"algorithm_id\": \"registered-clustering-TimeSeriesKShapes\", \"preprocessor_id\": \"none\", \"params\": {\"n_clusters\": 2, \"fit_on\": \"all\", \"random_state\": 42, \"max_iter\": 300, \"n_init\": 10, \"tol\": 0.0001}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 2830.9, \"log\": [\"Selected dataset: ShapeletSim (labels for ARI)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-clustering-kshape-shapeletsim (sktime backend, algorithm: registered-clustering-TimeSeriesKShapes, created: 2026-10-15T07:21:49.866386+00:00)\", \"Loaded UCR/UEA ShapeletSim train=20 test=180\", \"Finished in 2830.9 ms\"]}, \"error\": null}\n"
+}

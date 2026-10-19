@@ -1,0 +1,29 @@
+{
+  "id": "classification-tsf-chinatown",
+  "task": "classification",
+  "ran_at": "2026-10-15T11:25:23.420315+00:00",
+  "train_command": "libraryts train --algorithm TimeSeriesForestClassifier --dataset ucr-chinatown --model-id bench-classification-tsf-chinatown --param random_state=0 --param min_interval=3 --param n_estimators=200 --param n_jobs=1",
+  "run_command": "libraryts run --model-id bench-classification-tsf-chinatown --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 7.03,
+  "values": {
+    "Accuracy": 0.9766763848396501
+  },
+  "per_metric": {
+    "Accuracy": {
+      "gt": 0.97668,
+      "value": 0.9766763848396501,
+      "delta": -4e-06,
+      "delta_rel": 4e-06,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "Accuracy": 0.9766763848396501,
+    "Macro F1": 0.9712513619981561
+  },
+  "error": null,
+  "stdout_tail": ", \"task\": \"classification\", \"dataset\": {\"id\": \"ucr-chinatown\", \"name\": \"UCR/UEA Chinatown\", \"task\": \"classification\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"Chinatown\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-classification-tsf-chinatown\", \"name\": \"TimeSeriesForestClassifier (trained: bench-classification-tsf-chinatown)\", \"task\": \"classification\", \"module\": \"sktime.classification.interval_based._tsf.TimeSeriesForestClassifier\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-9/playground/models/bench-classification-tsf-chinatown\", \"manifest\": {\"model_id\": \"bench-classification-tsf-chinatown\", \"backend\": \"sktime\", \"task\": \"classification\", \"algorithm_id\": \"registered-classification-TimeSeriesForestClassifier\", \"algorithm_name\": \"TimeSeriesForestClassifier\", \"module\": \"sktime.classification.interval_based._tsf.TimeSeriesForestClassifier\", \"params\": {\"random_state\": 0, \"min_interval\": 3, \"n_estimators\": 200, \"n_jobs\": 1}, \"eval_params\": {}, \"created_at\": \"2026-10-15T11:25:19.457520+00:00\", \"spec\": {\"task\": \"classification\", \"dataset_id\": \"ucr-chinatown\", \"algorithm_id\": \"registered-classification-TimeSeriesForestClassifier\", \"preprocessor_id\": \"none\", \"params\": {\"random_state\": 0, \"min_interval\": 3, \"n_estimators\": 200, \"n_jobs\": 1}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 2857.6, \"log\": [\"Selected dataset: UCR/UEA Chinatown\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-classification-tsf-chinatown (sktime backend, algorithm: registered-classification-TimeSeriesForestClassifier, created: 2026-10-15T11:25:19.457520+00:00)\", \"Loaded UCR/UEA Chinatown train=20 test=343\", \"Finished in 2857.6 ms\"]}, \"error\": null}\n"
+}

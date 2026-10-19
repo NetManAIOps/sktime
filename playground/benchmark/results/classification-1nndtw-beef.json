@@ -1,0 +1,29 @@
+{
+  "id": "classification-1nndtw-beef",
+  "task": "classification",
+  "ran_at": "2026-10-15T11:16:21.917717+00:00",
+  "train_command": "libraryts train --algorithm KNeighborsTimeSeriesClassifier --dataset ucr-beef --model-id bench-classification-1nndtw-beef --param distance=dtw --param n_neighbors=1 --param leaf_size=30",
+  "run_command": "libraryts run --model-id bench-classification-1nndtw-beef --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 8.6,
+  "values": {
+    "Accuracy": 0.6333333333333333
+  },
+  "per_metric": {
+    "Accuracy": {
+      "gt": 0.63333,
+      "value": 0.6333333333333333,
+      "delta": 3e-06,
+      "delta_rel": 5e-06,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "Accuracy": 0.6333333333333333,
+    "Macro F1": 0.6294017094017095
+  },
+  "error": null,
+  "stdout_tail": "\"params\": {}}, \"task\": \"classification\", \"dataset\": {\"id\": \"ucr-beef\", \"name\": \"UCR/UEA Beef\", \"task\": \"classification\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"Beef\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-classification-1nndtw-beef\", \"name\": \"KNeighborsTimeSeriesClassifier (trained: bench-classification-1nndtw-beef)\", \"task\": \"classification\", \"module\": \"sktime.classification.distance_based._time_series_neighbors.KNeighborsTimeSeriesClassifier\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-9/playground/models/bench-classification-1nndtw-beef\", \"manifest\": {\"model_id\": \"bench-classification-1nndtw-beef\", \"backend\": \"sktime\", \"task\": \"classification\", \"algorithm_id\": \"registered-classification-KNeighborsTimeSeriesClassifier\", \"algorithm_name\": \"KNeighborsTimeSeriesClassifier\", \"module\": \"sktime.classification.distance_based._time_series_neighbors.KNeighborsTimeSeriesClassifier\", \"params\": {\"distance\": \"dtw\", \"n_neighbors\": 1, \"leaf_size\": 30}, \"eval_params\": {}, \"created_at\": \"2026-10-15T11:16:16.886719+00:00\", \"spec\": {\"task\": \"classification\", \"dataset_id\": \"ucr-beef\", \"algorithm_id\": \"registered-classification-KNeighborsTimeSeriesClassifier\", \"preprocessor_id\": \"none\", \"params\": {\"distance\": \"dtw\", \"n_neighbors\": 1, \"leaf_size\": 30}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 4117.6, \"log\": [\"Selected dataset: UCR/UEA Beef\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-classification-1nndtw-beef (sktime backend, algorithm: registered-classification-KNeighborsTimeSeriesClassifier, created: 2026-10-15T11:16:16.886719+00:00)\", \"Loaded UCR/UEA Beef train=30 test=30\", \"Finished in 4117.6 ms\"]}, \"error\": null}\n"
+}

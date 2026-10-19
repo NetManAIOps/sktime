@@ -1,0 +1,29 @@
+{
+  "id": "classification-catch22-beef",
+  "task": "classification",
+  "ran_at": "2026-10-15T11:21:41.687740+00:00",
+  "train_command": "libraryts train --algorithm Catch22Classifier --dataset ucr-beef --model-id bench-classification-catch22-beef --param random_state=0 --param n_jobs=1",
+  "run_command": "libraryts run --model-id bench-classification-catch22-beef --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 23.14,
+  "values": {
+    "Accuracy": 0.5666666666666667
+  },
+  "per_metric": {
+    "Accuracy": {
+      "gt": 0.6,
+      "value": 0.5666666666666667,
+      "delta": -0.033333,
+      "delta_rel": 0.055556,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "Accuracy": 0.5666666666666667,
+    "Macro F1": 0.5630065359477123
+  },
+  "error": null,
+  "stdout_tail": "classification\", \"dataset_id\": \"ucr-beef\", \"algorithm_id\": \"sktime-trained:bench-classification-catch22-beef\", \"preprocessor_id\": \"none\", \"params\": {}}, \"task\": \"classification\", \"dataset\": {\"id\": \"ucr-beef\", \"name\": \"UCR/UEA Beef\", \"task\": \"classification\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"Beef\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-classification-catch22-beef\", \"name\": \"Catch22Classifier (trained: bench-classification-catch22-beef)\", \"task\": \"classification\", \"module\": \"sktime.classification.feature_based._catch22_classifier.Catch22Classifier\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-9/playground/models/bench-classification-catch22-beef\", \"manifest\": {\"model_id\": \"bench-classification-catch22-beef\", \"backend\": \"sktime\", \"task\": \"classification\", \"algorithm_id\": \"registered-classification-Catch22Classifier\", \"algorithm_name\": \"Catch22Classifier\", \"module\": \"sktime.classification.feature_based._catch22_classifier.Catch22Classifier\", \"params\": {\"random_state\": 0, \"n_jobs\": 1}, \"eval_params\": {}, \"created_at\": \"2026-10-15T11:21:34.913905+00:00\", \"spec\": {\"task\": \"classification\", \"dataset_id\": \"ucr-beef\", \"algorithm_id\": \"registered-classification-Catch22Classifier\", \"preprocessor_id\": \"none\", \"params\": {\"random_state\": 0, \"n_jobs\": 1}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 2850.9, \"log\": [\"Selected dataset: UCR/UEA Beef\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-classification-catch22-beef (sktime backend, algorithm: registered-classification-Catch22Classifier, created: 2026-10-15T11:21:34.913905+00:00)\", \"Loaded UCR/UEA Beef train=30 test=30\", \"Finished in 2850.9 ms\"]}, \"error\": null}\n"
+}

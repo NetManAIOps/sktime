@@ -1,0 +1,31 @@
+{
+  "id": "clustering-kmeansed-fish",
+  "task": "clustering",
+  "ran_at": "2026-10-15T11:23:13.284028+00:00",
+  "train_command": "libraryts train --algorithm TimeSeriesKMeansTslearn --dataset fish-cl --model-id bench-clustering-kmeansed-fish --param n_clusters=7 --param fit_on=all --param random_state=42 --param metric=euclidean --param init=k-means++ --param n_init=10 --param max_iter=300 --param max_iter_barycenter=100 --param tol=1e-06 --param verbose=0",
+  "run_command": "libraryts run --model-id bench-clustering-kmeansed-fish --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 13.71,
+  "values": {
+    "ARI": 0.18522849850963605
+  },
+  "per_metric": {
+    "ARI": {
+      "gt": 0.206705,
+      "value": 0.18522849850963605,
+      "delta": -0.021477,
+      "delta_rel": 0.103899,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "ARI": 0.18522849850963605,
+    "NMI": 0.31721267208262105,
+    "Clusters": 7,
+    "Largest Cluster": 95
+  },
+  "error": null,
+  "stdout_tail": "ktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"Fish\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-clustering-kmeansed-fish\", \"name\": \"TimeSeriesKMeansTslearn (trained: bench-clustering-kmeansed-fish)\", \"task\": \"clustering\", \"module\": \"sktime.clustering.k_means._k_means_tslearn.TimeSeriesKMeansTslearn\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-10/playground/models/bench-clustering-kmeansed-fish\", \"manifest\": {\"model_id\": \"bench-clustering-kmeansed-fish\", \"backend\": \"sktime\", \"task\": \"clustering\", \"algorithm_id\": \"registered-clustering-TimeSeriesKMeansTslearn\", \"algorithm_name\": \"TimeSeriesKMeansTslearn\", \"module\": \"sktime.clustering.k_means._k_means_tslearn.TimeSeriesKMeansTslearn\", \"params\": {\"n_clusters\": 7, \"random_state\": 42, \"metric\": \"euclidean\", \"init\": \"k-means++\", \"n_init\": 10, \"max_iter\": 300, \"max_iter_barycenter\": 100, \"tol\": 1e-06, \"verbose\": 0}, \"eval_params\": {\"fit_on\": \"all\"}, \"created_at\": \"2026-10-15T11:23:06.271470+00:00\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"fish-cl\", \"algorithm_id\": \"registered-clustering-TimeSeriesKMeansTslearn\", \"preprocessor_id\": \"none\", \"params\": {\"n_clusters\": 7, \"fit_on\": \"all\", \"random_state\": 42, \"metric\": \"euclidean\", \"init\": \"k-means++\", \"n_init\": 10, \"max_iter\": 300, \"max_iter_barycenter\": 100, \"tol\": 1e-06, \"verbose\": 0}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 4655.7, \"log\": [\"Selected dataset: Fish (labels for ARI)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-clustering-kmeansed-fish (sktime backend, algorithm: registered-clustering-TimeSeriesKMeansTslearn, created: 2026-10-15T11:23:06.271470+00:00)\", \"Loaded UCR/UEA Fish train=175 test=175\", \"Finished in 4655.7 ms\"]}, \"error\": null}\n"
+}

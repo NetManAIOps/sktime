@@ -1,0 +1,39 @@
+{
+  "id": "clustering-kshape-car",
+  "task": "clustering",
+  "ran_at": "2026-10-15T06:51:03.694019+00:00",
+  "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset car-cl --model-id bench-clustering-kshape-car --param n_clusters=4 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+  "run_command": "libraryts run --model-id bench-clustering-kshape-car --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 35.16,
+  "values": {
+    "ARI": 0.19286451857627548,
+    "NMI": 0.28132314444966733
+  },
+  "per_metric": {
+    "ARI": {
+      "gt": 0.13584,
+      "value": 0.19286451857627548,
+      "delta": 0.057025,
+      "delta_rel": 0.419792,
+      "status": "reproduced"
+    },
+    "NMI": {
+      "gt": 0.21614,
+      "value": 0.28132314444966733,
+      "delta": 0.065183,
+      "delta_rel": 0.301578,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "ARI": 0.19286451857627548,
+    "NMI": 0.28132314444966733,
+    "Clusters": 4,
+    "Largest Cluster": 50
+  },
+  "error": null,
+  "stdout_tail": "{\"task\": \"clustering\", \"dataset_id\": \"car-cl\", \"algorithm_id\": \"sktime-trained:bench-clustering-kshape-car\", \"preprocessor_id\": \"none\", \"params\": {}}, \"task\": \"clustering\", \"dataset\": {\"id\": \"car-cl\", \"name\": \"Car (labels for ARI)\", \"task\": \"clustering\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"Car\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-clustering-kshape-car\", \"name\": \"TimeSeriesKShapes (trained: bench-clustering-kshape-car)\", \"task\": \"clustering\", \"module\": \"sktime.clustering.k_shapes.TimeSeriesKShapes\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/playground/models/bench-clustering-kshape-car\", \"manifest\": {\"model_id\": \"bench-clustering-kshape-car\", \"backend\": \"sktime\", \"task\": \"clustering\", \"algorithm_id\": \"registered-clustering-TimeSeriesKShapes\", \"algorithm_name\": \"TimeSeriesKShapes\", \"module\": \"sktime.clustering.k_shapes.TimeSeriesKShapes\", \"params\": {\"n_clusters\": 4, \"random_state\": 42, \"max_iter\": 300, \"n_init\": 10, \"tol\": 0.0001}, \"eval_params\": {\"fit_on\": \"all\"}, \"created_at\": \"2026-10-15T06:50:59.269744+00:00\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"car-cl\", \"algorithm_id\": \"registered-clustering-TimeSeriesKShapes\", \"preprocessor_id\": \"none\", \"params\": {\"n_clusters\": 4, \"fit_on\": \"all\", \"random_state\": 42, \"max_iter\": 300, \"n_init\": 10, \"tol\": 0.0001}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 2795.4, \"log\": [\"Selected dataset: Car (labels for ARI)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-clustering-kshape-car (sktime backend, algorithm: registered-clustering-TimeSeriesKShapes, created: 2026-10-15T06:50:59.269744+00:00)\", \"Loaded UCR/UEA Car train=60 test=60\", \"Finished in 2795.4 ms\"]}, \"error\": null}\n"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "clustering-kshape-oliveoil",
+  "task": "clustering",
+  "ran_at": "2026-10-15T07:19:06.273894+00:00",
+  "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset oliveoil-cl --model-id bench-clustering-kshape-oliveoil --param n_clusters=4 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+  "run_command": "libraryts run --model-id bench-clustering-kshape-oliveoil --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 29.82,
+  "values": {
+    "ARI": 0.29831716474844455,
+    "NMI": 0.48148641914472406
+  },
+  "per_metric": {
+    "ARI": {
+      "gt": 0.64161,
+      "value": 0.29831716474844455,
+      "delta": -0.343293,
+      "delta_rel": 0.535049,
+      "status": "deviation"
+    },
+    "NMI": {
+      "gt": 0.64827,
+      "value": 0.48148641914472406,
+      "delta": -0.166784,
+      "delta_rel": 0.257275,
+      "status": "deviation"
+    }
+  },
+  "status": "deviation",
+  "metrics": {
+    "ARI": 0.29831716474844455,
+    "NMI": 0.48148641914472406,
+    "Clusters": 4,
+    "Largest Cluster": 33
+  },
+  "error": null,
+  "stdout_tail": "\": \"sktime-trained:bench-clustering-kshape-oliveoil\", \"preprocessor_id\": \"none\", \"params\": {}}, \"task\": \"clustering\", \"dataset\": {\"id\": \"oliveoil-cl\", \"name\": \"OliveOil (labels for ARI)\", \"task\": \"clustering\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"OliveOil\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-clustering-kshape-oliveoil\", \"name\": \"TimeSeriesKShapes (trained: bench-clustering-kshape-oliveoil)\", \"task\": \"clustering\", \"module\": \"sktime.clustering.k_shapes.TimeSeriesKShapes\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/playground/models/bench-clustering-kshape-oliveoil\", \"manifest\": {\"model_id\": \"bench-clustering-kshape-oliveoil\", \"backend\": \"sktime\", \"task\": \"clustering\", \"algorithm_id\": \"registered-clustering-TimeSeriesKShapes\", \"algorithm_name\": \"TimeSeriesKShapes\", \"module\": \"sktime.clustering.k_shapes.TimeSeriesKShapes\", \"params\": {\"n_clusters\": 4, \"random_state\": 42, \"max_iter\": 300, \"n_init\": 10, \"tol\": 0.0001}, \"eval_params\": {\"fit_on\": \"all\"}, \"created_at\": \"2026-10-15T07:19:01.830880+00:00\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"oliveoil-cl\", \"algorithm_id\": \"registered-clustering-TimeSeriesKShapes\", \"preprocessor_id\": \"none\", \"params\": {\"n_clusters\": 4, \"fit_on\": \"all\", \"random_state\": 42, \"max_iter\": 300, \"n_init\": 10, \"tol\": 0.0001}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 2863.3, \"log\": [\"Selected dataset: OliveOil (labels for ARI)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-clustering-kshape-oliveoil (sktime backend, algorithm: registered-clustering-TimeSeriesKShapes, created: 2026-10-15T07:19:01.830880+00:00)\", \"Loaded UCR/UEA OliveOil train=30 test=30\", \"Finished in 2863.3 ms\"]}, \"error\": null}\n"
+}

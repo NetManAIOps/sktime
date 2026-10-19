@@ -1,0 +1,32 @@
+{
+  "id": "detection-hbos-mgab-auc",
+  "task": "anomaly_detection",
+  "ran_at": "2026-10-14T17:54:57.614043+00:00",
+  "train_command": "libraryts train --algorithm PyODHBOSDetector --dataset tsb-mgab --model-id bench-detection-hbos-mgab-auc --param contamination=0.1 --param n_bins=10",
+  "run_command": "libraryts run --model-id bench-detection-hbos-mgab-auc --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 20.7,
+  "values": {
+    "AUC-ROC": 0.5810082640280562
+  },
+  "per_metric": {
+    "AUC-ROC": {
+      "gt": 0.54,
+      "value": 0.5810082640280562,
+      "delta": 0.041008,
+      "delta_rel": 0.075941,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "AUC-ROC": 0.5810082640280562,
+    "Precision": 0.0030277657005804504,
+    "Recall": 0.10500000000000001,
+    "F1": 0.005885790049699375,
+    "Series": 10
+  },
+  "error": null,
+  "stdout_tail": ".pyod.PyODHBOSDetector\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/playground/models/bench-detection-hbos-mgab-auc\", \"manifest\": {\"model_id\": \"bench-detection-hbos-mgab-auc\", \"backend\": \"sktime\", \"task\": \"anomaly_detection\", \"algorithm_id\": \"registered-anomaly_detection-PyODHBOSDetector\", \"algorithm_name\": \"PyODHBOSDetector\", \"module\": \"sktime.detection.adapters.pyod.PyODHBOSDetector\", \"params\": {\"contamination\": 0.1, \"n_bins\": 10}, \"eval_params\": {}, \"created_at\": \"2026-10-14T17:54:46.225458+00:00\", \"spec\": {\"task\": \"anomaly_detection\", \"dataset_id\": \"tsb-mgab\", \"algorithm_id\": \"registered-anomaly_detection-PyODHBOSDetector\", \"preprocessor_id\": \"none\", \"params\": {\"contamination\": 0.1, \"n_bins\": 10}, \"preprocessor_params\": {}}, \"multiseries\": true, \"series\": [{\"name\": \"1.test.out\", \"artifact\": \"series/0000/model.zip\"}, {\"name\": \"10.test.out\", \"artifact\": \"series/0001/model.zip\"}, {\"name\": \"2.test.out\", \"artifact\": \"series/0002/model.zip\"}, {\"name\": \"3.test.out\", \"artifact\": \"series/0003/model.zip\"}, {\"name\": \"4.test.out\", \"artifact\": \"series/0004/model.zip\"}, {\"name\": \"5.test.out\", \"artifact\": \"series/0005/model.zip\"}, {\"name\": \"6.test.out\", \"artifact\": \"series/0006/model.zip\"}, {\"name\": \"7.test.out\", \"artifact\": \"series/0007/model.zip\"}, {\"name\": \"8.test.out\", \"artifact\": \"series/0008/model.zip\"}, {\"name\": \"9.test.out\", \"artifact\": \"series/0009/model.zip\"}], \"artifacts\": {\"model\": null, \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 10082.0, \"log\": [\"Selected dataset: TSB-UAD MGAB (10 series)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-detection-hbos-mgab-auc (sktime backend, algorithm: registered-anomaly_detection-PyODHBOSDetector, created: 2026-10-14T17:54:46.225458+00:00)\", \"Multi-series eval: 10 series, AUC-ROC=0.5810\", \"Finished in 10082.0 ms\"]}, \"error\": null}\n"
+}

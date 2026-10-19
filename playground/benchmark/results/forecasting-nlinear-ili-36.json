@@ -1,0 +1,39 @@
+{
+  "id": "forecasting-nlinear-ili-36",
+  "task": "forecasting",
+  "ran_at": "2026-10-15T07:47:01.923498+00:00",
+  "train_command": "libraryts train --algorithm NLinearForecaster --dataset hf-ili --model-id bench-forecasting-nlinear-ili-36 --param seq_len=104 --param pred_len=36 --param horizon=36 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.7 --param test_fraction=0.2 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+  "run_command": "libraryts run --model-id bench-forecasting-nlinear-ili-36 --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 9.5,
+  "values": {
+    "MSE": 2.0837282898166767,
+    "MAE": 0.9640873364747866
+  },
+  "per_metric": {
+    "MSE": {
+      "gt": 1.703,
+      "value": 2.0837282898166767,
+      "delta": 0.380728,
+      "delta_rel": 0.223563,
+      "status": "deviation"
+    },
+    "MAE": {
+      "gt": 0.859,
+      "value": 0.9640873364747866,
+      "delta": 0.105087,
+      "delta_rel": 0.122337,
+      "status": "reproduced"
+    }
+  },
+  "status": "deviation",
+  "metrics": {
+    "MAE": 0.9640873364747866,
+    "MSE": 2.0837282898166767,
+    "MAPE": 3.374680495984632,
+    "Windows": 159
+  },
+  "error": null,
+  "stdout_tail": "ing-nlinear-ili-36\", \"backend\": \"sktime\", \"task\": \"forecasting\", \"algorithm_id\": \"registered-forecasting-NLinearForecaster\", \"algorithm_name\": \"NLinearForecaster\", \"module\": \"sktime.forecasting.tslib.NLinearForecaster\", \"params\": {\"seq_len\": 104, \"pred_len\": 36, \"num_epochs\": 10, \"batch_size\": 32, \"channel_independence\": 1, \"d_ff\": 128, \"d_layers\": 1, \"d_model\": 64, \"dropout\": 0.1, \"e_layers\": 2, \"factor\": 3, \"label_len\": 18, \"lr\": 0.001, \"lr_decay\": 1, \"moving_avg\": 25, \"n_heads\": 8, \"num_kernels\": 6, \"top_k\": 3}, \"eval_params\": {\"horizon\": 36, \"eval_mode\": \"rolling\", \"train_fraction\": 0.7, \"test_fraction\": 0.2, \"context_window\": 36}, \"created_at\": \"2026-10-15T07:46:57.354261+00:00\", \"spec\": {\"task\": \"forecasting\", \"dataset_id\": \"hf-ili\", \"algorithm_id\": \"registered-forecasting-NLinearForecaster\", \"preprocessor_id\": \"none\", \"params\": {\"seq_len\": 104, \"pred_len\": 36, \"horizon\": 36, \"num_epochs\": 10, \"eval_mode\": \"rolling\", \"train_fraction\": 0.7, \"test_fraction\": 0.2, \"batch_size\": 32, \"channel_independence\": 1, \"context_window\": 36, \"d_ff\": 128, \"d_layers\": 1, \"d_model\": 64, \"dropout\": 0.1, \"e_layers\": 2, \"factor\": 3, \"label_len\": 18, \"lr\": 0.001, \"lr_decay\": 1, \"moving_avg\": 25, \"n_heads\": 8, \"num_kernels\": 6, \"top_k\": 3}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 3240.0, \"log\": [\"Selected dataset: THU-ANM ILI\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-forecasting-nlinear-ili-36 (sktime backend, algorithm: registered-forecasting-NLinearForecaster, created: 2026-10-15T07:46:57.354261+00:00)\", \"Loaded Hugging Face config ILI (966 rows x 7 channels)\", \"Normalized time index to RangeIndex for reproducible forecasting\", \"Rolling eval: fit on 676 rows, 159 windows (test region [772, 966) of 966, horizon=36)\", \"Finished in 3240.0 ms\"]}, \"error\": null}\n"
+}

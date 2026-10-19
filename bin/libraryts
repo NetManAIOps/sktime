@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# LibraryTS CLI launcher:  libraryts train|run|ls|catalog|... (see `libraryts --help`).
+# Put this directory on PATH, or symlink the file into a venv's bin/ so that
+# the venv's python is used:  ln -s "$PWD/bin/libraryts" .venv/bin/libraryts
+here="$(dirname "$0")"
+root="$(cd "$(dirname "$(readlink -f "$0")")/.." && pwd)"
+if [ -x "$here/python" ]; then py="$here/python"; else py="${LIBRARYTS_PYTHON:-python}"; fi
+exec "$py" "$root/playground/libraryts.py" "$@"

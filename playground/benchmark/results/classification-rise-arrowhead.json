@@ -1,0 +1,29 @@
+{
+  "id": "classification-rise-arrowhead",
+  "task": "classification",
+  "ran_at": "2026-10-15T12:43:03.872872+00:00",
+  "train_command": "libraryts train --algorithm RandomIntervalSpectralEnsemble --dataset arrow-head --model-id bench-classification-rise-arrowhead --param random_state=0 --param acf_lag=100 --param acf_min_values=4 --param max_interval=0 --param min_interval=16 --param n_estimators=500 --param n_jobs=1",
+  "run_command": "libraryts run --model-id bench-classification-rise-arrowhead --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 17.15,
+  "values": {
+    "Accuracy": 0.7885714285714286
+  },
+  "per_metric": {
+    "Accuracy": {
+      "gt": 0.78857,
+      "value": 0.7885714285714286,
+      "delta": 1e-06,
+      "delta_rel": 2e-06,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "Accuracy": 0.7885714285714286,
+    "Macro F1": 0.7888683177260817
+  },
+  "error": null,
+  "stdout_tail": "Head\", \"task\": \"classification\", \"source\": \"local\", \"loader\": \"sktime.datasets.load_arrow_head\", \"enabled\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-classification-rise-arrowhead\", \"name\": \"RandomIntervalSpectralEnsemble (trained: bench-classification-rise-arrowhead)\", \"task\": \"classification\", \"module\": \"sktime.classification.interval_based._rise.RandomIntervalSpectralEnsemble\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-14/playground/models/bench-classification-rise-arrowhead\", \"manifest\": {\"model_id\": \"bench-classification-rise-arrowhead\", \"backend\": \"sktime\", \"task\": \"classification\", \"algorithm_id\": \"registered-classification-RandomIntervalSpectralEnsemble\", \"algorithm_name\": \"RandomIntervalSpectralEnsemble\", \"module\": \"sktime.classification.interval_based._rise.RandomIntervalSpectralEnsemble\", \"params\": {\"random_state\": 0, \"acf_lag\": 100, \"acf_min_values\": 4, \"max_interval\": 0, \"min_interval\": 16, \"n_estimators\": 500, \"n_jobs\": 1}, \"eval_params\": {}, \"created_at\": \"2026-10-15T12:42:52.089074+00:00\", \"spec\": {\"task\": \"classification\", \"dataset_id\": \"arrow-head\", \"algorithm_id\": \"registered-classification-RandomIntervalSpectralEnsemble\", \"preprocessor_id\": \"none\", \"params\": {\"random_state\": 0, \"acf_lag\": 100, \"acf_min_values\": 4, \"max_interval\": 0, \"min_interval\": 16, \"n_estimators\": 500, \"n_jobs\": 1}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 10416.7, \"log\": [\"Selected dataset: ArrowHead\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-classification-rise-arrowhead (sktime backend, algorithm: registered-classification-RandomIntervalSpectralEnsemble, created: 2026-10-15T12:42:52.089074+00:00)\", \"Loaded ArrowHead train=36 test=175\", \"Finished in 10416.7 ms\"]}, \"error\": null}\n"
+}

@@ -1,0 +1,31 @@
+{
+  "id": "clustering-agglomerative-car",
+  "task": "clustering",
+  "ran_at": "2026-10-15T12:55:24.139547+00:00",
+  "train_command": "libraryts train --algorithm user-agglomerative --dataset car-cl --model-id bench-clustering-agglomerative-car --param n_clusters=4 --param fit_on=all --param linkage=ward --param metric=euclidean",
+  "run_command": "libraryts run --model-id bench-clustering-agglomerative-car --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 5.52,
+  "values": {
+    "ARI": 0.10786270341014927
+  },
+  "per_metric": {
+    "ARI": {
+      "gt": 0.107863,
+      "value": 0.10786270341014927,
+      "delta": -0.0,
+      "delta_rel": 3e-06,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "ARI": 0.10786270341014927,
+    "NMI": 0.23160756992653916,
+    "Clusters": 4,
+    "Largest Cluster": 64
+  },
+  "error": null,
+  "stdout_tail": "e81\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"car-cl\", \"algorithm_id\": \"sktime-trained:bench-clustering-agglomerative-car\", \"preprocessor_id\": \"none\", \"params\": {}}, \"task\": \"clustering\", \"dataset\": {\"id\": \"car-cl\", \"name\": \"Car (labels for ARI)\", \"task\": \"clustering\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"Car\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-clustering-agglomerative-car\", \"name\": \"Agglomerative (Euclidean, ward linkage) (trained: bench-clustering-agglomerative-car)\", \"task\": \"clustering\", \"module\": \"user_algos.AgglomerativePanelClusterer\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-16/playground/models/bench-clustering-agglomerative-car\", \"manifest\": {\"model_id\": \"bench-clustering-agglomerative-car\", \"backend\": \"sktime\", \"task\": \"clustering\", \"algorithm_id\": \"user-agglomerative\", \"algorithm_name\": \"Agglomerative (Euclidean, ward linkage)\", \"module\": \"user_algos.AgglomerativePanelClusterer\", \"params\": {\"n_clusters\": 4, \"linkage\": \"ward\", \"metric\": \"euclidean\"}, \"eval_params\": {\"fit_on\": \"all\"}, \"created_at\": \"2026-10-15T12:55:22.036856+00:00\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"car-cl\", \"algorithm_id\": \"user-agglomerative\", \"preprocessor_id\": \"none\", \"params\": {\"n_clusters\": 4, \"fit_on\": \"all\", \"linkage\": \"ward\", \"metric\": \"euclidean\"}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 1392.2, \"log\": [\"Selected dataset: Car (labels for ARI)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-clustering-agglomerative-car (sktime backend, algorithm: user-agglomerative, created: 2026-10-15T12:55:22.036856+00:00)\", \"Loaded UCR/UEA Car train=60 test=60\", \"Finished in 1392.2 ms\"]}, \"error\": null}\n"
+}

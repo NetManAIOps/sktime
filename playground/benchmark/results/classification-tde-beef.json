@@ -1,0 +1,29 @@
+{
+  "id": "classification-tde-beef",
+  "task": "classification",
+  "ran_at": "2026-10-15T13:12:24.402480+00:00",
+  "train_command": "libraryts train --algorithm TemporalDictionaryEnsemble --dataset ucr-beef --model-id bench-classification-tde-beef --param random_state=0 --param dim_threshold=0.85 --param max_dims=20 --param max_ensemble_size=50 --param max_win_len_prop=1 --param min_window=10 --param n_jobs=1 --param n_parameter_samples=250 --param randomly_selected_params=50 --param time_limit_in_minutes=0",
+  "run_command": "libraryts run --model-id bench-classification-tde-beef --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 77.49,
+  "values": {
+    "Accuracy": 0.8333333333333334
+  },
+  "per_metric": {
+    "Accuracy": {
+      "gt": 0.9,
+      "value": 0.8333333333333334,
+      "delta": -0.066667,
+      "delta_rel": 0.074074,
+      "status": "deviation"
+    }
+  },
+  "status": "deviation",
+  "metrics": {
+    "Accuracy": 0.8333333333333334,
+    "Macro F1": 0.8337595737595738
+  },
+  "error": null,
+  "stdout_tail": "ime-trained:bench-classification-tde-beef\", \"name\": \"TemporalDictionaryEnsemble (trained: bench-classification-tde-beef)\", \"task\": \"classification\", \"module\": \"sktime.classification.dictionary_based._tde.TemporalDictionaryEnsemble\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-14/playground/models/bench-classification-tde-beef\", \"manifest\": {\"model_id\": \"bench-classification-tde-beef\", \"backend\": \"sktime\", \"task\": \"classification\", \"algorithm_id\": \"registered-classification-TemporalDictionaryEnsemble\", \"algorithm_name\": \"TemporalDictionaryEnsemble\", \"module\": \"sktime.classification.dictionary_based._tde.TemporalDictionaryEnsemble\", \"params\": {\"random_state\": 0, \"dim_threshold\": 0.85, \"max_dims\": 20, \"max_ensemble_size\": 50, \"max_win_len_prop\": 1, \"min_window\": 10, \"n_jobs\": 1, \"n_parameter_samples\": 250, \"randomly_selected_params\": 50, \"time_limit_in_minutes\": 0}, \"eval_params\": {}, \"created_at\": \"2026-10-15T13:12:08.996130+00:00\", \"spec\": {\"task\": \"classification\", \"dataset_id\": \"ucr-beef\", \"algorithm_id\": \"registered-classification-TemporalDictionaryEnsemble\", \"preprocessor_id\": \"none\", \"params\": {\"random_state\": 0, \"dim_threshold\": 0.85, \"max_dims\": 20, \"max_ensemble_size\": 50, \"max_win_len_prop\": 1, \"min_window\": 10, \"n_jobs\": 1, \"n_parameter_samples\": 250, \"randomly_selected_params\": 50, \"time_limit_in_minutes\": 0}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 14162.2, \"log\": [\"Selected dataset: UCR/UEA Beef\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-classification-tde-beef (sktime backend, algorithm: registered-classification-TemporalDictionaryEnsemble, created: 2026-10-15T13:12:08.996130+00:00)\", \"Loaded UCR/UEA Beef train=30 test=30\", \"Finished in 14162.2 ms\"]}, \"error\": null}\n"
+}

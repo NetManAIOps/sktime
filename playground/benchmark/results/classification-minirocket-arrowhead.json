@@ -1,0 +1,29 @@
+{
+  "id": "classification-minirocket-arrowhead",
+  "task": "classification",
+  "ran_at": "2026-10-14T17:37:48.766126+00:00",
+  "train_command": "libraryts train --algorithm RocketClassifier --dataset arrow-head --model-id bench-classification-minirocket-arrowhead --param rocket_transform=minirocket --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+  "run_command": "libraryts run --model-id bench-classification-minirocket-arrowhead --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 15.84,
+  "values": {
+    "Accuracy": 0.8457142857142858
+  },
+  "per_metric": {
+    "Accuracy": {
+      "gt": 0.88095,
+      "value": 0.8457142857142858,
+      "delta": -0.035236,
+      "delta_rel": 0.039997,
+      "status": "deviation"
+    }
+  },
+  "status": "deviation",
+  "metrics": {
+    "Accuracy": 0.8457142857142858,
+    "Macro F1": 0.8463768115942029
+  },
+  "error": null,
+  "stdout_tail": "task\": \"classification\", \"dataset\": {\"id\": \"arrow-head\", \"name\": \"ArrowHead\", \"task\": \"classification\", \"source\": \"local\", \"loader\": \"sktime.datasets.load_arrow_head\", \"enabled\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-classification-minirocket-arrowhead\", \"name\": \"RocketClassifier (trained: bench-classification-minirocket-arrowhead)\", \"task\": \"classification\", \"module\": \"sktime.classification.kernel_based._rocket_classifier.RocketClassifier\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/playground/models/bench-classification-minirocket-arrowhead\", \"manifest\": {\"model_id\": \"bench-classification-minirocket-arrowhead\", \"backend\": \"sktime\", \"task\": \"classification\", \"algorithm_id\": \"registered-classification-RocketClassifier\", \"algorithm_name\": \"RocketClassifier\", \"module\": \"sktime.classification.kernel_based._rocket_classifier.RocketClassifier\", \"params\": {\"rocket_transform\": \"minirocket\", \"max_dilations_per_kernel\": 32, \"n_features_per_kernel\": 4, \"n_jobs\": 1, \"num_kernels\": 10000}, \"eval_params\": {}, \"created_at\": \"2026-10-14T17:37:42.863541+00:00\", \"spec\": {\"task\": \"classification\", \"dataset_id\": \"arrow-head\", \"algorithm_id\": \"registered-classification-RocketClassifier\", \"preprocessor_id\": \"none\", \"params\": {\"rocket_transform\": \"minirocket\", \"max_dilations_per_kernel\": 32, \"n_features_per_kernel\": 4, \"n_jobs\": 1, \"num_kernels\": 10000}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 4850.1, \"log\": [\"Selected dataset: ArrowHead\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-classification-minirocket-arrowhead (sktime backend, algorithm: registered-classification-RocketClassifier, created: 2026-10-14T17:37:42.863541+00:00)\", \"Loaded ArrowHead train=36 test=175\", \"Finished in 4850.1 ms\"]}, \"error\": null}\n"
+}

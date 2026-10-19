@@ -1,0 +1,31 @@
+{
+  "id": "clustering-kmedoids-meat",
+  "task": "clustering",
+  "ran_at": "2026-10-15T11:24:16.332197+00:00",
+  "train_command": "libraryts train --algorithm TimeSeriesKMedoids --dataset meat-cl --model-id bench-clustering-kmedoids-meat --param n_clusters=3 --param fit_on=all --param random_state=42 --param metric=euclidean --param max_iter=300 --param n_init=10 --param tol=1e-06",
+  "run_command": "libraryts run --model-id bench-clustering-kmedoids-meat --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 6.68,
+  "values": {
+    "ARI": 0.4365025677182084
+  },
+  "per_metric": {
+    "ARI": {
+      "gt": 0.623891,
+      "value": 0.4365025677182084,
+      "delta": -0.187388,
+      "delta_rel": 0.300354,
+      "status": "deviation"
+    }
+  },
+  "status": "deviation",
+  "metrics": {
+    "ARI": 0.4365025677182084,
+    "NMI": 0.6044991765417204,
+    "Clusters": 3,
+    "Largest Cluster": 78
+  },
+  "error": null,
+  "stdout_tail": "oids-meat\", \"preprocessor_id\": \"none\", \"params\": {}}, \"task\": \"clustering\", \"dataset\": {\"id\": \"meat-cl\", \"name\": \"Meat (labels for ARI)\", \"task\": \"clustering\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"Meat\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-clustering-kmedoids-meat\", \"name\": \"TimeSeriesKMedoids (trained: bench-clustering-kmedoids-meat)\", \"task\": \"clustering\", \"module\": \"sktime.clustering.k_medoids.TimeSeriesKMedoids\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-10/playground/models/bench-clustering-kmedoids-meat\", \"manifest\": {\"model_id\": \"bench-clustering-kmedoids-meat\", \"backend\": \"sktime\", \"task\": \"clustering\", \"algorithm_id\": \"registered-clustering-TimeSeriesKMedoids\", \"algorithm_name\": \"TimeSeriesKMedoids\", \"module\": \"sktime.clustering.k_medoids.TimeSeriesKMedoids\", \"params\": {\"n_clusters\": 3, \"random_state\": 42, \"metric\": \"euclidean\", \"max_iter\": 300, \"n_init\": 10, \"tol\": 1e-06}, \"eval_params\": {\"fit_on\": \"all\"}, \"created_at\": \"2026-10-15T11:24:13.542405+00:00\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"meat-cl\", \"algorithm_id\": \"registered-clustering-TimeSeriesKMedoids\", \"preprocessor_id\": \"none\", \"params\": {\"n_clusters\": 3, \"fit_on\": \"all\", \"random_state\": 42, \"metric\": \"euclidean\", \"max_iter\": 300, \"n_init\": 10, \"tol\": 1e-06}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 1924.8, \"log\": [\"Selected dataset: Meat (labels for ARI)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-clustering-kmedoids-meat (sktime backend, algorithm: registered-clustering-TimeSeriesKMedoids, created: 2026-10-15T11:24:13.542405+00:00)\", \"Loaded UCR/UEA Meat train=60 test=60\", \"Finished in 1924.8 ms\"]}, \"error\": null}\n"
+}

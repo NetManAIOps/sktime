@@ -1,0 +1,32 @@
+{
+  "id": "detection-copod-genesis-auc",
+  "task": "anomaly_detection",
+  "ran_at": "2026-10-15T11:58:03.599649+00:00",
+  "train_command": "libraryts train --algorithm PyODCOPODDetector --dataset tsb-genesis --model-id bench-detection-copod-genesis-auc --param contamination=0.1",
+  "run_command": "libraryts run --model-id bench-detection-copod-genesis-auc --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 20.05,
+  "values": {
+    "AUC-ROC": 0.6418923933209647
+  },
+  "per_metric": {
+    "AUC-ROC": {
+      "gt": 0.6419,
+      "value": 0.6418923933209647,
+      "delta": -8e-06,
+      "delta_rel": 1.2e-05,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "AUC-ROC": 0.6418923933209647,
+    "Precision": 0.00963837097838633,
+    "Recall": 0.3133333333333333,
+    "F1": 0.018701463710041586,
+    "Series": 6
+  },
+  "error": null,
+  "stdout_tail": "detection-copod-genesis-auc)\", \"task\": \"anomaly_detection\", \"module\": \"sktime.detection.adapters.pyod.PyODCOPODDetector\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-11/playground/models/bench-detection-copod-genesis-auc\", \"manifest\": {\"model_id\": \"bench-detection-copod-genesis-auc\", \"backend\": \"sktime\", \"task\": \"anomaly_detection\", \"algorithm_id\": \"registered-anomaly_detection-PyODCOPODDetector\", \"algorithm_name\": \"PyODCOPODDetector\", \"module\": \"sktime.detection.adapters.pyod.PyODCOPODDetector\", \"params\": {\"contamination\": 0.1}, \"eval_params\": {}, \"created_at\": \"2026-10-15T11:57:57.052108+00:00\", \"spec\": {\"task\": \"anomaly_detection\", \"dataset_id\": \"tsb-genesis\", \"algorithm_id\": \"registered-anomaly_detection-PyODCOPODDetector\", \"preprocessor_id\": \"none\", \"params\": {\"contamination\": 0.1}, \"preprocessor_params\": {}}, \"multiseries\": true, \"series\": [{\"name\": \"genesis-anomalies.test.csv@1.out\", \"artifact\": \"series/0000/model.zip\"}, {\"name\": \"genesis-anomalies.test.csv@13.out\", \"artifact\": \"series/0001/model.zip\"}, {\"name\": \"genesis-anomalies.test.csv@17.out\", \"artifact\": \"series/0002/model.zip\"}, {\"name\": \"genesis-anomalies.test.csv@3.out\", \"artifact\": \"series/0003/model.zip\"}, {\"name\": \"genesis-anomalies.test.csv@5.out\", \"artifact\": \"series/0004/model.zip\"}, {\"name\": \"genesis-anomalies.test.csv@6.out\", \"artifact\": \"series/0005/model.zip\"}], \"artifacts\": {\"model\": null, \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 3215.9, \"log\": [\"Selected dataset: TSB-UAD Genesis (6 series)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-detection-copod-genesis-auc (sktime backend, algorithm: registered-anomaly_detection-PyODCOPODDetector, created: 2026-10-15T11:57:57.052108+00:00)\", \"Multi-series eval: 6 series, AUC-ROC=0.6419\", \"Finished in 3215.9 ms\"]}, \"error\": null}\n"
+}

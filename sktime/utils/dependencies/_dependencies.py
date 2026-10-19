@@ -1,5 +1,6 @@
 """Utility to check soft dependency imports, and raise warnings or errors."""
 
+import re
 import sys
 import warnings
 from functools import lru_cache
@@ -364,7 +365,7 @@ def _get_installed_packages_private():
     from importlib.metadata import distributions, version
 
     dists = distributions()
-    package_names = {dist.metadata["Name"] for dist in dists}
+    package_names = {_normalize_pkg_name(dist.metadata["Name"]) for dist in dists}
     package_versions = {pkg_name: version(pkg_name) for pkg_name in package_names}
     # developer note:
     # we cannot just use distributions naively,
@@ -382,10 +383,20 @@ def _get_installed_packages():
     Returns
     -------
     dict : dictionary of installed packages and their versions
-        keys are PEP 440 compatible package names, values are package versions
+        keys are PEP 503 normalized package names, values are package versions
         MAJOR.MINOR.PATCH version format is used for versions, e.g., "1.2.3"
     """
     return _get_installed_packages_private().copy()
+
+
+def _normalize_pkg_name(name):
+    """Normalize a package name according to PEP 503.
+
+    PEP 503 normalized names are lowercased, with runs of the characters
+    ``-``, ``_`` and ``.`` replaced by a single ``-``, e.g.,
+    ``huggingface_hub`` and ``HuggingFace-Hub`` both become ``huggingface-hub``.
+    """
+    return re.sub(r"[-_.]+", "-", name).lower()
 
 
 def _get_pkg_version(package_name):
@@ -400,6 +411,7 @@ def _get_pkg_version(package_name):
         PEP 440 compatibe specifier string, e.g., "pandas" or "sklearn".
         This is the pypi package name, not the import name, e.g.,
         ``scikit-learn``, not ``sklearn``.
+        The name is normalized according to PEP 503 before comparison.
 
     Returns
     -------
@@ -407,7 +419,7 @@ def _get_pkg_version(package_name):
     ``importlib`` ``Version`` of package, if present in environment.
     """
     pkgs = _get_installed_packages()
-    pkg_vers_str = pkgs.get(package_name, None)
+    pkg_vers_str = pkgs.get(_normalize_pkg_name(package_name), None)
     if pkg_vers_str is None:
         return None
     try:

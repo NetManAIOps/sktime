@@ -1,0 +1,32 @@
+{
+  "id": "detection-ecod-dodgers-auc",
+  "task": "anomaly_detection",
+  "ran_at": "2026-10-15T12:15:13.046847+00:00",
+  "train_command": "libraryts train --algorithm PyODECODDetector --dataset tsb-dodgers --model-id bench-detection-ecod-dodgers-auc --param contamination=0.1",
+  "run_command": "libraryts run --model-id bench-detection-ecod-dodgers-auc --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 6.95,
+  "values": {
+    "AUC-ROC": 0.667751816413507
+  },
+  "per_metric": {
+    "AUC-ROC": {
+      "gt": 0.6678,
+      "value": 0.667751816413507,
+      "delta": -4.8e-05,
+      "delta_rel": 7.2e-05,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "AUC-ROC": 0.667751816413507,
+    "Precision": 0.06097560975609756,
+    "Recall": 0.027619387027797575,
+    "F1": 0.038018150600932055,
+    "Series": 1
+  },
+  "error": null,
+  "stdout_tail": " \"algorithm_id\": \"sktime-trained:bench-detection-ecod-dodgers-auc\", \"preprocessor_id\": \"none\", \"params\": {}}, \"task\": \"anomaly_detection\", \"dataset\": {\"id\": \"tsb-dodgers\", \"name\": \"TSB-UAD Dodgers (1 series)\", \"task\": \"anomaly_detection\", \"source\": \"tsb_uad\", \"series_dir\": \"TSB-UAD-Public/Dodgers\", \"enabled\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-detection-ecod-dodgers-auc\", \"name\": \"PyODECODDetector (trained: bench-detection-ecod-dodgers-auc)\", \"task\": \"anomaly_detection\", \"module\": \"sktime.detection.adapters.pyod.PyODECODDetector\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-13/playground/models/bench-detection-ecod-dodgers-auc\", \"manifest\": {\"model_id\": \"bench-detection-ecod-dodgers-auc\", \"backend\": \"sktime\", \"task\": \"anomaly_detection\", \"algorithm_id\": \"registered-anomaly_detection-PyODECODDetector\", \"algorithm_name\": \"PyODECODDetector\", \"module\": \"sktime.detection.adapters.pyod.PyODECODDetector\", \"params\": {\"contamination\": 0.1}, \"eval_params\": {}, \"created_at\": \"2026-10-15T12:15:09.438828+00:00\", \"spec\": {\"task\": \"anomaly_detection\", \"dataset_id\": \"tsb-dodgers\", \"algorithm_id\": \"registered-anomaly_detection-PyODECODDetector\", \"preprocessor_id\": \"none\", \"params\": {\"contamination\": 0.1}, \"preprocessor_params\": {}}, \"multiseries\": true, \"series\": [{\"name\": \"101-freeway-traffic.test.out\", \"artifact\": \"series/0000/model.zip\"}], \"artifacts\": {\"model\": null, \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 2610.9, \"log\": [\"Selected dataset: TSB-UAD Dodgers (1 series)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-detection-ecod-dodgers-auc (sktime backend, algorithm: registered-anomaly_detection-PyODECODDetector, created: 2026-10-15T12:15:09.438828+00:00)\", \"Multi-series eval: 1 series, AUC-ROC=0.6678\", \"Finished in 2610.9 ms\"]}, \"error\": null}\n"
+}

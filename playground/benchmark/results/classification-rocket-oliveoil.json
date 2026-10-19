@@ -1,0 +1,29 @@
+{
+  "id": "classification-rocket-oliveoil",
+  "task": "classification",
+  "ran_at": "2026-10-15T06:35:54.933872+00:00",
+  "train_command": "libraryts train --algorithm RocketClassifier --dataset ucr-oliveoil --model-id bench-classification-rocket-oliveoil --param max_dilations_per_kernel=32 --param n_features_per_kernel=4 --param n_jobs=1 --param num_kernels=10000",
+  "run_command": "libraryts run --model-id bench-classification-rocket-oliveoil --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 22.54,
+  "values": {
+    "Accuracy": 0.9333333333333333
+  },
+  "per_metric": {
+    "Accuracy": {
+      "gt": 0.91667,
+      "value": 0.9333333333333333,
+      "delta": 0.016663,
+      "delta_rel": 0.018178,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "Accuracy": 0.9333333333333333,
+    "Macro F1": 0.9284161490683229
+  },
+  "error": null,
+  "stdout_tail": "one\", \"params\": {}}, \"task\": \"classification\", \"dataset\": {\"id\": \"ucr-oliveoil\", \"name\": \"UCR/UEA OliveOil\", \"task\": \"classification\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"OliveOil\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-classification-rocket-oliveoil\", \"name\": \"RocketClassifier (trained: bench-classification-rocket-oliveoil)\", \"task\": \"classification\", \"module\": \"sktime.classification.kernel_based._rocket_classifier.RocketClassifier\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/playground/models/bench-classification-rocket-oliveoil\", \"manifest\": {\"model_id\": \"bench-classification-rocket-oliveoil\", \"backend\": \"sktime\", \"task\": \"classification\", \"algorithm_id\": \"registered-classification-RocketClassifier\", \"algorithm_name\": \"RocketClassifier\", \"module\": \"sktime.classification.kernel_based._rocket_classifier.RocketClassifier\", \"params\": {\"max_dilations_per_kernel\": 32, \"n_features_per_kernel\": 4, \"n_jobs\": 1, \"num_kernels\": 10000}, \"eval_params\": {}, \"created_at\": \"2026-10-15T06:35:47.583081+00:00\", \"spec\": {\"task\": \"classification\", \"dataset_id\": \"ucr-oliveoil\", \"algorithm_id\": \"registered-classification-RocketClassifier\", \"preprocessor_id\": \"none\", \"params\": {\"max_dilations_per_kernel\": 32, \"n_features_per_kernel\": 4, \"n_jobs\": 1, \"num_kernels\": 10000}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 6613.4, \"log\": [\"Selected dataset: UCR/UEA OliveOil\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-classification-rocket-oliveoil (sktime backend, algorithm: registered-classification-RocketClassifier, created: 2026-10-15T06:35:47.583081+00:00)\", \"Loaded UCR/UEA OliveOil train=30 test=30\", \"Finished in 6613.4 ms\"]}, \"error\": null}\n"
+}

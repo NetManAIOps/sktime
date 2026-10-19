@@ -127,7 +127,7 @@ Run examples from the repository root:
 python3 .agent/skills/time-series-sandbox/user_cases/01_forecasting_naive_airline.py
 ```
 
-## TSBox Playground
+## LibraryTS Playground
 
 The repo ships a runnable web Playground as a top-level module at
 `playground/` (it was moved out of this skill; it is NOT under `.agent/`).
@@ -178,17 +178,42 @@ registry entry looks wrong, rerun the command above rather than trusting it.
   `/api/catalog`, `/api/run`, `/api/export/script`, `/api/export/report`.
   Static assets live in `playground/static/`.
 - `playground/catalog.py`: builds the task/algorithm/dataset catalog consumed
-  by the front end, and discovers sktime estimators.
+  by the front end, and discovers sktime estimators. Also registers the
+  `causal` task (NOTEARS/PC/GES/PCMCI + bnlearn datasets with ground-truth
+  DAGs) and marks compositors that accept sub-estimators
+  (`required_params`/`accepts_estimators`).
 - `playground/runners.py`: validates specs, runs experiments, and generates the
-  reproduction script and report for each run.
+  reproduction script and report for each run. Supports preprocessing chains
+  (ordered, length-preserving steps), nested estimator specs for compositors,
+  registry-driven extra metrics, continuous anomaly scores, and re-scoring of
+  saved runs (`evaluate_saved_run`).
+- `playground/metrics.py`: unified metric registry (sktime forecasting /
+  detection metrics, sklearn task metrics, DevAD score-based anomaly
+  metrics) with `id/name/task/requires/direction/default` metadata; drives
+  `libraryts ls metrics`, `run --metric`, and `libraryts evaluate`.
+- `playground/domain_runners.py`: causal-discovery runner (graph metrics:
+  SHD + edge precision/recall/F1 against the true DAG) and the pairwise
+  distance-matrix backend for `libraryts dist`.
+- `playground/analyzer.py`: `sktime.param_est` backend for `libraryts analyze`
+  (seasonality, stationarity, AR lag order).
 - `playground/hf_data.py`: Hugging Face loader for online forecasting series.
 - `playground/test_playground.py`: unittest suite.
-- `playground/labts.py`: LabTS API — headless CLI version of this Playground
+- `playground/libraryts.py`: LibraryTS API — headless CLI version of this Playground
   for autoresearch harnesses and automated pipelines. Full parity with the web
   endpoints: `catalog` ↔ `/api/catalog`, `run` ↔ `/api/run`,
   `script` ↔ `/api/export/script`, `report` ↔ `/api/export/report`, with a
   unified JSON envelope and pipeline flow (`run --out` → `script/report
-  --from`). See the `labts-api` skill.
+  --from`). Adds stateful model lifecycle commands for EVERY catalog
+  algorithm/task: `train` (persist under `playground/models/`) and
+  `run --model-id` (reload + score the holdout, no refit; `predict`/`detect`
+  are aliases), plus `ls models`, `evaluate` (re-score saved runs with
+  registry metrics), `analyze` (param_est), and `dist` (pairwise distances).
+  See the `libraryts-api` skill.
+- `playground/trainer.py`: generic train/persist/predict backends (sktime
+  save/load via `persistence.py`; DevAD zoo via `sktime/libs/devad`) used by
+  `libraryts.py train` / `run --model-id`. Covers rolling-origin forecasting,
+  clustering `fit_on=all`, causal discovery, and per-series model bundles
+  for multi-series anomaly datasets.
 
 ### Dynamic algorithm registration
 
@@ -197,16 +222,34 @@ walks `sktime.registry.all_estimators()` for `forecaster`, `classifier`,
 `regressor`, `clusterer`, and `detector`, and exposes EVERY discovered
 estimator as enabled, plus its numeric scalar hyperparameters from
 `get_params()`. There is no environment gating and no disabled list: whatever
-sktime has registered shows up and is runnable.
+sktime has registered shows up and is runnable. Estimators whose constructor
+requires arguments (compositors/meta-estimators such as ForecastingPipeline,
+EnsembleForecaster, reduction wrappers) are enabled too and marked with
+`required_params` / `accepts_estimators` — they run through **nested
+estimator specs** (`spec.params` values of the form
+`{"name": "x", "estimator": {"algorithm_id": ..., "params": {...}}}`, built
+recursively by `runners._build_estimator` with task-type validation).
 
 - Five curated defaults (`NaiveForecaster`, `SummaryClassifier`,
   `SklearnRegressorPipeline`, `TimeSeriesKMeans`, `ThresholdDetector`) keep
-  their hand-tuned runners and are listed first.
+  their hand-tuned runners and are listed first; the causal task adds curated
+  `NOTEARS` (native), `PC`/`GES` (soft dep `causal-learn`), and `PCMCI`
+  (soft dep `tigramite`) plus the bnlearn `causal-sachs/alarm/asia` datasets
+  with ground-truth DAGs.
 - Every other discovered estimator goes through a generic per-task runner
   (`_run_<task>_generic`) and a generic export-script generator.
 - Evaluation parameters (`horizon`; `threshold`/`window` for the curated
-  anomaly detector) are split from estimator constructor parameters via
-  `catalog.split_params()`.
+  anomaly detector; `max_samples`/`seed` for causal) are split from estimator
+  constructor parameters via `catalog.split_params()`.
+- Preprocessors chain: `spec.preprocessors` is an ordered list of
+  length/instance-preserving steps (`--preprocessor` repeatable on the CLI,
+  per-step params via `--pre-param STEP:key=value`); the legacy single
+  `preprocessor_id` form is a one-step chain.
+- Metrics come from the unified registry in `playground/metrics.py`:
+  defaults are unchanged per task; `run --metric <id>` adds registry entries
+  (e.g. DevAD `pa_f1`/`vus_roc` on top of the point P/R/F1), and
+  `libraryts evaluate --from run.json` re-scores a saved run without re-fitting
+  (anomaly via the saved continuous `scores`).
 
 Soft dependencies are not required to start the Playground, but they unlock most
 discovered estimators. For broad coverage install them, for example:
@@ -232,7 +275,7 @@ local import fixes) and adapted as sktime forecasters in
 
 They subclass `BaseDeepNetworkPyTorch` (soft dependency `torch`, CPU build in
 `playground/requirements.txt`), are default-constructible, and therefore show
-up in the Playground/labts catalog automatically as
+up in the Playground/libraryts catalog automatically as
 `registered-forecasting-<ClassName>` with their numeric hyperparameters
 (`seq_len`, `d_model`, `e_layers`, `num_epochs`, ...) exposed. Without torch
 they appear as disabled with a "Missing dependency" reason — nothing breaks.
@@ -256,7 +299,7 @@ Their class documentation identifies the PyOD source. The existing
 `iforest.IForest` is a separate window-based detector, not this PyOD wrapper.
 
 They are default-constructible and discovered as
-`registered-anomaly_detection-<ClassName>` in Playground/labts. All expose
+`registered-anomaly_detection-<ClassName>` in Playground/LibraryTS. All expose
 `contamination` (default 0.1) plus their model-specific numeric hyperparameters.
 `pyod` is pinned in `playground/requirements.txt`.
 
@@ -266,7 +309,56 @@ of PyOD `decision_function` scores (larger means more anomalous). There is no
 internal windowing, imputation or scaling. The former `_PyODPointsMixin`,
 `labels` constructor option, and `adapters/pyod.py` wrappers have been removed.
 
-### Experiment plugins (`playground/experiments/`) + `labts fork`
+### DevAD anomaly-detection zoo (`sktime/libs/devad`)
+
+Nineteen anomaly-detection families are vendored under `sktime/libs/devad/`
+(imported from the `tinyfire27_devad_cli` branch; see
+`sktime/libs/devad/README.md` for provenance) behind a uniform
+`fit(x_train)` / `detect(x_test) -> scores + start_pos` API
+(`models/Base.py`, `models/registry.py`):
+
+- torch families: AnomalyTransformer, BeatGAN, COUTA, DAGMM, Donut, FCVAE, FITS, KAN-AD, LSTM-AD,
+  ModernTCN, OmniAnomaly, TimesNet, TranAD, USAD
+- scikit-learn subsequence families: IForest, KMeansAD, SubLOF, SubOCSVM,
+  SubPCA
+
+Each family has an `HP` table of hyperparameters; entries marked `REQUIRED`
+get defaults from the sktime adapters (`_default_overrides`). Model families
+CAE/EncDecAD exist as source files but are **not**
+in `ModelRegistry` (upstream WIP) and are therefore not exposed.
+
+Two entry points consume the zoo:
+
+- `sktime/detection/adapters/devad.py` — one default-constructible detector
+  per family (`DevADFITSDetector`, ...), discoverable as
+  `registered-anomaly_detection-<ClassName>`. `_predict` thresholds the
+  DevAD anomaly scores at `threshold_quantile` (default 0.99) and returns
+  point ilocs; `win_len`/`epochs`/`batch_size` are first-class constructor
+  params, every other HP goes through the `params` dict (a JSON string is
+  accepted, e.g. `--param params='{"h_dim": 64}'`).
+- `playground/trainer.py` — backs `libraryts.py train` / `libraryts.py detect` /
+  `libraryts.py ls models` on top of DevAD's `services.model_service`: training
+  persists `model.pt` + `manifest.json` + `training.log` under
+  `playground/models/<model_id>/` (gitignored), detection reloads the model
+  and returns the standard run envelope. This is the train-once/detect-many
+  counterpart of the stateless `libraryts run`.
+
+The zoo's native typer CLI also works:
+`python -m sktime.libs.devad.cli.app model list|info|train|detect|evaluate`
+(data in/out as `.npy` files; requires `typer`, pinned in
+`playground/requirements.txt`; `rich` renders the training reporter).
+
+The native detectors under `sktime/detection/` (for example `donut.Donut` and
+`sub_lof.SubLOF`) are separate implementations, not these `DevAD*` wrappers.
+They use externally preprocessed inputs and expose `transform_scores`; their
+`predict` threshold policy is not implemented. The current CLI/GUI anomaly
+runner still depends on `predict`, so discovery does not mean these native
+models already support an end-to-end CLI detection experiment. Do not add an
+implicit threshold to work around that boundary. Some historical benchmark
+commands still refer to removed `PyOD*Detector` names; do not map the removed
+point-wise PyOD IForest to the native window-based `IForest`.
+
+### Experiment plugins (`playground/experiments/`) + `libraryts fork`
 
 For autoresearch coding agents: algorithms can live as **single-file plugins**
 in `playground/experiments/*.py` instead of inside the `sktime` package. See
@@ -278,8 +370,8 @@ fit/predict signatures per task; sktime estimators are also valid plugins).
   into the catalog as `user-<filename>` (re-scanned on every catalog call, so
   edits show up immediately). A broken plugin only disables itself with a
   `disabled_reason` — it never crashes catalog discovery.
-- `labts.py fork <algorithm_id> [--name X]` writes a subclass scaffold of any
-  enabled catalog algorithm into `experiments/`; `labts.py check <file>`
+- `libraryts.py fork <algorithm_id> [--name X]` writes a subclass scaffold of any
+  enabled catalog algorithm into `experiments/`; `libraryts.py check <file>`
   validates the contract and runs a tiny smoke experiment.
 - Plugin `PARAMS` are the declared defaults: the runners apply them under the
   run's params (excluding per-task eval params), and the UI renders them as

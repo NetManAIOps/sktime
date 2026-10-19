@@ -21,11 +21,13 @@ class ARDL(_StatsModelsAdapter):
 
     Parameters
     ----------
-    lags : {int, list[int]}, optional
+    lags : {int, list[int]}, optional, default=None
         Only considered if auto_ardl is False
         The number of lags to include in the model if an integer or the
         list of lag indices to include.  For example, [1, 4] will only
         include lags 1 and 4 while lags=4 will include lags 1, 2, 3, and 4.
+        If None, no lags of the endogenous variable are included,
+        this is resolved by ``statsmodels.tsa.ardl.ARDL``.
     order : {int, sequence[int], dict}, optional
         Only considered if auto_ardl is False
         If int, uses lags 0, 1, ..., order  for all exog variables. If
@@ -279,9 +281,6 @@ class ARDL(_StatsModelsAdapter):
         self.ic = ic
         self.glob = glob
         self.maxorder = maxorder
-
-        if not self.auto_ardl:
-            assert self.lags is not None
 
         if self.auto_ardl and self.lags is not None:
             raise ValueError("lags should not be specified if auto_ardl is True")

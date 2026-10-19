@@ -1,0 +1,39 @@
+{
+  "id": "clustering-kshape-beef",
+  "task": "clustering",
+  "ran_at": "2026-10-14T16:53:44.815791+00:00",
+  "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset beef-cl --model-id bench-clustering-kshape-beef --param n_clusters=5 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+  "run_command": "libraryts run --model-id bench-clustering-kshape-beef --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 1059.15,
+  "values": {
+    "ARI": 0.12630400488524757,
+    "NMI": 0.33355419620403015
+  },
+  "per_metric": {
+    "ARI": {
+      "gt": 0.09361,
+      "value": 0.12630400488524757,
+      "delta": 0.032694,
+      "delta_rel": 0.349258,
+      "status": "reproduced"
+    },
+    "NMI": {
+      "gt": 0.27548,
+      "value": 0.33355419620403015,
+      "delta": 0.058074,
+      "delta_rel": 0.210811,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "ARI": 0.12630400488524757,
+    "NMI": 0.33355419620403015,
+    "Clusters": 5,
+    "Largest Cluster": 29
+  },
+  "error": null,
+  "stdout_tail": "stering\", \"dataset_id\": \"beef-cl\", \"algorithm_id\": \"sktime-trained:bench-clustering-kshape-beef\", \"preprocessor_id\": \"none\", \"params\": {}}, \"task\": \"clustering\", \"dataset\": {\"id\": \"beef-cl\", \"name\": \"Beef (labels for ARI)\", \"task\": \"clustering\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"Beef\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-clustering-kshape-beef\", \"name\": \"TimeSeriesKShapes (trained: bench-clustering-kshape-beef)\", \"task\": \"clustering\", \"module\": \"sktime.clustering.k_shapes.TimeSeriesKShapes\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/playground/models/bench-clustering-kshape-beef\", \"manifest\": {\"model_id\": \"bench-clustering-kshape-beef\", \"backend\": \"sktime\", \"task\": \"clustering\", \"algorithm_id\": \"registered-clustering-TimeSeriesKShapes\", \"algorithm_name\": \"TimeSeriesKShapes\", \"module\": \"sktime.clustering.k_shapes.TimeSeriesKShapes\", \"params\": {\"n_clusters\": 5, \"random_state\": 42, \"max_iter\": 300, \"n_init\": 10, \"tol\": 0.0001}, \"eval_params\": {\"fit_on\": \"all\"}, \"created_at\": \"2026-10-14T16:53:37.703329+00:00\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"beef-cl\", \"algorithm_id\": \"registered-clustering-TimeSeriesKShapes\", \"preprocessor_id\": \"none\", \"params\": {\"n_clusters\": 5, \"fit_on\": \"all\", \"random_state\": 42, \"max_iter\": 300, \"n_init\": 10, \"tol\": 0.0001}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 4590.3, \"log\": [\"Selected dataset: Beef (labels for ARI)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-clustering-kshape-beef (sktime backend, algorithm: registered-clustering-TimeSeriesKShapes, created: 2026-10-14T16:53:37.703329+00:00)\", \"Loaded UCR/UEA Beef train=30 test=30\", \"Finished in 4590.3 ms\"]}, \"error\": null}\n"
+}

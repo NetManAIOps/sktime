@@ -1,8 +1,8 @@
-"""Drop-in experiment algorithms for the LibraryTS Playground GUI and LabTS CLI.
+"""Drop-in experiment algorithms for the LibraryTS Playground.
 
 Every ``*.py`` file in this directory (except this one) is a self-contained
 algorithm plugin, discovered by ``playground/catalog.py`` and runnable from
-the web UI and the LabTS CLI as ``user-<filename>``.
+the web UI and the LibraryTS CLI as ``user-<filename>``.
 
 Required top-level names
 ------------------------
@@ -20,7 +20,7 @@ PARAMS : dict
     Default hyperparameters; numeric values become UI/CLI knobs.
 FORKED_FROM : str
     Algorithm id this file was forked from (provenance, written by
-    ``labts fork``).
+    ``libraryts fork``).
 
 Minimal method contract (per task)
 ----------------------------------
@@ -34,13 +34,13 @@ Minimal method contract (per task)
 
 Classes that implement the sktime estimator interface (``get_params`` etc.)
 are driven through the full sktime contract instead (e.g. ``predict(fh=...)``
-for forecasters), so ``labts fork`` scaffolds can subclass any catalog
+for forecasters), so ``libraryts fork`` scaffolds can subclass any catalog
 algorithm directly.
 
 Workflow
 --------
-    labts.py fork registered-forecasting-TimesNetForecaster --name my_timesnet
+    libraryts.py fork registered-forecasting-TimesNetForecaster --name my_timesnet
     # edit playground/experiments/my_timesnet.py
-    labts.py check playground/experiments/my_timesnet.py
-    labts.py run --algorithm user-my-timesnet --task forecasting ...
+    libraryts.py check playground/experiments/my_timesnet.py
+    libraryts.py run --algorithm user-my-timesnet --task forecasting ...
 """

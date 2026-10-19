@@ -1,0 +1,31 @@
+{
+  "id": "clustering-kmedoids-bme",
+  "task": "clustering",
+  "ran_at": "2026-10-15T11:15:11.697126+00:00",
+  "train_command": "libraryts train --algorithm TimeSeriesKMedoids --dataset bme-cl --model-id bench-clustering-kmedoids-bme --param n_clusters=3 --param fit_on=all --param random_state=42 --param metric=euclidean --param max_iter=300 --param n_init=10 --param tol=1e-06",
+  "run_command": "libraryts run --model-id bench-clustering-kmedoids-bme --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 6.38,
+  "values": {
+    "ARI": 0.12056124255441815
+  },
+  "per_metric": {
+    "ARI": {
+      "gt": 0.16423,
+      "value": 0.12056124255441815,
+      "delta": -0.043669,
+      "delta_rel": 0.2659,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "ARI": 0.12056124255441815,
+    "NMI": 0.16557631588821348,
+    "Clusters": 3,
+    "Largest Cluster": 66
+  },
+  "error": null,
+  "stdout_tail": "tering-kmedoids-bme\", \"preprocessor_id\": \"none\", \"params\": {}}, \"task\": \"clustering\", \"dataset\": {\"id\": \"bme-cl\", \"name\": \"BME (labels for ARI)\", \"task\": \"clustering\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"BME\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-clustering-kmedoids-bme\", \"name\": \"TimeSeriesKMedoids (trained: bench-clustering-kmedoids-bme)\", \"task\": \"clustering\", \"module\": \"sktime.clustering.k_medoids.TimeSeriesKMedoids\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-10/playground/models/bench-clustering-kmedoids-bme\", \"manifest\": {\"model_id\": \"bench-clustering-kmedoids-bme\", \"backend\": \"sktime\", \"task\": \"clustering\", \"algorithm_id\": \"registered-clustering-TimeSeriesKMedoids\", \"algorithm_name\": \"TimeSeriesKMedoids\", \"module\": \"sktime.clustering.k_medoids.TimeSeriesKMedoids\", \"params\": {\"n_clusters\": 3, \"random_state\": 42, \"metric\": \"euclidean\", \"max_iter\": 300, \"n_init\": 10, \"tol\": 1e-06}, \"eval_params\": {\"fit_on\": \"all\"}, \"created_at\": \"2026-10-15T11:15:08.887112+00:00\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"bme-cl\", \"algorithm_id\": \"registered-clustering-TimeSeriesKMedoids\", \"preprocessor_id\": \"none\", \"params\": {\"n_clusters\": 3, \"fit_on\": \"all\", \"random_state\": 42, \"metric\": \"euclidean\", \"max_iter\": 300, \"n_init\": 10, \"tol\": 1e-06}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 1725.0, \"log\": [\"Selected dataset: BME (labels for ARI)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-clustering-kmedoids-bme (sktime backend, algorithm: registered-clustering-TimeSeriesKMedoids, created: 2026-10-15T11:15:08.887112+00:00)\", \"Loaded UCR/UEA BME train=30 test=150\", \"Finished in 1725.0 ms\"]}, \"error\": null}\n"
+}

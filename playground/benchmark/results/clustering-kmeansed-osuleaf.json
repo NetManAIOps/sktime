@@ -1,0 +1,31 @@
+{
+  "id": "clustering-kmeansed-osuleaf",
+  "task": "clustering",
+  "ran_at": "2026-10-15T11:25:50.045942+00:00",
+  "train_command": "libraryts train --algorithm TimeSeriesKMeansTslearn --dataset osuleaf-cl --model-id bench-clustering-kmeansed-osuleaf --param n_clusters=6 --param fit_on=all --param random_state=42 --param metric=euclidean --param init=k-means++ --param n_init=10 --param max_iter=300 --param max_iter_barycenter=100 --param tol=1e-06 --param verbose=0",
+  "run_command": "libraryts run --model-id bench-clustering-kmeansed-osuleaf --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 14.6,
+  "values": {
+    "ARI": 0.16217956283619145
+  },
+  "per_metric": {
+    "ARI": {
+      "gt": 0.140457,
+      "value": 0.16217956283619145,
+      "delta": 0.021723,
+      "delta_rel": 0.154656,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "ARI": 0.16217956283619145,
+    "NMI": 0.23487217864343374,
+    "Clusters": 6,
+    "Largest Cluster": 129
+  },
+  "error": null,
+  "stdout_tail": "_dataset\", \"ucr_name\": \"OSULeaf\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-clustering-kmeansed-osuleaf\", \"name\": \"TimeSeriesKMeansTslearn (trained: bench-clustering-kmeansed-osuleaf)\", \"task\": \"clustering\", \"module\": \"sktime.clustering.k_means._k_means_tslearn.TimeSeriesKMeansTslearn\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/.tower/worktrees/wt-10/playground/models/bench-clustering-kmeansed-osuleaf\", \"manifest\": {\"model_id\": \"bench-clustering-kmeansed-osuleaf\", \"backend\": \"sktime\", \"task\": \"clustering\", \"algorithm_id\": \"registered-clustering-TimeSeriesKMeansTslearn\", \"algorithm_name\": \"TimeSeriesKMeansTslearn\", \"module\": \"sktime.clustering.k_means._k_means_tslearn.TimeSeriesKMeansTslearn\", \"params\": {\"n_clusters\": 6, \"random_state\": 42, \"metric\": \"euclidean\", \"init\": \"k-means++\", \"n_init\": 10, \"max_iter\": 300, \"max_iter_barycenter\": 100, \"tol\": 1e-06, \"verbose\": 0}, \"eval_params\": {\"fit_on\": \"all\"}, \"created_at\": \"2026-10-15T11:25:42.891003+00:00\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"osuleaf-cl\", \"algorithm_id\": \"registered-clustering-TimeSeriesKMeansTslearn\", \"preprocessor_id\": \"none\", \"params\": {\"n_clusters\": 6, \"fit_on\": \"all\", \"random_state\": 42, \"metric\": \"euclidean\", \"init\": \"k-means++\", \"n_init\": 10, \"max_iter\": 300, \"max_iter_barycenter\": 100, \"tol\": 1e-06, \"verbose\": 0}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 3999.8, \"log\": [\"Selected dataset: OSULeaf (labels for ARI)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-clustering-kmeansed-osuleaf (sktime backend, algorithm: registered-clustering-TimeSeriesKMeansTslearn, created: 2026-10-15T11:25:42.891003+00:00)\", \"Loaded UCR/UEA OSULeaf train=200 test=242\", \"Finished in 3999.8 ms\"]}, \"error\": null}\n"
+}

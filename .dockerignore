@@ -22,3 +22,9 @@ Dockerfile
 .dockerignore
 **/*.pyc
 **/__pycache__
+.venv-full
+.venv-*
+playground/models
+*.mp4
+*.pptx
+node_modules

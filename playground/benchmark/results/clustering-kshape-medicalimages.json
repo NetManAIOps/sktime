@@ -1,0 +1,39 @@
+{
+  "id": "clustering-kshape-medicalimages",
+  "task": "clustering",
+  "ran_at": "2026-10-15T07:18:03.923203+00:00",
+  "train_command": "libraryts train --algorithm TimeSeriesKShapes --dataset medicalimages-cl --model-id bench-clustering-kshape-medicalimages --param n_clusters=10 --param fit_on=all --param random_state=42 --param max_iter=300 --param n_init=10 --param tol=0.0001",
+  "run_command": "libraryts run --model-id bench-clustering-kshape-medicalimages --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 103.07,
+  "values": {
+    "ARI": 0.0755166180656937,
+    "NMI": 0.2331082219065114
+  },
+  "per_metric": {
+    "ARI": {
+      "gt": 0.07287,
+      "value": 0.0755166180656937,
+      "delta": 0.002647,
+      "delta_rel": 0.03632,
+      "status": "reproduced"
+    },
+    "NMI": {
+      "gt": 0.22733,
+      "value": 0.2331082219065114,
+      "delta": 0.005778,
+      "delta_rel": 0.025418,
+      "status": "reproduced"
+    }
+  },
+  "status": "reproduced",
+  "metrics": {
+    "ARI": 0.0755166180656937,
+    "NMI": 0.2331082219065114,
+    "Clusters": 10,
+    "Largest Cluster": 175
+  },
+  "error": null,
+  "stdout_tail": "rocessor_id\": \"none\", \"params\": {}}, \"task\": \"clustering\", \"dataset\": {\"id\": \"medicalimages-cl\", \"name\": \"MedicalImages (labels for ARI)\", \"task\": \"clustering\", \"source\": \"ucr_uea\", \"loader\": \"sktime.datasets.load_UCR_UEA_dataset\", \"ucr_name\": \"MedicalImages\", \"enabled\": true, \"online\": true}, \"algorithm\": {\"id\": \"sktime-trained:bench-clustering-kshape-medicalimages\", \"name\": \"TimeSeriesKShapes (trained: bench-clustering-kshape-medicalimages)\", \"task\": \"clustering\", \"module\": \"sktime.clustering.k_shapes.TimeSeriesKShapes\", \"curated\": false, \"trained\": true, \"backend\": \"sktime\", \"model_dir\": \"/home/xiezhe/sktime/playground/models/bench-clustering-kshape-medicalimages\", \"manifest\": {\"model_id\": \"bench-clustering-kshape-medicalimages\", \"backend\": \"sktime\", \"task\": \"clustering\", \"algorithm_id\": \"registered-clustering-TimeSeriesKShapes\", \"algorithm_name\": \"TimeSeriesKShapes\", \"module\": \"sktime.clustering.k_shapes.TimeSeriesKShapes\", \"params\": {\"n_clusters\": 10, \"random_state\": 42, \"max_iter\": 300, \"n_init\": 10, \"tol\": 0.0001}, \"eval_params\": {\"fit_on\": \"all\"}, \"created_at\": \"2026-10-15T07:17:59.355002+00:00\", \"spec\": {\"task\": \"clustering\", \"dataset_id\": \"medicalimages-cl\", \"algorithm_id\": \"registered-clustering-TimeSeriesKShapes\", \"preprocessor_id\": \"none\", \"params\": {\"n_clusters\": 10, \"fit_on\": \"all\", \"random_state\": 42, \"max_iter\": 300, \"n_init\": 10, \"tol\": 0.0001}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 2866.0, \"log\": [\"Selected dataset: MedicalImages (labels for ARI)\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-clustering-kshape-medicalimages (sktime backend, algorithm: registered-clustering-TimeSeriesKShapes, created: 2026-10-15T07:17:59.355002+00:00)\", \"Loaded UCR/UEA MedicalImages train=381 test=760\", \"Finished in 2866.0 ms\"]}, \"error\": null}\n"
+}

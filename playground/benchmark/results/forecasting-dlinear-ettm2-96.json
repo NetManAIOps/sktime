@@ -1,0 +1,39 @@
+{
+  "id": "forecasting-dlinear-ettm2-96",
+  "task": "forecasting",
+  "ran_at": "2026-10-14T18:34:53.648666+00:00",
+  "train_command": "libraryts train --algorithm DLinearForecaster --dataset hf-ettm2 --model-id bench-forecasting-dlinear-ettm2-96 --param seq_len=336 --param pred_len=96 --param horizon=96 --param num_epochs=10 --param eval_mode=rolling --param train_fraction=0.496 --param test_start_fraction=0.661 --param test_end_fraction=0.827 --param batch_size=32 --param channel_independence=1 --param context_window=36 --param d_ff=128 --param d_layers=1 --param d_model=64 --param dropout=0.1 --param e_layers=2 --param factor=3 --param label_len=18 --param lr=0.001 --param lr_decay=1 --param moving_avg=25 --param n_heads=8 --param num_kernels=6 --param top_k=3",
+  "run_command": "libraryts run --model-id bench-forecasting-dlinear-ettm2-96 --compact",
+  "python": "/home/xiezhe/sktime/.venv-full/bin/python",
+  "returncode": 0,
+  "duration_s": 44.5,
+  "values": {
+    "MSE": 0.2139072106814372,
+    "MAE": 0.30897329918574196
+  },
+  "per_metric": {
+    "MSE": {
+      "gt": 0.167,
+      "value": 0.2139072106814372,
+      "delta": 0.046907,
+      "delta_rel": 0.280882,
+      "status": "deviation"
+    },
+    "MAE": {
+      "gt": 0.26,
+      "value": 0.30897329918574196,
+      "delta": 0.048973,
+      "delta_rel": 0.188359,
+      "status": "deviation"
+    }
+  },
+  "status": "deviation",
+  "metrics": {
+    "MAE": 0.30897329918574196,
+    "MSE": 0.2139072106814372,
+    "MAPE": 1.0528949958620513,
+    "Windows": 11472
+  },
+  "error": null,
+  "stdout_tail": "ecasting-DLinearForecaster\", \"algorithm_name\": \"DLinearForecaster\", \"module\": \"sktime.forecasting.tslib.DLinearForecaster\", \"params\": {\"seq_len\": 336, \"pred_len\": 96, \"num_epochs\": 10, \"batch_size\": 32, \"channel_independence\": 1, \"d_ff\": 128, \"d_layers\": 1, \"d_model\": 64, \"dropout\": 0.1, \"e_layers\": 2, \"factor\": 3, \"label_len\": 18, \"lr\": 0.001, \"lr_decay\": 1, \"moving_avg\": 25, \"n_heads\": 8, \"num_kernels\": 6, \"top_k\": 3}, \"eval_params\": {\"horizon\": 96, \"eval_mode\": \"rolling\", \"train_fraction\": 0.496, \"test_start_fraction\": 0.661, \"test_end_fraction\": 0.827, \"context_window\": 36}, \"created_at\": \"2026-10-14T18:34:47.179219+00:00\", \"spec\": {\"task\": \"forecasting\", \"dataset_id\": \"hf-ettm2\", \"algorithm_id\": \"registered-forecasting-DLinearForecaster\", \"preprocessor_id\": \"none\", \"params\": {\"seq_len\": 336, \"pred_len\": 96, \"horizon\": 96, \"num_epochs\": 10, \"eval_mode\": \"rolling\", \"train_fraction\": 0.496, \"test_start_fraction\": 0.661, \"test_end_fraction\": 0.827, \"batch_size\": 32, \"channel_independence\": 1, \"context_window\": 36, \"d_ff\": 128, \"d_layers\": 1, \"d_model\": 64, \"dropout\": 0.1, \"e_layers\": 2, \"factor\": 3, \"label_len\": 18, \"lr\": 0.001, \"lr_decay\": 1, \"moving_avg\": 25, \"n_heads\": 8, \"num_kernels\": 6, \"top_k\": 3}, \"preprocessor_params\": {}}, \"artifacts\": {\"model\": \"model.zip\", \"preprocessor\": null}}}, \"preprocessor\": {\"id\": \"none\", \"name\": \"Identity / none\", \"task\": \"all\", \"module\": null, \"enabled\": true, \"curated\": true, \"params\": {}}, \"duration_ms\": 4952.2, \"log\": [\"Selected dataset: THU-ANM ETTm2\", \"Selected preprocessor: Identity / none\", \"Selected model: bench-forecasting-dlinear-ettm2-96 (sktime backend, algorithm: registered-forecasting-DLinearForecaster, created: 2026-10-14T18:34:47.179219+00:00)\", \"Loaded Hugging Face config ETTm2 (69680 rows x 7 channels)\", \"Normalized time index to RangeIndex for reproducible forecasting\", \"Rolling eval: fit on 34561 rows, 11472 windows (test region [46058, 57625) of 69680, horizon=96)\", \"Finished in 4952.2 ms\"]}, \"error\": null}\n"
+}

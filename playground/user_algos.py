@@ -5,6 +5,14 @@ that package's docstring for the contract). They are discovered by
 :func:`discover_user_algorithms` and merged into the catalog by
 ``catalog.build_catalog``; a broken plugin only disables itself, never the
 whole catalog.
+
+In addition to file-based plugins, this module hosts built-in user
+algorithms: thin wrappers that expose an estimator the plugin mechanism
+cannot express (e.g. scalar-only constructor params wrapping a nested
+sklearn estimator). They share the ``user-`` id prefix and the catalog
+merge path but are defined here so they can subclass a sktime base class —
+a requirement of the `libraryts train` persistence contract — without
+depending on the experiments directory.
 """
 
 from __future__ import annotations
@@ -13,6 +21,8 @@ import importlib.util
 import json
 import sys
 from pathlib import Path
+
+from sktime.clustering.base import BaseClusterer
 
 EXPERIMENTS_DIR = Path(__file__).resolve().parent / "experiments"
 USER_ID_PREFIX = "user-"
@@ -85,10 +95,53 @@ def _validate_plugin(module, path: Path) -> dict:
     return {"task": task, "name": str(name), "params": dict(params), "klass": klass}
 
 
+def _plugin_cache_file() -> Path | None:
+    from catalog import _disk_cache_dir
+
+    cache_dir = _disk_cache_dir()
+    return cache_dir / "user-plugins.json" if cache_dir else None
+
+
+def _load_plugin_cache() -> dict:
+    cache_file = _plugin_cache_file()
+    try:
+        return json.loads(cache_file.read_text(encoding="utf-8")) if cache_file else {}
+    except (OSError, ValueError):
+        return {}
+
+
+def _save_plugin_cache(cache: dict) -> None:
+    cache_file = _plugin_cache_file()
+    if cache_file is None:
+        return
+    try:
+        cache_file.parent.mkdir(parents=True, exist_ok=True)
+        tmp = cache_file.with_suffix(f".tmp{__import__('os').getpid()}")
+        tmp.write_text(json.dumps(cache), encoding="utf-8")
+        tmp.replace(cache_file)
+    except OSError:
+        pass
+
+
 def discover_user_algorithms() -> list[dict]:
-    """Discover experiment plugins; never raises on a broken file."""
+    """Discover experiment plugins; never raises on a broken file.
+
+    Importing a plugin can pull in heavy dependencies (torch, tensorflow), so
+    validated plugins are cached by (path, mtime, size, this file's mtime) and
+    only re-imported when they change. Broken plugins are never cached.
+    """
     entries = []
+    cache = _load_plugin_cache()
+    fresh_cache: dict = {}
+    self_stamp = Path(__file__).stat().st_mtime_ns
     for path in iter_plugin_files():
+        stat = path.stat()
+        stamp = [stat.st_mtime_ns, stat.st_size, self_stamp]
+        cached = cache.get(str(path))
+        if cached and cached.get("stamp") == stamp:
+            entries.append(cached["entry"])
+            fresh_cache[str(path)] = cached
+            continue
         base = {
             "id": user_algorithm_id(path.stem),
             "task": "all",
@@ -119,6 +172,11 @@ def discover_user_algorithms() -> list[dict]:
                 params={},
             )
         entries.append(base)
+        if base.get("enabled"):
+            fresh_cache[str(path)] = {"stamp": stamp, "entry": base}
+    if fresh_cache != cache:
+        _save_plugin_cache(fresh_cache)
+    entries.extend(_builtin_user_algorithms())
     return entries
 
 
@@ -132,14 +190,95 @@ def get_user_algorithm(algorithm_id: str) -> dict | None:
 
 
 # ----------------------------------------------------------------------
+# built-in user algorithms
+# ----------------------------------------------------------------------
+
+
+class AgglomerativePanelClusterer(BaseClusterer):
+    """Agglomerative (hierarchical) clustering of time series panels.
+
+    Thin wrapper over sklearn's ``AgglomerativeClustering``: the panel is
+    flattened to one vector per series (numpy3D ``(n, c, t) -> (n, c*t)``)
+    and clustered with the given linkage and metric. Defaults are sklearn's
+    own (ward linkage, Euclidean) — the configuration the Javed et al.
+    time series clustering benchmark's published Agglomerative scores
+    actually match (verified: 40/41 UCR datasets reproduce the paper CSV
+    to machine precision; ``linkage='complete'`` as written in the
+    benchmark's code/main.py:135 does not).
+
+    The algorithm is transductive — sklearn's agglomerative clustering has
+    no out-of-sample assignment — so ``predict`` returns the fitted
+    ``labels_`` for the training panel and otherwise re-clusters the new
+    panel with a fresh clone, the same contract as ``TimeSeriesDBSCAN``.
+    """
+
+    _tags = {
+        "capability:out_of_sample": False,
+        "capability:predict_proba": False,
+        "capability:multivariate": True,
+        "X_inner_mtype": "numpy3D",
+    }
+
+    def __init__(self, n_clusters=2, linkage="ward", metric="euclidean"):
+        self.n_clusters = n_clusters
+        self.linkage = linkage
+        self.metric = metric
+        super().__init__(n_clusters=n_clusters)
+
+    def _fit(self, X, y=None):
+        from sklearn.cluster import AgglomerativeClustering
+
+        self._X = X
+        flat = X.reshape(X.shape[0], -1)
+        self.agglomerative_ = AgglomerativeClustering(
+            n_clusters=self.n_clusters, linkage=self.linkage, metric=self.metric
+        )
+        self.labels_ = self.agglomerative_.fit_predict(flat)
+        return self
+
+    def _predict(self, X, y=None):
+        from sktime.utils.warnings import warn
+
+        if X is self._X:
+            return self.labels_
+        warn(
+            "sklearn AgglomerativeClustering does not support different X "
+            "in fit and predict, but a new X was passed in predict. "
+            "Therefore, a clone of AgglomerativePanelClusterer will be fit, "
+            "and results returned, without updating the state of the "
+            "fitted estimator.",
+            obj=self,
+        )
+        return self.clone().fit(X).labels_
+
+
+def _builtin_user_algorithms() -> list[dict]:
+    """Catalog entries for the built-in wrappers defined in this module."""
+    return [
+        {
+            "id": "user-agglomerative",
+            "name": "Agglomerative (Euclidean, ward linkage)",
+            "task": "clustering",
+            "module": "user_algos.AgglomerativePanelClusterer",
+            "class_name": "AgglomerativePanelClusterer",
+            "curated": False,
+            "user": True,
+            "builtin": True,
+            "enabled": True,
+            "params": {"n_clusters": 2, "linkage": "ward", "metric": "euclidean"},
+        },
+    ]
+
+
+# ----------------------------------------------------------------------
 # fork scaffolding
 # ----------------------------------------------------------------------
 
 _FORK_TEMPLATE = '''"""Fork of {algorithm_id} (`{module}`).
 
 Edit this file freely, then:
-    labts.py check playground/experiments/{stem}.py
-    labts.py run --algorithm user-{stem} --task {task} ...
+    libraryts.py check playground/experiments/{stem}.py
+    libraryts.py run --algorithm user-{stem} --task {task} ...
 
 The original implementation lives in `{module}`; this subclass starts as an
 exact copy of its behavior. Override methods, change defaults in PARAMS, or
