@@ -1,4 +1,4 @@
-# Playground runtime dependencies for the TSBox Sandbox Playground (playground/).
+# Runtime dependencies for the LibraryTS Playground GUI (playground/).
 #
 # Environment: Python 3.12 (sktime requires >=3.10,<3.15). Generated with
 #   uv pip freeze --python .venv/bin/python

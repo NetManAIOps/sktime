@@ -260,6 +260,7 @@ datasets = [
   "requests",
 ]
 dl = [
+  'rich',
   'neuralforecast>=1.6.4; python_version < "3.12"',
   'peft>=0.10.0,<0.14.0; python_version < "3.12"',
   'tensorflow<2.20,>=2.15; python_version < "3.13"',

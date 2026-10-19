@@ -97,18 +97,20 @@
 | Clustering | metrics/averaging | mean_average | `sktime.clustering.metrics.averaging` |
 | Clustering | partitioning | BaseTimeSeriesLloyds | `sktime.clustering.partitioning` |
 | Clustering | spatio_temporal | STDBSCAN | `sktime.clustering.spatio_temporal` |
-| Detection | adapters | PyODAnnotator | `sktime.detection.adapters` |
 | Detection | adapters | PyODDetector | `sktime.detection.adapters` |
+| Detection | ecod | ECOD (PyOD) | `sktime.detection.ecod` |
+| Detection | copod | COPOD (PyOD) | `sktime.detection.copod` |
+| Detection | lof | LOF (PyOD) | `sktime.detection.lof` |
+| Detection | knn | KNN (PyOD) | `sktime.detection.knn` |
+| Detection | hbos | HBOS (PyOD) | `sktime.detection.hbos` |
+| Detection | cblof | CBLOF (PyOD) | `sktime.detection.cblof` |
+| Detection | mcd | MCD (PyOD) | `sktime.detection.mcd` |
+| Detection | ocsvm | OCSVM (PyOD) | `sktime.detection.ocsvm` |
 | Detection | base | BaseDetector | `sktime.detection.base` |
 | Detection | compose | AnnotatorAsTransformer | `sktime.detection.compose` |
 | Detection | compose | AnnotatorPipeline | `sktime.detection.compose` |
 | Detection | compose | DetectorAsTransformer | `sktime.detection.compose` |
 | Detection | compose | DetectorPipeline | `sktime.detection.compose` |
-| Detection | dummy | DummyRegularAnomalies | `sktime.detection.dummy` |
-| Detection | dummy | DummyRegularChangePoints | `sktime.detection.dummy` |
-| Detection | dummy | ZeroAnomalies | `sktime.detection.dummy` |
-| Detection | dummy | ZeroChangePoints | `sktime.detection.dummy` |
-| Detection | dummy | ZeroSegments | `sktime.detection.dummy` |
 | Detection | hmm_learn | BaseHMMLearn | `sktime.detection.hmm_learn` |
 | Detection | hmm_learn | GMMHMM | `sktime.detection.hmm_learn` |
 | Detection | hmm_learn | GaussianHMM | `sktime.detection.hmm_learn` |

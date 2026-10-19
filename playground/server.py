@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Local HTTP server for the TSBox Sandbox Playground."""
+"""Local HTTP server for the LibraryTS Playground GUI."""
 
 from __future__ import annotations
 
@@ -24,7 +24,7 @@ if str(REPO_ROOT) not in sys.path:
 
 
 class PlaygroundHandler(BaseHTTPRequestHandler):
-    server_version = "TSBoxSandboxPlayground/1.0"
+    server_version = "LibraryTSPlayground/1.0"
 
     def do_GET(self):
         parsed = urlparse(self.path)
@@ -139,16 +139,15 @@ def main():
 
     threading.Thread(target=_refresh_snapshot, daemon=True).start()
 
-    print(f"TSBox Sandbox Playground running at {url}")
+    print(f"LibraryTS Playground GUI running at {url}")
     print("Press Ctrl+C to stop.")
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
-        print("\nStopping Playground.")
+        print("\nStopping LibraryTS Playground GUI.")
     finally:
         httpd.server_close()
 
 
 if __name__ == "__main__":
     main()
-

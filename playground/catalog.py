@@ -1,4 +1,4 @@
-"""Catalog and compatibility matrix for the local Sandbox Playground."""
+"""Catalog and compatibility matrix for the LibraryTS Playground GUI and LabTS CLI."""
 
 from __future__ import annotations
 
@@ -458,6 +458,7 @@ def _detector_subtype(name: str, module: str) -> str:
             "threshold", "outlier", "anomal", "stray", "lof", "iforest",
             "isolation", "pyod", "knn", "mcd", "cblof", "cof", "abod", "sod",
             "subsequence", "matrixprofile", "stumpy", "sigma",
+            "ecod", "copod", "hbos", "ocsvm",
         )
     ):
         return "point_anomaly"
@@ -853,4 +854,3 @@ def write_snapshot(path: Path | None = None) -> Path:
 if __name__ == "__main__":
     out = write_snapshot()
     print(f"Wrote catalog snapshot to {out}")
-

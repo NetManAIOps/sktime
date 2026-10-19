@@ -72,8 +72,7 @@ class BaseDetector(BaseEstimator):
         "python_dependencies": None,  # str or list of str, package soft dependencies
         # estimator tags
         # --------------
-        # todo 1.0.0 - remove series-annotator
-        "object_type": ["detector", "series-annotator"],  # type of object
+        "object_type": "detector",  # type of object
         "learning_type": "None",  # supervised, unsupervised
         "task": "None",  # anomaly_detection, change_point_detection, segmentation
         "capability:multivariate": False,
@@ -132,7 +131,7 @@ class BaseDetector(BaseEstimator):
         else:
             return NotImplemented
 
-    def fit(self, X, y=None):
+    def fit(self, X, y=None, **kwargs):
         """Fit to training data.
 
         Parameters
@@ -163,6 +162,9 @@ class BaseDetector(BaseEstimator):
 
             Labels (if present) in the ``"labels"`` column indicate the type of event.
 
+        **kwargs : dict
+            Additional fitting arguments forwarded to the detector's ``_fit``.
+
         Returns
         -------
         self :
@@ -174,6 +176,7 @@ class BaseDetector(BaseEstimator):
         _is_fitted flag to True.
         """
         # input checks and conversions for X
+        self.reset()
         X_inner = self._check_X(X)
 
         # skip inner _fit if fit is empty
@@ -187,9 +190,9 @@ class BaseDetector(BaseEstimator):
         self._y = y
 
         if _method_has_arg(self._fit, "y"):
-            self._fit(X=X_inner, y=y)  # X_inner is the converted X
+            self._fit(X=X_inner, y=y, **kwargs)
         else:
-            self._fit(X=X_inner)
+            self._fit(X=X_inner, **kwargs)
 
         # this should happen last
         self._is_fitted = True
@@ -279,13 +282,17 @@ class BaseDetector(BaseEstimator):
         y_dense = self._coerce_to_df(y_dense, columns=["labels"])
         return y_dense
 
-    def transform_scores(self, X):
+    def transform_scores(self, X, **kwargs):
         """Return scores for predicted labels on test/deployment data.
 
         Parameters
         ----------
         X : pd.DataFrame, pd.Series or np.ndarray
             Data to label (time series).
+
+        **kwargs : dict
+            Additional arguments, such as preprocessing masks, forwarded to
+            ``_transform_scores``.
 
         Returns
         -------
@@ -296,7 +303,7 @@ class BaseDetector(BaseEstimator):
 
         X_inner = self._check_X(X)
 
-        return self._transform_scores(X_inner)
+        return self._transform_scores(X_inner, **kwargs)
 
     def predict_scores(self, X):
         """Return scores for predicted labels on test/deployment data.
@@ -573,7 +580,7 @@ class BaseDetector(BaseEstimator):
         """
         ALLOWED_SCITYPES = ["Series", "Panel"]
         X_valid, X_msg, X_metadata = check_is_scitype(
-            X, scitype=ALLOWED_SCITYPES, return_metadata=[]
+            X, scitype=ALLOWED_SCITYPES, return_metadata=["is_univariate"]
         )
         self._X_metadata = X_metadata
         if not X_valid:
@@ -594,6 +601,14 @@ class BaseDetector(BaseEstimator):
                     allowed_msg=allowed_msg,
                     raise_exception=True,
                 )
+
+        if not X_metadata["is_univariate"] and not self.get_tag(
+            "capability:multivariate"
+        ):
+            raise ValueError(
+                f"{type(self).__name__} supports only univariate time series "
+                "(capability:multivariate=False)"
+            )
 
         X_inner_mtype = self.get_tag("X_inner_mtype")
         X_inner = convert(X, from_type=X_metadata["mtype"], to_type=X_inner_mtype)
@@ -657,23 +672,6 @@ class BaseDetector(BaseEstimator):
         -------
         Y : pd.Series
             Labels for sequence X exact format depends on detection type.
-        """
-        raise NotImplementedError("abstract method")
-
-    def _transform_scores(self, X):
-        """Return scores for predicted labels on test/deployment data.
-
-        core logic
-
-        Parameters
-        ----------
-        X : pd.DataFrame
-            Time series subject to detection, which will be assigned labels or scores.
-
-        Returns
-        -------
-        scores : pd.DataFrame with same index as X
-            Scores for sequence ``X``.
         """
         raise NotImplementedError("abstract method")
 

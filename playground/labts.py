@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""LabTS API — CLI version of the TSBox Sandbox Playground, for automated harnesses.
+"""LabTS API — CLI counterpart of the LibraryTS Playground GUI, for automated harnesses.
 
 One process per call, no HTTP server required. Every Playground web capability
 has a CLI counterpart (same catalog/runner code, identical results):

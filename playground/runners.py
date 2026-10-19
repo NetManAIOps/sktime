@@ -1,4 +1,4 @@
-"""Experiment runners for the TSBox Sandbox Playground."""
+"""Experiment runners for the LibraryTS Playground GUI and LabTS CLI."""
 
 from __future__ import annotations
 
@@ -920,7 +920,7 @@ def generate_report(result: dict) -> str:
     )
     return textwrap.dedent(
         f"""\
-        # TSBox Sandbox Experiment Report
+        # LibraryTS Experiment Report
 
         - Task: {result['task']}
         - Dataset: {result['dataset']['name']}

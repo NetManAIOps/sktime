@@ -249,24 +249,22 @@ Adapter notes:
 
 ### PyOD point-anomaly detectors
 
-Nine pyod models are wrapped in `sktime/detection/adapters/pyod.py` as
-default-constructible detectors, so registry discovery (and hence the
-Playground/labts catalog) picks them up as
-`registered-anomaly_detection-<ClassName>`:
+Eight PyOD models are exposed as individual modules under `sktime/detection/`:
+`ecod.ECOD`, `copod.COPOD`, `lof.LOF`,
+`knn.KNN`, `hbos.HBOS`, `cblof.CBLOF`, `mcd.MCD`, and `ocsvm.OCSVM`.
+Their class documentation identifies the PyOD source. The existing
+`iforest.IForest` is a separate window-based detector, not this PyOD wrapper.
 
-- `PyODECODDetector`, `PyODCOPODDetector` (parameter-free), `PyODLOFDetector`,
-  `PyODIForestDetector`, `PyODKNNDetector`, `PyODHBOSDetector`,
-  `PyODCBLOFDetector`, `PyODMCDDetector`, `PyODOCSVMDetector`
-
-All expose `contamination` (default 0.1) plus their model-specific numeric
-hyperparameters, and are classified as `point_anomaly` in the catalog.
+They are default-constructible and discovered as
+`registered-anomaly_detection-<ClassName>` in Playground/labts. All expose
+`contamination` (default 0.1) plus their model-specific numeric hyperparameters.
 `pyod` is pinned in `playground/requirements.txt`.
 
-Important: the wrappers override `_predict` via `_PyODPointsMixin` to return
-anomaly **positions** (ilocs). Upstream `PyODDetector._predict` returns the
-anomalous points' label *values* instead, which collapses every detection
-onto iloc 1 in the playground's sparse-ilocs pipeline — do not remove the
-mixin.
+Shared adaptation lives in `adapters/_pyod.py::PyODDetector`: `predict` returns
+anomaly positions (ilocs), while `transform_scores` returns the full sequence
+of PyOD `decision_function` scores (larger means more anomalous). There is no
+internal windowing, imputation or scaling. The former `_PyODPointsMixin`,
+`labels` constructor option, and `adapters/pyod.py` wrappers have been removed.
 
 ### Experiment plugins (`playground/experiments/`) + `labts fork`
 

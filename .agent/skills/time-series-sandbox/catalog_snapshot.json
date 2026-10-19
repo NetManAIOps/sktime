@@ -3,7 +3,7 @@
     "generated_at": "2026-09-10T11:51:59.081749+00:00",
     "source": "playground.catalog.build_catalog",
     "refresh": "python playground/catalog.py (also refreshed on playground/server.py startup)",
-    "note": "Static snapshot; may lag behind a running server. Regenerate to refresh."
+    "note": "Static snapshot; may lag behind a running server. Regenerate to refresh. Detection dummy entries were removed on 2026-10-16; other entries retain the original snapshot date. PyOD detector names and paths were migrated on 2026-10-16; other entries retain the original snapshot date. The removed PyOD IsolationForest entry and its compatibility records were cleared on 2026-10-16. The SubLOF entry was refreshed from its current sliding-window implementation on 2026-10-16."
   },
   "tasks": [
     {
@@ -3749,34 +3749,6 @@
       "params": {}
     },
     {
-      "id": "registered-anomaly_detection-DummyRegularAnomalies",
-      "name": "DummyRegularAnomalies",
-      "task": "anomaly_detection",
-      "module": "sktime.detection.dummy._dummy_regular_an.DummyRegularAnomalies",
-      "class_name": "DummyRegularAnomalies",
-      "curated": false,
-      "python_dependencies": null,
-      "subtype": "point_anomaly",
-      "enabled": true,
-      "params": {
-        "step_size": 2
-      }
-    },
-    {
-      "id": "registered-anomaly_detection-DummyRegularChangePoints",
-      "name": "DummyRegularChangePoints",
-      "task": "anomaly_detection",
-      "module": "sktime.detection.dummy._dummy_regular_cp.DummyRegularChangePoints",
-      "class_name": "DummyRegularChangePoints",
-      "curated": false,
-      "python_dependencies": null,
-      "subtype": "change_point",
-      "enabled": true,
-      "params": {
-        "step_size": 2
-      }
-    },
-    {
       "id": "registered-anomaly_detection-GMMHMM",
       "name": "GMMHMM",
       "task": "anomaly_detection",
@@ -3950,11 +3922,11 @@
       }
     },
     {
-      "id": "registered-anomaly_detection-PyODCBLOFDetector",
-      "name": "PyODCBLOFDetector",
+      "id": "registered-anomaly_detection-CBLOF",
+      "name": "CBLOF",
       "task": "anomaly_detection",
-      "module": "sktime.detection.adapters.pyod.PyODCBLOFDetector",
-      "class_name": "PyODCBLOFDetector",
+      "module": "sktime.detection.cblof.CBLOF",
+      "class_name": "CBLOF",
       "curated": false,
       "python_dependencies": "pyod",
       "subtype": "point_anomaly",
@@ -3965,11 +3937,11 @@
       }
     },
     {
-      "id": "registered-anomaly_detection-PyODCOPODDetector",
-      "name": "PyODCOPODDetector",
+      "id": "registered-anomaly_detection-COPOD",
+      "name": "COPOD",
       "task": "anomaly_detection",
-      "module": "sktime.detection.adapters.pyod.PyODCOPODDetector",
-      "class_name": "PyODCOPODDetector",
+      "module": "sktime.detection.copod.COPOD",
+      "class_name": "COPOD",
       "curated": false,
       "python_dependencies": "pyod",
       "subtype": "point_anomaly",
@@ -3992,11 +3964,11 @@
       "params": {}
     },
     {
-      "id": "registered-anomaly_detection-PyODECODDetector",
-      "name": "PyODECODDetector",
+      "id": "registered-anomaly_detection-ECOD",
+      "name": "ECOD",
       "task": "anomaly_detection",
-      "module": "sktime.detection.adapters.pyod.PyODECODDetector",
-      "class_name": "PyODECODDetector",
+      "module": "sktime.detection.ecod.ECOD",
+      "class_name": "ECOD",
       "curated": false,
       "python_dependencies": "pyod",
       "subtype": "point_anomaly",
@@ -4006,11 +3978,11 @@
       }
     },
     {
-      "id": "registered-anomaly_detection-PyODHBOSDetector",
-      "name": "PyODHBOSDetector",
+      "id": "registered-anomaly_detection-HBOS",
+      "name": "HBOS",
       "task": "anomaly_detection",
-      "module": "sktime.detection.adapters.pyod.PyODHBOSDetector",
-      "class_name": "PyODHBOSDetector",
+      "module": "sktime.detection.hbos.HBOS",
+      "class_name": "HBOS",
       "curated": false,
       "python_dependencies": "pyod",
       "subtype": "point_anomaly",
@@ -4021,26 +3993,11 @@
       }
     },
     {
-      "id": "registered-anomaly_detection-PyODIForestDetector",
-      "name": "PyODIForestDetector",
+      "id": "registered-anomaly_detection-KNN",
+      "name": "KNN",
       "task": "anomaly_detection",
-      "module": "sktime.detection.adapters.pyod.PyODIForestDetector",
-      "class_name": "PyODIForestDetector",
-      "curated": false,
-      "python_dependencies": "pyod",
-      "subtype": "point_anomaly",
-      "enabled": true,
-      "params": {
-        "contamination": 0.1,
-        "n_estimators": 100
-      }
-    },
-    {
-      "id": "registered-anomaly_detection-PyODKNNDetector",
-      "name": "PyODKNNDetector",
-      "task": "anomaly_detection",
-      "module": "sktime.detection.adapters.pyod.PyODKNNDetector",
-      "class_name": "PyODKNNDetector",
+      "module": "sktime.detection.knn.KNN",
+      "class_name": "KNN",
       "curated": false,
       "python_dependencies": "pyod",
       "subtype": "point_anomaly",
@@ -4051,11 +4008,11 @@
       }
     },
     {
-      "id": "registered-anomaly_detection-PyODLOFDetector",
-      "name": "PyODLOFDetector",
+      "id": "registered-anomaly_detection-LOF",
+      "name": "LOF",
       "task": "anomaly_detection",
-      "module": "sktime.detection.adapters.pyod.PyODLOFDetector",
-      "class_name": "PyODLOFDetector",
+      "module": "sktime.detection.lof.LOF",
+      "class_name": "LOF",
       "curated": false,
       "python_dependencies": "pyod",
       "subtype": "point_anomaly",
@@ -4066,11 +4023,11 @@
       }
     },
     {
-      "id": "registered-anomaly_detection-PyODMCDDetector",
-      "name": "PyODMCDDetector",
+      "id": "registered-anomaly_detection-MCD",
+      "name": "MCD",
       "task": "anomaly_detection",
-      "module": "sktime.detection.adapters.pyod.PyODMCDDetector",
-      "class_name": "PyODMCDDetector",
+      "module": "sktime.detection.mcd.MCD",
+      "class_name": "MCD",
       "curated": false,
       "python_dependencies": "pyod",
       "subtype": "point_anomaly",
@@ -4080,11 +4037,11 @@
       }
     },
     {
-      "id": "registered-anomaly_detection-PyODOCSVMDetector",
-      "name": "PyODOCSVMDetector",
+      "id": "registered-anomaly_detection-OCSVM",
+      "name": "OCSVM",
       "task": "anomaly_detection",
-      "module": "sktime.detection.adapters.pyod.PyODOCSVMDetector",
-      "class_name": "PyODOCSVMDetector",
+      "module": "sktime.detection.ocsvm.OCSVM",
+      "class_name": "OCSVM",
       "curated": false,
       "python_dependencies": "pyod",
       "subtype": "point_anomaly",
@@ -4126,13 +4083,13 @@
       "id": "registered-anomaly_detection-SubLOF",
       "name": "SubLOF",
       "task": "anomaly_detection",
-      "module": "sktime.detection.lof.SubLOF",
+      "module": "sktime.detection.sub_lof.SubLOF",
       "class_name": "SubLOF",
       "curated": false,
-      "python_dependencies": null,
+      "python_dependencies": "scikit-learn",
       "subtype": "point_anomaly",
       "enabled": false,
-      "disabled_reason": "TypeError: SubLOF.__init__() missing 2 required positional arguments: 'n_neighbors' and 'window_size'",
+      "disabled_reason": "TypeError: SubLOF.__init__() missing 1 required positional argument: 'win_len'",
       "params": {}
     },
     {
@@ -4149,42 +4106,6 @@
         "step_size": 1,
         "window_size": 1
       }
-    },
-    {
-      "id": "registered-anomaly_detection-ZeroAnomalies",
-      "name": "ZeroAnomalies",
-      "task": "anomaly_detection",
-      "module": "sktime.detection.dummy._zero_an.ZeroAnomalies",
-      "class_name": "ZeroAnomalies",
-      "curated": false,
-      "python_dependencies": null,
-      "subtype": "point_anomaly",
-      "enabled": true,
-      "params": {}
-    },
-    {
-      "id": "registered-anomaly_detection-ZeroChangePoints",
-      "name": "ZeroChangePoints",
-      "task": "anomaly_detection",
-      "module": "sktime.detection.dummy._zero_cp.ZeroChangePoints",
-      "class_name": "ZeroChangePoints",
-      "curated": false,
-      "python_dependencies": null,
-      "subtype": "change_point",
-      "enabled": true,
-      "params": {}
-    },
-    {
-      "id": "registered-anomaly_detection-ZeroSegments",
-      "name": "ZeroSegments",
-      "task": "anomaly_detection",
-      "module": "sktime.detection.dummy._zero_seg.ZeroSegments",
-      "class_name": "ZeroSegments",
-      "curated": false,
-      "python_dependencies": null,
-      "subtype": "segmentation",
-      "enabled": true,
-      "params": {}
     },
     {
       "id": "user-ecod_direct",
@@ -4215,7 +4136,7 @@
         "contamination": 0.02
       },
       "subtype": "point_anomaly",
-      "forked_from": "registered-anomaly_detection-PyODECODDetector"
+      "forked_from": "registered-anomaly_detection-ECOD"
     },
     {
       "id": "user-my_timesnet",
@@ -50770,26 +50691,6 @@
     },
     {
       "task": "anomaly_detection",
-      "algorithm_id": "registered-anomaly_detection-DummyRegularAnomalies",
-      "dataset_id": "yahoo"
-    },
-    {
-      "task": "anomaly_detection",
-      "algorithm_id": "registered-anomaly_detection-DummyRegularAnomalies",
-      "dataset_id": "mitdb"
-    },
-    {
-      "task": "anomaly_detection",
-      "algorithm_id": "registered-anomaly_detection-DummyRegularChangePoints",
-      "dataset_id": "yahoo"
-    },
-    {
-      "task": "anomaly_detection",
-      "algorithm_id": "registered-anomaly_detection-DummyRegularChangePoints",
-      "dataset_id": "mitdb"
-    },
-    {
-      "task": "anomaly_detection",
       "algorithm_id": "registered-anomaly_detection-GMMHMM",
       "dataset_id": "yahoo"
     },
@@ -50880,92 +50781,82 @@
     },
     {
       "task": "anomaly_detection",
-      "algorithm_id": "registered-anomaly_detection-PyODCBLOFDetector",
+      "algorithm_id": "registered-anomaly_detection-CBLOF",
       "dataset_id": "yahoo"
     },
     {
       "task": "anomaly_detection",
-      "algorithm_id": "registered-anomaly_detection-PyODCBLOFDetector",
+      "algorithm_id": "registered-anomaly_detection-CBLOF",
       "dataset_id": "mitdb"
     },
     {
       "task": "anomaly_detection",
-      "algorithm_id": "registered-anomaly_detection-PyODCOPODDetector",
+      "algorithm_id": "registered-anomaly_detection-COPOD",
       "dataset_id": "yahoo"
     },
     {
       "task": "anomaly_detection",
-      "algorithm_id": "registered-anomaly_detection-PyODCOPODDetector",
+      "algorithm_id": "registered-anomaly_detection-COPOD",
       "dataset_id": "mitdb"
     },
     {
       "task": "anomaly_detection",
-      "algorithm_id": "registered-anomaly_detection-PyODECODDetector",
+      "algorithm_id": "registered-anomaly_detection-ECOD",
       "dataset_id": "yahoo"
     },
     {
       "task": "anomaly_detection",
-      "algorithm_id": "registered-anomaly_detection-PyODECODDetector",
+      "algorithm_id": "registered-anomaly_detection-ECOD",
       "dataset_id": "mitdb"
     },
     {
       "task": "anomaly_detection",
-      "algorithm_id": "registered-anomaly_detection-PyODHBOSDetector",
+      "algorithm_id": "registered-anomaly_detection-HBOS",
       "dataset_id": "yahoo"
     },
     {
       "task": "anomaly_detection",
-      "algorithm_id": "registered-anomaly_detection-PyODHBOSDetector",
+      "algorithm_id": "registered-anomaly_detection-HBOS",
       "dataset_id": "mitdb"
     },
     {
       "task": "anomaly_detection",
-      "algorithm_id": "registered-anomaly_detection-PyODIForestDetector",
+      "algorithm_id": "registered-anomaly_detection-KNN",
       "dataset_id": "yahoo"
     },
     {
       "task": "anomaly_detection",
-      "algorithm_id": "registered-anomaly_detection-PyODIForestDetector",
+      "algorithm_id": "registered-anomaly_detection-KNN",
       "dataset_id": "mitdb"
     },
     {
       "task": "anomaly_detection",
-      "algorithm_id": "registered-anomaly_detection-PyODKNNDetector",
+      "algorithm_id": "registered-anomaly_detection-LOF",
       "dataset_id": "yahoo"
     },
     {
       "task": "anomaly_detection",
-      "algorithm_id": "registered-anomaly_detection-PyODKNNDetector",
+      "algorithm_id": "registered-anomaly_detection-LOF",
       "dataset_id": "mitdb"
     },
     {
       "task": "anomaly_detection",
-      "algorithm_id": "registered-anomaly_detection-PyODLOFDetector",
+      "algorithm_id": "registered-anomaly_detection-MCD",
       "dataset_id": "yahoo"
     },
     {
       "task": "anomaly_detection",
-      "algorithm_id": "registered-anomaly_detection-PyODLOFDetector",
+      "algorithm_id": "registered-anomaly_detection-MCD",
       "dataset_id": "mitdb"
     },
     {
       "task": "anomaly_detection",
-      "algorithm_id": "registered-anomaly_detection-PyODMCDDetector",
+      "algorithm_id": "registered-anomaly_detection-OCSVM",
       "dataset_id": "yahoo"
     },
     {
       "task": "anomaly_detection",
-      "algorithm_id": "registered-anomaly_detection-PyODMCDDetector",
-      "dataset_id": "mitdb"
-    },
-    {
-      "task": "anomaly_detection",
-      "algorithm_id": "registered-anomaly_detection-PyODOCSVMDetector",
-      "dataset_id": "yahoo"
-    },
-    {
-      "task": "anomaly_detection",
-      "algorithm_id": "registered-anomaly_detection-PyODOCSVMDetector",
+      "algorithm_id": "registered-anomaly_detection-OCSVM",
       "dataset_id": "mitdb"
     },
     {
@@ -50986,36 +50877,6 @@
     {
       "task": "anomaly_detection",
       "algorithm_id": "registered-anomaly_detection-WindowSegmenter",
-      "dataset_id": "mitdb"
-    },
-    {
-      "task": "anomaly_detection",
-      "algorithm_id": "registered-anomaly_detection-ZeroAnomalies",
-      "dataset_id": "yahoo"
-    },
-    {
-      "task": "anomaly_detection",
-      "algorithm_id": "registered-anomaly_detection-ZeroAnomalies",
-      "dataset_id": "mitdb"
-    },
-    {
-      "task": "anomaly_detection",
-      "algorithm_id": "registered-anomaly_detection-ZeroChangePoints",
-      "dataset_id": "yahoo"
-    },
-    {
-      "task": "anomaly_detection",
-      "algorithm_id": "registered-anomaly_detection-ZeroChangePoints",
-      "dataset_id": "mitdb"
-    },
-    {
-      "task": "anomaly_detection",
-      "algorithm_id": "registered-anomaly_detection-ZeroSegments",
-      "dataset_id": "yahoo"
-    },
-    {
-      "task": "anomaly_detection",
-      "algorithm_id": "registered-anomaly_detection-ZeroSegments",
       "dataset_id": "mitdb"
     },
     {

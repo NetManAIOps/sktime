@@ -1,4 +1,4 @@
-"""Lightweight tests for the local TSBox Sandbox Playground."""
+"""Lightweight tests for the local LibraryTS Playground GUI."""
 
 from __future__ import annotations
 
@@ -54,6 +54,8 @@ class RunnerTests(unittest.TestCase):
         self.assertEqual(result["status"], "ok")
         self.assertIn("MAE", result["metrics"])
         self.assertIn("code", result)
+        self.assertIn("# LibraryTS Experiment Report", result["report"])
+        self.assertNotIn("Sandbox", result["report"])
 
     def test_classification_runner(self):
         result = self._run_or_skip_missing_deps(
@@ -153,14 +155,14 @@ class RunnerTests(unittest.TestCase):
         self.assertIn("code", result)
 
     def test_pyod_detector_runs(self):
-        # PyOD wrapper (sktime.detection.adapters.pyod) exercises the generic
+        # PyOD wrapper (sktime.detection.ecod) exercises the generic
         # anomaly runner; guards the sparse-ilocs contract of _predict.
         try:
             result = run_experiment(
                 {
                     "task": "anomaly_detection",
                     "dataset_id": "yahoo",
-                    "algorithm_id": "registered-anomaly_detection-PyODECODDetector",
+                    "algorithm_id": "registered-anomaly_detection-ECOD",
                     "params": {"contamination": 0.01},
                 }
             )

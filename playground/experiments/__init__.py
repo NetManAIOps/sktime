@@ -1,4 +1,4 @@
-"""Drop-in experiment algorithms for the TSBox Sandbox Playground.
+"""Drop-in experiment algorithms for the LibraryTS Playground GUI and LabTS CLI.
 
 Every ``*.py`` file in this directory (except this one) is a self-contained
 algorithm plugin, discovered by ``playground/catalog.py`` and runnable from
@@ -44,4 +44,3 @@ Workflow
     labts.py check playground/experiments/my_timesnet.py
     labts.py run --algorithm user-my-timesnet --task forecasting ...
 """
-

@@ -46,19 +46,6 @@ Change Point Detection
         pelt.PELT
         seeded_binseg.SeededBinarySegmentation
 
-Naive Baselines
-^^^^^^^^^^^^^^^
-
-.. currentmodule:: sktime.detection.dummy
-
-.. autosummary::
-    :toctree: auto_generated/
-    :template: class.rst
-
-    DummyRegularChangePoints
-    ZeroChangePoints
-
-
 Time Series Point Anomaly Detection
 -----------------------------------
 
@@ -67,7 +54,7 @@ Point anomaly detectors identify single anomalous indices.
 Window-based Anomaly Detection
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. currentmodule:: sktime.detection.lof
+.. currentmodule:: sktime.detection.sub_lof
 
 .. autosummary::
     :toctree: auto_generated/
@@ -86,17 +73,23 @@ Reduction to Tabular Anomaly Detection
 
     PyODDetector
 
-Naive Baselines
-^^^^^^^^^^^^^^^
-
-.. currentmodule:: sktime.detection.dummy
+.. currentmodule:: sktime.detection
 
 .. autosummary::
     :toctree: auto_generated/
     :template: class.rst
 
-    DummyRegularAnomalies
-    ZeroAnomalies
+    ecod.ECOD
+    copod.COPOD
+    lof.LOF
+    knn.KNN
+    hbos.HBOS
+    cblof.CBLOF
+    mcd.MCD
+    ocsvm.OCSVM
+
+Naive Baselines
+^^^^^^^^^^^^^^^
 
 .. currentmodule:: sktime.detection.naive
 
@@ -125,14 +118,6 @@ Segment anomaly detectors identify anomalous segment.
 
 Naive Baselines
 ^^^^^^^^^^^^^^^
-
-.. currentmodule:: sktime.detection.dummy
-
-.. autosummary::
-    :toctree: auto_generated/
-    :template: class.rst
-
-    ZeroSegments
 
 .. currentmodule:: sktime.detection.naive
 
@@ -244,15 +229,3 @@ Reduction to clustering
     :template: class.rst
 
     WindowSegmenter
-
-
-Naive Baselines
-^^^^^^^^^^^^^^^
-
-.. currentmodule:: sktime.detection.dummy
-
-.. autosummary::
-    :toctree: auto_generated/
-    :template: class.rst
-
-    ZeroSegments
