@@ -355,6 +355,7 @@ requires = [
 
 [tool.setuptools.package-data]
 sktime = [
+  "libs/affiliation/LICENSE",
   "utils/_estimator_html_repr.css",
   "*.csv",
   "*.csv.gz",
