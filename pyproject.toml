@@ -65,7 +65,7 @@ dependencies = [
 libraryts = "playground.cli.app:app"
 
 [project.optional-dependencies]
-cli = ["typer>=0.16"]
+cli = ["typer>=0.16", "torch", "matplotlib"]
 
 # there are the following dependency sets:
 # - all_extras_pandas2, all_extras - all soft dependencies
