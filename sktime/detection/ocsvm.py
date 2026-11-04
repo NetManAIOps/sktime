@@ -9,7 +9,8 @@ __author__ = ["xiezhe"]
 
 
 class OCSVM(PyODDetector):
-    """One-Class SVM outlier detection with an RBF kernel [1]_.
+    """Learn an RBF-kernel one-class boundary; score individual observations by
+    negative decision values.
 
     This detector wraps ``pyod.models.ocsvm.OCSVM`` from the PyOD library.
     Inputs are observations, not sliding windows; preprocessing is external.

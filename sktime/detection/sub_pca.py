@@ -8,7 +8,8 @@ from sktime.detection.utils.window import sliding_windows
 
 
 class SubPCA(BaseDetector):
-    """Fit PCA to standardized lag features of an imputed univariate series.
+    """Fit PCA to lag features; score windows by summed distances to selected
+    trailing principal-component vectors.
 
     Window columns are standardized using training statistics, then constant
     columns are removed using a training-fitted mask. Missing and infinite

@@ -63,8 +63,9 @@ class BeatGANBackbone(nn.Module):
 
 
 class BeatGAN(BaseDeepDetector):
-    """Native detector; input scaling belongs to an external transformer.
+    """Combine reconstruction and feature errors in an adversarial autoencoder.
 
+    Input scaling belongs to an external transformer.
     Network, losses and valid-window scores retain the DevAD arithmetic.
     Scores are padded with zeros before the first valid window.
     """

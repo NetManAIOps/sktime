@@ -9,7 +9,7 @@ __author__ = ["xiezhe"]
 
 
 class COPOD(PyODDetector):
-    """COPOD: copula-based outlier detection. Parameter-free [1]_.
+    """Score observations by tail probabilities estimated with empirical copulas.
 
     This detector wraps ``pyod.models.copod.COPOD`` from the PyOD library.
     Inputs are observations, not sliding windows; preprocessing is external.

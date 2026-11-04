@@ -9,7 +9,8 @@ __author__ = ["xiezhe"]
 
 
 class CBLOF(PyODDetector):
-    """CBLOF: cluster-based local outlier factor [1]_.
+    """Cluster observations into large and small groups; score by distance to
+    large-cluster centers.
 
     This detector wraps ``pyod.models.cblof.CBLOF`` from the PyOD library.
     Inputs are observations, not sliding windows; preprocessing is external.

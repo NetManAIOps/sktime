@@ -55,8 +55,10 @@ class USADBackbone(nn.Module):
 
 
 class USAD(BaseDeepDetector):
-    """Native detector; input scaling belongs to an external transformer.
+    """Train two decoders adversarially; combine direct and cascaded reconstruction
+    errors into a window-end score.
 
+    Input scaling belongs to an external transformer.
     Network, losses and valid-window scores retain the DevAD arithmetic.
     Scores are padded with zeros before the first valid window.
     """

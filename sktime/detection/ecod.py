@@ -9,8 +9,8 @@ __author__ = ["xiezhe"]
 
 
 class ECOD(PyODDetector):
-    """ECOD: unsupervised outlier detection using empirical cumulative
-    distribution functions. Parameter-free and fast [1]_.
+    """Score observations by feature-wise empirical tail probabilities,
+    accounting for distribution skewness.
 
     This detector wraps ``pyod.models.ecod.ECOD`` from the PyOD library.
     Inputs are observations, not sliding windows; preprocessing is external.

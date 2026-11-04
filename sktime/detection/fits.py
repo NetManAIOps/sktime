@@ -53,8 +53,10 @@ class FITSBackbone(nn.Module):
 
 
 class FITS(BaseDeepDetector):
-    """Native detector; input scaling belongs to an external transformer.
+    """Reconstruct downsampled windows through learned frequency interpolation;
+    assign whole-window mean squared error to the endpoint.
 
+    Input scaling belongs to an external transformer.
     Network, losses and valid-window scores retain the DevAD arithmetic.
     Scores are padded with zeros before the first valid window.
     """

@@ -9,7 +9,8 @@ __author__ = ["xiezhe"]
 
 
 class HBOS(PyODDetector):
-    """HBOS: histogram-based outlier score. Fast, linear-time [1]_.
+    """Estimate feature-wise histogram densities; score observations by combined
+    negative log-densities.
 
     This detector wraps ``pyod.models.hbos.HBOS`` from the PyOD library.
     Inputs are observations, not sliding windows; preprocessing is external.

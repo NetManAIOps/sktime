@@ -136,8 +136,10 @@ class COUTABackbone(nn.Module):
 
 
 class COUTA(BaseDeepDetector):
-    """Native detector; input scaling belongs to an external transformer.
+    """Learn uncertainty-aware one-class representations; score windows by distance
+    to a fixed one-class center.
 
+    Input scaling belongs to an external transformer.
     Network, losses and valid-window scores retain the DevAD arithmetic.
     Scores are padded with zeros before the first valid window.
     """

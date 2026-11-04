@@ -61,7 +61,12 @@ dependencies = [
   "scipy<2.0.0,>=1.2",  # required for estimators and framework layer
 ]
 
+[project.scripts]
+libraryts = "playground.cli.app:app"
+
 [project.optional-dependencies]
+cli = ["typer>=0.16"]
+
 # there are the following dependency sets:
 # - all_extras_pandas2, all_extras - all soft dependencies
 # - single-task soft dependencies, e.g., forecasting, classification, etc.

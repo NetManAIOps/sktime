@@ -9,7 +9,8 @@ __author__ = ["xiezhe"]
 
 
 class LOF(PyODDetector):
-    """Local Outlier Factor: density-deviation based outlier detection [1]_.
+    """Score individual observations by how much their local density falls below
+    that of their neighbors.
 
     This detector wraps ``pyod.models.lof.LOF`` from the PyOD library.
     Inputs are observations, not sliding windows; preprocessing is external.

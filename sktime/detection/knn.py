@@ -9,7 +9,7 @@ __author__ = ["xiezhe"]
 
 
 class KNN(PyODDetector):
-    """k-Nearest-Neighbors distance based outlier detection [1]_.
+    """Score each observation by its distance to the k-th nearest training neighbor.
 
     This detector wraps ``pyod.models.knn.KNN`` from the PyOD library.
     Inputs are observations, not sliding windows; preprocessing is external.

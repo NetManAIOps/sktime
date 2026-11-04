@@ -8,7 +8,8 @@ from sktime.detection.utils.window import sliding_windows
 
 
 class SubOCSVM(BaseDetector):
-    """Fit One-Class SVM to overlapping windows of a preprocessed series.
+    """Learn a one-class SVM boundary over sliding windows; score window endpoints
+    by negative decision values.
 
     Standardize the series with an upstream transformer before windowing.
     Each window's negative decision value is assigned to its last point;

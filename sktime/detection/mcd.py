@@ -9,8 +9,8 @@ __author__ = ["xiezhe"]
 
 
 class MCD(PyODDetector):
-    """MCD: minimum covariance determinant, robust Gaussian outlier
-    detection [1]_.
+    """Estimate robust location and covariance with minimum covariance determinant;
+    score observations by squared Mahalanobis distance.
 
     This detector wraps ``pyod.models.mcd.MCD`` from the PyOD library.
     Inputs are observations, not sliding windows; preprocessing is external.

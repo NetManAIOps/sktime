@@ -41,8 +41,10 @@ class LSTMModel(nn.Module):
 
 
 class LSTMAD(BaseDeepDetector):
-    """Native detector; input scaling belongs to an external transformer.
+    """Forecast a future window with an LSTM; assign its mean squared prediction
+    error to the forecast endpoint.
 
+    Input scaling belongs to an external transformer.
     Network, losses and valid-window scores retain the DevAD arithmetic.
     Scores are padded with zeros before the first valid window.
     """

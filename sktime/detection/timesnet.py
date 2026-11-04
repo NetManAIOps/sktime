@@ -193,8 +193,10 @@ class TimesNetBackbone(nn.Module):
 
 
 class TimesNet(BaseDeepDetector):
-    """Native detector; input scaling belongs to an external transformer.
+    """Reconstruct windows using multi-period two-dimensional convolutions;
+    score the last point by squared reconstruction error.
 
+    Input scaling belongs to an external transformer.
     Network, losses and valid-window scores retain the DevAD arithmetic.
     Scores are padded with zeros before the first valid window.
     """

@@ -76,8 +76,10 @@ def _rfft(input_tensor: torch.Tensor, dim: int = -1) -> torch.Tensor:
 
 
 class FCVAE(BaseDeepDetector):
-    """FCVAE for already imputed and scaled univariate values.
+    """Condition a VAE on frequency features; score the window's last point by
+    reconstruction negative log-likelihood.
 
+    Inputs must be imputed and scaled univariate values.
     Preprocessing belongs to upstream transformers. Pass missing_mask (and
     val_missing_mask to fit) to retain the original missing positions; True
     denotes missing. Without a mask, all positions are treated as observed.

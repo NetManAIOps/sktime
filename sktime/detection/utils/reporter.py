@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import sys
-import traceback
 from contextlib import ExitStack, redirect_stderr, redirect_stdout
 from datetime import timedelta
 from pathlib import Path
@@ -114,19 +113,7 @@ class TrainingReporter:
             raise
 
     def __exit__(self, exc_type, exc, tb):
-        try:
-            if exc is not None:
-                self.status = "Interrupted" if isinstance(exc, KeyboardInterrupt) else "Failed"
-                self._write(f"{self.status}: {exc_type.__name__}: {exc}")
-                traceback.print_exception(
-                    exc_type, exc, tb,
-                    file=self.log_file if self.log_file is not None else self.console.file,
-                )
-                self.progress.stop_task(self.task)
-                self._refresh(force=True)
-        finally:
-            self._stack.close()
-        return False
+        self._stack.close()
 
     def begin_stage(self, description: str):
         if not hasattr(self, "training_started_at"):

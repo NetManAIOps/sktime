@@ -266,8 +266,9 @@ class _DualEarlyStopping:
 
 
 class AnomalyTransformer(BaseDeepDetector):
-    """Native detector; input scaling belongs to an external transformer.
+    """Weight window-end reconstruction error by attention association discrepancy.
 
+    Input scaling belongs to an external transformer.
     Network, losses and valid-window scores retain the DevAD arithmetic.
     Scores are padded with zeros before the first valid window.
     """

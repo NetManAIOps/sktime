@@ -61,8 +61,10 @@ class KANADBackbone(nn.Module):
 
 
 class KANAD(BaseDeepDetector):
-    """One-step predictor for already differenced and scaled univariate values.
+    """Predict the next value using cosine-basis features and convolutions;
+    score by absolute prediction error.
 
+    Inputs must be differenced and scaled univariate values.
     Preprocess with Differencer(lags=1, na_handling="fill_zero", memory="none")
     and a training-fitted scaling transformer before calling this detector.
     Network, losses and valid-window scores retain the DevAD arithmetic.

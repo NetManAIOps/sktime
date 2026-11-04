@@ -210,8 +210,10 @@ class ModernTCNBackbone(nn.Module):
 
 
 class ModernTCN(BaseDeepDetector):
-    """Native detector; input scaling belongs to an external transformer.
+    """Reconstruct windows with large-kernel temporal convolutions; assign
+    whole-window mean squared error to the endpoint.
 
+    Input scaling belongs to an external transformer.
     Network, losses and valid-window scores retain the DevAD arithmetic.
     Scores are padded with zeros before the first valid window.
     """

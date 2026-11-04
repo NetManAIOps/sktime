@@ -124,8 +124,10 @@ class OmniAnomalyBackbone(nn.Module):
 
 
 class OmniAnomaly(BaseDeepDetector):
-    """Native detector; input scaling belongs to an external transformer.
+    """Reconstruct windows with a recurrent variational model and normalizing
+    flows; score the last point by negative log-likelihood.
 
+    Input scaling belongs to an external transformer.
     Network, losses and valid-window scores retain the DevAD arithmetic.
     Scores are padded with zeros before the first valid window.
     """

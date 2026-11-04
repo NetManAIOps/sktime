@@ -8,7 +8,8 @@ from sktime.detection.utils.window import sliding_windows
 
 
 class KMeansAD(BaseDetector):
-    """Score preprocessed windows by distance to their assigned cluster center.
+    """Cluster sliding windows with k-means; score each endpoint by Euclidean
+    distance to its assigned center.
 
     Standardize the series with an upstream transformer before windowing.
     Each window's Euclidean distance is assigned to its last point;

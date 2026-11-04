@@ -8,7 +8,8 @@ from sktime.detection.utils.window import sliding_windows
 
 
 class SubLOF(BaseDetector):
-    """Fit one novelty LOF to overlapping windows of a preprocessed series.
+    """Compare sliding-window densities with their neighbors using novelty LOF;
+    assign each score to the window endpoint.
 
     Standardize the series with an upstream transformer before windowing.
     Each window's negative decision value is assigned to its last point;

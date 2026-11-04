@@ -8,7 +8,8 @@ from sktime.detection.utils.window import sliding_windows
 
 
 class IForest(BaseDetector):
-    """Fit Isolation Forest to overlapping windows of an imputed series.
+    """Isolate sliding windows with random trees; score endpoints from isolation
+    path lengths via negative decision values.
 
     Missing and infinite values must be handled by upstream transformers.
     Optional normalization is performed after windowing, independently for

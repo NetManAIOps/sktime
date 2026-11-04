@@ -142,7 +142,8 @@ class DonutModel(nn.Module):
 
 
 class Donut(BaseDeepDetector):
-    """Univariate Donut detector, using the sktime estimator interface.
+    """Reconstruct windows with a masked VAE; score the last point by Monte Carlo
+    negative log-likelihood.
 
     Parameters
     ----------

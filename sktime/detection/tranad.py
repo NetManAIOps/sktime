@@ -127,8 +127,10 @@ class TranADBackbone(nn.Module):
 
 
 class TranAD(BaseDeepDetector):
-    """Native detector; input scaling belongs to an external transformer.
+    """Refine Transformer reconstruction using first-pass errors; score the last
+    point by second-pass squared error.
 
+    Input scaling belongs to an external transformer.
     Network, losses and valid-window scores retain the DevAD arithmetic.
     Scores are padded with zeros before the first valid window.
     """
