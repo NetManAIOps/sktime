@@ -28,7 +28,10 @@ class KMeansAD(BaseDetector):
         "property:randomness": "stochastic",
     }
 
-    def __init__(self, win_len, k=20, seed=0):
+    _core_params = ("win_len", "k")
+    _recommended_preprocessors = ({"class": "StandardScaler"},)
+
+    def __init__(self, win_len=100, k=20, seed=0):
         self.win_len = win_len
         self.k = k
         self.seed = seed

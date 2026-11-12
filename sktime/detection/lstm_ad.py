@@ -51,15 +51,18 @@ class LSTMAD(BaseDeepDetector):
 
     _tags = {"capability:multivariate": False, "capability:missing_values": False}
 
+    _core_params = ("win_len", "pred_len", "h_dim")
+    _recommended_preprocessors = ({"class": "StandardScaler"},)
+
     def __init__(
         self,
-        batch_size,
-        win_len,
-        h_dim,
-        pred_len,
-        num_layers,
-        lr,
-        epochs,
+        batch_size=128,
+        win_len=100,
+        h_dim=40,
+        pred_len=5,
+        num_layers=2,
+        lr=0.0008,
+        epochs=50,
         early_stop_patience=7,
         early_stop_delta=0.0,
         seed=0,

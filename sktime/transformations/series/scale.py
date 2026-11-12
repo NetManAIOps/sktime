@@ -1,9 +1,10 @@
 # copyright: sktime developers, BSD-3-Clause License (see LICENSE file)
 """Per-variable scaling using training-series statistics."""
 
-__all__ = ["StandardScaler"]
+__all__ = ["MinMaxScaler", "StandardScaler"]
 
 import pandas as pd
+from sklearn.preprocessing import MinMaxScaler as _SklearnMinMaxScaler
 from sklearn.preprocessing import StandardScaler as _SklearnStandardScaler
 
 from sktime.transformations.base import BaseTransformer
@@ -98,3 +99,56 @@ class StandardScaler(BaseTransformer):
             {"with_std": False},
             {"with_mean": False, "with_std": False},
         ]
+
+
+class MinMaxScaler(BaseTransformer):
+    """Rescale each variable using its minimum and maximum on the training data.
+
+    The scaler preserves the time index, columns and missing positions.
+    Values outside the training range can map outside the target interval.
+
+    Parameters
+    ----------
+    feature_range : tuple or list of float, default=(0.0, 1.0)
+        Lower and upper endpoints of the transformed training interval.
+    clip : bool, default=False
+        Clip transformed values to feature_range.
+    """
+
+    _tags = {
+        "X_inner_mtype": "pd.DataFrame",
+        "fit_is_empty": False,
+        "capability:multivariate": True,
+        "capability:missing_values": True,
+        "capability:categorical_in_X": False,
+        "capability:inverse_transform": True,
+        "transform-returns-same-time-index": True,
+    }
+
+    def __init__(self, feature_range=(0.0, 1.0), clip=False):
+        self.feature_range = feature_range
+        self.clip = clip
+        super().__init__()
+
+    def _fit(self, X, y=None):
+        self.scaler_ = _SklearnMinMaxScaler(
+            feature_range=tuple(self.feature_range), clip=self.clip
+        ).fit(X)
+        self.data_min_ = self.scaler_.data_min_
+        self.data_max_ = self.scaler_.data_max_
+        return self
+
+    def _transform(self, X, y=None):
+        return pd.DataFrame(
+            self.scaler_.transform(X), index=X.index, columns=X.columns
+        )
+
+    def _inverse_transform(self, X, y=None):
+        return pd.DataFrame(
+            self.scaler_.inverse_transform(X), index=X.index, columns=X.columns
+        )
+
+    @classmethod
+    def get_test_params(cls, parameter_set="default"):
+        """Return a default and a clipped, non-unit interval configuration."""
+        return [{}, {"feature_range": (-1.0, 1.0), "clip": True}]

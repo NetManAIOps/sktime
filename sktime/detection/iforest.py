@@ -31,6 +31,9 @@ class IForest(BaseDetector):
         "property:randomness": "stochastic",
     }
 
+    _core_params = ("win_len", "max_samples", "n_estimators")
+    _recommended_preprocessors = ()
+
     def __init__(
         self,
         win_len=1,

@@ -6,6 +6,8 @@ __author__ = ["RNKuhns", "fkiraly", "benheid"]
 __all__ = ["Differencer"]
 
 
+from numbers import Integral
+
 import numpy as np
 import pandas as pd
 from sklearn.utils import check_array
@@ -183,7 +185,7 @@ def _inverse_diff(X, lags, X_diff_seq=None):
         return X_diff_last
 
 
-class Differencer(BaseTransformer):
+class _Differencer(BaseTransformer):
     """Apply iterative differences to a timeseries.
 
     The transformation works for univariate and multivariate timeseries. However,
@@ -224,10 +226,10 @@ class Differencer(BaseTransformer):
 
     Examples
     --------
-    >>> from sktime.transformations.series.difference import Differencer
+    >>> from sktime.transformations.series.difference import _Differencer
     >>> from sktime.datasets import load_airline
     >>> y = load_airline()
-    >>> transformer = Differencer(lags=[1, 12])
+    >>> transformer = _Differencer(lags=[1, 12])
     >>> y_transform = transformer.fit_transform(y)
     """
 
@@ -419,3 +421,38 @@ class Differencer(BaseTransformer):
         #   this removes "drop_na" setting where the inverse has problems
         #   need to deal with this in a better way in testing
         return params
+
+
+class Differencer(_Differencer):
+    """Difference each input segment independently and pad the start with zeros.
+
+    The first lag * order positions are zero. The output preserves the input
+    index and length. Inverting the differences reconstructs a relative series
+    from a zero baseline.
+
+    Parameters
+    ----------
+    lag : int, default=1
+        Distance in samples between the two values subtracted at each pass.
+    order : int, default=1
+        Number of successive differences using the same lag.
+    """
+
+    def __init__(self, lag=1, order=1):
+        for name, value in (("lag", lag), ("order", order)):
+            if isinstance(value, bool) or not isinstance(value, Integral) or value < 1:
+                raise ValueError(f"{name} must be a positive integer")
+        self.lag = lag
+        self.order = order
+        super().__init__(lags=[lag] * order, na_handling="fill_zero", memory="none")
+
+    def __setstate__(self, state):
+        # Older native artifacts used the public name for the general transformer.
+        if "lags" in state and "lag" not in state:
+            self.__class__ = _Differencer
+        self.__dict__.update(state)
+
+    @classmethod
+    def get_test_params(cls, parameter_set="default"):
+        """Return configurations for constructing test instances."""
+        return [{}, {"lag": 2, "order": 2}]

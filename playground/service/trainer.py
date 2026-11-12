@@ -12,7 +12,7 @@ def train(experiment_spec: dict, output_dir: str | Path):
     """Train and save a model/pipeline, then return the fitted object.
 
     Currently targets anomaly detection. Model hyperparameters (including
-    early stopping) stay in init_params; fit_params are passed to fit.
+    early stopping) stay in each step's params. fit_params are passed to fit.
     A top-level seed overrides seed/random_state on components that accept them.
     The complete configuration is experiment_spec. Validation data comes from
     data.val, and test data is never loaded here.
@@ -55,11 +55,11 @@ def train(experiment_spec: dict, output_dir: str | Path):
 def build_estimator(spec: list[dict], *, task: str, seed: int | None = None):
     """Construct ``spec["estimator"]`` without fitting any component.
 
-    Each step has ``class`` and optional ``init_params``. Classes are resolved
+    Each step has ``class`` and optional ``params``. Classes are resolved
     by exact short name among transformers and the task's estimator type.
     A single step must match the task. Multi-step construction is currently
     implemented only for anomaly detection, using DetectorPipeline.
-    init_params are passed directly to each class constructor. When provided,
+    params are passed directly to each class constructor. When provided,
     seed overrides each component's seed/random_state without changing spec.
     Omitting seed keeps the component's supplied or default settings.
     """
@@ -79,7 +79,9 @@ def build_estimator(spec: list[dict], *, task: str, seed: int | None = None):
     steps = []
     for step in spec:
         class_name = step["class"]
-        params = dict(step.get("init_params", {}))
+        if "init_params" in step:
+            raise ValueError("Use params for estimator step parameters")
+        params = dict(step.get("params", {}))
         klass = _resolve_class(class_name, registry)
         if seed is not None:
             param_names = klass.get_param_names()

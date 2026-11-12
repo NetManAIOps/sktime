@@ -30,6 +30,9 @@ class CBLOF(PyODDetector):
 
     _tags = {"authors": ["xiezhe", "pyod"], "maintainers": ["xiezhe"]}
 
+    _core_params = ("n_clusters",)
+    _recommended_preprocessors = ()
+
     def __init__(self, n_clusters=8, contamination=0.1):
         _check_soft_dependencies("pyod")
         from pyod.models.cblof import CBLOF as _CBLOF

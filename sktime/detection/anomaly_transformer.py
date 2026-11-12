@@ -275,22 +275,24 @@ class AnomalyTransformer(BaseDeepDetector):
 
     _tags = {"capability:multivariate": False, "capability:missing_values": False}
 
+    _core_params = ("win_len", "d_model", "k")
+    _recommended_preprocessors = ({"class": "StandardScaler"},)
+
     def __init__(
         self,
-        batch_size=256,
         win_len=100,
         d_model=512,
         n_heads=8,
         e_layers=3,
         d_ff=512,
         dropout_rate=0.0,
-        activation='gelu',
         epochs=10,
         lr=0.0001,
         k=3.0,
         temperature=50.0,
-        early_stop_patience=7,
+        early_stop_patience=3,
         early_stop_delta=0.0,
+        batch_size=256,
         seed=0,
         device="cpu",
     ):
@@ -301,13 +303,13 @@ class AnomalyTransformer(BaseDeepDetector):
         self.e_layers = e_layers
         self.d_ff = d_ff
         self.dropout_rate = dropout_rate
-        self.activation = activation
         self.epochs = epochs
         self.lr = lr
         self.k = k
         self.temperature = temperature
         self.early_stop_patience = early_stop_patience
         self.early_stop_delta = early_stop_delta
+        self.activation = "gelu"
         super().__init__(seed=seed, device=device)
 
     def _build_network(self):

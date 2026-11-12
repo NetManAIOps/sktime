@@ -12,13 +12,13 @@ description: Use the native LibraryTS CLI for time-series anomaly detection. Dis
 | 任务 | 命令 | 结果 |
 |---|---|---|
 | 查询检测器或预处理器 | `ls algorithms` / `ls preprocessors`，带 `--task anomaly_detection` | 可选类名和简介 |
-| 已知要用哪个类 | 在对应的 `ls` 命令追加 `--name CLASS` | 构造参数、必填项和默认值 |
+| 已知要用哪个类 | 在对应的 `ls` 命令追加 `--name CLASS` | 构造默认值、核心调参项和推荐预处理 |
 | 训练并交付模型或管线 | `train` | `model.zip` 和 `manifest.json` |
 | 用已保存模型对新数据打分 | `predict` | `scores.csv` |
 | 用已有分数和测试标签算指标 | `evaluate` | `metrics.json` |
 | 一次执行训练、打分和带标签评估 | `run` | 三阶段的产物和本轮 manifest |
 
-已知目标类时，直接查询该类的详情。编写或调整 `--spec` 时读 [实验配置](references/experiment-spec.md)。执行命令、传递产物或排查失败时读 [命令与产物](references/commands-and-artifacts.md)。
+已知目标类时，直接查询该类的详情。编写或调整 `--spec` 时读 [实验配置](references/experiment-spec.md)。需要调参依据、适用条件或已有实验记录时，从 [检测器参考](references/detectors/index.md) 打开对应模型。上游出处和复现差异见 [官方参考配置](references/official-configs.md)。执行命令、传递产物或排查失败时读 [命令与产物](references/commands-and-artifacts.md)。
 
 ## 执行约定
 

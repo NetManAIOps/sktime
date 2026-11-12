@@ -28,6 +28,9 @@ class MCD(PyODDetector):
 
     _tags = {"authors": ["xiezhe", "pyod"], "maintainers": ["xiezhe"]}
 
+    _core_params = ()
+    _recommended_preprocessors = ()
+
     def __init__(self, contamination=0.1):
         _check_soft_dependencies("pyod")
         from pyod.models.mcd import MCD as _MCD

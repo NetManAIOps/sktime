@@ -90,27 +90,33 @@ class FCVAE(BaseDeepDetector):
 
     _tags = {"capability:multivariate": False, "capability:missing_values": False}
 
+    _core_params = ("win_len", "latent_dim", "d_model")
+    _recommended_preprocessors = (
+        {"class": "StandardScaler"},
+        {
+            "class": "Imputer",
+            "params": {"method": "constant", "value": 0, "add_missing_mask": True},
+        },
+    )
+
     def __init__(
         self,
         batch_size=256,
-        win_len=64,
-        latent_dim=8,
+        win_len=128,  #
+        latent_dim=8,  #
         condition_emb_dim=16,
         d_model=256,
         d_inner=512,
         n_head=8,
-        kernel_size=16,
-        stride=8,
+        kernel_size=16, #
+        stride=16,  #
         dropout_rate=0.05,
-        mcmc_rate=0.2,
-        mcmc_value=-5,
-        mcmc_mode=2,
         lr=0.0005,
         epochs=30,
         missing_data_rate=0.0,
         point_ano_rate=0.0,
         seg_ano_rate=0.0,
-        early_stop_patience=7,
+        early_stop_patience=5,
         early_stop_delta=0.0,
         seed=0,
         device="cpu",
@@ -125,9 +131,9 @@ class FCVAE(BaseDeepDetector):
         self.kernel_size = kernel_size
         self.stride = stride
         self.dropout_rate = dropout_rate
-        self.mcmc_rate = mcmc_rate
-        self.mcmc_value = mcmc_value
-        self.mcmc_mode = mcmc_mode
+        self.mcmc_rate = 0.2
+        self.mcmc_value = -5
+        self.mcmc_mode = 2
         self.lr = lr
         self.epochs = epochs
         self.missing_data_rate = missing_data_rate

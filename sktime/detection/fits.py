@@ -63,12 +63,15 @@ class FITS(BaseDeepDetector):
 
     _tags = {"capability:multivariate": False, "capability:missing_values": False}
 
+    _core_params = ("win_len", "downsample_rate", "cut_freq")
+    _recommended_preprocessors = ({"class": "StandardScaler"},)
+
     def __init__(
         self,
         batch_size=1024,
-        win_len=100,
-        downsample_rate=4,
-        cut_freq=12,
+        win_len=64,
+        downsample_rate=2,
+        cut_freq=16,
         epochs=10,
         lr=0.0001,
         early_stop_patience=3,
@@ -90,7 +93,22 @@ class FITS(BaseDeepDetector):
         win_len = int(self.win_len)
         downsample_rate = int(self.downsample_rate)
         cut_freq = int(self.cut_freq)
+        if not 1 <= downsample_rate < win_len:
+            raise ValueError("FITS requires 1 <= downsample_rate < win_len")
+
         input_len = win_len // downsample_rate
+        sampled_len = (win_len + downsample_rate - 1) // downsample_rate
+        input_bins = sampled_len // 2 + 1
+        output_bins = win_len // 2 + 1
+        if (
+            not 1 <= cut_freq <= input_bins
+            or int(cut_freq * (win_len / input_len)) > output_bins
+        ):
+            raise ValueError(
+                f"FITS cut_freq={cut_freq} is incompatible with win_len={win_len} "
+                f"and downsample_rate={downsample_rate}; use a smaller cut_freq "
+                "or change the window and downsampling settings"
+            )
 
         self.criterion_ = nn.MSELoss()
         self.backend_ = FITSBackbone(

@@ -32,9 +32,12 @@ class SubPCA(BaseDetector):
         "property:randomness": "stochastic",
     }
 
+    _core_params = ("win_len", "n_selected_components", "weighted")
+    _recommended_preprocessors = ()
+
     def __init__(
         self,
-        win_len,
+        win_len=16,
         n_components=None,
         n_selected_components=None,
         weighted=True,

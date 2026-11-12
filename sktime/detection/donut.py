@@ -147,11 +147,11 @@ class Donut(BaseDeepDetector):
 
     Parameters
     ----------
-    win_len : int
+    win_len : int, default=120
         Sliding window length.
-    h_dim : int or sequence of int
+    h_dim : int or sequence of int, default=(100, 100)
         Hidden layer dimensions of the encoder and decoder.
-    z_dim : int
+    z_dim : int, default=5
         Latent dimension.
     mask_prob : float, default=0.01
         Probability of masking a training input point.
@@ -161,35 +161,18 @@ class Donut(BaseDeepDetector):
         Training and scoring batch size.
     epochs : int, default=50
         Maximum number of training epochs.
-    lr : float, default=1e-4
+    lr : float, default=0.001
         Learning rate.
     weight_decay : float, default=1e-3
         Optimizer weight decay.
-    grad_clip : float, default=10.0
-        Gradient norm clipping limit.
-    scheduler_step_size : int, default=10
-        Learning-rate scheduler step size in epochs.
-    scheduler_gamma : float, default=0.75
-        Learning-rate decay factor.
     early_stop_patience : int, default=7
-        Early-stopping patience in epochs.
+        Early-stopping patience in epochs. Zero disables early stopping.
     early_stop_delta : float, default=0.0
         Minimum validation improvement for early stopping.
     seed : int, default=0
         Random seed for model initialization, training and scoring.
     device : str, default="cpu"
         PyTorch execution device.
-
-    Notes
-    -----
-    Inputs must already be standardized by the caller or an external transformer.
-    This detector performs no scaling and stores no scaling statistics.
-    Network, loss, windowing and Monte Carlo scoring follow DevAD.
-    transform_scores returns a one-dimensional array of input length. The first
-    win_len - 1 positions have no window score and are filled with zeros.
-    Validation enables in-memory best-weight selection when patience is positive;
-    this corresponds to DevAD fit with validation and a checkpoint path.
-    predict requires a threshold policy and is not implemented here.
     """
 
     _tags = {
@@ -197,20 +180,20 @@ class Donut(BaseDeepDetector):
         "capability:missing_values": False,
     }
 
+    _core_params = ("win_len", "h_dim", "z_dim")
+    _recommended_preprocessors = ({"class": "StandardScaler"},)
+
     def __init__(
         self,
-        win_len,
-        h_dim,
-        z_dim,
+        win_len=120,
+        h_dim=(100, 100),
+        z_dim=5,
         mask_prob=0.01,
         mc_samples=256,
         batch_size=128,
         epochs=50,
-        lr=1e-4,
+        lr=0.001,
         weight_decay=1e-3,
-        grad_clip=10.0,
-        scheduler_step_size=10,
-        scheduler_gamma=0.75,
         early_stop_patience=7,
         early_stop_delta=0.0,
         seed=0,
@@ -225,9 +208,9 @@ class Donut(BaseDeepDetector):
         self.epochs = epochs
         self.lr = lr
         self.weight_decay = weight_decay
-        self.grad_clip = grad_clip
-        self.scheduler_step_size = scheduler_step_size
-        self.scheduler_gamma = scheduler_gamma
+        self.grad_clip = 10.0
+        self.scheduler_step_size = 10
+        self.scheduler_gamma = 0.75
         self.early_stop_patience = early_stop_patience
         self.early_stop_delta = early_stop_delta
         super().__init__(seed=seed, device=device)

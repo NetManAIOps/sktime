@@ -134,21 +134,24 @@ class OmniAnomaly(BaseDeepDetector):
 
     _tags = {"capability:multivariate": False, "capability:missing_values": False}
 
+    _core_params = ("win_len", "latent_dim", "n_flows")
+    _recommended_preprocessors = (
+        {"class": "Imputer", "params": {"method": "constant", "value": 0}},
+        {"class": "MinMaxScaler"},
+    )
+
     def __init__(
         self,
-        win_len,
+        win_len=64,
         batch_size=50,
-        mc_samples=1,
-        hidden_dim=500,
-        dense_dim=500,
+        mc_samples=8,
+        hidden_dim=128,
+        dense_dim=128,
         latent_dim=3,
-        n_flows=20,
+        n_flows=4,
         std_epsilon=0.0001,
         lr=0.001,
-        epochs=10,
-        scheduler_step_size=40,
-        scheduler_gamma=0.5,
-        grad_clip=10.0,
+        epochs=20,
         early_stop_patience=7,
         early_stop_delta=0.0,
         seed=0,
@@ -164,9 +167,9 @@ class OmniAnomaly(BaseDeepDetector):
         self.std_epsilon = std_epsilon
         self.lr = lr
         self.epochs = epochs
-        self.scheduler_step_size = scheduler_step_size
-        self.scheduler_gamma = scheduler_gamma
-        self.grad_clip = grad_clip
+        self.scheduler_step_size = 40
+        self.scheduler_gamma = 0.5
+        self.grad_clip = 10.0
         self.early_stop_patience = early_stop_patience
         self.early_stop_delta = early_stop_delta
         super().__init__(seed=seed, device=device)

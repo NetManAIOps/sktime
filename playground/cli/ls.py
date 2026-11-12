@@ -18,7 +18,7 @@ def algorithms(
     task: str = typer.Option(..., "--task", help="Task, e.g. anomaly_detection."),
     name: str | None = typer.Option(None, "--name", help="Exact algorithm class name."),
 ) -> None:
-    """List task algorithms, or show one algorithm's description and parameters."""
+    """List algorithms or show one algorithm's description and constructor parameters."""
     show(ctx, "algorithms", task=task, name=name)
 
 

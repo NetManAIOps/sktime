@@ -15,6 +15,7 @@ TASK_ESTIMATOR_TYPES = {
 TASK_PREPROCESSORS = {
     "anomaly_detection": {
         "StandardScaler",
+        "MinMaxScaler",
         "Imputer",
         "Differencer",
         "Detrender",
@@ -41,10 +42,11 @@ def list_algorithms(task: str, name: str | None = None) -> list[dict] | dict:
 
     Without name return [{"class": ..., "description": ...}, ...]. With name
     return {"class": ..., "task": ..., "description": ..., "params": ...}.
+    Anomaly detector details also include core_params and recommended_preprocessors.
     Descriptions use the first docstring paragraph. Params map names to defaults, or
     "required" when no default is defined.
     Non-JSON defaults are explicitly represented as {"python_repr": ...}; they
-    are descriptions, not directly usable init_params values.
+    are descriptions, not directly usable experiment parameter values.
     """
     from sktime.registry import all_estimators
 
@@ -78,7 +80,6 @@ def list_preprocessors(task: str, name: str | None = None) -> list[dict] | dict:
     selects names from the transformer registry; shared transformers do not need
     a task tag. Only anomaly_detection currently has a configured list.
     Details contain class, task, description and params, as for algorithms.
-    No parameters are overridden or preprocessing steps inserted automatically.
     """
     from sktime.registry import all_estimators
 
@@ -119,7 +120,7 @@ def _list_estimators(registry, name: str | None, *, task: str):
         if key != "self"
         and param.kind not in (param.VAR_POSITIONAL, param.VAR_KEYWORD)
     ]
-    return {
+    details = {
         "class": name,
         "task": task,
         "description": " ".join(
@@ -134,6 +135,11 @@ def _list_estimators(registry, name: str | None, *, task: str):
             for param in parameters
         },
     }
+
+    get_metadata = getattr(klass, "get_experiment_metadata", None)
+    if task == "anomaly_detection" and get_metadata is not None:
+        details.update(get_metadata())
+    return details
 
 
 def _describe_default(value):

@@ -22,6 +22,8 @@ State:
 __author__ = ["fkiraly", "tveten", "alex-jg3", "satya-pattnaik"]
 __all__ = ["BaseDetector"]
 
+from copy import deepcopy
+
 import numpy as np
 import pandas as pd
 
@@ -85,6 +87,17 @@ class BaseDetector(BaseEstimator):
         "X_inner_mtype": "pd.DataFrame",
         "fit_is_empty": False,
     }
+
+    _core_params = ()
+    _recommended_preprocessors = ()
+
+    @classmethod
+    def get_experiment_metadata(cls) -> dict:
+        """Return editable copies of parameter hints and pipeline steps."""
+        return {
+            "core_params": list(cls._core_params),
+            "recommended_preprocessors": deepcopy(list(cls._recommended_preprocessors)),
+        }
 
     def __init__(self):
         self._is_fitted = False

@@ -146,19 +146,23 @@ class COUTA(BaseDeepDetector):
 
     _tags = {"capability:multivariate": False, "capability:missing_values": False}
 
+    _core_params = ("win_len", "alpha", "hidden_dims")
+    _recommended_preprocessors = (
+        {"class": "MinMaxScaler"},
+        {"class": "Imputer", "params": {"method": "linear"}},
+    )
+
     def __init__(
         self,
-        win_len=100,
+        win_len=64,
+        hidden_dims=(16, 16, 16),
         epochs=40,
         batch_size=64,
         lr=0.0001,
-        hidden_dims=16,
         emb_dim=16,
         rep_hidden=16,
         pretext_hidden=16,
-        kernel_size=2,
         dropout=0.0,
-        bias=True,
         alpha=0.1,
         neg_batch_ratio=0.2,
         early_stop_patience=7,
@@ -174,9 +178,9 @@ class COUTA(BaseDeepDetector):
         self.emb_dim = emb_dim
         self.rep_hidden = rep_hidden
         self.pretext_hidden = pretext_hidden
-        self.kernel_size = kernel_size
         self.dropout = dropout
-        self.bias = bias
+        self.kernel_size = 2
+        self.bias = True
         self.alpha = alpha
         self.neg_batch_ratio = neg_batch_ratio
         self.early_stop_patience = early_stop_patience

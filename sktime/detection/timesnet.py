@@ -203,19 +203,22 @@ class TimesNet(BaseDeepDetector):
 
     _tags = {"capability:multivariate": False, "capability:missing_values": False}
 
+    _core_params = ("win_len", "top_k", "d_model")
+    _recommended_preprocessors = ({"class": "StandardScaler"},)
+
     def __init__(
         self,
         batch_size=128,
-        win_len=96,
-        d_model=16,
-        d_ff=32,
+        win_len=100,
+        d_model=64,
+        d_ff=64,
         e_layers=2,
-        top_k=3,
+        top_k=5,
         num_kernels=6,
         dropout_rate=0.1,
         lr=0.0001,
-        epochs=20,
-        early_stop_patience=7,
+        epochs=10,
+        early_stop_patience=3,
         early_stop_delta=0.0,
         seed=0,
         device="cpu",

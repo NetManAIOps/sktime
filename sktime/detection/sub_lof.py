@@ -28,8 +28,11 @@ class SubLOF(BaseDetector):
         "python_dependencies": "scikit-learn",
     }
 
+    _core_params = ("win_len", "n_neighbors")
+    _recommended_preprocessors = ({"class": "StandardScaler"},)
+
     def __init__(
-        self, win_len, n_neighbors=20, algorithm="auto", metric="minkowski", n_jobs=4
+        self, win_len=8, n_neighbors=20, algorithm="auto", metric="minkowski", n_jobs=4
     ):
         self.win_len = win_len
         self.n_neighbors = n_neighbors

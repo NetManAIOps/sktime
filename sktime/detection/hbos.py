@@ -30,6 +30,9 @@ class HBOS(PyODDetector):
 
     _tags = {"authors": ["xiezhe", "pyod"], "maintainers": ["xiezhe"]}
 
+    _core_params = ("n_bins",)
+    _recommended_preprocessors = ()
+
     def __init__(self, n_bins=10, contamination=0.1):
         _check_soft_dependencies("pyod")
         from pyod.models.hbos import HBOS as _HBOS

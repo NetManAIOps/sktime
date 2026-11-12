@@ -137,6 +137,9 @@ class TranAD(BaseDeepDetector):
 
     _tags = {"capability:multivariate": False, "capability:missing_values": False}
 
+    _core_params = ("win_len", "lr")
+    _recommended_preprocessors = ({"class": "MinMaxScaler"},)
+
     def __init__(
         self,
         batch_size=128,
@@ -145,10 +148,7 @@ class TranAD(BaseDeepDetector):
         dropout_rate=0.1,
         lr=0.0001,
         epochs=5,
-        weight_decay=1e-05,
-        scheduler_step_size=5,
-        scheduler_gamma=0.9,
-        early_stop_patience=7,
+        early_stop_patience=0,
         early_stop_delta=0.0,
         seed=0,
         device="cpu",
@@ -159,9 +159,9 @@ class TranAD(BaseDeepDetector):
         self.dropout_rate = dropout_rate
         self.lr = lr
         self.epochs = epochs
-        self.weight_decay = weight_decay
-        self.scheduler_step_size = scheduler_step_size
-        self.scheduler_gamma = scheduler_gamma
+        self.weight_decay = 1e-5
+        self.scheduler_step_size = 5
+        self.scheduler_gamma = 0.9
         self.early_stop_patience = early_stop_patience
         self.early_stop_delta = early_stop_delta
         super().__init__(seed=seed, device=device)

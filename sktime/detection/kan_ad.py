@@ -65,7 +65,7 @@ class KANAD(BaseDeepDetector):
     score by absolute prediction error.
 
     Inputs must be differenced and scaled univariate values.
-    Preprocess with Differencer(lags=1, na_handling="fill_zero", memory="none")
+    Preprocess with Differencer(lag=1, order=1)
     and a training-fitted scaling transformer before calling this detector.
     Network, losses and valid-window scores retain the DevAD arithmetic.
     Scores are padded with zeros before the first valid window.
@@ -74,14 +74,20 @@ class KANAD(BaseDeepDetector):
     _tags = {"capability:multivariate": False, 
              "capability:missing_values": False}
 
+    _core_params = ("win_len", "order", "lr")
+    _recommended_preprocessors = (
+        {"class": "Differencer", "params": {"lag": 1, "order": 1}},
+        {"class": "StandardScaler"},
+    )
+
     def __init__(
         self,
-        win_len,
+        win_len=96,
         order=2,
         batch_size=1024,
         epochs=100,
         lr=0.01,
-        early_stop_patience=7,
+        early_stop_patience=3,
         early_stop_delta=0.0,
         seed=0,
         device="cpu",

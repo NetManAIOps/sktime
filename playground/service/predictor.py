@@ -24,8 +24,8 @@ def predict(
     """Load a fitted model, score test data and save scores.csv plus a manifest.
 
     Return a score Series indexed like the test input. No fit, thresholding,
-    label-based decisions or evaluation occurs here. init_params/fit_params
-    in experiment_spec do not replace parameters on the saved model.
+    label-based decisions or evaluation occurs here. The saved model provides
+    its own estimator and fit parameters.
     Scores are higher for more anomalous points. Existing warm-up zeros from
     detectors are kept as-is, without automatic trimming or normalization.
     """

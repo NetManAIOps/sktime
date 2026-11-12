@@ -220,25 +220,23 @@ class ModernTCN(BaseDeepDetector):
 
     _tags = {"capability:multivariate": False, "capability:missing_values": False}
 
+    _core_params = ("win_len", "d_model", "large_size")
+    _recommended_preprocessors = ({"class": "StandardScaler"},)
+
     def __init__(
         self,
-        win_len,
+        win_len=32,
         batch_size=128,
-        patch_size=8,
-        patch_stride=4,
+        patch_size=4,
+        patch_stride=2,
         num_blocks=1,
         d_model=8,
-        large_size=51,
+        large_size=13,
         small_size=5,
-        ffn_ratio=1,
         dropout=0.1,
-        revin=True,
-        affine=False,
-        subtract_last=False,
-        epochs=2,
+        epochs=10,
         lr=0.0005,
-        pct_start=0.3,
-        early_stop_patience=7,
+        early_stop_patience=3,
         early_stop_delta=0.0,
         seed=0,
         device="cpu",
@@ -251,14 +249,14 @@ class ModernTCN(BaseDeepDetector):
         self.d_model = d_model
         self.large_size = large_size
         self.small_size = small_size
-        self.ffn_ratio = ffn_ratio
         self.dropout = dropout
-        self.revin = revin
-        self.affine = affine
-        self.subtract_last = subtract_last
         self.epochs = epochs
         self.lr = lr
-        self.pct_start = pct_start
+        self.ffn_ratio = 1
+        self.pct_start = 0.3
+        self.revin = True
+        self.affine = False
+        self.subtract_last = False
         self.early_stop_patience = early_stop_patience
         self.early_stop_delta = early_stop_delta
         super().__init__(seed=seed, device=device)

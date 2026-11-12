@@ -29,6 +29,9 @@ class KNN(PyODDetector):
 
     _tags = {"authors": ["xiezhe", "pyod"], "maintainers": ["xiezhe"]}
 
+    _core_params = ("n_neighbors",)
+    _recommended_preprocessors = ()
+
     def __init__(self, n_neighbors=5, contamination=0.1):
         _check_soft_dependencies("pyod")
         from pyod.models.knn import KNN as _KNN

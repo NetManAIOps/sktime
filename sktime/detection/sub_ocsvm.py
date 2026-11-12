@@ -27,9 +27,12 @@ class SubOCSVM(BaseDetector):
         "python_dependencies": "scikit-learn",
     }
 
+    _core_params = ("win_len", "nu", "gamma")
+    _recommended_preprocessors = ({"class": "StandardScaler"},)
+
     def __init__(
         self,
-        win_len,
+        win_len=64,
         kernel="rbf",
         degree=3,
         gamma="auto",

@@ -121,21 +121,21 @@ class DAGMM(BaseDeepDetector):
 
     _tags = {"capability:multivariate": False, "capability:missing_values": False}
 
+    _core_params = ("win_len", "n_gmm", "latent_dim")
+    _recommended_preprocessors = ({"class": "StandardScaler"},)
+
     def __init__(
         self,
-        batch_size=128,
         win_len=64,
+        n_gmm=3,
+        batch_size=128,
         latent_dim=4,
         ae_hidden=(64, 32),
         est_hidden=(16,),
-        n_gmm=3,
-        energy_weight=0.1,
-        cov_weight=0.005,
         lr=0.0001,
         epochs=30,
         weight_decay=0.0,
-        grad_clip=5.0,
-        early_stop_patience=7,
+        early_stop_patience=0,
         early_stop_delta=0.0,
         seed=0,
         device="cpu",
@@ -146,14 +146,14 @@ class DAGMM(BaseDeepDetector):
         self.ae_hidden = ae_hidden
         self.est_hidden = est_hidden
         self.n_gmm = n_gmm
-        self.energy_weight = energy_weight
-        self.cov_weight = cov_weight
         self.lr = lr
         self.epochs = epochs
         self.weight_decay = weight_decay
-        self.grad_clip = grad_clip
         self.early_stop_patience = early_stop_patience
         self.early_stop_delta = early_stop_delta
+        self.energy_weight = 0.1
+        self.cov_weight = 0.005
+        self.grad_clip = 5.0
         super().__init__(seed=seed, device=device)
 
     def _build_network(self):

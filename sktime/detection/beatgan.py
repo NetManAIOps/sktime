@@ -72,17 +72,18 @@ class BeatGAN(BaseDeepDetector):
 
     _tags = {"capability:multivariate": False, "capability:missing_values": False}
 
+    _core_params = ("win_len", "latent_dim", "recon_weight")
+    _recommended_preprocessors = ({"class": "StandardScaler"},)
+
     def __init__(
         self,
+        win_len=64,
+        latent_dim=16,
         batch_size=128,
         hidden_dim=32,
-        latent_dim=16,
-        win_len=64,
         lr=0.0001,
         epochs=30,
         recon_weight=10.0,
-        feature_weight=1.0,
-        adv_weight=1.0,
         score_recon_weight=0.9,
         early_stop_patience=7,
         early_stop_delta=0.0,
@@ -96,11 +97,11 @@ class BeatGAN(BaseDeepDetector):
         self.lr = lr
         self.epochs = epochs
         self.recon_weight = recon_weight
-        self.feature_weight = feature_weight
-        self.adv_weight = adv_weight
         self.score_recon_weight = score_recon_weight
         self.early_stop_patience = early_stop_patience
         self.early_stop_delta = early_stop_delta
+        self.feature_weight = 1.0
+        self.adv_weight = 1.0
         super().__init__(seed=seed, device=device)
 
     def _build_network(self):

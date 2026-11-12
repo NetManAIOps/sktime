@@ -30,6 +30,9 @@ class LOF(PyODDetector):
 
     _tags = {"authors": ["xiezhe", "pyod"], "maintainers": ["xiezhe"]}
 
+    _core_params = ("n_neighbors",)
+    _recommended_preprocessors = ()
+
     def __init__(self, n_neighbors=20, contamination=0.1):
         _check_soft_dependencies("pyod")
         from pyod.models.lof import LOF as _LOF

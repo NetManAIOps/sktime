@@ -6,10 +6,10 @@
 libraryts ls algorithms --task anomaly_detection
 libraryts ls algorithms --task anomaly_detection --name Donut
 libraryts ls preprocessors --task anomaly_detection
-libraryts ls preprocessors --task anomaly_detection --name StandardScaler
+libraryts ls preprocessors --task anomaly_detection --name MinMaxScaler
 ```
 
-列表是 JSON 数组，每项含 `class`、`description`。指定 `--name` 后返回一个 JSON 对象，另含 `task` 和 `params`。参数值为 `"required"` 时，编写 spec 时需要提供该参数。当前组件查询覆盖 algorithms 和 preprocessors。
+列表是 JSON 数组，每项含 `class`、`description`。指定 `--name` 后返回一个 JSON 对象，另含 `task` 和 `params`。`params` 显示当前构造默认值，标为 `"required"` 的字段必须在 spec 中提供。检测器详情还返回 `core_params` 和 `recommended_preprocessors`。前者列出可优先尝试的参数名，后者按执行顺序提供可复制到 spec 的步骤。预处理器详情使用通用字段。模型侧使用经验见 [检测器参考](detectors/index.md)，上游实验差异见 [官方参考配置](official-configs.md)。
 
 ## 分阶段执行
 

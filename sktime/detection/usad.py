@@ -65,18 +65,21 @@ class USAD(BaseDeepDetector):
 
     _tags = {"capability:multivariate": False, "capability:missing_values": False}
 
+    _core_params = ("win_len", "latent_dim", "lr")
+    _recommended_preprocessors = ({"class": "MinMaxScaler"},)
+
     def __init__(
         self,
         batch_size=128,
         win_len=5,
-        hidden_dim=16,
-        latent_dim=5,
+        hidden_dim=32,
+        latent_dim=8,
         epochs=10,
-        lr=0.0001,
+        lr=0.001,
         weight_decay=1e-05,
-        early_stop_patience=7,
+        early_stop_patience=0,
         early_stop_delta=0.0,
-        seed=0,
+        seed=2026,
         device="cpu",
     ):
         self.batch_size = batch_size
