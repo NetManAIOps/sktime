@@ -1,6 +1,6 @@
 [project]
-name = "libraryts"
-version = "0.1.0"
+name = "sktime"
+version = "0.40.1"
 description = "A unified framework for machine learning with time series"
 readme = "README.md"
 keywords = [

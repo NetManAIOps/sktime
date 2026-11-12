@@ -9,9 +9,9 @@ __author__ = ["xiezhe"]
 
 
 class CBLOF(PyODDetector):
-    """Cluster observations into large and small groups; score by distance to
-    large-cluster centers.
+    """Cluster observations into large and small groups; score by distance.
 
+    Scores are computed as distance to large-cluster centers.
     This detector wraps ``pyod.models.cblof.CBLOF`` from the PyOD library.
     Inputs are observations, not sliding windows; preprocessing is external.
 
@@ -43,4 +43,8 @@ class CBLOF(PyODDetector):
 
     @classmethod
     def get_test_params(cls, parameter_set="default"):
-        return {"n_clusters": 2}
+        """Return testing parameter settings for the estimator."""
+        # n_clusters must stay >= 8 here: with very few clusters, PyOD's
+        # alpha/beta separation criterion cannot split large vs small
+        # clusters on the small random training series used in tests
+        return {"n_clusters": 8}

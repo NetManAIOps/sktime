@@ -285,3 +285,16 @@ class DAGMM(BaseDeepDetector):
         raise NotImplementedError(
             "Use transform_scores; an anomaly threshold policy has not been defined."
         )
+
+    @classmethod
+    def get_test_params(cls, parameter_set="default"):
+        """Return testing parameter settings for the detector."""
+        return {
+            "win_len": 4,
+            "n_gmm": 2,
+            "latent_dim": 2,
+            "ae_hidden": (8,),
+            "est_hidden": (4,),
+            "batch_size": 8,
+            "epochs": 1,
+        }

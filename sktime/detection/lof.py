@@ -2,15 +2,15 @@
 """LOF anomaly detector backed by PyOD."""
 
 from sktime.detection.adapters._pyod import PyODDetector
+from sktime.detection.sub_lof import SubLOF
 from sktime.utils.dependencies import _check_soft_dependencies
 
-__all__ = ["LOF"]
+__all__ = ["LOF", "SubLOF"]
 __author__ = ["xiezhe"]
 
 
 class LOF(PyODDetector):
-    """Score individual observations by how much their local density falls below
-    that of their neighbors.
+    """Score observations by how far their local density falls below neighbors'.
 
     This detector wraps ``pyod.models.lof.LOF`` from the PyOD library.
     Inputs are observations, not sliding windows; preprocessing is external.
@@ -43,4 +43,5 @@ class LOF(PyODDetector):
 
     @classmethod
     def get_test_params(cls, parameter_set="default"):
+        """Return testing parameter settings for the estimator."""
         return {"n_neighbors": 3}

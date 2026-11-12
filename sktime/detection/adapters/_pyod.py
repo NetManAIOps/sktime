@@ -12,6 +12,14 @@ __author__ = ["mloning", "satya-pattnaik", "fkiraly"]
 __all__ = ["PyODDetector"]
 
 
+def _as_2d(X):
+    """Convert to a 2D numpy array, reshaping 1D series to a single feature."""
+    X_np = X.to_numpy()
+    if X_np.ndim == 1:
+        X_np = X_np.reshape(-1, 1)
+    return X_np
+
+
 class PyODDetector(BaseDetector):
     """Wrap a PyOD estimator without changing its training or scoring algorithm.
 
@@ -45,15 +53,15 @@ class PyODDetector(BaseDetector):
 
     def _fit(self, X, y=None, **kwargs):
         self.estimator_ = clone(self.estimator)
-        self.estimator_.fit(X.to_numpy())
+        self.estimator_.fit(_as_2d(X))
         return self
 
     def _predict(self, X):
-        labels = self.estimator_.predict(X.to_numpy())
+        labels = self.estimator_.predict(_as_2d(X))
         return pd.Series(np.flatnonzero(labels), dtype="int64")
 
     def _transform_scores(self, X, **kwargs):
-        scores = self.estimator_.decision_function(X.to_numpy())
+        scores = self.estimator_.decision_function(_as_2d(X))
         return np.asarray(scores, dtype=np.float64).reshape(-1)
 
     @classmethod

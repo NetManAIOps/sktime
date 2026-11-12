@@ -323,3 +323,16 @@ class COUTA(BaseDeepDetector):
         raise NotImplementedError(
             "Use transform_scores; an anomaly threshold policy has not been defined."
         )
+
+    @classmethod
+    def get_test_params(cls, parameter_set="default"):
+        """Return testing parameter settings for the detector."""
+        return {
+            "win_len": 4,
+            "hidden_dims": (8,),
+            "emb_dim": 4,
+            "rep_hidden": 4,
+            "pretext_hidden": 4,
+            "batch_size": 8,
+            "epochs": 1,
+        }

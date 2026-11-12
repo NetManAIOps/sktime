@@ -497,3 +497,16 @@ class AnomalyTransformer(BaseDeepDetector):
         raise NotImplementedError(
             "Use transform_scores; an anomaly threshold policy has not been defined."
         )
+
+    @classmethod
+    def get_test_params(cls, parameter_set="default"):
+        """Return testing parameter settings for the detector."""
+        return {
+            "win_len": 4,
+            "d_model": 16,
+            "n_heads": 2,
+            "e_layers": 1,
+            "d_ff": 16,
+            "epochs": 1,
+            "batch_size": 8,
+        }

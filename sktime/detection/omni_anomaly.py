@@ -286,3 +286,19 @@ class OmniAnomaly(BaseDeepDetector):
         raise NotImplementedError(
             "Use transform_scores; an anomaly threshold policy has not been defined."
         )
+
+    @classmethod
+    def get_test_params(cls, parameter_set="default"):
+        """Return testing parameter settings for the estimator."""
+        return [
+            {
+                "win_len": 4,
+                "batch_size": 4,
+                "mc_samples": 2,
+                "hidden_dim": 8,
+                "dense_dim": 8,
+                "latent_dim": 2,
+                "n_flows": 1,
+                "epochs": 1,
+            }
+        ]

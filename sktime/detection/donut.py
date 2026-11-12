@@ -339,3 +339,15 @@ class Donut(BaseDeepDetector):
             "Donut returns continuous scores via transform_scores; "
             "an anomaly threshold policy has not been defined."
         )
+
+    @classmethod
+    def get_test_params(cls, parameter_set="default"):
+        """Return testing parameter settings for the detector."""
+        return {
+            "win_len": 4,
+            "h_dim": (8,),
+            "z_dim": 2,
+            "mc_samples": 8,
+            "batch_size": 8,
+            "epochs": 1,
+        }

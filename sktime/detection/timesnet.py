@@ -361,3 +361,19 @@ class TimesNet(BaseDeepDetector):
         raise NotImplementedError(
             "Use transform_scores; an anomaly threshold policy has not been defined."
         )
+
+    @classmethod
+    def get_test_params(cls, parameter_set="default"):
+        """Return testing parameter settings for the estimator."""
+        return [
+            {
+                "batch_size": 4,
+                "win_len": 4,
+                "d_model": 8,
+                "d_ff": 8,
+                "e_layers": 1,
+                "top_k": 2,
+                "num_kernels": 2,
+                "epochs": 1,
+            }
+        ]

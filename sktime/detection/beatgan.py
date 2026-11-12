@@ -237,3 +237,14 @@ class BeatGAN(BaseDeepDetector):
         raise NotImplementedError(
             "Use transform_scores; an anomaly threshold policy has not been defined."
         )
+
+    @classmethod
+    def get_test_params(cls, parameter_set="default"):
+        """Return testing parameter settings for the detector."""
+        return {
+            "win_len": 4,
+            "latent_dim": 4,
+            "hidden_dim": 8,
+            "batch_size": 8,
+            "epochs": 1,
+        }

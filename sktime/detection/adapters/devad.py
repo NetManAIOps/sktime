@@ -274,9 +274,14 @@ class DevADFCVAEDetector(_DevADDetectorBase):
 
     @classmethod
     def get_test_params(cls, parameter_set="default"):
-        """Small, fast configuration; win_len must cover kernel_size=16."""
+        """Small, fast configuration for the estimator checks.
+
+        win_len must be at least kernel_size, and the 10-point test series
+        must contain at least one full window.
+        """
         params = super().get_test_params(parameter_set=parameter_set)
-        params["win_len"] = 16
+        params["win_len"] = 8
+        params["params"] = {"kernel_size": 8, "stride": 4}
         return params
 
 

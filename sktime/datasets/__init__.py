@@ -123,7 +123,7 @@ from sktime.datasets._single_problem_loaders import (
     load_alarm,
     load_asia,
     load_UCR_UEA_dataset,
-    # load_unit_test,
+    load_unit_test,
     # load_unit_test_tsf,
     # load_uschange,
     load_oil_display,

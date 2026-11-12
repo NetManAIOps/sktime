@@ -436,7 +436,28 @@ class Differencer(_Differencer):
         Distance in samples between the two values subtracted at each pass.
     order : int, default=1
         Number of successive differences using the same lag.
+    lags : int or list of int, optional
+        Legacy interface of the general iterative differencer. When given,
+        ``lag``/``order`` are ignored and the instance behaves like the
+        pre-LibraryTS ``Differencer`` (equivalent to ``_Differencer``).
+    na_handling : str, optional
+        Only used in legacy mode (see ``lags``).
+    memory : str, optional
+        Only used in legacy mode (see ``lags``).
     """
+
+    def __new__(cls, lag=1, order=1, lags=None, na_handling="drop_na",
+                memory="pre-processing"):
+        if lags is not None or na_handling != "drop_na" or memory != "pre-processing":
+            obj = _Differencer.__new__(_Differencer)
+            _Differencer.__init__(
+                obj,
+                lags=lags if lags is not None else [lag] * order,
+                na_handling=na_handling,
+                memory=memory,
+            )
+            return obj
+        return super().__new__(cls)
 
     def __init__(self, lag=1, order=1):
         for name, value in (("lag", lag), ("order", order)):
@@ -447,6 +468,7 @@ class Differencer(_Differencer):
         super().__init__(lags=[lag] * order, na_handling="fill_zero", memory="none")
 
     def __setstate__(self, state):
+        """Restore state, mapping legacy artifacts to the general transformer."""
         # Older native artifacts used the public name for the general transformer.
         if "lags" in state and "lag" not in state:
             self.__class__ = _Differencer
