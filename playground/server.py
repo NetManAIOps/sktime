@@ -239,11 +239,10 @@ def main():
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
-        print("\nStopping Playground.")
+        print("\nStopping LibraryTS Playground GUI.")
     finally:
         httpd.server_close()
 
 
 if __name__ == "__main__":
     main()
-

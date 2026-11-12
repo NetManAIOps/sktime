@@ -11,7 +11,7 @@ import pytest
 
 from sktime.datasets import load_airline
 from sktime.tests.test_switch import run_test_for_class
-from sktime.transformations.series.difference import Differencer
+from sktime.transformations.series.difference import _Differencer as Differencer
 from sktime.utils._testing.estimator_checks import _assert_array_almost_equal
 
 y_airline = load_airline()
@@ -167,7 +167,7 @@ def test_differencer_cutoff():
     from sktime.forecasting.compose import TransformedTargetForecaster, YfromX
     from sktime.forecasting.model_selection import ForecastingGridSearchCV
     from sktime.split import ExpandingWindowSplitter, temporal_train_test_split
-    from sktime.transformations.series.difference import Differencer
+    from sktime.transformations.series.difference import _Differencer as Differencer
 
     y, X = load_longley()
 
@@ -241,7 +241,7 @@ def test_differencer_inverse_does_not_memorize():
     from sktime.forecasting.base import ForecastingHorizon
     from sktime.forecasting.naive import NaiveForecaster
     from sktime.split import temporal_train_test_split
-    from sktime.transformations.series.difference import Differencer
+    from sktime.transformations.series.difference import _Differencer as Differencer
 
     y = load_airline()
 
@@ -314,3 +314,16 @@ def test_dropna_pipeline():
     # Predict
     y_pred = pipe_yX.predict(fh=[1], X=X.iloc[-1:, :])
     assert len(y_pred) == 1
+
+
+def test_public_differencer_treats_segments_independently():
+    """The public constructor preserves indices and zero-pads each segment."""
+    from sktime.transformations.series.difference import Differencer
+
+    train = pd.Series([100, 200, 300], index=range(7, 10))
+    test = pd.Series([1, 2, 4, 7, 11, 16], index=range(10, 16))
+    transformer = Differencer(lag=2, order=2).fit(train)
+
+    assert transformer.get_params() == {"lag": 2, "order": 2}
+    expected = pd.Series([0.0, 0.0, 0.0, 0.0, 4.0, 4.0], index=test.index)
+    pd.testing.assert_series_equal(transformer.transform(test), expected)

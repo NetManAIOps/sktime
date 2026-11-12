@@ -37,10 +37,10 @@ class DetectorAsTransformer(BaseTransformer):
     Examples
     --------
     >>> from sktime.detection.compose import DetectorAsTransformer
-    >>> from sktime.detection.lof import SubLOF
-    >>> from sktime.utils._testing.hierarchical import _make_hierarchical
-    >>> X = _make_hierarchical()
-    >>> detector = SubLOF.create_test_instance()
+    >>> import pandas as pd
+    >>> from sktime.detection.lof import LOF
+    >>> X = pd.Series([0.0, 0.1, -0.1, 0.2, 0.0, 8.0, -0.2, 0.0])
+    >>> detector = LOF(n_neighbors=3)
     >>> t = DetectorAsTransformer(detector)
     >>> t.fit(X)
     DetectorAsTransformer(...)
@@ -148,10 +148,10 @@ class DetectorAsTransformer(BaseTransformer):
             `create_test_instance` uses the first (or only) dictionary in `params`.
         """
         # imports
-        from sktime.detection.lof import SubLOF
+        from sktime.detection.naive import ThresholdDetector
 
-        params1 = {"estimator": SubLOF.create_test_instance()}
-        params2 = {"estimator": SubLOF.create_test_instance()}
+        params1 = {"estimator": ThresholdDetector(upper=1.5, mode="points")}
+        params2 = {"estimator": ThresholdDetector(upper=1.5, mode="segments")}
 
         return [params1, params2]
 

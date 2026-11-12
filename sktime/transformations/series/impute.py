@@ -79,6 +79,12 @@ class Imputer(BaseTransformer):
     random_state : int/float/str, optional
         Value to set random.seed() if method="random", default None
 
+    add_missing_mask : bool, default=False
+        Publish the current input's missing positions in
+        ``extra_outputs_["missing_mask"]`` on each transform. The transformed
+        data return value is unchanged. Detection pipelines forward these
+        auxiliary outputs to their final detector.
+
     Examples
     --------
     >>> from sktime.transformations.series.impute import Imputer
@@ -127,12 +133,14 @@ class Imputer(BaseTransformer):
         value=None,
         forecaster=None,
         missing_values=None,
+        add_missing_mask=False,
     ):
         self.method = method
         self.missing_values = missing_values
         self.value = value
         self.forecaster = forecaster
         self.random_state = random_state
+        self.add_missing_mask = add_missing_mask
         super().__init__()
 
         # these methods require self._X remembered in _fit and _update
@@ -226,6 +234,10 @@ class Imputer(BaseTransformer):
         # replace missing_values with np.nan
         if self.missing_values:
             X = X.replace(to_replace=self.missing_values, value=np.nan)
+
+        self.extra_outputs_ = (
+            {"missing_mask": X.isna().to_numpy()} if self.add_missing_mask else {}
+        )
 
         if not _has_missing_values(X):
             return X

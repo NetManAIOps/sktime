@@ -292,41 +292,39 @@ Adapter notes:
 
 ### PyOD point-anomaly detectors
 
-Nine pyod models are wrapped in `sktime/detection/adapters/pyod.py` as
-default-constructible detectors, so registry discovery (and hence the
-Playground/libraryts catalog) picks them up as
-`registered-anomaly_detection-<ClassName>`:
+Eight PyOD models are exposed as individual modules under `sktime/detection/`:
+`ecod.ECOD`, `copod.COPOD`, `lof.LOF`,
+`knn.KNN`, `hbos.HBOS`, `cblof.CBLOF`, `mcd.MCD`, and `ocsvm.OCSVM`.
+Their class documentation identifies the PyOD source. The existing
+`iforest.IForest` is a separate window-based detector, not this PyOD wrapper.
 
-- `PyODECODDetector`, `PyODCOPODDetector` (parameter-free), `PyODLOFDetector`,
-  `PyODIForestDetector`, `PyODKNNDetector`, `PyODHBOSDetector`,
-  `PyODCBLOFDetector`, `PyODMCDDetector`, `PyODOCSVMDetector`
-
-All expose `contamination` (default 0.1) plus their model-specific numeric
-hyperparameters, and are classified as `point_anomaly` in the catalog.
+They are default-constructible and discovered as
+`registered-anomaly_detection-<ClassName>` in Playground/LibraryTS. All expose
+`contamination` (default 0.1) plus their model-specific numeric hyperparameters.
 `pyod` is pinned in `playground/requirements.txt`.
 
-Important: the wrappers override `_predict` via `_PyODPointsMixin` to return
-anomaly **positions** (ilocs). Upstream `PyODDetector._predict` returns the
-anomalous points' label *values* instead, which collapses every detection
-onto iloc 1 in the playground's sparse-ilocs pipeline — do not remove the
-mixin.
+Shared adaptation lives in `adapters/_pyod.py::PyODDetector`: `predict` returns
+anomaly positions (ilocs), while `transform_scores` returns the full sequence
+of PyOD `decision_function` scores (larger means more anomalous). There is no
+internal windowing, imputation or scaling. The former `_PyODPointsMixin`,
+`labels` constructor option, and `adapters/pyod.py` wrappers have been removed.
 
 ### DevAD anomaly-detection zoo (`sktime/libs/devad`)
 
-Seventeen anomaly-detection families are vendored under `sktime/libs/devad/`
+Nineteen anomaly-detection families are vendored under `sktime/libs/devad/`
 (imported from the `tinyfire27_devad_cli` branch; see
 `sktime/libs/devad/README.md` for provenance) behind a uniform
 `fit(x_train)` / `detect(x_test) -> scores + start_pos` API
 (`models/Base.py`, `models/registry.py`):
 
-- torch families: BeatGAN, COUTA, Donut, FCVAE, FITS, KAN-AD, LSTM-AD,
+- torch families: AnomalyTransformer, BeatGAN, COUTA, DAGMM, Donut, FCVAE, FITS, KAN-AD, LSTM-AD,
   ModernTCN, OmniAnomaly, TimesNet, TranAD, USAD
 - scikit-learn subsequence families: IForest, KMeansAD, SubLOF, SubOCSVM,
   SubPCA
 
 Each family has an `HP` table of hyperparameters; entries marked `REQUIRED`
 get defaults from the sktime adapters (`_default_overrides`). Model families
-AnomalyTransformer/CAE/DAGMM/EncDecAD exist as source files but are **not**
+CAE/EncDecAD exist as source files but are **not**
 in `ModelRegistry` (upstream WIP) and are therefore not exposed.
 
 Two entry points consume the zoo:
@@ -349,6 +347,16 @@ The zoo's native typer CLI also works:
 `python -m sktime.libs.devad.cli.app model list|info|train|detect|evaluate`
 (data in/out as `.npy` files; requires `typer`, pinned in
 `playground/requirements.txt`; `rich` renders the training reporter).
+
+The native detectors under `sktime/detection/` (for example `donut.Donut` and
+`sub_lof.SubLOF`) are separate implementations, not these `DevAD*` wrappers.
+They use externally preprocessed inputs and expose `transform_scores`; their
+`predict` threshold policy is not implemented. The current CLI/GUI anomaly
+runner still depends on `predict`, so discovery does not mean these native
+models already support an end-to-end CLI detection experiment. Do not add an
+implicit threshold to work around that boundary. Some historical benchmark
+commands still refer to removed `PyOD*Detector` names; do not map the removed
+point-wise PyOD IForest to the native window-based `IForest`.
 
 ### Experiment plugins (`playground/experiments/`) + `libraryts fork`
 

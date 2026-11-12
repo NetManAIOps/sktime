@@ -6,11 +6,10 @@ from sktime.detection.compose._as_transform import (
     AnnotatorAsTransformer,
     DetectorAsTransformer,
 )
-from sktime.detection.compose._pipeline import AnnotatorPipeline, DetectorPipeline
+from sktime.detection.compose._pipeline import DetectorPipeline
 
 __all__ = [
     "AnnotatorAsTransformer",
-    "AnnotatorPipeline",
     "DetectorAsTransformer",
     "DetectorPipeline",
 ]

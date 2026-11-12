@@ -1,6 +1,6 @@
 [project]
-name = "sktime"
-version = "0.40.1"
+name = "libraryts"
+version = "0.1.0"
 description = "A unified framework for machine learning with time series"
 readme = "README.md"
 keywords = [
@@ -61,7 +61,12 @@ dependencies = [
   "scipy<2.0.0,>=1.2",  # required for estimators and framework layer
 ]
 
+[project.scripts]
+libraryts = "playground.cli.app:app"
+
 [project.optional-dependencies]
+cli = ["typer>=0.16", "torch", "matplotlib"]
+
 # there are the following dependency sets:
 # - all_extras_pandas2, all_extras - all soft dependencies
 # - single-task soft dependencies, e.g., forecasting, classification, etc.
@@ -260,6 +265,7 @@ datasets = [
   "requests",
 ]
 dl = [
+  'rich',
   'neuralforecast>=1.6.4; python_version < "3.12"',
   'peft>=0.10.0,<0.14.0; python_version < "3.12"',
   'tensorflow<2.20,>=2.15; python_version < "3.13"',
@@ -354,6 +360,7 @@ requires = [
 
 [tool.setuptools.package-data]
 sktime = [
+  "libs/affiliation/LICENSE",
   "utils/_estimator_html_repr.css",
   "*.csv",
   "*.csv.gz",

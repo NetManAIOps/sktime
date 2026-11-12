@@ -789,7 +789,7 @@ def _detector_subtype(name: str, module: str) -> str:
         for k in (
             "threshold", "outlier", "anomal", "stray", "lof", "iforest",
             "isolation", "pyod", "devad", "knn", "mcd", "cblof", "cof", "abod",
-            "sod", "subsequence", "matrixprofile", "stumpy", "sigma",
+            "sod", "subsequence", "matrixprofile", "stumpy", "sigma", "ecod", "copod", "hbos", "ocsvm",
         )
     ):
         return "point_anomaly"
@@ -1403,4 +1403,3 @@ def write_snapshot(path: Path | None = None) -> Path:
 if __name__ == "__main__":
     out = write_snapshot()
     print(f"Wrote catalog snapshot to {out}")
-

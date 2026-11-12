@@ -13,7 +13,7 @@ from sktime.tests.test_switch import run_test_module_changed
 from sktime.transformations.compose import Id
 from sktime.transformations.series.boxcox import BoxCoxTransformer
 from sktime.transformations.series.detrend import Detrender
-from sktime.transformations.series.difference import Differencer
+from sktime.transformations.series.difference import Differencer, _Differencer
 from sktime.transformations.series.exponent import ExponentTransformer
 from sktime.transformations.series.lag import Lag
 from sktime.utils._testing.hierarchical import _bottom_hier_datagen, _make_hierarchical
@@ -393,7 +393,7 @@ def test_lagged_y_prediction():
     forecaster = make_reduction(Ridge(), window_length=12, strategy="recursive")
 
     pipe = Pipeline()
-    pipe = pipe.add_step(Differencer(lags=[1, 3]), "differencer", edges={"X": "y"})
+    pipe = pipe.add_step(_Differencer(lags=[1, 3]), "differencer", edges={"X": "y"})
     pipe = pipe.add_step(
         forecaster, name="forecaster", edges={"X": "differencer", "y": "y"}
     )

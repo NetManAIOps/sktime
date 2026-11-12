@@ -1,95 +1,99 @@
-"""Tests for SubLOF"""
+"""Regression tests for pointwise PyOD LOF and sliding-window SubLOF."""
 
-__author__ = ["Alex-JG3"]
+import unittest
 
-import datetime
-
+import numpy as np
 import pandas as pd
-import pytest
+from sklearn.neighbors import LocalOutlierFactor
 
-from sktime.detection.lof import SubLOF
-from sktime.tests.test_switch import run_test_for_class
+from sktime.detection.lof import LOF
+from sktime.detection.sub_lof import SubLOF
+from sktime.utils.dependencies import _check_soft_dependencies
 
 
-@pytest.mark.skipif(
-    not run_test_for_class(SubLOF),
-    reason="run test only if softdeps are present and incrementally (if requested)",
+@unittest.skipUnless(
+    _check_soft_dependencies("pyod", severity="none"), "PyOD is not installed"
 )
-@pytest.mark.parametrize(
-    "x,interval_size,expected_intervals",
-    [
-        (
-            pd.Index([1, 2, 3, 4, 5]),
-            1,
-            pd.IntervalIndex.from_breaks([1, 2, 3, 4, 5, 6], closed="left"),
-        ),
-        (
-            pd.Index([0.0, 1.3, 1.5, 2.0, 3.5]),
-            1.5,
-            pd.IntervalIndex.from_breaks([0.0, 1.5, 3.0, 4.5], closed="left"),
-        ),
-        (
-            pd.DatetimeIndex(
-                [
-                    "2024-01-01 00:00:00",
-                    "2024-01-02 00:00:00",
-                    "2024-01-03 00:00:00",
-                    "2024-01-04 00:00:00",
-                    "2024-01-05 00:00:00",
-                ]
-            ),
-            datetime.timedelta(days=1),
-            pd.IntervalIndex.from_breaks(
-                [
-                    "2024-01-01 00:00:00",
-                    "2024-01-02 00:00:00",
-                    "2024-01-03 00:00:00",
-                    "2024-01-04 00:00:00",
-                    "2024-01-05 00:00:00",
-                    "2024-01-06 00:00:00",
-                ],
-                closed="left",
-                dtype="interval[datetime64[ns], left]",
-            ),
-        ),
-    ],
-)
-def test_cut_into_intervals(x, interval_size, expected_intervals):
-    """Check if the predicted change points match."""
-    actual_intervals = SubLOF._split_into_intervals(x, interval_size)
-    assert (actual_intervals == expected_intervals).all()
+class TestLOF(unittest.TestCase):
+    def setUp(self):
+        self.train = pd.DataFrame(np.linspace(-1, 1, 40))
+        self.test = pd.DataFrame([0.0, 0.1, 8.0, -0.1, -8.0, 0.2])
+
+    def test_scores_and_positions_match_pyod(self):
+        """Expose full scores, sparse positions and dense labels from PyOD."""
+        from pyod.models.lof import LOF as PyODLOF
+
+        model = LOF(n_neighbors=3).fit(self.train)
+        reference = PyODLOF(n_neighbors=3).fit(self.train.to_numpy())
+        scores = model.transform_scores(self.test)
+        np.testing.assert_array_equal(
+            scores, reference.decision_function(self.test.to_numpy())
+        )
+        self.assertEqual(scores.shape, (len(self.test),))
+        self.assertEqual(scores.dtype, np.float64)
+        labels = reference.predict(self.test.to_numpy())
+        np.testing.assert_array_equal(model.predict(self.test)["ilocs"], [2, 4])
+        np.testing.assert_array_equal(
+            model.predict(self.test)["ilocs"], np.flatnonzero(labels)
+        )
+        np.testing.assert_array_equal(model.transform(self.test)["labels"], labels)
+
+    def test_inputs_are_unchanged(self):
+        train_before, test_before = self.train.copy(), self.test.copy()
+        model = LOF(n_neighbors=3).fit(self.train)
+        model.predict(self.test)
+        model.transform_scores(self.test)
+        pd.testing.assert_frame_equal(self.train, train_before)
+        pd.testing.assert_frame_equal(self.test, test_before)
+
+    def test_clone_and_save_load(self):
+        model = LOF(n_neighbors=3).fit(self.train)
+        self.assertEqual(model.clone().get_params(), model.get_params())
+        loaded = LOF.load_from_serial(model.save()[1])
+        np.testing.assert_array_equal(
+            loaded.transform_scores(self.test), model.transform_scores(self.test)
+        )
+        pd.testing.assert_frame_equal(loaded.predict(self.test), model.predict(self.test))
 
 
-@pytest.mark.skipif(
-    not run_test_for_class(SubLOF),
-    reason="run test only if softdeps are present and incrementally (if requested)",
-)
-@pytest.mark.parametrize(
-    "X,y_expected",
-    [
-        (
-            pd.DataFrame([0, 0, 100, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 100, 0]),
-            pd.DataFrame({"ilocs": [2, 7, 13]}),
-        ),
-    ],
-)
-def test_predict(X, y_expected):
-    model = SubLOF(3, window_size=5, novelty=True)
-    model.fit(X)
-    y_actual = model.predict(X)
-    pd.testing.assert_frame_equal(y_actual, y_expected)
+class TestSubLOF(unittest.TestCase):
+    def setUp(self):
+        self.train = np.sin(np.linspace(0, 12, 80))
+        self.test = np.cos(np.linspace(0, 3, 24))
+        self.test[12] = 8.0
 
+    def test_window_scores_match_sklearn(self):
+        """Score stride-one windows at their last point; pad the warm-up only."""
+        win_len = 4
+        model = SubLOF(win_len=win_len, n_neighbors=3, n_jobs=1).fit(self.train)
+        reference = LocalOutlierFactor(n_neighbors=3, n_jobs=1, novelty=True)
+        reference.fit(np.lib.stride_tricks.sliding_window_view(self.train, win_len))
+        expected = -reference.decision_function(
+            np.lib.stride_tricks.sliding_window_view(self.test, win_len)
+        )
+        scores = model.transform_scores(self.test)
+        np.testing.assert_array_equal(scores[: win_len - 1], 0)
+        np.testing.assert_array_equal(scores[win_len - 1 :], expected)
+        self.assertEqual(scores.shape, self.test.shape)
+        self.assertEqual(scores.dtype, np.float64)
 
-@pytest.mark.skipif(
-    not run_test_for_class(SubLOF),
-    reason="run test only if softdeps are present and incrementally (if requested)",
-)
-def test_sublof_does_not_mutate_input():
-    """Check that SubLOF does not modify the input DataFrame."""
-    X = pd.DataFrame([0, 0.5, 100, 0.1, 0, 0.2, 0.3, 50])
-    X_original = X.copy(deep=True)
+    def test_inputs_are_unchanged(self):
+        train, test = pd.DataFrame(self.train), pd.DataFrame(self.test)
+        train_before, test_before = train.copy(), test.copy()
+        model = SubLOF(win_len=4, n_neighbors=3, n_jobs=1).fit(train)
+        model.transform_scores(test)
+        pd.testing.assert_frame_equal(train, train_before)
+        pd.testing.assert_frame_equal(test, test_before)
 
-    model = SubLOF(n_neighbors=2, window_size=2, novelty=True)
-    _ = model.fit_transform(X)
+    def test_predict_has_no_implicit_threshold(self):
+        model = SubLOF(win_len=4, n_neighbors=3, n_jobs=1).fit(self.train)
+        with self.assertRaisesRegex(NotImplementedError, "transform_scores"):
+            model.predict(self.test)
 
-    pd.testing.assert_frame_equal(X, X_original)
+    def test_clone_and_save_load(self):
+        model = SubLOF(win_len=4, n_neighbors=3, n_jobs=1).fit(self.train)
+        self.assertEqual(model.clone().get_params(), model.get_params())
+        loaded = SubLOF.load_from_serial(model.save()[1])
+        np.testing.assert_array_equal(
+            loaded.transform_scores(self.test), model.transform_scores(self.test)
+        )

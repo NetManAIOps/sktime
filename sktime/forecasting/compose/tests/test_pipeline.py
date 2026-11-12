@@ -32,7 +32,7 @@ from sktime.transformations.hierarchical.aggregate import Aggregator
 from sktime.transformations.series.adapt import TabularToSeriesAdaptor
 from sktime.transformations.series.boxcox import LogTransformer
 from sktime.transformations.series.detrend import Detrender
-from sktime.transformations.series.difference import Differencer
+from sktime.transformations.series.difference import _Differencer
 from sktime.transformations.series.exponent import ExponentTransformer
 from sktime.transformations.series.feature_selection import FeatureSelection
 from sktime.transformations.series.fourier import FourierFeatures
@@ -196,14 +196,14 @@ def test_pipeline_with_dimension_changing_transformer():
     pipe = TransformedTargetForecaster(
         steps=[
             ("log", OptionalPassthrough(LogTransformer())),
-            ("differencer", Differencer(na_handling="drop_na")),
+            ("differencer", _Differencer(na_handling="drop_na")),
             ("scaler", TabularToSeriesAdaptor(StandardScaler())),
             (
                 "myforecasterpipe",
                 ForecastingPipeline(
                     steps=[
                         ("logX", OptionalPassthrough(LogTransformer())),
-                        ("differencerX", Differencer(na_handling="drop_na")),
+                        ("differencerX", _Differencer(na_handling="drop_na")),
                         ("scalerX", TabularToSeriesAdaptor(StandardScaler())),
                         ("myforecaster", make_reduction(SVR())),
                     ]

@@ -403,7 +403,7 @@ class MultiSeriesAnomalyTests(TrainerTestCase):
     def test_multiseries_train_run_matches_one_shot(self):
         trained = self._train_or_skip(
             {
-                "algorithm_id": "registered-anomaly_detection-PyODLOFDetector",
+                "algorithm_id": "registered-anomaly_detection-LOF",
                 "dataset_id": "tsb-yahoo",
                 "model_id": "t-lof-ms",
             }
@@ -423,7 +423,7 @@ class MultiSeriesAnomalyTests(TrainerTestCase):
             {
                 "task": "anomaly_detection",
                 "dataset_id": "tsb-yahoo",
-                "algorithm_id": "registered-anomaly_detection-PyODLOFDetector",
+                "algorithm_id": "registered-anomaly_detection-LOF",
             }
         )
         self.assertEqual(result["status"], "ok")

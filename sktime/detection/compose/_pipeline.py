@@ -1,5 +1,7 @@
 """Pipeline for time series detectors."""
 
+from copy import deepcopy
+
 from sktime.base import _HeterogenousMetaEstimator
 from sktime.detection.base import BaseDetector
 from sktime.registry import scitype
@@ -29,14 +31,15 @@ class DetectorPipeline(_HeterogenousMetaEstimator, BaseDetector):
     --------
     >>> import numpy as np
     >>> import pandas as pd
-    >>> from sktime.detection.lof import SubLOF
+    >>> from sktime.detection.lof import LOF
     >>> from sktime.transformations.series.detrend import Detrender
     >>>
     >>> n = 100
-    >>> x = pd.Series(np.linspace(0, 5, n) + np.random.normal(0, 0.1, size=n))
+    >>> rng = np.random.default_rng(0)
+    >>> x = pd.Series(np.linspace(0, 5, n) + rng.normal(0, 0.1, size=n))
     >>> x.at[50] = 100
     >>>
-    >>> pipeline = Detrender() * SubLOF(n_neighbors=5, window_size=5, novelty=True)
+    >>> pipeline = Detrender() * LOF(n_neighbors=5)
     >>> pipeline.fit(x)
     DetectorPipeline(...)
     >>> y_hat = pipeline.transform(x)
@@ -69,13 +72,10 @@ class DetectorPipeline(_HeterogenousMetaEstimator, BaseDetector):
         self.steps = steps
         self.steps_ = self._check_steps(steps, allow_postproc=False)
 
-        tags_to_clone = ["learning_type", "task"]
-        # we do not clone X-y-must-have-same-index, since transformers can
-        #   create indices, and that behaviour is not tag-inspectable
-        self.clone_tags(self.estimator_, tags_to_clone)
-
-        # init must be called at the end so task is properly set
         super().__init__()
+        self.clone_tags(
+            self.estimator_,
+            ["learning_type", "task", "capability:multivariate"])
 
     def __rmul__(self, other):
         """Magic * method, return (left) concatenated DetectorPipeline.
@@ -253,7 +253,7 @@ class DetectorPipeline(_HeterogenousMetaEstimator, BaseDetector):
         comp_dict = {name: comp for (name, comp) in fitted_estimator_tuples}
         return comp_dict
 
-    def _fit(self, X, y=None):
+    def _fit(self, X, y=None, *, X_val=None, **kwargs):
         """Fit to training data.
 
         core logic
@@ -264,6 +264,13 @@ class DetectorPipeline(_HeterogenousMetaEstimator, BaseDetector):
             training data to fit model to, time series
         y : pd.Series, optional
             ground truth detections for training if detector is supervised
+        X_val : pd.DataFrame, pd.Series or np.ndarray, optional
+            Validation data transformed using the transformers fitted on X.
+            The final detector must support X_val when it is supplied.
+        **kwargs : dict
+            Additional fitting arguments forwarded to the final detector.
+            Transformer extra_outputs_ are also forwarded by name; validation
+            outputs receive a val_ prefix. Names must be distinct across steps.
 
         Returns
         -------
@@ -273,6 +280,9 @@ class DetectorPipeline(_HeterogenousMetaEstimator, BaseDetector):
         ------------
         creates fitted model (attributes ending in "_")
         """
+        if X_val is not None:
+            X_val = self._check_X(X_val)
+
         # skip transformers if X is ignored
         # condition 1 for ignoring X: X is None and required in fit of 1st transformer
         first_trafo = self.steps_[0][1]
@@ -289,22 +299,42 @@ class DetectorPipeline(_HeterogenousMetaEstimator, BaseDetector):
             for step_idx, name, transformer in self._iter_transformers():
                 t = transformer.clone()
                 X = t.fit_transform(X=X, y=y)
+                kwargs.update(deepcopy(getattr(t, "extra_outputs_", {})))
+                if X_val is not None:
+                    X_val = t.transform(X=X_val)
+                    kwargs.update({
+                        f"val_{key}": value
+                        for key, value in deepcopy(
+                            getattr(t, "extra_outputs_", {})
+                        ).items()
+                    })
                 self.steps_[step_idx] = (name, t)
 
         # fit detector
         name, detector = self.steps_[-1]
         f = detector.clone()
-        f.fit(X=X, y=y)
+        if X_val is not None:
+            kwargs["X_val"] = X_val
+        f.fit(X=X, y=y, **kwargs)
         self.steps_[-1] = (name, f)
 
         return self
 
-    def _transform(self, X=None, y=None):
+    def _transform(self, X=None, y=None, *, extra_outputs=None):
         # If X is not given or ignored, just passthrough the data without transformation
         if not self.skip_trafos_:
             for _, _, transformer in self._iter_transformers():
                 X = transformer.transform(X=X, y=y)
+                if extra_outputs is not None:
+                    extra_outputs.update(deepcopy(
+                        getattr(transformer, "extra_outputs_", {})
+                    ))
         return X
+
+    def _transform_scores(self, X, **kwargs):
+        """Apply fitted preprocessing and return the detector's scores."""
+        X = self._transform(X=X, extra_outputs=kwargs)
+        return self.estimator_.transform_scores(X, **kwargs)
 
     def _predict(self, X):
         """Predict on test/deployment data.
@@ -375,34 +405,26 @@ class DetectorPipeline(_HeterogenousMetaEstimator, BaseDetector):
             `MyClass(**params)` or `MyClass(**params[i])` creates a valid test instance.
             `create_test_instance` uses the first (or only) dictionary in `params`
         """
-        import datetime
-
         from sklearn.preprocessing import StandardScaler
 
-        from sktime.detection.lof import SubLOF
+        from sktime.detection.naive import ThresholdDetector
         from sktime.transformations.series.adapt import TabularToSeriesAdaptor
         from sktime.transformations.series.detrend import Detrender
         from sktime.transformations.series.exponent import ExponentTransformer
 
-        lof = SubLOF(
-            n_neighbors=5, window_size=datetime.timedelta(days=25), novelty=True
-        )
+        detector = ThresholdDetector(upper=1.5, mode="points")
         STEPS1 = [
             ("transformer", TabularToSeriesAdaptor(StandardScaler())),
-            ("anomaly", lof),
+            ("anomaly", detector),
         ]
         params1 = {"steps": STEPS1}
 
         STEPS2 = [
             ("transformer", ExponentTransformer()),
-            ("anomaly", lof),
+            ("anomaly", detector),
         ]
         params2 = {"steps": STEPS2}
 
-        params3 = {"steps": [Detrender(), lof]}
+        params3 = {"steps": [Detrender(), detector]}
 
         return [params1, params2, params3]
-
-
-# todo 1.0.0 - remove alias, i.e., remove this line
-AnnotatorPipeline = DetectorPipeline
