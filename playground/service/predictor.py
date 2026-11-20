@@ -12,14 +12,8 @@ from sktime.base import load
 from playground.service.data import load_test_data
 
 
-def load_model(model_dir: str | Path):
-    """Restore model.zip, including fitted preprocessing; only load trusted files."""
-    model_dir = Path(model_dir).expanduser().resolve()
-    return load(model_dir / "model.zip")
-
-
 def predict(
-    experiment_spec: dict, model_dir: str | Path, output_dir: str | Path
+    experiment_spec: dict, model_path: str | Path, output_dir: str | Path
 ) -> pd.Series:
     """Load a fitted model, score test data and save scores.csv plus a manifest.
 
@@ -34,21 +28,20 @@ def predict(
             "This service currently supports anomaly_detection only"
         )
     output_dir = Path(output_dir).expanduser().resolve()
-    if output_dir.exists():
-        raise FileExistsError(f"Output directory already exists: {output_dir}")
-    estimator = load_model(model_dir)
-    X = load_test_data(experiment_spec["data"])
-    values = np.asarray(estimator.transform_scores(X), dtype=float)
-    if values.shape != (len(X),) or not np.isfinite(values).all():
-        raise ValueError("Detector scores must be finite and have shape (n_test,)")
-    scores = pd.Series(values, index=X.index, name="score")
+    scores_path = output_dir / "scores.csv"
+    if scores_path.exists():
+        raise FileExistsError(f"Scores already exist: {scores_path}")
 
-    output_dir.mkdir(parents=True)
-    scores.to_csv(output_dir / "scores.csv", index_label="timestamp")
+    model_path = Path(model_path).expanduser().resolve()
+    estimator = load(model_path)
+    scores = score_estimator(experiment_spec, estimator)
+
+    output_dir.mkdir(parents=True, exist_ok=True)
+    scores.to_csv(scores_path, index_label="timestamp", mode="x")
     manifest = {
         "created_at": datetime.now(timezone.utc).isoformat(),
         "experiment_spec": experiment_spec,
-        "model_dir": str(Path(model_dir).expanduser().resolve()),
+        "model_path": str(model_path),
         "artifacts": {"scores": "scores.csv"},
     }
     (output_dir / "manifest.json").write_text(
@@ -56,3 +49,12 @@ def predict(
         encoding="utf-8",
     )
     return scores
+
+
+def score_estimator(experiment_spec: dict, estimator) -> pd.Series:
+    """Score the test series with a fitted detector and preserve its index."""
+    X = load_test_data(experiment_spec["data"])
+    values = np.asarray(estimator.transform_scores(X), dtype=float)
+    if values.shape != (len(X),) or not np.isfinite(values).all():
+        raise ValueError("Detector scores must be finite and have shape (n_test,)")
+    return pd.Series(values, index=X.index, name="score")

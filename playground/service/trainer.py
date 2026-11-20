@@ -8,48 +8,14 @@ from playground.service.catalog import TASK_ESTIMATOR_TYPES
 from playground.service.data import load_training_data
 
 
-def train(experiment_spec: dict, output_dir: str | Path):
-    """Train and save a model/pipeline, then return the fitted object.
-
-    Currently targets anomaly detection. Model hyperparameters (including
-    early stopping) stay in each step's params. fit_params are passed to fit.
-    A top-level seed overrides seed/random_state on components that accept them.
-    The complete configuration is experiment_spec. Validation data comes from
-    data.val, and test data is never loaded here.
-    Write model.zip and manifest.json into a new output_dir. The ZIP contains
-    the whole estimator, including fitted preprocessing steps in a pipeline.
-    Existing output directories are not overwritten. Inference and evaluation
-    belong to the caller.
-    """
-    output_dir = Path(output_dir).expanduser().resolve()
-    if output_dir.exists():
-        raise FileExistsError(f"Output directory already exists: {output_dir}")
-
-    X_train, X_val = load_training_data(experiment_spec["data"])
-    estimator = build_estimator(
-        experiment_spec["estimator"],
-        task=experiment_spec["task"],
-        seed=experiment_spec.get("seed"),
-    )
-
-    fit_params = dict(experiment_spec.get("fit_params", {}))
-    if X_val is not None:
-        fit_params["X_val"] = X_val
-
-    estimator.fit(X_train, **fit_params)
-
-    manifest = {
-        "created_at": datetime.now(timezone.utc).isoformat(),
-        "experiment_spec": experiment_spec,
-        "artifacts": {"model": "model.zip"},
-    }
-    manifest_json = json.dumps(manifest, ensure_ascii=False, indent=2, allow_nan=False)
-    output_dir.mkdir(parents=True)
-    estimator.save(output_dir / "model").close()
-    (output_dir / "manifest.json").write_text(
-        manifest_json + "\n", encoding="utf-8"
-    )
-    return estimator
+def _resolve_class(class_name: str, registry) -> type:
+    """Find one uniquely named class in the supplied registry."""
+    matches = {klass for name, klass in registry if name == class_name}
+    if len(matches) != 1:
+        raise ValueError(
+            f"Expected one class named {class_name}, found {len(matches)}"
+        )
+    return matches.pop()
 
 
 def build_estimator(spec: list[dict], *, task: str, seed: int | None = None):
@@ -100,11 +66,51 @@ def build_estimator(spec: list[dict], *, task: str, seed: int | None = None):
     return DetectorPipeline(steps=steps)
 
 
-def _resolve_class(class_name: str, registry) -> type:
-    """Find one uniquely named class in the supplied registry."""
-    matches = {klass for name, klass in registry if name == class_name}
-    if len(matches) != 1:
-        raise ValueError(
-            f"Expected one class named {class_name}, found {len(matches)}"
-        )
-    return matches.pop()
+def fit_estimator(experiment_spec: dict):
+    """Fit the configured estimator or pipeline on the training data."""
+    X_train, X_val = load_training_data(experiment_spec["data"])
+    estimator = build_estimator(
+        experiment_spec["estimator"],
+        task=experiment_spec["task"],
+        seed=experiment_spec.get("seed"),
+    )
+
+    fit_params = dict(experiment_spec.get("fit_params", {}))
+    if X_val is not None:
+        fit_params["X_val"] = X_val
+
+    estimator.fit(X_train, **fit_params)
+    return estimator
+
+
+def train(experiment_spec: dict, output_dir: str | Path):
+    """Train and save a model/pipeline, then return the fitted object.
+
+    Currently targets anomaly detection. Model hyperparameters (including
+    early stopping) stay in each step's params. fit_params are passed to fit.
+    A top-level seed overrides seed/random_state on components that accept them.
+    The complete configuration is experiment_spec. Validation data comes from
+    data.val, and test data is never loaded here.
+    Write model.zip and manifest.json into output_dir. The ZIP contains
+    the whole estimator, including fitted preprocessing steps in a pipeline.
+    An existing model.zip raises FileExistsError before training.
+    """
+    output_dir = Path(output_dir).expanduser().resolve()
+    model_path = output_dir / "model.zip"
+    if model_path.exists():
+        raise FileExistsError(f"Model already exists: {model_path}")
+
+    estimator = fit_estimator(experiment_spec)
+
+    manifest = {
+        "created_at": datetime.now(timezone.utc).isoformat(),
+        "experiment_spec": experiment_spec,
+        "artifacts": {"model": "model.zip"},
+    }
+    manifest_json = json.dumps(manifest, ensure_ascii=False, indent=2, allow_nan=False)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    estimator.save(output_dir / "model").close()
+    (output_dir / "manifest.json").write_text(
+        manifest_json + "\n", encoding="utf-8"
+    )
+    return estimator

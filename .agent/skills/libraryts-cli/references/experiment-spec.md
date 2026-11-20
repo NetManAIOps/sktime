@@ -7,8 +7,8 @@
 | 命令 | 使用的字段 |
 |---|---|
 | `train` | `task`、`data.train`、`estimator`，以及可选的 `data.val`、`seed`、`fit_params` |
-| `predict` | `task`、`data.test`。模型与已拟合的预处理由 `--model-dir` 提供 |
-| `evaluate` | `task`、`data.test`、`metrics`。分数由 `--prediction-dir` 提供 |
+| `predict` | `task`、`data.test`。模型与已拟合的预处理从 `--model-path` 指定的 ZIP 文件加载 |
+| `evaluate` | `task`、`data.test`、`metrics`。分数从 `--scores-path` 指定的 CSV 文件读取 |
 | `run` | 上述字段的并集。必须显式提供不同的 train/test 文件，并选择至少一个指标 |
 
 - `task` 填 `"anomaly_detection"`。

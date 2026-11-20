@@ -14,7 +14,7 @@ from playground.cli import report_error
 def train(
     ctx: typer.Context,
     spec: Path = typer.Option(..., "--spec", help="Experiment JSON file."),
-    output_dir: Path = typer.Option(..., "--output-dir", help="New model directory."),
+    output_dir: Path = typer.Option(..., "--output-dir", help="Output directory for model.zip. An existing model.zip blocks training."),
 ) -> None:
     """Train and save a model or pipeline."""
     _execute(ctx, "train", spec, output_dir)
@@ -23,29 +23,29 @@ def train(
 def predict(
     ctx: typer.Context,
     spec: Path = typer.Option(..., "--spec", help="Experiment JSON file."),
-    model_dir: Path = typer.Option(
-        ..., "--model-dir", help="Trusted saved model directory."
+    model_path: Path = typer.Option(
+        ..., "--model-path", help="Path to a trusted saved model ZIP file."
     ),
     output_dir: Path = typer.Option(
-        ..., "--output-dir", help="New prediction directory."
+        ..., "--output-dir", help="Output directory for a new scores.csv file."
     ),
 ) -> None:
     """Load a trusted model and save anomaly scores without refitting."""
-    _execute(ctx, "predict", spec, output_dir, model_dir=model_dir)
+    _execute(ctx, "predict", spec, output_dir, model_path=model_path)
 
 
 def evaluate(
     ctx: typer.Context,
     spec: Path = typer.Option(..., "--spec", help="Experiment JSON file with metrics."),
-    prediction_dir: Path = typer.Option(
-        ..., "--prediction-dir", help="Directory containing saved scores.csv."
+    scores_path: Path = typer.Option(
+        ..., "--scores-path", help="CSV file containing saved pointwise scores."
     ),
     output_dir: Path = typer.Option(
-        ..., "--output-dir", help="New evaluation directory."
+        ..., "--output-dir", help="Output directory for metrics.json and the evaluation manifest."
     ),
 ) -> None:
     """Evaluate saved scores against test labels without rerunning the model."""
-    _execute(ctx, "evaluate", spec, output_dir, prediction_dir=prediction_dir)
+    _execute(ctx, "evaluate", spec, output_dir, scores_path=scores_path)
 
 
 def run(
@@ -54,7 +54,7 @@ def run(
         ..., "--spec", help="Experiment JSON with train/test/metrics."
     ),
     output_dir: Path = typer.Option(
-        ..., "--output-dir", help="New experiment directory."
+        ..., "--output-dir", help="Experiment directory, empty or containing only the matching spec.json."
     ),
 ) -> None:
     """Train, predict and evaluate one experiment using test ground truth."""

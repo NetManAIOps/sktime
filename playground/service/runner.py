@@ -1,30 +1,49 @@
-"""End-to-end experiment orchestration, reusing the individual services."""
+"""Train, score and evaluate a pipeline in a single experiment directory."""
 
 import json
+from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
 
 from playground.service.data import resolve_data_path
-from playground.service.evaluator import evaluate
-from playground.service.predictor import predict
-from playground.service.trainer import train
+from playground.service.evaluator import compute_metrics
+from playground.service.predictor import score_estimator
+from playground.service.trainer import fit_estimator
+
+
+def _write_json(path: Path, payload: dict) -> None:
+    text = json.dumps(payload, ensure_ascii=False, indent=2, allow_nan=False)
+    with path.open("x", encoding="utf-8") as stream:
+        stream.write(text + "\n")
+
+
+@contextmanager
+def _run_directory(output_dir: Path, experiment_spec: dict):
+    """Reserve the directory for one run, accepting a matching prewritten spec."""
+    output_dir.mkdir(parents=True, exist_ok=True)
+    lock = output_dir / ".run.lock"
+    lock.touch(exist_ok=False)
+    try:
+        spec_path = output_dir / "spec.json"
+        for entry in output_dir.iterdir():
+            if entry not in (spec_path, lock):
+                raise FileExistsError(f"Experiment directory already contains {entry.name}: {output_dir}")
+        if spec_path.exists():
+            if json.loads(spec_path.read_text(encoding="utf-8")) != experiment_spec:
+                raise ValueError(f"Existing spec.json differs from the requested experiment: {spec_path}")
+        else:
+            _write_json(spec_path, experiment_spec)
+        yield
+    finally:
+        lock.unlink()
 
 
 def run(experiment_spec: dict, output_dir: str | Path) -> dict:
-    """Train, save, reload, score and evaluate one anomaly-detection experiment.
-
-    Layout: model/{model.zip,manifest.json}, prediction/{scores.csv,manifest.json},
-    evaluation/{metrics.json,manifest.json}, plus this run's manifest.json.
-    Explicit train/test CSV paths are required until the registered-dataset
-    split protocol is defined. Failed runs keep completed stages for inspection.
-    """
+    """Save one spec, fitted pipeline, score series, metric result and final manifest."""
     if experiment_spec["task"] != "anomaly_detection":
         raise NotImplementedError(
             "This service currently supports anomaly_detection only"
         )
-    output_dir = Path(output_dir).expanduser().resolve()
-    if output_dir.exists():
-        raise FileExistsError(f"Output directory already exists: {output_dir}")
     data = experiment_spec["data"]
     if "dataset_id" in data:
         raise ValueError(
@@ -38,26 +57,26 @@ def run(experiment_spec: dict, output_dir: str | Path) -> dict:
     if not experiment_spec.get("metrics"):
         raise ValueError("experiment_spec.metrics must select at least one metric")
 
-    model_dir = output_dir / "model"
-    prediction_dir = output_dir / "prediction"
-    evaluation_dir = output_dir / "evaluation"
-    output_dir.mkdir(parents=True)
-    train(experiment_spec, model_dir)
-    predict(experiment_spec, model_dir, prediction_dir)
-    results = evaluate(experiment_spec, prediction_dir, evaluation_dir)
-    summary = {
-        "model_dir": str(model_dir),
-        "prediction_dir": str(prediction_dir),
-        "evaluation_dir": str(evaluation_dir),
-        "metrics": results,
+    output_dir = Path(output_dir).expanduser().resolve()
+    with _run_directory(output_dir, experiment_spec):
+        estimator = fit_estimator(experiment_spec)
+        estimator.save(output_dir / "model").close()
+
+        scores = score_estimator(experiment_spec, estimator)
+        scores.to_csv(output_dir / "scores.csv", index_label="timestamp", mode="x")
+
+        metrics = compute_metrics(experiment_spec, scores)
+        _write_json(output_dir / "metrics.json", metrics)
+        _write_json(output_dir / "manifest.json", {
+            "completed_at": datetime.now(timezone.utc).isoformat(),
+            "spec": "spec.json",
+            "artifacts": {"model": "model.zip", "scores": "scores.csv", "metrics": "metrics.json"},
+        })
+
+    return {
+        "spec_path": str(output_dir / "spec.json"),
+        "model_path": str(output_dir / "model.zip"),
+        "scores_path": str(output_dir / "scores.csv"),
+        "metrics_path": str(output_dir / "metrics.json"),
+        "metrics": metrics,
     }
-    manifest = {
-        "created_at": datetime.now(timezone.utc).isoformat(),
-        "experiment_spec": experiment_spec,
-        **summary,
-    }
-    (output_dir / "manifest.json").write_text(
-        json.dumps(manifest, ensure_ascii=False, indent=2, allow_nan=False) + "\n",
-        encoding="utf-8",
-    )
-    return summary

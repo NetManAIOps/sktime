@@ -22,6 +22,6 @@ description: Use the native LibraryTS CLI for time-series anomaly detection. Dis
 
 ## 执行约定
 
-- 每次执行使用新的输出目录。以退出码判断成功或失败，从 `stdout` 读取结果 JSON，保留返回的目录路径用于下一步。需要定位执行错误时，在子命令前加 `--debug` 并查看 `stderr`。
-- 复用已训练模型时调用 `predict` 并传入可信的模型目录。已有分数时可直接调用 `evaluate`。
+- `train` 和 `predict` 可复用已有目录，分别要求其中尚无 `model.zip` 和 `scores.csv`。`evaluate` 可在已有目录更新指标和评估 manifest。`run` 可使用新目录、空目录或只含本轮 `spec.json` 的目录。以退出码判断成功或失败，从 `stdout` 读取结果 JSON，保留返回的目录路径用于下一步。需要定位执行错误时，在子命令前加 `--debug` 并查看 `stderr`。
+- 复用已训练模型时调用 `predict` 并传入可信的模型 ZIP 文件。已有分数时可通过 `--scores-path` 把 CSV 传给 `evaluate`。
 - 在无标签模型选择阶段，只使用研究协议允许的数据和反馈。真实测试标签上的 `evaluate` 和 `run` 留给独立评估阶段。

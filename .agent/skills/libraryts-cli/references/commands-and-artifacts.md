@@ -13,12 +13,12 @@ libraryts ls preprocessors --task anomaly_detection --name MinMaxScaler
 
 ## 分阶段执行
 
-在 [实验配置](experiment-spec.md) 示例的工作目录执行。以下输出目录应尚未存在。根据用户任务执行需要的阶段即可。
+在 [实验配置](experiment-spec.md) 示例的工作目录执行。`train` 可复用已有目录，遇到已有的 `model.zip` 会在训练前报错。`predict` 同样可复用已有目录，遇到已有的 `scores.csv` 会在加载模型前报错。`evaluate` 可复用已有目录，成功后更新 `metrics.json` 和评估用的 `manifest.json`。根据用户任务执行需要的阶段即可。
 
 ```bash
 libraryts train --spec experiment.json --output-dir artifacts/donut
-libraryts predict --spec experiment.json --model-dir artifacts/donut --output-dir artifacts/donut-scores
-libraryts evaluate --spec experiment.json --prediction-dir artifacts/donut-scores --output-dir artifacts/donut-metrics
+libraryts predict --spec experiment.json --model-path artifacts/donut/model.zip --output-dir artifacts/donut-scores
+libraryts evaluate --spec experiment.json --scores-path artifacts/donut-scores/scores.csv --output-dir artifacts/donut-metrics
 ```
 
 | 命令 | 成功 JSON 字段 | 目录中的文件 |
@@ -27,7 +27,7 @@ libraryts evaluate --spec experiment.json --prediction-dir artifacts/donut-score
 | `predict` | `prediction_dir`、`scores_path`、`n_scores`、`manifest_path` | `scores.csv`、`manifest.json` |
 | `evaluate` | `evaluation_dir`、`metrics_path`、`metrics`、`manifest_path` | `metrics.json`、`manifest.json` |
 
-自动化调用时，把 `train` 返回的 `model_dir` 传给 `predict --model-dir`，把 `predict` 返回的 `prediction_dir` 传给 `evaluate --prediction-dir`。CLI 返回的路径是绝对路径。用可信来源的 `model.zip`，其中包含拟合后的模型与管线。逐点异常分数在 `scores.csv` 中，列为 `timestamp,score`，分数越高表示越异常。
+自动化调用时，把 `train` 返回的 `model_path` 传给 `predict --model-path`，把 `predict` 返回的 `scores_path` 传给 `evaluate --scores-path`。CLI 返回的路径是绝对路径。用可信来源的 `model.zip`，其中包含拟合后的模型与管线。逐点异常分数在 `scores.csv` 中，列为 `timestamp,score`，分数越高表示越异常。
 
 ## 一次执行完整实验
 
@@ -37,7 +37,7 @@ libraryts evaluate --spec experiment.json --prediction-dir artifacts/donut-score
 libraryts run --spec experiment.json --output-dir artifacts/donut-run
 ```
 
-`run` 在输出目录内创建 `model/`、`prediction/`、`evaluation/` 和顶层 `manifest.json`。成功 JSON 含 `run_dir`、`model_dir`、`prediction_dir`、`evaluation_dir`、`metrics`、`manifest_path`。若中途失败，已完成的阶段可能仍在输出目录里。检查已有产物后，可以在新目录重跑，或从已完成的阶段接着调用独立命令。
+`run` 将本轮的 `spec.json`、`model.zip`、`scores.csv` 和 `metrics.json` 写在同一目录，成功后写入一份 `manifest.json`，记录 UTC 完成时间及各文件的相对路径。若目录中已有内容，只接受与本轮配置一致的 `spec.json`。CLI 返回 `run_dir`、`spec_path`、`model_path`、`scores_path`、`metrics_path`、`manifest_path` 和 `metrics`。失败时已完成的阶段文件可用于排查。
 
 ## 读取结果和排查失败
 
@@ -50,7 +50,7 @@ libraryts run --spec experiment.json --output-dir artifacts/donut-run
 例如，排查模型加载失败时可运行：
 
 ```bash
-libraryts --debug predict --spec experiment.json --model-dir artifacts/donut --output-dir artifacts/donut-debug
+libraryts --debug predict --spec experiment.json --model-path artifacts/donut/model.zip --output-dir artifacts/donut-debug
 ```
 
 `--debug` 放在子命令前。它只控制执行错误的堆栈，深度训练的进度由 spec 中的 `fit_params.show_progress` 控制。调用时分别捕获 stdout 和 stderr，这样 stdout 的 JSON 可以直接解析。
